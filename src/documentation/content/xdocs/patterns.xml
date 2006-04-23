@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2005 The Apache Software Foundation or its licensors,
+  as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Patterns</title>
+  </header>
+  <body>
+    <section id="switch">
+      <title>Handling different documents</title>
+      <p>
+        The <strong>xml::list</strong> feature can be used in order to provide a switch-like structure to process several documents with different root elements.<br />
+        Given for example the following documents :
+      </p>
+      <source><![CDATA[<document-1>
+  <element-1>content</element-1>
+</document-1>]]></source>
+      <source><![CDATA[<document-2>
+  <element-2 />
+</document-2>]]></source>
+      <source><![CDATA[<document-3>
+  <element-3 attribute="something" />
+</document-3>]]></source>
+      <p>
+        A code able to unserialize all of them from a single entry point could be :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    my_class( xml::xistream& xis )
+    {
+        xis >> xml::list( "document-1", *this, &my_class::read_document_1 )
+            >> xml::list( "document-2", *this, &my_class::read_document_2 )
+            >> xml::list( "document-3", *this, &my_class::read_document_3 );
+    }
+
+private:
+    void read_document_1( xml::xistream& xis )
+    {
+        std::string content;
+        xis >> xml::content( "element-1", content );
+    }
+
+    void read_document_2( xml::xistream& xis )
+    {
+        xis >> xml::start( "element-2" )
+            >> xml::end();
+    }
+
+    void read_document_3( xml::xistream& xis )
+    {
+        std::string attribute;
+        xis >> xml::attribute( "attribute", attribute );
+    }
+};]]></source>
+    </section>
+    <section id="exists">
+      <title>Testing for the existence of an element</title>
+      <p>
+        If the requirement is only to test whether a given element exists or not during unserialization, the following code sample can be used :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    my_class( xml::xistream& xis )
+    {
+        bool exists = false;
+        xis >> xml::list( "element", *this, &my_class::check, exists );
+    }
+
+private:
+    void check( xml::xistream& xis, bool& exists ) const
+    {
+        exists = true;
+    }
+};]]></source>
+    </section>
+    <section id="factorization">
+      <title>Factorizing the unserialization of similar nodes</title>
+      <p>
+        If different nodes have elements and/or attributes in common, factorization can sometimes significantly reduce the amount of code.<br />
+        Most of the time the benefits are better when the code logics behind those elements indicate that they are very tied together.<br />
+      </p>
+      <p>
+        For example given the following document :
+      </p>
+      <source><![CDATA[<document>
+  <element-1 name="name 1">content</element-1>
+  <element-2 name="name 2"/>
+  <element-2 name="name 3" attribute="something" />
+</document-3>]]></source>
+      <p>
+        A possible factorization can be :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    my_class( xml::xistream& xis )
+    {
+        process( xis, "element-1", &my_class::read_element_1 );
+        process( xis, "element-2", &my_class::read_element_2 );
+        process( xis, "element-3", &my_class::read_element_3 );
+    }
+
+private:
+    template< typename T >
+    void process( xml::xistream& xis, const std::string& element, T functor ) const
+    {
+        std::string name;
+        xis >> xml::start( element )
+            >> xml::attribute( "name", name );
+        (this->*functor)( xis, name );
+    }
+
+    void read_element_1( xml::xistream& xis, const std::string& name )
+    {
+        std::string content;
+        xis >> content;
+    }
+
+    void read_element_2( xml::xistream& xis, const std::string& name )
+    {
+    }
+
+    void read_element_3( xml::xistream& xis, const std::string& name )
+    {
+        std::string attribute;
+        xis >> xml::attribute( "attribute", attribute );
+    }
+};]]></source>
+    <p>
+      Note the use of a template helper method which allows the user not to have to worry about the exact type of the functor.
+    </p>
+    </section>
+    <section id="modular">
+      <title>Organizing serialization in modular systems</title>
+    </section>
+  </body>
+</document>

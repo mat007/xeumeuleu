@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project name="xeumeuleu" default="all">
+
+  <!-- assumes FORREST_HOME has been set as an environment variable -->
+  <property environment="env"/>
+  <import file="${env.FORREST_HOME}/main/forrest.build.xml"/>
+
+  <!-- requires scp : http://ant.apache.org/manual/OptionalTasks/scp.html -->
+
+  <target name="deploy" depends="init" description="deploy to remote server">
+    <if>
+      <not>
+        <isset property="deploy.scp.username"/>
+      </not>
+      <then>
+        <input addproperty="deploy.scp.username" message="Enter username to enable scp to deploy:"/>
+      </then>
+    </if>
+    <property name="deploy.scp.dest" value="${deploy.scp.username}@ssh.sourceforge.net://home/groups/x/xe/xeumeuleu/htdocs"/>
+    <if>
+      <not>
+        <isset property="deploy.scp.password"/>
+      </not>
+      <then>
+        <input addproperty="deploy.scp.password" message="Enter remote password to enable scp to ${deploy.scp.dest}:"/>
+      </then>
+    </if>
+    <scp todir="${deploy.scp.dest}" password="${deploy.scp.password}" trust="yes">
+      <fileset dir="${project.site-dir}"/>
+    </scp>
+  </target>
+
+  <target name="all" depends="site,deploy" description="build documentation and deploy to remote server"/>
+
+</project>

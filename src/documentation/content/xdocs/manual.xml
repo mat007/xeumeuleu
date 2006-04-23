@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2005 The Apache Software Foundation or its licensors,
+  as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Manual</title>
+  </header>
+  <body>
+    <section id="general">
+      <title>General</title>
+      <section id="include">
+        <title>Including the library</title>
+        <p>
+          In order to use the library only one include statement is necessary :
+        </p>
+        <source><![CDATA[#include <xeumeuleu/xml.h>]]></source>
+      </section>
+      <section id="error">
+        <title>Error management</title>
+        <p>
+          Should an error happen manipulating a stream an exception of type <em>xml::exception</em> which derives from <em>std::exception</em> will be raised.
+        </p>
+      </section>
+    </section>
+    <section id="creation">
+      <title>Creating a stream</title>
+      <p>
+        The first step is to create the proper stream depending on the needs.
+      </p>
+      <section id="input">
+        <title>Input streams</title>
+        <p>
+          The following code creates a stream from an XML document contained in an <em>std::string</em> :
+        </p>
+        <source><![CDATA[xml::xistringstream xis( string );]]></source>
+        <p>
+          The following code creates a stream from an XML document contained in a file <em>file.xml</em> :
+        </p>
+        <source><![CDATA[xml::xifstream xis( "file.xml" );]]></source>
+      </section>
+      <section id="output">
+        <title>Output streams</title>
+        <p>
+          The following code creates a stream to write an XML document to an <em>std::string</em> :
+        </p>
+        <source><![CDATA[xml::xostringstream xos;]]></source>
+        <p>
+          After the serialization is finished the resulting document can be retrieved :
+        </p>
+        <source><![CDATA[const std::string xml = xos.str();]]></source>
+        <p>
+          The following code creates a stream to write an XML document to a file <em>file.xml</em> :
+        </p>
+        <source><![CDATA[xml::xofstream xos( "file.xml" );]]></source>
+        <p>
+          The following code creates a stream to write an XML document to a buffer :
+        </p>
+        <source><![CDATA[xml::xobufferstream xobs;]]></source>
+        <p>
+          The only purpose of this type of stream is to bufferize XML in order to serialize it later in another output stream, for example :
+        </p>
+        <source><![CDATA[xml::xofstream xos( "file.xml" );
+xos << xobs;]]></source>
+      </section>
+      <section id="encoding">
+        <title>Encoding</title>
+        <p>
+          By default the encoding type of an input stream while be detected in the document prolog if available, example :
+        </p>
+        <source><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
+<element/>]]></source>
+      </section>
+      <p>
+        If no encoding is specified or no prolog is available, the encoding will be assumed to be UTF-8.
+      </p>
+      <p>
+        An output stream will be encoded in UTF-8 by default.
+      </p>
+      <p>
+        The encoding type can be forced at creation time :
+      </p>
+        <source><![CDATA[xml::xostringstream xos( xml::encoding( "UTF-16" ) );]]></source>
+      <section id="validation">
+        <title>Validation</title>
+        <p>
+          By default validation will only occur if an XML schema definition (XSD) exists within the document, example :
+        </p>
+        <source><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
+<element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="example.xsd" >]]></source>
+      </section>
+      <p>
+        Optionally a schema definition can be specified when creating an input stream :
+      </p>
+      <source><![CDATA[xml::xostringstream xos( xml::validate( "example.xsd" ) );]]></source>
+      <p>
+        Multiple schema definitions can also be specified :
+      </p>
+      <source><![CDATA[xml::xostringstream xos( xml::validate( "exmaple.xsd test.xsd" ) );]]></source>
+    </section>
+    <section id="walking">
+      <title>Walking the tree</title>
+      <p>
+        Elements are (un)serialized in order to process an XML document.
+      </p>
+      <section id="elements">
+        <title>Elements</title>
+        <p>
+          Elements are (un)serialized using <strong>xml::start</strong> and <strong>xml::end</strong>, for example :
+        </p>
+        <source><![CDATA[xos << xml::start( "element" ) << xml::end();]]></source>
+        <p>
+          An important feature concerning input streams is that when unserializing an element the first available child matching a given name will be pulled.
+        </p>
+        <p>
+          This allows to ignore elements ordering as for the following XML document :
+        </p>
+        <source><![CDATA[<root>
+  <first-element/>
+  <second-element/>
+</root>]]></source>
+      <p>
+        The following unserialization code is valid :
+      </p>
+      <source><![CDATA[xis >> xml::start( "root" )
+      >> xml::start( "second-element" ) >> xml::end()
+      >> xml::start( "first-element" ) >> xml::end()
+    >> xml::end()]]></source>
+      <p>
+        Of course as a side effect the following code appears to be also valid :
+      </p>
+      <source><![CDATA[xis >> xml::start( "root" )
+      >> xml::start( "first-element" ) >> xml::end()
+      >> xml::start( "first-element" ) >> xml::end()
+      >> xml::start( "first-element" ) >> xml::end()
+    >> xml::end();]]></source>
+      </section>
+      <p>
+        It is also considered valid for some nodes not be unserialized if they are not needed and therefore no exception will be raised.
+      </p>
+      <section id="lists">
+        <title>Lists of elements</title>
+        <p>
+          In order to cope with lists of elements of the same name in input streams <strong>xml::list</strong> can be used, for example for the following document :
+        </p>
+        <source><![CDATA[<root>
+  <element/>
+  <element/>
+  <element/>
+</root>]]></source>
+      <p>
+        The following code will be used : :
+      </p>
+        <source><![CDATA[xis >> xml::start( "root" )
+      >> xml::list( "element", my_instance, &my_class::my_method )
+    >> xml::end();]]></source>
+      </section>
+      <p>
+        Where <em>my_instance</em> is an instance of a functor class <em>my_class</em> which method <em>my_method</em> signature will be :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    void my_method( xistream& xis );
+};]]></source>
+      <p>
+        Note that the functor method can be declared <em>const</em> if needed.
+      </p>
+      <p>
+        For each <em>element</em> the functor method will be called and the stream passed as parameter will be ready to handle the branch as if the corresponding child element had been unserialized.<br />
+        If no child of the given name can be found the functor method will not be called but no exception will be raised.
+      </p>
+      <p>
+        Additionally if custom parameters are needed within the functor method they can be passed to <strong>xml::list</strong>, for example :
+      </p>
+      <source><![CDATA[int my_integer = 3;
+std::string my_string = "something";
+xis >> xml::start( "root" )
+      >> xml::list( "element", my_instance, &my_class::my_method, my_integer, my_string )
+    >> xml::end();]]></source>
+      <p>
+        The functor method signature will be expected to be compatible with the parameters passed by reference (parameters cannot be passed by value) :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    void my_method( xistream& xis, int& my_integer, const std::string& my_string ) const;
+};]]></source>
+      <p>
+        Note that each parameter can be declared <em>const</em> or not depending on the needs.
+      </p>
+    </section>
+    <section id="data">
+      <title>Managing data</title>
+      <p>
+        Supported data types are :
+      </p>
+      <ul>
+        <li>std::string</li>
+        <li>const char* (handled as strings and only for output streams)</li>
+        <li>bool</li>
+        <li>int</li>
+        <li>float</li>
+        <li>double</li>
+      </ul>
+      <section id="contents">
+        <title>Contents</title>
+        <p>
+          The content of an element can be directly (un)serialized, for example :
+        </p>
+        <source><![CDATA[xos << xml::start( "element" )
+      << "the text content of the node"
+    << xml::end();]]></source>
+        <p>
+          Will produce the following XML document :
+        </p>
+        <source><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<element>
+  the text content of the node
+</element>]]></source>
+        <p>
+          As convenience <strong>xml::content</strong> is a shortcut to manage the previous manipulation in one step, for example :
+        </p>
+        <source><![CDATA[xos << xml::content( "element", "the text content of the node" );]]></source>
+      </section>
+      <p>
+        Will perform the exact same operation.
+      </p>
+      <section id="attributes">
+        <title>Attributes</title>
+        <p>
+          Coping with attributes involves using <strong>xml::attribute</strong>, for example :
+        </p>
+        <source><![CDATA[xos << xml::start( "element" )
+    << xml::attribute( "name", "the-name" )
+    << xml::end();]]></source>
+        <p>
+          Will produce the following XML document :
+        </p>
+        <source><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<element name="the-name"/>]]></source>
+      </section>
+    </section>
+    <section id="optional">
+      <title>Handling optionals</title>
+      <p>
+        Elements and attributes can be optional when reading an XML document.
+      </p>
+      <section id="optional-element">
+        <title>Optional elements</title>
+        <p>
+          If an element is optional in an input stream, <strong>xml::optional</strong> can be used during unserialization, for example the following document :
+        </p>
+        <source><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<element/>]]></source>
+        <p>
+          Can be unserialized with :
+        </p>
+        <source><![CDATA[xis >> xml::start( "element" )
+      >> xml::optional()
+      >> xml::start( "non-existing-child" )
+        >> xml::start( "non-existing-grand-child" )
+        >> xml::attribute( "name", name )
+        >> xml::end()
+      >> xml::end()
+    >> xml::end();]]></source>
+        <p>
+          No exception will be raised as the whole <em>non-existing-child</em> branch will be skipped.<br />
+          Obviously <em>name</em> will not be read, which points out the fact that when using <strong>xml::optional</strong> data should probably be initialized with default values prior to unserialization.
+        </p>
+      </section>
+      <section id="optional-attributes">
+        <title>Optional attributes</title>
+        <p>
+          An optional attribute can be handled by the same <strong>xml::optional</strong> feature :
+        </p>
+        <source><![CDATA[xis >> xml::start( "element" )
+    >> xml::optional() >> xml::attribute( "name", name )
+    >> xml::end();]]></source>
+        <p>
+          The variable <em>name</em> will not be read if it does not exist in the XML document and no exception will be raised.
+        </p>
+      </section>
+    </section>
+    <section id="protecting">
+      <title>Protecting a stream</title>
+      <p>
+        Forgetting to provide an <strong>xml::end</strong> for each corresponding <strong>xml::start</strong> obviously yields either a wrong serialization or most likely an unserialization error.<br />
+        Because tracing the process and locating the issue can sometimes be tedious, a special type of stream has been introduced in order to ensure that a missing <strong>xml::end</strong> does not impact the whole (un)serialization.
+      </p>
+      <p>
+        For example the following code wraps an <strong>xml::xistream</strong> :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    my_class( xml::xistream& xis )
+    {
+        xml::xisubstream xiss( xis );
+        xiss >> xml::start( "element" );
+    }
+};]]></source>
+      <p>
+        The sub-stream can perform any operation without altering the underlying stream, therefore the missing <strong>xml::end</strong> will not have any consequences.
+      </p>
+      <p>
+        Obviously the life-time of the sub-stream must not exceed the life-time of the underlying stream which is referenced.
+      </p>
+      <p>
+        Another type of sub-stream wraps an <strong>xml::xostream</strong> with the same benefits :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    my_class( xml::xostream& xos )
+    {
+        xml::xosubstream xoss( xos );
+        xoss << xml::start( "element" );
+    }
+};]]></source>
+    </section>
+  </body>
+</document>
