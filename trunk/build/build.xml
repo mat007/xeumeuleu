@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<project name="xeumeuleu" default="all">
+
+    <!--
+    <property name="platform" value="cygwin"/>
+    <property name="compiler" value="gcc"/>
+
+    <import file="../../poney/src/poney/poney.xml"/>
+    -->
+
+  <import file="//install/masa/common/dev/common/poney/poney.xml"/>
+
+    <!--
+    ============================================================================
+      libraries
+    ============================================================================
+    -->
+    <target name="xeumeuleu" description="build library">
+        <build-lib name="xeumeuleu"/>
+    </target>
+
+    <!--
+    ============================================================================
+      tests
+    ============================================================================
+    -->
+    <target name="xeumeuleu_test" depends="xeumeuleu" description="build and run tests">
+        <build-test name="xeumeuleu" libs="xeumeuleu,xerces-c_2,libboost_unit_test_framework-${platform}-mt-1_32,mockpp"/>
+        <run-test name="xeumeuleu"/>
+    </target>
+
+    <!--
+    ============================================================================
+      clean
+    ============================================================================
+    -->
+    <target name="clean" depends="clean-reports" description="clean intermediate build artifacts">
+        <clean name="xeumeuleu"/>
+        <clean name="xeumeuleu_test"/>
+    </target>
+
+    <target name="clean-reports">
+        <delete dir="${reports.dir}" includeEmptyDirs="true"/>
+    </target>
+
+    <!--
+    ============================================================================
+      package
+    ============================================================================
+    -->
+    <target name="package" depends="build,test" description="package the distribution">
+        <copy todir="${dist.dir}/lib/vc71" flatten="true">
+            <fileset dir="${out.dir}" includes="**/*.lib"/>
+        </copy>
+        <copy todir="${dist.dir}/dll" flatten="true">
+            <fileset dir="${run.dir}" includes="*.dll"/>
+        </copy>
+        <copy todir="${dist.dir}/include">
+            <fileset dir="${libraries.dir}">
+                <include name="**/xml.h"/>
+                <include name="**/exception.h"/>
+                <include name="**/xi*.h"/>
+                <include name="**/xo*.h"/>
+                <include name="**/encoding.h"/>
+                <include name="**/grammar.h"/>
+                <include name="**/start.h"/>
+                <include name="**/end.h"/>
+                <include name="**/content.h"/>
+                <include name="**/attribute.h"/>
+                <include name="**/list.h"/>
+                <include name="**/functor.h"/>
+                <include name="**/caller*.h"/>
+                <include name="**/optional.h"/>
+                <exclude name="**/*_pch.h"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <!--
+    ============================================================================
+      documentation
+    ============================================================================
+    -->
+    <target name="old_site">
+        <property name="site.dir" location="../src/site"/>
+        <build-doc input="${site.dir}" name="XeuMeuLeu">
+            <property name="OUTPUT_DIRECTORY" value="${doc.dir}"/>
+            <property name="HTML_OUTPUT" value="${doc.dir}"/>
+            <property name="FILE_PATTERNS" value="*.dox"/>
+            <property name="HTML_HEADER" value="${site.dir}/header.html"/>
+            <property name="HTML_FOOTER" value="${site.dir}/footer.html"/>
+            <property name="HTML_STYLESHEET" value="${site.dir}/maven.css"/>
+            <property name="DISABLE_INDEX" value="YES"/>
+            <property name="GENERATE_TREEVIEW" value="NO"/>
+            <property name="GENERATE_LEGEND" value="NO"/>
+        </build-doc>
+        <xslt basedir="${reports.dir}" destdir="${out.dir}/doc" style="${site.dir}/boost.test.xsl">
+            <include name="*_test.xml"/>
+        </xslt>
+        <concat destfile="${doc.dir}/xeumeuleu-test.html">
+            <header file="${site.dir}/header.html"/>
+            <fileset dir="${out.dir}/doc" includes="xeumeuleu_test.html"/>
+            <footer file="${site.dir}/footer.html"/>
+        </concat>
+        <xslt basedir="${reports.dir}" destdir="${out.dir}/doc" style="${site.dir}/cpd.xsl">
+            <include name="*-cpd.xml"/>
+        </xslt>
+        <concat destfile="${doc.dir}/xeumeuleu-cpd.html">
+            <header file="${site.dir}/header.html"/>
+            <fileset dir="${out.dir}/doc" includes="xeumeuleu-cpd.html"/>
+            <footer file="${site.dir}/footer.html"/>
+        </concat>
+    </target>
+
+    <target name="site" description="build and deploy web site">
+      <ant antfile="forrest-build.xml"/>
+    </target>
+
+    <!--
+    ============================================================================
+      main
+    ============================================================================
+    -->
+    <target name="test" depends="clean-reports,xeumeuleu_test" description="run all tests"/>
+
+    <target name="build" depends="xeumeuleu" description="build all"/>
+
+    <target name="configure" description="initialize local project structure with libraries">
+        <update name="boost"/>
+        <update name="mockpp"/>
+        <update name="xerces-c"/>
+    </target>
+
+    <target name="all" depends="configure,test,build,package" description="build, run tests and package distribution"/>
+
+</project>

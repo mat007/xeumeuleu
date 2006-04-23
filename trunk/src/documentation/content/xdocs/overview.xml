@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2005 The Apache Software Foundation or its licensors,
+  as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Overview</title>
+  </header>
+  <body>
+    <section id="what-is">
+      <title>What is XeuMeuLeu</title>
+      <p>
+        XeuMeuLeu is an open-source cross-platform C++ stream oriented interface on top of <a href="ext:xerces">Apache Xerces</a>.<br />
+        It aims at hiding <a href="ext:xerces">Apache Xerces</a> complexity and providing an easy means to read and write XML.
+      </p>
+      <p>
+        The following features are provided :
+      </p>
+      <ul>
+        <li>source can be a string, a file or a url</li>
+        <li>destination can be a string or a file</li>
+        <li>encoding can be any of the encodings supported by Apache Xerces</li>
+        <li>output is formated for human reading</li>
+        <li>input can be validated against an XML schema definition</li>
+      </ul>
+    </section>
+
+    <section id="what-is-not">
+      <title>What XeuMeuLeu is not</title>
+      <p>
+        XeuMeuLeu is not an XML parser as it relies on <a href="ext:xerces">Apache Xerces</a> for this.
+      </p>
+      <p>
+        XeuMeuLeu does not turn <a href="ext:xerces">Apache Xerces</a> into a real pull-parser, XML documents are parsed in memory when a stream is created or flushed to the stream when the document is complete.
+      </p>
+      <p>
+        XeuMeuLeu is not a data-binding framework, it does not automatically (un)serialize objects.
+      </p>
+    </section>
+
+    <section id="why">
+      <title>Why use XeuMeuLeu</title>
+      <p>
+        Because of the following benefits :
+      </p>
+      <ul>
+        <li>the stream oriented design allows to quickly write easy and simple code</li>
+        <li>the underlying use of Apache Xerces ensures proper parsing and full features support</li>
+        <li>the opensource license guarantees code availability and free use</li>
+        <li>the unit tests coverage greatly helps reducing the risk of bugs within the library</li>
+      </ul>
+    </section>
+
+    <section id="what-looks">
+      <title>What XeuMeuLeu looks like</title>
+      <p>
+        Given the following XML document :
+      </p>
+      <source><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<document>
+  <element name="my_element" />
+  <another-element>my content</another-element>
+</document>]]></source>
+      <p>
+        The code to parse it would be :
+      </p>
+      <source><![CDATA[#include <xeumeuleu/xml.h>
+#include <string>
+
+std::string name, content;
+xml::xifstream xis( "my_document.xml" );
+xis >> xml::start( "document" )
+      >> xml::start( "element" )
+        >> xml::attribute( "name", name )
+      >> xml::end()
+      >> xml::content( "another-element", content )
+    >> xml::end();]]></source>
+    </section>
+
+  </body>
+</document>

@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xeumeuleu", "xeumeuleu.vcproj", "{DC8EF64E-152E-4157-A558-C4E17181B2DE}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xeumeuleu_test", "xeumeuleu_test.vcproj", "{A055FEA8-BF30-4DB1-B4F3-F52748839CB3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DC8EF64E-152E-4157-A558-C4E17181B2DE} = {DC8EF64E-152E-4157-A558-C4E17181B2DE}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		debug = debug
+		release = release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{DC8EF64E-152E-4157-A558-C4E17181B2DE}.debug.ActiveCfg = debug|Win32
+		{DC8EF64E-152E-4157-A558-C4E17181B2DE}.debug.Build.0 = debug|Win32
+		{DC8EF64E-152E-4157-A558-C4E17181B2DE}.release.ActiveCfg = release|Win32
+		{DC8EF64E-152E-4157-A558-C4E17181B2DE}.release.Build.0 = release|Win32
+		{A055FEA8-BF30-4DB1-B4F3-F52748839CB3}.debug.ActiveCfg = debug|Win32
+		{A055FEA8-BF30-4DB1-B4F3-F52748839CB3}.debug.Build.0 = debug|Win32
+		{A055FEA8-BF30-4DB1-B4F3-F52748839CB3}.release.ActiveCfg = release|Win32
+		{A055FEA8-BF30-4DB1-B4F3-F52748839CB3}.release.Build.0 = release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
