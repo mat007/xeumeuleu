@@ -80,103 +80,6 @@ BOOST_AUTO_UNIT_TEST( streaming_value_at_root_level_throws_an_exception )
 }
 
 // -----------------------------------------------------------------------------
-// Name: streaming_root_content_makes_a_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_root_content_makes_a_valid_document )
-{
-    xml::xostringstream xos;
-    xos << xml::content( "element", " this is the content " );
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element>this is the content</element>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: streaming_child_float_content_makes_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_child_float_content_makes_valid_document )
-{
-    xml::xostringstream xos;
-    const float value = 1.23f;
-    xos << xml::start( "element" ) << xml::content( "child", value ) << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element>\n"
-                       "  <child>1.23</child>\n"
-                       "</element>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: streaming_child_double_content_makes_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_child_double_content_makes_valid_document )
-{
-    xml::xostringstream xos;
-    const double value = 1.23;
-    xos << xml::start( "element" ) << xml::content( "child", value ) << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element>\n"
-                       "  <child>1.23</child>\n"
-                       "</element>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: streaming_child_integer_content_makes_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_child_integer_content_makes_valid_document )
-{
-    xml::xostringstream xos;
-    const int value = 1242;
-    xos << xml::start( "element" ) << xml::content( "child", value ) << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element>\n"
-                       "  <child>1242</child>\n"
-                       "</element>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: streaming_child_boolean_content_makes_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_child_boolean_content_makes_valid_document )
-{
-    xml::xostringstream xos;
-    const bool value = false;
-    xos << xml::start( "element" ) << xml::content( "child", value ) << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element>\n"
-                       "  <child>false</child>\n"
-                       "</element>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: streaming_direct_content_value_makes_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_direct_content_value_makes_valid_document )
-{
-    xml::xostringstream xos;
-    xos << xml::content( "element", 7 );
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element>7</element>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: streaming_direct_content_non_constant_value_makes_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_direct_content_non_constant_value_makes_valid_document )
-{
-    xml::xostringstream xos;
-    int value = 7;
-    xos << xml::content( "element", value );
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element>7</element>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
 // Name: creating_a_stream_with_invalid_encoding_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
@@ -205,7 +108,7 @@ BOOST_AUTO_UNIT_TEST( streaming_extended_character_into_ISO_8859_1_makes_a_valid
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( streaming_extended_character_into_UTF_16_makes_a_valid_document )
 {
-    BOOST_TODO;
+    BOOST_TODO; // $$$$ MAT 2006-04-23: must think about adding support for std::wstring ?
 //    xml::xowstringstream xos( "UTF-16" );
 //    xos << xml::content( "element", "ça c'est sûr !" );
 //    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"no\" ?>\n"

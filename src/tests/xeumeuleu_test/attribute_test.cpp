@@ -12,6 +12,16 @@
 
 using namespace mockpp;
 
+namespace
+{
+    void warning_check()
+    {
+        xml::xistream& xis = *(xml::xistream*)0;
+        std::string value;
+        xis >> xml::attribute( "attribute", value );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: read_attribute_from_root_level_throws_an_exception
 // Created: MCO 2006-01-03

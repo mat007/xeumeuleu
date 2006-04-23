@@ -14,6 +14,128 @@ using namespace mockpp;
 
 namespace
 {
+    class my_class
+    {
+    public:
+        void my_method( xml::xistream& ) {}
+        void my_const_method( xml::xistream& ) const {}
+    };
+
+    class my_type
+    {
+    };
+
+    class my_class_ext_1
+    {
+    public:
+        void my_method( xml::xistream& , my_type& ) {};
+        void my_const_method( xml::xistream& , my_type& ) const {};
+    };
+
+    class my_class_ext_const_1
+    {
+    public:
+        void my_method( xml::xistream& , const my_type& ) {};
+        void my_const_method( xml::xistream& , const my_type& ) const {};
+    };
+
+    class my_class_ext_2
+    {
+    public:
+        void my_method( xml::xistream& , my_type& , my_type& ) {};
+        void my_const_method( xml::xistream& , my_type& , my_type& ) const {};
+    };
+
+    class my_class_ext_const_2
+    {
+    public:
+        void my_method( xml::xistream& , const my_type&, my_type& ) {};
+        void my_const_method( xml::xistream& , const my_type&, my_type& ) const {};
+    };
+
+    class my_class_ext_const_const_2
+    {
+    public:
+        void my_method_const( xml::xistream& , const my_type&, const my_type& ) {};
+        void my_const_method_const( xml::xistream& , const my_type&, const my_type& ) const {};
+    };
+
+    void warning_check()
+    {
+        xml::xistream& xis = *(xml::xistream*)0;
+        {
+            my_class my_instance;
+            xis >> xml::list( "node", my_instance, &my_class::my_method );
+        }
+        {
+            my_class my_instance;
+            xis >> xml::list( "node", my_instance, &my_class::my_const_method );
+        }
+        {
+            const my_class my_instance = my_class();
+            xis >> xml::list( "node", my_instance, &my_class::my_const_method );
+        }
+
+        my_type param;
+        my_type& param_ref = param;
+        const my_type& param_const_ref = param;
+        {
+            my_class_ext_1 my_instance;
+            xis >> xml::list( "node", my_instance, &my_class_ext_1::my_method, param );
+            xis >> xml::list( "node", my_instance, &my_class_ext_1::my_const_method, param );
+            xis >> xml::list( "node", my_instance, &my_class_ext_1::my_method, param_ref );
+            xis >> xml::list( "node", my_instance, &my_class_ext_1::my_const_method, param_ref );
+        }
+        {
+            const my_class_ext_1 my_instance = my_class_ext_1();
+            xis >> xml::list( "node", my_instance, &my_class_ext_1::my_const_method, param );
+            xis >> xml::list( "node", my_instance, &my_class_ext_1::my_const_method, param_ref );
+        }
+        {
+            my_class_ext_const_1 my_instance;
+            xis >> xml::list( "node", my_instance, &my_class_ext_const_1::my_method, param_const_ref );
+            xis >> xml::list( "node", my_instance, &my_class_ext_const_1::my_const_method, param_const_ref );
+        }
+        {
+            const my_class_ext_const_1 my_instance = my_class_ext_const_1();
+            xis >> xml::list( "node", my_instance, &my_class_ext_const_1::my_const_method, param_const_ref );
+        }
+        {
+            my_class_ext_2 my_instance;
+            xis >> xml::list( "node", my_instance, &my_class_ext_2::my_method, param, param );
+            xis >> xml::list( "node", my_instance, &my_class_ext_2::my_const_method, param, param );
+            xis >> xml::list( "node", my_instance, &my_class_ext_2::my_method, param_ref, param_ref );
+            xis >> xml::list( "node", my_instance, &my_class_ext_2::my_const_method, param_ref, param_ref );
+       }
+       {
+            const my_class_ext_2 my_instance = my_class_ext_2();
+            xis >> xml::list( "node", my_instance, &my_class_ext_2::my_const_method, param, param );
+            xis >> xml::list( "node", my_instance, &my_class_ext_2::my_const_method, param_ref, param_ref );
+       }
+       {
+            my_class_ext_const_2 my_instance;
+            xis >> xml::list( "node", my_instance, &my_class_ext_const_2::my_method, param_const_ref, param );
+            xis >> xml::list( "node", my_instance, &my_class_ext_const_2::my_const_method, param_const_ref, param_ref );
+       }
+       {
+            const my_class_ext_const_2 my_instance = my_class_ext_const_2();
+            xis >> xml::list( "node", my_instance, &my_class_ext_const_2::my_const_method, param_const_ref, param );
+            xis >> xml::list( "node", my_instance, &my_class_ext_const_2::my_const_method, param_const_ref, param_ref );
+       }
+       {
+            my_class_ext_const_const_2 my_instance;
+            xis >> xml::list( "node", my_instance, &my_class_ext_const_const_2::my_method_const, param_const_ref, param_const_ref );
+            xis >> xml::list( "node", my_instance, &my_class_ext_const_const_2::my_const_method_const, param_const_ref, param_const_ref );
+       }
+       {
+            const my_class_ext_const_const_2 my_instance = my_class_ext_const_const_2();
+            xis >> xml::list( "node", my_instance, &my_class_ext_const_const_2::my_const_method_const, param_const_ref, param_const_ref );
+        }
+    }
+}
+
+namespace
+{
     class xistream_constraint : public mockpp::Constraint< xml::xistream >
     {
     public:
@@ -110,7 +232,7 @@ BOOST_AUTO_UNIT_TEST( read_list_from_element_calls_a_custom_method_with_paramete
 
 namespace
 {
-    class my_interface
+    class an_interface
     {
     };
 
@@ -121,14 +243,14 @@ namespace
             : mockpp::ChainableMockObject( "mock_custom_class", 0 )
             , process_mocker             ( "process", this )
         {}
-        void process( xml::xistream& xis, my_interface& p1 )
+        void process( xml::xistream& xis, an_interface& p1 )
         {
             process_mocker.forward( xis, &p1 );
         }
-        mockpp::ChainableMockMethod< void, xml::xistream, my_interface* > process_mocker;
+        mockpp::ChainableMockMethod< void, xml::xistream, an_interface* > process_mocker;
     };
 
-    class my_class : public my_interface
+    class a_class : public an_interface
     {
     };
 }
@@ -140,8 +262,8 @@ namespace
 BOOST_AUTO_UNIT_TEST( read_list_from_element_calls_a_custom_method_with_polymorphic_parameter )
 {
     mock_custom_class_with_polymorphic_parameter mock_custom;
-    my_class my_instance;
-    mock_custom.process_mocker.expects( mockpp::once() ).with( new xistream_constraint( "content" ), eq< my_interface* >( &my_instance ) );
+    a_class my_instance;
+    mock_custom.process_mocker.expects( mockpp::once() ).with( new xistream_constraint( "content" ), eq< an_interface* >( &my_instance ) );
     xml::xistringstream xis( "<element>"
                                "<sub-node>content</sub-node>"
                              "</element>" );
