@@ -147,102 +147,6 @@ BOOST_AUTO_UNIT_TEST( streaming_node_value_fails_when_no_content )
 }
 
 // -----------------------------------------------------------------------------
-// Name: streaming_content_reads_node_string_content
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_string_content )
-{
-    xml::xistringstream xis( "<element>"
-                               " this is the value "
-                             "</element>");
-    std::string value;
-    xis >> xml::content( "element", value );
-    BOOST_CHECK_EQUAL( "this is the value", value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: streaming_content_reads_node_float_content
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_float_content )
-{
-    xml::xistringstream xis( "<element>"
-                               "1.23"
-                             "</element>");
-    float value;
-    xis >> xml::content( "element", value );
-    BOOST_CHECK_EQUAL( 1.23f, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: streaming_content_reads_node_double_content
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_double_content )
-{
-    xml::xistringstream xis( "<element>"
-                               "1e+99"
-                             "</element>");
-    double value;
-    xis >> xml::content( "element", value );
-    BOOST_CHECK_EQUAL( 1e+99, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: streaming_content_reads_node_integer_content
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_integer_content )
-{
-    xml::xistringstream xis( "<element>"
-                               "12"
-                             "</element>");
-    int value;
-    xis >> xml::content( "element", value );
-    BOOST_CHECK_EQUAL( 12, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: streaming_content_reads_node_float_content_in_integer_throws_an_exception
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_float_content_in_integer_throws_an_exception )
-{
-    xml::xistringstream xis( "<element>"
-                               "12.3"
-                             "</element>");
-    int value;
-    BOOST_CHECK_THROW( xis >> xml::content( "element", value ), xml::exception );
-}
-
-// -----------------------------------------------------------------------------
-// Name: read_node_overflow_double_content_in_float_throws_an_exception
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_node_overflow_double_content_in_float_throws_an_exception )
-{
-    xml::xistringstream xis( "<element>"
-                               "1e+99"
-                             "</element>");
-    float value;
-    BOOST_CHECK_THROW( xis >> xml::content( "element", value ), xml::exception );
-}
-
-// -----------------------------------------------------------------------------
-// Name: streaming_content_reads_node_boolean_content
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_boolean_content )
-{
-    xml::xistringstream xis( "<element>"
-                               "true"
-                             "</element>");
-    bool value;
-    xis >> xml::content( "element", value );
-    BOOST_CHECK_EQUAL( true, value );
-}
-
-// -----------------------------------------------------------------------------
 // Name: creating_an_UTF_8_stream_with_non_UTF_8_characters_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
@@ -253,17 +157,17 @@ BOOST_AUTO_UNIT_TEST( creating_an_UTF_8_stream_with_non_UTF_8_characters_throws_
 }
 
 // -----------------------------------------------------------------------------
-// Name: creating_an_utf_16_stream_with_UTF_16_format_throws_an_exception
+// Name: creating_an_UTF_16_stream_with_extended_characters_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_an_UTF_16_stream_with_extended_characters_does_not_throw_an_exception )
+BOOST_AUTO_UNIT_TEST( creating_an_UTF_16_stream_with_extended_characters_throws_an_exception )
 {
     BOOST_CHECK_THROW( xml::xistringstream( "<?xml version='1.0' encoding='UTF-16' standalone='no' ?>"
                                             "<element>ça c'est sûr !</element>" ), xml::exception );
 }
 
 // -----------------------------------------------------------------------------
-// Name: creating_an_utf_16_stream_with_ISO_8859_1_format_throws_an_exception
+// Name: creating_an_ISO_8859_1_stream_with_extended_characters_does_not_throw_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( creating_an_ISO_8859_1_stream_with_extended_characters_does_not_throw_an_exception )

@@ -165,13 +165,7 @@
 				Name="xml"
 				Filter="">
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\attribute.cpp">
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\attribute.h">
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\content.cpp">
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\content.h">
@@ -181,9 +175,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\end.h">
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\functor.cpp">
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\functor.h">
