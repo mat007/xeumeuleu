@@ -70,7 +70,7 @@ which will be used to configure the chosen Forrest skin.
        default skin: renders it at the top  -->
   <project-name></project-name>
   <project-description>XeuMeuLeu</project-description>
-  <project-url>http://xeumeuleu.org/</project-url>
+  <project-url>http://xeumeuleu.org</project-url>
   <project-logo></project-logo>
   <!-- Alternative static image:
   <project-logo>images/project-logo.gif</project-logo> -->
@@ -79,7 +79,7 @@ which will be used to configure the chosen Forrest skin.
        default skin: renders it at the top-left corner -->
   <group-name>XeuMeuLeu</group-name>
   <group-description>XeuMeuLeu Description</group-description>
-  <group-url>index.html</group-url>
+  <group-url>http://xeumeuleu.org</group-url>
   <group-logo>images/group.png</group-logo>
   <!-- Alternative static image:
   <group-logo>images/group-logo.gif</group-logo> -->
