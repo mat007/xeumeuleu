@@ -125,6 +125,7 @@ private:
         xis >> xml::start( element )
             >> xml::attribute( "name", name );
         (this->*functor)( xis, name );
+        xis >> xml::end();
     }
 
     void read_element_1( xml::xistream& xis, const std::string& name )
