@@ -64,8 +64,6 @@
           <li>install the dependencies</li>
           <li>if needed copy the xerces dll in a directory called <em>run</em> to be created in the project root directory</li>
           <li>open the solution located in <em>build/vc71</em></li>
-          <li>in <em>xeumeuleu_test</em> project properties in <em>Debugging</em> set the working directory to <em>..\..\run</em></li>
-          <!-- data_directory=..\data\tests\xeumeuleu_test in program argument ? -->
           <li>in <em>Tools / Options / Projects / VC++ Directories</em> add include and library directories pointing to the dependencies</li>
           <li>build the solution</li>
           <li>run <em>build/export.bat</em></li>
@@ -76,6 +74,14 @@
         <ul>
           <li><em>lib</em> will contain the XeuMeuLeu library files</li>
           <li><em>include</em> will contain the headers needed in order to use XeuMeuLeu</li>
+        </ul>
+        <p>
+          The tests are run as a post-build step when building the solution.<br />
+          If needed however launching <em>xeumeuleu_test</em> with <em>ctrl-F5</em> requires some additional project properties to be set :
+        </p>
+        <ul>
+          <li>Set <em>Debugging</em> / <em>Command Arguments</em> to <em>--data_directory=..\..\data\tests\xeumeuleu_test</em></li>
+          <li>Set <em>Debugging</em> / <em>Working Directory</em> to <em>..\..\run</em></li>
         </ul>
       </section>
       <section id="gcc">
