@@ -80,7 +80,7 @@ xos << xobs;]]></source>
       <section id="encoding">
         <title>Encoding</title>
         <p>
-          By default the encoding type of an input stream while be detected in the document prolog if available, example :
+          By default the encoding type of an input stream will be detected in the document prolog if available, example :
         </p>
         <source><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
 <element/>]]></source>
@@ -92,9 +92,13 @@ xos << xobs;]]></source>
         An output stream will be encoded in UTF-8 by default.
       </p>
       <p>
-        The encoding type can be forced at creation time :
+        The encoding type can be forced at creation time, for example :
       </p>
         <source><![CDATA[xml::xostringstream xos( xml::encoding( "UTF-16" ) );]]></source>
+      <p>
+        Or :
+      </p>
+        <source><![CDATA[xml::xifstream xis( "file.xml", xml::encoding( "ISO-8859-1" ) );]]></source>
       <section id="validation">
         <title>Validation</title>
         <p>
@@ -124,7 +128,7 @@ xos << xobs;]]></source>
         </p>
         <source><![CDATA[xos << xml::start( "element" ) << xml::end();]]></source>
         <p>
-          An important feature concerning input streams is that when unserializing an element the first available child matching a given name will be pulled.
+          An important feature concerning input streams is that when unserializing an element the first available child matching the given name will be pulled.
         </p>
         <p>
           This allows to ignore elements ordering as for the following XML document :
@@ -163,7 +167,7 @@ xos << xobs;]]></source>
   <element/>
 </root>]]></source>
       <p>
-        The following code will be used : :
+        The following code will be used :
       </p>
         <source><![CDATA[xis >> xml::start( "root" )
       >> xml::list( "element", my_instance, &my_class::my_method )
