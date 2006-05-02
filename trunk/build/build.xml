@@ -5,10 +5,10 @@
     <property name="platform" value="cygwin"/>
     <property name="compiler" value="gcc"/>
 
-    <import file="../../poney/src/poney/poney.xml"/>
+    <import file="../../../projects/poney/src/poney/poney.xml"/>
     -->
 
-  <import file="//install/masa/common/dev/common/poney/poney.xml"/>
+    <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
     <!--
     ============================================================================
@@ -45,10 +45,10 @@
 
     <!--
     ============================================================================
-      package
+      deploy
     ============================================================================
     -->
-    <target name="package" depends="build,test" description="package the distribution">
+    <target name="deploy" depends="build,test" description="deploy the distribution">
         <copy todir="${dist.dir}/lib/vc71" flatten="true">
             <fileset dir="${out.dir}" includes="**/*.lib"/>
         </copy>
@@ -74,6 +74,16 @@
                 <exclude name="**/*_pch.h"/>
             </fileset>
         </copy>
+    </target>
+
+    <!--
+    ============================================================================
+      package
+    ============================================================================
+    -->
+    <target name="package" description="package the distribution">
+        <zip destfile="../xeumeuleu.zip" basedir=".." includes="build/**,src/**,data/**,run,*.txt" excludes="**/*.suo,**/*.ncb"/>
+        <tar destfile="../xeumeuleu.tar.bz2" basedir=".." includes="build/**,src/**,data/**,run,*.txt" excludes="**/*.suo,**/*.ncb" compression="bzip2"/>
     </target>
 
     <!--
@@ -125,12 +135,12 @@
 
     <target name="build" depends="xeumeuleu" description="build all"/>
 
-    <target name="configure" description="initialize local project structure with libraries">
+    <target name="configure" description="initialize local project structure with dependencies">
         <update name="boost"/>
         <update name="mockpp"/>
         <update name="xerces-c"/>
     </target>
 
-    <target name="all" depends="configure,test,build,package" description="build, run tests and package distribution"/>
+    <target name="all" depends="configure,test,build,deploy" description="build, run tests and package distribution"/>
 
 </project>
