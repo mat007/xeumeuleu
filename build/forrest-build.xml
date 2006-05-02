@@ -16,7 +16,7 @@
         <input addproperty="deploy.scp.username" message="Enter username to enable scp to deploy:"/>
       </then>
     </if>
-    <property name="deploy.scp.dest" value="${deploy.scp.username}@ssh.sourceforge.net://home/groups/x/xe/xeumeuleu/htdocs"/>
+    <property name="deploy.scp.dest" value="${deploy.scp.username}@ssh.sourceforge.net:/home/groups/x/xe/xeumeuleu/htdocs"/>
     <if>
       <not>
         <isset property="deploy.scp.password"/>
