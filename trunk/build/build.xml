@@ -5,10 +5,10 @@
     <property name="platform" value="cygwin"/>
     <property name="compiler" value="gcc"/>
 
-    <import file="//install/masa/common/dev/common/poney/poney.xml"/>
+    <import file="../../../projects/poney/src/poney/poney.xml"/>
     -->
 
-    <import file="../../../projects/poney/src/poney/poney.xml"/>
+    <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
     <!--
     ============================================================================
