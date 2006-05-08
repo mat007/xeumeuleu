@@ -5,10 +5,10 @@
     <property name="platform" value="cygwin"/>
     <property name="compiler" value="gcc"/>
 
-    <import file="../../../projects/poney/src/poney/poney.xml"/>
+    <import file="//install/masa/common/dev/common/poney/poney.xml"/>
     -->
 
-    <import file="//install/masa/common/dev/common/poney/poney.xml"/>
+    <import file="../../../projects/poney/src/poney/poney.xml"/>
 
     <!--
     ============================================================================
@@ -49,30 +49,26 @@
     ============================================================================
     -->
     <target name="deploy" depends="build,test" description="deploy the distribution">
-        <copy todir="${dist.dir}/lib/vc71" flatten="true">
-            <fileset dir="${out.dir}" includes="**/*.lib"/>
-        </copy>
+        <deploy>
+            <include name="**/*.lib"/>
+            <include name="**/xml.h"/>
+            <include name="**/exception.h"/>
+            <include name="**/xi*.h"/>
+            <include name="**/xo*.h"/>
+            <include name="**/encoding.h"/>
+            <include name="**/grammar.h"/>
+            <include name="**/start.h"/>
+            <include name="**/end.h"/>
+            <include name="**/content.h"/>
+            <include name="**/attribute.h"/>
+            <include name="**/list.h"/>
+            <include name="**/functor.h"/>
+            <include name="**/caller*.h"/>
+            <include name="**/optional.h"/>
+            <exclude name="**/*_pch.h"/>
+        </deploy>
         <copy todir="${dist.dir}/dll" flatten="true">
             <fileset dir="${run.dir}" includes="*.dll"/>
-        </copy>
-        <copy todir="${dist.dir}/include">
-            <fileset dir="${libraries.dir}">
-                <include name="**/xml.h"/>
-                <include name="**/exception.h"/>
-                <include name="**/xi*.h"/>
-                <include name="**/xo*.h"/>
-                <include name="**/encoding.h"/>
-                <include name="**/grammar.h"/>
-                <include name="**/start.h"/>
-                <include name="**/end.h"/>
-                <include name="**/content.h"/>
-                <include name="**/attribute.h"/>
-                <include name="**/list.h"/>
-                <include name="**/functor.h"/>
-                <include name="**/caller*.h"/>
-                <include name="**/optional.h"/>
-                <exclude name="**/*_pch.h"/>
-            </fileset>
         </copy>
     </target>
 
