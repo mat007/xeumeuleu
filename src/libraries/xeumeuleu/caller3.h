@@ -137,7 +137,7 @@ private:
     M method_;
     T1 value1_;
     T2 value2_;
-    T2 value3_;
+    T3 value3_;
     //@}
 };
 
