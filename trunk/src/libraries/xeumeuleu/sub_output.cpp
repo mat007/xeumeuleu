@@ -61,5 +61,5 @@ sub_output::~sub_output()
 // -----------------------------------------------------------------------------
 void sub_output::finished()
 {
-    output_.finished();
+    output_.flush();
 }
