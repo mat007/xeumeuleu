@@ -49,7 +49,6 @@ namespace
 beautifier::beautifier( XMLFormatTarget& target, const XMLCh* newLine )
     : target_        ( target )
     , newLine_       ( translate( newLine == chNull ? defaultNewLine : newLine ) )
-    , newLineSize_   ( newLine_.size() )
     , discardNewLine_( false )
 {
     // NOTHING
@@ -90,5 +89,5 @@ void beautifier::writeChars( const XMLByte* const toWrite, const unsigned int co
 inline
 bool beautifier::isNewLine( const XMLByte* const toWrite, const unsigned int count ) const
 {
-    return count == newLineSize_ && 0 == strncmp( reinterpret_cast< const char* const >( toWrite ), newLine_.c_str(), count );
+    return count == newLine_.size() && 0 == strncmp( reinterpret_cast< const char* const >( toWrite ), newLine_.c_str(), count );
 }
