@@ -18,7 +18,7 @@ namespace
     const std::string load( const char* filename )
     {
         std::ifstream ifs( filename );
-        if( !ifs )
+        if( ! ifs )
             throw std::runtime_error( ( std::string( "file " ) + filename + " not found" ).c_str() );
         return std::string( std::istreambuf_iterator< char >( ifs ), std::istreambuf_iterator< char >() );
     }
@@ -35,7 +35,7 @@ BOOST_AUTO_UNIT_TEST( empty_tree_does_not_create_any_file )
         xml::xofstream xos( filename );
     }
     std::ifstream file( filename.c_str() );
-    BOOST_CHECK( !file.is_open() );
+    BOOST_CHECK( ! file.is_open() );
 }
 
 // -----------------------------------------------------------------------------

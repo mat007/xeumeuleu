@@ -60,10 +60,10 @@ translate::operator const XMLCh* const() const
 // -----------------------------------------------------------------------------
 translate::operator std::string() const
 {
-    if( !pCh_ )
+    if( ! pCh_ )
         return std::string();
     char* pStr = XMLString::transcode( pCh_ );
-    if( !pStr )
+    if( ! pStr )
         return std::string();
     std::string str( pStr );
     XMLString::release( &pStr );
