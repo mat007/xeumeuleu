@@ -49,6 +49,7 @@ namespace
 beautifier::beautifier( XMLFormatTarget& target, const XMLCh* newLine )
     : target_        ( target )
     , newLine_       ( translate( newLine == chNull ? defaultNewLine : newLine ) )
+    , newLineSize_   ( newLine_.size() )
     , discardNewLine_( false )
 {
     // NOTHING
@@ -71,9 +72,9 @@ void beautifier::writeChars( const XMLByte* const toWrite, const unsigned int co
 {
     if( isNewLine( toWrite, count ) )
     {
-        if( !discardNewLine_ )
+        if( ! discardNewLine_ )
             target_.writeChars( toWrite, count, formatter );
-        discardNewLine_ = !discardNewLine_;
+        discardNewLine_ = ! discardNewLine_;
     }
     else
     {
@@ -86,7 +87,8 @@ void beautifier::writeChars( const XMLByte* const toWrite, const unsigned int co
 // Name: beautifier::isNewLine
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
+inline
 bool beautifier::isNewLine( const XMLByte* const toWrite, const unsigned int count ) const
 {
-    return newLine_ == std::string( reinterpret_cast< const char* const >( toWrite ), count );
+    return count == newLineSize_ && 0 == strncmp( reinterpret_cast< const char* const >( toWrite ), newLine_.c_str(), count );
 }
