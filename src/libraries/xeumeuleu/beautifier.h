@@ -80,7 +80,6 @@ private:
     //@{
     XERCES_CPP_NAMESPACE::XMLFormatTarget& target_;
     const std::string newLine_;
-    const std::string::size_type newLineSize_;
     bool discardNewLine_;
     //@}
 };
