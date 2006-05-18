@@ -89,8 +89,7 @@ void output::end()
     if( isRoot() )
         throw xml::exception( "Illegal 'end' from root level" );
     pCurrent_ = pCurrent_->getParentNode();
-    if( isRoot() )
-        finished();
+    flush();
 }
 
 // -----------------------------------------------------------------------------
@@ -125,8 +124,7 @@ void output::attach( const output& rhs )
     if( rhs.document_.hasChildNodes() )
     {
         pCurrent_->appendChild( document_.importNode( rhs.document_.getDocumentElement(), true ) );
-        if( isRoot() )
-            finished();
+        flush();
     }
 }
 
@@ -146,4 +144,14 @@ std::auto_ptr< output > output::branch()
 bool output::isRoot() const
 {
     return pCurrent_ == &root_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: output::flush
+// Created: MAT 2006-05-18
+// -----------------------------------------------------------------------------
+void output::flush()
+{
+    if( isRoot() )
+        finished();
 }

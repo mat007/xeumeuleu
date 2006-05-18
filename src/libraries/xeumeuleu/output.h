@@ -79,6 +79,12 @@ public:
 
     std::auto_ptr< output > branch();
 
+    void flush();
+    //@}
+
+protected:
+    //! @name Operations
+    //@{
     virtual void finished() = 0;
     //@}
 
