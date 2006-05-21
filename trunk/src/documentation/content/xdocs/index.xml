@@ -22,7 +22,7 @@
   </header>
   <body>
     <p>
-      XeuMeuLeu is an opensource cross-platform C++ stream oriented interface on top of <a href="ext:xerces">Apache Xerces</a> for manipulating XML.<br />
+      XeuMeuLeu is an open-source cross-platform C++ stream oriented library on top of <a href="ext:xerces">Apache Xerces</a> for manipulating XML.<br />
     </p>
     <p>
       Please visit the following pages for more information :
