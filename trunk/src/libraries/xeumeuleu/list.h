@@ -193,7 +193,27 @@ list_manipulator< caller4< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& > >
 template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4 >
 list_manipulator< const_caller4< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& > > list( const std::string& name, const T& instance, void (T::*method)( xistream&, T1&, T2&, T3&, T4& ) const, Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4 )
 {
-    return list_manipulator< const_caller4< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& > >( name, const_caller3< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& >( instance, method, value1, value2, value3, value4 ) );
+    return list_manipulator< const_caller4< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& > >( name, const_caller4< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& >( instance, method, value1, value2, value3, value4 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: list
+// Created: MCO 2006-06-22
+// -----------------------------------------------------------------------------
+template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4, typename Arg5, typename T5 >
+list_manipulator< caller5< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4&, Arg5&, T5& > > list( const std::string& name, T& instance, void (T::*method)( xistream&, T1&, T2&, T3&, T4&, T5& ), Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4, Arg5& value5 )
+{
+    return list_manipulator< caller5< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4&, Arg5&, T5& > >( name, caller5< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4&, Arg5&, T5& >( instance, method, value1, value2, value3, value4, value5 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: list
+// Created: MCO 2006-06-22
+// -----------------------------------------------------------------------------
+template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4, typename Arg5, typename T5 >
+list_manipulator< const_caller5< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4&, Arg5&, T5& > > list( const std::string& name, const T& instance, void (T::*method)( xistream&, T1&, T2&, T3&, T4&, T5& ) const, Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4, Arg5& value5 )
+{
+    return list_manipulator< const_caller5< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4&, Arg5&, T5& > >( name, const_caller5< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4&, Arg5&, T5& >( instance, method, value1, value2, value3, value4, value5 ) );
 }
 
 }
