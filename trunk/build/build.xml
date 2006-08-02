@@ -48,7 +48,7 @@
       deploy
     ============================================================================
     -->
-    <target name="deploy" depends="build,test" description="deploy the distribution">
+    <target name="export" depends="build,test" description="export the distribution">
         <deploy>
             <include name="**/*.lib"/>
             <include name="**/xml.h"/>
@@ -118,8 +118,32 @@
         </concat>
     </target>
 
-    <target name="site" description="build and deploy web site">
-      <ant antfile="forrest-build.xml"/>
+    <target name="site" description="build web site">
+      <forrest/>
+    </target>
+
+    <!-- requires scp : http://ant.apache.org/manual/OptionalTasks/scp.html -->
+    <target name="deploy" depends="site" description="deploy web site">
+      <if>
+        <not>
+          <isset property="deploy.scp.username"/>
+        </not>
+        <then>
+          <input addproperty="deploy.scp.username" message="Enter username to enable scp to deploy:"/>
+        </then>
+      </if>
+      <property name="deploy.scp.dest" value="${deploy.scp.username}@ssh.sourceforge.net:/home/groups/x/xe/xeumeuleu/htdocs"/>
+      <if>
+        <not>
+          <isset property="deploy.scp.password"/>
+        </not>
+        <then>
+          <input addproperty="deploy.scp.password" message="Enter remote password to enable scp to ${deploy.scp.dest}:"/>
+        </then>
+      </if>
+      <scp todir="${deploy.scp.dest}" password="${deploy.scp.password}" trust="yes">
+        <fileset dir="${out.dir}/documentation/site"/> <!-- actually ${project.site-dir} for forrest, cf. forrest.properties -->
+      </scp>
     </target>
 
     <!--
@@ -137,6 +161,6 @@
         <update name="xerces-c"/>
     </target>
 
-    <target name="all" depends="configure,test,build,deploy" description="build, run tests and package distribution"/>
+    <target name="all" depends="configure,test,build,export,site" description="build, run tests and package distribution"/>
 
 </project>
