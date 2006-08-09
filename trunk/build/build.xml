@@ -87,38 +87,7 @@
       documentation
     ============================================================================
     -->
-    <target name="old_site">
-        <property name="site.dir" location="../src/site"/>
-        <build-doc input="${site.dir}" name="XeuMeuLeu">
-            <property name="OUTPUT_DIRECTORY" value="${doc.dir}"/>
-            <property name="HTML_OUTPUT" value="${doc.dir}"/>
-            <property name="FILE_PATTERNS" value="*.dox"/>
-            <property name="HTML_HEADER" value="${site.dir}/header.html"/>
-            <property name="HTML_FOOTER" value="${site.dir}/footer.html"/>
-            <property name="HTML_STYLESHEET" value="${site.dir}/maven.css"/>
-            <property name="DISABLE_INDEX" value="YES"/>
-            <property name="GENERATE_TREEVIEW" value="NO"/>
-            <property name="GENERATE_LEGEND" value="NO"/>
-        </build-doc>
-        <xslt basedir="${reports.dir}" destdir="${out.dir}/doc" style="${site.dir}/boost.test.xsl">
-            <include name="*_test.xml"/>
-        </xslt>
-        <concat destfile="${doc.dir}/xeumeuleu-test.html">
-            <header file="${site.dir}/header.html"/>
-            <fileset dir="${out.dir}/doc" includes="xeumeuleu_test.html"/>
-            <footer file="${site.dir}/footer.html"/>
-        </concat>
-        <xslt basedir="${reports.dir}" destdir="${out.dir}/doc" style="${site.dir}/cpd.xsl">
-            <include name="*-cpd.xml"/>
-        </xslt>
-        <concat destfile="${doc.dir}/xeumeuleu-cpd.html">
-            <header file="${site.dir}/header.html"/>
-            <fileset dir="${out.dir}/doc" includes="xeumeuleu-cpd.html"/>
-            <footer file="${site.dir}/footer.html"/>
-        </concat>
-    </target>
-
-    <target name="site" description="build web site">
+    <target name="site" depends="build,test" description="build web site">
       <forrest/>
     </target>
 
@@ -142,7 +111,7 @@
         </then>
       </if>
       <scp todir="${deploy.scp.dest}" password="${deploy.scp.password}" trust="yes">
-        <fileset dir="${out.dir}/documentation/site"/> <!-- actually ${project.site-dir} for forrest, cf. forrest.properties -->
+        <fileset dir="${doc.dir}/site"/>
       </scp>
     </target>
 
@@ -151,7 +120,7 @@
       main
     ============================================================================
     -->
-    <target name="test" depends="clean-reports,xeumeuleu_test" description="run all tests"/>
+    <target name="test" depends="xeumeuleu_test" description="run all tests"/>
 
     <target name="build" depends="xeumeuleu" description="build all"/>
 
@@ -161,6 +130,6 @@
         <update name="xerces-c"/>
     </target>
 
-    <target name="all" depends="configure,test,build,export,site" description="build, run tests and package distribution"/>
+    <target name="all" depends="clean-reports,configure,build,test,export,site" description="build, run tests and package distribution"/>
 
 </project>
