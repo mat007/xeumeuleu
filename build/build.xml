@@ -45,7 +45,7 @@
 
     <!--
     ============================================================================
-      deploy
+      export
     ============================================================================
     -->
     <target name="export" depends="build,test" description="export the distribution">
@@ -78,8 +78,8 @@
     ============================================================================
     -->
     <target name="package" description="package the distribution">
-        <zip destfile="../xeumeuleu.zip" basedir=".." includes="build/**,src/**,data/**,run,*.txt" excludes="**/*.suo,**/*.ncb"/>
-        <tar destfile="../xeumeuleu.tar.bz2" basedir=".." includes="build/**,src/**,data/**,run,*.txt" excludes="**/*.suo,**/*.ncb" compression="bzip2"/>
+        <zip destfile="${dist.dir}/xeumeuleu.zip" basedir=".." includes="build/**,src/**,data/**,run,*.txt" excludes="**/*.suo,**/*.ncb"/>
+        <tar destfile="${dist.dir}/xeumeuleu.tar.bz2" basedir=".." includes="build/**,src/**,data/**,run,*.txt" excludes="**/*.suo,**/*.ncb" compression="bzip2"/>
     </target>
 
     <!--
@@ -87,32 +87,32 @@
       documentation
     ============================================================================
     -->
-    <target name="site" depends="build,test" description="build web site">
-      <forrest/>
+    <target name="site" depends="build,test" description="create web site">
+        <forrest/>
     </target>
 
     <!-- requires scp : http://ant.apache.org/manual/OptionalTasks/scp.html -->
     <target name="deploy" depends="site" description="deploy web site">
-      <if>
-        <not>
-          <isset property="deploy.scp.username"/>
-        </not>
-        <then>
-          <input addproperty="deploy.scp.username" message="Enter username to enable scp to deploy:"/>
-        </then>
-      </if>
-      <property name="deploy.scp.dest" value="${deploy.scp.username}@ssh.sourceforge.net:/home/groups/x/xe/xeumeuleu/htdocs"/>
-      <if>
-        <not>
-          <isset property="deploy.scp.password"/>
-        </not>
-        <then>
-          <input addproperty="deploy.scp.password" message="Enter remote password to enable scp to ${deploy.scp.dest}:"/>
-        </then>
-      </if>
-      <scp todir="${deploy.scp.dest}" password="${deploy.scp.password}" trust="yes">
-        <fileset dir="${doc.dir}/site"/>
-      </scp>
+        <if>
+            <not>
+                <isset property="deploy.scp.username"/>
+            </not>
+            <then>
+                <input addproperty="deploy.scp.username" message="Enter username to enable scp to deploy:"/>
+            </then>
+        </if>
+        <property name="deploy.scp.dest" value="${deploy.scp.username}@ssh.sourceforge.net:/home/groups/x/xe/xeumeuleu/htdocs"/>
+        <if>
+            <not>
+                <isset property="deploy.scp.password"/>
+            </not>
+            <then>
+                <input addproperty="deploy.scp.password" message="Enter remote password to enable scp to ${deploy.scp.dest}:"/>
+            </then>
+        </if>
+        <scp todir="${deploy.scp.dest}" password="${deploy.scp.password}" trust="yes">
+            <fileset dir="${doc.dir}/site"/>
+        </scp>
     </target>
 
     <!--
@@ -130,6 +130,6 @@
         <update name="xerces-c"/>
     </target>
 
-    <target name="all" depends="clean-reports,configure,build,test,export,site" description="build, run tests and package distribution"/>
+    <target name="all" depends="clean-reports,configure,build,test,export,package,site" description="build, run tests, package distribution and create web site"/>
 
 </project>
