@@ -7,7 +7,6 @@
 
     <import file="../../../projects/poney/src/poney/poney.xml"/>
     -->
-
     <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
     <!--
