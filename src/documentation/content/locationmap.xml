@@ -51,7 +51,7 @@
     </match>
 
     <match pattern="reports/*.xml">
-      <location src="{project:content}/../../reports/{1}.xml" />
+      <location src="{project:temp-dir}/../../reports/{1}.xml" />
     </match>
 
     <!--
