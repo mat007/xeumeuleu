@@ -25,7 +25,6 @@
     -->
     <target name="xeumeuleu_test" depends="xeumeuleu" description="build and run tests">
         <build-test name="xeumeuleu" libs="xeumeuleu,xerces-c_2,libboost_unit_test_framework-${platform}-mt-1_32,mockpp"/>
-        <run-test name="xeumeuleu"/>
     </target>
 
     <!--
