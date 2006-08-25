@@ -180,9 +180,6 @@
 					RelativePath="..\..\src\libraries\xeumeuleu\functor.h">
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\list.cpp">
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\list.h">
 				</File>
 				<File
