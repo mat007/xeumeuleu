@@ -38,7 +38,7 @@
 
 namespace xml
 {
-    class functor;
+    class visitor;
 
 // =============================================================================
 /** @class  input_base
@@ -52,8 +52,8 @@ class input_base
 public:
     //! @name Constructors/Destructor
     //@{
-             input_base() {};
-    virtual ~input_base() {};
+             input_base() {}
+    virtual ~input_base() {}
     //@}
 
     //! @name Operations
@@ -82,7 +82,7 @@ public:
     virtual void attribute( const std::string& name, int& value ) const = 0;
     virtual void attribute( const std::string& name, bool& value ) const = 0;
 
-    virtual void list( const std::string& name, const functor& f ) const = 0;
+    virtual void visit( const visitor& v ) const = 0;
     //@}
 };
 

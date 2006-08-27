@@ -39,7 +39,7 @@
 namespace xml
 {
     class input;
-    class functor;
+    class visitor;
 
 // =============================================================================
 /** @class  xistream
@@ -72,7 +72,7 @@ public:
     void attribute( const std::string& name, int& value ) const;
     void attribute( const std::string& name, bool& value ) const;
 
-    void list( const std::string& name, const functor& f );
+    void visit( const visitor& v );
     //@}
 
     //! @name Modifiers

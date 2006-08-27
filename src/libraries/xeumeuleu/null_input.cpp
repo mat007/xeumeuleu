@@ -195,10 +195,10 @@ void null_input::attribute( const std::string& /*name*/, bool& /*value*/ ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: null_input::list
+// Name: null_input::visit
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
-void null_input::list( const std::string& /*name*/, const functor& /*f*/ ) const
+void null_input::visit( const visitor& /*v*/ ) const
 {
     // NOTHING
 }

@@ -60,7 +60,7 @@
             <include name="**/content.h"/>
             <include name="**/attribute.h"/>
             <include name="**/list.h"/>
-            <include name="**/functor.h"/>
+            <include name="**/visitor.h"/>
             <include name="**/caller*.h"/>
             <include name="**/optional.h"/>
             <exclude name="**/*_pch.h"/>
