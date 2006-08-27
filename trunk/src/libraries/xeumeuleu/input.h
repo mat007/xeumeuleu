@@ -41,7 +41,7 @@
 
 namespace xml
 {
-    class functor;
+    class visitor;
 
 // =============================================================================
 /** @class  input
@@ -79,7 +79,7 @@ public:
         pInput_->attribute( name, value );
     }
 
-    void list( const std::string& name, const functor& f ) const;
+    void visit( const visitor& v ) const;
     //@}
 
     //! @name Modifiers

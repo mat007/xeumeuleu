@@ -33,29 +33,31 @@
 #ifndef _xeumeuleu_functor_h_
 #define _xeumeuleu_functor_h_
 
+#include <string>
+
 namespace xml
 {
     class xistream;
 
 // =============================================================================
-/** @class  functor
-    @brief  Functor definition
+/** @class  visitor
+    @brief  Visitor definition
 */
 // Created: MAT 2006-01-05
 // =============================================================================
-class functor
+class visitor
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             functor() {};
-    virtual ~functor() {};
+             visitor() {}
+    virtual ~visitor() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void process( xistream& xis ) const = 0;
+    virtual void process( const std::string& name, xistream& xis ) const = 0;
     //@}
 };
 

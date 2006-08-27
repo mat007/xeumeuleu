@@ -204,13 +204,13 @@ void xistream::attribute( const std::string& name, bool& value ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::list
+// Name: xistream::visit
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-void xistream::list( const std::string& name, const functor& f )
+void xistream::visit( const visitor& v )
 {
     TRY
-        pInput_->list( name, f );
+        pInput_->visit( v );
     CATCH
 }
 

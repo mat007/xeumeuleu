@@ -28,36 +28,36 @@ namespace
     class my_class_ext_1
     {
     public:
-        void my_method( xml::xistream& , my_type& ) {};
-        void my_const_method( xml::xistream& , my_type& ) const {};
+        void my_method( xml::xistream& , my_type& ) {}
+        void my_const_method( xml::xistream& , my_type& ) const {}
     };
 
     class my_class_ext_const_1
     {
     public:
-        void my_method( xml::xistream& , const my_type& ) {};
-        void my_const_method( xml::xistream& , const my_type& ) const {};
+        void my_method( xml::xistream& , const my_type& ) {}
+        void my_const_method( xml::xistream& , const my_type& ) const {}
     };
 
     class my_class_ext_2
     {
     public:
-        void my_method( xml::xistream& , my_type& , my_type& ) {};
-        void my_const_method( xml::xistream& , my_type& , my_type& ) const {};
+        void my_method( xml::xistream& , my_type& , my_type& ) {}
+        void my_const_method( xml::xistream& , my_type& , my_type& ) const {}
     };
 
     class my_class_ext_const_2
     {
     public:
-        void my_method( xml::xistream& , const my_type&, my_type& ) {};
-        void my_const_method( xml::xistream& , const my_type&, my_type& ) const {};
+        void my_method( xml::xistream& , const my_type&, my_type& ) {}
+        void my_const_method( xml::xistream& , const my_type&, my_type& ) const {}
     };
 
     class my_class_ext_const_const_2
     {
     public:
-        void my_method_const( xml::xistream& , const my_type&, const my_type& ) {};
-        void my_const_method_const( xml::xistream& , const my_type&, const my_type& ) const {};
+        void my_method_const( xml::xistream& , const my_type&, const my_type& ) {}
+        void my_const_method_const( xml::xistream& , const my_type&, const my_type& ) const {}
     };
 
     void warning_check()

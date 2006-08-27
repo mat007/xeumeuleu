@@ -83,7 +83,7 @@ public:
     virtual void attribute( const std::string& name, int& value ) const;
     virtual void attribute( const std::string& name, bool& value ) const;
 
-    virtual void list( const std::string& name, const functor& f ) const;
+    virtual void visit( const visitor& v ) const;
     //@}
 
 private:

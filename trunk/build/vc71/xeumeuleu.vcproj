@@ -177,9 +177,6 @@
 					RelativePath="..\..\src\libraries\xeumeuleu\end.h">
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\functor.h">
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\list.h">
 				</File>
 				<File
@@ -193,6 +190,9 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\start.h">
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\visitor.h">
 				</File>
 				<Filter
 					Name="caller"

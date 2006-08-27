@@ -35,7 +35,7 @@
 #include "translate.h"
 #include "trim.h"
 #include "chained_exception.h"
-#include "functor.h"
+#include "visitor.h"
 #include "sub_xistream.h"
 #include <xercesc/util/XMLFloat.hpp>
 #include <xercesc/util/XMLDouble.hpp>
@@ -332,19 +332,16 @@ void input_imp::attribute( const std::string& name, bool& value ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_imp::list
+// Name: input_imp::visit
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-void input_imp::list( const std::string& name, const functor& f ) const
+void input_imp::visit( const visitor& v ) const
 {
     DOMNode* pChild = pCurrent_->getFirstChild();
     while( pChild )
     {
-        if( trim( name ) == trim( translate( pChild->getNodeName() ) ) )
-        {
-            sub_xistream xis( *pChild );
-            f.process( xis );
-        }
+        sub_xistream xis( *pChild );
+        v.process( trim( translate( pChild->getNodeName() ) ), xis );
         pChild = pChild->getNextSibling();
     }
 }

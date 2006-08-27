@@ -85,12 +85,12 @@ std::auto_ptr< input > input::branch()
 }
 
 // -----------------------------------------------------------------------------
-// Name: input::list
+// Name: input::visit
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-void input::list( const std::string& name, const functor& f ) const
+void input::visit( const visitor& v ) const
 {
-    pInput_->list( name, f );
+    pInput_->visit( v );
 }
 
 // -----------------------------------------------------------------------------

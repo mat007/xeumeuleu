@@ -237,10 +237,10 @@ void optional_input::attribute( const std::string& name, bool& value ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: optional_input::list
+// Name: optional_input::visit
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-void optional_input::list( const std::string& name, const functor& f ) const
+void optional_input::visit( const visitor& v ) const
 {
-    context_.reset( pInput_ ).list( name, f );
+    context_.reset( pInput_ ).visit( v );
 }
