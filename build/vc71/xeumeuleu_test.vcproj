@@ -44,7 +44,7 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd ../../run
+				CommandLine="cd ../../run/vc71
 &quot;$(TargetDir)$(TargetName).exe&quot; --result_code=no --report_level=no --log_level=messages --data_directory=&quot;../data/tests/xeumeuleu_test&quot;
 "/>
 			<Tool
@@ -101,7 +101,7 @@
 				Name="VCMIDLTool"/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd ../../run
+				CommandLine="cd ../../run/vc71
 &quot;$(TargetDir)$(TargetName).exe&quot; --result_code=no --report_level=no --log_level=messages --data_directory=&quot;../data/tests/xeumeuleu_test&quot;
 "/>
 			<Tool

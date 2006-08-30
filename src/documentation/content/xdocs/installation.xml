@@ -80,8 +80,8 @@
           If needed however launching <em>xeumeuleu_test</em> with <em>ctrl-F5</em> requires some additional project properties to be set :
         </p>
         <ul>
-          <li>Set <em>Debugging</em> / <em>Command Arguments</em> to <em>--data_directory=..\..\data\tests\xeumeuleu_test</em></li>
-          <li>Set <em>Debugging</em> / <em>Working Directory</em> to <em>..\..\run</em></li>
+          <li>Set <em>Debugging</em> / <em>Command Arguments</em> to <em>--data_directory=..\..\..\data\tests\xeumeuleu_test</em></li>
+          <li>Set <em>Debugging</em> / <em>Working Directory</em> to <em>..\..\run\vc71</em></li>
         </ul>
       </section>
       <section id="gcc">
