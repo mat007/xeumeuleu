@@ -340,8 +340,11 @@ void input_imp::visit( const visitor& v ) const
     DOMNode* pChild = pCurrent_->getFirstChild();
     while( pChild )
     {
-        sub_xistream xis( *pChild );
-        v.process( trim( translate( pChild->getNodeName() ) ), xis );
+        if( pChild->getNodeType() == DOMNode::ELEMENT_NODE )
+        {
+            sub_xistream xis( *pChild );
+            v.process( trim( translate( pChild->getNodeName() ) ), xis );
+        }
         pChild = pChild->getNextSibling();
     }
 }

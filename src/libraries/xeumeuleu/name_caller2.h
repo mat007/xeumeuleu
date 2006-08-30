@@ -30,61 +30,113 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_grammar_h_
-#define _xeumeuleu_grammar_h_
-
-#include <string>
+#ifndef _xeumeuleu_name_caller2_h_
+#define _xeumeuleu_name_caller2_h_
 
 namespace xml
 {
+    class xistream;
 
 // =============================================================================
-/** @class  grammar
-    @brief  Grammar type definition wrapper
-
-    This class provides typing for XML schema definition uri's.
+/** @class  name_caller2
+    @brief  Method call functor with element name and two fixed parameters
 */
-// Created: MAT 2006-03-24
+// Created: ZEBRE 2006-08-30
 // =============================================================================
-class grammar
+template< typename T, typename Arg1, typename T1, typename Arg2, typename T2 >
+class name_caller2
 {
+private:
+    //! @name Types
+    //@{
+    typedef void (T::*M)( const std::string&, xistream&, T1, T2 );
+    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit grammar( const std::string& uri );
-    virtual ~grammar();
+    name_caller2( T& instance, M method, Arg1 value1, Arg2 value2 )
+        : instance_( instance )
+        , method_  ( method )
+        , value1_  ( value1 )
+        , value2_  ( value2 )
+    {}
     //@}
 
-    //! @name Operators
+    //! @name Operations
     //@{
-    operator const std::string&() const;
+    void operator()( const std::string& name, xistream& xis ) const
+    {
+        (instance_.*method_)( name, xis, value1_, value2_ );
+    }
+    //@}
+
+private:
+    //! @name Constructors/Destructor
+    //@{
+    name_caller2& operator=( const name_caller2& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string uri_;
+    T& instance_;
+    M method_;
+    T1 value1_;
+    T2 value2_;
     //@}
 };
 
 // =============================================================================
-/** @class  internal_grammar
-    @brief  Grammar wrapper to specify internal schema validation 
+/** @class  const_name_caller2
+    @brief  Const method call functor with element name and two fixed parameters
 */
 // Created: ZEBRE 2006-08-30
 // =============================================================================
-class internal_grammar : public grammar
+template< typename T, typename Arg1, typename T1, typename Arg2, typename T2 >
+class const_name_caller2
 {
+private:
+    //! @name Types
+    //@{
+    typedef void (T::*M)( const std::string&, xistream&, T1, T2 ) const;
+    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-             internal_grammar();
-    virtual ~internal_grammar();
+    const_name_caller2( const T& instance, M method, Arg1 value1, Arg2 value2 )
+        : instance_( instance )
+        , method_  ( method )
+        , value1_  ( value1 )
+        , value2_  ( value2 )
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    void operator()( const std::string& name, xistream& xis ) const
+    {
+        (instance_.*method_)( name, xis, value1_, value2_ );
+    }
+    //@}
+
+private:
+    //! @name Constructors/Destructor
+    //@{
+    const_name_caller2& operator=( const const_name_caller2& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const T& instance_;
+    M method_;
+    T1 value1_;
+    T2 value2_;
     //@}
 };
 
 }
 
-#endif // _xeumeuleu_grammar_h_
+#endif // _xeumeuleu_name_caller2_h_

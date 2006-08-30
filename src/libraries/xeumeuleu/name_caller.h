@@ -30,54 +30,11 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_pch.h"
-#include "grammar.h"
+#ifndef _xeumeuleu_name_caller_h_
+#define _xeumeuleu_name_caller_h_
 
-using namespace xml;
+#include "name_caller0.h"
+#include "name_caller1.h"
+#include "name_caller2.h"
 
-// -----------------------------------------------------------------------------
-// Name: grammar constructor
-// Created: MAT 2006-03-24
-// -----------------------------------------------------------------------------
-grammar::grammar( const std::string& uri )
-    : uri_( uri )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: grammar destructor
-// Created: MAT 2006-03-24
-// -----------------------------------------------------------------------------
-grammar::~grammar()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: grammar::operator const std::string&
-// Created: MAT 2006-03-24
-// -----------------------------------------------------------------------------
-grammar::operator const std::string&() const
-{
-    return uri_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: internal_grammar constructor
-// Created: ZEBRE 2006-08-30
-// -----------------------------------------------------------------------------
-internal_grammar::internal_grammar()
-    : grammar( "" )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: internal_grammar destructor
-// Created: ZEBRE 2006-08-30
-// -----------------------------------------------------------------------------
-internal_grammar::~internal_grammar()
-{
-    // NOTHING
-}
+#endif // _xeumeuleu_name_caller_h_

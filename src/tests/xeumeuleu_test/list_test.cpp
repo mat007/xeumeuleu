@@ -297,3 +297,77 @@ BOOST_AUTO_UNIT_TEST( move_up_from_sub_node_throws_an_exception )
                              "</element>" );
     BOOST_CHECK_THROW( xis >> xml::start( "element" ) >> xml::list( "sub-node", custom, &custom_class::process ), xml::exception );
 }
+
+namespace 
+{
+    class mock_custom_class_name_list_with_parameters : public mockpp::ChainableMockObject
+    {
+    public:
+        mock_custom_class_name_list_with_parameters()
+            : mockpp::ChainableMockObject( "mock_custom_class_name_list_with_parameters", 0 )
+            , process_mocker             ( "process", this )
+        {}
+        void process( const std::string& name, xml::xistream& xis, int& p1 )
+        {
+            process_mocker.forward( name, xis, p1 );
+        }
+        mockpp::ChainableMockMethod< void, std::string, xml::xistream, int > process_mocker;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: read_name_list_with_parameters
+// Created: ZEBRE 2006-08-30
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( read_name_list_with_parameters )
+{
+    xml::xistringstream xis( "<element>"
+                               "<sub-node1>content number one</sub-node1>"
+                               "<sub-node2>content number two</sub-node2>"
+                             "</element>" );
+    int p1 = 12;
+    mock_custom_class_name_list_with_parameters mock_custom;
+    mock_custom.process_mocker.expects( mockpp::once() ).with( eq( std::string( "sub-node1" ) ), new xistream_constraint( "content number one" ), eq( p1 ) );
+    mock_custom.process_mocker.expects( mockpp::once() ).with( eq( std::string( "sub-node2" ) ), new xistream_constraint( "content number two" ), eq( p1 ) );
+
+    xis >> xml::start( "element" )
+            >> xml::list( mock_custom, &mock_custom_class_name_list_with_parameters::process, p1 )
+        >> xml::end();
+    mock_custom.verify();
+}
+
+namespace 
+{
+    class mock_custom_class_name_list : public mockpp::ChainableMockObject
+    {
+    public:
+        mock_custom_class_name_list()
+            : mockpp::ChainableMockObject( "mock_custom_class_name_list", 0 )
+            , process_mocker             ( "process", this )
+        {}
+        void process( const std::string& name, xml::xistream& xis )
+        {
+            process_mocker.forward( name, xis );
+        }
+        mockpp::ChainableMockMethod< void, std::string, xml::xistream > process_mocker;
+    };
+}
+ 
+// -----------------------------------------------------------------------------
+// Name: read_name_list_is_not_called_with_content
+// Created: ZEBRE 2006-08-30
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( read_name_list_is_not_called_with_content )
+{
+    xml::xistringstream xis( "<element>"
+                               "content not to be read"
+                               "<sub-node>content</sub-node>"
+                             "</element>" );
+    mock_custom_class_name_list mock_custom;
+    mock_custom.process_mocker.expects( mockpp::once() ).with( eq( std::string( "sub-node" ) ), new xistream_constraint( "content" ) );
+
+    xis >> xml::start( "element" )
+            >> xml::list( mock_custom, &mock_custom_class_name_list::process )
+        >> xml::end();
+    mock_custom.verify();
+}
