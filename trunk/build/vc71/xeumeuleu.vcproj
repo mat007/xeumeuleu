@@ -180,6 +180,9 @@
 					RelativePath="..\..\src\libraries\xeumeuleu\list.h">
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\name_list.h">
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\optional.cpp">
 				</File>
 				<File
@@ -217,6 +220,18 @@
 					</File>
 					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\caller5.h">
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\name_caller.h">
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\name_caller0.h">
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\name_caller1.h">
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\name_caller2.h">
 					</File>
 				</Filter>
 			</Filter>

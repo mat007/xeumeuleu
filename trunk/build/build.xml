@@ -60,8 +60,10 @@
             <include name="**/content.h"/>
             <include name="**/attribute.h"/>
             <include name="**/list.h"/>
+            <include name="**/name_list.h"/>
             <include name="**/visitor.h"/>
             <include name="**/caller*.h"/>
+            <include name="**/name_caller*.h"/>
             <include name="**/optional.h"/>
             <exclude name="**/*_pch.h"/>
         </deploy>
