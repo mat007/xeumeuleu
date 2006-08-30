@@ -223,6 +223,16 @@ BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_validated_by_schema_does_not_thro
 }
 
 // -----------------------------------------------------------------------------
+// Name: creating_stream_with_xml_validated_by_internally_referenced_schema_does_not_throw_an_exception
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_validated_by_internally_referenced_schema_does_not_throw_an_exception )
+{
+    const std::string xml( "<element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='schema.xsd' />" );
+    BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml, xml::internal_grammar() ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: creating_stream_with_xml_not_validated_by_internally_referenced_schema_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
@@ -242,12 +252,3 @@ BOOST_AUTO_UNIT_TEST( internal_schema_is_used_only_if_specified )
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml  ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: creating_stream_with_xml_validated_by_internally_referenced_schema_does_not_throw_an_exception
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_validated_by_internally_referenced_schema_does_not_throw_an_exception )
-{
-    const std::string xml( "<element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='schema.xsd' />" );
-    BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml ) );
-}
