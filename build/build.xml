@@ -32,13 +32,9 @@
       clean
     ============================================================================
     -->
-    <target name="clean" depends="clean-reports" description="clean intermediate build artifacts">
+    <target name="clean" description="clean intermediate build artifacts">
         <clean name="xeumeuleu"/>
         <clean name="xeumeuleu_test"/>
-    </target>
-
-    <target name="clean-reports">
-        <delete dir="${reports.dir}"/>
     </target>
 
     <!--
@@ -130,6 +126,6 @@
         <update name="xerces-c"/>
     </target>
 
-    <target name="all" depends="clean-reports,configure,build,test,export,package,site" description="build, run tests, package distribution and create web site"/>
+    <target name="all" depends="configure,build,test,export,package,site" description="build, run tests, package distribution and create web site"/>
 
 </project>
