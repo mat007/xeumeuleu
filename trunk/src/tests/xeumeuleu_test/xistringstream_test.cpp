@@ -249,6 +249,5 @@ BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_not_validated_by_internally_refer
 BOOST_AUTO_UNIT_TEST( internal_schema_is_used_only_if_specified )
 {
     const std::string xml( "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='schema.xsd' />" );
-    BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml  ) );
+    BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml ) );
 }
-
