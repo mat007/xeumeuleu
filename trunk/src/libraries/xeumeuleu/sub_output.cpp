@@ -34,12 +34,13 @@
 #include "sub_output.h"
 
 using namespace xml;
+using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: sub_output constructor
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-sub_output::sub_output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root, output& o )
+sub_output::sub_output( DOMDocument& document, DOMNode& root, output& o )
     : output( document, root )
     , output_( o )
 {
