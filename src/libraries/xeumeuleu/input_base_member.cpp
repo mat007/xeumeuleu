@@ -50,7 +50,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // Name: input_base_member constructor
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
-input_base_member::input_base_member( XERCES_CPP_NAMESPACE::DOMNode& root )
+input_base_member::input_base_member( DOMNode& root )
     : root_( root )
 {
     // NOTHING
@@ -69,7 +69,7 @@ input_base_member::~input_base_member()
 // Name: input_base_member::parse
 // Created: MAT 2006-01-10
 // -----------------------------------------------------------------------------
-DOMNode& input_base_member::parse( XERCES_CPP_NAMESPACE::InputSource& source, const encoding* pEncoding, const grammar* pGrammar )
+DOMNode& input_base_member::parse( InputSource& source, const encoding* pEncoding, const grammar* pGrammar )
 {
     try
     {
