@@ -45,7 +45,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // Name: output constructor
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-output::output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root )
+output::output( DOMDocument& document, DOMNode& root )
     : document_( document )
     , root_    ( root )
     , pCurrent_( &root )

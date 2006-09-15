@@ -66,7 +66,7 @@ output_base_member::~output_base_member()
 // Name: output_base_member::build
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-XERCES_CPP_NAMESPACE::DOMDocument& output_base_member::build()
+DOMDocument& output_base_member::build()
 {
     try
     {
@@ -94,7 +94,7 @@ XERCES_CPP_NAMESPACE::DOMDocument& output_base_member::build()
 // Name: output_base_member::fill
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-void output_base_member::fill( XERCES_CPP_NAMESPACE::XMLFormatTarget& destination, const std::string& encoding ) const
+void output_base_member::fill( XMLFormatTarget& destination, const std::string& encoding ) const
 {
     const DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
     xerces_wrapper< DOMWriter > pWriter( ((DOMImplementationLS*)pImpl)->createDOMWriter() );

@@ -49,7 +49,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // Name: input_imp constructor
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-input_imp::input_imp( const XERCES_CPP_NAMESPACE::DOMNode& root )
+input_imp::input_imp( const DOMNode& root )
     : root_    ( root )
     , pCurrent_( &root_ )
 {
@@ -133,7 +133,7 @@ const DOMNode* input_imp::findAttribute( const std::string& name ) const
 // Name: input_imp::findContent
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
-const XERCES_CPP_NAMESPACE::DOMNode* input_imp::findContent() const
+const DOMNode* input_imp::findContent() const
 {
     const DOMNode* pChild = pCurrent_->getFirstChild();
     if( ! pChild || pChild->getNodeType() != DOMNode::TEXT_NODE )
