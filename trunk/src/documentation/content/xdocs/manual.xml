@@ -207,6 +207,31 @@ public:
       <p>
         Note that each parameter can be declared <em>const</em> or not depending on the needs.
       </p>
+      <p>
+        Another version of <strong>xml::list</strong> exists which does not take an element name as first parameter, but instead discovers every element and for each one calls a functor with its name, for example with the document :
+      </p>
+      <source><![CDATA[<root>
+  <first-element/>
+  <second-element/>
+  <third-element/>
+</root>]]></source>
+      <p>
+        The following code will call a functor for each element :
+      </p>
+        <source><![CDATA[xis >> xml::start( "root" )
+      >> xml::list( my_instance, &my_class::my_method )
+    >> xml::end();]]></source>
+      <p>
+        With the functor method signature being :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    void my_method( const std::string& name, xistream& xis ) const;
+};]]></source>
+    <p>
+      The <em>name</em> argument will be <em>first-element</em>, <em>second-element</em> and then <em>third-element</em> : the order of the calls matches the order of the elements in the document.
+    </p>
     </section>
     <section id="data">
       <title>Managing data</title>
