@@ -148,6 +148,78 @@ private:
       Note the use of a template helper method which allows the user not to have to worry about the exact type of the functor.
     </p>
     </section>
+    <section id="factory-method">
+      <title>Creating objects depending on the type of a node</title>
+      <p>
+        Using the factory design pattern decouples concrete object instantiation from object manipulation.
+      </p>
+      <p>
+        For example if a collection of objects must be instantiated from different concrete classes implementing the same interface, the factory definition may look like :
+      </p>
+      <source><![CDATA[class my_factory
+{
+public:
+    virtual my_interface* create( const std::string& type, xml::xistream& xis ) = 0;
+};]]></source>
+      <p>
+        The following code demonstrates how to create all objects from the collection with the factory and add them to a vector :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    my_class( my_factory& factory )
+        : factory_( factory )
+    {}
+
+    void load( xml::xistream& xis )
+    {
+        xis >> xml::list( *this, &my_class::create );
+    }
+
+private:
+    void create( const std::string& type, xml::xistream& xis )
+    {
+        collection_.push_back( factory_.create( type, xis ) );
+    }
+
+private:
+    my_factory& factory_;
+    std::vector< my_interface* > collection_;
+};]]></source>
+      <p>
+        The implementation of the factory requires testing the type of the element to be created, for example :
+      </p>
+      <source><![CDATA[class my_factory_imp : public my_factory
+{
+public:
+    virtual interface* create( const std::string& type, xml::xistream& xis )
+    {
+        if( type == "first_type" )
+            return new first_type( xis );
+        if( type == "second_type" )
+            return new second_type( xis );
+        if( type == "third_type" )
+            return new third_type( xis );
+        return 0;
+    }
+};]]></source>
+      <p>
+        Moving the instantiation code to a factory provides better extensibility.<br />
+        It's possible to add support for new types without changing the existing code, only by using a different factory, for example :
+      </p>
+      <source><![CDATA[class my_extended_factory_imp : public my_factory_imp
+{
+public:
+    virtual interface* create( const std::string& type, xml::xistream& xis )
+    {
+        if( type == "extended_type" )
+            return new extended_type( xis );
+        if( type == "another_extended_type" )
+            return new another_extended_type( xis );
+        return my_factory_imp::create( type, xis );
+    }
+};]]></source>
+    </section>
     <section id="modular">
       <title>Organizing serialization in modular systems</title>
     </section>
