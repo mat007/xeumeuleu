@@ -208,7 +208,8 @@ public:
         Note that each parameter can be declared <em>const</em> or not depending on the needs.
       </p>
       <p>
-        Another version of <strong>xml::list</strong> exists which does not take an element name as first parameter, but instead discovers every element and for each one calls a functor with its name, for example with the document :
+        Another version of <strong>xml::list</strong> exists which does not take an element name as first parameter, but instead discovers every element and for each one calls a functor with its name.<br />
+        This allows to read an heterogeneous list of elements when the ordering matters, for example with the document :
       </p>
       <source><![CDATA[<root>
   <first-element/>
