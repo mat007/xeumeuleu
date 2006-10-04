@@ -92,7 +92,7 @@
         <ol>
           <li>install the dependencies</li>
           <li>open <em>build/makefile</em></li>
-          <li>change the <em>INC_DIR</em> and <em>LIB_DIR</em> variables at the top in order to indicate the location of the dependencies</li>
+          <li>change the <em>INC_DIRS</em> and <em>LIB_DIRS</em> variables at the top in order to indicate the location of the dependencies</li>
           <li>run <em>make</em> from the <em>build</em> directory</li>
         </ol>
         <p>

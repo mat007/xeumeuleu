@@ -21,6 +21,8 @@ xcopy /Y "%SRC_DIR%\end.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\content.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\attribute.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\list.h" %INCLUDE_DIR%
-xcopy /Y "%SRC_DIR%\functor.h" %INCLUDE_DIR%
+xcopy /Y "%SRC_DIR%\name_list.h" %INCLUDE_DIR%
+xcopy /Y "%SRC_DIR%\visitor.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\caller*.h" %INCLUDE_DIR%
+xcopy /Y "%SRC_DIR%\name_caller*.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\optional.h" %INCLUDE_DIR%
