@@ -73,9 +73,22 @@
       package
     ============================================================================
     -->
-    <target name="package" description="package the distribution">
+    <target name="package" depends="generate-vc80" description="package the distribution">
         <zip destfile="${dist.dir}/xeumeuleu.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb"/>
         <tar destfile="${dist.dir}/xeumeuleu.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb" compression="bzip2"/>
+    </target>
+
+    <target name="generate-vc80" description="create vc80 build files from vc71 files">
+        <copy todir="vc80">
+            <fileset dir="vc71" includes="*.sln,*.vcproj"/>
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="vc71" to="vc80"/>
+                    <replacestring from="8.00" to="9.00"/>
+                    <replacestring from="7.10" to="8.00"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
     </target>
 
     <!--
