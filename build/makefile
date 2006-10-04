@@ -1,14 +1,16 @@
 #!/usr/bin/make
 
 # configuration
-INC_DIR = ../../../include
-LIB_DIR = ../../../lib/cygwin
-RUN_DIR = ../run
+INC_DIRS = ../../../../include
+LIB_DIRS = ../../../../lib/cygwin
+RUN_DIR = ../run/cygwin
 
 NAME = xeumeuleu
 LIBS = xerces-c_2 libboost_unit_test_framework-cygwin-mt-1_32 mockpp
 
-EXPORTS = exception.h xml.h xi*.h xo*.h encoding.h grammar.h start.h end.h content.h attribute.h list.h functor.h caller*.h optional.h
+EXPORTS = exception.h xml.h xi*.h xo*.h encoding.h grammar.h start.h end.h \
+          content.h attribute.h list.h name_list.h visitor.h caller*.h \
+          name_caller*.h optional.h
 
 # tools
 CXX = g++
@@ -17,18 +19,20 @@ MD = mkdir -p
 CP = cp -f -u
 RM = rm -r -f
 
+# helpers
+location = $(shell mkdir -p $(1); cd $(1); pwd)
+
 # project layout
 OUT_DIR = ../out/gcc
 SRC_DIR = ../src
-DATA_DIR = ../data
-DOC_DIR = ../doc
+DATA_DIR = ../../data
 OBJ_DIR = $(OUT_DIR)/obj
 DEP_DIR = $(OUT_DIR)/dep
 INC_EXPORT_DIR = ../include/$(NAME)
 LIB_EXPORT_DIR = ../lib
 
 LIB = $(OUT_DIR)/lib$(NAME).a
-TEST = $(OUT_DIR)/$(NAME)_test
+TEST = $(call location,$(OUT_DIR))/$(NAME)_test
 
 LIB_MODULE = libraries/$(NAME)
 LIB_SRC = $(wildcard $(SRC_DIR)/$(LIB_MODULE)/*.cpp)
@@ -41,10 +45,10 @@ TEST_OBJ = $(TEST_SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 TEST_DEP = $(TEST_SRC:$(SRC_DIR)/%.cpp=$(DEP_DIR)/%.d)
 
 # flags
-CXXFLAGS = -O3 -I$(SRC_DIR)/libraries $(INC_DIR:%=-I%)
-LDFLAGS = $(LIB_DIR:%=-L%)
+CXXFLAGS = -O3 -I$(SRC_DIR)/libraries $(INC_DIRS:%=-I%)
+LDFLAGS = $(LIB_DIRS:%=-L%)
 
-# default rule
+# rules
 all : build test doc export
 
 .PHONY : FORCE all build test doc export clean realclean
@@ -83,7 +87,8 @@ $(TEST) : $(TEST_OBJ) $(LIB)
 build : $(LIB)
 
 test : $(TEST)
-	cd $(RUN_DIR); $(TEST) --log_level=warnings --data_directory=$(DATA_DIR)/$(TEST_MODULE)
+	@$(MD) $(RUN_DIR)
+	@cd $(RUN_DIR); $(TEST) --log_level=warnings --data_directory=$(DATA_DIR)/$(TEST_MODULE)
 
 doc :
 

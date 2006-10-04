@@ -74,8 +74,8 @@
     ============================================================================
     -->
     <target name="package" description="package the distribution">
-        <zip destfile="${dist.dir}/xeumeuleu.zip" basedir=".." includes="build/**,src/**,data/**,run,*.txt" excludes="**/*.suo,**/*.ncb"/>
-        <tar destfile="${dist.dir}/xeumeuleu.tar.bz2" basedir=".." includes="build/**,src/**,data/**,run,*.txt" excludes="**/*.suo,**/*.ncb" compression="bzip2"/>
+        <zip destfile="${dist.dir}/xeumeuleu.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb"/>
+        <tar destfile="${dist.dir}/xeumeuleu.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb" compression="bzip2"/>
     </target>
 
     <!--
