@@ -91,6 +91,7 @@ test : build $(TEST)
 install export : build
 	$(MD) $(INC_EXPORT_DIR)
 	$(CP) $(wildcard $(EXPORTS:%=$(SRC_DIR)/libraries/$(NAME)/%)) $(INC_EXPORT_DIR)
+	$(MD) $(LIB_EXPORT_DIR)
 	$(CP) $(LIB) $(LIB_EXPORT_DIR)
 
 clean :
