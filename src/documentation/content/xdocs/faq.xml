@@ -23,9 +23,15 @@
   <body>
     <section id="utf-exception">
       <title>An exception occurred! Type:UTFDataFormatException, Message:invalid byte 2 of a 3-byte sequence</title>
+      <p>
+        TODO
+      </p>
     </section>
     <section id="cannot-load-message">
       <title>Cannot load message</title>
+      <p>
+        TODO
+      </p>
     </section>
   </body>
 </document>
