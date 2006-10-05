@@ -1,8 +1,8 @@
 #!/usr/bin/make
 
 # configuration
-INC_DIRS = ../../../../include
-LIB_DIRS = ../../../../lib/cygwin
+INC_DIRS = ../../../include
+LIB_DIRS = ../../../lib/cygwin
 RUN_DIR = ../run/cygwin
 
 NAME = xeumeuleu
@@ -25,7 +25,7 @@ location = $(shell mkdir -p $(1); cd $(1); pwd)
 # project layout
 OUT_DIR = ../out/gcc
 SRC_DIR = ../src
-DATA_DIR = ../../data
+DATA_DIR = $(call location,../data)
 OBJ_DIR = $(OUT_DIR)/obj
 DEP_DIR = $(OUT_DIR)/dep
 INC_EXPORT_DIR = ../include/$(NAME)
@@ -49,9 +49,9 @@ CXXFLAGS = -O3 -I$(SRC_DIR)/libraries $(INC_DIRS:%=-I%)
 LDFLAGS = $(LIB_DIRS:%=-L%)
 
 # rules
-all : build test doc export
+default : export
 
-.PHONY : FORCE all build test doc export clean realclean
+.PHONY : FORCE all build test install export clean realclean
 FORCE : ;
 .DELETE_ON_ERROR :
 
@@ -75,10 +75,8 @@ ifneq ($(MAKECMDGOALS),realclean)
 endif
 endif
 
-ifneq ($(MAKECMDGOALS),all)
-ifneq ($(MAKECMDGOALS),test)
+ifeq ($(MAKECMDGOALS),test)
   -include $(TEST_DEP)
-endif
 endif
 
 $(TEST) : $(TEST_OBJ) $(LIB)
@@ -86,20 +84,17 @@ $(TEST) : $(TEST_OBJ) $(LIB)
 
 build : $(LIB)
 
-test : $(TEST)
+test : build $(TEST)
 	@$(MD) $(RUN_DIR)
 	@cd $(RUN_DIR); $(TEST) --log_level=warnings --data_directory=$(DATA_DIR)/$(TEST_MODULE)
 
-doc :
-
-export :
+install export : build
 	$(MD) $(INC_EXPORT_DIR)
 	$(CP) $(wildcard $(EXPORTS:%=$(SRC_DIR)/libraries/$(NAME)/%)) $(INC_EXPORT_DIR)
 	$(CP) $(LIB) $(LIB_EXPORT_DIR)
 
 clean :
-	$(RM) $(OBJ_DIR)
-	$(RM) $(DEP_DIR)
+	$(RM) $(OBJ_DIR) $(DEP_DIR)
 
 realclean :
 	$(RM) $(OUT_DIR)
