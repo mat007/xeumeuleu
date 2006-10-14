@@ -102,19 +102,29 @@ xos << xobs;]]></source>
       <section id="validation">
         <title>Validation</title>
         <p>
-          By default validation will only occur if an XML schema definition (XSD) exists within the document, example :
+          By default validation will only occur if an XML schema definition (XSD) is specified when creating an input stream :
+        </p>
+        <source><![CDATA[xml::xostringstream xos( xml::grammar( "example.xsd" ) );]]></source>
+        <p>
+          Multiple schema definitions can also be specified :
+        </p>
+        <source><![CDATA[xml::xostringstream xos( xml::grammar( "exmaple.xsd test.xsd" ) );]]></source>
+        <p>
+          Sometimes an embedded schema definition has been specified in the document :
         </p>
         <source><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
 <element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="example.xsd" >]]></source>
+        <p>
+          A special <em>internal_grammar</em> has to be used :
+        </p>
+        <source><![CDATA[xml::xostringstream xos( xml::internal_grammar() );]]></source>
+        <p>
+          The default behaviour is not to validate against internal schema definitions because it may require an internet connection.
+        </p>
+        <p>
+          Combining internal and external schema validations is not supported at the moment.
+        </p>
       </section>
-      <p>
-        Optionally a schema definition can be specified when creating an input stream :
-      </p>
-      <source><![CDATA[xml::xostringstream xos( xml::validate( "example.xsd" ) );]]></source>
-      <p>
-        Multiple schema definitions can also be specified :
-      </p>
-      <source><![CDATA[xml::xostringstream xos( xml::validate( "exmaple.xsd test.xsd" ) );]]></source>
     </section>
     <section id="walking">
       <title>Walking the tree</title>
