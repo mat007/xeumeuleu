@@ -43,6 +43,6 @@ std::string xml::trim( const std::string& str )
 {
     if( str.empty() )
         return str;
-    const size_t start = str.find_first_not_of( " \t\n" );
-    return str.substr( start, str.find_last_not_of( " \t\n" ) - start + 1 );
+    const size_t start = str.find_first_not_of( " \t\r\n" );
+    return str.substr( start, str.find_last_not_of( " \t\r\n" ) - start + 1 );
 }
