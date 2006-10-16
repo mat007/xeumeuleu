@@ -51,10 +51,10 @@ BOOST_AUTO_UNIT_TEST( read_integer_attribute_from_element_retrieves_value )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( read_string_attribute_from_element_retrieves_value )
 {
-    xml::xistringstream xis( "<element attribute=\"the attribute value\"/>" );
+    xml::xistringstream xis( "<element attribute=\"  the attribute value   \"/>" );
     std::string value;
     xis >> xml::start( "element" ) >> xml::attribute( "attribute", value ) >> xml::end();
-    BOOST_CHECK_EQUAL( "the attribute value", value );
+    BOOST_CHECK_EQUAL( "  the attribute value   ", value );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +103,7 @@ BOOST_AUTO_UNIT_TEST( add_string_attribute_on_element_makes_a_valid_document )
     const std::string value = "  the attribute value  ";
     xos << xml::start( "element" ) << xml::attribute( "attribute", value ) << xml::end();
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element attribute=\"the attribute value\"/>\n", xos.str() );
+                       "<element attribute=\"  the attribute value  \"/>\n", xos.str() );
 }
 
 // -----------------------------------------------------------------------------

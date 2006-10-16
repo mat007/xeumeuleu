@@ -117,7 +117,7 @@ BOOST_AUTO_UNIT_TEST( streaming_node_string_value )
                              "</element>" );
     std::string value;
     xis >> xml::start( "element" ) >> value >> xml::end();
-    BOOST_CHECK_EQUAL( "this is the value", value );
+    BOOST_CHECK_EQUAL( "\n this is the value \n", value );
 }
 
 // -----------------------------------------------------------------------------
