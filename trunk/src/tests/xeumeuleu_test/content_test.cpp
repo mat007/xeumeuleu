@@ -29,9 +29,9 @@ namespace
 BOOST_AUTO_UNIT_TEST( streaming_root_content_makes_a_valid_document )
 {
     xml::xostringstream xos;
-    xos << xml::content( "element", " this is the content " );
+    xos << xml::content( "element", " this is the content  " );
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element>this is the content</element>\n", xos.str() );
+                       "<element> this is the content  </element>\n", xos.str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,12 +125,10 @@ BOOST_AUTO_UNIT_TEST( streaming_direct_content_non_constant_value_makes_valid_do
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_string_content )
 {
-    xml::xistringstream xis( "<element>"
-                               " this is the value "
-                             "</element>");
+    xml::xistringstream xis( "<element> this is the value </element>");
     std::string value;
     xis >> xml::content( "element", value );
-    BOOST_CHECK_EQUAL( "this is the value", value );
+    BOOST_CHECK_EQUAL( " this is the value ", value );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,9 +137,7 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_string_content )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_float_content )
 {
-    xml::xistringstream xis( "<element>"
-                               "1.23"
-                             "</element>");
+    xml::xistringstream xis( "<element> 1.23 </element>");
     float value;
     xis >> xml::content( "element", value );
     BOOST_CHECK_EQUAL( 1.23f, value );
@@ -153,9 +149,7 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_float_content )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_double_content )
 {
-    xml::xistringstream xis( "<element>"
-                               "1e+99"
-                             "</element>");
+    xml::xistringstream xis( "<element> 1e+99 </element>");
     double value;
     xis >> xml::content( "element", value );
     BOOST_CHECK_EQUAL( 1e+99, value );
@@ -167,9 +161,7 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_double_content )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_integer_content )
 {
-    xml::xistringstream xis( "<element>"
-                               "12"
-                             "</element>");
+    xml::xistringstream xis( "<element> 12 </element>");
     int value;
     xis >> xml::content( "element", value );
     BOOST_CHECK_EQUAL( 12, value );
@@ -181,9 +173,7 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_integer_content )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_float_content_in_integer_throws_an_exception )
 {
-    xml::xistringstream xis( "<element>"
-                               "12.3"
-                             "</element>");
+    xml::xistringstream xis( "<element> 12.3 </element>");
     int value;
     BOOST_CHECK_THROW( xis >> xml::content( "element", value ), xml::exception );
 }
@@ -194,9 +184,7 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_float_content_in_integer_thro
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( read_node_overflow_double_content_in_float_throws_an_exception )
 {
-    xml::xistringstream xis( "<element>"
-                               "1e+99"
-                             "</element>");
+    xml::xistringstream xis( "<element> 1e+99 </element>");
     float value;
     BOOST_CHECK_THROW( xis >> xml::content( "element", value ), xml::exception );
 }
@@ -207,9 +195,7 @@ BOOST_AUTO_UNIT_TEST( read_node_overflow_double_content_in_float_throws_an_excep
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_boolean_content )
 {
-    xml::xistringstream xis( "<element>"
-                               "true"
-                             "</element>");
+    xml::xistringstream xis( "<element> true </element>");
     bool value;
     xis >> xml::content( "element", value );
     BOOST_CHECK_EQUAL( true, value );
