@@ -98,7 +98,7 @@ void output::end()
 // -----------------------------------------------------------------------------
 void output::write( const std::string& value )
 {
-    pCurrent_->appendChild( document_.createTextNode( translate( trim( value ) ) ) );
+    pCurrent_->appendChild( document_.createTextNode( translate( value ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +111,7 @@ void output::attribute( const std::string& name, const std::string& value )
     if( ! pAttributes )
         throw xml::exception( context() + " cannot have attributes" );
     DOMAttr* pAttribute = document_.createAttribute( translate( trim( name ) ) );
-    pAttribute->setValue( translate( trim( value ) ) );
+    pAttribute->setValue( translate( value ) );
     pAttributes->setNamedItem( pAttribute );
 }
 

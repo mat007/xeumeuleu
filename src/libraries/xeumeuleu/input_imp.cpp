@@ -221,7 +221,7 @@ int input_imp::toInteger( const XMLCh* from ) const
 // -----------------------------------------------------------------------------
 bool input_imp::toBoolean( const XMLCh* from ) const
 {
-    const std::string value = translate( from );
+    const std::string value = trim( translate( from ) );
     if ( value == "true" || value == "1" )
         return true;
     if ( value == "false" || value == "0" )
@@ -235,7 +235,7 @@ bool input_imp::toBoolean( const XMLCh* from ) const
 // -----------------------------------------------------------------------------
 void input_imp::read( std::string& value ) const
 {
-    value = trim( translate( readValue() ) );
+    value = translate( readValue() );
 }
 
 // -----------------------------------------------------------------------------
