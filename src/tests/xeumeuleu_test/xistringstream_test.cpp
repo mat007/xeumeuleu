@@ -147,6 +147,21 @@ BOOST_AUTO_UNIT_TEST( streaming_node_value_fails_when_no_content )
 }
 
 // -----------------------------------------------------------------------------
+// Name: streaming_node_value_mixed_with_sub_node
+// Created: MCO 2006-10-16
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( streaming_node_value_mixed_with_sub_node )
+{
+    xml::xistringstream xis( "<element>"
+                             " \n text node content "
+                               "<sub-node/>"
+                             "</element>" );
+    std::string value;
+    xis >> xml::start( "element" ) >> value >> xml::start( "sub-node" ) >> xml::end() >> xml::end();
+    BOOST_CHECK_EQUAL( " \n text node content ", value );
+}
+
+// -----------------------------------------------------------------------------
 // Name: creating_an_UTF_8_stream_with_non_UTF_8_characters_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------

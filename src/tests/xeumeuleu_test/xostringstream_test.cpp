@@ -80,6 +80,21 @@ BOOST_AUTO_UNIT_TEST( streaming_value_at_root_level_throws_an_exception )
 }
 
 // -----------------------------------------------------------------------------
+// Name: streaming_text_node_value_mixed_with_sub_node
+// Created: MCO 2006-10-16
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( streaming_text_node_value_mixed_with_sub_node )
+{
+    BOOST_TODO; // $$$$ MAT 2006-10-16: of course this test fails as we format the output : should it be considered a bug or a feature ?
+//    xml::xostringstream xos;
+//    xos << xml::start( "element" ) << " \n text node content " << xml::start( "child" ) << xml::end() << xml::end();
+//    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+//                       "<element> \n text node content "
+//                       "<child/>\n"
+//                       "</element>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: creating_a_stream_with_invalid_encoding_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
