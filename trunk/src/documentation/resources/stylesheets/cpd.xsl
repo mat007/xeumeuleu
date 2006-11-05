@@ -38,7 +38,7 @@
           <td><xsl:value-of select="count(duplication/file)"/></td>
         </tr>
       </table>
-  
+
       <h1>Duplications</h1>
       <xsl:for-each select="duplication">
         <xsl:variable name="lines" select="@lines"/>
@@ -64,7 +64,7 @@
         </xsl:for-each>
 
     </xsl:template>
-    
+
     <xsl:template name="alternated-row">
       <xsl:attribute name="class">
         <xsl:if test="position() mod 2 = 1">a</xsl:if>
