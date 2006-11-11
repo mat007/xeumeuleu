@@ -50,8 +50,8 @@ xisubstream::xisubstream( const xistream& xis )
 // Name: xisubstream constructor
 // Created: AGE 2006-11-07
 // -----------------------------------------------------------------------------
-xisubstream::xisubstream( const xisubstream& xis )
-    : xistream( xis.branch() )
+xisubstream::xisubstream( const xisubstream& xiss )
+    : xistream( xiss.branch() )
 {
     // NOTHING
 }
