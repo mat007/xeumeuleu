@@ -69,7 +69,7 @@ public:
         pInput_->read( value );
     }
 
-    std::auto_ptr< input > branch();
+    std::auto_ptr< input > branch() const;
     //@}
 
     //! @name Accessors
