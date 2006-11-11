@@ -85,3 +85,14 @@ BOOST_AUTO_UNIT_TEST( creating_root_element_in_sub_stream_completes_the_stream )
                             "<element/>\n";
     BOOST_CHECK_EQUAL( xml, xos.str() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: creating_sub_stream_in_sub_stream_is_valid
+// Created: MCO 2006-03-20
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( creating_sub_stream_in_sub_stream_is_valid )
+{
+    xml::xostringstream xos;
+    xml::xosubstream xoss( xos );
+    xml::xosubstream xosss( xoss );
+}

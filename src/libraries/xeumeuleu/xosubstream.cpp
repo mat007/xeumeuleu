@@ -48,6 +48,17 @@ xosubstream::xosubstream( xostream& xos )
 }
 
 // -----------------------------------------------------------------------------
+// Name: xosubstream constructor
+// Created: MAT 2006-11-20
+// -----------------------------------------------------------------------------
+xosubstream::xosubstream( xosubstream& xoss )
+    : xo_base_member( xoss.branch() )
+    , xostream( *pOutput_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: xosubstream destructor
 // Created: MAT 2006-03-18
 // -----------------------------------------------------------------------------

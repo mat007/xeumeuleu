@@ -61,7 +61,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              xisubstream( const xistream& xis );
-             xisubstream( const xisubstream& xis );
+             xisubstream( const xisubstream& xiss );
     virtual ~xisubstream();
     //@}
 };
