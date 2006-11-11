@@ -76,13 +76,25 @@ BOOST_AUTO_UNIT_TEST( sub_stream_created_after_optional_is_not_optional )
 }
 
 // -----------------------------------------------------------------------------
-// Name: creating_sub_stream_on_optional_non_existing_branch_is_valid
+// Name: creating_sub_stream_on_optional_non_existing_branch_is_valid_and_does_not_reset_optional
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_sub_stream_on_optional_non_existing_branch_is_valid )
+BOOST_AUTO_UNIT_TEST( creating_sub_stream_on_optional_non_existing_branch_is_valid_and_does_not_reset_optional )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional() >> xml::start( "non-existing" );
     xml::xisubstream xiss( xis );
     BOOST_CHECK_NO_THROW( xis >> xml::start( "another-non-existing" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: creating_sub_stream_on_sub_stream_is_valid
+// Created: MCO 2006-11-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( creating_sub_stream_on_sub_stream_is_valid )
+{
+    xml::xistringstream xis( "<element/>" );
+    xml::xisubstream xiss( xis );
+    xml::xisubstream xisss( xiss );
+    BOOST_CHECK_NO_THROW( xisss >> xml::start( "element" ) );
 }
