@@ -40,7 +40,7 @@ using namespace xml;
 // Name: xisubstream constructor
 // Created: MAT 2006-03-18
 // -----------------------------------------------------------------------------
-xisubstream::xisubstream( xistream& xis )
+xisubstream::xisubstream( const xistream& xis )
     : xistream( xis.branch() )
 {
     // NOTHING
@@ -50,7 +50,7 @@ xisubstream::xisubstream( xistream& xis )
 // Name: xisubstream constructor
 // Created: AGE 2006-11-07
 // -----------------------------------------------------------------------------
-xisubstream::xisubstream( xisubstream& xis )
+xisubstream::xisubstream( const xisubstream& xis )
     : xistream( xis.branch() )
 {
     // NOTHING

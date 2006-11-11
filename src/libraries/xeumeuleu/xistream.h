@@ -61,7 +61,7 @@ public:
     void start( const std::string& tag );
     void end();
 
-    std::auto_ptr< input > branch();
+    std::auto_ptr< input > branch() const;
     //@}
 
     //! @name Accessors

@@ -60,8 +60,8 @@ class xisubstream : public xistream
 public:
     //! @name Constructors/Destructor
     //@{
-             xisubstream( xistream& xis );
-             xisubstream( xisubstream& xis );
+             xisubstream( const xistream& xis );
+             xisubstream( const xisubstream& xis );
     virtual ~xisubstream();
     //@}
 };

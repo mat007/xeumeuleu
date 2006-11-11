@@ -79,7 +79,7 @@ void input::end()
 // Name: input::branch
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
-std::auto_ptr< input > input::branch()
+std::auto_ptr< input > input::branch() const
 {
     return std::auto_ptr< input >( new input( pInput_->branch() ) );
 }
