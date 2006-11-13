@@ -63,9 +63,6 @@
             <include name="**/optional.h"/>
             <exclude name="**/*_pch.h"/>
         </deploy>
-        <copy todir="${dist.dir}/dll" flatten="true">
-            <fileset dir="${run.dir}" includes="*.dll"/>
-        </copy>
     </target>
 
     <!--
