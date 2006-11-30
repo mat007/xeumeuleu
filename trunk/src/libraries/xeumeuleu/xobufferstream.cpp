@@ -30,7 +30,6 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_pch.h"
 #include "xobufferstream.h"
 #include "buffer_output.h"
 
