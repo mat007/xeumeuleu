@@ -54,7 +54,6 @@ namespace xml
 // =============================================================================
 class xistringstream : public xistream
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

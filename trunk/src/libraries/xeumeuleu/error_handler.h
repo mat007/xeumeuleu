@@ -47,7 +47,6 @@ namespace xml
 // =============================================================================
 class error_handler : public XERCES_CPP_NAMESPACE::DOMErrorHandler
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

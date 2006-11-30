@@ -48,7 +48,6 @@ namespace xml
 // =============================================================================
 class encoding
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

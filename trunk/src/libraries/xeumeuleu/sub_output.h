@@ -46,7 +46,6 @@ namespace xml
 // =============================================================================
 class sub_output : public output
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

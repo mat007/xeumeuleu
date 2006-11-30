@@ -47,7 +47,6 @@ namespace xml
 // =============================================================================
 class file_output : private output_base_member, public output
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

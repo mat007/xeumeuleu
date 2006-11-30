@@ -48,7 +48,6 @@ namespace xml
 // =============================================================================
 class grammar
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -76,7 +75,6 @@ private:
 // =============================================================================
 class internal_grammar : public grammar
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -47,7 +47,6 @@ namespace xml
 // =============================================================================
 class file_input : private input_base_member, public input
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

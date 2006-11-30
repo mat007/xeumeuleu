@@ -49,11 +49,10 @@ namespace xml
 // =============================================================================
 class output_base_member : private document
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit output_base_member();
+             output_base_member();
     virtual ~output_base_member();
     //@}
 

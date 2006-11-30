@@ -51,7 +51,6 @@ namespace xml
 template< typename T >
 class list_name_visitor : public visitor
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

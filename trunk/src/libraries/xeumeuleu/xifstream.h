@@ -53,7 +53,6 @@ namespace xml
 // =============================================================================
 class xifstream : public xistream
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

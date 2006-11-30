@@ -46,7 +46,6 @@ namespace xml
 // =============================================================================
 class document
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

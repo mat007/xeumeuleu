@@ -37,11 +37,11 @@
 #include "input_base.h"
 #include <string>
 #include <memory>
-#include <xercesc/dom/DOMDocument.hpp>
 
 namespace xml
 {
     class visitor;
+    class input_base;
 
 // =============================================================================
 /** @class  input
@@ -51,7 +51,6 @@ namespace xml
 // =============================================================================
 class input : private input_context
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

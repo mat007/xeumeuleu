@@ -47,7 +47,6 @@ namespace xml
 // =============================================================================
 class input_context
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

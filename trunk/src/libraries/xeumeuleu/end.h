@@ -54,7 +54,6 @@ namespace xml
 // =============================================================================
 class end
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
