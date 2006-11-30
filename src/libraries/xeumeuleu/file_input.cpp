@@ -30,7 +30,6 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_pch.h"
 #include "file_input.h"
 #include "translate.h"
 #include "exception.h"

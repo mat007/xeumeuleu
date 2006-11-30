@@ -30,7 +30,6 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_pch.h"
 #include "string_input.h"
 #include "input_imp.h"
 #include "grammar.h"
