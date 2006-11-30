@@ -50,7 +50,6 @@ namespace xml
 // =============================================================================
 class beautifier : public XERCES_CPP_NAMESPACE::XMLFormatTarget
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

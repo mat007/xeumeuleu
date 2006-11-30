@@ -47,7 +47,6 @@ namespace xml
 // =============================================================================
 class xo_base_member
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

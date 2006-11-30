@@ -53,7 +53,6 @@ namespace xml
 // =============================================================================
 class xofstream : private xo_base_member, public xostream
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

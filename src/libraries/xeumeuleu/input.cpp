@@ -33,10 +33,8 @@
 #include "xeumeuleu_pch.h"
 #include "input.h"
 #include "optional_input.h"
-#include "exception.h"
 
 using namespace xml;
-using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: input constructor

@@ -47,7 +47,6 @@ namespace xml
 // =============================================================================
 class chained_exception : public xml::exception
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

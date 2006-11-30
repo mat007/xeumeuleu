@@ -49,7 +49,6 @@ namespace xml
 // =============================================================================
 class xostream
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

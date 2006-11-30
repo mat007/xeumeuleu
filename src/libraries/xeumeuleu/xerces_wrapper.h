@@ -45,7 +45,6 @@ namespace xml
 template< typename T >
 class xerces_wrapper
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

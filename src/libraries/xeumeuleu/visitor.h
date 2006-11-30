@@ -47,7 +47,6 @@ namespace xml
 // =============================================================================
 class visitor
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

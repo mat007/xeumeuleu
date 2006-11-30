@@ -50,7 +50,6 @@ namespace xml
 // =============================================================================
 class optional
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

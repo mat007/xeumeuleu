@@ -47,7 +47,6 @@ namespace xml
 // =============================================================================
 class sub_xistream : public xistream
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

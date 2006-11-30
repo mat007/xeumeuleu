@@ -49,7 +49,6 @@ namespace xml
 template< typename T >
 class attribute_manipulator
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -46,7 +46,6 @@ namespace xml
 // =============================================================================
 class exception : public std::runtime_error
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
