@@ -60,7 +60,7 @@
       <ul>
         <li>the stream oriented design allows to quickly write easy and simple code</li>
         <li>the underlying use of Apache Xerces ensures proper parsing and full features support</li>
-        <li>the opensource license guarantees code availability and free use</li>
+        <li>the open-source license guarantees code availability and free use</li>
         <li>the unit tests coverage greatly helps reducing the risk of bugs within the library</li>
       </ul>
     </section>
