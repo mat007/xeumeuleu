@@ -65,7 +65,7 @@ translate::operator std::string() const
     char* pStr = XMLString::transcode( pCh_ );
     if( ! pStr )
         return std::string();
-    std::string str( pStr );
+    const std::string str( pStr );
     XMLString::release( &pStr );
     return str;
 }
