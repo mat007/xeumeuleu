@@ -30,7 +30,6 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_pch.h"
 #include "xistream.h"
 #include "input.h"
 #include "chained_exception.h"

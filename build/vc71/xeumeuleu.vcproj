@@ -22,9 +22,9 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="3"
-				PrecompiledHeaderThrough="$(ProjectName)_pch.h"
-				PrecompiledHeaderFile="$(IntDir)/$(ProjectName).pch"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderThrough=""
+				PrecompiledHeaderFile=""
 				AssemblerListingLocation="$(IntDir)/"
 				ObjectFile="$(IntDir)/"
 				ProgramDataBaseFileName="$(IntDir)/$(ProjectName).pdb"
@@ -69,9 +69,9 @@
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="TRUE"
-				UsePrecompiledHeader="3"
-				PrecompiledHeaderThrough="$(ProjectName)_pch.h"
-				PrecompiledHeaderFile="$(IntDir)/$(ProjectName).pch"
+				UsePrecompiledHeader="0"
+				PrecompiledHeaderThrough=""
+				PrecompiledHeaderFile=""
 				AssemblerListingLocation="$(IntDir)/"
 				ObjectFile="$(IntDir)/"
 				ProgramDataBaseFileName="$(IntDir)/$(ProjectName).pdb"
@@ -139,24 +139,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeumeuleu\translate.h">
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\xeumeuleu_pch.cpp">
-				<FileConfiguration
-					Name="debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\xeumeuleu_pch.h">
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeumeuleu\xml.h">
