@@ -47,7 +47,6 @@ namespace xml
 // =============================================================================
 class null_input : public input_base
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

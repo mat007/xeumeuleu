@@ -56,7 +56,6 @@ namespace xml
 // =============================================================================
 class start
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

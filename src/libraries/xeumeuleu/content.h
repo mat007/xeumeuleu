@@ -59,7 +59,6 @@ namespace xml
 template< typename T >
 class content_manipulator
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

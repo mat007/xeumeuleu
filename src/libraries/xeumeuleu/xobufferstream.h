@@ -54,7 +54,6 @@ namespace xml
 // =============================================================================
 class xobufferstream : private xo_base_member, public xostream
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

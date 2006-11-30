@@ -48,7 +48,6 @@ namespace xml
 // =============================================================================
 class input_base
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

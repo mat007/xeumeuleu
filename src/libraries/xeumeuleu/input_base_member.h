@@ -34,7 +34,7 @@
 #define _xeumeuleu_input_base_member_h_
 
 #include "document.h"
-#include <xercesc/dom/DOMDocument.hpp>
+#include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/sax/InputSource.hpp>
 #include <string>
 
@@ -51,7 +51,6 @@ namespace xml
 // =============================================================================
 class input_base_member : protected document
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
