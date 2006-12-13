@@ -273,6 +273,18 @@ void optional_input::attribute( const std::string& name, double& value ) const
 
 // -----------------------------------------------------------------------------
 // Name: optional_input::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void optional_input::attribute( const std::string& name, short& value ) const
+{
+    if( pInput_->hasAttribute( name ) )
+        context_.reset( pInput_ ).attribute( name, value );
+    else
+        context_.reset( pInput_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: optional_input::attribute
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, int& value ) const
@@ -287,7 +299,7 @@ void optional_input::attribute( const std::string& name, int& value ) const
 // Name: optional_input::attribute
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-void optional_input::attribute( const std::string& name, short& value ) const
+void optional_input::attribute( const std::string& name, long& value ) const
 {
     if( pInput_->hasAttribute( name ) )
         context_.reset( pInput_ ).attribute( name, value );
@@ -311,7 +323,31 @@ void optional_input::attribute( const std::string& name, bool& value ) const
 // Name: optional_input::attribute
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
+void optional_input::attribute( const std::string& name, unsigned short& value ) const
+{
+    if( pInput_->hasAttribute( name ) )
+        context_.reset( pInput_ ).attribute( name, value );
+    else
+        context_.reset( pInput_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: optional_input::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, unsigned int& value ) const
+{
+    if( pInput_->hasAttribute( name ) )
+        context_.reset( pInput_ ).attribute( name, value );
+    else
+        context_.reset( pInput_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: optional_input::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void optional_input::attribute( const std::string& name, unsigned long& value ) const
 {
     if( pInput_->hasAttribute( name ) )
         context_.reset( pInput_ ).attribute( name, value );
