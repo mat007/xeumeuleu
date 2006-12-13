@@ -269,6 +269,17 @@ void xostream::attribute( const std::string& name, unsigned int value )
 }
 
 // -----------------------------------------------------------------------------
+// Name: xostream::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void xostream::attribute( const std::string& name, unsigned long value )
+{
+    TRY
+        output_.attribute( name, value );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
 // Name: xostream::branch
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
