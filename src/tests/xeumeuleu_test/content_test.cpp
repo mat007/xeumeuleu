@@ -125,6 +125,36 @@ BOOST_AUTO_UNIT_TEST( streaming_child_unsigned_integer_content_makes_valid_docum
 }
 
 // -----------------------------------------------------------------------------
+// Name: streaming_child_long_integer_content_makes_valid_document
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( streaming_child_long_integer_content_makes_valid_document )
+{
+    xml::xostringstream xos;
+    const long value = 1242;
+    xos << xml::start( "element" ) << xml::content( "child", value ) << xml::end();
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element>\n"
+                       "  <child>1242</child>\n"
+                       "</element>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: streaming_child_unsigned_long_integer_content_makes_valid_document
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( streaming_child_unsigned_long_integer_content_makes_valid_document )
+{
+    xml::xostringstream xos;
+    const unsigned long value = 1242;
+    xos << xml::start( "element" ) << xml::content( "child", value ) << xml::end();
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element>\n"
+                       "  <child>1242</child>\n"
+                       "</element>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: streaming_direct_content_value_makes_valid_document
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
