@@ -152,6 +152,18 @@ void optional_input::read( bool& value ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: optional_input::read
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void optional_input::read( unsigned int& value ) const
+{
+    if( pInput_->hasContent() )
+        context_.reset( pInput_ ).read( value );
+    else
+        context_.reset( pInput_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: std::auto_ptr< input_base > optional_input::branch
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------

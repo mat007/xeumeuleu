@@ -184,10 +184,10 @@ const XMLCh* input_imp::readValue() const
 // -----------------------------------------------------------------------------
 float input_imp::toFloat( const XMLCh* from ) const
 {
-    const XMLFloat fValue( from );
-    if( fValue.isDataOverflowed() )
+    const XMLFloat value( from );
+    if( value.isDataOverflowed() )
         throw xml::exception( "Value of " + context() + " overflowed (probably a double instead of a float)" );
-    return static_cast< float >( fValue.getValue() );
+    return static_cast< float >( value.getValue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -215,11 +215,12 @@ int input_imp::toInteger( const XMLCh* from ) const
 short input_imp::toShort( const XMLCh* from ) const
 {
     if( XMLFloat( from ).isDataOverflowed() )
-        throw xml::exception( "Value of " + context() + " overflowed (probably a double instead of a short integer)" );
-    const double dValue = XMLDouble( from ).getValue();
-    if( static_cast< double >( static_cast< short >( dValue ) ) != dValue )
-        throw xml::exception( "Value of " + context() + " is not a short integer (probably a float or a double)" );
-    return static_cast< short >( dValue );
+        throw xml::exception( "Value of " + context() + " overflowed" );
+    const double value = XMLDouble( from ).getValue();
+    const short result = static_cast< short >( value );
+    if( static_cast< double >( result ) != value )
+        throw xml::exception( "Value of " + context() + " is not a short integer" );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -234,6 +235,19 @@ bool input_imp::toBoolean( const XMLCh* from ) const
     if ( value == "false" || value == "0" )
         return false;
     throw xml::exception( "Value of " + context() + " is not a boolean" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::toUnsignedInteger
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+unsigned int input_imp::toUnsignedInteger( const XMLCh* from ) const
+{
+    const double value = XMLDouble( from ).getValue();
+    const unsigned int result = static_cast< unsigned int >( value );
+    if( static_cast< double >( result ) != value )
+        throw xml::exception( "Value of " + context() + " is not an unsigned integer" );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -288,6 +302,15 @@ void input_imp::read( short& value ) const
 void input_imp::read( bool& value ) const
 {
     value = toBoolean( readValue() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::read
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void input_imp::read( unsigned int& value ) const
+{
+    value = toUnsignedInteger( readValue() );
 }
 
 // -----------------------------------------------------------------------------
