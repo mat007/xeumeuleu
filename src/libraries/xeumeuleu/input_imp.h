@@ -65,6 +65,7 @@ public:
     virtual void read( float& value ) const;
     virtual void read( double& value ) const;
     virtual void read( int& value ) const;
+    virtual void read( short& value ) const;
     virtual void read( bool& value ) const;
 
     virtual std::auto_ptr< input_base > branch() const;
@@ -106,6 +107,7 @@ private:
     float  toFloat  ( const XMLCh* from ) const;
     double toDouble ( const XMLCh* from ) const;
     int    toInteger( const XMLCh* from ) const;
+    short  toShort  ( const XMLCh* from ) const;
     bool   toBoolean( const XMLCh* from ) const;
     //@}
 

@@ -85,6 +85,7 @@ public:
     xistream& operator>>( float& value );
     xistream& operator>>( double& value );
     xistream& operator>>( int& value );
+    xistream& operator>>( short& value );
     xistream& operator>>( bool& value );
     //@}
 

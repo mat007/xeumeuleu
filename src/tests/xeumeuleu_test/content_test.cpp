@@ -144,6 +144,17 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_float_content )
 }
 
 // -----------------------------------------------------------------------------
+// Name: read_node_overflow_double_content_in_float_throws_an_exception
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( read_node_overflow_double_content_in_float_throws_an_exception )
+{
+    xml::xistringstream xis( "<element> 1e+99 </element>");
+    float value;
+    BOOST_CHECK_THROW( xis >> xml::content( "element", value ), xml::exception );
+}
+
+// -----------------------------------------------------------------------------
 // Name: streaming_content_reads_node_double_content
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
@@ -179,17 +190,6 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_float_content_in_integer_thro
 }
 
 // -----------------------------------------------------------------------------
-// Name: read_node_overflow_double_content_in_float_throws_an_exception
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_node_overflow_double_content_in_float_throws_an_exception )
-{
-    xml::xistringstream xis( "<element> 1e+99 </element>");
-    float value;
-    BOOST_CHECK_THROW( xis >> xml::content( "element", value ), xml::exception );
-}
-
-// -----------------------------------------------------------------------------
 // Name: streaming_content_reads_node_boolean_content
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
@@ -199,4 +199,27 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_boolean_content )
     bool value;
     xis >> xml::content( "element", value );
     BOOST_CHECK_EQUAL( true, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: streaming_content_reads_node_short_content
+// Created: MCO 2006-12-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_short_content )
+{
+    xml::xistringstream xis( "<element> 5 </element>");
+    short value;
+    xis >> xml::content( "element", value );
+    BOOST_CHECK_EQUAL( 5, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: streaming_content_reads_node_integer_content_in_short_throws_an_exception
+// Created: MCO 2006-12-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_integer_content_in_short_throws_an_exception )
+{
+    xml::xistringstream xis( "<element> 300000 </element>");
+    short value;
+    BOOST_CHECK_THROW( xis >> xml::content( "element", value ), xml::exception );
 }

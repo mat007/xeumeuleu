@@ -137,6 +137,18 @@ xistream& xistream::operator>>( int& value )
 
 // -----------------------------------------------------------------------------
 // Name: xistream::operator>>
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+xistream& xistream::operator>>( short& value )
+{
+    TRY
+        pInput_->read( value );
+        return *this;
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xistream::operator>>
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
 xistream& xistream::operator>>( bool& value )
