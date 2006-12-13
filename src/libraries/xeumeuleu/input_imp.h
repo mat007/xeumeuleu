@@ -64,10 +64,13 @@ public:
     virtual void read( std::string& value ) const;
     virtual void read( float& value ) const;
     virtual void read( double& value ) const;
-    virtual void read( int& value ) const;
     virtual void read( short& value ) const;
+    virtual void read( int& value ) const;
+    virtual void read( long& value ) const;
     virtual void read( bool& value ) const;
+    virtual void read( unsigned short& value ) const;
     virtual void read( unsigned int& value ) const;
+    virtual void read( unsigned long& value ) const;
 
     virtual std::auto_ptr< input_base > branch() const;
     //@}
@@ -109,11 +112,14 @@ private:
 
     float  toFloat  ( const XMLCh* from ) const;
     double toDouble ( const XMLCh* from ) const;
-    int    toInteger( const XMLCh* from ) const;
     short  toShort  ( const XMLCh* from ) const;
+    int    toInteger( const XMLCh* from ) const;
+    long   toLong   ( const XMLCh* from ) const;
     bool   toBoolean( const XMLCh* from ) const;
 
-    unsigned int toUnsignedInteger( const XMLCh* from ) const;
+    unsigned short toUnsignedShort  ( const XMLCh* from ) const;
+    unsigned int   toUnsignedInteger( const XMLCh* from ) const;
+    unsigned long  toUnsignedLong   ( const XMLCh* from ) const;
     //@}
 
 private:
