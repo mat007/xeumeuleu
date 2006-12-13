@@ -79,6 +79,7 @@ public:
     virtual void attribute( const std::string& name, float& value ) const;
     virtual void attribute( const std::string& name, double& value ) const;
     virtual void attribute( const std::string& name, int& value ) const;
+    virtual void attribute( const std::string& name, short& value ) const;
     virtual void attribute( const std::string& name, bool& value ) const;
 
     virtual void visit( const visitor& v ) const;
