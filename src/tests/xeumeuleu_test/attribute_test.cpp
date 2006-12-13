@@ -58,6 +58,18 @@ BOOST_AUTO_UNIT_TEST( read_short_integer_attribute_from_element_retrieves_value 
 }
 
 // -----------------------------------------------------------------------------
+// Name: read_unsigned_integer_attribute_from_element_retrieves_value
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( read_unsigned_integer_attribute_from_element_retrieves_value )
+{
+    xml::xistringstream xis( "<element attribute=\"12\"/>" );
+    unsigned int value;
+    xis >> xml::start( "element" ) >> xml::attribute( "attribute", value ) >> xml::end();
+    BOOST_CHECK_EQUAL( 12u, value );
+}
+
+// -----------------------------------------------------------------------------
 // Name: read_string_attribute_from_element_retrieves_value
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------

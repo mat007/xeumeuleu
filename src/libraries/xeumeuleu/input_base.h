@@ -83,6 +83,7 @@ public:
     virtual void attribute( const std::string& name, int& value ) const = 0;
     virtual void attribute( const std::string& name, short& value ) const = 0;
     virtual void attribute( const std::string& name, bool& value ) const = 0;
+    virtual void attribute( const std::string& name, unsigned int& value ) const = 0;
 
     virtual void visit( const visitor& v ) const = 0;
     //@}

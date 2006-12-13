@@ -272,6 +272,18 @@ void optional_input::attribute( const std::string& name, bool& value ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: optional_input::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void optional_input::attribute( const std::string& name, unsigned int& value ) const
+{
+    if( pInput_->hasAttribute( name ) )
+        context_.reset( pInput_ ).attribute( name, value );
+    else
+        context_.reset( pInput_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: optional_input::visit
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
