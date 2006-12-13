@@ -102,6 +102,8 @@ private:
 
     //! @name Helpers
     //@{
+    template< typename T > void readContent( T& value ) const;
+    template< typename T > void readAttribute( const std::string& name, T& value ) const;
     //@}
 
 private:
