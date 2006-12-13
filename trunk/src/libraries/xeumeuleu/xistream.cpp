@@ -238,6 +238,17 @@ void xistream::attribute( const std::string& name, bool& value ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: xistream::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void xistream::attribute( const std::string& name, unsigned int& value ) const
+{
+    TRY
+        pInput_->attribute( name, value );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
 // Name: xistream::visit
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------

@@ -380,6 +380,15 @@ void input_imp::attribute( const std::string& name, bool& value ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: input_imp::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void input_imp::attribute( const std::string& name, unsigned int& value ) const
+{
+    value = toUnsignedInteger( readAttribute( name ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: input_imp::visit
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
