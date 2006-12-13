@@ -69,6 +69,7 @@ public:
     void attribute( const std::string& name, float& value ) const;
     void attribute( const std::string& name, double& value ) const;
     void attribute( const std::string& name, int& value ) const;
+    void attribute( const std::string& name, short& value ) const;
     void attribute( const std::string& name, bool& value ) const;
 
     void visit( const visitor& v );
