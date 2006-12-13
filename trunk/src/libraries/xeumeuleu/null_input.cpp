@@ -105,6 +105,15 @@ void null_input::read( double& /*value*/ ) const
 
 // -----------------------------------------------------------------------------
 // Name: null_input::read
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void null_input::read( short& /*value*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: null_input::read
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
 void null_input::read( int& /*value*/ ) const
@@ -116,7 +125,7 @@ void null_input::read( int& /*value*/ ) const
 // Name: null_input::read
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-void null_input::read( short& /*value*/ ) const
+void null_input::read( long& /*value*/ ) const
 {
     // NOTHING
 }
@@ -134,7 +143,25 @@ void null_input::read( bool& /*value*/ ) const
 // Name: null_input::read
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
+void null_input::read( unsigned short& /*value*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: null_input::read
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
 void null_input::read( unsigned int& /*value*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: null_input::read
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void null_input::read( unsigned long& /*value*/ ) const
 {
     // NOTHING
 }

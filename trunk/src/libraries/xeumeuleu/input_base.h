@@ -65,8 +65,11 @@ public:
     virtual void read( double& value ) const = 0;
     virtual void read( int& value ) const = 0;
     virtual void read( short& value ) const = 0;
+    virtual void read( long& value ) const = 0;
     virtual void read( bool& value ) const = 0;
+    virtual void read( unsigned short& value ) const = 0;
     virtual void read( unsigned int& value ) const = 0;
+    virtual void read( unsigned long& value ) const = 0;
 
     virtual std::auto_ptr< input_base > branch() const = 0;
     //@}

@@ -200,6 +200,19 @@ double input_imp::toDouble( const XMLCh* from ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: input_imp::toShort
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+short input_imp::toShort( const XMLCh* from ) const
+{
+    const double value = XMLDouble( from ).getValue();
+    const short result = static_cast< short >( value );
+    if( static_cast< double >( result ) != value )
+        throw xml::exception( "Value of " + context() + " is not a short integer" );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: input_imp::toInteger
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
@@ -209,17 +222,15 @@ int input_imp::toInteger( const XMLCh* from ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_imp::toShort
+// Name: input_imp::toLong
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-short input_imp::toShort( const XMLCh* from ) const
+long input_imp::toLong( const XMLCh* from ) const
 {
-    if( XMLFloat( from ).isDataOverflowed() )
-        throw xml::exception( "Value of " + context() + " overflowed" );
     const double value = XMLDouble( from ).getValue();
-    const short result = static_cast< short >( value );
+    const long result = static_cast< long >( value );
     if( static_cast< double >( result ) != value )
-        throw xml::exception( "Value of " + context() + " is not a short integer" );
+        throw xml::exception( "Value of " + context() + " is not a long integer" );
     return result;
 }
 
@@ -238,6 +249,19 @@ bool input_imp::toBoolean( const XMLCh* from ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: input_imp::toUnsignedShort
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+unsigned short input_imp::toUnsignedShort( const XMLCh* from ) const
+{
+    const double value = XMLDouble( from ).getValue();
+    const unsigned short result = static_cast< unsigned short >( value );
+    if( static_cast< double >( result ) != value )
+        throw xml::exception( "Value of " + context() + " is not an unsigned short integer" );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: input_imp::toUnsignedInteger
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
@@ -247,6 +271,19 @@ unsigned int input_imp::toUnsignedInteger( const XMLCh* from ) const
     const unsigned int result = static_cast< unsigned int >( value );
     if( static_cast< double >( result ) != value )
         throw xml::exception( "Value of " + context() + " is not an unsigned integer" );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::toUnsignedLong
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+unsigned long input_imp::toUnsignedLong( const XMLCh* from ) const
+{
+    const double value = XMLDouble( from ).getValue();
+    const unsigned long result = static_cast< unsigned long >( value );
+    if( static_cast< double >( result ) != value )
+        throw xml::exception( "Value of " + context() + " is not an unsigned short integer" );
     return result;
 }
 
@@ -279,6 +316,15 @@ void input_imp::read( double& value ) const
 
 // -----------------------------------------------------------------------------
 // Name: input_imp::read
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void input_imp::read( short& value ) const
+{
+    value = toShort( readValue() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::read
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
 void input_imp::read( int& value ) const
@@ -290,9 +336,9 @@ void input_imp::read( int& value ) const
 // Name: input_imp::read
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-void input_imp::read( short& value ) const
+void input_imp::read( long& value ) const
 {
-    value = toShort( readValue() );
+    value = toLong( readValue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -308,9 +354,27 @@ void input_imp::read( bool& value ) const
 // Name: input_imp::read
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
+void input_imp::read( unsigned short& value ) const
+{
+    value = toUnsignedShort( readValue() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::read
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
 void input_imp::read( unsigned int& value ) const
 {
     value = toUnsignedInteger( readValue() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::read
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void input_imp::read( unsigned long& value ) const
+{
+    value = toUnsignedLong( readValue() );
 }
 
 // -----------------------------------------------------------------------------

@@ -117,6 +117,18 @@ void optional_input::read( double& value ) const
 
 // -----------------------------------------------------------------------------
 // Name: optional_input::read
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void optional_input::read( short& value ) const
+{
+    if( pInput_->hasContent() )
+        context_.reset( pInput_ ).read( value );
+    else
+        context_.reset( pInput_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: optional_input::read
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
 void optional_input::read( int& value ) const
@@ -131,7 +143,7 @@ void optional_input::read( int& value ) const
 // Name: optional_input::read
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-void optional_input::read( short& value ) const
+void optional_input::read( long& value ) const
 {
     if( pInput_->hasContent() )
         context_.reset( pInput_ ).read( value );
@@ -155,7 +167,31 @@ void optional_input::read( bool& value ) const
 // Name: optional_input::read
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
+void optional_input::read( unsigned short& value ) const
+{
+    if( pInput_->hasContent() )
+        context_.reset( pInput_ ).read( value );
+    else
+        context_.reset( pInput_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: optional_input::read
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
 void optional_input::read( unsigned int& value ) const
+{
+    if( pInput_->hasContent() )
+        context_.reset( pInput_ ).read( value );
+    else
+        context_.reset( pInput_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: optional_input::read
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void optional_input::read( unsigned long& value ) const
 {
     if( pInput_->hasContent() )
         context_.reset( pInput_ ).read( value );

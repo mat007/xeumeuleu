@@ -110,13 +110,13 @@ BOOST_AUTO_UNIT_TEST( streaming_child_boolean_content_makes_valid_document )
 }
 
 // -----------------------------------------------------------------------------
-// Name: streaming_child_unsigned_integer_content_makes_valid_document
+// Name: streaming_child_long_integer_content_makes_valid_document
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_child_unsigned_integer_content_makes_valid_document )
+BOOST_AUTO_UNIT_TEST( streaming_child_long_integer_content_makes_valid_document )
 {
     xml::xostringstream xos;
-    const unsigned int value = 1242;
+    const long value = 1242;
     xos << xml::start( "element" ) << xml::content( "child", value ) << xml::end();
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element>\n"
@@ -125,13 +125,28 @@ BOOST_AUTO_UNIT_TEST( streaming_child_unsigned_integer_content_makes_valid_docum
 }
 
 // -----------------------------------------------------------------------------
-// Name: streaming_child_long_integer_content_makes_valid_document
+// Name: streaming_child_unsigned_short_content_makes_valid_document
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_child_long_integer_content_makes_valid_document )
+BOOST_AUTO_UNIT_TEST( streaming_child_unsigned_short_content_makes_valid_document )
 {
     xml::xostringstream xos;
-    const long value = 1242;
+    const unsigned short value = 65535u;
+    xos << xml::start( "element" ) << xml::content( "child", value ) << xml::end();
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element>\n"
+                       "  <child>65535</child>\n"
+                       "</element>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: streaming_child_unsigned_integer_content_makes_valid_document
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( streaming_child_unsigned_integer_content_makes_valid_document )
+{
+    xml::xostringstream xos;
+    const unsigned int value = 1242;
     xos << xml::start( "element" ) << xml::content( "child", value ) << xml::end();
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element>\n"
@@ -239,6 +254,18 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_integer_content )
 }
 
 // -----------------------------------------------------------------------------
+// Name: streaming_content_reads_node_short_integer_content
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_short_integer_content )
+{
+    xml::xistringstream xis( "<element> 32767 </element>");
+    short value;
+    xis >> xml::content( "element", value );
+    BOOST_CHECK_EQUAL( 32767, value );
+}
+
+// -----------------------------------------------------------------------------
 // Name: streaming_content_reads_node_float_content_in_integer_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
@@ -262,13 +289,13 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_boolean_content )
 }
 
 // -----------------------------------------------------------------------------
-// Name: streaming_content_reads_node_short_integer_content
+// Name: streaming_content_reads_node_long_integer_content
 // Created: MCO 2006-12-12
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_short_integer_content )
+BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_long_integer_content )
 {
     xml::xistringstream xis( "<element> 5 </element>");
-    short value;
+    long value;
     xis >> xml::content( "element", value );
     BOOST_CHECK_EQUAL( 5, value );
 }
@@ -294,6 +321,30 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_unsigned_integer_content )
     unsigned int value;
     xis >> xml::content( "element", value );
     BOOST_CHECK_EQUAL( 4294967295u, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: streaming_content_reads_node_unsigned_short_integer_content
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_unsigned_short_integer_content )
+{
+    xml::xistringstream xis( "<element> 65535 </element>");
+    unsigned short value;
+    xis >> xml::content( "element", value );
+    BOOST_CHECK_EQUAL( 65535u, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: streaming_content_reads_node_unsigned_long_integer_content
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_unsigned_long_integer_content )
+{
+    xml::xistringstream xis( "<element> 4294967295 </element>");
+    unsigned long value;
+    xis >> xml::content( "element", value );
+    BOOST_CHECK_EQUAL( 4294967295, value );
 }
 
 // -----------------------------------------------------------------------------

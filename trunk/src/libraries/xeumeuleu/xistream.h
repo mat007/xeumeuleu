@@ -86,10 +86,13 @@ public:
     xistream& operator>>( std::string& value );
     xistream& operator>>( float& value );
     xistream& operator>>( double& value );
-    xistream& operator>>( int& value );
     xistream& operator>>( short& value );
+    xistream& operator>>( int& value );
+    xistream& operator>>( long& value );
     xistream& operator>>( bool& value );
+    xistream& operator>>( unsigned short& value );
     xistream& operator>>( unsigned int& value );
+    xistream& operator>>( unsigned long& value );
     //@}
 
 protected:
