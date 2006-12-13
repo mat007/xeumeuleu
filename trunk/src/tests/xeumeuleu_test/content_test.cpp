@@ -80,10 +80,10 @@ BOOST_AUTO_UNIT_TEST( streaming_child_integer_content_makes_valid_document )
 }
 
 // -----------------------------------------------------------------------------
-// Name: streaming_child_short_content_makes_valid_document
+// Name: streaming_child_short_integer_content_makes_valid_document
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_child_short_content_makes_valid_document )
+BOOST_AUTO_UNIT_TEST( streaming_child_short_integer_content_makes_valid_document )
 {
     xml::xostringstream xos;
     const short value = 1242;
@@ -217,10 +217,10 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_boolean_content )
 }
 
 // -----------------------------------------------------------------------------
-// Name: streaming_content_reads_node_short_content
+// Name: streaming_content_reads_node_short_integer_content
 // Created: MCO 2006-12-12
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_short_content )
+BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_short_integer_content )
 {
     xml::xistringstream xis( "<element> 5 </element>");
     short value;
@@ -229,10 +229,10 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_short_content )
 }
 
 // -----------------------------------------------------------------------------
-// Name: streaming_content_reads_node_integer_content_in_short_throws_an_exception
+// Name: streaming_content_reads_node_integer_content_in_short_integer_throws_an_exception
 // Created: MCO 2006-12-12
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_integer_content_in_short_throws_an_exception )
+BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_integer_content_in_short_integer_throws_an_exception )
 {
     xml::xistringstream xis( "<element> 300000 </element>");
     short value;

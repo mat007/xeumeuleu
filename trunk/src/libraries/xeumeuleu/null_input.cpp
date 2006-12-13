@@ -195,6 +195,15 @@ void null_input::attribute( const std::string& /*name*/, int& /*value*/ ) const
 
 // -----------------------------------------------------------------------------
 // Name: null_input::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void null_input::attribute( const std::string& /*name*/, short& /*value*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: null_input::attribute
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
 void null_input::attribute( const std::string& /*name*/, bool& /*value*/ ) const
