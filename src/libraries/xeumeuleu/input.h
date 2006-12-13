@@ -40,9 +40,6 @@
 
 namespace xml
 {
-    class visitor;
-    class input_base;
-
 // =============================================================================
 /** @class  input
     @brief  Input
