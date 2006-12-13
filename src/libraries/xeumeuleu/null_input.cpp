@@ -222,6 +222,15 @@ void null_input::attribute( const std::string& /*name*/, double& /*value*/ ) con
 
 // -----------------------------------------------------------------------------
 // Name: null_input::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void null_input::attribute( const std::string& /*name*/, short& /*value*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: null_input::attribute
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
 void null_input::attribute( const std::string& /*name*/, int& /*value*/ ) const
@@ -233,7 +242,7 @@ void null_input::attribute( const std::string& /*name*/, int& /*value*/ ) const
 // Name: null_input::attribute
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-void null_input::attribute( const std::string& /*name*/, short& /*value*/ ) const
+void null_input::attribute( const std::string& /*name*/, long& /*value*/ ) const
 {
     // NOTHING
 }
@@ -251,7 +260,25 @@ void null_input::attribute( const std::string& /*name*/, bool& /*value*/ ) const
 // Name: null_input::attribute
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
+void null_input::attribute( const std::string& /*name*/, unsigned short& /*value*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: null_input::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
 void null_input::attribute( const std::string& /*name*/, unsigned int& /*value*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: null_input::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void null_input::attribute( const std::string& /*name*/, unsigned long& /*value*/ ) const
 {
     // NOTHING
 }

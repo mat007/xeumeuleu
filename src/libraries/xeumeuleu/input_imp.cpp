@@ -418,6 +418,15 @@ void input_imp::attribute( const std::string& name, double& value ) const
 
 // -----------------------------------------------------------------------------
 // Name: input_imp::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void input_imp::attribute( const std::string& name, short& value ) const
+{
+    value = toShort( readAttribute( name ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::attribute
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, int& value ) const
@@ -429,9 +438,9 @@ void input_imp::attribute( const std::string& name, int& value ) const
 // Name: input_imp::attribute
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-void input_imp::attribute( const std::string& name, short& value ) const
+void input_imp::attribute( const std::string& name, long& value ) const
 {
-    value = toShort( readAttribute( name ) );
+    value = toLong( readAttribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -447,9 +456,27 @@ void input_imp::attribute( const std::string& name, bool& value ) const
 // Name: input_imp::attribute
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
+void input_imp::attribute( const std::string& name, unsigned short& value ) const
+{
+    value = toUnsignedShort( readAttribute( name ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, unsigned int& value ) const
 {
     value = toUnsignedInteger( readAttribute( name ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void input_imp::attribute( const std::string& name, unsigned long& value ) const
+{
+    value = toUnsignedLong( readAttribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
