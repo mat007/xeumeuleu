@@ -159,6 +159,18 @@ xostream& xostream::operator<<( bool value )
 
 // -----------------------------------------------------------------------------
 // Name: xostream::operator<<
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+xostream& xostream::operator<<( unsigned int value )
+{
+    TRY
+        output_.write( value );
+        return *this;
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xostream::operator<<
 // Created: MAT 2006-03-07
 // -----------------------------------------------------------------------------
 xostream& xostream::operator<<( xobufferstream& xobs )
