@@ -68,10 +68,13 @@ public:
     void attribute( const std::string& name, std::string& value ) const;
     void attribute( const std::string& name, float& value ) const;
     void attribute( const std::string& name, double& value ) const;
-    void attribute( const std::string& name, int& value ) const;
     void attribute( const std::string& name, short& value ) const;
+    void attribute( const std::string& name, int& value ) const;
+    void attribute( const std::string& name, long& value ) const;
     void attribute( const std::string& name, bool& value ) const;
+    void attribute( const std::string& name, unsigned short& value ) const;
     void attribute( const std::string& name, unsigned int& value ) const;
+    void attribute( const std::string& name, unsigned long& value ) const;
 
     void visit( const visitor& v );
     //@}

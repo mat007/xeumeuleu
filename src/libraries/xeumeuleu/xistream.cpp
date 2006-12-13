@@ -242,6 +242,17 @@ void xistream::attribute( const std::string& name, double& value ) const
 
 // -----------------------------------------------------------------------------
 // Name: xistream::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void xistream::attribute( const std::string& name, short& value ) const
+{
+    TRY
+        pInput_->attribute( name, value );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xistream::attribute
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
 void xistream::attribute( const std::string& name, int& value ) const
@@ -255,7 +266,7 @@ void xistream::attribute( const std::string& name, int& value ) const
 // Name: xistream::attribute
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-void xistream::attribute( const std::string& name, short& value ) const
+void xistream::attribute( const std::string& name, long& value ) const
 {
     TRY
         pInput_->attribute( name, value );
@@ -277,7 +288,29 @@ void xistream::attribute( const std::string& name, bool& value ) const
 // Name: xistream::attribute
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
+void xistream::attribute( const std::string& name, unsigned short& value ) const
+{
+    TRY
+        pInput_->attribute( name, value );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xistream::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
 void xistream::attribute( const std::string& name, unsigned int& value ) const
+{
+    TRY
+        pInput_->attribute( name, value );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xistream::attribute
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void xistream::attribute( const std::string& name, unsigned long& value ) const
 {
     TRY
         pInput_->attribute( name, value );
