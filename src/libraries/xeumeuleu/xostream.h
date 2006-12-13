@@ -72,6 +72,7 @@ public:
     void attribute( const std::string& name, int value );
     void attribute( const std::string& name, bool value );
     void attribute( const std::string& name, unsigned int value );
+    void attribute( const std::string& name, unsigned long value );
     //@}
 
     //! @name Operators
