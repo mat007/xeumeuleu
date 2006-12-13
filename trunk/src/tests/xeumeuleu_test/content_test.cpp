@@ -80,6 +80,21 @@ BOOST_AUTO_UNIT_TEST( streaming_child_integer_content_makes_valid_document )
 }
 
 // -----------------------------------------------------------------------------
+// Name: streaming_child_short_content_makes_valid_document
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( streaming_child_short_content_makes_valid_document )
+{
+    xml::xostringstream xos;
+    const short value = 1242;
+    xos << xml::start( "element" ) << xml::content( "child", value ) << xml::end();
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element>\n"
+                       "  <child>1242</child>\n"
+                       "</element>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: streaming_child_boolean_content_makes_valid_document
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
