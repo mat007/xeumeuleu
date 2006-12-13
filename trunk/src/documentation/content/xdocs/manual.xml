@@ -254,8 +254,11 @@ public:
         <li>const char* (handled as strings and only for output streams)</li>
         <li>bool</li>
         <li>int</li>
+        <li>long</li>
         <li>float</li>
         <li>double</li>
+        <li>unsigned int</li>
+        <li>unsigned long</li>
       </ul>
       <section id="contents">
         <title>Contents</title>
