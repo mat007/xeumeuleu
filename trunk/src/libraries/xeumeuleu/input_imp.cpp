@@ -215,6 +215,20 @@ int input_imp::toInteger( const XMLCh* from ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: input_imp::toShort
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+short input_imp::toShort( const XMLCh* from ) const
+{
+    if( XMLFloat( from ).isDataOverflowed() )
+        throw xml::exception( "Value of " + context() + " overflowed (probably a double instead of a short integer)" );
+    const double dValue = XMLDouble( from ).getValue();
+    if( static_cast< double >( static_cast< short >( dValue ) ) != dValue )
+        throw xml::exception( "Value of " + context() + " is not a short integer (probably a float or a double)" );
+    return static_cast< short >( dValue );
+}
+
+// -----------------------------------------------------------------------------
 // Name: input_imp::toBoolean
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
@@ -262,6 +276,15 @@ void input_imp::read( double& value ) const
 void input_imp::read( int& value ) const
 {
     value = toInteger( readValue() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::read
+// Created: MCO 2006-12-13
+// -----------------------------------------------------------------------------
+void input_imp::read( short& value ) const
+{
+    value = toShort( readValue() );
 }
 
 // -----------------------------------------------------------------------------
