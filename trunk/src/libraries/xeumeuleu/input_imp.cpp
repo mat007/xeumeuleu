@@ -205,13 +205,7 @@ double input_imp::toDouble( const XMLCh* from ) const
 // -----------------------------------------------------------------------------
 int input_imp::toInteger( const XMLCh* from ) const
 {
-     // $$$$ MAT 2006-01-10: use XMLString::parseInt
-    if( XMLFloat( from ).isDataOverflowed() )
-        throw xml::exception( "Value of " + context() + " overflowed (probably a double instead of an integer)" );
-    const double dValue = XMLDouble( from ).getValue();
-    if( static_cast< double >( static_cast< int >( dValue ) ) != dValue )
-        throw xml::exception( "Value of " + context() + " is not an integer (probably a float or a double)" );
-    return static_cast< int >( dValue );
+    return XMLString::parseInt( from );
 }
 
 // -----------------------------------------------------------------------------
