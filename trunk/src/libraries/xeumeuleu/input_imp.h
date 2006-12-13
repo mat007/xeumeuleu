@@ -67,6 +67,7 @@ public:
     virtual void read( int& value ) const;
     virtual void read( short& value ) const;
     virtual void read( bool& value ) const;
+    virtual void read( unsigned int& value ) const;
 
     virtual std::auto_ptr< input_base > branch() const;
     //@}
@@ -110,6 +111,8 @@ private:
     int    toInteger( const XMLCh* from ) const;
     short  toShort  ( const XMLCh* from ) const;
     bool   toBoolean( const XMLCh* from ) const;
+
+    unsigned int toUnsignedInteger( const XMLCh* from ) const;
     //@}
 
 private:
