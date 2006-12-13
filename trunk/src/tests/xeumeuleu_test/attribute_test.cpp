@@ -118,6 +118,32 @@ BOOST_AUTO_UNIT_TEST( add_integer_attribute_on_element_makes_a_valid_document )
 }
 
 // -----------------------------------------------------------------------------
+// Name: add_short_integer_attribute_on_element_makes_a_valid_document
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( add_short_integer_attribute_on_element_makes_a_valid_document )
+{
+    xml::xostringstream xos;
+    const short value = 12;
+    xos << xml::start( "element" ) << xml::attribute( "attribute", value ) << xml::end();
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element attribute=\"12\"/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: add_unsigned_integer_attribute_on_element_makes_a_valid_document
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( add_unsigned_integer_attribute_on_element_makes_a_valid_document )
+{
+    xml::xostringstream xos;
+    const unsigned int value = 12;
+    xos << xml::start( "element" ) << xml::attribute( "attribute", value ) << xml::end();
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element attribute=\"12\"/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: add_string_attribute_on_element_makes_a_valid_document
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
