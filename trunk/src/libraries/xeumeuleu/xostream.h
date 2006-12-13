@@ -81,6 +81,7 @@ public:
     xostream& operator<<( double value );
     xostream& operator<<( int value );
     xostream& operator<<( bool value );
+    xostream& operator<<( unsigned int value );
 
     xostream& operator<<( xobufferstream& xobs );
     //@}
