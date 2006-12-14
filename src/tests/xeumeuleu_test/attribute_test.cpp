@@ -20,6 +20,25 @@ namespace
         std::string value;
         xis >> xml::attribute( "attribute", value );
     }
+
+    template< typename T > T read( const std::string& source )
+    {
+        xml::xistringstream xis( "<element attribute=\"" + source + "\"/>" );
+        T value;
+        xis >> xml::start( "element" ) >> xml::attribute( "attribute", value );
+        return value;
+    }
+    template< typename T > std::string write( const T& value )
+    {
+        xml::xostringstream xos;
+        xos << xml::start( "element" ) << xml::attribute( "attribute", value ) << xml::end();
+        return xos.str();
+    }
+    std::string format( const std::string& value )
+    {
+        return "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+               "<element attribute=\"" + value + "\"/>\n";
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -31,90 +50,6 @@ BOOST_AUTO_UNIT_TEST( read_attribute_from_root_level_throws_an_exception )
     xml::xistringstream xis( "<element attribute=\"12\"/>" );
     int value;
     BOOST_CHECK_THROW( xis >> xml::attribute( "attribute", value ), xml::exception );
-}
-
-// -----------------------------------------------------------------------------
-// Name: read_short_integer_attribute_from_element_retrieves_value
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_short_integer_attribute_from_element_retrieves_value )
-{
-    xml::xistringstream xis( "<element attribute=\"12\"/>" );
-    short value;
-    xis >> xml::start( "element" ) >> xml::attribute( "attribute", value ) >> xml::end();
-    BOOST_CHECK_EQUAL( 12, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: read_integer_attribute_from_element_retrieves_value
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_integer_attribute_from_element_retrieves_value )
-{
-    xml::xistringstream xis( "<element attribute=\"12\"/>" );
-    int value;
-    xis >> xml::start( "element" ) >> xml::attribute( "attribute", value ) >> xml::end();
-    BOOST_CHECK_EQUAL( 12, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: read_long_integer_attribute_from_element_retrieves_value
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_long_integer_attribute_from_element_retrieves_value )
-{
-    xml::xistringstream xis( "<element attribute=\"12\"/>" );
-    long value;
-    xis >> xml::start( "element" ) >> xml::attribute( "attribute", value ) >> xml::end();
-    BOOST_CHECK_EQUAL( 12, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: read_unsigned_short_integer_attribute_from_element_retrieves_value
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_unsigned_short_integer_attribute_from_element_retrieves_value )
-{
-    xml::xistringstream xis( "<element attribute=\"12\"/>" );
-    unsigned short value;
-    xis >> xml::start( "element" ) >> xml::attribute( "attribute", value ) >> xml::end();
-    BOOST_CHECK_EQUAL( 12u, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: read_unsigned_integer_attribute_from_element_retrieves_value
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_unsigned_integer_attribute_from_element_retrieves_value )
-{
-    xml::xistringstream xis( "<element attribute=\"12\"/>" );
-    unsigned int value;
-    xis >> xml::start( "element" ) >> xml::attribute( "attribute", value ) >> xml::end();
-    BOOST_CHECK_EQUAL( 12u, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: read_unsigned_long_integer_attribute_from_element_retrieves_value
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_unsigned_long_integer_attribute_from_element_retrieves_value )
-{
-    xml::xistringstream xis( "<element attribute=\"12\"/>" );
-    unsigned long value;
-    xis >> xml::start( "element" ) >> xml::attribute( "attribute", value ) >> xml::end();
-    BOOST_CHECK_EQUAL( 12u, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: read_string_attribute_from_element_retrieves_value
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_string_attribute_from_element_retrieves_value )
-{
-    xml::xistringstream xis( "<element attribute=\"  the attribute value   \"/>" );
-    std::string value;
-    xis >> xml::start( "element" ) >> xml::attribute( "attribute", value ) >> xml::end();
-    BOOST_CHECK_EQUAL( "  the attribute value   ", value );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,115 +65,41 @@ BOOST_AUTO_UNIT_TEST( read_unexisting_attribute_throws_an_exception )
 }
 
 // -----------------------------------------------------------------------------
+// Name: read_attribute_from_element_retrieves_value
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( read_attribute_from_element_retrieves_value )
+{
+    BOOST_CHECK_EQUAL( 12, read< short >( "12" ) );
+    BOOST_CHECK_EQUAL( 12, read< int >( "12" ) );
+    BOOST_CHECK_EQUAL( 12, read< long >( "12" ) );
+    BOOST_CHECK_EQUAL( 12u, read< unsigned short >( "12" ) );
+    BOOST_CHECK_EQUAL( 12u, read< unsigned int >( "12" ) );
+    BOOST_CHECK_EQUAL( 12u, read< unsigned long >( "12" ) );
+    BOOST_CHECK_EQUAL( "  the attribute value   ", read< std::string >( "  the attribute value   " ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: add_attribute_at_root_level_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( add_attribute_at_root_level_throws_an_exception )
 {
     xml::xostringstream xos;
-    const int value = 12;
-    BOOST_CHECK_THROW( xos << xml::attribute( "attribute", value ), xml::exception );
+    BOOST_CHECK_THROW( xos << xml::attribute( "attribute", 12 ), xml::exception );
 }
 
 // -----------------------------------------------------------------------------
-// Name: add_short_integer_attribute_on_element_makes_a_valid_document
+// Name: add_attribute_on_element_makes_a_valid_document
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( add_short_integer_attribute_on_element_makes_a_valid_document )
+BOOST_AUTO_UNIT_TEST( add_attribute_on_element_makes_a_valid_document )
 {
-    xml::xostringstream xos;
-    const short value = 12;
-    xos << xml::start( "element" ) << xml::attribute( "attribute", value ) << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element attribute=\"12\"/>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: add_integer_attribute_on_element_makes_a_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( add_integer_attribute_on_element_makes_a_valid_document )
-{
-    xml::xostringstream xos;
-    const int value = 12;
-    xos << xml::start( "element" ) << xml::attribute( "attribute", value ) << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element attribute=\"12\"/>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: add_long_attribute_on_element_makes_a_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( add_long_attribute_on_element_makes_a_valid_document )
-{
-    xml::xostringstream xos;
-    const long value = 12;
-    xos << xml::start( "element" ) << xml::attribute( "attribute", value ) << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element attribute=\"12\"/>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: add_unsigned_short_integer_attribute_on_element_makes_a_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( add_unsigned_short_integer_attribute_on_element_makes_a_valid_document )
-{
-    xml::xostringstream xos;
-    const unsigned short value = 12;
-    xos << xml::start( "element" ) << xml::attribute( "attribute", value ) << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element attribute=\"12\"/>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: add_unsigned_integer_attribute_on_element_makes_a_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( add_unsigned_integer_attribute_on_element_makes_a_valid_document )
-{
-    xml::xostringstream xos;
-    const unsigned int value = 12;
-    xos << xml::start( "element" ) << xml::attribute( "attribute", value ) << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element attribute=\"12\"/>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: add_unsigned_long_attribute_on_element_makes_a_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( add_unsigned_long_attribute_on_element_makes_a_valid_document )
-{
-    xml::xostringstream xos;
-    const unsigned long value = 12;
-    xos << xml::start( "element" ) << xml::attribute( "attribute", value ) << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element attribute=\"12\"/>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: add_string_attribute_on_element_makes_a_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( add_string_attribute_on_element_makes_a_valid_document )
-{
-    xml::xostringstream xos;
-    const std::string value = "  the attribute value  ";
-    xos << xml::start( "element" ) << xml::attribute( "attribute", value ) << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element attribute=\"  the attribute value  \"/>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: add_stack_integer_attribute_on_element_makes_a_valid_document
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( add_stack_integer_attribute_on_element_makes_a_valid_document )
-{
-    xml::xostringstream xos;
-    xos << xml::start( "element" ) << xml::attribute( "attribute", 12 ) << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element attribute=\"12\"/>\n", xos.str() );
+    BOOST_CHECK_EQUAL( format( "12" ), write< short >( 12 ) );
+    BOOST_CHECK_EQUAL( format( "12" ), write< int >( 12 ) );
+    BOOST_CHECK_EQUAL( format( "12" ), write< long >( 12 ) );
+    BOOST_CHECK_EQUAL( format( "12" ), write< unsigned short >( 12 ) );
+    BOOST_CHECK_EQUAL( format( "12" ), write< unsigned int >( 12 ) );
+    BOOST_CHECK_EQUAL( format( "12" ), write< unsigned long >( 12 ) );
+    BOOST_CHECK_EQUAL( format( "  the attribute value  " ), write< std::string >( "  the attribute value  " ) );
 }
