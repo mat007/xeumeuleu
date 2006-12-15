@@ -30,25 +30,43 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xml_h_
-#define _xeumeuleu_xml_h_
+#ifndef _xeumeuleu_xistream_base_member_h_
+#define _xeumeuleu_xistream_base_member_h_
 
-#include "xistringstream.h"
-#include "xostringstream.h"
-#include "xifstream.h"
-#include "xofstream.h"
-#include "xobufferstream.h"
-#include "xosubstream.h"
-#include "xisubstream.h"
-#include "xistreamstream.h"
-#include "exception.h"
-#include "start.h"
-#include "end.h"
-#include "content.h"
-#include "attribute.h"
-#include "list.h"
-#include "name_list.h"
-#include "optional.h"
-#include "grammar.h"
+#include <string>
 
-#endif // _xeumeuleu_xml_h_
+namespace xml
+{
+
+// =============================================================================
+/** @class  xistream_base_member
+    @brief  xistream_base_member
+*/
+// Created: MCO 2006-12-15
+// =============================================================================
+class xistream_base_member
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit xistream_base_member( const std::string& data );
+    virtual ~xistream_base_member();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    xistream_base_member( const xistream_base_member& );            //!< Copy constructor
+    xistream_base_member& operator=( const xistream_base_member& ); //!< Assignement operator
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    const std::string data_;
+    //@}
+};
+
+}
+
+#endif // _xeumeuleu_xistream_base_member_h_
