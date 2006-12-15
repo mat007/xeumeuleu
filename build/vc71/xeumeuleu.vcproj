@@ -141,6 +141,12 @@
 				RelativePath="..\..\src\libraries\xeumeuleu\translate.h">
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\xeumeuleu\xistream_base_member.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeumeuleu\xistream_base_member.h">
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\xeumeuleu\xml.h">
 			</File>
 			<Filter
@@ -360,6 +366,12 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xistream.h">
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\xistreamstream.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\xistreamstream.h">
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xistringstream.cpp">
