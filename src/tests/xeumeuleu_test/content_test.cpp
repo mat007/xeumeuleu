@@ -27,12 +27,12 @@ namespace
         xos << xml::content( "element", value );
         return xos.str();
     }
-    template< typename T > T read( const std::string& source )
+    template< typename T > T read( const std::string& value )
     {
-        T value;
-        xml::xistringstream xis( "<element> " + source + " </element>");
-        xis >> xml::content( "element", value );
-        return value;
+        T result;
+        xml::xistringstream xis( "<element> " + value + " </element>");
+        xis >> xml::content( "element", result );
+        return result;
     }
     std::string format( const std::string& value )
     {
