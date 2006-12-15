@@ -30,25 +30,18 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xml_h_
-#define _xeumeuleu_xml_h_
+#include "xeumeuleu_test_pch.h"
+#include "xeumeuleu/xml.h"
 
-#include "xistringstream.h"
-#include "xostringstream.h"
-#include "xifstream.h"
-#include "xofstream.h"
-#include "xobufferstream.h"
-#include "xosubstream.h"
-#include "xisubstream.h"
-#include "xistreamstream.h"
-#include "exception.h"
-#include "start.h"
-#include "end.h"
-#include "content.h"
-#include "attribute.h"
-#include "list.h"
-#include "name_list.h"
-#include "optional.h"
-#include "grammar.h"
+using namespace mockpp;
 
-#endif // _xeumeuleu_xml_h_
+// -----------------------------------------------------------------------------
+// Name: xistreamstream_adapts_a_standard_input_stream
+// Created: MCO 2006-12-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( xistreamstream_adapts_a_standard_input_stream )
+{
+    std::stringstream stream( "<element/>" );
+    xml::xistreamstream xis( stream );
+    BOOST_CHECK_NO_THROW( xis >> xml::start( "element" ) );
+}

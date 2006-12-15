@@ -30,25 +30,25 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xml_h_
-#define _xeumeuleu_xml_h_
+#include "xistream_base_member.h"
 
-#include "xistringstream.h"
-#include "xostringstream.h"
-#include "xifstream.h"
-#include "xofstream.h"
-#include "xobufferstream.h"
-#include "xosubstream.h"
-#include "xisubstream.h"
-#include "xistreamstream.h"
-#include "exception.h"
-#include "start.h"
-#include "end.h"
-#include "content.h"
-#include "attribute.h"
-#include "list.h"
-#include "name_list.h"
-#include "optional.h"
-#include "grammar.h"
+using namespace xml;
 
-#endif // _xeumeuleu_xml_h_
+// -----------------------------------------------------------------------------
+// Name: xistream_base_member constructor
+// Created: MCO 2006-12-15
+// -----------------------------------------------------------------------------
+xistream_base_member::xistream_base_member( const std::string& data )
+    : data_( data )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: xistream_base_member destructor
+// Created: MCO 2006-12-15
+// -----------------------------------------------------------------------------
+xistream_base_member::~xistream_base_member()
+{
+    // NOTHING
+}

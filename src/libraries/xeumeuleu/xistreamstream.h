@@ -30,25 +30,32 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xml_h_
-#define _xeumeuleu_xml_h_
+#ifndef _xeumeuleu_xistreamstream_h_
+#define _xeumeuleu_xistreamstream_h_
 
-#include "xistringstream.h"
-#include "xostringstream.h"
-#include "xifstream.h"
-#include "xofstream.h"
-#include "xobufferstream.h"
-#include "xosubstream.h"
-#include "xisubstream.h"
-#include "xistreamstream.h"
-#include "exception.h"
-#include "start.h"
-#include "end.h"
-#include "content.h"
-#include "attribute.h"
-#include "list.h"
-#include "name_list.h"
-#include "optional.h"
-#include "grammar.h"
+#include "xistream_base_member.h"
+#include "xistream.h"
+#include <istream>
 
-#endif // _xeumeuleu_xml_h_
+namespace xml
+{
+
+// =============================================================================
+/** @class  xistreamstream
+    @brief  Xml stream to adapt a standard input stream
+*/
+// Created: MCO 2006-12-15
+// =============================================================================
+class xistreamstream : private xistream_base_member, public xistream
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit xistreamstream( std::basic_istream< char >& stream );
+    virtual ~xistreamstream();
+    //@}
+};
+
+}
+
+#endif // _xeumeuleu_xistreamstream_h_
