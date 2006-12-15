@@ -21,12 +21,12 @@ namespace
         xis >> xml::attribute( "attribute", value );
     }
 
-    template< typename T > T read( const std::string& source )
+    template< typename T > T read( const std::string& value )
     {
-        xml::xistringstream xis( "<element attribute=\"" + source + "\"/>" );
-        T value;
-        xis >> xml::start( "element" ) >> xml::attribute( "attribute", value );
-        return value;
+        xml::xistringstream xis( "<element attribute=\"" + value + "\"/>" );
+        T result;
+        xis >> xml::start( "element" ) >> xml::attribute( "attribute", result );
+        return result;
     }
     template< typename T > std::string write( const T& value )
     {
