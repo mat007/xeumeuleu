@@ -38,7 +38,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  chained_exception
     @brief  Xml chained exception

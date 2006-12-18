@@ -40,7 +40,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  list_visitor
     @brief  List visitor

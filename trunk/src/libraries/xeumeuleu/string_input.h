@@ -38,7 +38,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  string_input
     @brief  String input implementation

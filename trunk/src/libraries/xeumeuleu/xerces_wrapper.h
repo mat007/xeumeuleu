@@ -35,7 +35,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  xerces_wrapper
     @brief  Xerces object wrapper to automatically release it when going out of scope

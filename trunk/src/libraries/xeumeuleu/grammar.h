@@ -37,7 +37,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  grammar
     @brief  Grammar type definition wrapper

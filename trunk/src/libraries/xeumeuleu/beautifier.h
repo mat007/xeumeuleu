@@ -39,7 +39,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  beautifier
     @brief  Xerces target wrapper

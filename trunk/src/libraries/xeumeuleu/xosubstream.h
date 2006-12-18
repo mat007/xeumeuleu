@@ -38,7 +38,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  xosubstream
     @brief  Xml output sub-stream

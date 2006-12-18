@@ -38,7 +38,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  sub_xistream
     @brief  Sub-node xml input stream

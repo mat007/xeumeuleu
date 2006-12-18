@@ -39,7 +39,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  content_manipulator
     @brief  Content manipulator

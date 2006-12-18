@@ -39,7 +39,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  attribute_manipulator
     @brief  Attribute manipulator
