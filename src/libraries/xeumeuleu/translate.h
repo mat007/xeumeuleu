@@ -30,12 +30,12 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
+#ifndef _xeumeuleu_translate_h_
+#define _xeumeuleu_translate_h_
+
 #include <string>
 #include <iostream>
 #include <xercesc/util/XMLString.hpp>
-
-#ifndef _xeumeuleu_translate_h_
-#define _xeumeuleu_translate_h_
 
 namespace xml
 {
