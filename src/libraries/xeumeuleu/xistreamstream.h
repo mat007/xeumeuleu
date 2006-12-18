@@ -39,7 +39,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  xistreamstream
     @brief  Xml stream to adapt a standard input stream

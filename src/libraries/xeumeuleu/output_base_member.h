@@ -40,7 +40,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  output_base_member
     @brief  Base from member idiom base class
