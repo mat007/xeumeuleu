@@ -38,7 +38,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  xobufferstream
     @brief  Xml buffer stream

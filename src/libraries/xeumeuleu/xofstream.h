@@ -39,7 +39,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  xofstream
     @brief  Xml file output stream

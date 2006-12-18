@@ -39,7 +39,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  translate
     @brief  String translation helpers

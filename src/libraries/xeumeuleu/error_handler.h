@@ -38,7 +38,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  error_handler
     @brief  Error handler

@@ -37,7 +37,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  encoding
     @brief  Encoding wrapper

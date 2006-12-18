@@ -37,7 +37,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  xistream_base_member
     @brief  xistream_base_member

@@ -37,7 +37,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  sub_output
     @brief  Sub output implementation

@@ -38,7 +38,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  file_input
     @brief  File input implementation

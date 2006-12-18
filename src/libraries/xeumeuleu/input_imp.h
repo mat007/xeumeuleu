@@ -40,7 +40,6 @@
 
 namespace xml
 {
-
 // =============================================================================
 /** @class  input_imp
     @brief  Input implementation
