@@ -52,6 +52,11 @@
           The following code creates a stream from an XML document contained in a file <em>file.xml</em> :
         </p>
         <source><![CDATA[xml::xifstream xis( "file.xml" );]]></source>
+        <p>
+          The following code creates a stream from an XML document contained in a <em>std::istream</em> :
+        </p>
+        <source><![CDATA[std::istringstream stream( string );
+xml::xistreamstream xis( stream );]]></source>
       </section>
       <section id="output">
         <title>Output streams</title>
