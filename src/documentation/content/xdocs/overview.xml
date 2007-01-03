@@ -31,7 +31,7 @@
         The following features are provided :
       </p>
       <ul>
-        <li>source can be a string, a file or a url</li>
+        <li>source can be a string, a file, a url or any std::istream</li>
         <li>destination can be a string or a file</li>
         <li>encoding can be any of the encodings supported by Apache Xerces</li>
         <li>output is formated for human reading</li>
