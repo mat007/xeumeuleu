@@ -5,7 +5,7 @@
     <property name="platform" value="cygwin"/>
     <property name="compiler" value="gcc"/>
 
-    <import file="../../../projects/poney/src/poney/poney.xml"/>
+    <import file="../../../projects/poney/src/poney.xml"/>
     -->
     <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
@@ -44,24 +44,24 @@
     -->
     <target name="export" depends="build,test" description="export the distribution">
         <deploy>
-            <include name="**/*.lib"/>
-            <include name="**/xml.h"/>
-            <include name="**/exception.h"/>
-            <include name="**/xi*.h"/>
-            <include name="**/xo*.h"/>
-            <include name="**/encoding.h"/>
-            <include name="**/grammar.h"/>
-            <include name="**/start.h"/>
-            <include name="**/end.h"/>
-            <include name="**/content.h"/>
-            <include name="**/attribute.h"/>
-            <include name="**/list.h"/>
-            <include name="**/name_list.h"/>
-            <include name="**/visitor.h"/>
-            <include name="**/caller*.h"/>
-            <include name="**/name_caller*.h"/>
-            <include name="**/optional.h"/>
-            <exclude name="**/*_pch.h"/>
+            <module name="xeumeuleu">
+                <include name="xml.h"/>
+                <include name="exception.h"/>
+                <include name="xi*.h"/>
+                <include name="xo*.h"/>
+                <include name="encoding.h"/>
+                <include name="grammar.h"/>
+                <include name="start.h"/>
+                <include name="end.h"/>
+                <include name="content.h"/>
+                <include name="attribute.h"/>
+                <include name="list.h"/>
+                <include name="name_list.h"/>
+                <include name="visitor.h"/>
+                <include name="caller*.h"/>
+                <include name="name_caller*.h"/>
+                <include name="optional.h"/>
+            </module>
         </deploy>
     </target>
 
