@@ -102,5 +102,5 @@ void output_base_member::fill( XMLFormatTarget& destination, const std::string& 
     pWriter->setEncoding( translate( encoding ) );
     pWriter->setFeature( XMLUni::fgDOMWRTFormatPrettyPrint, true );
     beautifier target( destination, pWriter->getNewLine() );
-    pWriter->writeNode( &target, *&document_ );
+    pWriter->writeNode( &target, document_ );
 }
