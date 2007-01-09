@@ -133,7 +133,7 @@ void output::attach( const output& rhs )
 // -----------------------------------------------------------------------------
 std::auto_ptr< output > output::branch()
 {
-    return std::auto_ptr< output >( new sub_output( *&document_, *pCurrent_, *this ) );
+    return std::auto_ptr< output >( new sub_output( document_, *pCurrent_, *this ) );
 }
 
 // -----------------------------------------------------------------------------
