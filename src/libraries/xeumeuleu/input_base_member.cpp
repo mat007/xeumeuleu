@@ -77,7 +77,6 @@ DOMNode& input_base_member::parse( InputSource& source, const encoding* pEncodin
         Wrapper4InputSource input( &source, false );
         DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
         xerces_wrapper< DOMBuilder > pParser( ((DOMImplementationLS*)pImpl)->createDOMBuilder( DOMImplementationLS::MODE_SYNCHRONOUS, 0 ) );
-
         pParser->setFeature( XMLUni::fgXercesUserAdoptsDOMDocument, true );
         pParser->setFeature( XMLUni::fgDOMNamespaces, true );
         pParser->setFeature( XMLUni::fgDOMDatatypeNormalization, true );
@@ -90,7 +89,7 @@ DOMNode& input_base_member::parse( InputSource& source, const encoding* pEncodin
                 pParser->setFeature( XMLUni::fgDOMValidation, true );
                 pParser->setFeature( XMLUni::fgXercesUseCachedGrammarInParse, true );
                 // $$$$ MAT 2006-03-27: use pParser->setProperty( XMLUni::fgXercesSchemaExternalNoNameSpaceSchemaLocation, ... ) ?
-                pParser->loadGrammar( translate( *pGrammar ), Grammar::SchemaGrammarType, true );
+                pParser->loadGrammar( translate( schema ), Grammar::SchemaGrammarType, true );
             }
             else
                 pParser->setFeature( XMLUni::fgDOMValidateIfSchema, true );
