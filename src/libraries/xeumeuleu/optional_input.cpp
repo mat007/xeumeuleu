@@ -76,7 +76,7 @@ void optional_input::start( const std::string& tag )
 void optional_input::end()
 {
     context_.reset( pInput_ );
-    throw xml::exception( "Invalid 'end' after an 'optional'" ); // $$$$ MAT 2006-03-20: really necessary ?
+    throw xml::exception( "Invalid 'end' after an 'optional'" );
 }
 
 // -----------------------------------------------------------------------------

@@ -40,21 +40,10 @@ using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: string_input constructor
-// Created: MAT 2006-01-03
+// Created: MAT 2006-03-24
 // -----------------------------------------------------------------------------
-string_input::string_input( const std::string& data )
-    : input_base_member( build( data, 0, 0 ) )
-    , input( std::auto_ptr< input_base >( new input_imp( root_ ) ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: string_input constructor
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-string_input::string_input( const std::string& data, const encoding& encoding )
-    : input_base_member( build( data, &encoding, 0 ) )
+string_input::string_input( const std::string& data, const grammar& grammar )
+    : input_base_member( build( data, 0, grammar ) )
     , input( std::auto_ptr< input_base >( new input_imp( root_ ) ) )
 {
     // NOTHING
@@ -65,18 +54,7 @@ string_input::string_input( const std::string& data, const encoding& encoding )
 // Created: MAT 2006-03-24
 // -----------------------------------------------------------------------------
 string_input::string_input( const std::string& data, const encoding& encoding, const grammar& grammar )
-    : input_base_member( build( data, &encoding, &grammar ) )
-    , input( std::auto_ptr< input_base >( new input_imp( root_ ) ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: string_input constructor
-// Created: MAT 2006-03-24
-// -----------------------------------------------------------------------------
-string_input::string_input( const std::string& data, const grammar& grammar )
-    : input_base_member( build( data, 0, &grammar ) )
+    : input_base_member( build( data, &encoding, grammar ) )
     , input( std::auto_ptr< input_base >( new input_imp( root_ ) ) )
 {
     // NOTHING
@@ -95,9 +73,9 @@ string_input::~string_input()
 // Name: string_input::build
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-DOMNode& string_input::build( const std::string& data, const encoding* pEncoding, const grammar* pGrammar )
+DOMNode& string_input::build( const std::string& data, const encoding* pEncoding, const grammar& grammar )
 {
     initialize();
     MemBufInputSource buffer( reinterpret_cast< const XMLByte* >( data.c_str() ), data.size(), "string_input", false );
-    return parse( buffer, pEncoding, pGrammar );
+    return parse( buffer, pEncoding, grammar );
 }

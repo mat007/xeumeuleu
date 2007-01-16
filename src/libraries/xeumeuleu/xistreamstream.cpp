@@ -35,13 +35,20 @@
 
 using namespace xml;
 
+namespace
+{
+    std::string load( std::basic_istream< char >& stream )
+    {
+        return std::string( std::istreambuf_iterator< char >( stream ), std::istreambuf_iterator< char >() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: xistreamstream constructor
 // Created: MCO 2006-12-15
 // -----------------------------------------------------------------------------
-xistreamstream::xistreamstream( std::basic_istream< char >& stream )
-    : xistream_base_member( std::string( std::istreambuf_iterator< char >( stream ), std::istreambuf_iterator< char >() ) )
-    , xistream( std::auto_ptr< input >( new string_input( data_ ) ) )
+xistreamstream::xistreamstream( std::basic_istream< char >& stream, const grammar& grammar )
+    : xistream( std::auto_ptr< input >( new string_input( load( stream ), grammar ) ) )
 {
     // NOTHING
 }

@@ -37,11 +37,11 @@
 
 namespace xml
 {
+    class parser;
+
 // =============================================================================
 /** @class  grammar
-    @brief  Grammar type definition wrapper
-
-    This class provides typing for XML schema definition uri's.
+    @brief  Grammar definition
 */
 // Created: MAT 2006-03-24
 // =============================================================================
@@ -50,13 +50,34 @@ class grammar
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit grammar( const std::string& uri );
-    virtual ~grammar();
+             grammar() {}
+    virtual ~grammar() {}
     //@}
 
-    //! @name Operators
+    //! @name Operations
     //@{
-    operator const std::string&() const;
+    virtual void configure( parser& parser ) const = 0;
+    //@}
+};
+
+// =============================================================================
+/** @class  external_grammar
+    @brief  Grammar implementation to specify an external schema for validation
+*/
+// Created: MAT 2006-03-24
+// =============================================================================
+class external_grammar : public grammar
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit external_grammar( const std::string& uri );
+    virtual ~external_grammar();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void configure( parser& parser ) const;
     //@}
 
 private:
@@ -68,7 +89,7 @@ private:
 
 // =============================================================================
 /** @class  internal_grammar
-    @brief  Grammar wrapper to specify internal schema validation 
+    @brief  Grammar implementation to specify internal schema validation
 */
 // Created: ZEBRE 2006-08-30
 // =============================================================================
@@ -79,6 +100,32 @@ public:
     //@{
              internal_grammar();
     virtual ~internal_grammar();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void configure( parser& parser ) const;
+    //@}
+};
+
+// =============================================================================
+/** @class  null_grammar
+    @brief  Grammar implementation to disable schema validation
+*/
+// Created: MCO 2007-01-16
+// =============================================================================
+class null_grammar : public grammar
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+             null_grammar();
+    virtual ~null_grammar();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void configure( parser& parser ) const;
     //@}
 };
 

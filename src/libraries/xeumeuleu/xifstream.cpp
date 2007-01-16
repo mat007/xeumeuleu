@@ -37,26 +37,6 @@
 using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: xifstream constructor
-// Created: MAT 2006-01-04
-// -----------------------------------------------------------------------------
-xifstream::xifstream( const std::string& filename )
-    : xistream( std::auto_ptr< input >( new file_input( filename ) ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: xifstream constructor
-// Created: MAT 2006-01-10
-// -----------------------------------------------------------------------------
-xifstream::xifstream( const std::string& filename, const encoding& encoding )
-    : xistream( std::auto_ptr< input >( new file_input( filename, encoding ) ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: xifstream::xifstream
 // Created: MAT 2006-04-10
 // -----------------------------------------------------------------------------
