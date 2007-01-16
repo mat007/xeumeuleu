@@ -38,26 +38,6 @@ using namespace xml;
 
 // -----------------------------------------------------------------------------
 // Name: xistringstream constructor
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-xistringstream::xistringstream( const std::string& data )
-    : xistream( std::auto_ptr< input >( new string_input( data ) ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistringstream constructor
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-xistringstream::xistringstream( const std::string& data, const encoding& encoding )
-    : xistream( std::auto_ptr< input >( new string_input( data, encoding ) ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistringstream constructor
 // Created: MAT 2006-03-24
 // -----------------------------------------------------------------------------
 xistringstream::xistringstream( const std::string& data, const grammar& grammar )

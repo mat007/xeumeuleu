@@ -47,12 +47,12 @@ class xerces_wrapper
 public:
     //! @name Constructors/Destructor
     //@{
-    xerces_wrapper( T* pObject )
-        : pObject_( pObject )
+    explicit xerces_wrapper( T& object )
+        : object_( object )
     {}
     ~xerces_wrapper()
     {
-        pObject_->release();
+        object_.release();
     }
     //@}
 
@@ -60,7 +60,7 @@ public:
     //@{
     T* operator->()
     {
-        return pObject_;
+        return &object_;
     }
     //@}
 
@@ -74,7 +74,7 @@ private:
 private:
     //! @name Member data
     //@{
-    T* pObject_;
+    T& object_;
     //@}
 };
 

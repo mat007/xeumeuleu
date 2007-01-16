@@ -33,8 +33,8 @@
 #ifndef _xeumeuleu_xistreamstream_h_
 #define _xeumeuleu_xistreamstream_h_
 
-#include "xistream_base_member.h"
 #include "xistream.h"
+#include "grammar.h"
 #include <istream>
 
 namespace xml
@@ -45,12 +45,12 @@ namespace xml
 */
 // Created: MCO 2006-12-15
 // =============================================================================
-class xistreamstream : private xistream_base_member, public xistream
+class xistreamstream : public xistream
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xistreamstream( std::basic_istream< char >& stream );
+    explicit xistreamstream( std::basic_istream< char >& stream, const grammar& grammar = null_grammar() );
     virtual ~xistreamstream();
     //@}
 };

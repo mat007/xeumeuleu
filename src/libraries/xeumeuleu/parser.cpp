@@ -30,25 +30,49 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xistream_base_member.h"
+#include "parser.h"
+#include "error_handler.h"
+#include "exception.h"
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/framework/Wrapper4InputSource.hpp>
 
 using namespace xml;
+using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
-// Name: xistream_base_member constructor
-// Created: MCO 2006-12-15
+// Name: parser constructor
+// Created: MCO 2007-01-16
 // -----------------------------------------------------------------------------
-xistream_base_member::xistream_base_member( const std::string& data )
-    : data_( data )
+parser::parser( DOMBuilder& builder )
+    : xerces_wrapper< XERCES_CPP_NAMESPACE::DOMBuilder >( builder )
+    , builder_( builder )
+{
+    builder_.setFeature( XMLUni::fgXercesUserAdoptsDOMDocument, true );
+    builder_.setFeature( XMLUni::fgDOMNamespaces, true );
+    builder_.setFeature( XMLUni::fgDOMDatatypeNormalization, true );
+    builder_.setFeature( XMLUni::fgXercesSchema, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: parser destructor
+// Created: MCO 2007-01-16
+// -----------------------------------------------------------------------------
+parser::~parser()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream_base_member destructor
-// Created: MCO 2006-12-15
+// Name: parser::parse
+// Created: MCO 2007-01-16
 // -----------------------------------------------------------------------------
-xistream_base_member::~xistream_base_member()
+DOMNode& parser::parse( InputSource& source )
 {
-    // NOTHING
+    error_handler errorHandler;
+    builder_.setErrorHandler( &errorHandler );
+    Wrapper4InputSource input( &source, false );
+    DOMDocument* pDocument = builder_.parse( input );
+    if( ! pDocument )
+        throw xml::exception( "Could not generate document" );
+    return *pDocument;
 }

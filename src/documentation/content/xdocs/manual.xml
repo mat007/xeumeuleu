@@ -109,11 +109,11 @@ xos << xobs;]]></source>
         <p>
           By default validation will only occur if an XML schema definition (XSD) is specified when creating an input stream :
         </p>
-        <source><![CDATA[xml::xostringstream xos( xml::grammar( "example.xsd" ) );]]></source>
+        <source><![CDATA[xml::xostringstream xos( xml::external_grammar( "example.xsd" ) );]]></source>
         <p>
           Multiple schema definitions can also be specified :
         </p>
-        <source><![CDATA[xml::xostringstream xos( xml::grammar( "example.xsd test.xsd" ) );]]></source>
+        <source><![CDATA[xml::xostringstream xos( xml::external_grammar( "example.xsd test.xsd" ) );]]></source>
         <p>
           Sometimes an embedded schema definition has been specified in the document :
         </p>
