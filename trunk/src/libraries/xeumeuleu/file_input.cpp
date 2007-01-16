@@ -42,32 +42,10 @@ using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: file_input constructor
-// Created: MAT 2006-01-04
-// -----------------------------------------------------------------------------
-file_input::file_input( const std::string& filename )
-    : input_base_member( build( filename, 0, 0 ) )
-    , input( std::auto_ptr< input_base >( new input_imp( root_ ) ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: file_input constructor
-// Created: MAT 2006-01-10
-// -----------------------------------------------------------------------------
-file_input::file_input( const std::string& filename, const encoding& encoding )
-    : input_base_member( build( filename, &encoding, 0 ) )
-    , input( std::auto_ptr< input_base >( new input_imp( root_ ) ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: file_input constructor
 // Created: MAT 2006-03-26
 // -----------------------------------------------------------------------------
 file_input::file_input( const std::string& filename, const encoding& encoding, const grammar& grammar )
-    : input_base_member( build( filename, &encoding, &grammar ) )
+    : input_base_member( build( filename, &encoding, grammar ) )
     , input( std::auto_ptr< input_base >( new input_imp( root_ ) ) )
 {
     // NOTHING
@@ -78,7 +56,7 @@ file_input::file_input( const std::string& filename, const encoding& encoding, c
 // Created: MAT 2006-03-26
 // -----------------------------------------------------------------------------
 file_input::file_input( const std::string& filename, const grammar& grammar )
-    : input_base_member( build( filename, 0, &grammar ) )
+    : input_base_member( build( filename, 0, grammar ) )
     , input( std::auto_ptr< input_base >( new input_imp( root_ ) ) )
 {
     // NOTHING
@@ -108,10 +86,10 @@ void file_input::check( const std::string& filename )
 // Name: file_input::build
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-DOMNode& file_input::build( const std::string& filename, const encoding* pEncoding, const grammar* pGrammar )
+DOMNode& file_input::build( const std::string& filename, const encoding* pEncoding, const grammar& grammar )
 {
     check( filename );
     initialize();
     LocalFileInputSource buffer( static_cast< const XMLCh* const >( translate( filename ) ) );
-    return parse( buffer, pEncoding, pGrammar );
+    return parse( buffer, pEncoding, grammar );
 }

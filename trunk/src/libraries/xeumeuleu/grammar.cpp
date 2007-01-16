@@ -31,35 +31,42 @@
  */
 
 #include "grammar.h"
+#include "translate.h"
+#include "parser.h"
+#include <xercesc/validators/common/Grammar.hpp>
 
 using namespace xml;
+using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
-// Name: grammar constructor
+// Name: external_grammar constructor
 // Created: MAT 2006-03-24
 // -----------------------------------------------------------------------------
-grammar::grammar( const std::string& uri )
+external_grammar::external_grammar( const std::string& uri )
     : uri_( uri )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: grammar destructor
+// Name: external_grammar destructor
 // Created: MAT 2006-03-24
 // -----------------------------------------------------------------------------
-grammar::~grammar()
+external_grammar::~external_grammar()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: grammar::operator const std::string&
-// Created: MAT 2006-03-24
+// Name: external_grammar::configure
+// Created: MCO 2007-01-16
 // -----------------------------------------------------------------------------
-grammar::operator const std::string&() const
+void external_grammar::configure( parser& parser ) const
 {
-    return uri_;
+    parser->setFeature( XMLUni::fgDOMValidation, true );
+    parser->setFeature( XMLUni::fgXercesUseCachedGrammarInParse, true );
+    // $$$$ MAT 2006-03-27: use parser->setProperty( XMLUni::fgXercesSchemaExternalNoNameSpaceSchemaLocation, ... ) ?
+    parser->loadGrammar( translate( uri_ ), Grammar::SchemaGrammarType, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +74,6 @@ grammar::operator const std::string&() const
 // Created: ZEBRE 2006-08-30
 // -----------------------------------------------------------------------------
 internal_grammar::internal_grammar()
-    : grammar( "" )
 {
     // NOTHING
 }
@@ -79,4 +85,41 @@ internal_grammar::internal_grammar()
 internal_grammar::~internal_grammar()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: internal_grammar::configure
+// Created: MCO 2007-01-16
+// -----------------------------------------------------------------------------
+void internal_grammar::configure( parser& parser ) const
+{
+    parser->setFeature( XMLUni::fgDOMValidateIfSchema, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: null_grammar::null_grammar
+// Created: MCO 2007-01-16
+// -----------------------------------------------------------------------------
+null_grammar::null_grammar()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: null_grammar::~null_grammar
+// Created: MCO 2007-01-16
+// -----------------------------------------------------------------------------
+null_grammar::~null_grammar()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: null_grammar::configure
+// Created: MCO 2007-01-16
+// -----------------------------------------------------------------------------
+void null_grammar::configure( parser& parser ) const
+{
+    parser->setFeature( XMLUni::fgDOMValidation, false );
+    parser->setFeature( XMLUni::fgXercesLoadExternalDTD, false ) ;
 }

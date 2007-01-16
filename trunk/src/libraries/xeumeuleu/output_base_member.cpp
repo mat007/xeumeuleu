@@ -69,11 +69,10 @@ DOMDocument& output_base_member::build()
 {
     try
     {
-        DOMImplementation* impl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
-        DOMDocument* pDocument = impl->createDocument();
-        if( ! pDocument )
-            throw xml::exception( "Could not generate document" );
-        return *pDocument;
+        DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
+        if( ! pImpl )
+            throw xml::exception( "Internal error in " __FUNCTION__ " : DOMImplementation 'LS' not found" );
+        return *pImpl->createDocument();
     }
     catch( const OutOfMemoryException& )
     {
@@ -95,12 +94,14 @@ DOMDocument& output_base_member::build()
 // -----------------------------------------------------------------------------
 void output_base_member::fill( XMLFormatTarget& destination, const std::string& encoding ) const
 {
-    const DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
-    xerces_wrapper< DOMWriter > pWriter( ((DOMImplementationLS*)pImpl)->createDOMWriter() );
-    error_handler errorHandler;
-    pWriter->setErrorHandler( &errorHandler );
-    pWriter->setEncoding( translate( encoding ) );
-    pWriter->setFeature( XMLUni::fgDOMWRTFormatPrettyPrint, true );
-    beautifier target( destination, pWriter->getNewLine() );
-    pWriter->writeNode( &target, document_ );
+    DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
+    if( ! pImpl )
+        throw xml::exception( "Internal error in " __FUNCTION__ " : DOMImplementation 'LS' not found" );
+    xerces_wrapper< DOMWriter > writer( *dynamic_cast< DOMImplementationLS* >( pImpl )->createDOMWriter() );
+    error_handler handler;
+    writer->setErrorHandler( &handler );
+    writer->setEncoding( translate( encoding ) );
+    writer->setFeature( XMLUni::fgDOMWRTFormatPrettyPrint, true );
+    beautifier target( destination, writer->getNewLine() );
+    writer->writeNode( &target, document_ );
 }

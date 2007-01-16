@@ -34,13 +34,11 @@
 #include "translate.h"
 #include "error_handler.h"
 #include "chained_exception.h"
-#include "xerces_wrapper.h"
 #include "encoding.h"
 #include "grammar.h"
+#include "parser.h"
 #include <xercesc/dom/DOM.hpp>
-#include <xercesc/framework/Wrapper4InputSource.hpp>
 #include <xercesc/util/OutOfMemoryException.hpp>
-#include <xercesc/validators/common/Grammar.hpp>
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
@@ -64,48 +62,22 @@ input_base_member::~input_base_member()
     root_.release();
 }
 
-// -----------------------------------------------------------------------------
+ // -----------------------------------------------------------------------------
 // Name: input_base_member::parse
 // Created: MAT 2006-01-10
 // -----------------------------------------------------------------------------
-DOMNode& input_base_member::parse( InputSource& source, const encoding* pEncoding, const grammar* pGrammar )
+DOMNode& input_base_member::parse( InputSource& source, const encoding* pEncoding, const grammar& grammar )
 {
     try
     {
+        DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
+        if( ! pImpl )
+            throw xml::exception( "Internal error in " __FUNCTION__ " : DOMImplementation 'LS' not found" );
+        parser parser( *dynamic_cast< DOMImplementationLS* >( pImpl )->createDOMBuilder( DOMImplementationLS::MODE_SYNCHRONOUS, 0 ) );
+        grammar.configure( parser );
         if( pEncoding )
             source.setEncoding( translate( *pEncoding ) );
-        Wrapper4InputSource input( &source, false );
-        DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
-        xerces_wrapper< DOMBuilder > pParser( ((DOMImplementationLS*)pImpl)->createDOMBuilder( DOMImplementationLS::MODE_SYNCHRONOUS, 0 ) );
-        pParser->setFeature( XMLUni::fgXercesUserAdoptsDOMDocument, true );
-        pParser->setFeature( XMLUni::fgDOMNamespaces, true );
-        pParser->setFeature( XMLUni::fgDOMDatatypeNormalization, true );
-        pParser->setFeature( XMLUni::fgXercesSchema, true );
-        if( pGrammar )
-        {
-            const std::string schema = *pGrammar;
-            if( ! schema.empty() )
-            {
-                pParser->setFeature( XMLUni::fgDOMValidation, true );
-                pParser->setFeature( XMLUni::fgXercesUseCachedGrammarInParse, true );
-                // $$$$ MAT 2006-03-27: use pParser->setProperty( XMLUni::fgXercesSchemaExternalNoNameSpaceSchemaLocation, ... ) ?
-                pParser->loadGrammar( translate( schema ), Grammar::SchemaGrammarType, true );
-            }
-            else
-                pParser->setFeature( XMLUni::fgDOMValidateIfSchema, true );
-        }
-        else
-        {
-            pParser->setFeature( XMLUni::fgDOMValidateIfSchema, true );
-            pParser->setFeature( XMLUni::fgDOMValidation, false );
-            pParser->setFeature( XMLUni::fgXercesLoadExternalDTD, false ) ;
-        }
-        error_handler errorHandler;
-        pParser->setErrorHandler( &errorHandler );
-        DOMDocument* pDocument = pParser->parse( input );
-        if( ! pDocument )
-            throw xml::exception( "Could not generate document" );
-        return *pDocument;
+        return parser.parse( source );
     }
     catch( const OutOfMemoryException& )
     {

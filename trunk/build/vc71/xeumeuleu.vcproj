@@ -135,16 +135,16 @@
 				RelativePath="..\..\src\libraries\xeumeuleu\grammar.h">
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\xeumeuleu\parser.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeumeuleu\parser.h">
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\xeumeuleu\translate.cpp">
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeumeuleu\translate.h">
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\xistream_base_member.cpp">
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\xistream_base_member.h">
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeumeuleu\xml.h">

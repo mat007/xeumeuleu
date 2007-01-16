@@ -30,42 +30,42 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xistream_base_member_h_
-#define _xeumeuleu_xistream_base_member_h_
+#ifndef _xeumeuleu_parser_h_
+#define _xeumeuleu_parser_h_
 
-#include <string>
+#include "xerces_wrapper.h"
+#include <xercesc/dom/DOMBuilder.hpp>
+#include <xercesc/sax/InputSource.hpp>
 
 namespace xml
 {
 // =============================================================================
-/** @class  xistream_base_member
-    @brief  xistream_base_member
+/** @class  parser
+    @brief  parser wrapper
 */
-// Created: MCO 2006-12-15
+// Created: MCO 2007-01-16
 // =============================================================================
-class xistream_base_member
+class parser : public xerces_wrapper< XERCES_CPP_NAMESPACE::DOMBuilder >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xistream_base_member( const std::string& data );
-    virtual ~xistream_base_member();
+    explicit parser( XERCES_CPP_NAMESPACE::DOMBuilder& builder );
+    virtual ~parser();
     //@}
-
-private:
-    //! @name Copy/Assignment
+    
+    //! @name Operations
     //@{
-    xistream_base_member( const xistream_base_member& );            //!< Copy constructor
-    xistream_base_member& operator=( const xistream_base_member& ); //!< Assignement operator
+    XERCES_CPP_NAMESPACE::DOMNode& parse( XERCES_CPP_NAMESPACE::InputSource& source );
     //@}
-
-protected:
+    
+private:
     //! @name Member data
     //@{
-    const std::string data_;
+    XERCES_CPP_NAMESPACE::DOMBuilder& builder_;
     //@}
 };
 
 }
 
-#endif // _xeumeuleu_xistream_base_member_h_
+#endif // _xeumeuleu_parser_h_

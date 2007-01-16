@@ -34,11 +34,11 @@
 #define _xeumeuleu_xistringstream_h_
 
 #include "xistream.h"
+#include "grammar.h"
 
 namespace xml
 {
     class encoding;
-    class grammar;
 
 // =============================================================================
 /** @class  xistringstream
@@ -57,10 +57,8 @@ class xistringstream : public xistream
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xistringstream( const std::string& data );
-             xistringstream( const std::string& data, const encoding& encoding );
-             xistringstream( const std::string& data, const grammar& grammar );
-             xistringstream( const std::string& data, const encoding& encoding, const grammar& grammar );
+    explicit xistringstream( const std::string& data, const grammar& grammar = null_grammar() );
+             xistringstream( const std::string& data, const encoding& encoding, const grammar& grammar = null_grammar() );
     virtual ~xistringstream();
     //@}
 };

@@ -34,11 +34,11 @@
 #define _xeumeuleu_xifstream_h_
 
 #include "xistream.h"
+#include "grammar.h"
 
 namespace xml
 {
     class encoding;
-    class grammar;
 
 // =============================================================================
 /** @class  xifstream
@@ -56,10 +56,8 @@ class xifstream : public xistream
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xifstream( const std::string& filename );
-             xifstream( const std::string& filename, const encoding& encoding );
-             xifstream( const std::string& filename, const grammar& grammar );
-             xifstream( const std::string& filename, const encoding& encoding, const grammar& grammar );
+    explicit xifstream( const std::string& filename, const grammar& grammar = null_grammar() );
+             xifstream( const std::string& filename, const encoding& encoding, const grammar& grammar = null_grammar() );
     virtual ~xifstream();
     //@}
 };

@@ -38,6 +38,8 @@
 
 namespace xml
 {
+    class grammar;
+
 // =============================================================================
 /** @class  string_input
     @brief  String input implementation
@@ -49,17 +51,15 @@ class string_input : private input_base_member, public input
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit string_input( const std::string& data );
-             string_input( const std::string& data, const encoding& encoding );
+    explicit string_input( const std::string& data, const grammar& grammar );
              string_input( const std::string& data, const encoding& encoding, const grammar& grammar );
-             string_input( const std::string& data, const grammar& grammar );
     virtual ~string_input();
     //@}
 
 private:
     //! @name Helpers
     //@{
-    static XERCES_CPP_NAMESPACE::DOMNode& build( const std::string& data, const encoding* pEncoding, const grammar* pGrammar );
+    static XERCES_CPP_NAMESPACE::DOMNode& build( const std::string& data, const encoding* pEncoding, const grammar& grammar );
     //@}
 };
 

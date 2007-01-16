@@ -36,7 +36,6 @@
 #include "document.h"
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/sax/InputSource.hpp>
-#include <string>
 
 namespace xml
 {
@@ -68,7 +67,7 @@ private:
 protected:
     //! @name Helpers
     //@{
-    static XERCES_CPP_NAMESPACE::DOMNode& parse( XERCES_CPP_NAMESPACE::InputSource& source, const encoding* pEncoding, const grammar* pGrammar );
+    static XERCES_CPP_NAMESPACE::DOMNode& parse( XERCES_CPP_NAMESPACE::InputSource& source, const encoding* pEncoding, const grammar& grammar );
     //@}
 
 protected:

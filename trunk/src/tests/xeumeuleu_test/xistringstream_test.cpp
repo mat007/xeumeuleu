@@ -248,7 +248,7 @@ BOOST_AUTO_UNIT_TEST( forcing_encoding_to_ISO_8859_1_whereas_UTF_8_is_specified_
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_not_validated_by_schema_throws_an_exception )
 {
-    BOOST_CHECK_THROW( xml::xistringstream( "<wrong-element/>", xml::grammar( "schema.xsd" ) ), xml::exception );
+    BOOST_CHECK_THROW( xml::xistringstream( "<wrong-element/>", xml::external_grammar( "schema.xsd" ) ), xml::exception );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,7 +257,7 @@ BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_not_validated_by_schema_throws_an
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_validated_by_schema_does_not_throw_an_exception )
 {
-    BOOST_CHECK_NO_THROW( xml::xistringstream( "<element/>", xml::grammar( "schema.xsd" ) ) );
+    BOOST_CHECK_NO_THROW( xml::xistringstream( "<element/>", xml::external_grammar( "schema.xsd" ) ) );
 }
 
 // -----------------------------------------------------------------------------
