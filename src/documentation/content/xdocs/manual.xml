@@ -113,7 +113,7 @@ xos << xobs;]]></source>
         <p>
           Multiple schema definitions can also be specified :
         </p>
-        <source><![CDATA[xml::xostringstream xos( xml::grammar( "exmaple.xsd test.xsd" ) );]]></source>
+        <source><![CDATA[xml::xostringstream xos( xml::grammar( "example.xsd test.xsd" ) );]]></source>
         <p>
           Sometimes an embedded schema definition has been specified in the document :
         </p>
