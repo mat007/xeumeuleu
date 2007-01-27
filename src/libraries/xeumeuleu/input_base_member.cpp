@@ -72,7 +72,7 @@ DOMNode& input_base_member::parse( InputSource& source, const encoding* pEncodin
     {
         DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
         if( ! pImpl )
-            throw xml::exception( "Internal error in " __FUNCTION__ " : DOMImplementation 'LS' not found" );
+            throw xml::exception( "Internal error in 'input_base_member::parse' : DOMImplementation 'LS' not found" );
         parser parser( *dynamic_cast< DOMImplementationLS* >( pImpl )->createDOMBuilder( DOMImplementationLS::MODE_SYNCHRONOUS, 0 ) );
         grammar.configure( parser );
         if( pEncoding )

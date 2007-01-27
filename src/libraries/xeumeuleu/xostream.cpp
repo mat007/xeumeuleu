@@ -147,6 +147,18 @@ xostream& xostream::operator<<( int value )
 
 // -----------------------------------------------------------------------------
 // Name: xostream::operator<<
+// Created: MAT 2007-01-25
+// -----------------------------------------------------------------------------
+xostream& xostream::operator<<( long value )
+{
+    TRY
+        output_.write( value );
+        return *this;
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xostream::operator<<
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
 xostream& xostream::operator<<( bool value )
@@ -240,6 +252,17 @@ void xostream::attribute( const std::string& name, double value )
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
 void xostream::attribute( const std::string& name, int value )
+{
+    TRY
+        output_.attribute( name, value );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xostream::attribute
+// Created: MAT 2007-01-25
+// -----------------------------------------------------------------------------
+void xostream::attribute( const std::string& name, long value )
 {
     TRY
         output_.attribute( name, value );
