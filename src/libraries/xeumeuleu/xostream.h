@@ -70,6 +70,7 @@ public:
     void attribute( const std::string& name, float value );
     void attribute( const std::string& name, double value );
     void attribute( const std::string& name, int value );
+    void attribute( const std::string& name, long value );
     void attribute( const std::string& name, bool value );
     void attribute( const std::string& name, unsigned int value );
     void attribute( const std::string& name, unsigned long value );
@@ -82,6 +83,7 @@ public:
     xostream& operator<<( float value );
     xostream& operator<<( double value );
     xostream& operator<<( int value );
+    xostream& operator<<( long value );
     xostream& operator<<( bool value );
     xostream& operator<<( unsigned int value );
     xostream& operator<<( unsigned long value );
