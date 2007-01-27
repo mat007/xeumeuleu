@@ -71,7 +71,7 @@ DOMDocument& output_base_member::build()
     {
         DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
         if( ! pImpl )
-            throw xml::exception( "Internal error in " __FUNCTION__ " : DOMImplementation 'LS' not found" );
+            throw xml::exception( "Internal error in 'output_base_member::build' : DOMImplementation 'LS' not found" );
         return *pImpl->createDocument();
     }
     catch( const OutOfMemoryException& )
@@ -96,7 +96,7 @@ void output_base_member::fill( XMLFormatTarget& destination, const std::string& 
 {
     DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
     if( ! pImpl )
-        throw xml::exception( "Internal error in " __FUNCTION__ " : DOMImplementation 'LS' not found" );
+        throw xml::exception( "Internal error in 'output_base_member::fill' : DOMImplementation 'LS' not found" );
     xerces_wrapper< DOMWriter > writer( *dynamic_cast< DOMImplementationLS* >( pImpl )->createDOMWriter() );
     error_handler handler;
     writer->setErrorHandler( &handler );

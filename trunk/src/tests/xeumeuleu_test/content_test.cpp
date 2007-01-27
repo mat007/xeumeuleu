@@ -109,7 +109,7 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_content )
     BOOST_CHECK_EQUAL( 5, read< long > ( "5" ) );
     BOOST_CHECK_EQUAL( 4294967295u, read< unsigned int >( "4294967295" ) );
     BOOST_CHECK_EQUAL( 65535u, read< unsigned short >( "65535" ) );
-    BOOST_CHECK_EQUAL( 4294967295, read< unsigned long >( "4294967295" ) );
+    BOOST_CHECK_EQUAL( 4294967295u, read< unsigned long >( "4294967295" ) );
 }
 
 // -----------------------------------------------------------------------------
