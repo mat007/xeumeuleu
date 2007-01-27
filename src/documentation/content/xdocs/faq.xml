@@ -33,5 +33,11 @@
         TODO
       </p>
     </section>
+    <section id="float-double-output">
+      <title>Float or double output looses precision</title>
+      <p>
+        TODO
+      </p>
+    </section>
   </body>
 </document>
