@@ -95,12 +95,12 @@
     -->
     <target name="documentation" depends="" description="create documentation">
         <cpd-report/>
-        <!--cppncss-report>
+        <cppncss-report>
             <define name="TRY"/>
             <define name="CATCH"/>
             <macro name="BOOST_CHECK_THROW"/>
             <macro name="BOOST_CHECK_NO_THROW"/>
-        </cppncss-report-->
+        </cppncss-report>
         <doxygen-report/>
         <forrest/>
     </target>
