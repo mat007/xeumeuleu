@@ -5,7 +5,7 @@
     <property name="platform" value="cygwin"/>
     <property name="compiler" value="gcc"/>
 
-    <import file="../../../projects/poney/src/poney.xml"/>
+    <import file="../../poney/src/poney.xml"/>
     -->
     <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
@@ -93,29 +93,23 @@
       documentation
     ============================================================================
     -->
-    <target name="site" depends="build,test" description="create web site">
+    <target name="documentation" depends="" description="create documentation">
+        <cpd-report/>
+        <!--cppncss-report>
+            <define name="TRY"/>
+            <define name="CATCH"/>
+            <macro name="BOOST_CHECK_THROW"/>
+            <macro name="BOOST_CHECK_NO_THROW"/>
+        </cppncss-report-->
+        <doxygen-report/>
         <forrest/>
     </target>
 
     <!-- requires scp : http://ant.apache.org/manual/OptionalTasks/scp.html -->
-    <target name="deploy" depends="site" description="deploy web site">
-        <if>
-            <not>
-                <isset property="deploy.scp.username"/>
-            </not>
-            <then>
-                <input addproperty="deploy.scp.username" message="Enter username to enable scp to deploy:"/>
-            </then>
-        </if>
+    <target name="site" depends="documentation" description="deploy web site">
+        <input addproperty="deploy.scp.username" message="Enter username to enable scp to deploy:"/>
         <property name="deploy.scp.dest" value="${deploy.scp.username}@ssh.sourceforge.net:/home/groups/x/xe/xeumeuleu/htdocs"/>
-        <if>
-            <not>
-                <isset property="deploy.scp.password"/>
-            </not>
-            <then>
-                <input addproperty="deploy.scp.password" message="Enter remote password to enable scp to ${deploy.scp.dest}:"/>
-            </then>
-        </if>
+        <input addproperty="deploy.scp.password" message="Enter remote password to enable scp to ${deploy.scp.dest}:"/>
         <scp todir="${deploy.scp.dest}" password="${deploy.scp.password}" trust="yes">
             <fileset dir="${doc.dir}/site"/>
         </scp>
@@ -136,6 +130,6 @@
         <update name="xerces-c"/>
     </target>
 
-    <target name="all" depends="configure,build,test,export,package,site" description="build, run tests, package distribution and create web site"/>
+    <target name="all" depends="configure,build,test,export,package,documentation" description="build, run tests, package distribution and create web site"/>
 
 </project>
