@@ -60,14 +60,12 @@ public:
     void end();
 
     void write( const std::string& value );
-
-    template< typename T > void write( const T value )
+    template< typename T > void write( T value )
     {
         write( serialize( value ) );
     }
 
     void attribute( const std::string& name, const std::string& value );
-
     template< typename T > void attribute( const std::string& name, T value )
     {
         attribute( name, serialize( value ) );
@@ -97,13 +95,15 @@ private:
     //@{
     std::string context() const;
 
-    template< typename T > std::string serialize( T& value )
+    std::string serialize( float value ) const;
+    std::string serialize( double value ) const;
+    template< typename T > std::string serialize( T value ) const
     {
         std::stringstream stream;
         stream << std::boolalpha << value;
         return stream.str();
     }
-    
+
     bool isRoot() const;
     //@}
 

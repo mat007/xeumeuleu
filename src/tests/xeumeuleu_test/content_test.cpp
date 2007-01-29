@@ -80,6 +80,14 @@ BOOST_AUTO_UNIT_TEST( streaming_content_writes_node_content )
     BOOST_CHECK_EQUAL( format( "65535" ), write< unsigned short >( 65535u ) );
     BOOST_CHECK_EQUAL( format( "1242" ), write< unsigned int >( 1242 ) );
     BOOST_CHECK_EQUAL( format( "1242" ), write< unsigned long >( 1242 ) );
+    BOOST_CHECK_EQUAL( format( "INF" ), write< float >( std::numeric_limits< float >::infinity() ) );
+    BOOST_CHECK_EQUAL( format( "-INF" ), write< float >( - std::numeric_limits< float >::infinity() ) );
+    BOOST_CHECK_EQUAL( format( "NaN" ), write< float >( std::numeric_limits< float >::quiet_NaN() ) );
+    BOOST_CHECK_EQUAL( format( "NaN" ), write< float >( std::numeric_limits< float >::signaling_NaN() ) );
+    BOOST_CHECK_EQUAL( format( "INF" ), write< double >( std::numeric_limits< double >::infinity() ) );
+    BOOST_CHECK_EQUAL( format( "-INF" ), write< double >( - std::numeric_limits< double >::infinity() ) );
+    BOOST_CHECK_EQUAL( format( "NaN" ), write< double >( std::numeric_limits< double >::quiet_NaN() ) );
+    BOOST_CHECK_EQUAL( format( "NaN" ), write< double >( std::numeric_limits< double >::signaling_NaN() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,6 +118,18 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_content )
     BOOST_CHECK_EQUAL( 4294967295u, read< unsigned int >( "4294967295" ) );
     BOOST_CHECK_EQUAL( 65535u, read< unsigned short >( "65535" ) );
     BOOST_CHECK_EQUAL( 4294967295u, read< unsigned long >( "4294967295" ) );
+    BOOST_CHECK_EQUAL( std::numeric_limits< float >::infinity(), read< float >( "INF" ) );
+    BOOST_CHECK_EQUAL( - std::numeric_limits< float >::infinity(), read< float >( "-INF" ) );
+    {
+        const float NaN = read< float >( "NaN" );
+        BOOST_CHECK( NaN != NaN );
+    }
+    BOOST_CHECK_EQUAL( std::numeric_limits< double >::infinity(), read< double >( "INF" ) );
+    BOOST_CHECK_EQUAL( - std::numeric_limits< double >::infinity(), read< double >( "-INF" ) );
+    {
+        const double NaN = read< double >( "NaN" );
+        BOOST_CHECK( NaN != NaN );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -123,4 +143,5 @@ BOOST_AUTO_UNIT_TEST( streaming_content_with_invalid_format_throws_an_exception 
     BOOST_CHECK_THROW( read< unsigned int >( "12.3" ), xml::exception );
     BOOST_CHECK_THROW( read< unsigned int >( "-42" ), xml::exception );
     BOOST_CHECK_THROW( read< float >( "1e+99" ), xml::exception );
+    BOOST_CHECK_THROW( read< float >( "not a number" ), xml::exception );
 }
