@@ -40,6 +40,7 @@
 #include <xercesc/util/XMLDouble.hpp>
 #include <xercesc/util/XMLInteger.hpp>
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
+#include <limits>
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
@@ -187,7 +188,17 @@ float input_imp::toFloat( const XMLCh* from ) const
     const XMLFloat value( from );
     if( value.isDataOverflowed() )
         throw xml::exception( "Value of " + context() + " overflowed (probably a double instead of a float)" );
-    return static_cast< float >( value.getValue() );
+    switch( value.getType() )
+    {
+    case XMLDouble::NegINF :
+        return - std::numeric_limits< float >::infinity();
+    case XMLDouble::PosINF :
+        return std::numeric_limits< float >::infinity();
+    case XMLDouble::NaN :
+        return std::numeric_limits< float >::quiet_NaN();
+    default:
+        return static_cast< float >( value.getValue() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -196,7 +207,20 @@ float input_imp::toFloat( const XMLCh* from ) const
 // -----------------------------------------------------------------------------
 double input_imp::toDouble( const XMLCh* from ) const
 {
-    return XMLDouble( from ).getValue();
+    const XMLDouble value( from );
+    if( value.isDataOverflowed() )
+        throw xml::exception( "Value of " + context() + " overflowed (probably more than a double)" );
+    switch( value.getType() )
+    {
+    case XMLDouble::NegINF :
+        return - std::numeric_limits< double >::infinity();
+    case XMLDouble::PosINF :
+        return std::numeric_limits< double >::infinity();
+    case XMLDouble::NaN :
+        return std::numeric_limits< double >::quiet_NaN();
+    default:
+        return value.getValue();
+    }
 }
 
 // -----------------------------------------------------------------------------

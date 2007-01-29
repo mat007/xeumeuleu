@@ -36,6 +36,7 @@
 #include "trim.h"
 #include "sub_output.h"
 #include <xercesc/dom/DOM.hpp>
+#include <limits>
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
@@ -137,6 +138,16 @@ std::auto_ptr< output > output::branch()
 }
 
 // -----------------------------------------------------------------------------
+// Name: output::flush
+// Created: MAT 2006-05-18
+// -----------------------------------------------------------------------------
+void output::flush()
+{
+    if( isRoot() )
+        finished();
+}
+
+// -----------------------------------------------------------------------------
 // Name: output::isRoot
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
@@ -146,11 +157,35 @@ bool output::isRoot() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: output::flush
-// Created: MAT 2006-05-18
+// Name: output::serialize
+// Created: MAT 2007-01-29
 // -----------------------------------------------------------------------------
-void output::flush()
+std::string output::serialize( float value ) const
 {
-    if( isRoot() )
-        finished();
+    if( value == std::numeric_limits< float >::infinity() )
+        return "INF";
+    if( value == - std::numeric_limits< float >::infinity() )
+        return "-INF";
+    if( value != value )
+        return "NaN";
+    std::stringstream stream;
+    stream << value;
+    return stream.str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: output::serialize
+// Created: MAT 2007-01-29
+// -----------------------------------------------------------------------------
+std::string output::serialize( double value ) const
+{
+    if( value == std::numeric_limits< double >::infinity() )
+        return "INF";
+    if( value == - std::numeric_limits< double >::infinity() )
+        return "-INF";
+    if( value != value )
+        return "NaN";
+    std::stringstream stream;
+    stream << value;
+    return stream.str();
 }
