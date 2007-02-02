@@ -32,37 +32,36 @@
 
 #include "xeumeuleu_test_pch.h"
 #include <string>
-#ifdef _MSC_VER
-#   include <direct.h>
-#else
-#   include <unistd.h>
-#endif
 
 namespace
 {
+    static std::string data_directory;
 
-void MoveToDataDirectory( int argc, char* argv[] )
-{
-    while( argc-- )
+    void set_data_directory( int argc, char* argv[] )
     {
-        const std::string argument( argv[argc] );
-        const std::string::size_type n = argument.find( '=' );
-        if( n != std::string::npos )
+        while( argc-- )
         {
-            const std::string option = argument.substr( 0, n );
-            if( option == "--data_directory" )
+            const std::string argument( argv[argc] );
+            const std::string::size_type n = argument.find( '=' );
+            if( n != std::string::npos )
             {
-                const std::string value  = argument.substr( n+1 );
-                ::chdir( value.c_str() );
+                const std::string option = argument.substr( 0, n );
+                if( option == "--data_directory" )
+                    data_directory = argument.substr( n+1 );
             }
         }
     }
 }
 
-}
-
 boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv [] )
 {
-    MoveToDataDirectory( argc, argv );
+    set_data_directory( argc, argv );
     return boost::unit_test::ut_detail::auto_unit_test_suite(); // $$$$ MAT 2006-04-20: remove ut_detail:: for boost 1_33
+}
+
+std::string BOOST_RESOLVE( const std::string& filename )
+{
+    if( data_directory.empty() )
+        return filename;
+    return data_directory + '/' + filename;
 }
