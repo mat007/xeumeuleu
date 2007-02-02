@@ -248,7 +248,7 @@ BOOST_AUTO_UNIT_TEST( forcing_encoding_to_ISO_8859_1_whereas_UTF_8_is_specified_
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_not_validated_by_schema_throws_an_exception )
 {
-    BOOST_CHECK_THROW( xml::xistringstream( "<wrong-element/>", xml::external_grammar( "schema.xsd" ) ), xml::exception );
+    BOOST_CHECK_THROW( xml::xistringstream( "<wrong-element/>", xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) ), xml::exception );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,7 +257,7 @@ BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_not_validated_by_schema_throws_an
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_validated_by_schema_does_not_throw_an_exception )
 {
-    BOOST_CHECK_NO_THROW( xml::xistringstream( "<element/>", xml::external_grammar( "schema.xsd" ) ) );
+    BOOST_CHECK_NO_THROW( xml::xistringstream( "<element/>", xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -266,7 +266,8 @@ BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_validated_by_schema_does_not_thro
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_validated_by_internally_referenced_schema_does_not_throw_an_exception )
 {
-    const std::string xml( "<element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='schema.xsd' />" );
+    const std::string schema = BOOST_RESOLVE( "schema.xsd" );
+    const std::string xml( "<element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />" );
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml, xml::internal_grammar() ) );
 }
 
@@ -276,7 +277,8 @@ BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_validated_by_internally_reference
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_not_validated_by_internally_referenced_schema_throws_an_exception )
 {
-    const std::string xml( "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='schema.xsd' />" );
+    const std::string schema = BOOST_RESOLVE( "schema.xsd" );
+    const std::string xml( "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />" );
     BOOST_CHECK_THROW( xml::xistringstream xis( xml, xml::internal_grammar() ), xml::exception );
 }
 
@@ -286,6 +288,7 @@ BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_not_validated_by_internally_refer
 // -----------------------------------------------------------------------------
 BOOST_AUTO_UNIT_TEST( internal_schema_is_used_only_if_specified )
 {
-    const std::string xml( "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='schema.xsd' />" );
+    const std::string schema = BOOST_RESOLVE( "schema.xsd" );
+    const std::string xml( "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />" );
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml ) );
 }
