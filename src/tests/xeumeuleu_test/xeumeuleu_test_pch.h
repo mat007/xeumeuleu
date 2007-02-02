@@ -51,4 +51,6 @@
 #include <mockpp/chaining/CountedChainableMethod.h>
 #include <mockpp/chaining/ChainingMockObjectSupport.h>
 
+std::string BOOST_RESOLVE( const std::string& filename );
+
 #endif // __xeumeuleu_test_pch_h_
