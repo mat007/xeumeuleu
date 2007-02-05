@@ -32,6 +32,11 @@
 
 #include "xeumeuleu_test_pch.h"
 #include <string>
+#include <boost/test/unit_test_log_formatter.hpp>
+#include <boost/test/detail/supplied_log_formatters.hpp>
+
+using namespace boost::unit_test;
+using namespace boost::unit_test::ut_detail;
 
 namespace
 {
@@ -51,12 +56,27 @@ namespace
             }
         }
     }
+
+    class msvc_log_formatter : public msvc65_like_log_formatter
+    {
+    public:
+        msvc_log_formatter()
+            : msvc65_like_log_formatter( unit_test_log::instance() )
+        {}
+
+        virtual void log_exception( std::ostream& output, const_string test_case_name, const_string explanation )
+        {
+            output << "Exception in '" << test_case_name << "': error: " << explanation;
+        }
+    };
+
 }
 
-boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv [] )
+test_suite* init_unit_test_suite( int argc, char* argv [] )
 {
+    unit_test_log::instance().set_log_formatter( new msvc_log_formatter() );
     set_data_directory( argc, argv );
-    return boost::unit_test::ut_detail::auto_unit_test_suite(); // $$$$ MAT 2006-04-20: remove ut_detail:: for boost 1_33
+    return ut_detail::auto_unit_test_suite();
 }
 
 std::string BOOST_RESOLVE( const std::string& filename )
