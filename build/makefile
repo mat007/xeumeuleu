@@ -8,7 +8,7 @@ RUN_DIR = ../run/cygwin
 NAME = xeumeuleu
 LIBS = xerces-c_2 libboost_unit_test_framework-cygwin-mt-1_32 mockpp
 
-EXPORTS = exception.h xml.h xi*.h xo*.h encoding.h grammar.h start.h end.h \
+EXPORTS = xml.h exception.h xi*.h xo*.h encoding.h grammar.h start.h end.h \
           content.h attribute.h list.h name_list.h visitor.h caller*.h \
           name_caller*.h optional.h
 
