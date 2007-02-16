@@ -1,0 +1,14 @@
+1.2.0
+. added support for short, unsigned short, unsigned int, long and unsigned long data types
+. added a wrapper stream to create xml streams from standard input streams
+. xml::grammar renamed to xml::external_grammar
+. added support for INF, -INF and NaN
+
+1.1.0
+. added 4 and 5 parameters xml::list support 
+. added xml::internal_grammar to use internal schema definition validation 
+. added xml::list with node names parameter (up to 2 parameters) 
+. fixed a typo in 3 parameters xml::list 
+. fixed a sub_output bug which triggered too many writes to ouput
+
+1.0.0

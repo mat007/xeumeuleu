@@ -71,8 +71,8 @@
     ============================================================================
     -->
     <target name="package" depends="generate-vc80" description="package the distribution">
-        <zip destfile="${dist.dir}/xeumeuleu.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*"/>
-        <tar destfile="${dist.dir}/xeumeuleu.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*" compression="bzip2"/>
+        <zip destfile="${dist.dir}/xeumeuleu.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user"/>
+        <tar destfile="${dist.dir}/xeumeuleu.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user" compression="bzip2"/>
     </target>
 
     <target name="generate-vc80" description="create vc80 build files from vc71 files">
@@ -93,7 +93,7 @@
       documentation
     ============================================================================
     -->
-    <target name="documentation" depends="" description="create documentation">
+    <target name="documentation" description="create documentation">
         <cpd-report/>
         <cppncss-report>
             <define name="TRY"/>
@@ -105,11 +105,11 @@
         <forrest/>
     </target>
 
-    <!-- requires scp : http://ant.apache.org/manual/OptionalTasks/scp.html -->
     <target name="site" depends="documentation" description="deploy web site">
         <input addproperty="deploy.scp.username" message="Enter username to enable scp to deploy:"/>
         <property name="deploy.scp.dest" value="${deploy.scp.username}@ssh.sourceforge.net:/home/groups/x/xe/xeumeuleu/htdocs"/>
         <input addproperty="deploy.scp.password" message="Enter remote password to enable scp to ${deploy.scp.dest}:"/>
+        <!-- requires scp : http://ant.apache.org/manual/OptionalTasks/scp.html -->
         <scp todir="${deploy.scp.dest}" password="${deploy.scp.password}" trust="yes">
             <fileset dir="${doc.dir}/site"/>
         </scp>
