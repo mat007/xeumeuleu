@@ -59,7 +59,7 @@ xobufferstream::~xobufferstream()
 // Name: xobufferstream::attach
 // Created: MAT 2006-03-08
 // -----------------------------------------------------------------------------
-void xobufferstream::attach( output& o )
+void xobufferstream::attach( output& o ) const
 {
     o.attach( *pOutput_ );
 }
