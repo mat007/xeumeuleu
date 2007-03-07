@@ -62,7 +62,7 @@ public:
 
     //! @name Operations
     //@{
-    void attach( output& o );
+    void attach( output& o ) const;
     //@}
 };
 
