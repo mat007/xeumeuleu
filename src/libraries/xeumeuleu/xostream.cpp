@@ -197,7 +197,7 @@ xostream& xostream::operator<<( unsigned long value )
 // Name: xostream::operator<<
 // Created: MAT 2006-03-07
 // -----------------------------------------------------------------------------
-xostream& xostream::operator<<( xobufferstream& xobs )
+xostream& xostream::operator<<( const xobufferstream& xobs )
 {
     TRY
         xobs.attach( output_ );

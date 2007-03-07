@@ -88,7 +88,7 @@ public:
     xostream& operator<<( unsigned int value );
     xostream& operator<<( unsigned long value );
 
-    xostream& operator<<( xobufferstream& xobs );
+    xostream& operator<<( const xobufferstream& xobs );
     //@}
 
 protected:
