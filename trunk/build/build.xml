@@ -54,6 +54,7 @@
                 <include name="start.h"/>
                 <include name="end.h"/>
                 <include name="content.h"/>
+                <include name="cdata.h"/>
                 <include name="attribute.h"/>
                 <include name="list.h"/>
                 <include name="name_list.h"/>

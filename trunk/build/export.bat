@@ -19,6 +19,7 @@ xcopy /Y "%SRC_DIR%\grammar.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\start.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\end.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\content.h" %INCLUDE_DIR%
+xcopy /Y "%SRC_DIR%\cdata.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\attribute.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\list.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\name_list.h" %INCLUDE_DIR%
