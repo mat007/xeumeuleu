@@ -136,7 +136,8 @@ const DOMNode* input_imp::findAttribute( const std::string& name ) const
 const DOMNode* input_imp::findContent() const
 {
     const DOMNode* pChild = pCurrent_->getFirstChild();
-    if( ! pChild || pChild->getNodeType() != DOMNode::TEXT_NODE )
+    if( ! pChild || pChild->getNodeType() != DOMNode::TEXT_NODE
+                 && pChild->getNodeType() != DOMNode::CDATA_SECTION_NODE )
         return 0;
     return pChild;
 }
