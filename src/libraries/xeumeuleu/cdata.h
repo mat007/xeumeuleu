@@ -37,7 +37,6 @@
 
 namespace xml
 {
-    class xistream;
     class xostream;
 
 // =============================================================================
@@ -45,10 +44,10 @@ namespace xml
     @brief  CDATA manipulator
     @par Using example
     @code
-    xml::xistream& xis = ...;
+    xml::xostream& xos = ...;
     T value;
-    xis << xml::cdata( "node", value );
-    xis << xml::cdata( value );
+    xos << xml::cdata( "node", value );
+    xos << xml::content( "node", xml::cdata( value ) );
     @endcode
 */
 // Created: MCO 2007-03-14
