@@ -30,63 +30,36 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "beautifier.h"
-#include "translate.h"
+#include "cdata.h"
+#include "xostream.h"
 
 using namespace xml;
-using namespace XERCES_CPP_NAMESPACE;
-
-namespace
-{
-    static const XMLCh defaultNewLine[] = { chLF, chNull };
-}
 
 // -----------------------------------------------------------------------------
-// Name: beautifier constructor
-// Created: MAT 2006-01-05
+// Name: cdata constructor
+// Created: MCO 2007-03-14
 // -----------------------------------------------------------------------------
-beautifier::beautifier( XMLFormatTarget& target, const XMLCh* newLine )
-    : target_        ( target )
-    , newLine_       ( translate( newLine == chNull ? defaultNewLine : newLine ) )
-    , discardNewLine_( false )
+cdata::cdata( const std::string& content )
+    : content_( content )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: beautifier destructor
-// Created: MAT 2006-01-05
+// Name: cdata::operator()
+// Created: MCO 2007-03-14
 // -----------------------------------------------------------------------------
-beautifier::~beautifier()
+xostream& cdata::operator()( xostream& xos ) const
 {
-    // NOTHING
+    xos.cdata( content_ );
+    return xos;
 }
 
 // -----------------------------------------------------------------------------
-// Name: beautifier::isNewLine
-// Created: MAT 2006-01-05
+// Name: xml::operator<<
+// Created: MCO 2007-03-14
 // -----------------------------------------------------------------------------
-inline
-bool beautifier::isNewLine( const XMLByte* const toWrite, const unsigned int count ) const
+xostream& xml::operator<<( xostream& xos, const cdata& manipulator )
 {
-    return count == newLine_.size() && 0 == strncmp( reinterpret_cast< const char* const >( toWrite ), newLine_.c_str(), count );
-}
-
-// -----------------------------------------------------------------------------
-// Name: beautifier::writeChars
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void beautifier::writeChars( const XMLByte* const toWrite, const unsigned int count, XMLFormatter* const formatter )
-{
-    if( isNewLine( toWrite, count ) )
-    {
-        if( ! discardNewLine_ )
-            target_.writeChars( toWrite, count, formatter );
-        discardNewLine_ = ! discardNewLine_;
-    }
-    else
-    {
-        target_.writeChars( toWrite, count, formatter );
-        discardNewLine_ = false;
-    }
+    return manipulator( xos );
 }

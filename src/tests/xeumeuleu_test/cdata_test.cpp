@@ -30,63 +30,24 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "beautifier.h"
-#include "translate.h"
+#include "xeumeuleu_test_pch.h"
+#include "xeumeuleu/xml.h"
 
-using namespace xml;
-using namespace XERCES_CPP_NAMESPACE;
+using namespace mockpp;
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: streaming_cdata_creates_output_with_cdata_content
+// Created: MCO 2007-02-14
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( streaming_cdata_creates_output_with_cdata_content )
 {
-    static const XMLCh defaultNewLine[] = { chLF, chNull };
-}
-
-// -----------------------------------------------------------------------------
-// Name: beautifier constructor
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-beautifier::beautifier( XMLFormatTarget& target, const XMLCh* newLine )
-    : target_        ( target )
-    , newLine_       ( translate( newLine == chNull ? defaultNewLine : newLine ) )
-    , discardNewLine_( false )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: beautifier destructor
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-beautifier::~beautifier()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: beautifier::isNewLine
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-inline
-bool beautifier::isNewLine( const XMLByte* const toWrite, const unsigned int count ) const
-{
-    return count == newLine_.size() && 0 == strncmp( reinterpret_cast< const char* const >( toWrite ), newLine_.c_str(), count );
-}
-
-// -----------------------------------------------------------------------------
-// Name: beautifier::writeChars
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void beautifier::writeChars( const XMLByte* const toWrite, const unsigned int count, XMLFormatter* const formatter )
-{
-    if( isNewLine( toWrite, count ) )
-    {
-        if( ! discardNewLine_ )
-            target_.writeChars( toWrite, count, formatter );
-        discardNewLine_ = ! discardNewLine_;
-    }
-    else
-    {
-        target_.writeChars( toWrite, count, formatter );
-        discardNewLine_ = false;
-    }
+    xml::xostringstream xos;
+    xos << xml::start( "element" )
+            << xml::cdata( "<<<" )
+        << xml::end();
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element>\n"
+                       "  \n" // $$$$ MCO 2007-03-14: 
+                       "  <![CDATA[<<<]]>\n"
+                       "</element>\n", xos.str() );
 }
