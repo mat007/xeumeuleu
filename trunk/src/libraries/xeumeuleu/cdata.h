@@ -30,63 +30,55 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "beautifier.h"
-#include "translate.h"
+#ifndef _xeumeuleu_cdata_h_
+#define _xeumeuleu_cdata_h_
 
-using namespace xml;
-using namespace XERCES_CPP_NAMESPACE;
+#include <string>
 
-namespace
+namespace xml
 {
-    static const XMLCh defaultNewLine[] = { chLF, chNull };
+    class xistream;
+    class xostream;
+
+// =============================================================================
+/** @class  cdata
+    @brief  CDATA manipulator
+    @par Using example
+    @code
+    xml::xistream& xis = ...;
+    T value;
+    xis << xml::cdata( "node", value );
+    xis << xml::cdata( value );
+    @endcode
+*/
+// Created: MCO 2007-03-14
+// =============================================================================
+class cdata
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit cdata( const std::string& content );
+    //@}
+
+    //! @name Operators
+    //@{
+    xostream& operator()( xostream& xos ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string content_;
+    //@}
+};
+
+// -----------------------------------------------------------------------------
+// Name: operator<<
+// Created: MAT 2006-01-03
+// -----------------------------------------------------------------------------
+xostream& operator<<( xostream& xos, const cdata& manipulator );
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: beautifier constructor
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-beautifier::beautifier( XMLFormatTarget& target, const XMLCh* newLine )
-    : target_        ( target )
-    , newLine_       ( translate( newLine == chNull ? defaultNewLine : newLine ) )
-    , discardNewLine_( false )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: beautifier destructor
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-beautifier::~beautifier()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: beautifier::isNewLine
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-inline
-bool beautifier::isNewLine( const XMLByte* const toWrite, const unsigned int count ) const
-{
-    return count == newLine_.size() && 0 == strncmp( reinterpret_cast< const char* const >( toWrite ), newLine_.c_str(), count );
-}
-
-// -----------------------------------------------------------------------------
-// Name: beautifier::writeChars
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void beautifier::writeChars( const XMLByte* const toWrite, const unsigned int count, XMLFormatter* const formatter )
-{
-    if( isNewLine( toWrite, count ) )
-    {
-        if( ! discardNewLine_ )
-            target_.writeChars( toWrite, count, formatter );
-        discardNewLine_ = ! discardNewLine_;
-    }
-    else
-    {
-        target_.writeChars( toWrite, count, formatter );
-        discardNewLine_ = false;
-    }
-}
+#endif // _xeumeuleu_cdata_h_

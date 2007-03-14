@@ -65,6 +65,8 @@ public:
         write( serialize( value ) );
     }
 
+    void cdata( const std::string& value );
+
     void attribute( const std::string& name, const std::string& value );
     template< typename T > void attribute( const std::string& name, T value )
     {

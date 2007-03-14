@@ -45,6 +45,7 @@
 #include "start.h"
 #include "end.h"
 #include "content.h"
+#include "cdata.h"
 #include "attribute.h"
 #include "list.h"
 #include "name_list.h"

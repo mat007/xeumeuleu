@@ -156,6 +156,12 @@
 					RelativePath="..\..\src\libraries\xeumeuleu\attribute.h">
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\cdata.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\cdata.h">
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\content.h">
 				</File>
 				<File
