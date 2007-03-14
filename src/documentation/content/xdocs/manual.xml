@@ -290,6 +290,17 @@ public:
       <p>
         Will perform the exact same operation.
       </p>
+      <p>
+        A CDATA section happens to be unserialized transparently either directly or with an <strong>xml::content</strong> however it must be manually serialized, for example :
+        <source><![CDATA[xos << xml::start( "element" )
+      << xml::cdata( "the CDATA section of the node" )
+    << xml::end();]]></source>
+      </p>
+      <p>
+        It is worth noting that <strong>xml::cdata</strong> can be used inside an <strong>xml::content</strong> :
+      </p>
+        <source><![CDATA[xos << xml::content( "element", xml::cdata( "the CDATA section of the node" ) );]]></source>
+      </p>
       <section id="attributes">
         <title>Attributes</title>
         <p>
