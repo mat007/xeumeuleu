@@ -1,5 +1,6 @@
 1.2.1
 . added const to the xobufferstream parameter serialized to an xostream
+. added CDATA support
 
 1.2.0
 . added support for short, unsigned short, unsigned int, long and unsigned long data types
