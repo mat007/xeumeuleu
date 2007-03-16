@@ -53,6 +53,21 @@ BOOST_AUTO_UNIT_TEST( streaming_cdata_creates_output_with_cdata_section )
 }
 
 // -----------------------------------------------------------------------------
+// Name: streaming_cdata_creates_output_with_cdata_content
+// Created: MCO 2007-02-14
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( streaming_cdata_content_creates_output_with_cdata_section )
+{
+    xml::xostringstream xos;
+    xos << xml::content( "element", xml::cdata( "<<<" ) );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element>\n"
+                       "  \n" // $$$$ MCO 2007-03-14: 
+                       "  <![CDATA[<<<]]>\n"
+                       "</element>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: reading_cdata_provides_valid_content
 // Created: MCO 2007-02-14
 // -----------------------------------------------------------------------------
@@ -62,5 +77,17 @@ BOOST_AUTO_UNIT_TEST( reading_cdata_provides_valid_text )
     xml::xistringstream xis( "<element><![CDATA[<<<]]></element>");
     xis >> xml::start( "element" )
             >> content;
+    BOOST_CHECK_EQUAL( "<<<", content );
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_cdata_content_provides_valid_content
+// Created: MCO 2007-02-14
+// -----------------------------------------------------------------------------
+BOOST_AUTO_UNIT_TEST( reading_cdata_content_provides_valid_content )
+{
+    std::string content;
+    xml::xistringstream xis( "<element><![CDATA[<<<]]></element>");
+    xis >> xml::content( "element", content );
     BOOST_CHECK_EQUAL( "<<<", content );
 }
