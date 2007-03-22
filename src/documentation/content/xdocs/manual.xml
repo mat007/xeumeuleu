@@ -169,7 +169,7 @@ xos << xobs;]]></source>
     >> xml::end();]]></source>
       </section>
       <p>
-        It is also considered valid for some nodes not be unserialized if they are not needed and therefore no exception will be raised.
+        It is also considered valid for some nodes to be left unserialized and therefore no exception will be raised.
       </p>
       <section id="lists">
         <title>Lists of elements</title>
