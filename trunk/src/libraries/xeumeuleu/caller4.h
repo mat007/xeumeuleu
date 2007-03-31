@@ -84,10 +84,10 @@ private:
     //@{
     T& instance_;
     M method_;
-    T1 value1_;
-    T2 value2_;
-    T3 value3_;
-    T4 value4_;
+    Arg1 value1_;
+    Arg2 value2_;
+    Arg3 value3_;
+    Arg4 value4_;
     //@}
 };
 
@@ -138,10 +138,10 @@ private:
     //@{
     const T& instance_;
     M method_;
-    T1 value1_;
-    T2 value2_;
-    T3 value3_;
-    T4 value4_;
+    Arg1 value1_;
+    Arg2 value2_;
+    Arg3 value3_;
+    Arg4 value4_;
     //@}
 };
 

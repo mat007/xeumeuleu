@@ -81,7 +81,7 @@ private:
     //@{
     T& instance_;
     M method_;
-    T1 value_;
+    Arg value_;
     //@}
 };
 
@@ -129,7 +129,7 @@ private:
     //@{
     const T& instance_;
     M method_;
-    T1 value_;
+    Arg value_;
     //@}
 };
 
