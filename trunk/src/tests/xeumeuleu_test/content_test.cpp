@@ -37,13 +37,6 @@ using namespace mockpp;
 
 namespace
 {
-    void warning_check()
-    {
-        xml::xistream& xis = *(xml::xistream*)0;
-        int value;
-        xis >> xml::content( "node", value );
-    }
-
     template< typename T > std::string write( const T& value )
     {
         xml::xostringstream xos;
