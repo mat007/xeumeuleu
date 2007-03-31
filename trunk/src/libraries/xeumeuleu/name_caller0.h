@@ -43,9 +43,15 @@ namespace xml
 */
 // Created: ZEBRE 2006-08-30
 // =============================================================================
-template< typename T, typename M >
+template< typename T >
 class name_caller0
 {
+private:
+    //! @name Types
+    //@{
+    typedef void (T::*M)( const std::string&, xistream& );
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -73,6 +79,52 @@ private:
     //! @name Member data
     //@{
     T& instance_;
+    M method_;
+    //@}
+};
+
+// =============================================================================
+/** @class  const_name_caller0
+    @brief  Const method call functor with element name
+*/
+// Created: ZEBRE 2006-08-30
+// =============================================================================
+template< typename T >
+class const_name_caller0
+{
+private:
+    //! @name Types
+    //@{
+    typedef void (T::*M)( const std::string&, xistream& ) const;
+    //@}
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+    const_name_caller0( const T& instance, M method )
+        : instance_( instance )
+        , method_  ( method )
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    void operator()( const std::string& name, xistream& xis ) const
+    {
+        (instance_.*method_)( name, xis );
+    }
+    //@}
+
+private:
+    //! @name Constructors/Destructor
+    //@{
+    const_name_caller0& operator=( const const_name_caller0& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const T& instance_;
     M method_;
     //@}
 };

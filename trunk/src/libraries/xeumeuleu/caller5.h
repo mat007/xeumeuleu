@@ -43,13 +43,19 @@ namespace xml
 */
 // Created: MCO 2006-06-22
 // =============================================================================
-template< typename T, typename M, typename P1, typename P2, typename P3, typename P4, typename P5 >
+template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4, typename Arg5, typename T5 >
 class caller5
 {
+private:
+    //! @name Types
+    //@{
+    typedef void (T::*M)( xistream&, T1, T2, T3, T4, T5 );
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
-    caller5( T& instance, M method, P1 value1, P2 value2, P3 value3, P4 value4, P5 value5 )
+    caller5( T& instance, M method, Arg1 value1, Arg2 value2, Arg3 value3, Arg4 value4, Arg5 value5 )
         : instance_( instance )
         , method_  ( method )
         , value1_  ( value1 )
@@ -79,11 +85,67 @@ private:
     //@{
     T& instance_;
     M method_;
-    P1 value1_;
-    P2 value2_;
-    P3 value3_;
-    P4 value4_;
-    P5 value5_;
+    T1 value1_;
+    T2 value2_;
+    T3 value3_;
+    T4 value4_;
+    T5 value5_;
+    //@}
+};
+
+// =============================================================================
+/** @class  const_caller5
+    @brief  Const method call functor with five fixed parameters
+*/
+// Created: MCO 2006-06-22
+// =============================================================================
+template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4, typename Arg5, typename T5 >
+class const_caller5
+{
+private:
+    //! @name Types
+    //@{
+    typedef void (T::*M)( xistream&, T1, T2, T3, T4, T5 ) const;
+    //@}
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+    const_caller5( const T& instance, M method, Arg1 value1, Arg2 value2, Arg3 value3, Arg4 value4, Arg5 value5 )
+        : instance_( instance )
+        , method_  ( method )
+        , value1_  ( value1 )
+        , value2_  ( value2 )
+        , value3_  ( value3 )
+        , value4_  ( value4 )
+        , value5_  ( value5 )
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    void operator()( xistream& xis ) const
+    {
+        (instance_.*method_)( xis, value1_, value2_, value3_, value4_, value5_ );
+    }
+    //@}
+
+private:
+    //! @name Constructors/Destructor
+    //@{
+    const_caller5& operator=( const const_caller5& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const T& instance_;
+    M method_;
+    T1 value1_;
+    T2 value2_;
+    T3 value3_;
+    T4 value4_;
+    T5 value5_;
     //@}
 };
 

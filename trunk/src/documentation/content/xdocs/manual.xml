@@ -212,12 +212,12 @@ xis >> xml::start( "root" )
       >> xml::list( "element", my_instance, &my_class::my_method, my_integer, my_string )
     >> xml::end();]]></source>
       <p>
-        The functor method signature will be expected to be called with the given parameters :
+        The functor method signature will be expected to be compatible with the parameters passed by reference (parameters cannot be passed by value) :
       </p>
       <source><![CDATA[class my_class
 {
 public:
-    void my_method( xistream& xis, int my_integer, const std::string& my_string ) const;
+    void my_method( xistream& xis, int& my_integer, const std::string& my_string ) const;
 };]]></source>
       <p>
         Note that each parameter can be declared <em>const</em> or not depending on the needs.
