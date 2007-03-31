@@ -43,15 +43,9 @@ namespace xml
 */
 // Created: MAT 2006-01-06
 // =============================================================================
-template< typename T >
+template< typename T, typename M >
 class caller0
 {
-private:
-    //! @name Types
-    //@{
-    typedef void (T::*M)( xistream& );
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -79,52 +73,6 @@ private:
     //! @name Member data
     //@{
     T& instance_;
-    M method_;
-    //@}
-};
-
-// =============================================================================
-/** @class  const_caller0
-    @brief  Const method call functor
-*/
-// Created: MAT 2006-01-06
-// =============================================================================
-template< typename T >
-class const_caller0
-{
-private:
-    //! @name Types
-    //@{
-    typedef void (T::*M)( xistream& ) const;
-    //@}
-
-public:
-    //! @name Constructors/Destructor
-    //@{
-    const_caller0( const T& instance, M method )
-        : instance_( instance )
-        , method_  ( method )
-    {}
-    //@}
-
-    //! @name Operations
-    //@{
-    void operator()( xistream& xis ) const
-    {
-        (instance_.*method_)( xis );
-    }
-    //@}
-
-private:
-    //! @name Constructors/Destructor
-    //@{
-    const_caller0& operator=( const const_caller0& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const T& instance_;
     M method_;
     //@}
 };

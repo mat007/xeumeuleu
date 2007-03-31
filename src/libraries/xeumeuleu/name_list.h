@@ -48,14 +48,7 @@ namespace xml
     class my_class
     {
     public:
-        void my_method( const std::string& name, xml::xistream& xis )
-        {
-            if( name == ... )
-                xis >> ...
-            else if( name == ... )
-                xis >> ...
-        }
-        void my_const_method( const std::string& name, xml::xistream& xis ) const
+        void my_method( const std::string& name, xml::xistream& xis, int, const std::string& )
         {
             if( name == ... )
                 xis >> ...
@@ -64,8 +57,7 @@ namespace xml
         }
     } my_instance;
     xml::xistream& xis = ...;
-    xis >> xml::list( my_instance, &my_class::my_method );
-    xis >> xml::list( my_instance, &my_class::my_const_method );
+    xis >> xml::list( my_instance, &my_class::my_method, 3, "string" );
     @endcode
 */
 // Created: ZEBRE 2006-08-30
@@ -117,60 +109,30 @@ xistream& operator>>( xistream& xis, const list_name_visitor< T >& manipulator )
 // Name: list
 // Created: AGE 2006-08-30
 // -----------------------------------------------------------------------------
-template< typename T >
-list_name_visitor< name_caller0< T > > list( T& instance, void (T::*method)( const std::string&, xistream& ) )
+template< typename T, typename M >
+list_name_visitor< name_caller0< T, M > > list( T& instance, M method )
 {
-    return list_name_visitor< name_caller0< T > >( name_caller0< T >( instance, method ) );
+    return list_name_visitor< name_caller0< T, M > >( name_caller0< T, M >( instance, method ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: list
 // Created: AGE 2006-08-30
 // -----------------------------------------------------------------------------
-template< typename T >
-list_name_visitor< const_name_caller0< T > > list( const T& instance, void (T::*method)( const std::string&, xistream& ) const )
+template< typename T, typename M, typename P1 >
+list_name_visitor< name_caller1< T, M, P1& > > list( T& instance, M method, P1& value )
 {
-    return list_name_visitor< const_name_caller0< T > >( const_name_caller0< T >( instance, method ) );
+    return list_name_visitor< name_caller1< T, M, P1& > >( name_caller1< T, M, P1& >( instance, method, value ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: list
 // Created: AGE 2006-08-30
 // -----------------------------------------------------------------------------
-template< typename T, typename Arg1, typename T1 >
-list_name_visitor< name_caller1< T, Arg1&, T1& > > list( T& instance, void (T::*method)( const std::string&, xistream&, T1& ), Arg1& value )
+template< typename T, typename M, typename P1, typename P2 >
+list_name_visitor< name_caller2< T, M, P1&, P2& > > list( T& instance, M method, P1& value1 )
 {
-    return list_name_visitor< name_caller1< T, Arg1&, T1& > >( name_caller1< T, Arg1&, T1& >( instance, method, value ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: list
-// Created: AGE 2006-08-30
-// -----------------------------------------------------------------------------
-template< typename T, typename Arg1, typename T1 >
-list_name_visitor< const_name_caller1< T, Arg1&, T1& > > list( const T& instance, void (T::*method)( const std::string&, xistream&, T1& ) const, Arg1& value )
-{
-    return list_name_visitor< const_name_caller1< T, Arg1&, T1& > >( const_name_caller1< T, Arg1&, T1& >( instance, method, value ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: list
-// Created: AGE 2006-08-30
-// -----------------------------------------------------------------------------
-template< typename T, typename Arg1, typename T1, typename Arg2, typename T2 >
-list_name_visitor< name_caller2< T, Arg1&, T1&, Arg2&, T2& > > list( T& instance, void (T::*method)( const std::string&, xistream&, T1&, T2& ), Arg1& value1, Arg2& value2 )
-{
-    return list_name_visitor< name_caller2< T, Arg1&, T1&, Arg2&, T2& > >( name_caller2< T, Arg1&, T1&, Arg2&, T2& >( instance, method, value1, value2 ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: list
-// Created: AGE 2006-08-30
-// -----------------------------------------------------------------------------
-template< typename T, typename Arg1, typename T1, typename Arg2, typename T2 >
-list_name_visitor< const_name_caller2< T, Arg1&, T1&, Arg2&, T2& > > list( const T& instance, void (T::*method)( const std::string&, xistream&, T1&, T2& ) const, Arg1& value1, Arg2& value2 )
-{
-    return list_name_visitor< const_name_caller2< T, Arg1&, T1&, Arg2&, T2& > >( const_name_caller2< T, Arg1&, T1&, Arg2&, T2& >( instance, method, value1, value2 ) );
+    return list_name_visitor< name_caller2< T, M, P1&, P2& > >( name_caller2< T, M, P1&, P2& >( instance, method, value1, value2 ) );
 }
 
 }
