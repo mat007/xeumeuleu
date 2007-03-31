@@ -43,19 +43,13 @@ namespace xml
 */
 // Created: AGE 2006-01-27
 // =============================================================================
-template< typename T, typename Arg, typename T1 >
+template< typename T, typename M, typename P >
 class caller1
 {
-private:
-    //! @name Types
-    //@{
-    typedef void (T::*M)( xistream&, T1 );
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
-    caller1( T& instance, M method, Arg value )
+    caller1( T& instance, M method, P value )
         : instance_( instance )
         , method_  ( method )
         , value_   ( value )
@@ -81,55 +75,7 @@ private:
     //@{
     T& instance_;
     M method_;
-    T1 value_;
-    //@}
-};
-
-// =============================================================================
-/** @class  const_caller1
-    @brief  Const method call functor with one fixed parameter
-*/
-// Created: AGE 2006-01-27
-// =============================================================================
-template< typename T, typename Arg, typename T1 >
-class const_caller1
-{
-private:
-    //! @name Types
-    //@{
-    typedef void (T::*M)( xistream&, T1 ) const;
-    //@}
-
-public:
-    //! @name Constructors/Destructor
-    //@{
-    const_caller1( const T& instance, M method, Arg value )
-        : instance_( instance )
-        , method_  ( method )
-        , value_   ( value )
-    {}
-    //@}
-
-    //! @name Operations
-    //@{
-    void operator()( xistream& xis ) const
-    {
-        (instance_.*method_)( xis, value_ );
-    }
-    //@}
-
-private:
-    //! @name Constructors/Destructor
-    //@{
-    const_caller1& operator=( const const_caller1& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const T& instance_;
-    M method_;
-    T1 value_;
+    P value_;
     //@}
 };
 
