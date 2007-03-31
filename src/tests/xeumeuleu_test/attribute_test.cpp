@@ -37,13 +37,6 @@ using namespace mockpp;
 
 namespace
 {
-    void warning_check()
-    {
-        xml::xistream& xis = *(xml::xistream*)0;
-        std::string value;
-        xis >> xml::attribute( "attribute", value );
-    }
-
     template< typename T > T read( const std::string& value )
     {
         xml::xistringstream xis( "<element attribute=\"" + value + "\"/>" );
