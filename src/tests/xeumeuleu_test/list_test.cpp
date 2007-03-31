@@ -226,7 +226,7 @@ namespace
             : mockpp::ChainableMockObject( "mock_custom_class", 0 )
             , process_mocker             ( "process", this )
         {}
-        void process( xml::xistream& xis, int& p1, const float& p2 )
+        void process( xml::xistream& xis, int p1, const float p2 )
         {
             process_mocker.forward( xis, p1, p2 );
         }
@@ -330,7 +330,7 @@ namespace
             : mockpp::ChainableMockObject( "mock_custom_class_name_list_with_parameters", 0 )
             , process_mocker             ( "process", this )
         {}
-        void process( const std::string& name, xml::xistream& xis, int& p1 )
+        void process( const std::string& name, xml::xistream& xis, int p1 )
         {
             process_mocker.forward( name, xis, p1 );
         }
@@ -352,7 +352,6 @@ BOOST_AUTO_UNIT_TEST( read_name_list_with_parameters )
     mock_custom_class_name_list_with_parameters mock_custom;
     mock_custom.process_mocker.expects( mockpp::once() ).with( eq( std::string( "sub-node1" ) ), new xistream_constraint( "content number one" ), eq( p1 ) );
     mock_custom.process_mocker.expects( mockpp::once() ).with( eq( std::string( "sub-node2" ) ), new xistream_constraint( "content number two" ), eq( p1 ) );
-
     xis >> xml::start( "element" )
             >> xml::list( mock_custom, &mock_custom_class_name_list_with_parameters::process, p1 )
         >> xml::end();
@@ -388,7 +387,6 @@ BOOST_AUTO_UNIT_TEST( read_name_list_is_not_called_with_content )
                              "</element>" );
     mock_custom_class_name_list mock_custom;
     mock_custom.process_mocker.expects( mockpp::once() ).with( eq( std::string( "sub-node" ) ), new xistream_constraint( "content" ) );
-
     xis >> xml::start( "element" )
             >> xml::list( mock_custom, &mock_custom_class_name_list::process )
         >> xml::end();

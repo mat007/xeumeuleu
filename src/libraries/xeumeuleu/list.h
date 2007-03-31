@@ -135,9 +135,9 @@ list_visitor< const_caller0< T > > list( const std::string& name, const T& insta
 // Created: AGE 2006-02-01
 // -----------------------------------------------------------------------------
 template< typename T, typename Arg1, typename T1 >
-list_visitor< caller1< T, Arg1&, T1& > > list( const std::string& name, T& instance, void (T::*method)( xistream&, T1& ), Arg1& value )
+list_visitor< caller1< T, Arg1&, T1 > > list( const std::string& name, T& instance, void (T::*method)( xistream&, T1 ), Arg1& value )
 {
-    return list_visitor< caller1< T, Arg1&, T1& > >( name, caller1< T, Arg1&, T1& >( instance, method, value ) );
+    return list_visitor< caller1< T, Arg1&, T1 > >( name, caller1< T, Arg1&, T1 >( instance, method, value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,9 +145,9 @@ list_visitor< caller1< T, Arg1&, T1& > > list( const std::string& name, T& insta
 // Created: AGE 2006-02-01
 // -----------------------------------------------------------------------------
 template< typename T, typename Arg1, typename T1 >
-list_visitor< const_caller1< T, Arg1&, T1& > > list( const std::string& name, const T& instance, void (T::*method)( xistream&, T1& ) const, Arg1& value )
+list_visitor< const_caller1< T, Arg1&, T1 > > list( const std::string& name, const T& instance, void (T::*method)( xistream&, T1 ) const, Arg1& value )
 {
-    return list_visitor< const_caller1< T, Arg1&, T1& > >( name, const_caller1< T, Arg1&, T1& >( instance, method, value ) );
+    return list_visitor< const_caller1< T, Arg1&, T1 > >( name, const_caller1< T, Arg1&, T1 >( instance, method, value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,9 +155,9 @@ list_visitor< const_caller1< T, Arg1&, T1& > > list( const std::string& name, co
 // Created: AGE 2006-02-01
 // -----------------------------------------------------------------------------
 template< typename T, typename Arg1, typename T1, typename Arg2, typename T2 >
-list_visitor< caller2< T, Arg1&, T1&, Arg2&, T2& > > list( const std::string& name, T& instance, void (T::*method)( xistream&, T1&, T2& ), Arg1& value1, Arg2& value2 )
+list_visitor< caller2< T, Arg1&, T1, Arg2&, T2 > > list( const std::string& name, T& instance, void (T::*method)( xistream&, T1, T2 ), Arg1& value1, Arg2& value2 )
 {
-    return list_visitor< caller2< T, Arg1&, T1&, Arg2&, T2& > >( name, caller2< T, Arg1&, T1&, Arg2&, T2& >( instance, method, value1, value2 ) );
+    return list_visitor< caller2< T, Arg1&, T1, Arg2&, T2 > >( name, caller2< T, Arg1&, T1, Arg2&, T2 >( instance, method, value1, value2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,9 +165,9 @@ list_visitor< caller2< T, Arg1&, T1&, Arg2&, T2& > > list( const std::string& na
 // Created: AGE 2006-02-01
 // -----------------------------------------------------------------------------
 template< typename T, typename Arg1, typename T1, typename Arg2, typename T2 >
-list_visitor< const_caller2< T, Arg1&, T1&, Arg2&, T2& > > list( const std::string& name, const T& instance, void (T::*method)( xistream&, T1&, T2& ) const, Arg1& value1, Arg2& value2 )
+list_visitor< const_caller2< T, Arg1&, T1, Arg2&, T2 > > list( const std::string& name, const T& instance, void (T::*method)( xistream&, T1, T2 ) const, Arg1& value1, Arg2& value2 )
 {
-    return list_visitor< const_caller2< T, Arg1&, T1&, Arg2&, T2& > >( name, const_caller2< T, Arg1&, T1&, Arg2&, T2& >( instance, method, value1, value2 ) );
+    return list_visitor< const_caller2< T, Arg1&, T1, Arg2&, T2 > >( name, const_caller2< T, Arg1&, T1, Arg2&, T2 >( instance, method, value1, value2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,9 +175,9 @@ list_visitor< const_caller2< T, Arg1&, T1&, Arg2&, T2& > > list( const std::stri
 // Created: MCO 2006-03-17
 // -----------------------------------------------------------------------------
 template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3 >
-list_visitor< caller3< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3& > > list( const std::string& name, T& instance, void (T::*method)( xistream&, T1&, T2&, T3& ), Arg1& value1, Arg2& value2, Arg3& value3 )
+list_visitor< caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > > list( const std::string& name, T& instance, void (T::*method)( xistream&, T1, T2, T3 ), Arg1& value1, Arg2& value2, Arg3& value3 )
 {
-    return list_visitor< caller3< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3& > >( name, caller3< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3& >( instance, method, value1, value2, value3 ) );
+    return list_visitor< caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > >( name, caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 >( instance, method, value1, value2, value3 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,9 +185,9 @@ list_visitor< caller3< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3& > > list( const std
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
 template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3 >
-list_visitor< const_caller3< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3& > > list( const std::string& name, const T& instance, void (T::*method)( xistream&, T1&, T2&, T3& ) const, Arg1& value1, Arg2& value2, Arg3& value3 )
+list_visitor< const_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > > list( const std::string& name, const T& instance, void (T::*method)( xistream&, T1, T2, T3 ) const, Arg1& value1, Arg2& value2, Arg3& value3 )
 {
-    return list_visitor< const_caller3< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3& > >( name, const_caller3< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3& >( instance, method, value1, value2, value3 ) );
+    return list_visitor< const_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > >( name, const_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 >( instance, method, value1, value2, value3 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,9 +195,9 @@ list_visitor< const_caller3< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3& > > list( con
 // Created: SBO 2006-05-16
 // -----------------------------------------------------------------------------
 template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4 >
-list_visitor< caller4< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& > > list( const std::string& name, T& instance, void (T::*method)( xistream&, T1&, T2&, T3&, T4& ), Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4 )
+list_visitor< caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 > > list( const std::string& name, T& instance, void (T::*method)( xistream&, T1, T2, T3, T4 ), Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4 )
 {
-    return list_visitor< caller4< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& > >( name, caller4< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& >( instance, method, value1, value2, value3, value4 ) );
+    return list_visitor< caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 > >( name, caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 >( instance, method, value1, value2, value3, value4 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,9 +205,9 @@ list_visitor< caller4< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& > > lis
 // Created: SBO 2006-05-16
 // -----------------------------------------------------------------------------
 template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4 >
-list_visitor< const_caller4< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& > > list( const std::string& name, const T& instance, void (T::*method)( xistream&, T1&, T2&, T3&, T4& ) const, Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4 )
+list_visitor< const_caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 > > list( const std::string& name, const T& instance, void (T::*method)( xistream&, T1, T2, T3, T4 ) const, Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4 )
 {
-    return list_visitor< const_caller4< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& > >( name, const_caller4< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& >( instance, method, value1, value2, value3, value4 ) );
+    return list_visitor< const_caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 > >( name, const_caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 >( instance, method, value1, value2, value3, value4 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -215,9 +215,9 @@ list_visitor< const_caller4< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4& >
 // Created: MCO 2006-06-22
 // -----------------------------------------------------------------------------
 template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4, typename Arg5, typename T5 >
-list_visitor< caller5< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4&, Arg5&, T5& > > list( const std::string& name, T& instance, void (T::*method)( xistream&, T1&, T2&, T3&, T4&, T5& ), Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4, Arg5& value5 )
+list_visitor< caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 > > list( const std::string& name, T& instance, void (T::*method)( xistream&, T1, T2, T3, T4, T5 ), Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4, Arg5& value5 )
 {
-    return list_visitor< caller5< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4&, Arg5&, T5& > >( name, caller5< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4&, Arg5&, T5& >( instance, method, value1, value2, value3, value4, value5 ) );
+    return list_visitor< caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 > >( name, caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 >( instance, method, value1, value2, value3, value4, value5 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,9 +225,9 @@ list_visitor< caller5< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4&, Arg5&,
 // Created: MCO 2006-06-22
 // -----------------------------------------------------------------------------
 template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4, typename Arg5, typename T5 >
-list_visitor< const_caller5< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4&, Arg5&, T5& > > list( const std::string& name, const T& instance, void (T::*method)( xistream&, T1&, T2&, T3&, T4&, T5& ) const, Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4, Arg5& value5 )
+list_visitor< const_caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 > > list( const std::string& name, const T& instance, void (T::*method)( xistream&, T1, T2, T3, T4, T5 ) const, Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4, Arg5& value5 )
 {
-    return list_visitor< const_caller5< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4&, Arg5&, T5& > >( name, const_caller5< T, Arg1&, T1&, Arg2&, T2&, Arg3&, T3&, Arg4&, T4&, Arg5&, T5& >( instance, method, value1, value2, value3, value4, value5 ) );
+    return list_visitor< const_caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 > >( name, const_caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 >( instance, method, value1, value2, value3, value4, value5 ) );
 }
 
 }
