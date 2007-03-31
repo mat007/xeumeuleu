@@ -43,13 +43,19 @@ namespace xml
 */
 // Created: ZEBRE 2006-08-30
 // =============================================================================
-template< typename T, typename M, typename P >
+template< typename T, typename Arg, typename T1 >
 class name_caller1
 {
+private:
+    //! @name Types
+    //@{
+    typedef void (T::*M)( const std::string&, xistream&, T1 );
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
-    name_caller1( T& instance, M method, P value )
+    name_caller1( T& instance, M method, Arg value )
         : instance_( instance )
         , method_  ( method )
         , value_   ( value )
@@ -75,7 +81,55 @@ private:
     //@{
     T& instance_;
     M method_;
-    P value_;
+    T1 value_;
+    //@}
+};
+
+// =============================================================================
+/** @class  const_name_caller1
+    @brief  Const method call functor with element name and one fixed parameter
+*/
+// Created: ZEBRE 2006-08-30
+// =============================================================================
+template< typename T, typename Arg, typename T1 >
+class const_name_caller1
+{
+private:
+    //! @name Types
+    //@{
+    typedef void (T::*M)( const std::string&, xistream&, T1 ) const;
+    //@}
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+    const_name_caller1( const T& instance, M method, Arg value )
+        : instance_( instance )
+        , method_  ( method )
+        , value_   ( value )
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    void operator()( const std::string& name, xistream& xis ) const
+    {
+        (instance_.*method_)( name, xis, value_ );
+    }
+    //@}
+
+private:
+    //! @name Constructors/Destructor
+    //@{
+    const_name_caller1& operator=( const const_name_caller1& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const T& instance_;
+    M method_;
+    T1 value_;
     //@}
 };
 

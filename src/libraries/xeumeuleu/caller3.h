@@ -43,13 +43,19 @@ namespace xml
 */
 // Created: AGE 2006-01-27
 // =============================================================================
-template< typename T, typename M, typename P1, typename P2, typename P3 >
+template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3 >
 class caller3
 {
+private:
+    //! @name Types
+    //@{
+    typedef void (T::*M)( xistream&, T1, T2, T3 );
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
-    caller3( T& instance, M method, P1 value1, P2 value2, P3 value3 )
+    caller3( T& instance, M method, Arg1 value1, Arg2 value2, Arg3 value3 )
         : instance_( instance )
         , method_  ( method )
         , value1_  ( value1 )
@@ -77,9 +83,61 @@ private:
     //@{
     T& instance_;
     M method_;
-    P1 value1_;
-    P2 value2_;
-    P3 value3_;
+    T1 value1_;
+    T2 value2_;
+    T3 value3_;
+    //@}
+};
+
+// =============================================================================
+/** @class  const_caller3
+    @brief  Const method call functor with two fixed parameters
+*/
+// Created: AGE 2006-02-01
+// =============================================================================
+template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3 >
+class const_caller3
+{
+private:
+    //! @name Types
+    //@{
+    typedef void (T::*M)( xistream&, T1, T2, T3 ) const;
+    //@}
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+    const_caller3( const T& instance, M method, Arg1 value1, Arg2 value2, Arg3 value3 )
+        : instance_( instance )
+        , method_  ( method )
+        , value1_  ( value1 )
+        , value2_  ( value2 )
+        , value3_  ( value3 )
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    void operator()( xistream& xis ) const
+    {
+        (instance_.*method_)( xis, value1_, value2_, value3_ );
+    }
+    //@}
+
+private:
+    //! @name Constructors/Destructor
+    //@{
+    const_caller3& operator=( const const_caller3& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const T& instance_;
+    M method_;
+    T1 value1_;
+    T2 value2_;
+    T3 value3_;
     //@}
 };
 
