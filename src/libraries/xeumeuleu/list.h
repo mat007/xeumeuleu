@@ -94,7 +94,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string name_;
+    const std::string name_;
     const T visitor_;
     //@}
 };
