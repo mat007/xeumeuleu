@@ -76,8 +76,8 @@ class list_name_visitor : public visitor
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit list_name_visitor( const T& visitor )
-        : visitor_( visitor )
+    explicit list_name_visitor( const T& functor )
+        : functor_( functor )
     {}
     //@}
 
@@ -98,7 +98,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const T visitor_;
+    const T functor_;
     //@}
 };
 

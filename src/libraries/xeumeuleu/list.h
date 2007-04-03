@@ -70,9 +70,9 @@ class list_visitor : public visitor
 public:
     //! @name Constructors/Destructor
     //@{
-    list_visitor( const std::string& name, const T& visitor )
+    list_visitor( const std::string& name, const T& functor )
         : name_   ( name )
-        , visitor_( visitor )
+        , functor_( functor )
     {}
     //@}
 
@@ -81,7 +81,7 @@ public:
     virtual void process( const std::string& name, xistream& xis ) const
     {
         if( name == name_ )
-            visitor_( xis );
+            functor_( xis );
     }
     //@}
 
@@ -95,7 +95,7 @@ private:
     //! @name Member data
     //@{
     const std::string name_;
-    const T visitor_;
+    const T functor_;
     //@}
 };
 
