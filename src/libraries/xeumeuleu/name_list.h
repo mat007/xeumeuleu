@@ -85,7 +85,7 @@ public:
     //@{
     virtual void process( const std::string& name, xistream& xis ) const
     {
-        visitor_( name, xis );
+        functor_( name, xis );
     }
     //@}
 
