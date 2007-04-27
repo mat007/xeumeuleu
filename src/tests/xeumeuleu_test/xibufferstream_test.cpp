@@ -30,81 +30,94 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "input.h"
-#include "optional_input.h"
+#include "xeumeuleu_test_pch.h"
+#include "xeumeuleu/xml.h"
 
-using namespace xml;
+using namespace mockpp;
 
 // -----------------------------------------------------------------------------
-// Name: input constructor
-// Created: MAT 2006-03-19
+// Name: created_buffer_stream_starts_from_current_stream_level
+// Created: MCO 2006-03-18
 // -----------------------------------------------------------------------------
-input::input( std::auto_ptr< input_base > pInput )
-    : pInput_( pInput )
+BOOST_AUTO_UNIT_TEST( created_buffer_stream_starts_from_current_stream_level )
 {
-    // NOTHING
+    const std::string xml = "<element>"
+                            "  <sub-node/>"
+                            "</element>";
+    xml::xistringstream xis( xml );
+    xis >> xml::start( "element" );
+    xml::xibufferstream xiss( xis );
+    BOOST_CHECK_NO_THROW( xiss >> xml::start( "sub-node" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input destructor
-// Created: MAT 2006-01-04
+// Name: streaming_end_at_sub_root_level_throws_an_exception
+// Created: MCO 2006-03-18
 // -----------------------------------------------------------------------------
-input::~input()
+BOOST_AUTO_UNIT_TEST( streaming_end_at_sub_root_level_throws_an_exception )
 {
-    // NOTHING
+    xml::xistringstream xis( "<element/>" );
+    xis >> xml::start( "element" );
+    xml::xibufferstream xiss( xis );
+    BOOST_CHECK_THROW( xiss >> xml::end(), xml::exception );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input::start
-// Created: MAT 2006-01-03
+// Name: creating_a_buffer_stream_does_not_modify_original_stream
+// Created: MCO 2006-03-18
 // -----------------------------------------------------------------------------
-void input::start( const std::string& tag )
+BOOST_AUTO_UNIT_TEST( creating_a_buffer_stream_does_not_modify_original_stream )
 {
-    pInput_->start( tag );
+    xml::xistringstream xis( "<element/>" );
+    xml::xibufferstream xiss( xis );
+    xiss >> xml::start( "element" );
+    BOOST_CHECK_NO_THROW( xis >> xml::start( "element" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input::end
-// Created: MAT 2006-01-03
+// Name: creating_stream_created_after_optional_does_not_reset_optional
+// Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-void input::end()
+BOOST_AUTO_UNIT_TEST( creating_stream_created_after_optional_does_not_reset_optional )
 {
-    pInput_->end();
+    xml::xistringstream xis( "<element/>" );
+    xis >> xml::start( "element" ) >> xml::optional();
+    xml::xibufferstream xiss( xis );
+    BOOST_CHECK_NO_THROW( xis >> xml::start( "non-existing" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input::branch
-// Created: MAT 2006-03-19
+// Name: buffer_stream_created_after_optional_is_not_optional
+// Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-std::auto_ptr< input > input::branch( bool clone ) const
+BOOST_AUTO_UNIT_TEST( buffer_stream_created_after_optional_is_not_optional )
 {
-    return std::auto_ptr< input >( new input( pInput_->branch( clone ) ) );
+    xml::xistringstream xis( "<element/>" );
+    xis >> xml::start( "element" ) >> xml::optional();
+    xml::xibufferstream xiss( xis );
+    BOOST_CHECK_THROW( xiss >> xml::start( "non-existing" ), xml::exception );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input::visit
-// Created: MAT 2006-01-05
+// Name: creating_buffer_stream_on_optional_non_existing_branch_is_valid_and_does_not_reset_optional
+// Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-void input::visit( const visitor& v ) const
+BOOST_AUTO_UNIT_TEST( creating_buffer_stream_on_optional_non_existing_branch_is_valid_and_does_not_reset_optional )
 {
-    pInput_->visit( v );
+    xml::xistringstream xis( "<element/>" );
+    xis >> xml::start( "element" ) >> xml::optional() >> xml::start( "non-existing" );
+    xml::xibufferstream xiss( xis );
+    BOOST_CHECK_NO_THROW( xis >> xml::start( "another-non-existing" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input::optional
-// Created: MAT 2006-01-08
+// Name: creating_buffer_stream_on_buffer_stream_is_valid
+// Created: MCO 2006-11-12
 // -----------------------------------------------------------------------------
-void input::optional()
+BOOST_AUTO_UNIT_TEST( creating_buffer_stream_on_buffer_stream_is_valid )
 {
-    pInput_.reset( new optional_input( pInput_, *this ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input::reset
-// Created: MAT 2006-03-20
-// -----------------------------------------------------------------------------
-input_base& input::reset( std::auto_ptr< input_base > pInput )
-{
-    pInput_ = pInput;
-    return *pInput_;
+    xml::xistringstream xis( "<element/>" );
+    xml::xibufferstream xiss( xis );
+    xml::xibufferstream xisss( xiss );
+    BOOST_CHECK_NO_THROW( xisss >> xml::start( "element" ) );
 }

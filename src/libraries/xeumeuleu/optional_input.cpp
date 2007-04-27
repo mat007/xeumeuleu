@@ -185,9 +185,9 @@ void optional_input::read( unsigned long& value ) const
 // Name: std::auto_ptr< input_base > optional_input::branch
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-std::auto_ptr< input_base > optional_input::branch() const
+std::auto_ptr< input_base > optional_input::branch( bool clone ) const
 {
-    return pInput_->branch();
+    return pInput_->branch( clone );
 }
 
 // -----------------------------------------------------------------------------

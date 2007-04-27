@@ -263,6 +263,12 @@
 					Name="input"
 					Filter="">
 					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\buffer_input.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\buffer_input.h">
+					</File>
+					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\file_input.cpp">
 					</File>
 					<File
@@ -360,6 +366,12 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\sub_xistream.h">
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\xibufferstream.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\xibufferstream.h">
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xifstream.cpp">

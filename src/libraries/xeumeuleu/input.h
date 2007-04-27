@@ -65,7 +65,7 @@ public:
         pInput_->read( value );
     }
 
-    std::auto_ptr< input > branch() const;
+    std::auto_ptr< input > branch( bool clone ) const;
     //@}
 
     //! @name Accessors

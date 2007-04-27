@@ -30,42 +30,36 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xobufferstream_h_
-#define _xeumeuleu_xobufferstream_h_
+#include "xibufferstream.h"
+#include "input.h"
 
-#include "xo_base_member.h"
-#include "xostream.h"
+using namespace xml;
 
-namespace xml
+// -----------------------------------------------------------------------------
+// Name: xibufferstream constructor
+// Created: MAT 2006-03-18
+// -----------------------------------------------------------------------------
+xibufferstream::xibufferstream( const xistream& xis )
+    : xistream( xis.branch( true ) )
 {
-// =============================================================================
-/** @class  xobufferstream
-    @brief  Xml output buffer stream
-    @par    Using example
-    xml::xobufferstream xobs;
-    xobs << ...;
-
-    xml::xostream& xos = ...;
-    xos << ... << xobs << ...;
-    @endcode
-*/
-// Created: MAT 2006-03-07
-// =============================================================================
-class xobufferstream : private xo_base_member, public xostream
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             xobufferstream();
-    virtual ~xobufferstream();
-    //@}
-
-    //! @name Operations
-    //@{
-    void attach( output& o ) const;
-    //@}
-};
-
+    // NOTHING
 }
 
-#endif // _xeumeuleu_xobufferstream_h_
+// -----------------------------------------------------------------------------
+// Name: xibufferstream constructor
+// Created: AGE 2006-11-07
+// -----------------------------------------------------------------------------
+xibufferstream::xibufferstream( const xibufferstream& xiss )
+    : xistream( xiss.branch( true ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: xibufferstream destructor
+// Created: MAT 2006-03-18
+// -----------------------------------------------------------------------------
+xibufferstream::~xibufferstream()
+{
+    // NOTHING
+}

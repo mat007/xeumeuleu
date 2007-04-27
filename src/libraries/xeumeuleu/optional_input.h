@@ -70,7 +70,7 @@ public:
     virtual void read( unsigned int& value ) const;
     virtual void read( unsigned long& value ) const;
 
-    virtual std::auto_ptr< input_base > branch() const;
+    virtual std::auto_ptr< input_base > branch( bool clone ) const;
     //@}
 
     //! @name Accessors
