@@ -32,7 +32,6 @@
 
 #include "xifstream.h"
 #include "file_input.h"
-#include "encoding.h"
 
 using namespace xml;
 
