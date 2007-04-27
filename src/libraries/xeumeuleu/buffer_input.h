@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2007, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,42 +30,37 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xobufferstream_h_
-#define _xeumeuleu_xobufferstream_h_
+#ifndef _xeumeuleu_buffer_input_h_
+#define _xeumeuleu_buffer_input_h_
 
-#include "xo_base_member.h"
-#include "xostream.h"
+#include "input_base_member.h"
+#include "input_imp.h"
 
 namespace xml
 {
 // =============================================================================
-/** @class  xobufferstream
-    @brief  Xml output buffer stream
-    @par    Using example
-    xml::xobufferstream xobs;
-    xobs << ...;
-
-    xml::xostream& xos = ...;
-    xos << ... << xobs << ...;
-    @endcode
+/** @class  buffer_input
+    @brief  Buffer input
 */
-// Created: MAT 2006-03-07
+// Created: MCO 2007-04-27
 // =============================================================================
-class xobufferstream : private xo_base_member, public xostream
+class buffer_input : private input_base_member, public input_imp
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             xobufferstream();
-    virtual ~xobufferstream();
+    explicit buffer_input( const XERCES_CPP_NAMESPACE::DOMNode& root );
+    virtual ~buffer_input();
     //@}
 
-    //! @name Operations
+private:
+    //! @name Copy/Assignment
     //@{
-    void attach( output& o ) const;
+    buffer_input( const buffer_input& );            //!< Copy constructor
+    buffer_input& operator=( const buffer_input& ); //!< Assignement operator
     //@}
 };
 
 }
 
-#endif // _xeumeuleu_xobufferstream_h_
+#endif // _xeumeuleu_buffer_input_h_

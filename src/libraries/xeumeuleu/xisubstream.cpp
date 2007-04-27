@@ -40,7 +40,7 @@ using namespace xml;
 // Created: MAT 2006-03-18
 // -----------------------------------------------------------------------------
 xisubstream::xisubstream( const xistream& xis )
-    : xistream( xis.branch() )
+    : xistream( xis.branch( false ) )
 {
     // NOTHING
 }
@@ -50,7 +50,7 @@ xisubstream::xisubstream( const xistream& xis )
 // Created: AGE 2006-11-07
 // -----------------------------------------------------------------------------
 xisubstream::xisubstream( const xisubstream& xiss )
-    : xistream( xiss.branch() )
+    : xistream( xiss.branch( false ) )
 {
     // NOTHING
 }

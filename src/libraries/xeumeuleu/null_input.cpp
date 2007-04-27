@@ -296,7 +296,7 @@ void null_input::visit( const visitor& /*v*/ ) const
 // Name: null_input::branch
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
-std::auto_ptr< input_base > null_input::branch() const
+std::auto_ptr< input_base > null_input::branch( bool /*clone*/ ) const
 {
     return std::auto_ptr< input_base >( new null_input( std::auto_ptr< input_base >( 0 ), context_ ) );
 }
