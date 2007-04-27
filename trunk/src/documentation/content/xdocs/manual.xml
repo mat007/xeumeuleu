@@ -57,6 +57,13 @@
         </p>
         <source><![CDATA[std::istringstream stream( string );
 xml::xistreamstream xis( stream );]]></source>
+        <p>
+          The following code clones a given existing stream <em>xis</em> :
+        </p>
+        <source><![CDATA[xml::xibufferstream xibs( xis );]]></source>
+        <p>
+          The purpose of this stream implementation is to bufferize XML in order to read it later.
+        </p>
       </section>
       <section id="output">
         <title>Output streams</title>

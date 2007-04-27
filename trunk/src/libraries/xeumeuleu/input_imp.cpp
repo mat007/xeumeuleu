@@ -36,6 +36,7 @@
 #include "chained_exception.h"
 #include "visitor.h"
 #include "sub_xistream.h"
+#include "buffer_input.h"
 #include <xercesc/util/XMLFloat.hpp>
 #include <xercesc/util/XMLDouble.hpp>
 #include <xercesc/util/XMLInteger.hpp>
@@ -266,9 +267,9 @@ long input_imp::toLong( const XMLCh* from ) const
 bool input_imp::toBoolean( const XMLCh* from ) const
 {
     const std::string value = trim( translate( from ) );
-    if ( value == "true" || value == "1" )
+    if( value == "true" || value == "1" )
         return true;
-    if ( value == "false" || value == "0" )
+    if( value == "false" || value == "0" )
         return false;
     throw xml::exception( "Value of " + context() + " is not a boolean" );
 }
@@ -526,7 +527,9 @@ void input_imp::visit( const visitor& v ) const
 // Name: input_imp::branch
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
-std::auto_ptr< input_base > input_imp::branch() const
+std::auto_ptr< input_base > input_imp::branch( bool clone ) const
 {
+    if( clone )
+        return std::auto_ptr< input_base >( new buffer_input( *pCurrent_ ) );
     return std::auto_ptr< input_base >( new input_imp( *pCurrent_ ) );
 }

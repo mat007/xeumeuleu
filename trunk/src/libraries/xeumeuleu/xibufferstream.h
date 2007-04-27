@@ -30,42 +30,40 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xobufferstream_h_
-#define _xeumeuleu_xobufferstream_h_
+#ifndef _xeumeuleu_xibufferstream_h_
+#define _xeumeuleu_xibufferstream_h_
 
-#include "xo_base_member.h"
-#include "xostream.h"
+#include "xistream.h"
 
 namespace xml
 {
 // =============================================================================
-/** @class  xobufferstream
-    @brief  Xml output buffer stream
+/** @class  xibufferstream
+    @brief  Xml input buffer stream
     @par    Using example
-    xml::xobufferstream xobs;
-    xobs << ...;
-
-    xml::xostream& xos = ...;
-    xos << ... << xobs << ...;
+    @code
+    xml::xistream& xis = ...
+    xis >> ...
+    xml::xibufferstream xiss( xis );
+    xis >> ...
+    ...
+    xiss >> ...
     @endcode
+    @note the constructor is implicit on purpose.
 */
-// Created: MAT 2006-03-07
+// Created: MAT 2006-03-18
 // =============================================================================
-class xobufferstream : private xo_base_member, public xostream
+class xibufferstream : public xistream
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             xobufferstream();
-    virtual ~xobufferstream();
-    //@}
-
-    //! @name Operations
-    //@{
-    void attach( output& o ) const;
+             xibufferstream( const xistream& xis );
+             xibufferstream( const xibufferstream& xiss );
+    virtual ~xibufferstream();
     //@}
 };
 
 }
 
-#endif // _xeumeuleu_xobufferstream_h_
+#endif // _xeumeuleu_xibufferstream_h_

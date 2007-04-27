@@ -343,9 +343,9 @@ void xistream::optional()
 // Name: xistream::branch
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
-std::auto_ptr< input > xistream::branch() const
+std::auto_ptr< input > xistream::branch( bool clone ) const
 {
     TRY
-        return pInput_->branch();
+        return pInput_->branch( clone );
     CATCH
 }

@@ -38,6 +38,7 @@
 #include "xifstream.h"
 #include "xofstream.h"
 #include "xobufferstream.h"
+#include "xibufferstream.h"
 #include "xosubstream.h"
 #include "xisubstream.h"
 #include "xistreamstream.h"
