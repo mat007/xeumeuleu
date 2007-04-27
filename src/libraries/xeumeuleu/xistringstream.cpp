@@ -32,7 +32,6 @@
 
 #include "xistringstream.h"
 #include "string_input.h"
-#include "encoding.h"
 
 using namespace xml;
 
