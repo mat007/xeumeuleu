@@ -37,6 +37,7 @@
 #include "visitor.h"
 #include "sub_xistream.h"
 #include "buffer_input.h"
+#include "output.h"
 #include <xercesc/util/XMLFloat.hpp>
 #include <xercesc/util/XMLDouble.hpp>
 #include <xercesc/util/XMLInteger.hpp>
@@ -532,4 +533,13 @@ std::auto_ptr< input_base > input_imp::branch( bool clone ) const
     if( clone )
         return std::auto_ptr< input_base >( new buffer_input( *pCurrent_ ) );
     return std::auto_ptr< input_base >( new input_imp( *pCurrent_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::copy
+// Created: MCO 2007-05-28
+// -----------------------------------------------------------------------------
+void input_imp::copy( output& destination ) const
+{
+    destination.copy( *pCurrent_ );
 }
