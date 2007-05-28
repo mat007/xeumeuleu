@@ -300,3 +300,12 @@ std::auto_ptr< input_base > null_input::branch( bool /*clone*/ ) const
 {
     return std::auto_ptr< input_base >( new null_input( std::auto_ptr< input_base >( 0 ), context_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: null_input::copy
+// Created: MCO 2007-05-28
+// -----------------------------------------------------------------------------
+void null_input::copy( output& /*destination*/ ) const
+{
+    // NOTHING
+}

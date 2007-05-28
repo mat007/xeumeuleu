@@ -34,6 +34,7 @@
 #include "output.h"
 #include "xobufferstream.h"
 #include "chained_exception.h"
+#include "xistream.h"
 #include <xercesc/util/OutOfMemoryException.hpp>
 #include <xercesc/util/XMLException.hpp>
 #include <xercesc/dom/DOMException.hpp>
@@ -201,6 +202,18 @@ xostream& xostream::operator<<( const xobufferstream& xobs )
 {
     TRY
         xobs.attach( output_ );
+        return *this;
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xostream::operator<<
+// Created: MCO 2007-05-28
+// -----------------------------------------------------------------------------
+xostream& xostream::operator<<( const xistream& xis )
+{
+    TRY
+        xis.copy( output_ );
         return *this;
     CATCH
 }

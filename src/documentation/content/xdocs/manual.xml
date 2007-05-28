@@ -178,6 +178,27 @@ xos << xobs;]]></source>
       <p>
         It is also considered valid for some nodes to be left unserialized and therefore no exception will be raised.
       </p>
+      <p>
+        An <strong>xml::xistream</strong> can also be used as an element in order to be directly copied into an <strong>xml::xostream</strong>, for example given the following input :
+      </p>
+        <source><![CDATA[<root>
+  <element>
+    <sub-element/>
+  </element>
+</root>]]></source>
+      <p>
+        The following code :
+      </p>
+      <source><![CDATA[xml::xifstream xis( "file.xml" );
+xis >> xml::start( "root" );
+xml::xostringstream xos;
+xos << xis;]]></source>
+      <p>
+        Will result in the following output document :
+      </p>
+        <source><![CDATA[<element/>
+  <sub-element/>
+</element>]]></source>
       <section id="lists">
         <title>Lists of elements</title>
         <p>

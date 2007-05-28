@@ -40,6 +40,7 @@ namespace xml
 {
     class input;
     class visitor;
+    class output;
 
 // =============================================================================
 /** @class  xistream
@@ -61,6 +62,8 @@ public:
     void end();
 
     std::auto_ptr< input > branch( bool clone ) const;
+
+    void copy( output& destination ) const;
     //@}
 
     //! @name Accessors

@@ -349,3 +349,14 @@ std::auto_ptr< input > xistream::branch( bool clone ) const
         return pInput_->branch( clone );
     CATCH
 }
+
+// -----------------------------------------------------------------------------
+// Name: xistream::copy
+// Created: MCO 2007-05-28
+// -----------------------------------------------------------------------------
+void xistream::copy( output& destination ) const
+{
+    TRY
+        pInput_->copy( destination );
+    CATCH
+}
