@@ -40,6 +40,7 @@ namespace xml
 {
     class output;
     class xobufferstream;
+    class xistream;
 
 // =============================================================================
 /** @class  xostream
@@ -91,6 +92,7 @@ public:
     xostream& operator<<( unsigned long value );
 
     xostream& operator<<( const xobufferstream& xobs );
+    xostream& operator<<( const xistream& xis );
     //@}
 
 protected:

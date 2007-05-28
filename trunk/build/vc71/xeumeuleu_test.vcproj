@@ -186,6 +186,9 @@
 				RelativePath="..\..\src\tests\xeumeuleu_test\xofstream_test.cpp">
 			</File>
 			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\xostream_xistream_test.cpp">
+			</File>
+			<File
 				RelativePath="..\..\src\tests\xeumeuleu_test\xostringstream_test.cpp">
 			</File>
 			<File

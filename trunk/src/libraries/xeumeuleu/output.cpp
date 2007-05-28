@@ -138,6 +138,21 @@ void output::attach( const output& rhs )
 }
 
 // -----------------------------------------------------------------------------
+// Name: output::copy
+// Created: MCO 2007-05-28
+// -----------------------------------------------------------------------------
+void output::copy( const XERCES_CPP_NAMESPACE::DOMNode& node )
+{
+    DOMNode* pChild = node.getFirstChild();
+    while( pChild )
+    {
+        pCurrent_->appendChild( document_.importNode( pChild, true ) );
+        pChild = pChild->getNextSibling();
+    }
+    flush();
+}
+
+// -----------------------------------------------------------------------------
 // Name: output::branch
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------

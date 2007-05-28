@@ -74,6 +74,8 @@ public:
     }
 
     void attach( const output& rhs );
+    
+    void copy( const XERCES_CPP_NAMESPACE::DOMNode& node );
 
     std::auto_ptr< output > branch();
 

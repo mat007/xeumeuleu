@@ -191,6 +191,15 @@ std::auto_ptr< input_base > optional_input::branch( bool clone ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: optional_input::copy
+// Created: MCO 2007-05-28
+// -----------------------------------------------------------------------------
+void optional_input::copy( output& destination ) const
+{
+    pInput_->copy( destination );
+}
+
+// -----------------------------------------------------------------------------
 // Name: optional_input::hasElement
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
