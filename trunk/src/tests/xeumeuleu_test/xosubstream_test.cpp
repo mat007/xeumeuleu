@@ -39,7 +39,7 @@ using namespace mockpp;
 // Name: created_output_sub_stream_starts_from_current_stream_level
 // Created: MCO 2006-03-18
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( created_output_sub_stream_starts_from_current_stream_level )
+BOOST_AUTO_TEST_CASE( created_output_sub_stream_starts_from_current_stream_level )
 {
     xml::xostringstream xos;
     xos << xml::start( "element" );
@@ -57,7 +57,7 @@ BOOST_AUTO_UNIT_TEST( created_output_sub_stream_starts_from_current_stream_level
 // Name: streaming_end_to_an_output_sub_stream_at_root_level_throws_an_exception
 // Created: MCO 2006-03-18
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_end_to_an_output_sub_stream_at_root_level_throws_an_exception )
+BOOST_AUTO_TEST_CASE( streaming_end_to_an_output_sub_stream_at_root_level_throws_an_exception )
 {
     xml::xostringstream xos;
     xos << xml::start( "element" );
@@ -69,7 +69,7 @@ BOOST_AUTO_UNIT_TEST( streaming_end_to_an_output_sub_stream_at_root_level_throws
 // Name: creating_root_element_after_it_has_been_created_in_sub_stream_throws_an_exception
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_root_element_after_it_has_been_created_in_sub_stream_throws_an_exception )
+BOOST_AUTO_TEST_CASE( creating_root_element_after_it_has_been_created_in_sub_stream_throws_an_exception )
 {
     xml::xostringstream xos;
     xml::xosubstream xoss( xos );
@@ -81,7 +81,7 @@ BOOST_AUTO_UNIT_TEST( creating_root_element_after_it_has_been_created_in_sub_str
 // Name: creating_a_sub_stream_does_not_modify_original_output_stream
 // Created: MCO 2006-03-18
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_a_sub_stream_does_not_modify_original_output_stream )
+BOOST_AUTO_TEST_CASE( creating_a_sub_stream_does_not_modify_original_output_stream )
 {
     xml::xostringstream xos;
     xos << xml::start( "element" );
@@ -99,7 +99,7 @@ BOOST_AUTO_UNIT_TEST( creating_a_sub_stream_does_not_modify_original_output_stre
 // Name: creating_root_element_in_sub_stream_completes_the_stream
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_root_element_in_sub_stream_completes_the_stream )
+BOOST_AUTO_TEST_CASE( creating_root_element_in_sub_stream_completes_the_stream )
 {
     xml::xostringstream xos;
     xml::xosubstream xoss( xos );
@@ -113,7 +113,7 @@ BOOST_AUTO_UNIT_TEST( creating_root_element_in_sub_stream_completes_the_stream )
 // Name: creating_sub_stream_in_sub_stream_is_valid
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_sub_stream_in_sub_stream_is_valid )
+BOOST_AUTO_TEST_CASE( creating_sub_stream_in_sub_stream_is_valid )
 {
     xml::xostringstream xos;
     xml::xosubstream xoss( xos );

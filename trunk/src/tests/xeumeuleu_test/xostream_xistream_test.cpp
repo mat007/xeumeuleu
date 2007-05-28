@@ -39,7 +39,7 @@ using namespace mockpp;
 // Name: copy_xistream_from_root_to_empty_xostream
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( copy_xistream_from_root_to_empty_xostream )
+BOOST_AUTO_TEST_CASE( copy_xistream_from_root_to_empty_xostream )
 {
     xml::xistringstream xis( "<root/>" );
     xml::xostringstream xos;
@@ -52,7 +52,7 @@ BOOST_AUTO_UNIT_TEST( copy_xistream_from_root_to_empty_xostream )
 // Name: copy_xistream_with_prolog_from_root_to_empty_xostream
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( copy_xistream_with_prolog_from_root_to_empty_xostream )
+BOOST_AUTO_TEST_CASE( copy_xistream_with_prolog_from_root_to_empty_xostream )
 {
     xml::xistringstream xis( "<?xml version='1.0' encoding='UTF-8' standalone='no' ?><root/>" );
     xml::xostringstream xos;
@@ -65,7 +65,7 @@ BOOST_AUTO_UNIT_TEST( copy_xistream_with_prolog_from_root_to_empty_xostream )
 // Name: copy_xistream_from_root_to_xostream
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( copy_xistream_from_root_to_xostream )
+BOOST_AUTO_TEST_CASE( copy_xistream_from_root_to_xostream )
 {
     xml::xistringstream xis( "<element/>" );
     xml::xostringstream xos;
@@ -80,7 +80,7 @@ BOOST_AUTO_UNIT_TEST( copy_xistream_from_root_to_xostream )
 // Name: copy_xistream_from_sub-element_to_xostream
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( element_to_xostream )
+BOOST_AUTO_TEST_CASE( element_to_xostream )
 {
     xml::xistringstream xis( "<element><sub-element/></element>" );
     xis >> xml::start( "element" );
@@ -96,7 +96,7 @@ BOOST_AUTO_UNIT_TEST( element_to_xostream )
 // Name: copy_xistream_from_optional_non_existing_element_to_xostream
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( copy_xistream_from_optional_non_existing_element_to_xostream )
+BOOST_AUTO_TEST_CASE( copy_xistream_from_optional_non_existing_element_to_xostream )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
@@ -111,7 +111,7 @@ BOOST_AUTO_UNIT_TEST( copy_xistream_from_optional_non_existing_element_to_xostre
 // Name: copy_xistream_from_optional_to_xostream
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( copy_xistream_from_optional_to_xostream )
+BOOST_AUTO_TEST_CASE( copy_xistream_from_optional_to_xostream )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )

@@ -39,7 +39,7 @@ using namespace mockpp;
 // Name: creating_empty_document_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_empty_document_throws_an_exception )
+BOOST_AUTO_TEST_CASE( creating_empty_document_throws_an_exception )
 {
     BOOST_CHECK_THROW( xml::xistringstream( "" ), xml::exception );
 }
@@ -48,7 +48,7 @@ BOOST_AUTO_UNIT_TEST( creating_empty_document_throws_an_exception )
 // Name: streaming_document_with_one_element
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_document_with_one_element )
+BOOST_AUTO_TEST_CASE( streaming_document_with_one_element )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::end();
@@ -58,7 +58,7 @@ BOOST_AUTO_UNIT_TEST( streaming_document_with_one_element )
 // Name: streaming_document_with_prolog_and_one_element
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_document_with_prolog_and_one_element )
+BOOST_AUTO_TEST_CASE( streaming_document_with_prolog_and_one_element )
 {
     xml::xistringstream xis( "<?xml version='1.0' encoding='UTF-8' standalone='no'?>"
                              "<element/>" );
@@ -69,7 +69,7 @@ BOOST_AUTO_UNIT_TEST( streaming_document_with_prolog_and_one_element )
 // Name: streaming_document_with_wrong_element_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_document_with_wrong_element_throws_an_exception )
+BOOST_AUTO_TEST_CASE( streaming_document_with_wrong_element_throws_an_exception )
 {
     xml::xistringstream xis( "<element/>" );
     BOOST_CHECK_THROW( xis >> xml::start( "not_element" ), xml::exception );
@@ -79,7 +79,7 @@ BOOST_AUTO_UNIT_TEST( streaming_document_with_wrong_element_throws_an_exception 
 // Name: leaving_root_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( leaving_root_throws_an_exception )
+BOOST_AUTO_TEST_CASE( leaving_root_throws_an_exception )
 {
     xml::xistringstream xis( "<element/>" );
     BOOST_CHECK_THROW( xis >> xml::end(), xml::exception );
@@ -89,7 +89,7 @@ BOOST_AUTO_UNIT_TEST( leaving_root_throws_an_exception )
 // Name: not_reading_child_node_is_allowed
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( not_reading_child_node_is_allowed )
+BOOST_AUTO_TEST_CASE( not_reading_child_node_is_allowed )
 {
     xml::xistringstream xis( "<element>"
                                "<sub-node/>"
@@ -101,7 +101,7 @@ BOOST_AUTO_UNIT_TEST( not_reading_child_node_is_allowed )
 // Name: not_reading_all_child_nodes_is_allowed
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( not_reading_all_child_nodes_is_allowed )
+BOOST_AUTO_TEST_CASE( not_reading_all_child_nodes_is_allowed )
 {
     xml::xistringstream xis( "<element>"
                                "<sub-node/>"
@@ -116,7 +116,7 @@ BOOST_AUTO_UNIT_TEST( not_reading_all_child_nodes_is_allowed )
 // Name: reading_several_times_in_any_order_is_allowed
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( reading_several_times_in_any_order_is_allowed )
+BOOST_AUTO_TEST_CASE( reading_several_times_in_any_order_is_allowed )
 {
     xml::xistringstream xis( "<element>"
                                "<sub-node1/>"
@@ -133,7 +133,7 @@ BOOST_AUTO_UNIT_TEST( reading_several_times_in_any_order_is_allowed )
 // Name: streaming_node_string_value
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_node_string_value )
+BOOST_AUTO_TEST_CASE( streaming_node_string_value )
 {
     xml::xistringstream xis( "<element>"
                                "\n this is the value \n"
@@ -147,7 +147,7 @@ BOOST_AUTO_UNIT_TEST( streaming_node_string_value )
 // Name: streaming_node_value_fails_when_no_child
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_node_value_fails_when_no_child )
+BOOST_AUTO_TEST_CASE( streaming_node_value_fails_when_no_child )
 {
     xml::xistringstream xis( "<element/>" );
     std::string value;
@@ -159,7 +159,7 @@ BOOST_AUTO_UNIT_TEST( streaming_node_value_fails_when_no_child )
 // Name: streaming_node_value_fails_when_no_content
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_node_value_fails_when_no_content )
+BOOST_AUTO_TEST_CASE( streaming_node_value_fails_when_no_content )
 {
     xml::xistringstream xis( "<element>"
                                "<sub-node/>"
@@ -173,7 +173,7 @@ BOOST_AUTO_UNIT_TEST( streaming_node_value_fails_when_no_content )
 // Name: streaming_node_value_mixed_with_sub_node
 // Created: MCO 2006-10-16
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_node_value_mixed_with_sub_node )
+BOOST_AUTO_TEST_CASE( streaming_node_value_mixed_with_sub_node )
 {
     xml::xistringstream xis( "<element>"
                              " \n text node content "
@@ -188,7 +188,7 @@ BOOST_AUTO_UNIT_TEST( streaming_node_value_mixed_with_sub_node )
 // Name: creating_an_UTF_8_stream_with_non_UTF_8_characters_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_an_UTF_8_stream_with_non_UTF_8_characters_throws_an_exception )
+BOOST_AUTO_TEST_CASE( creating_an_UTF_8_stream_with_non_UTF_8_characters_throws_an_exception )
 {
     BOOST_CHECK_THROW( xml::xistringstream( "<?xml version='1.0' encoding='UTF-8' standalone='no' ?>"
                                             "<element>ça c'est sûr !</element>" ), xml::exception );
@@ -198,7 +198,7 @@ BOOST_AUTO_UNIT_TEST( creating_an_UTF_8_stream_with_non_UTF_8_characters_throws_
 // Name: creating_an_UTF_16_stream_with_extended_characters_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_an_UTF_16_stream_with_extended_characters_throws_an_exception )
+BOOST_AUTO_TEST_CASE( creating_an_UTF_16_stream_with_extended_characters_throws_an_exception )
 {
     BOOST_CHECK_THROW( xml::xistringstream( "<?xml version='1.0' encoding='UTF-16' standalone='no' ?>"
                                             "<element>ça c'est sûr !</element>" ), xml::exception );
@@ -208,7 +208,7 @@ BOOST_AUTO_UNIT_TEST( creating_an_UTF_16_stream_with_extended_characters_throws_
 // Name: creating_an_ISO_8859_1_stream_with_extended_characters_does_not_throw_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_an_ISO_8859_1_stream_with_extended_characters_does_not_throw_an_exception )
+BOOST_AUTO_TEST_CASE( creating_an_ISO_8859_1_stream_with_extended_characters_does_not_throw_an_exception )
 {
     xml::xistringstream xis( "<?xml version='1.0' encoding='ISO-8859-1' standalone='no' ?>"
                              "<element>ça c'est sûr !</element>" );
@@ -221,7 +221,7 @@ BOOST_AUTO_UNIT_TEST( creating_an_ISO_8859_1_stream_with_extended_characters_doe
 // Name: forcing_encoding_to_ISO_8859_1_allows_to_read_content
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( forcing_encoding_to_ISO_8859_1_allows_to_read_content )
+BOOST_AUTO_TEST_CASE( forcing_encoding_to_ISO_8859_1_allows_to_read_content )
 {
     xml::xistringstream xis( "<element>ça c'est sûr !</element>", xml::encoding( "ISO-8859-1" ) );
     std::string value;
@@ -233,7 +233,7 @@ BOOST_AUTO_UNIT_TEST( forcing_encoding_to_ISO_8859_1_allows_to_read_content )
 // Name: forcing_encoding_to_ISO_8859_1_whereas_UTF_8_is_specified_in_document_allows_to_read_content
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( forcing_encoding_to_ISO_8859_1_whereas_UTF_8_is_specified_in_document_allows_to_read_content )
+BOOST_AUTO_TEST_CASE( forcing_encoding_to_ISO_8859_1_whereas_UTF_8_is_specified_in_document_allows_to_read_content )
 {
     xml::xistringstream xis( "<?xml version='1.0' encoding='UTF-8' standalone='no' ?>"
                              "<element>ça c'est sûr !</element>", xml::encoding( "ISO-8859-1" ) );
@@ -246,7 +246,7 @@ BOOST_AUTO_UNIT_TEST( forcing_encoding_to_ISO_8859_1_whereas_UTF_8_is_specified_
 // Name: creating_stream_with_xml_not_validated_by_schema_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_not_validated_by_schema_throws_an_exception )
+BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_schema_throws_an_exception )
 {
     BOOST_CHECK_THROW( xml::xistringstream( "<wrong-element/>", xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) ), xml::exception );
 }
@@ -255,7 +255,7 @@ BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_not_validated_by_schema_throws_an
 // Name: creating_stream_with_xml_validated_by_schema_does_not_throw_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_validated_by_schema_does_not_throw_an_exception )
+BOOST_AUTO_TEST_CASE( creating_stream_with_xml_validated_by_schema_does_not_throw_an_exception )
 {
     BOOST_CHECK_NO_THROW( xml::xistringstream( "<element/>", xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) ) );
 }
@@ -264,7 +264,7 @@ BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_validated_by_schema_does_not_thro
 // Name: creating_stream_with_xml_validated_by_internally_referenced_schema_does_not_throw_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_validated_by_internally_referenced_schema_does_not_throw_an_exception )
+BOOST_AUTO_TEST_CASE( creating_stream_with_xml_validated_by_internally_referenced_schema_does_not_throw_an_exception )
 {
     const std::string schema = BOOST_RESOLVE( "schema.xsd" );
     const std::string xml( "<element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />" );
@@ -275,7 +275,7 @@ BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_validated_by_internally_reference
 // Name: creating_stream_with_xml_not_validated_by_internally_referenced_schema_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_not_validated_by_internally_referenced_schema_throws_an_exception )
+BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_internally_referenced_schema_throws_an_exception )
 {
     const std::string schema = BOOST_RESOLVE( "schema.xsd" );
     const std::string xml( "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />" );
@@ -286,7 +286,7 @@ BOOST_AUTO_UNIT_TEST( creating_stream_with_xml_not_validated_by_internally_refer
 // Name: internal_schema_is_used_only_if_specified
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( internal_schema_is_used_only_if_specified )
+BOOST_AUTO_TEST_CASE( internal_schema_is_used_only_if_specified )
 {
     const std::string schema = BOOST_RESOLVE( "schema.xsd" );
     const std::string xml( "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />" );

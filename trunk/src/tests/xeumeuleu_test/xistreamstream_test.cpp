@@ -39,7 +39,7 @@ using namespace mockpp;
 // Name: xistreamstream_adapts_a_standard_input_stream
 // Created: MCO 2006-12-15
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( xistreamstream_adapts_a_standard_input_stream )
+BOOST_AUTO_TEST_CASE( xistreamstream_adapts_a_standard_input_stream )
 {
     std::stringstream stream( "<element/>" );
     xml::xistreamstream xis( stream );

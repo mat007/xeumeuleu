@@ -32,11 +32,6 @@
 
 #include "xeumeuleu_test_pch.h"
 #include <string>
-#include <boost/test/unit_test_log_formatter.hpp>
-#include <boost/test/detail/supplied_log_formatters.hpp>
-
-using namespace boost::unit_test;
-using namespace boost::unit_test::ut_detail;
 
 namespace
 {
@@ -46,37 +41,18 @@ namespace
     {
         while( argc-- )
         {
-            const std::string argument( argv[argc] );
+            const std::string argument = argv[argc];
             const std::string::size_type n = argument.find( '=' );
-            if( n != std::string::npos )
-            {
-                const std::string option = argument.substr( 0, n );
-                if( option == "--data_directory" )
-                    data_directory = argument.substr( n+1 );
-            }
+            if( n != std::string::npos && argument.substr( 0, n ) == "--data_directory" )
+                data_directory = argument.substr( n+1 );
         }
     }
-
-    class msvc_log_formatter : public msvc65_like_log_formatter
-    {
-    public:
-        msvc_log_formatter()
-            : msvc65_like_log_formatter( unit_test_log::instance() )
-        {}
-
-        virtual void log_exception( std::ostream& output, const_string test_case_name, const_string explanation )
-        {
-            output << "Exception in '" << test_case_name << "': error: " << explanation;
-        }
-    };
-
 }
 
-test_suite* init_unit_test_suite( int argc, char* argv [] )
+::boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] )
 {
-    unit_test_log::instance().set_log_formatter( new msvc_log_formatter() );
     set_data_directory( argc, argv );
-    return ut_detail::auto_unit_test_suite();
+    return 0;
 }
 
 std::string BOOST_RESOLVE( const std::string& filename )

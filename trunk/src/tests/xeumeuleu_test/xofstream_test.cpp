@@ -51,7 +51,7 @@ namespace
 // Name: empty_tree_does_not_create_any_file
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( empty_tree_does_not_create_any_file )
+BOOST_AUTO_TEST_CASE( empty_tree_does_not_create_any_file )
 {
     const std::string filename( "no_file" );
     {
@@ -65,7 +65,7 @@ BOOST_AUTO_UNIT_TEST( empty_tree_does_not_create_any_file )
 // Name: streaming_elements_creates_a_valid_file
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_elements_creates_a_valid_file )
+BOOST_AUTO_TEST_CASE( streaming_elements_creates_a_valid_file )
 {
     const std::string filename( "valid_file" );
     xml::xofstream xos( filename );

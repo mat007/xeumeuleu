@@ -39,7 +39,7 @@ using namespace mockpp;
 // Name: reading_optional_non_existing_element_does_not_throw_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( reading_optional_non_existing_element_does_not_throw_exception )
+BOOST_AUTO_TEST_CASE( reading_optional_non_existing_element_does_not_throw_exception )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
@@ -51,7 +51,7 @@ BOOST_AUTO_UNIT_TEST( reading_optional_non_existing_element_does_not_throw_excep
 // Name: reading_optional_non_existing_element_sub_node_does_not_throw_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( reading_optional_non_existing_element_sub_node_does_not_throw_exception )
+BOOST_AUTO_TEST_CASE( reading_optional_non_existing_element_sub_node_does_not_throw_exception )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
@@ -64,7 +64,7 @@ BOOST_AUTO_UNIT_TEST( reading_optional_non_existing_element_sub_node_does_not_th
 // Name: reading_optional_non_existing_element_content_does_not_throw_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( reading_optional_non_existing_element_content_does_not_throw_exception )
+BOOST_AUTO_TEST_CASE( reading_optional_non_existing_element_content_does_not_throw_exception )
 {
     xml::xistringstream xis( "<element/>" );
     int value = 0;
@@ -79,7 +79,7 @@ BOOST_AUTO_UNIT_TEST( reading_optional_non_existing_element_content_does_not_thr
 // Name: reading_optional_non_existing_element_attribute_does_not_throw_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( reading_optional_non_existing_element_attribute_does_not_throw_exception )
+BOOST_AUTO_TEST_CASE( reading_optional_non_existing_element_attribute_does_not_throw_exception )
 {
     xml::xistringstream xis( "<element/>" );
     int value = 0;
@@ -94,7 +94,7 @@ BOOST_AUTO_UNIT_TEST( reading_optional_non_existing_element_attribute_does_not_t
 // Name: moving_out_of_optional_non_existing_element_terminates_the_optional_sub_tree
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( moving_out_of_optional_non_existing_element_terminates_the_optional_sub_tree )
+BOOST_AUTO_TEST_CASE( moving_out_of_optional_non_existing_element_terminates_the_optional_sub_tree )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
@@ -108,7 +108,7 @@ BOOST_AUTO_UNIT_TEST( moving_out_of_optional_non_existing_element_terminates_the
 // Name: reading_existing_element_inside_optional_non_existing_element_is_still_optional
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( reading_existing_element_inside_optional_non_existing_element_is_still_optional )
+BOOST_AUTO_TEST_CASE( reading_existing_element_inside_optional_non_existing_element_is_still_optional )
 {
     xml::xistringstream xis( "<element>"
                                "<existing-child/>"
@@ -125,7 +125,7 @@ BOOST_AUTO_UNIT_TEST( reading_existing_element_inside_optional_non_existing_elem
 // Name: reading_optional_element_inside_optional_non_existing_element
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( reading_optional_element_inside_optional_non_existing_element )
+BOOST_AUTO_TEST_CASE( reading_optional_element_inside_optional_non_existing_element )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
@@ -142,7 +142,7 @@ BOOST_AUTO_UNIT_TEST( reading_optional_element_inside_optional_non_existing_elem
 // Name: setting_optional_before_moving_up_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( setting_optional_before_moving_up_throws_an_exception )
+BOOST_AUTO_TEST_CASE( setting_optional_before_moving_up_throws_an_exception )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
@@ -164,7 +164,7 @@ namespace
 // Name: reading_a_list_resets_the_optional_flag
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( reading_a_list_resets_the_optional_flag )
+BOOST_AUTO_TEST_CASE( reading_a_list_resets_the_optional_flag )
 {
     custom_class custom;
     xml::xistringstream xis( "<element/>" );
@@ -178,7 +178,7 @@ BOOST_AUTO_UNIT_TEST( reading_a_list_resets_the_optional_flag )
 // Name: reading_an_optional_non_existing_attribute_does_not_throw_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( reading_an_optional_non_existing_attribute_does_not_throw_an_exception )
+BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_attribute_does_not_throw_an_exception )
 {
     xml::xistringstream xis( "<element/>" );
     int value = 0;
@@ -192,7 +192,7 @@ BOOST_AUTO_UNIT_TEST( reading_an_optional_non_existing_attribute_does_not_throw_
 // Name: reading_an_optional_non_existing_text_content_does_not_throw_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( reading_an_optional_non_existing_text_content_does_not_throw_an_exception )
+BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_text_content_does_not_throw_an_exception )
 {
     xml::xistringstream xis( "<element/>" );
     int value = 0;
@@ -206,7 +206,7 @@ BOOST_AUTO_UNIT_TEST( reading_an_optional_non_existing_text_content_does_not_thr
 // Name: reading_an_optional_non_existing_content_in_existing_tag_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( reading_an_optional_non_existing_content_in_existing_tag_throws_an_exception )
+BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_content_in_existing_tag_throws_an_exception )
 {
     xml::xistringstream xis( "<element/>" );
     std::string value;
