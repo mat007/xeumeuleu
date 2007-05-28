@@ -202,7 +202,7 @@ namespace
 // Name: read_list_from_element_calls_a_custom_method
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_list_from_element_calls_a_custom_method )
+BOOST_AUTO_TEST_CASE( read_list_from_element_calls_a_custom_method )
 {
     mock_custom_class mock_custom;
     mock_custom.process_mocker.expects( once() ).with( new xistream_constraint( "content number one" ) );
@@ -238,7 +238,7 @@ namespace
 // Name: read_list_from_element_calls_a_custom_method_with_parameters
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_list_from_element_calls_a_custom_method_with_parameters )
+BOOST_AUTO_TEST_CASE( read_list_from_element_calls_a_custom_method_with_parameters )
 {
     mock_custom_class_with_parameters mock_custom;
     int p1 = 12;
@@ -282,7 +282,7 @@ namespace
 // Name: read_list_from_element_calls_a_custom_method_with_polymorphic_parameter
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_list_from_element_calls_a_custom_method_with_polymorphic_parameter )
+BOOST_AUTO_TEST_CASE( read_list_from_element_calls_a_custom_method_with_polymorphic_parameter )
 {
     mock_custom_class_with_polymorphic_parameter mock_custom;
     a_class my_instance;
@@ -312,7 +312,7 @@ namespace
 // Name: move_up_from_sub_node_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( move_up_from_sub_node_throws_an_exception )
+BOOST_AUTO_TEST_CASE( move_up_from_sub_node_throws_an_exception )
 {
     custom_class custom;
     xml::xistringstream xis( "<element>"
@@ -342,7 +342,7 @@ namespace
 // Name: read_name_list_with_parameters
 // Created: ZEBRE 2006-08-30
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_name_list_with_parameters )
+BOOST_AUTO_TEST_CASE( read_name_list_with_parameters )
 {
     xml::xistringstream xis( "<element>"
                                "<sub-node1>content number one</sub-node1>"
@@ -379,7 +379,7 @@ namespace
 // Name: read_name_list_is_not_called_with_content
 // Created: ZEBRE 2006-08-30
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_name_list_is_not_called_with_content )
+BOOST_AUTO_TEST_CASE( read_name_list_is_not_called_with_content )
 {
     xml::xistringstream xis( "<element>"
                                "content not to be read"

@@ -61,7 +61,7 @@ namespace
 // Name: read_attribute_from_root_level_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_attribute_from_root_level_throws_an_exception )
+BOOST_AUTO_TEST_CASE( read_attribute_from_root_level_throws_an_exception )
 {
     xml::xistringstream xis( "<element attribute=\"12\"/>" );
     int value;
@@ -72,7 +72,7 @@ BOOST_AUTO_UNIT_TEST( read_attribute_from_root_level_throws_an_exception )
 // Name: read_unexisting_attribute_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_unexisting_attribute_throws_an_exception )
+BOOST_AUTO_TEST_CASE( read_unexisting_attribute_throws_an_exception )
 {
     xml::xistringstream xis( "<element attribute=\"the attribute value\"/>" );
     std::string value;
@@ -84,7 +84,7 @@ BOOST_AUTO_UNIT_TEST( read_unexisting_attribute_throws_an_exception )
 // Name: read_attribute_from_element_retrieves_value
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( read_attribute_from_element_retrieves_value )
+BOOST_AUTO_TEST_CASE( read_attribute_from_element_retrieves_value )
 {
     BOOST_CHECK_EQUAL( 12, read< short >( "12" ) );
     BOOST_CHECK_EQUAL( 12, read< int >( "12" ) );
@@ -99,7 +99,7 @@ BOOST_AUTO_UNIT_TEST( read_attribute_from_element_retrieves_value )
 // Name: add_attribute_at_root_level_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( add_attribute_at_root_level_throws_an_exception )
+BOOST_AUTO_TEST_CASE( add_attribute_at_root_level_throws_an_exception )
 {
     xml::xostringstream xos;
     BOOST_CHECK_THROW( xos << xml::attribute( "attribute", 12 ), xml::exception );
@@ -109,7 +109,7 @@ BOOST_AUTO_UNIT_TEST( add_attribute_at_root_level_throws_an_exception )
 // Name: add_attribute_on_element_makes_a_valid_document
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( add_attribute_on_element_makes_a_valid_document )
+BOOST_AUTO_TEST_CASE( add_attribute_on_element_makes_a_valid_document )
 {
     BOOST_CHECK_EQUAL( format( "12" ), write< short >( 12 ) );
     BOOST_CHECK_EQUAL( format( "12" ), write< int >( 12 ) );

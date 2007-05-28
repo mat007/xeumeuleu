@@ -61,7 +61,7 @@ namespace
 // Name: streaming_content_writes_node_content
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_content_writes_node_content )
+BOOST_AUTO_TEST_CASE( streaming_content_writes_node_content )
 {
     BOOST_CHECK_EQUAL( format(" this is the content  "), write< char* >( " this is the content  " ) );
     BOOST_CHECK_EQUAL( format( "1.23" ), write< float >( 1.23f ) );
@@ -87,7 +87,7 @@ BOOST_AUTO_UNIT_TEST( streaming_content_writes_node_content )
 // Name: streaming_stack_content_writes_node_content
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_stack_content_writes_node_content )
+BOOST_AUTO_TEST_CASE( streaming_stack_content_writes_node_content )
 {
     xml::xostringstream xos;
     xos << xml::content( "element", 7 );
@@ -99,7 +99,7 @@ BOOST_AUTO_UNIT_TEST( streaming_stack_content_writes_node_content )
 // Name: streaming_content_reads_node_content
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_content )
+BOOST_AUTO_TEST_CASE( streaming_content_reads_node_content )
 {
     BOOST_CHECK_EQUAL( " this is the value ", read< std::string >( "this is the value" ) );
     BOOST_CHECK_EQUAL( 1.23f, read< float >( "1.23" ) );
@@ -129,7 +129,7 @@ BOOST_AUTO_UNIT_TEST( streaming_content_reads_node_content )
 // Name: streaming_content_with_invalid_format_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_content_with_invalid_format_throws_an_exception )
+BOOST_AUTO_TEST_CASE( streaming_content_with_invalid_format_throws_an_exception )
 {
     BOOST_CHECK_THROW( read< int >( "12.3" ), xml::exception );
     BOOST_CHECK_THROW( read< short >( "300000" ), xml::exception );

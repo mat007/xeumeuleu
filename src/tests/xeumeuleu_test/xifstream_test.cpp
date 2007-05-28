@@ -40,7 +40,7 @@ using namespace mockpp;
 // Name: creating_with_non_existing_file_throws_a_verbose_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_with_non_existing_file_throws_a_verbose_exception )
+BOOST_AUTO_TEST_CASE( creating_with_non_existing_file_throws_a_verbose_exception )
 {
     const std::string filename( "directory/non_existing_file" );
     try
@@ -59,7 +59,7 @@ BOOST_AUTO_UNIT_TEST( creating_with_non_existing_file_throws_a_verbose_exception
 // Name: creating_with_existing_empty_file_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_with_existing_empty_file_throws_an_exception )
+BOOST_AUTO_TEST_CASE( creating_with_existing_empty_file_throws_an_exception )
 {
     const std::string filename( "empty_file" );
     std::ofstream( filename.c_str() ).close();
@@ -71,7 +71,7 @@ BOOST_AUTO_UNIT_TEST( creating_with_existing_empty_file_throws_an_exception )
 // Name: creating_with_valid_file
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_with_valid_file )
+BOOST_AUTO_TEST_CASE( creating_with_valid_file )
 {
     const std::string filename( "valid_file" );
     std::ofstream file( filename.c_str() );

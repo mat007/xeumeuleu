@@ -39,7 +39,7 @@ using namespace mockpp;
 // Name: created_input_sub_stream_starts_from_current_stream_level
 // Created: MCO 2006-03-18
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( created_input_sub_stream_starts_from_current_stream_level )
+BOOST_AUTO_TEST_CASE( created_input_sub_stream_starts_from_current_stream_level )
 {
     const std::string xml = "<element>"
                             "  <sub-node/>"
@@ -54,7 +54,7 @@ BOOST_AUTO_UNIT_TEST( created_input_sub_stream_starts_from_current_stream_level 
 // Name: streaming_end_right_after_creating_a_sub_stream_throws_an_exception
 // Created: MCO 2006-03-18
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_end_right_after_creating_a_sub_stream_throws_an_exception )
+BOOST_AUTO_TEST_CASE( streaming_end_right_after_creating_a_sub_stream_throws_an_exception )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" );
@@ -66,7 +66,7 @@ BOOST_AUTO_UNIT_TEST( streaming_end_right_after_creating_a_sub_stream_throws_an_
 // Name: creating_a_sub_stream_does_not_modify_original_input_stream
 // Created: MCO 2006-03-18
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_a_sub_stream_does_not_modify_original_input_stream )
+BOOST_AUTO_TEST_CASE( creating_a_sub_stream_does_not_modify_original_input_stream )
 {
     xml::xistringstream xis( "<element/>" );
     xml::xisubstream xiss( xis );
@@ -78,7 +78,7 @@ BOOST_AUTO_UNIT_TEST( creating_a_sub_stream_does_not_modify_original_input_strea
 // Name: creating_sub_stream_created_after_optional_does_not_reset_optional
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_sub_stream_created_after_optional_does_not_reset_optional )
+BOOST_AUTO_TEST_CASE( creating_sub_stream_created_after_optional_does_not_reset_optional )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional();
@@ -90,7 +90,7 @@ BOOST_AUTO_UNIT_TEST( creating_sub_stream_created_after_optional_does_not_reset_
 // Name: sub_stream_created_after_optional_is_not_optional
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( sub_stream_created_after_optional_is_not_optional )
+BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_is_not_optional )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional();
@@ -102,7 +102,7 @@ BOOST_AUTO_UNIT_TEST( sub_stream_created_after_optional_is_not_optional )
 // Name: creating_sub_stream_on_optional_non_existing_branch_is_valid_and_does_not_reset_optional
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_sub_stream_on_optional_non_existing_branch_is_valid_and_does_not_reset_optional )
+BOOST_AUTO_TEST_CASE( creating_sub_stream_on_optional_non_existing_branch_is_valid_and_does_not_reset_optional )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional() >> xml::start( "non-existing" );
@@ -114,7 +114,7 @@ BOOST_AUTO_UNIT_TEST( creating_sub_stream_on_optional_non_existing_branch_is_val
 // Name: creating_sub_stream_on_sub_stream_is_valid
 // Created: MCO 2006-11-12
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_sub_stream_on_sub_stream_is_valid )
+BOOST_AUTO_TEST_CASE( creating_sub_stream_on_sub_stream_is_valid )
 {
     xml::xistringstream xis( "<element/>" );
     xml::xisubstream xiss( xis );
