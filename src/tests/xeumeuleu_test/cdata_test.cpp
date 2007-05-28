@@ -39,7 +39,7 @@ using namespace mockpp;
 // Name: streaming_cdata_creates_output_with_cdata_content
 // Created: MCO 2007-02-14
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_cdata_creates_output_with_cdata_section )
+BOOST_AUTO_TEST_CASE( streaming_cdata_creates_output_with_cdata_section )
 {
     xml::xostringstream xos;
     xos << xml::start( "element" )
@@ -56,7 +56,7 @@ BOOST_AUTO_UNIT_TEST( streaming_cdata_creates_output_with_cdata_section )
 // Name: streaming_cdata_creates_output_with_cdata_content
 // Created: MCO 2007-02-14
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_cdata_content_creates_output_with_cdata_section )
+BOOST_AUTO_TEST_CASE( streaming_cdata_content_creates_output_with_cdata_section )
 {
     xml::xostringstream xos;
     xos << xml::content( "element", xml::cdata( "<<<" ) );
@@ -71,7 +71,7 @@ BOOST_AUTO_UNIT_TEST( streaming_cdata_content_creates_output_with_cdata_section 
 // Name: reading_cdata_provides_valid_content
 // Created: MCO 2007-02-14
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( reading_cdata_provides_valid_text )
+BOOST_AUTO_TEST_CASE( reading_cdata_provides_valid_text )
 {
     std::string content;
     xml::xistringstream xis( "<element><![CDATA[<<<]]></element>");
@@ -84,7 +84,7 @@ BOOST_AUTO_UNIT_TEST( reading_cdata_provides_valid_text )
 // Name: reading_cdata_content_provides_valid_content
 // Created: MCO 2007-02-14
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( reading_cdata_content_provides_valid_content )
+BOOST_AUTO_TEST_CASE( reading_cdata_content_provides_valid_content )
 {
     std::string content;
     xml::xistringstream xis( "<element><![CDATA[<<<]]></element>");
