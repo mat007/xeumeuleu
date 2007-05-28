@@ -83,10 +83,10 @@ BOOST_AUTO_UNIT_TEST( streaming_child_element_makes_a_valid_document )
 }
 
 // -----------------------------------------------------------------------------
-// Name: streaming_end_at_root_level_throws_an_exception
+// Name: streaming_end_to_an_output_stream_at_root_level_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_end_at_root_level_throws_an_exception )
+BOOST_AUTO_UNIT_TEST( streaming_end_to_an_output_stream_at_root_level_throws_an_exception )
 {
     xml::xostringstream xos;
     BOOST_CHECK_THROW( xos << xml::end(), xml::exception );

@@ -51,10 +51,10 @@ BOOST_AUTO_UNIT_TEST( created_buffer_stream_starts_from_current_stream_level )
 }
 
 // -----------------------------------------------------------------------------
-// Name: streaming_end_at_sub_root_level_throws_an_exception
+// Name: streaming_end_right_after_creating_a_buffer_stream_throws_an_exception
 // Created: MCO 2006-03-18
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( streaming_end_at_sub_root_level_throws_an_exception )
+BOOST_AUTO_UNIT_TEST( streaming_end_right_after_creating_a_buffer_stream_throws_an_exception )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" );
@@ -75,10 +75,10 @@ BOOST_AUTO_UNIT_TEST( creating_a_buffer_stream_does_not_modify_original_stream )
 }
 
 // -----------------------------------------------------------------------------
-// Name: creating_stream_created_after_optional_does_not_reset_optional
+// Name: creating_buffer_stream_created_after_optional_does_not_reset_optional
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_UNIT_TEST( creating_stream_created_after_optional_does_not_reset_optional )
+BOOST_AUTO_UNIT_TEST( creating_buffer_stream_created_after_optional_does_not_reset_optional )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional();
