@@ -56,8 +56,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     name_caller1( T& instance, M method, Arg value )
-        : instance_( instance )
-        , method_  ( method )
+        : method_  ( method )
+        , instance_( instance )
         , value_   ( value )
     {}
     //@}
@@ -79,8 +79,8 @@ private:
 private:
     //! @name Member data
     //@{
-    T& instance_;
     M method_;
+    T& instance_;
     Arg value_;
     //@}
 };
@@ -104,8 +104,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     const_name_caller1( const T& instance, M method, Arg value )
-        : instance_( instance )
-        , method_  ( method )
+        : method_  ( method )
+        , instance_( instance )
         , value_   ( value )
     {}
     //@}
@@ -127,8 +127,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const T& instance_;
     M method_;
+    const T& instance_;
     Arg value_;
     //@}
 };
