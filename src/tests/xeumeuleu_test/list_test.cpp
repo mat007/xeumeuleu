@@ -374,7 +374,7 @@ namespace
         mockpp::ChainableMockMethod< void, std::string, xml::xistream > process_mocker;
     };
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: read_name_list_is_not_called_with_content
 // Created: ZEBRE 2006-08-30
@@ -391,4 +391,27 @@ BOOST_AUTO_TEST_CASE( read_name_list_is_not_called_with_content )
             >> xml::list( mock_custom, &mock_custom_class_name_list::process )
         >> xml::end();
     mock_custom.verify();
+}
+
+namespace
+{
+    class a_class_virtually_inheriting_from_another : virtual public an_interface
+    {
+    public:
+        void process( xml::xistream& /*xis*/ )
+        {
+            // NOTHING
+        }
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: msvc_does_not_issue_packing_related_warning_C4355_or_C4121_when_using_virtual_inheritance
+// Created: MAT 2007-06-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( msvc_does_not_issue_packing_related_warning_C4355_or_C4121_when_using_virtual_inheritance )
+{
+    xml::xistringstream xis( "<element/>" );
+    a_class_virtually_inheriting_from_another my_instance;
+    xis >> xml::list( "element", my_instance, &a_class_virtually_inheriting_from_another::process );
 }
