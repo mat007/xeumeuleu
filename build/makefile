@@ -1,12 +1,13 @@
 #!/usr/bin/make
 
 # configuration
-INC_DIRS = ../../../include
-LIB_DIRS = ../../../lib/cygwin
-RUN_DIR = ../run/cygwin
+PLATFORM = cygwin
+INC_DIRS = ../include
+LIB_DIRS = ../lib/$(PLATFORM)
+RUN_DIR = ../run/$(PLATFORM)
 
 NAME = xeumeuleu
-LIBS = xerces-c_2 libboost_unit_test_framework-cygwin-mt-1_32 mockpp
+LIBS = xerces-c_2 libboost_unit_test_framework-cygwin-mt-1_34 mockpp
 
 EXPORTS = xml.h exception.h xi*.h xo*.h encoding.h grammar.h start.h end.h \
           content.h attribute.h list.h name_list.h visitor.h caller*.h \
@@ -16,7 +17,7 @@ EXPORTS = xml.h exception.h xi*.h xo*.h encoding.h grammar.h start.h end.h \
 CXX = g++
 AR = ar crsu
 MD = mkdir -p
-CP = cp -f -u
+CP = cp -f
 RM = rm -r -f
 
 # helpers
@@ -29,7 +30,7 @@ DATA_DIR = $(call location,../data)
 OBJ_DIR = $(OUT_DIR)/obj
 DEP_DIR = $(OUT_DIR)/dep
 INC_EXPORT_DIR = ../include/$(NAME)
-LIB_EXPORT_DIR = ../lib
+LIB_EXPORT_DIR = ../lib/$(PLATFORM)
 
 LIB = $(OUT_DIR)/lib$(NAME).a
 TEST = $(call location,$(OUT_DIR))/$(NAME)_test
