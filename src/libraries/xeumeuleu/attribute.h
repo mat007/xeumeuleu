@@ -36,6 +36,7 @@
 #include <string>
 #include "xistream.h"
 #include "xostream.h"
+#include "optional.h"
 
 namespace xml
 {

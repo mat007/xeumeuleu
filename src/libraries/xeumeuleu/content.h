@@ -36,6 +36,7 @@
 #include <string>
 #include "start.h"
 #include "end.h"
+#include "optional.h"
 
 namespace xml
 {
