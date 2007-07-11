@@ -121,6 +121,28 @@ template< typename T > attribute_manipulator< T > attribute( const std::string& 
     return attribute_manipulator< T >( name, value );
 }
 
+// -----------------------------------------------------------------------------
+// Name: attribute
+// Created: MAT 2007-07-11
+// -----------------------------------------------------------------------------
+template< typename T > T attribute( xistream& xis, const std::string& name )
+{
+    T value;
+    xis >> attribute( name, value );
+    return value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: attribute
+// Created: MAT 2007-07-11
+// -----------------------------------------------------------------------------
+template< typename T > T attribute( xistream& xis, const std::string& name, const T& init )
+{
+    T value = init;
+    xis >> optional() >> attribute( name, value );
+    return value;
+}
+
 }
 
 #endif // _xeumeuleu_attribute_h_

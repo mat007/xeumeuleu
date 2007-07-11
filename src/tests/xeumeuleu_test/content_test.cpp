@@ -43,13 +43,6 @@ namespace
         xos << xml::content( "element", value );
         return xos.str();
     }
-    template< typename T > T read( const std::string& value )
-    {
-        T result;
-        xml::xistringstream xis( "<element> " + value + " </element>");
-        xis >> xml::content( "element", result );
-        return result;
-    }
     std::string format( const std::string& value )
     {
         return "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
@@ -95,6 +88,17 @@ BOOST_AUTO_TEST_CASE( streaming_stack_content_writes_node_content )
                        "<element>7</element>\n", xos.str() );
 }
 
+namespace
+{
+    template< typename T > T read( const std::string& value )
+    {
+        T result;
+        xml::xistringstream xis( "<element> " + value + " </element>");
+        xis >> xml::content( "element", result );
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: streaming_content_reads_node_content
 // Created: MCO 2006-01-03
@@ -107,7 +111,7 @@ BOOST_AUTO_TEST_CASE( streaming_content_reads_node_content )
     BOOST_CHECK_EQUAL( 12, read< int >( "12" ) );
     BOOST_CHECK_EQUAL( 32767, read< short >( "32767" ) );
     BOOST_CHECK_EQUAL( true, read< bool >( "true" ) );
-    BOOST_CHECK_EQUAL( 5, read< long > ( "5" ) );
+    BOOST_CHECK_EQUAL( 5, read< long >( "5" ) );
     BOOST_CHECK_EQUAL( 4294967295u, read< unsigned int >( "4294967295" ) );
     BOOST_CHECK_EQUAL( 65535u, read< unsigned short >( "65535" ) );
     BOOST_CHECK_EQUAL( 4294967295u, read< unsigned long >( "4294967295" ) );
@@ -137,4 +141,36 @@ BOOST_AUTO_TEST_CASE( streaming_content_with_invalid_format_throws_an_exception 
     BOOST_CHECK_THROW( read< unsigned int >( "-42" ), xml::exception );
     BOOST_CHECK_THROW( read< float >( "1e+99" ), xml::exception );
     BOOST_CHECK_THROW( read< float >( "not a number" ), xml::exception );
+}
+
+// -----------------------------------------------------------------------------
+// Name: read_content_directly_is_valid
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( read_content_directly_is_valid )
+{
+    xml::xistringstream xis( "<element>the content value</element>" );
+    BOOST_CHECK_EQUAL( "the content value", xml::content< std::string >( xis, "element" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: read_content_directly_with_default_value_is_valid
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( read_content_directly_with_default_value_is_valid )
+{
+    xml::xistringstream xis( "<element>the content value</element>" );
+    const std::string value = "the default value";
+    BOOST_CHECK_EQUAL( "the content value", xml::content( xis, "element", value ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: read_unexisting_content_directly_with_default_value_is_valid
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( read_unexisting_content_directly_with_default_value_is_valid )
+{
+    xml::xistringstream xis( "<element><pouet/></element>" );
+    const std::string value = "the default value";
+    BOOST_CHECK_EQUAL( value, xml::content( xis, "element", value ) );
 }
