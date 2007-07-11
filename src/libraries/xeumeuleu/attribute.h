@@ -136,9 +136,9 @@ template< typename T > T attribute( xistream& xis, const std::string& name )
 // Name: attribute
 // Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
-template< typename T > T attribute( xistream& xis, const std::string& name, const T& init )
+template< typename T > T attribute( xistream& xis, const std::string& name, const T& defaultValue )
 {
-    T value = init;
+    T value = defaultValue;
     xis >> optional() >> attribute( name, value );
     return value;
 }
