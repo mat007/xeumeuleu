@@ -402,6 +402,7 @@ public:
       </p>
       <source><![CDATA[const std::string result = xml::attribute< std::string >( xis, "attribute" );
 const std::string result = xml::attribute( xis, "attribute", "a default value" );]]></source>
+    </section>
     <section id="protecting">
       <title>Protecting a stream</title>
       <p>
