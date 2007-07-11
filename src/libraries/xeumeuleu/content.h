@@ -144,9 +144,9 @@ template< typename T > T content( xistream& xis, const std::string& tag )
 // Name: content
 // Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
-template< typename T > T content( xistream& xis, const std::string& tag, const T& init )
+template< typename T > T content( xistream& xis, const std::string& tag, const T& defaultValue )
 {
-    T value = init;
+    T value = defaultValue;
     xis >> optional() >> start( tag ) >> optional() >> value >> end();
     return value;
 }
