@@ -384,6 +384,24 @@ public:
         </p>
       </section>
     </section>
+    <section id="direct-reading">
+      <title>Direct reading helper functions</title>
+      <p>
+        Reading the content of a given node is also possible using the following helper function, either :
+      </p>
+      <source><![CDATA[const std::string result = xml::content< std::string >( xis, "element" );]]></source>
+      <p>
+        Or if the node and/or its content is optional, providing a default value :
+      </p>
+      <source><![CDATA[const std::string result = xml::content( xis, "element", "a default value" );]]></source>
+      <p>
+        Note that the first version requires the template to be explicited whereas the second version deduces it from the default value parameter type.
+      </p>
+      <p>
+        The same helper functions exist for reading attributes :
+      </p>
+      <source><![CDATA[const std::string result = xml::attribute< std::string >( xis, "attribute" );
+const std::string result = xml::attribute( xis, "attribute", "a default value" );]]></source>
     <section id="protecting">
       <title>Protecting a stream</title>
       <p>

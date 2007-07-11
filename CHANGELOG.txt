@@ -5,6 +5,7 @@
 . added xml::xibufferstream recursively cloning the current node of a given xml::xistream
 . added xml::xistream serialization to an xml::xostream
 . fixed msvc warnings when using xml::list with an instance of a class virtually inheriting from another
+. added attribute and content direct reading helper functions
 
 1.2.0
 . added support for short, unsigned short, unsigned int, long and unsigned long data types
