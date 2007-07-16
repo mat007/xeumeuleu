@@ -111,6 +111,8 @@ private:
     const XERCES_CPP_NAMESPACE::DOMNode* findAttribute( const std::string& name ) const;
     const XERCES_CPP_NAMESPACE::DOMNode* findContent  () const;
 
+    bool hasContent( const XERCES_CPP_NAMESPACE::DOMNode& node ) const;
+
     const XMLCh* readValue() const;
     const XMLCh* readAttribute( const std::string& name ) const;
 
