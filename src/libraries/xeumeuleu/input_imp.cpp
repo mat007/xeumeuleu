@@ -41,6 +41,7 @@
 #include <xercesc/util/XMLFloat.hpp>
 #include <xercesc/util/XMLDouble.hpp>
 #include <xercesc/util/XMLInteger.hpp>
+#include <xercesc/util/XMLChar.hpp>
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <limits>
 
@@ -138,10 +139,26 @@ const DOMNode* input_imp::findAttribute( const std::string& name ) const
 const DOMNode* input_imp::findContent() const
 {
     const DOMNode* pChild = pCurrent_->getFirstChild();
-    if( ! pChild || pChild->getNodeType() != DOMNode::TEXT_NODE
-                 && pChild->getNodeType() != DOMNode::CDATA_SECTION_NODE )
-        return 0;
-    return pChild;
+    while( pChild )
+    {
+        if( hasContent( *pChild ) )
+            return pChild;
+        pChild = pChild->getNextSibling();
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::hasContent
+// Created: MAT 2007-07-16
+// -----------------------------------------------------------------------------
+bool input_imp::hasContent( const DOMNode& node ) const
+{
+    if( node.getNodeType() != DOMNode::TEXT_NODE
+     && node.getNodeType() != DOMNode::CDATA_SECTION_NODE )
+        return false;
+    const XMLCh* const value = node.getNodeValue();
+    return ! XMLChar1_1::isAllSpaces( value, XMLString::stringLen( value ) );
 }
 
 // -----------------------------------------------------------------------------
