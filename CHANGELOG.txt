@@ -1,3 +1,5 @@
+1.2.2
+
 1.2.1
 . added const to the xml::xobufferstream parameter serialized to an xml::xostream
 . added CDATA support
