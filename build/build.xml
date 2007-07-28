@@ -2,10 +2,7 @@
 <project name="xeumeuleu" default="all">
 
     <!--
-    <property name="platform" value="cygwin"/>
-    <property name="compiler" value="gcc"/>
-
-    <import file="../../poney/src/poney.xml"/>
+    <import file="../../../../dev/projects/tools/poney/src/poney.xml"/>
     -->
     <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
@@ -29,12 +26,20 @@
 
     <!--
     ============================================================================
+      applications
+    ============================================================================
+    -->
+    <target name="xeumeuleu_bench" depends="xeumeuleu" description="build benchmark application">
+        <build-app name="xeumeuleu_bench" depends="boost" libs="xeumeuleu,xerces-c_2" subsystem="console"/>
+    </target>
+
+    <!--
+    ============================================================================
       clean
     ============================================================================
     -->
     <target name="clean" description="clean intermediate build artifacts">
-        <clean name="xeumeuleu"/>
-        <clean name="xeumeuleu_test"/>
+        <delete dir="${out.dir}"/>
     </target>
 
     <!--
@@ -71,7 +76,8 @@
       package
     ============================================================================
     -->
-    <target name="package" depends="generate-vc80" description="package the distribution">
+    <target name="package" description="package the distribution">
+        <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/xeumeuleu.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user"/>
         <tar destfile="${dist.dir}/xeumeuleu.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user" compression="bzip2"/>
     </target>
@@ -108,14 +114,17 @@
         <forrest/>
     </target>
 
-    <target name="site" depends="documentation" description="deploy web site">
+    <target name="site" description="deploy web site">
+        <zip destfile="${doc.dir}/site.zip">
+            <fileset dir="${doc.dir}/site"/>
+        </zip>
         <input addproperty="deploy.scp.username" message="Enter username to enable scp to deploy:"/>
-        <property name="deploy.scp.dest" value="${deploy.scp.username}@shell.sourceforge.net:/home/groups/x/xe/xeumeuleu/htdocs"/>
+        <property name="deploy.scp.dest" value="${deploy.scp.username}@shell.sourceforge.net:/home/groups/x/xe/xeumeuleu"/>
         <input addproperty="deploy.scp.password" message="Enter remote password to enable scp to ${deploy.scp.dest}:"/>
         <!-- requires scp : http://ant.apache.org/manual/OptionalTasks/scp.html -->
-        <scp todir="${deploy.scp.dest}" password="${deploy.scp.password}" trust="yes" verbose="true">
-            <fileset dir="${doc.dir}/site"/>
-        </scp>
+        <scp todir="${deploy.scp.dest}" password="${deploy.scp.password}" trust="yes" verbose="true" file="${doc.dir}/site.zip"/>
+        <sshexec host="shell.sourceforge.net" username="${deploy.scp.username}" password="${deploy.scp.password}"
+                 command="cd /home/groups/x/xe/xeumeuleu/htdocs;rm -r *;unzip ../site.zip" trust="yes"/>
     </target>
 
     <!--
@@ -125,7 +134,7 @@
     -->
     <target name="test" depends="xeumeuleu_test" description="run all tests"/>
 
-    <target name="build" depends="xeumeuleu" description="build all"/>
+    <target name="build" depends="xeumeuleu,xeumeuleu_bench" description="build all"/>
 
     <target name="configure" description="initialize local project structure with dependencies">
         <update name="boost"/>
