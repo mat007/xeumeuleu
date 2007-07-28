@@ -134,7 +134,7 @@
     -->
     <target name="test" depends="xeumeuleu_test" description="run all tests"/>
 
-    <target name="build" depends="xeumeuleu,xeumeuleu_bench" description="build all"/>
+    <target name="build" depends="xeumeuleu" description="build all"/>
 
     <target name="configure" description="initialize local project structure with dependencies">
         <update name="boost"/>
