@@ -28,8 +28,8 @@
           <th>Success rate</th>
         </tr>
       </thead>
-      <xsl:variable name="tests.passed" select="sum(TestSuite/SubTestCases/@passed)"/>
-      <xsl:variable name="tests.failed" select="sum(TestSuite/SubTestCases/@failed)"/>
+      <xsl:variable name="tests.passed" select="sum(TestSuite/@test_cases_passed)"/>
+      <xsl:variable name="tests.failed" select="sum(TestSuite/@test_cases_failed)"/>
       <xsl:variable name="tests.count" select="$tests.passed + $tests.failed"/>
       <xsl:variable name="tests.percent" select="round($tests.passed * 10000 div $tests.count) div 100"/>
         <tr class="b">
@@ -53,10 +53,10 @@
         <tr>
           <xsl:call-template name="alternated-row"/>
           <td><xsl:value-of select="@name"/></td>
-          <xsl:variable name="tests.count" select="SubTestCases/@passed + SubTestCases/@failed"/>
-          <xsl:variable name="tests.percent" select="round(SubTestCases/@passed * 10000 div $tests.count) div 100"/>
+          <xsl:variable name="tests.count" select="@test_cases_passed + @test_cases_failed"/>
+          <xsl:variable name="tests.percent" select="round(@test_cases_passed * 10000 div $tests.count) div 100"/>
           <td><xsl:value-of select="$tests.count"/></td>
-          <td><xsl:value-of select="SubTestCases/@failed"/></td>
+          <td><xsl:value-of select="@test_cases_failed"/></td>
           <td><xsl:value-of select="$tests.percent"/>%</td>
         </tr>
       </xsl:for-each>
