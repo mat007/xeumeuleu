@@ -132,6 +132,9 @@
 				RelativePath="..\..\src\tests\xeumeuleu_test\attribute_test.cpp">
 			</File>
 			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\attributes_test.cpp">
+			</File>
+			<File
 				RelativePath="..\..\src\tests\xeumeuleu_test\cdata_test.cpp">
 			</File>
 			<File

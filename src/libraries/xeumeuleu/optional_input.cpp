@@ -329,10 +329,19 @@ void optional_input::attribute( const std::string& name, unsigned long& value ) 
 }
 
 // -----------------------------------------------------------------------------
-// Name: optional_input::visit
+// Name: optional_input::nodes
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-void optional_input::visit( const visitor& v ) const
+void optional_input::nodes( const visitor& v ) const
 {
-    context_.reset( pInput_ ).visit( v );
+    context_.reset( pInput_ ).nodes( v );
+}
+
+// -----------------------------------------------------------------------------
+// Name: optional_input::attributes
+// Created: MAT 2007-08-01
+// -----------------------------------------------------------------------------
+void optional_input::attributes( const visitor& v ) const
+{
+    context_.reset( pInput_ ).attributes( v );
 }

@@ -524,10 +524,10 @@ void input_imp::attribute( const std::string& name, unsigned long& value ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_imp::visit
+// Name: input_imp::nodes
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-void input_imp::visit( const visitor& v ) const
+void input_imp::nodes( const visitor& v ) const
 {
     DOMNode* pChild = pCurrent_->getFirstChild();
     while( pChild )
@@ -538,6 +538,24 @@ void input_imp::visit( const visitor& v ) const
             v.process( trim( translate( pChild->getNodeName() ) ), xis );
         }
         pChild = pChild->getNextSibling();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::attributes
+// Created: MAT 2007-08-01
+// -----------------------------------------------------------------------------
+void input_imp::attributes( const visitor& v ) const
+{
+    const DOMNamedNodeMap* pAttributes = pCurrent_->getAttributes();
+    if( pAttributes )
+    {
+        for( XMLSize_t index = 0; index < pAttributes->getLength(); ++index )
+        {
+            DOMNode* pAttribute = pAttributes->item( index );
+            sub_xistream xis( *pCurrent_ );
+            v.process( trim( translate( pAttribute->getNodeName() ) ), xis );
+        }
     }
 }
 

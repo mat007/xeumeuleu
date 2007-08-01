@@ -318,13 +318,24 @@ void xistream::attribute( const std::string& name, unsigned long& value ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::visit
+// Name: xistream::nodes
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-void xistream::visit( const visitor& v )
+void xistream::nodes( const visitor& v )
 {
     TRY
-        pInput_->visit( v );
+        pInput_->nodes( v );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xistream::attributes
+// Created: MAT 2007-08-01
+// -----------------------------------------------------------------------------
+void xistream::attributes( const visitor& v )
+{
+    TRY
+        pInput_->attributes( v );
     CATCH
 }
 
