@@ -49,7 +49,7 @@ class sub_xistream : public xistream
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit sub_xistream( XERCES_CPP_NAMESPACE::DOMNode& root );
+    explicit sub_xistream( const XERCES_CPP_NAMESPACE::DOMNode& root );
     virtual ~sub_xistream();
     //@}
 };
