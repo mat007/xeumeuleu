@@ -41,7 +41,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // Name: sub_xistream constructor
 // Created: MAT 2006-01-06
 // -----------------------------------------------------------------------------
-sub_xistream::sub_xistream( DOMNode& root )
+sub_xistream::sub_xistream( const DOMNode& root )
     : xistream( std::auto_ptr< input >( new input( std::auto_ptr< input_base >( new input_imp( root ) ) ) ) )
 {
     // NOTHING
