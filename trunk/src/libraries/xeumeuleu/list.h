@@ -106,7 +106,7 @@ private:
 template< typename T >
 xistream& operator>>( xistream& xis, const list_visitor< T >& manipulator )
 {
-    xis.visit( manipulator );
+    xis.nodes( manipulator );
     return xis;
 }
 

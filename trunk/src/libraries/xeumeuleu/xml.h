@@ -50,6 +50,7 @@
 #include "attribute.h"
 #include "list.h"
 #include "name_list.h"
+#include "attributes.h"
 #include "optional.h"
 #include "grammar.h"
 

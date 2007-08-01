@@ -78,9 +78,9 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool hasElement  ( const std::string& tag ) const;
+    virtual bool hasElement( const std::string& tag ) const;
     virtual bool hasAttribute( const std::string& name ) const;
-    virtual bool hasContent  () const;
+    virtual bool hasContent() const;
 
     virtual void attribute( const std::string& name, std::string& value ) const;
     virtual void attribute( const std::string& name, float& value ) const;
@@ -93,7 +93,8 @@ public:
     virtual void attribute( const std::string& name, unsigned int& value ) const;
     virtual void attribute( const std::string& name, unsigned long& value ) const;
 
-    virtual void visit( const visitor& v ) const;
+    virtual void nodes( const visitor& v ) const;
+    virtual void attributes( const visitor& v ) const;
     //@}
 
 private:
