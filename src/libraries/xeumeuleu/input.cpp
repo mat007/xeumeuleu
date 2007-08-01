@@ -91,12 +91,21 @@ void input::copy( output& destination ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: input::visit
+// Name: input::nodes
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-void input::visit( const visitor& v ) const
+void input::nodes( const visitor& v ) const
 {
-    pInput_->visit( v );
+    pInput_->nodes( v );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input::nodes
+// Created: MAT 2007-08-01
+// -----------------------------------------------------------------------------
+void input::attributes( const visitor& v ) const
+{
+    pInput_->attributes( v );
 }
 
 // -----------------------------------------------------------------------------

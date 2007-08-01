@@ -1,4 +1,5 @@
 1.2.2
+. added xml::attributes similar to xml::list but for attributes
 
 1.2.1
 . added const to the xml::xobufferstream parameter serialized to an xml::xostream

@@ -262,9 +262,9 @@ public:
       <p>
         The following code will call a functor for each element :
       </p>
-        <source><![CDATA[xis >> xml::start( "root" )
-      >> xml::list( my_instance, &my_class::my_method )
-    >> xml::end();]]></source>
+      <source><![CDATA[xis >> xml::start( "root" )
+    >> xml::list( my_instance, &my_class::my_method )
+  >> xml::end();]]></source>
       <p>
         With the functor method signature being :
       </p>
@@ -277,6 +277,34 @@ public:
       The <em>name</em> argument will be <em>first-element</em>, <em>second-element</em> and then <em>third-element</em> : the order of the calls matches the order of the elements in the document.
     </p>
     </section>
+    <section id="attribute-lists">
+      <title>Lists of attributes</title>
+      <p>
+        In the same way as nodes, attributes can also be enumerated, for example given the following document :
+      </p>
+      <source><![CDATA[<root first="value 1" second="value 2"/>]]></source>
+      <p>
+        A functor to handle the attributes when their names are unknown at the compile time would be :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    void my_method( const std::string& name, xistream& xis ) const;
+};]]></source>
+      <p>
+        Note that this functor has the exact same signature as the similar <strong>xml::list</strong> functor.
+      </p>
+      <p>
+        With <em>my-instance</em> being an object of type <em>my_class</em>, the document can be read by the following piece of code :
+      </p>
+      <source><![CDATA[xis >> xml::start( "root" )
+    >> xml::attributes( my_instance, &my_class::my_method )
+  >> xml::end();]]></source>
+    </section>
+    <p>
+      The functor will be called a first time with <em>name</em> equal to <em>first</em> and a second time with <em>name</em> equal to <em>second</em>.
+      The <em>xis</em> parameter will be an input stream already placed on the <em>root</em> node.
+    </p>
     <section id="data">
       <title>Managing data</title>
       <p>

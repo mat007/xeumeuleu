@@ -284,10 +284,19 @@ void null_input::attribute( const std::string& /*name*/, unsigned long& /*value*
 }
 
 // -----------------------------------------------------------------------------
-// Name: null_input::visit
+// Name: null_input::nodes
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
-void null_input::visit( const visitor& /*v*/ ) const
+void null_input::nodes( const visitor& /*v*/ ) const
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: null_input::attributes
+// Created: MAT 2007-08-01
+// -----------------------------------------------------------------------------
+void null_input::attributes( const visitor& /*v*/ ) const
 {
     // NOTHING
 }

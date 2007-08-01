@@ -77,7 +77,8 @@ public:
         pInput_->attribute( name, value );
     }
 
-    void visit( const visitor& v ) const;
+    void nodes( const visitor& v ) const;
+    void attributes( const visitor& v ) const;
     //@}
 
     //! @name Modifiers
