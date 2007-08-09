@@ -7,10 +7,10 @@
  *   met :
  *
  *   . Redistributions  of  source  code  must  retain  the  above copyright
- *     notice, this attributes of conditions and the following disclaimer.
+ *     notice, this list of conditions and the following disclaimer.
  *
  *   . Redistributions in  binary form  must reproduce  the above  copyright
- *     notice, this attributes of conditions  and the following disclaimer in  the
+ *     notice, this list of conditions  and the following disclaimer in  the
  *     documentation and/or other materials provided with the distribution.
  *
  *   . Neither  the name  of  the  copyright  holders  nor the names  of the
@@ -33,9 +33,7 @@
 #ifndef _xeumeuleu_attributes_h_
 #define _xeumeuleu_attributes_h_
 
-#include <string>
-#include "visitor.h"
-#include "xistream.h"
+#include "adapter.h"
 #include "name_caller.h"
 
 namespace xml
@@ -43,62 +41,18 @@ namespace xml
 // =============================================================================
 /** @class  attributes_visitor
     @brief  Attributes visitor
-    @par    Using example
-    @code
-    class my_class
-    {
-    public:
-        void my_method( const std::string& name, xml::xistream& xis )
-        {
-            if( name == ... )
-                xis >> ...
-            else if( name == ... )
-                xis >> ...
-        }
-        void my_const_method( const std::string& name, xml::xistream& xis ) const
-        {
-            if( name == ... )
-                xis >> ...
-            else if( name == ... )
-                xis >> ...
-        }
-    } my_instance;
-    xml::xistream& xis = ...;
-    xis >> xml::attributes( my_instance, &my_class::my_method );
-    xis >> xml::attributes( my_instance, &my_class::my_const_method );
-    @endcode
 */
 // Created: MAT 2007-08-01
 // =============================================================================
 template< typename T >
-class attributes_visitor : public visitor
+class attributes_visitor : public adapter< T >
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit attributes_visitor( const T& functor )
-        : functor_( functor )
+        : adapter< T >( functor )
     {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void process( const std::string& name, xistream& xis ) const
-    {
-        functor_( name, xis );
-    }
-    //@}
-
-private:
-    //! @name Constructors/Destructor
-    //@{
-    attributes_visitor& operator=( const attributes_visitor& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const T functor_;
     //@}
 };
 
