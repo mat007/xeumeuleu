@@ -303,7 +303,7 @@ BOOST_AUTO_TEST_CASE( move_up_from_sub_node_throws_an_exception )
     BOOST_CHECK_THROW( xis >> xml::start( "element" ) >> xml::list( "sub-node", custom, &custom_class::process ), xml::exception );
 }
 
-namespace 
+namespace
 {
     class mock_custom_class_name_list_with_parameters : public mockpp::ChainableMockObject
     {
@@ -342,7 +342,7 @@ BOOST_AUTO_TEST_CASE( read_name_list_with_parameters )
     mock_custom.verify();
 }
 
-namespace 
+namespace
 {
     class mock_custom_class_name_list : public mockpp::ChainableMockObject
     {
