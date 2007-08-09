@@ -153,6 +153,9 @@
 				Name="xml"
 				Filter="">
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\adapter.h">
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\attribute.h">
 				</File>
 				<File
@@ -172,6 +175,9 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\end.h">
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\filter.h">
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\list.h">

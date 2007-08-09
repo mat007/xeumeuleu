@@ -33,9 +33,7 @@
 #ifndef _xeumeuleu_name_list_h_
 #define _xeumeuleu_name_list_h_
 
-#include <string>
-#include "visitor.h"
-#include "xistream.h"
+#include "adapter.h"
 #include "name_caller.h"
 
 namespace xml
@@ -43,62 +41,18 @@ namespace xml
 // =============================================================================
 /** @class  list_name_visitor
     @brief  List name visitor
-    @par    Using example
-    @code
-    class my_class
-    {
-    public:
-        void my_method( const std::string& name, xml::xistream& xis )
-        {
-            if( name == ... )
-                xis >> ...
-            else if( name == ... )
-                xis >> ...
-        }
-        void my_const_method( const std::string& name, xml::xistream& xis ) const
-        {
-            if( name == ... )
-                xis >> ...
-            else if( name == ... )
-                xis >> ...
-        }
-    } my_instance;
-    xml::xistream& xis = ...;
-    xis >> xml::list( my_instance, &my_class::my_method );
-    xis >> xml::list( my_instance, &my_class::my_const_method );
-    @endcode
 */
 // Created: ZEBRE 2006-08-30
 // =============================================================================
 template< typename T >
-class list_name_visitor : public visitor
+class list_name_visitor : public adapter< T >
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit list_name_visitor( const T& functor )
-        : functor_( functor )
+        : adapter< T >( functor )
     {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void process( const std::string& name, xistream& xis ) const
-    {
-        functor_( name, xis );
-    }
-    //@}
-
-private:
-    //! @name Constructors/Destructor
-    //@{
-    list_name_visitor& operator=( const list_name_visitor& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const T functor_;
     //@}
 };
 
