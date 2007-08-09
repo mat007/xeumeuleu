@@ -53,12 +53,12 @@ public:
     explicit parser( XERCES_CPP_NAMESPACE::DOMBuilder& builder );
     virtual ~parser();
     //@}
-    
+
     //! @name Operations
     //@{
     XERCES_CPP_NAMESPACE::DOMNode& parse( XERCES_CPP_NAMESPACE::InputSource& source );
     //@}
-    
+
 private:
     //! @name Member data
     //@{

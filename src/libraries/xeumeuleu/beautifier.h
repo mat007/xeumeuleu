@@ -42,7 +42,7 @@ namespace xml
 // =============================================================================
 /** @class  beautifier
     @brief  Xerces target wrapper
-    
+
     Intercepts written data to remove double new lines (xerces pretty print 'bug')
 */
 // Created: MAT 2006-01-05

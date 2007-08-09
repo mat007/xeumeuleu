@@ -66,7 +66,7 @@ public:
     }
 
     std::auto_ptr< input > branch( bool clone ) const;
-    
+
     void copy( output& destination ) const;
     //@}
 
