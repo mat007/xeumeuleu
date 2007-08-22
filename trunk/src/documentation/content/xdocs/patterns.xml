@@ -102,7 +102,7 @@ private:
       <source><![CDATA[<document>
   <element-1 name="name 1">content</element-1>
   <element-2 name="name 2"/>
-  <element-2 name="name 3" attribute="something" />
+  <element-3 name="name 3" attribute="something" />
 </document-3>]]></source>
       <p>
         A possible factorization can be :
