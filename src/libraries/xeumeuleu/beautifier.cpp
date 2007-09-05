@@ -38,7 +38,7 @@ using namespace XERCES_CPP_NAMESPACE;
 
 namespace
 {
-    static const XMLCh defaultNewLine[] = { chLF, chNull };
+    const XMLCh defaultNewLine[] = { chLF, chNull };
 }
 
 // -----------------------------------------------------------------------------
