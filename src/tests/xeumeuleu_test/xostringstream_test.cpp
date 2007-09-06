@@ -159,12 +159,11 @@ BOOST_AUTO_TEST_CASE( streaming_extended_character_into_UTF_16_makes_a_valid_doc
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( streaming_extended_character_into_UTF_8_makes_a_valid_document )
 {
+    const std::string content( "ça c'est sûr !" );
     xml::xostringstream xos( xml::encoding( "UTF-8" ) );
-    xos << xml::content( "element", "ça c'est sûr !" );
-    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                                 "<element>ça c'est sûr !</element>\n";
+    xos << xml::content( "element", content );
     xml::xistringstream xis( xos.str() );
     std::string value;
     xis >> xml::content( "element", value );
-    BOOST_CHECK_EQUAL( "ça c'est sûr !", value );
+    BOOST_CHECK_EQUAL( content, value );
 }
