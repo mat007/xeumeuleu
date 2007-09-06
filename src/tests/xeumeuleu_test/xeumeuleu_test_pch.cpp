@@ -35,7 +35,7 @@
 
 namespace
 {
-    static std::string data_directory;
+    std::string data_directory;
 
     void set_data_directory( int argc, char* argv[] )
     {
