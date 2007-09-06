@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE( copy_xistream_from_root_to_xostream )
 }
 
 // -----------------------------------------------------------------------------
-// Name: copy_xistream_from_sub-element_to_xostream
+// Name: copy_xistream_from_sub_element_to_xostream
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( element_to_xostream )
@@ -120,4 +120,21 @@ BOOST_AUTO_TEST_CASE( copy_xistream_from_optional_to_xostream )
     xos << xml::content( "root", xis );
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<root/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: copy_xistream_from_sub_element_to_xostream_removes_meaningless_empty_text_nodes
+// Created: MCO 2007-05-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( copy_xistream_from_sub_element_to_xostream_removes_meaningless_empty_text_nodes )
+{
+    xml::xistringstream xis( "<root>\n  <sub-element/>\n</root>" );
+    xis >> xml::start( "root" );
+    xml::xostringstream xos;
+    xos << xml::start( "root" ) << xis << xml::start( "another" ) << xml::end() << xml::end();
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<root>\n"
+                       "  <sub-element/>\n"
+                       "  <another/>\n"
+                       "</root>\n", xos.str() );
 }
