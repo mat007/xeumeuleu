@@ -36,6 +36,7 @@
 #include "trim.h"
 #include "sub_output.h"
 #include <xercesc/dom/DOM.hpp>
+#include <xercesc/util/XMLChar.hpp>
 #include <limits>
 
 using namespace xml;
@@ -138,6 +139,19 @@ void output::attach( const output& rhs )
 }
 
 // -----------------------------------------------------------------------------
+// Name: output::isEmpty
+// Created: MAT 2007-09-06
+// -----------------------------------------------------------------------------
+bool output::isEmpty( const DOMNode& node ) const
+{
+    if( node.getNodeType() != DOMNode::TEXT_NODE
+     && node.getNodeType() != DOMNode::CDATA_SECTION_NODE )
+        return false;
+    const XMLCh* const value = node.getNodeValue();
+    return XMLChar1_1::isAllSpaces( value, XMLString::stringLen( value ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: output::copy
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
@@ -146,7 +160,8 @@ void output::copy( const XERCES_CPP_NAMESPACE::DOMNode& node )
     DOMNode* pChild = node.getFirstChild();
     while( pChild )
     {
-        pCurrent_->appendChild( document_.importNode( pChild, true ) );
+        if( ! isEmpty( *pChild ) )
+            pCurrent_->appendChild( document_.importNode( pChild, true ) );
         pChild = pChild->getNextSibling();
     }
     flush();

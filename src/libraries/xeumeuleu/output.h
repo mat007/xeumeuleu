@@ -109,6 +109,7 @@ private:
     }
 
     bool isRoot() const;
+    bool isEmpty( const XERCES_CPP_NAMESPACE::DOMNode& node ) const;
     //@}
 
 private:
