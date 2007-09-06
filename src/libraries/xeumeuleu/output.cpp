@@ -153,17 +153,27 @@ bool output::isEmpty( const DOMNode& node ) const
 
 // -----------------------------------------------------------------------------
 // Name: output::copy
+// Created: MAT 2007-09-06
+// -----------------------------------------------------------------------------
+void output::copy( DOMNode* pNode, DOMNode& to )
+{
+    if( ! pNode )
+        return;
+    if( ! isEmpty( *pNode ) )
+    {
+        DOMNode* pNew = to.appendChild( document_.importNode( pNode, false ) );
+        copy( pNode->getFirstChild(), *pNew );
+    }
+    copy( pNode->getNextSibling(), to );
+}
+
+// -----------------------------------------------------------------------------
+// Name: output::copy
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
-void output::copy( const XERCES_CPP_NAMESPACE::DOMNode& node )
+void output::copy( const DOMNode& node )
 {
-    DOMNode* pChild = node.getFirstChild();
-    while( pChild )
-    {
-        if( ! isEmpty( *pChild ) )
-            pCurrent_->appendChild( document_.importNode( pChild, true ) );
-        pChild = pChild->getNextSibling();
-    }
+    copy( node.getFirstChild(), *pCurrent_ );
     flush();
 }
 

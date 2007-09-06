@@ -123,18 +123,35 @@ BOOST_AUTO_TEST_CASE( copy_xistream_from_optional_to_xostream )
 }
 
 // -----------------------------------------------------------------------------
-// Name: copy_xistream_from_sub_element_to_xostream_removes_meaningless_empty_text_nodes
+// Name: copy_xistream_from_sub_element_to_xostream_removes_meaningless_empty_text_node
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( copy_xistream_from_sub_element_to_xostream_removes_meaningless_empty_text_nodes )
+BOOST_AUTO_TEST_CASE( copy_xistream_from_sub_element_to_xostream_removes_meaningless_empty_text_node )
 {
-    xml::xistringstream xis( "<root>\n  <sub-element/>\n</root>" );
+    xml::xistringstream xis( "<root>  <sub-element/></root>" );
     xis >> xml::start( "root" );
     xml::xostringstream xos;
-    xos << xml::start( "root" ) << xis << xml::start( "another" ) << xml::end() << xml::end();
+    xos << xml::start( "root" ) << xis << xml::end();
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<root>\n"
                        "  <sub-element/>\n"
-                       "  <another/>\n"
+                       "</root>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: copy_xistream_from_sub_element_to_xostream_removes_meaningless_empty_text_sub_node
+// Created: MCO 2007-05-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( copy_xistream_from_sub_element_to_xostream_removes_meaningless_empty_text_sub_node )
+{
+    xml::xistringstream xis( "<root>"
+                             "  <element>"
+                             "  </element>"
+                             "</root>" );
+    xml::xostringstream xos;
+    xos << xis ;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<root>\n"
+                       "  <element/>\n"
                        "</root>\n", xos.str() );
 }
