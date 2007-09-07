@@ -49,7 +49,6 @@ int main( int /*argc*/, char* /*argv[]*/ )
             << xml::end();
     }
     const time_duration duration = microsec_clock::local_time() - start;
-    xml::xostringstream xos;
     std::cout << "duration : " << duration << std::endl;
     return 0;
 }
