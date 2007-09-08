@@ -220,6 +220,41 @@ public:
     }
 };]]></source>
     </section>
+    <section id="filtering">
+      <title>Reading, filtering and writing back</title>
+      <p>
+        Assuming the goal is to load a document from a file, change the content of one given element under the root element, then write it back to the same file copying all other elements and attributes, one way to deal with it could be :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    void process( const std::string& filename, const std::string& element, const std::string& content ) const
+    {
+        xml::xifstream xis( filename );
+        xml::xofstream xos( filename );
+        xos << xml::start( "root" );
+        xis >> xml::start( "root" )
+              >> xml::attributes( *this, &my_class::copy, xos )
+              >> xml::list( *this, &my_class::filter, xos, element, content );
+        xos << xml::end();
+    }
+private:
+    void filter( const std::string& type, xml::xistream& xis, xml::xostream& xos, const std::string& element, const std::string& content ) const
+    {
+        xos << xml::start( type );
+        xis >> xml::attributes( *this, &my_class::copy, xos );
+        if( type == element )
+            xos << content;
+         else
+            xos << xis;
+        xos << xml::end();
+    }
+    void copy( const std::string& attribute, xml::xistream& xis, xml::xostream& xos ) const
+    {
+        xos << xml::attribute( attribute, xml::attribute< std::string >( xis, attribute ) );
+    }
+};]]></source>
+    </section>
     <section id="modular">
       <title>Organizing serialization in modular systems</title>
       <p>
