@@ -127,6 +127,26 @@ list_name_visitor< const_name_caller2< T, Arg1&, T1, Arg2&, T2 > > list( const T
     return list_name_visitor< const_name_caller2< T, Arg1&, T1, Arg2&, T2 > >( const_name_caller2< T, Arg1&, T1, Arg2&, T2 >( instance, method, value1, value2 ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: list
+// Created: MAT 2007-09-08
+// -----------------------------------------------------------------------------
+template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3 >
+list_name_visitor< name_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > > list( T& instance, void (T::*method)( const std::string&, xistream&, T1, T2, T3 ), Arg1& value1, Arg2& value2, Arg3& value3 )
+{
+    return list_name_visitor< name_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > >( name_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 >( instance, method, value1, value2, value3 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: list
+// Created: MAT 2007-09-08
+// -----------------------------------------------------------------------------
+template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3 >
+list_name_visitor< const_name_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > > list( const T& instance, void (T::*method)( const std::string&, xistream&, T1, T2, T3 ) const, Arg1& value1, Arg2& value2, Arg3& value3 )
+{
+    return list_name_visitor< const_name_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > >( const_name_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 >( instance, method, value1, value2, value3 ) );
+}
+
 }
 
 #endif // _xeumeuleu_name_list_h_

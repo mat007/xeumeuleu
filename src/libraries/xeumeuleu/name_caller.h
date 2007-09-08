@@ -36,5 +36,6 @@
 #include "name_caller0.h"
 #include "name_caller1.h"
 #include "name_caller2.h"
+#include "name_caller3.h"
 
 #endif // _xeumeuleu_name_caller_h_
