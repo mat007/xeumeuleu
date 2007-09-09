@@ -33,10 +33,10 @@
 #ifndef _xeumeuleu_content_h_
 #define _xeumeuleu_content_h_
 
-#include <string>
 #include "start.h"
 #include "end.h"
 #include "optional.h"
+#include <string>
 
 namespace xml
 {
