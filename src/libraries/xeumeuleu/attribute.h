@@ -90,18 +90,18 @@ private:
 // Name: operator>>
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-template< typename T > xistream& operator>>( xistream& xos, const attribute_manipulator< T >& manipulator )
+template< typename T > xistream& operator>>( xistream& xis, const attribute_manipulator< T >& manipulator )
 {
-    return manipulator( xos );
+    return manipulator( xis );
 }
 
 // -----------------------------------------------------------------------------
 // Name: operator<<
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-template< typename T > xostream& operator<<( xostream& xis, const attribute_manipulator< T >& manipulator )
+template< typename T > xostream& operator<<( xostream& xos, const attribute_manipulator< T >& manipulator )
 {
-    return manipulator( xis );
+    return manipulator( xos );
 }
 
 // -----------------------------------------------------------------------------
