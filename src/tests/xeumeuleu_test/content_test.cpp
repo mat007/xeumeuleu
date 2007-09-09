@@ -51,6 +51,26 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: reading_empty_content_throws_proper_exception
+// Created: MCO 2007-09-09
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_empty_content_throws_proper_exception )
+{
+    xml::xistringstream xis( "<element/>" );
+    std::string value;
+    try
+    {
+        xis >> xml::content( "element", value );
+    }
+    catch( std::exception& e )
+    {
+        BOOST_CHECK_EQUAL( "node 'element' does not have a content", e.what() );
+        return;
+    }
+    BOOST_FAIL( "should have thrown" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: streaming_content_writes_node_content
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
@@ -170,7 +190,7 @@ BOOST_AUTO_TEST_CASE( read_content_directly_with_default_value_is_valid )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( read_unexisting_content_directly_with_default_value_is_valid )
 {
-    xml::xistringstream xis( "<element><pouet/></element>" );
+    xml::xistringstream xis( "<element/>" );
     const std::string value = "the default value";
     BOOST_CHECK_EQUAL( value, xml::content( xis, "element", value ) );
 }
