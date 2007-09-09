@@ -57,7 +57,7 @@ private:
     //! @name Copy/Assignment
     //@{
     buffer_input( const buffer_input& );            //!< Copy constructor
-    buffer_input& operator=( const buffer_input& ); //!< Assignement operator
+    buffer_input& operator=( const buffer_input& ); //!< Assignment operator
     //@}
 };
 

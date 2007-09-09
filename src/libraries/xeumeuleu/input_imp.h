@@ -98,7 +98,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     input_imp( const input_imp& );            //!< Copy constructor
     input_imp& operator=( const input_imp& ); //!< Assignment operator

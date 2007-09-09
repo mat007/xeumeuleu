@@ -65,7 +65,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     translate( const translate& );            //!< Copy constructor
     translate& operator=( const translate& ); //!< Assignment operator

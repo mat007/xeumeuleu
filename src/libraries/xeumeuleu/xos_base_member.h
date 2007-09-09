@@ -55,10 +55,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     xos_base_member( const xos_base_member& );            //!< Copy constructor
-    xos_base_member& operator=( const xos_base_member& ); //!< Assignement operator
+    xos_base_member& operator=( const xos_base_member& ); //!< Assignment operator
     //@}
 
 protected:

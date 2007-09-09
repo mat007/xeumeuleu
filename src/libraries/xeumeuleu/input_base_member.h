@@ -58,10 +58,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     input_base_member( const input_base_member& );            //!< Copy constructor
-    input_base_member& operator=( const input_base_member& ); //!< Assignement operator
+    input_base_member& operator=( const input_base_member& ); //!< Assignment operator
     //@}
 
 protected:
