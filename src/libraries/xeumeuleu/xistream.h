@@ -41,6 +41,7 @@ namespace xml
     class input;
     class visitor;
     class output;
+    class xostream;
 
 // =============================================================================
 /** @class  xistream
@@ -100,6 +101,8 @@ public:
     xistream& operator>>( unsigned short& value );
     xistream& operator>>( unsigned int& value );
     xistream& operator>>( unsigned long& value );
+
+    xistream& operator>>( xostream& xos );
     //@}
 
 protected:

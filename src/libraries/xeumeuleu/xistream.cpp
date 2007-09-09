@@ -33,6 +33,7 @@
 #include "xistream.h"
 #include "input.h"
 #include "chained_exception.h"
+#include "xostream.h"
 #include <xercesc/util/OutOfMemoryException.hpp>
 #include <xercesc/util/XMLException.hpp>
 #include <xercesc/dom/DOMException.hpp>
@@ -205,6 +206,16 @@ xistream& xistream::operator>>( unsigned long& value )
         pInput_->read( value );
         return *this;
     CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xistream::operator>>
+// Created: MAT 2007-09-09
+// -----------------------------------------------------------------------------
+xistream& xistream::operator>>( xostream& xos )
+{
+    xos << *this;
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
