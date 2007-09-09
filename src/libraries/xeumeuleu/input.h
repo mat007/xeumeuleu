@@ -87,7 +87,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     input( const input& );            //!< Copy constructor
     input& operator=( const input& ); //!< Assignment operator

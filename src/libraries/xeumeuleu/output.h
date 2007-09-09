@@ -89,7 +89,7 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     output( const output& );            //!< Copy constructor
     output& operator=( const output& ); //!< Assignment operator

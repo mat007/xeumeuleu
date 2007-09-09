@@ -109,7 +109,7 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     xistream( const xistream& );            //!< Copy constructor
     xistream& operator=( const xistream& ); //!< Assignment operator

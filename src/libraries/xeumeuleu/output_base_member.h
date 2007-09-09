@@ -62,10 +62,10 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     output_base_member( const output_base_member& );            //!< Copy constructor
-    output_base_member& operator=( const output_base_member& ); //!< Assignement operator
+    output_base_member& operator=( const output_base_member& ); //!< Assignment operator
     //@}
 
     //! @name Helpers

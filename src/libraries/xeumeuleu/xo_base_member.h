@@ -55,7 +55,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     xo_base_member( const xo_base_member& );            //!< Copy constructor
     xo_base_member& operator=( const xo_base_member& ); //!< Assignment operator
