@@ -33,10 +33,10 @@
 #ifndef _xeumeuleu_attribute_h_
 #define _xeumeuleu_attribute_h_
 
-#include <string>
 #include "xistream.h"
 #include "xostream.h"
 #include "optional.h"
+#include <string>
 
 namespace xml
 {
