@@ -97,10 +97,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     null_input( const null_input& );            //!< Copy constructor
-    null_input& operator=( const null_input& ); //!< Assignement operator
+    null_input& operator=( const null_input& ); //!< Assignment operator
     //@}
 
 private:

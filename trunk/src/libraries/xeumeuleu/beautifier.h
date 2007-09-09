@@ -62,7 +62,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     beautifier( const beautifier& );            //!< Copy constructor
     beautifier& operator=( const beautifier& ); //!< Assignment operator

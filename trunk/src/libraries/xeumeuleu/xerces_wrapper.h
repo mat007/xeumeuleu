@@ -65,7 +65,7 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     xerces_wrapper( const xerces_wrapper& );            //!< Copy constructor
     xerces_wrapper& operator=( const xerces_wrapper& ); //!< Assignment operator

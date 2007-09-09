@@ -102,7 +102,7 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignement
+    //! @name Copy/Assignment
     //@{
     xostream( const xostream& );            //!< Copy constructor
     xostream& operator=( const xostream& ); //!< Assignment operator
