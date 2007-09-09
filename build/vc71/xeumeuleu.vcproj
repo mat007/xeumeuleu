@@ -236,6 +236,9 @@
 					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\name_caller2.h">
 					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\name_caller3.h">
+					</File>
 				</Filter>
 			</Filter>
 			<Filter
