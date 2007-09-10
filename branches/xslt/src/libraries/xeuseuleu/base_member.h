@@ -39,7 +39,7 @@ namespace xsl
 {
 // =============================================================================
 /** @class  base_member
-    @brief  base_member
+    @brief  Base member implementation
 */
 // Created: SLI 2007-09-10
 // =============================================================================
@@ -49,8 +49,8 @@ class base_member
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit base_member( std::auto_ptr< T > pOutput )
-        : pOutput_( pOutput )
+    explicit base_member( std::auto_ptr< T > pMember )
+        : pMember_( pMember )
     {}
     //@}
 
@@ -64,7 +64,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const std::auto_ptr< T > pOutput_;
+    const std::auto_ptr< T > pMember_;
     //@}
 };
 

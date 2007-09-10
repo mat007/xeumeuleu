@@ -35,8 +35,8 @@
 #include <xalanc/XalanTransformer/XalanTransformer.hpp>
 
 using namespace xsl;
-XALAN_USING_XERCES( XMLPlatformUtils )
-XALAN_USING_XALAN( XalanTransformer )
+using namespace XALAN_CPP_NAMESPACE;
+using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: transform constructor

@@ -42,8 +42,7 @@ using namespace mockpp;
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( tranformation_is_applied_at_end_root_level )
 {
-    const std::string stylesheet = BOOST_RESOLVE( "stylesheet.xsl" );
-    xsl::xstringtransform transformer( stylesheet );
+    xsl::xstringtransform transformer( BOOST_RESOLVE( "stylesheet.xsl" ) );
     transformer << xml::start( "root" )
                     << xml::start( "element" )
                     << xml::end()
@@ -59,8 +58,7 @@ BOOST_AUTO_TEST_CASE( tranformation_is_applied_at_end_root_level )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( tranformation_from_a_xistream_is_valid )
 {
-    const std::string stylesheet = BOOST_RESOLVE( "stylesheet.xsl" );
-    xsl::xstringtransform transformer( stylesheet );
+    xsl::xstringtransform transformer( BOOST_RESOLVE( "stylesheet.xsl" ) );
     xml::xistringstream xis(
         "<root>"
             "<element/>"

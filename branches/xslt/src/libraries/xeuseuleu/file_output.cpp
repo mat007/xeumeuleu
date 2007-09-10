@@ -34,7 +34,7 @@
 #include <xalanc/XalanTransformer/XalanTransformer.hpp>
 
 using namespace xsl;
-XALAN_USING_XALAN( XSLTResultTarget )
+using namespace XALAN_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: file_output constructor

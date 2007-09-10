@@ -34,7 +34,8 @@
 #include <xalanc/XalanTransformer/XalanTransformer.hpp>
 
 using namespace xsl;
-XALAN_USING_XALAN( XSLTResultTarget )
+using namespace XALAN_CPP_NAMESPACE;
+using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: string_output constructor
@@ -42,7 +43,7 @@ XALAN_USING_XALAN( XSLTResultTarget )
 // -----------------------------------------------------------------------------
 string_output::string_output()
     : base_member< std::ostringstream >( std::auto_ptr< std::ostringstream >( new std::ostringstream() ) )
-    , output( std::auto_ptr< XSLTResultTarget >( new XSLTResultTarget( *pOutput_ ) ) )
+    , output( std::auto_ptr< XSLTResultTarget >( new XSLTResultTarget( *pMember_ ) ) )
 {
     // NOTHING
 }
@@ -62,5 +63,5 @@ string_output::~string_output()
 // -----------------------------------------------------------------------------
 std::string string_output::str() const
 {
-    return pOutput_->str();
+    return pMember_->str();
 }

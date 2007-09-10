@@ -33,10 +33,7 @@
 #include "output.h"
 
 using namespace xsl;
-
-XALAN_USING_XALAN( XalanTransformer )
-XALAN_USING_XALAN( XSLTInputSource )
-XALAN_USING_XALAN( XalanDOMString )
+using namespace XALAN_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: output constructor

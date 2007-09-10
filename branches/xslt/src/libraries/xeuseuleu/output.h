@@ -38,8 +38,6 @@
 #include <sstream>
 #include <xalanc/XalanTransformer/XalanTransformer.hpp>
 
-XALAN_USING_XALAN( XSLTResultTarget )
-
 namespace xsl
 {
 // =============================================================================
@@ -64,7 +62,7 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    explicit output( std::auto_ptr< XSLTResultTarget > pTarget );
+    explicit output( std::auto_ptr< XALAN_CPP_NAMESPACE::XSLTResultTarget > pTarget );
     //@}
 
 private:
@@ -77,7 +75,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< XSLTResultTarget > pTarget_;
+    std::auto_ptr< XALAN_CPP_NAMESPACE::XSLTResultTarget > pTarget_;
     //@}
 };
 
