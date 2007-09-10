@@ -13,6 +13,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xeumeuleu_bench", "xeumeule
 		{DC8EF64E-152E-4157-A558-C4E17181B2DE} = {DC8EF64E-152E-4157-A558-C4E17181B2DE}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xeuseuleu", "xeuseuleu.vcproj", "{03CDFC1D-A1C3-4480-B04A-4F5F576AA3A9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DC8EF64E-152E-4157-A558-C4E17181B2DE} = {DC8EF64E-152E-4157-A558-C4E17181B2DE}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xeuseuleu_test", "xeuseuleu_test.vcproj", "{15D77FA5-6E56-47AD-A55A-CBFF746BFB52}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03CDFC1D-A1C3-4480-B04A-4F5F576AA3A9} = {03CDFC1D-A1C3-4480-B04A-4F5F576AA3A9}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xeuseuleu_bench", "xeuseuleu_bench.vcproj", "{47A3D233-B4BD-47DE-8CAF-41736C2A3375}"
+	ProjectSection(ProjectDependencies) = postProject
+		{03CDFC1D-A1C3-4480-B04A-4F5F576AA3A9} = {03CDFC1D-A1C3-4480-B04A-4F5F576AA3A9}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		debug = debug
@@ -31,6 +46,18 @@ Global
 		{4DB20A7A-4BE9-4DC8-8682-35A386712CEC}.debug.Build.0 = debug|Win32
 		{4DB20A7A-4BE9-4DC8-8682-35A386712CEC}.release.ActiveCfg = release|Win32
 		{4DB20A7A-4BE9-4DC8-8682-35A386712CEC}.release.Build.0 = release|Win32
+		{03CDFC1D-A1C3-4480-B04A-4F5F576AA3A9}.debug.ActiveCfg = debug|Win32
+		{03CDFC1D-A1C3-4480-B04A-4F5F576AA3A9}.debug.Build.0 = debug|Win32
+		{03CDFC1D-A1C3-4480-B04A-4F5F576AA3A9}.release.ActiveCfg = release|Win32
+		{03CDFC1D-A1C3-4480-B04A-4F5F576AA3A9}.release.Build.0 = release|Win32
+		{15D77FA5-6E56-47AD-A55A-CBFF746BFB52}.debug.ActiveCfg = debug|Win32
+		{15D77FA5-6E56-47AD-A55A-CBFF746BFB52}.debug.Build.0 = debug|Win32
+		{15D77FA5-6E56-47AD-A55A-CBFF746BFB52}.release.ActiveCfg = release|Win32
+		{15D77FA5-6E56-47AD-A55A-CBFF746BFB52}.release.Build.0 = release|Win32
+		{47A3D233-B4BD-47DE-8CAF-41736C2A3375}.debug.ActiveCfg = debug|Win32
+		{47A3D233-B4BD-47DE-8CAF-41736C2A3375}.debug.Build.0 = debug|Win32
+		{47A3D233-B4BD-47DE-8CAF-41736C2A3375}.release.ActiveCfg = release|Win32
+		{47A3D233-B4BD-47DE-8CAF-41736C2A3375}.release.Build.0 = release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
