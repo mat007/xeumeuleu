@@ -33,7 +33,6 @@
 #include "xeuseuleu_test_pch.h"
 #include "xeuseuleu/xsl.h"
 
-using namespace xsl;
 using namespace mockpp;
 
 // -----------------------------------------------------------------------------
@@ -42,14 +41,14 @@ using namespace mockpp;
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( tranformation_is_applied_at_end_root_level )
 {
-    xsl::xstringtransform transformer( BOOST_RESOLVE( "stylesheet.xsl" ) );
-    transformer << xml::start( "root" )
-                    << xml::start( "element" )
-                    << xml::end()
-                    << xml::start( "element" )
-                    << xml::end()
-                << xml::end();
-    xml::xistringstream( transformer.str(), xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) );
+    xsl::xstringtransform xf( BOOST_RESOLVE( "stylesheet.xsl" ) );
+    xf << xml::start( "root" )
+           << xml::start( "element" )
+           << xml::end()
+           << xml::start( "element" )
+           << xml::end()
+       << xml::end();
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><new-root><transformed/><transformed/></new-root>", xf.str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,13 +57,13 @@ BOOST_AUTO_TEST_CASE( tranformation_is_applied_at_end_root_level )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( tranformation_from_a_xistream_is_valid )
 {
-    xsl::xstringtransform transformer( BOOST_RESOLVE( "stylesheet.xsl" ) );
+    xsl::xstringtransform xf( BOOST_RESOLVE( "stylesheet.xsl" ) );
     xml::xistringstream xis(
         "<root>"
             "<element/>"
             "<element/>"
         "</root>"
     );
-    transformer << xis;
-    xml::xistringstream( transformer.str(), xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) );
+    xf << xis;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><new-root><transformed/><transformed/></new-root>", xf.str() );
 }

@@ -32,8 +32,8 @@
 
 #include "xeuseuleu_test_pch.h"
 #include "xeuseuleu/xsl.h"
+#include <fstream>
 
-using namespace xsl;
 using namespace mockpp;
 
 // -----------------------------------------------------------------------------
@@ -42,15 +42,10 @@ using namespace mockpp;
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( tranformation_creates_a_file )
 {
-    const std::string stylesheet = BOOST_RESOLVE( "stylesheet.xsl" );
-    const std::string output = "output.xml";
-    xsl::xftransform transformer( stylesheet, output );
-    transformer << xml::start( "root" )
-                    << xml::start( "element" )
-                    << xml::end()
-                    << xml::start( "element" )
-                    << xml::end()
-                << xml::end();
-    xml::xifstream( output, xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) );
-    std::remove( output.c_str() );
+    const std::string filename = "output.xml";
+    xsl::xftransform xf( BOOST_RESOLVE( "stylesheet.xsl" ), filename );
+    xf << xml::start( "root" )
+       << xml::end();
+    std::ifstream file( filename.c_str() );
+    BOOST_CHECK( file.is_open() );
 }
