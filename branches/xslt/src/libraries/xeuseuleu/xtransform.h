@@ -54,17 +54,23 @@ public:
     virtual ~xtransform();
     //@}
 
-    //! @name Operations
+    //! @name Operators
     //@{
     xtransform& operator<<( const xml::start& start );
     xtransform& operator<<( const xml::end& end );
-    template< typename T > xtransform& operator<<( const T& value );
+
+    template< typename T > xtransform& operator<<( const T& value )
+    {
+        stream_ << value;
+        transform();
+        return *this;
+    }
     //@}
 
 protected:
     //! @name Constructors/Destructor
     //@{
-    explicit xtransform( const std::string& stylesheet, output& output );
+    explicit xtransform( output& output, const std::string& stylesheet );
     //@}
 
 private:
@@ -82,23 +88,12 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned int level_;
+    output& output_;
     const std::string stylesheet_;
     xml::xostringstream stream_;
-    output& output_;
+    unsigned int level_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: xtransform::operator<<
-// Created: SLI 2007-09-10
-// -----------------------------------------------------------------------------
-template< typename T > xtransform& xtransform::operator<<( const T& value )
-{
-    stream_ << value;
-    transform();
-    return *this;
-}
 
 }
 

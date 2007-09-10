@@ -41,7 +41,7 @@ using namespace xsl;
 // -----------------------------------------------------------------------------
 xstringtransform::xstringtransform( const std::string& stylesheet )
     : base_member< string_output >( std::auto_ptr< string_output >( new string_output() ) )
-    , xtransform( stylesheet, *pMember_ )
+    , xtransform( *pMember_, stylesheet )
 {
     // NOTHING
 }
@@ -59,7 +59,7 @@ xstringtransform::~xstringtransform()
 // Name: xstringtransform::str
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
-std::string xstringtransform::str() const
+const std::string xstringtransform::str() const
 {
     return pMember_->str();
 }

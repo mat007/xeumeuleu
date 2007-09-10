@@ -31,11 +31,11 @@
 */
 
 #include "string_output.h"
+#include <sstream>
 #include <xalanc/XalanTransformer/XalanTransformer.hpp>
 
 using namespace xsl;
 using namespace XALAN_CPP_NAMESPACE;
-using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: string_output constructor
@@ -61,7 +61,7 @@ string_output::~string_output()
 // Name: string_output::str
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
-std::string string_output::str() const
+const std::string string_output::str() const
 {
     return pMember_->str();
 }

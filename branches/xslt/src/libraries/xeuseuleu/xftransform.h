@@ -33,8 +33,8 @@
 #ifndef _xeuseuleu_xftransform_h_
 #define _xeuseuleu_xftransform_h_
 
-#include "xtransform.h"
 #include "base_member.h"
+#include "xtransform.h"
 
 namespace xsl
 {
@@ -45,7 +45,7 @@ namespace xsl
     @brief  Xsl file transformation
     @par    Using example
     @code
-    xsl::xftransform xft( "transform.xsl", "output.file" );
+    xsl::xftransform xft( "transform.xsl", "output.xml" );
     @endcode
 */
 // Created: SLI 2007-09-07
@@ -57,13 +57,6 @@ public:
     //@{
              xftransform( const std::string& stylesheet, const std::string& filename );
     virtual ~xftransform();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    xftransform( const xftransform& );            //!< Copy constructor
-    xftransform& operator=( const xftransform& ); //!< Assignment operator
     //@}
 };
 

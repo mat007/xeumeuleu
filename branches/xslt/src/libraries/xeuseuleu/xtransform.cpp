@@ -40,10 +40,10 @@ using namespace xsl;
 // Name: xtransform constructor
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
-xtransform::xtransform( const std::string& stylesheet, output& output )
-    : level_     ( 0 )
+xtransform::xtransform( output& output, const std::string& stylesheet )
+    : output_    ( output )
     , stylesheet_( stylesheet )
-    , output_    ( output )
+    , level_     ( 0 )
 {
     // NOTHING
 }

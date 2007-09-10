@@ -33,8 +33,8 @@
 #ifndef _xeuseuleu_xstringtransform_h_
 #define _xeuseuleu_xstringtransform_h_
 
-#include "xtransform.h"
 #include "base_member.h"
+#include "xtransform.h"
 
 namespace xsl
 {
@@ -50,7 +50,7 @@ namespace xsl
 */
 // Created: SLI 2007-09-10
 // =============================================================================
-class xstringtransform : private base_member< string_output > , public xtransform
+class xstringtransform : private base_member< string_output >, public xtransform
 {
 public:
     //! @name Constructors/Destructor
@@ -61,14 +61,7 @@ public:
 
     //! @name Operations
     //@{
-    std::string str() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    xstringtransform( const xstringtransform& );            //!< Copy constructor
-    xstringtransform& operator=( const xstringtransform& ); //!< Assignment operator
+    const std::string str() const;
     //@}
 };
 

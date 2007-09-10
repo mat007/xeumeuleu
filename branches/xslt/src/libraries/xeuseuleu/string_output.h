@@ -37,7 +37,7 @@
 #include "output.h"
 #include "base_member.h"
 #include <string>
-#include <sstream>
+#include <iosfwd>
 
 namespace xsl
 {
@@ -58,14 +58,7 @@ public:
 
     //! @name Operations
     //@{
-    std::string str() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    string_output( const string_output& );            //!< Copy constructor
-    string_output& operator=( const string_output& ); //!< Assignment operator
+    const std::string str() const;
     //@}
 };
 

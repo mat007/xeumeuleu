@@ -35,7 +35,7 @@
 
 #include <memory>
 #include <string>
-#include <sstream>
+#include <iosfwd>
 #include <xalanc/XalanTransformer/XalanTransformer.hpp>
 
 namespace xsl
