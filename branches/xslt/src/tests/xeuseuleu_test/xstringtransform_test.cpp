@@ -30,10 +30,43 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_xsl_h_
-#define _xeuseuleu_xsl_h_
+#include "xeuseuleu_test_pch.h"
+#include "xeuseuleu/xsl.h"
 
-#include "xftransform.h"
-#include "xstringtransform.h"
+using namespace xsl;
+using namespace mockpp;
 
-#endif // _xeuseuleu_xsl_h_
+// -----------------------------------------------------------------------------
+// Name: tranformation_is_applied_at_end_root_level
+// Created: SLI 2007-09-07
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( tranformation_is_applied_at_end_root_level )
+{
+    const std::string stylesheet = BOOST_RESOLVE( "stylesheet.xsl" );
+    xsl::xstringtransform transformer( stylesheet );
+    transformer << xml::start( "root" )
+                    << xml::start( "element" )
+                    << xml::end()
+                    << xml::start( "element" )
+                    << xml::end()
+                << xml::end();
+    xml::xistringstream( transformer.str(), xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: tranformation_from_a_xistream_is_valid
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( tranformation_from_a_xistream_is_valid )
+{
+    const std::string stylesheet = BOOST_RESOLVE( "stylesheet.xsl" );
+    xsl::xstringtransform transformer( stylesheet );
+    xml::xistringstream xis(
+        "<root>"
+            "<element/>"
+            "<element/>"
+        "</root>"
+    );
+    transformer << xis;
+    xml::xistringstream( transformer.str(), xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) );
+}

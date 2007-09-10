@@ -30,10 +30,57 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_xsl_h_
-#define _xeuseuleu_xsl_h_
+#ifndef _xeuseuleu_output_h_
+#define _xeuseuleu_output_h_
 
-#include "xftransform.h"
-#include "xstringtransform.h"
+#include <memory>
+#include <string>
+#include <sstream>
+#include <xalanc/XalanTransformer/XalanTransformer.hpp>
 
-#endif // _xeuseuleu_xsl_h_
+XALAN_USING_XALAN( XSLTResultTarget )
+
+namespace xsl
+{
+// =============================================================================
+/** @class  output
+    @brief  output
+*/
+// Created: SLI 2007-09-10
+// =============================================================================
+class output
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    virtual ~output();
+    //@}
+
+    //! @name Operations
+    //@{
+    void transform( std::istream& is, const std::string& stylesheet );
+    //@}
+
+protected:
+    //! @name Constructors/Destructor
+    //@{
+    explicit output( std::auto_ptr< XSLTResultTarget > pTarget );
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    output( const output& );            //!< Copy constructor
+    output& operator=( const output& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::auto_ptr< XSLTResultTarget > pTarget_;
+    //@}
+};
+
+}
+
+#endif // _xeuseuleu_output_h_

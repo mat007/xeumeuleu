@@ -147,6 +147,9 @@
 			<File
 				RelativePath="..\..\src\tests\xeuseuleu_test\xftransform_test.cpp">
 			</File>
+			<File
+				RelativePath="..\..\src\tests\xeuseuleu_test\xstringtransform_test.cpp">
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

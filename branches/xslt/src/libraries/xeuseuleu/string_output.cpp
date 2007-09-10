@@ -30,10 +30,37 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_xsl_h_
-#define _xeuseuleu_xsl_h_
+#include "string_output.h"
+#include <xalanc/XalanTransformer/XalanTransformer.hpp>
 
-#include "xftransform.h"
-#include "xstringtransform.h"
+using namespace xsl;
+XALAN_USING_XALAN( XSLTResultTarget )
 
-#endif // _xeuseuleu_xsl_h_
+// -----------------------------------------------------------------------------
+// Name: string_output constructor
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+string_output::string_output()
+    : base_member< std::ostringstream >( std::auto_ptr< std::ostringstream >( new std::ostringstream() ) )
+    , output( std::auto_ptr< XSLTResultTarget >( new XSLTResultTarget( *pOutput_ ) ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: string_output destructor
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+string_output::~string_output()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: string_output::str
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+std::string string_output::str() const
+{
+    return pOutput_->str();
+}

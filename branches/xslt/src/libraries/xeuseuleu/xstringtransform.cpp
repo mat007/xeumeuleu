@@ -30,10 +30,36 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_xsl_h_
-#define _xeuseuleu_xsl_h_
-
-#include "xftransform.h"
 #include "xstringtransform.h"
+#include "string_output.h"
 
-#endif // _xeuseuleu_xsl_h_
+using namespace xsl;
+
+// -----------------------------------------------------------------------------
+// Name: xstringtransform constructor
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+xstringtransform::xstringtransform( const std::string& stylesheet )
+    : base_member< string_output >( std::auto_ptr< string_output >( new string_output() ) )
+    , xtransform( stylesheet, *pOutput_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: xstringtransform destructor
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+xstringtransform::~xstringtransform()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: xstringtransform::str
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+std::string xstringtransform::str() const
+{
+    return pOutput_->str();
+}

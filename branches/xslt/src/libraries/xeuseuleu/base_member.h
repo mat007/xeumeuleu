@@ -30,10 +30,44 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_xsl_h_
-#define _xeuseuleu_xsl_h_
+#ifndef _xeuseuleu_base_member_h_
+#define _xeuseuleu_base_member_h_
 
-#include "xftransform.h"
-#include "xstringtransform.h"
+#include <memory>
 
-#endif // _xeuseuleu_xsl_h_
+namespace xsl
+{
+// =============================================================================
+/** @class  base_member
+    @brief  base_member
+*/
+// Created: SLI 2007-09-10
+// =============================================================================
+template< typename T >
+class base_member
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit base_member( std::auto_ptr< T > pOutput )
+        : pOutput_( pOutput )
+    {}
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    base_member( const base_member& );            //!< Copy constructor
+    base_member& operator=( const base_member& ); //!< Assignment operator
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    const std::auto_ptr< T > pOutput_;
+    //@}
+};
+
+}
+
+#endif // _xeuseuleu_base_member_h_

@@ -30,10 +30,38 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_xsl_h_
-#define _xeuseuleu_xsl_h_
+#ifndef _xeuseuleu_fileoutput_h_
+#define _xeuseuleu_fileoutput_h_
 
-#include "xftransform.h"
-#include "xstringtransform.h"
+#include "transform.h"
+#include "output.h"
+#include <string>
 
-#endif // _xeuseuleu_xsl_h_
+namespace xsl
+{
+// =============================================================================
+/** @class  file_output
+    @brief  file_output
+*/
+// Created: SLI 2007-09-10
+// =============================================================================
+class file_output : private transform, public output
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit file_output( const std::string& filename );
+    virtual ~file_output();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    file_output( const file_output& );            //!< Copy constructor
+    file_output& operator=( const file_output& ); //!< Assignment operator
+    //@}
+};
+
+}
+
+#endif // _xeuseuleu_fileoutput_h_

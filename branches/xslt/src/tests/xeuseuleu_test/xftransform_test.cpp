@@ -37,10 +37,10 @@ using namespace xsl;
 using namespace mockpp;
 
 // -----------------------------------------------------------------------------
-// Name: tranformation_is_applied_at_end_root_level
+// Name: tranformation_creates_a_file
 // Created: SLI 2007-09-07
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( tranformation_is_applied_at_end_root_level )
+BOOST_AUTO_TEST_CASE( tranformation_creates_a_file )
 {
     const std::string stylesheet = BOOST_RESOLVE( "stylesheet.xsl" );
     const std::string output = "output.xml";
@@ -52,25 +52,5 @@ BOOST_AUTO_TEST_CASE( tranformation_is_applied_at_end_root_level )
                     << xml::end()
                 << xml::end();
     xml::xifstream( output, xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) );
-    std::remove( output.c_str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: tranformation_from_a_xistream_is_valid
-// Created: SLI 2007-09-10
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( tranformation_from_a_xistream_is_valid )
-{
-    const std::string stylesheet = BOOST_RESOLVE( "stylesheet.xsl" );
-    const std::string output = "output.xml";
-    xsl::xftransform transformer( stylesheet, output );
-    xml::xistringstream xis(
-        "<root>"
-            "<element/>"
-            "<element/>"
-        "</root>"
-    );
-    transformer << xis;
-    xml::xifstream( output.c_str(), xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) );
     std::remove( output.c_str() );
 }

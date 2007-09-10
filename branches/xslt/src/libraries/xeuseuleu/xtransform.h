@@ -30,43 +30,76 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_xftransform_h_
-#define _xeuseuleu_xftransform_h_
+#ifndef _xeuseuleu_xtransform_h_
+#define _xeuseuleu_xtransform_h_
 
-#include "xtransform.h"
-#include "base_member.h"
+#include "xeumeuleu/xml.h"
+#include <string>
 
 namespace xsl
 {
-    class file_output;
+    class output;
 
 // =============================================================================
-/** @class  xftransform
-    @brief  Xsl file transformation
-    @par    Using example
-    @code
-    xsl::xftransform xft( "transform.xsl", "output.file" );
-    @endcode
+/** @class  xtransform
+    @brief  xtransform
 */
-// Created: SLI 2007-09-07
+// Created: SLI 2007-09-10
 // =============================================================================
-class xftransform : private base_member< file_output >, public xtransform
+class xtransform
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             xftransform( const std::string& stylesheet, const std::string& filename );
-    virtual ~xftransform();
+    virtual ~xtransform();
+    //@}
+
+    //! @name Operations
+    //@{
+    xtransform& operator<<( const xml::start& start );
+    xtransform& operator<<( const xml::end& end );
+    template< typename T > xtransform& operator<<( const T& value );
+    //@}
+
+protected:
+    //! @name Constructors/Destructor
+    //@{
+    explicit xtransform( const std::string& stylesheet, output& output );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    xftransform( const xftransform& );            //!< Copy constructor
-    xftransform& operator=( const xftransform& ); //!< Assignment operator
+    xtransform( const xtransform& );            //!< Copy constructor
+    xtransform& operator=( const xtransform& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void transform() const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    unsigned int level_;
+    const std::string stylesheet_;
+    xml::xostringstream stream_;
+    output& output_;
     //@}
 };
 
+// -----------------------------------------------------------------------------
+// Name: xtransform::operator<<
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+template< typename T > xtransform& xtransform::operator<<( const T& value )
+{
+    stream_ << value;
+    transform();
+    return *this;
 }
 
-#endif // _xeuseuleu_xftransform_h_
+}
+
+#endif // _xeuseuleu_xtransform_h_

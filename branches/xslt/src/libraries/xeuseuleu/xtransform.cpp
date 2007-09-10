@@ -30,27 +30,65 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#include "xftransform.h"
-#include "file_output.h"
+#include "xtransform.h"
+#include "output.h"
+#include <sstream>
 
 using namespace xsl;
 
 // -----------------------------------------------------------------------------
-// Name: xftransform constructor
-// Created: SLI 2007-09-07
+// Name: xtransform constructor
+// Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
-xftransform::xftransform( const std::string& stylesheet, const std::string& filename )
-    : base_member< file_output >( std::auto_ptr< file_output >( new file_output( filename ) ) )
-    , xtransform( stylesheet, *pOutput_ )
+xtransform::xtransform( const std::string& stylesheet, output& output )
+    : level_     ( 0 )
+    , stylesheet_( stylesheet )
+    , output_    ( output )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: xftransform destructor
-// Created: SLI 2007-09-07
+// Name: xtransform destructor
+// Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
-xftransform::~xftransform()
+xtransform::~xtransform()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: xtransform::operator<<
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+xtransform& xtransform::operator<<( const xml::start& start )
+{
+    stream_ << start;
+    ++level_;
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: xtransform::operator<<
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+xtransform& xtransform::operator<<( const xml::end& end )
+{
+    stream_ << end;
+    --level_;
+    transform();
+    return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: xtransform::transform
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+void xtransform::transform() const
+{
+    if( level_ == 0 )
+    {
+        std::istringstream is( stream_.str() );
+        output_.transform( is, stylesheet_ );
+    }
 }

@@ -30,10 +30,48 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_xsl_h_
-#define _xeuseuleu_xsl_h_
+#ifndef _xeuseuleu_xstringtransform_h_
+#define _xeuseuleu_xstringtransform_h_
 
-#include "xftransform.h"
-#include "xstringtransform.h"
+#include "xtransform.h"
+#include "base_member.h"
 
-#endif // _xeuseuleu_xsl_h_
+namespace xsl
+{
+    class string_output;
+
+// =============================================================================
+/** @class  xstringtransform
+    @brief  xml string transformation
+    @par    Using example
+    @code
+    xsl::xstringtransform xst( "transform.xsl" );
+    @endcode
+*/
+// Created: SLI 2007-09-10
+// =============================================================================
+class xstringtransform : private base_member< string_output > , public xtransform
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit xstringtransform( const std::string& stylesheet );
+    virtual ~xstringtransform();
+    //@}
+
+    //! @name Operations
+    //@{
+    std::string str() const;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    xstringtransform( const xstringtransform& );            //!< Copy constructor
+    xstringtransform& operator=( const xstringtransform& ); //!< Assignment operator
+    //@}
+};
+
+}
+
+#endif // _xeuseuleu_xstringtransform_h_

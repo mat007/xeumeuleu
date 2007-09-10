@@ -30,10 +30,42 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_xsl_h_
-#define _xeuseuleu_xsl_h_
+#include "output.h"
 
-#include "xftransform.h"
-#include "xstringtransform.h"
+using namespace xsl;
 
-#endif // _xeuseuleu_xsl_h_
+XALAN_USING_XALAN( XalanTransformer )
+XALAN_USING_XALAN( XSLTInputSource )
+XALAN_USING_XALAN( XalanDOMString )
+
+// -----------------------------------------------------------------------------
+// Name: output constructor
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+output::output( std::auto_ptr< XSLTResultTarget > pTarget )
+    : pTarget_( pTarget )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: output destructor
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+output::~output()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: output::transform
+// Created: SLI 2007-09-10
+// -----------------------------------------------------------------------------
+void output::transform( std::istream& is, const std::string& stylesheet )
+{
+    XSLTInputSource in( &is );
+    XSLTInputSource xsl( stylesheet.c_str() );
+    XalanTransformer transformer;
+    if( transformer.transform( in, xsl, *pTarget_ ) )
+        throw std::runtime_error( transformer.getLastError() );
+}
