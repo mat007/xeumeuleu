@@ -70,7 +70,7 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    explicit xtransform( output& output, const std::string& stylesheet );
+    xtransform( output& output, const std::string& stylesheet );
     //@}
 
 private:
