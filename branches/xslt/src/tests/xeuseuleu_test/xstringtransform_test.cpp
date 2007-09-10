@@ -36,6 +36,15 @@
 using namespace mockpp;
 
 // -----------------------------------------------------------------------------
+// Name: non_existing_style_sheet_file_throws
+// Created: MAT 2007-09-10
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( unexisting_style_sheet_file_throws )
+{
+    BOOST_CHECK_THROW( xsl::xstringtransform( "non_existing.xsl" ), std::exception );
+}
+
+// -----------------------------------------------------------------------------
 // Name: tranformation_is_applied_at_end_root_level
 // Created: SLI 2007-09-07
 // -----------------------------------------------------------------------------

@@ -33,6 +33,7 @@
 #include "xtransform.h"
 #include "output.h"
 #include <sstream>
+#include <fstream>
 
 using namespace xsl;
 
@@ -45,7 +46,9 @@ xtransform::xtransform( output& output, const std::string& stylesheet )
     , stylesheet_( stylesheet )
     , level_     ( 0 )
 {
-    // NOTHING
+    std::ifstream file( stylesheet.c_str() );
+    if( ! file.is_open() )
+        throw std::runtime_error( "Unable to open style sheet '" + stylesheet + "'" );
 }
 
 // -----------------------------------------------------------------------------
