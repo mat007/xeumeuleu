@@ -55,16 +55,17 @@ BOOST_AUTO_TEST_CASE( tranformation_is_applied_at_end_root_level )
            << xml::start( "element" )
            << xml::end()
            << xml::start( "element" )
-           << xml::end()
-       << xml::end();
+           << xml::end();
+    BOOST_CHECK( xf.str().empty() );
+    xf << xml::end();
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><new-root><transformed/><transformed/></new-root>", xf.str() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: tranformation_from_a_xistream_is_valid
+// Name: tranformation_from_an_xistream_is_valid
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( tranformation_from_a_xistream_is_valid )
+BOOST_AUTO_TEST_CASE( tranformation_from_an_xistream_is_valid )
 {
     xsl::xstringtransform xf( BOOST_RESOLVE( "stylesheet.xsl" ) );
     xml::xistringstream xis(
