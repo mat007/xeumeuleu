@@ -60,7 +60,7 @@ string_output::~string_output()
 // Name: string_output::str
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-std::string string_output::str() const
+const std::string string_output::str() const
 {
     return data_;
 }
