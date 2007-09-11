@@ -127,6 +127,9 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd">
 			<File
+				RelativePath="..\..\src\tests\xeuseuleu_test\parameter_test.cpp">
+			</File>
+			<File
 				RelativePath="..\..\src\tests\xeuseuleu_test\xeuseuleu_test_pch.cpp">
 				<FileConfiguration
 					Name="debug|Win32">

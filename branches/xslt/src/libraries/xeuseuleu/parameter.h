@@ -30,65 +30,52 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_output_h_
-#define _xeuseuleu_output_h_
+#ifndef _xeuseuleu_parameter_h_
+#define _xeuseuleu_parameter_h_
 
-#include <memory>
-#include <string>
-#include <vector>
-#include <iosfwd>
-#include <xalanc/XalanTransformer/XalanTransformer.hpp>
+#include "xeumeuleu/xml.h"
 
 namespace xsl
 {
+    class xtransform;
+
 // =============================================================================
-/** @class  output
-    @brief  output
+/** @class  parameter
+    @brief  parameter
 */
-// Created: SLI 2007-09-10
+// Created: SLI 2007-09-11
 // =============================================================================
-class output
+class parameter
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    virtual ~output();
+             parameter( const std::string& key, const std::string& expression );
+    virtual ~parameter();
     //@}
 
     //! @name Operations
     //@{
-    void transform( std::istream& is, const std::string& stylesheet );
-    void AddParameter( const std::string& key, const std::string& expression );
-    //@}
-
-protected:
-    //! @name Constructors/Destructor
-    //@{
-    explicit output( std::auto_ptr< XALAN_CPP_NAMESPACE::XSLTResultTarget > pTarget );
+    xtransform& operator()( xtransform& lhs ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    output( const output& );            //!< Copy constructor
-    output& operator=( const output& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< std::pair< std::string, std::string > > T_Parameters;
-    typedef T_Parameters::const_iterator                       CIT_Parameters;
+    parameter( const parameter& );            //!< Copy constructor
+    parameter& operator=( const parameter& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< XALAN_CPP_NAMESPACE::XSLTResultTarget > pTarget_;
-    T_Parameters parameters_;
+    const std::string key_;
+    const std::string expression_;
     //@}
 };
 
+xtransform& operator<<( xtransform& lhs, const parameter& manipulator );
+
 }
 
-#endif // _xeuseuleu_output_h_
+#endif // _xeuseuleu_parameter_h_

@@ -95,3 +95,12 @@ void xtransform::transform() const
         output_.transform( is, stylesheet_ );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: xtransform::AddParameter
+// Created: SLI 2007-09-11
+// -----------------------------------------------------------------------------
+void xtransform::AddParameter( const std::string& key, const std::string& expression )
+{
+    output_.AddParameter( key, expression );
+}

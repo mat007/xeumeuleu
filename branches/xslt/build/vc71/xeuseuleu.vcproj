@@ -126,6 +126,12 @@
 				RelativePath="..\..\src\libraries\xeuseuleu\output.h">
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\parameter.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\parameter.h">
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\string_output.cpp">
 			</File>
 			<File

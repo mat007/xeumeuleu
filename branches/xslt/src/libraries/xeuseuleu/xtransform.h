@@ -67,6 +67,11 @@ public:
     }
     //@}
 
+    //! @name Operations
+    //@{
+    void AddParameter( const std::string& key, const std::string& expression );
+    //@}
+
 protected:
     //! @name Constructors/Destructor
     //@{

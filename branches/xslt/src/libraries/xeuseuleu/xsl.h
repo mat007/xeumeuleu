@@ -35,5 +35,6 @@
 
 #include "xftransform.h"
 #include "xstringtransform.h"
+#include "parameter.h"
 
 #endif // _xeuseuleu_xsl_h_
