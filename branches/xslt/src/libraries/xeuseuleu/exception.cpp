@@ -30,51 +30,25 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#include "output.h"
 #include "exception.h"
 
 using namespace xsl;
-using namespace XALAN_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
-// Name: output constructor
-// Created: SLI 2007-09-10
+// Name: exception constructor
+// Created: SLI 2007-09-12
 // -----------------------------------------------------------------------------
-output::output( std::auto_ptr< XSLTResultTarget > pTarget )
-    : pTarget_( pTarget )
+xsl::exception::exception( const std::string& message )
+    : std::runtime_error( message )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: output destructor
-// Created: SLI 2007-09-10
+// Name: exception destructor
+// Created: SLI 2007-09-12
 // -----------------------------------------------------------------------------
-output::~output()
+xsl::exception::~exception() throw ()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: output::transform
-// Created: SLI 2007-09-10
-// -----------------------------------------------------------------------------
-void output::transform( std::istream& is, const std::string& stylesheet )
-{
-    XSLTInputSource in( &is );
-    XSLTInputSource xsl( stylesheet.c_str() );
-    XalanTransformer transformer;
-    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
-        transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
-    if( transformer.transform( in, xsl, *pTarget_ ) )
-        throw exception( transformer.getLastError() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: output::AddParameter
-// Created: SLI 2007-09-11
-// -----------------------------------------------------------------------------
-void output::AddParameter( const std::string& key, const std::string& expression )
-{
-    parameters_.push_back( std::make_pair( key, expression ) );
 }

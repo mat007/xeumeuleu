@@ -114,6 +114,12 @@
 				RelativePath="..\..\src\libraries\xeuseuleu\base_member.h">
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\exception.cpp">
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\exception.h">
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\file_output.cpp">
 			</File>
 			<File
