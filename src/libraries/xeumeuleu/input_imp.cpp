@@ -210,14 +210,14 @@ float input_imp::toFloat( const XMLCh* from ) const
         throw xml::exception( "Value of " + context() + " overflowed (probably a double instead of a float)" );
     switch( value.getType() )
     {
-    case XMLDouble::NegINF :
-        return - std::numeric_limits< float >::infinity();
-    case XMLDouble::PosINF :
-        return std::numeric_limits< float >::infinity();
-    case XMLDouble::NaN :
-        return std::numeric_limits< float >::quiet_NaN();
-    default:
-        return static_cast< float >( value.getValue() );
+        case XMLDouble::NegINF :
+            return - std::numeric_limits< float >::infinity();
+        case XMLDouble::PosINF :
+            return std::numeric_limits< float >::infinity();
+        case XMLDouble::NaN :
+            return std::numeric_limits< float >::quiet_NaN();
+        default:
+            return static_cast< float >( value.getValue() );
     }
 }
 
@@ -232,14 +232,14 @@ double input_imp::toDouble( const XMLCh* from ) const
         throw xml::exception( "Value of " + context() + " overflowed (probably more than a double)" );
     switch( value.getType() )
     {
-    case XMLDouble::NegINF :
-        return - std::numeric_limits< double >::infinity();
-    case XMLDouble::PosINF :
-        return std::numeric_limits< double >::infinity();
-    case XMLDouble::NaN :
-        return std::numeric_limits< double >::quiet_NaN();
-    default:
-        return value.getValue();
+        case XMLDouble::NegINF :
+            return - std::numeric_limits< double >::infinity();
+        case XMLDouble::PosINF :
+            return std::numeric_limits< double >::infinity();
+        case XMLDouble::NaN :
+            return std::numeric_limits< double >::quiet_NaN();
+        default:
+            return value.getValue();
     }
 }
 
@@ -275,6 +275,19 @@ long input_imp::toLong( const XMLCh* from ) const
     const long result = static_cast< long >( value );
     if( static_cast< double >( result ) != value )
         throw xml::exception( "Value of " + context() + " is not a long integer" );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::toLongLong
+// Created: MCO 2007-09-18
+// -----------------------------------------------------------------------------
+long long input_imp::toLongLong( const XMLCh* from ) const
+{
+    const double value = XMLDouble( from ).getValue();
+    const long long result = static_cast< long long >( value );
+    if( static_cast< double >( result ) != value )
+        throw xml::exception( "Value of " + context() + " is not a long long integer" );
     return result;
 }
 
@@ -327,7 +340,20 @@ unsigned long input_imp::toUnsignedLong( const XMLCh* from ) const
     const double value = XMLDouble( from ).getValue();
     const unsigned long result = static_cast< unsigned long >( value );
     if( static_cast< double >( result ) != value )
-        throw xml::exception( "Value of " + context() + " is not an unsigned short integer" );
+        throw xml::exception( "Value of " + context() + " is not an unsigned long integer" );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::toUnsignedLongLong
+// Created: MCO 2007-09-18
+// -----------------------------------------------------------------------------
+unsigned long long input_imp::toUnsignedLongLong( const XMLCh* from ) const
+{
+    const double value = XMLDouble( from ).getValue();
+    const unsigned long long result = static_cast< unsigned long long >( value );
+    if( static_cast< double >( result ) != value )
+        throw xml::exception( "Value of " + context() + " is not an unsigned long long integer" );
     return result;
 }
 
@@ -387,6 +413,15 @@ void input_imp::read( long& value ) const
 
 // -----------------------------------------------------------------------------
 // Name: input_imp::read
+// Created: MCO 2007-09-18
+// -----------------------------------------------------------------------------
+void input_imp::read( long long& value ) const
+{
+    value = toLongLong( readValue() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::read
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
 void input_imp::read( bool& value ) const
@@ -417,6 +452,15 @@ void input_imp::read( unsigned int& value ) const
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
 void input_imp::read( unsigned long& value ) const
+{
+    value = toUnsignedLong( readValue() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::read
+// Created: MAT 2007-09-18
+// -----------------------------------------------------------------------------
+void input_imp::read( unsigned long long& value ) const
 {
     value = toUnsignedLong( readValue() );
 }
@@ -489,6 +533,15 @@ void input_imp::attribute( const std::string& name, long& value ) const
 
 // -----------------------------------------------------------------------------
 // Name: input_imp::attribute
+// Created: MCO 2007-09-18
+// -----------------------------------------------------------------------------
+void input_imp::attribute( const std::string& name, long long& value ) const
+{
+    value = toLongLong( readAttribute( name ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::attribute
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, bool& value ) const
@@ -521,6 +574,15 @@ void input_imp::attribute( const std::string& name, unsigned int& value ) const
 void input_imp::attribute( const std::string& name, unsigned long& value ) const
 {
     value = toUnsignedLong( readAttribute( name ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::attribute
+// Created: MAT 2007-09-18
+// -----------------------------------------------------------------------------
+void input_imp::attribute( const std::string& name, unsigned long long& value ) const
+{
+    value = toUnsignedLongLong( readAttribute( name ) );
 }
 
 // -----------------------------------------------------------------------------

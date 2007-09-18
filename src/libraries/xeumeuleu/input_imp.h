@@ -66,10 +66,12 @@ public:
     virtual void read( short& value ) const;
     virtual void read( int& value ) const;
     virtual void read( long& value ) const;
+    virtual void read( long long& value ) const;
     virtual void read( bool& value ) const;
     virtual void read( unsigned short& value ) const;
     virtual void read( unsigned int& value ) const;
     virtual void read( unsigned long& value ) const;
+    virtual void read( unsigned long long& value ) const;
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const;
 
@@ -88,10 +90,12 @@ public:
     virtual void attribute( const std::string& name, short& value ) const;
     virtual void attribute( const std::string& name, int& value ) const;
     virtual void attribute( const std::string& name, long& value ) const;
+    virtual void attribute( const std::string& name, long long& value ) const;
     virtual void attribute( const std::string& name, bool& value ) const;
     virtual void attribute( const std::string& name, unsigned short& value ) const;
     virtual void attribute( const std::string& name, unsigned int& value ) const;
     virtual void attribute( const std::string& name, unsigned long& value ) const;
+    virtual void attribute( const std::string& name, unsigned long long& value ) const;
 
     virtual void nodes( const visitor& v ) const;
     virtual void attributes( const visitor& v ) const;
@@ -117,16 +121,18 @@ private:
     const XMLCh* readValue() const;
     const XMLCh* readAttribute( const std::string& name ) const;
 
-    float  toFloat  ( const XMLCh* from ) const;
-    double toDouble ( const XMLCh* from ) const;
-    short  toShort  ( const XMLCh* from ) const;
-    int    toInteger( const XMLCh* from ) const;
-    long   toLong   ( const XMLCh* from ) const;
-    bool   toBoolean( const XMLCh* from ) const;
+    float     toFloat   ( const XMLCh* from ) const;
+    double    toDouble  ( const XMLCh* from ) const;
+    short     toShort   ( const XMLCh* from ) const;
+    int       toInteger ( const XMLCh* from ) const;
+    long      toLong    ( const XMLCh* from ) const;
+    long long toLongLong( const XMLCh* from ) const;
+    bool      toBoolean ( const XMLCh* from ) const;
 
-    unsigned short toUnsignedShort  ( const XMLCh* from ) const;
-    unsigned int   toUnsignedInteger( const XMLCh* from ) const;
-    unsigned long  toUnsignedLong   ( const XMLCh* from ) const;
+    unsigned short     toUnsignedShort   ( const XMLCh* from ) const;
+    unsigned int       toUnsignedInteger ( const XMLCh* from ) const;
+    unsigned long      toUnsignedLong    ( const XMLCh* from ) const;
+    unsigned long long toUnsignedLongLong( const XMLCh* from ) const;
     //@}
 
 private:

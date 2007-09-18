@@ -160,6 +160,18 @@ xostream& xostream::operator<<( long value )
 
 // -----------------------------------------------------------------------------
 // Name: xostream::operator<<
+// Created: MAT 2007-09-18
+// -----------------------------------------------------------------------------
+xostream& xostream::operator<<( long long value )
+{
+    TRY
+        output_.write( value );
+        return *this;
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xostream::operator<<
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
 xostream& xostream::operator<<( bool value )
@@ -187,6 +199,18 @@ xostream& xostream::operator<<( unsigned int value )
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
 xostream& xostream::operator<<( unsigned long value )
+{
+    TRY
+        output_.write( value );
+        return *this;
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xostream::operator<<
+// Created: MAT 2007-09-18
+// -----------------------------------------------------------------------------
+xostream& xostream::operator<<( unsigned long long value )
 {
     TRY
         output_.write( value );
@@ -295,6 +319,17 @@ void xostream::attribute( const std::string& name, long value )
 
 // -----------------------------------------------------------------------------
 // Name: xostream::attribute
+// Created: MAT 2007-09-18
+// -----------------------------------------------------------------------------
+void xostream::attribute( const std::string& name, long long value )
+{
+    TRY
+        output_.attribute( name, value );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xostream::attribute
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
 void xostream::attribute( const std::string& name, bool value )
@@ -320,6 +355,17 @@ void xostream::attribute( const std::string& name, unsigned int value )
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
 void xostream::attribute( const std::string& name, unsigned long value )
+{
+    TRY
+        output_.attribute( name, value );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xostream::attribute
+// Created: MAT 2007-09-18
+// -----------------------------------------------------------------------------
+void xostream::attribute( const std::string& name, unsigned long long value )
 {
     TRY
         output_.attribute( name, value );
