@@ -147,6 +147,15 @@ void optional_input::read( long& value ) const
 
 // -----------------------------------------------------------------------------
 // Name: optional_input::read
+// Created: MAT 2007-09-18
+// -----------------------------------------------------------------------------
+void optional_input::read( long long& value ) const
+{
+    readContent( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: optional_input::read
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
 void optional_input::read( bool& value ) const
@@ -177,6 +186,15 @@ void optional_input::read( unsigned int& value ) const
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
 void optional_input::read( unsigned long& value ) const
+{
+    readContent( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: optional_input::read
+// Created: MAT 2007-09-18
+// -----------------------------------------------------------------------------
+void optional_input::read( unsigned long long& value ) const
 {
     readContent( value );
 }
@@ -294,6 +312,15 @@ void optional_input::attribute( const std::string& name, long& value ) const
 
 // -----------------------------------------------------------------------------
 // Name: optional_input::attribute
+// Created: MCO 2007-09-18
+// -----------------------------------------------------------------------------
+void optional_input::attribute( const std::string& name, long long& value ) const
+{
+    readAttribute( name, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: optional_input::attribute
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, bool& value ) const
@@ -324,6 +351,15 @@ void optional_input::attribute( const std::string& name, unsigned int& value ) c
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, unsigned long& value ) const
+{
+    readAttribute( name, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: optional_input::attribute
+// Created: MCO 2007-09-18
+// -----------------------------------------------------------------------------
+void optional_input::attribute( const std::string& name, unsigned long long& value ) const
 {
     readAttribute( name, value );
 }

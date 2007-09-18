@@ -75,10 +75,12 @@ public:
     void attribute( const std::string& name, short& value ) const;
     void attribute( const std::string& name, int& value ) const;
     void attribute( const std::string& name, long& value ) const;
+    void attribute( const std::string& name, long long& value ) const;
     void attribute( const std::string& name, bool& value ) const;
     void attribute( const std::string& name, unsigned short& value ) const;
     void attribute( const std::string& name, unsigned int& value ) const;
     void attribute( const std::string& name, unsigned long& value ) const;
+    void attribute( const std::string& name, unsigned long long& value ) const;
 
     void nodes( const visitor& v );
     void attributes( const visitor& v );
@@ -97,10 +99,12 @@ public:
     xistream& operator>>( short& value );
     xistream& operator>>( int& value );
     xistream& operator>>( long& value );
+    xistream& operator>>( long long& value );
     xistream& operator>>( bool& value );
     xistream& operator>>( unsigned short& value );
     xistream& operator>>( unsigned int& value );
     xistream& operator>>( unsigned long& value );
+    xistream& operator>>( unsigned long long& value );
 
     xistream& operator>>( xostream& xos );
     //@}

@@ -100,16 +100,14 @@ BOOST_AUTO_TEST_CASE( streaming_content_writes_text_content_as_it_is )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( streaming_content_writes_node_content )
 {
-//    check_numeric_limits< unsigned char >();
-//    check_numeric_limits< char >();
     check_numeric_limits< unsigned short >();
     check_numeric_limits< short >();
     check_numeric_limits< unsigned int >();
     check_numeric_limits< int >();
     check_numeric_limits< unsigned long >();
     check_numeric_limits< long >();
-//    check_numeric_limits< unsigned long long >();
-//    check_numeric_limits< long long >();
+    check_numeric_limits< unsigned long long >();
+    check_numeric_limits< long long >();
     check_numeric_limits< float >();
     check_numeric_limits< double >();
 }
@@ -166,9 +164,11 @@ BOOST_AUTO_TEST_CASE( streaming_content_reads_node_content )
     BOOST_CHECK_EQUAL( 32767, read< short >( "32767" ) );
     BOOST_CHECK_EQUAL( true, read< bool >( "true" ) );
     BOOST_CHECK_EQUAL( 5, read< long >( "5" ) );
+    BOOST_CHECK_EQUAL( -777, read< long long >( "-777" ) );
     BOOST_CHECK_EQUAL( 4294967295u, read< unsigned int >( "4294967295" ) );
     BOOST_CHECK_EQUAL( 65535u, read< unsigned short >( "65535" ) );
     BOOST_CHECK_EQUAL( 4294967295u, read< unsigned long >( "4294967295" ) );
+    BOOST_CHECK_EQUAL( 4294967295u, read< unsigned long long >( "4294967295" ) );
     BOOST_CHECK_EQUAL( std::numeric_limits< float >::infinity(), read< float >( "INF" ) );
     BOOST_CHECK_EQUAL( - std::numeric_limits< float >::infinity(), read< float >( "-INF" ) );
     {
