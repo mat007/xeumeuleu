@@ -14,6 +14,10 @@
     <target name="xeumeuleu" description="build library">
         <build-lib name="xeumeuleu"/>
     </target>
+    
+    <target name="xeuseuleu" description="build library">
+        <build-lib name="xeuseuleu"/>
+    </target>
 
     <!--
     ============================================================================
@@ -22,6 +26,12 @@
     -->
     <target name="xeumeuleu_test" depends="xeumeuleu" description="build and run tests">
         <build-test name="xeumeuleu" libs="xeumeuleu,xerces-c_2"/>
+    </target>
+
+    <target name="xeuseuleu_test" depends="xeuseuleu,xeumeuleu" description="build and run tests">
+        <build-test name="xeuseuleu" libs="xeuseuleu,xeumeuleu,,xerces-c_2,Xalan-C_1">
+            <compilerarg value="-g"/>
+        </build-test>
     </target>
 
     <!--
@@ -135,14 +145,15 @@
       main
     ============================================================================
     -->
-    <target name="test" depends="xeumeuleu_test" description="run all tests"/>
+    <target name="test" depends="xeumeuleu_test,xeuseuleu_test" description="run all tests"/>
 
-    <target name="build" depends="xeumeuleu" description="build all"/>
+    <target name="build" depends="xeumeuleu,xeuseuleu" description="build all"/>
 
     <target name="configure" description="initialize local project structure with dependencies">
         <update name="boost"/>
         <update name="mockpp"/>
         <update name="xerces-c"/>
+        <update name="xalan-c"/>
     </target>
 
     <target name="all" depends="configure,build,test,export,package,documentation" description="build, run tests, package distribution and create web site"/>

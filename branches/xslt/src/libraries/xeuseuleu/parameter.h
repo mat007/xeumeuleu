@@ -62,7 +62,6 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    parameter( const parameter& );            //!< Copy constructor
     parameter& operator=( const parameter& ); //!< Assignment operator
     //@}
 
