@@ -48,6 +48,21 @@ namespace
         return "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                "<element>" + value + "</element>\n";
     }
+    template< typename T > void check_numeric_limits()
+    {
+        {
+            const T value = std::numeric_limits< T >::max();
+            std::stringstream stream;
+            stream << value;
+            BOOST_CHECK_EQUAL( format( stream.str() ), write< T >( value ) );
+        }
+        {
+            const T value = std::numeric_limits< T >::min();
+            std::stringstream stream;
+            stream << value;
+            BOOST_CHECK_EQUAL( format( stream.str() ), write< T >( value ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -71,21 +86,40 @@ BOOST_AUTO_TEST_CASE( reading_empty_content_throws_proper_exception )
 }
 
 // -----------------------------------------------------------------------------
+// Name: streaming_content_writes_text_content_as_it_is
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( streaming_content_writes_text_content_as_it_is )
+{
+    BOOST_CHECK_EQUAL( format(" this is the content  "), write< char* >( " this is the content  " ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: streaming_content_writes_node_content
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( streaming_content_writes_node_content )
 {
-    BOOST_CHECK_EQUAL( format(" this is the content  "), write< char* >( " this is the content  " ) );
-    BOOST_CHECK_EQUAL( format( "1.23" ), write< float >( 1.23f ) );
-    BOOST_CHECK_EQUAL( format( "1.23" ), write< double >( 1.23 ) );
-    BOOST_CHECK_EQUAL( format( "1242" ), write< int >( 1242 ) );
-    BOOST_CHECK_EQUAL( format( "1242" ), write< short >( 1242 ) );
-    BOOST_CHECK_EQUAL( format( "false" ), write< bool >( false ) );
-    BOOST_CHECK_EQUAL( format( "1242" ), write< long >( 1242 ) );
-    BOOST_CHECK_EQUAL( format( "65535" ), write< unsigned short >( 65535u ) );
-    BOOST_CHECK_EQUAL( format( "1242" ), write< unsigned int >( 1242 ) );
-    BOOST_CHECK_EQUAL( format( "1242" ), write< unsigned long >( 1242 ) );
+//    check_numeric_limits< unsigned char >();
+//    check_numeric_limits< char >();
+    check_numeric_limits< unsigned short >();
+    check_numeric_limits< short >();
+    check_numeric_limits< unsigned int >();
+    check_numeric_limits< int >();
+    check_numeric_limits< unsigned long >();
+    check_numeric_limits< long >();
+//    check_numeric_limits< unsigned long long >();
+//    check_numeric_limits< long long >();
+    check_numeric_limits< float >();
+    check_numeric_limits< double >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: streaming_content_writes_node_special_value_content
+// Created: MCO 2007-09-18
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( streaming_content_writes_node_special_value_content )
+{
     BOOST_CHECK_EQUAL( format( "INF" ), write< float >( std::numeric_limits< float >::infinity() ) );
     BOOST_CHECK_EQUAL( format( "-INF" ), write< float >( - std::numeric_limits< float >::infinity() ) );
     BOOST_CHECK_EQUAL( format( "NaN" ), write< float >( std::numeric_limits< float >::quiet_NaN() ) );

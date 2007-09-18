@@ -72,7 +72,7 @@ input_imp::~input_imp()
 // Name: input_imp::context
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-std::string input_imp::context() const
+const std::string input_imp::context() const
 {
     return "node '" + trim( translate( pCurrent_->getNodeName() ) ) + "'";
 }

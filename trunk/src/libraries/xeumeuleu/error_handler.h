@@ -61,7 +61,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    std::string interpret( const XERCES_CPP_NAMESPACE::DOMError& error ) const;
+    const std::string interpret( const XERCES_CPP_NAMESPACE::DOMError& error ) const;
     //@}
 };
 
