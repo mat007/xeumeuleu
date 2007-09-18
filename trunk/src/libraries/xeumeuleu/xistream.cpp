@@ -150,6 +150,18 @@ xistream& xistream::operator>>( long& value )
 
 // -----------------------------------------------------------------------------
 // Name: xistream::operator>>
+// Created: MAT 2007-09-18
+// -----------------------------------------------------------------------------
+xistream& xistream::operator>>( long long& value )
+{
+    TRY
+        pInput_->read( value );
+        return *this;
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xistream::operator>>
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
 xistream& xistream::operator>>( short& value )
@@ -201,6 +213,18 @@ xistream& xistream::operator>>( unsigned short& value )
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
 xistream& xistream::operator>>( unsigned long& value )
+{
+    TRY
+        pInput_->read( value );
+        return *this;
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xistream::operator>>
+// Created: MAT 2007-09-18
+// -----------------------------------------------------------------------------
+xistream& xistream::operator>>( unsigned long long& value )
 {
     TRY
         pInput_->read( value );
@@ -286,6 +310,17 @@ void xistream::attribute( const std::string& name, long& value ) const
 
 // -----------------------------------------------------------------------------
 // Name: xistream::attribute
+// Created: MCO 2007-09-18
+// -----------------------------------------------------------------------------
+void xistream::attribute( const std::string& name, long long& value ) const
+{
+    TRY
+        pInput_->attribute( name, value );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xistream::attribute
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
 void xistream::attribute( const std::string& name, bool& value ) const
@@ -322,6 +357,17 @@ void xistream::attribute( const std::string& name, unsigned int& value ) const
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
 void xistream::attribute( const std::string& name, unsigned long& value ) const
+{
+    TRY
+        pInput_->attribute( name, value );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xistream::attribute
+// Created: MCO 2007-09-18
+// -----------------------------------------------------------------------------
+void xistream::attribute( const std::string& name, unsigned long long& value ) const
 {
     TRY
         pInput_->attribute( name, value );

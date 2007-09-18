@@ -2,6 +2,7 @@
  . fixed output indentation issues when serializing an xml::xistream directly into an xml::xostream
  . added xml::list with node names parameter with 3 parameters
  . added an operator to unserialize from an xml::xistream directly to an xml::xostream
+ . added support for long long and unsigned long long
 
 1.2.2
 . added xml::attributes similar to xml::list but for attributes
