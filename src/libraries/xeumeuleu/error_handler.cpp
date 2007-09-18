@@ -71,7 +71,7 @@ bool error_handler::handleError( const DOMError& error )
 // Name: error_handler::interpret
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-std::string error_handler::interpret( const DOMError& error ) const
+const std::string error_handler::interpret( const DOMError& error ) const
 {
     std::stringstream message;
     const DOMLocator* const pLocation = error.getLocation();
