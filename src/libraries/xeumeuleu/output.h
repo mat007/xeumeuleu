@@ -118,8 +118,8 @@ private:
     //! @name Member data
     //@{
     XERCES_CPP_NAMESPACE::DOMDocument& document_;
-    XERCES_CPP_NAMESPACE::DOMNode&     root_;
-    XERCES_CPP_NAMESPACE::DOMNode*     pCurrent_;
+    XERCES_CPP_NAMESPACE::DOMNode& root_;
+    XERCES_CPP_NAMESPACE::DOMNode* pCurrent_;
     //@}
 };
 
