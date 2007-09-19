@@ -33,9 +33,9 @@
 #ifndef _xeumeuleu_output_h_
 #define _xeumeuleu_output_h_
 
+#include "xerces.h"
 #include <sstream>
 #include <memory>
-#include <xercesc/dom/DOMDocument.hpp>
 
 namespace xml
 {

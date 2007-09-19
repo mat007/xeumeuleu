@@ -36,8 +36,7 @@
 #include "chained_exception.h"
 #include "beautifier.h"
 #include "xerces_wrapper.h"
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/util/OutOfMemoryException.hpp>
+#include "xerces.h"
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;

@@ -40,7 +40,7 @@ namespace xml
 {
 // =============================================================================
 /** @class  string_output
-    @brief  String output
+    @brief  String output implementation
 */
 // Created: MAT 2006-01-04
 // =============================================================================

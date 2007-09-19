@@ -33,8 +33,7 @@
 #include "parser.h"
 #include "error_handler.h"
 #include "exception.h"
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/framework/Wrapper4InputSource.hpp>
+#include "xerces.h"
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;

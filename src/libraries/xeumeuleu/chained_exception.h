@@ -34,7 +34,7 @@
 #define _xeumeuleu_chained_exception_h_
 
 #include "exception.h"
-#include <xercesc/dom/DOMException.hpp>
+#include "xerces.h"
 
 namespace xml
 {

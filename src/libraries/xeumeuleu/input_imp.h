@@ -34,9 +34,9 @@
 #define _xeumeuleu_input_imp_h_
 
 #include "input_base.h"
+#include "xerces.h"
 #include <string>
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
 
 namespace xml
 {

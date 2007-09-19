@@ -31,7 +31,7 @@
  */
 
 #include "file_output.h"
-#include <xercesc/framework/LocalFileFormatTarget.hpp>
+#include "xerces.h"
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;

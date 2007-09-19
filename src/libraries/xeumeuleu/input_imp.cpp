@@ -38,11 +38,7 @@
 #include "sub_xistream.h"
 #include "buffer_input.h"
 #include "output.h"
-#include <xercesc/util/XMLFloat.hpp>
-#include <xercesc/util/XMLDouble.hpp>
-#include <xercesc/util/XMLInteger.hpp>
-#include <xercesc/util/XMLChar.hpp>
-#include <xercesc/dom/DOMNamedNodeMap.hpp>
+#include "xerces.h"
 #include <limits>
 
 using namespace xml;

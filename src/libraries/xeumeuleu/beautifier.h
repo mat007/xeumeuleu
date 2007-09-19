@@ -33,8 +33,7 @@
 #ifndef _xeumeuleu_beautifier_h_
 #define _xeumeuleu_beautifier_h_
 
-#include <xercesc/framework/XMLFormatter.hpp>
-#include <xercesc/util/XMLUniDefs.hpp>
+#include "xerces.h"
 #include <string>
 
 namespace xml
