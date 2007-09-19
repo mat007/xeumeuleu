@@ -62,7 +62,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    std::ostringstream member_;
+    std::ostringstream os_;
     //@}
 };
 

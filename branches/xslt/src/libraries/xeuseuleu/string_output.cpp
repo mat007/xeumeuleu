@@ -40,7 +40,7 @@ using namespace XALAN_CPP_NAMESPACE;
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
 string_output::string_output()
-    : output( std::auto_ptr< XSLTResultTarget >( new XSLTResultTarget( member_ ) ) )
+    : output( std::auto_ptr< XSLTResultTarget >( new XSLTResultTarget( os_ ) ) )
 {
     // NOTHING
 }
@@ -60,5 +60,5 @@ string_output::~string_output()
 // -----------------------------------------------------------------------------
 const std::string string_output::str() const
 {
-    return member_.str();
+    return os_.str();
 }
