@@ -33,7 +33,7 @@
 #ifndef _xeuseuleu_parameter_h_
 #define _xeuseuleu_parameter_h_
 
-#include "xeumeuleu/xml.h"
+#include <string>
 
 namespace xsl
 {
@@ -41,7 +41,7 @@ namespace xsl
 
 // =============================================================================
 /** @class  parameter
-    @brief  parameter
+    @brief  Parameter manipulator
 */
 // Created: SLI 2007-09-11
 // =============================================================================
@@ -56,7 +56,7 @@ public:
 
     //! @name Operations
     //@{
-    xtransform& operator()( xtransform& lhs ) const;
+    xtransform& operator()( xtransform& transform ) const;
     //@}
 
 private:
@@ -73,7 +73,11 @@ private:
     //@}
 };
 
-xtransform& operator<<( xtransform& lhs, const parameter& manipulator );
+// -----------------------------------------------------------------------------
+// Name: operator<<
+// Created: SLI 2007-09-11
+// -----------------------------------------------------------------------------
+xtransform& operator<<( xtransform& transform, const parameter& manipulator );
 
 }
 

@@ -59,17 +59,17 @@ parameter::~parameter()
 // Name: parameter::operator()
 // Created: SLI 2007-09-11
 // -----------------------------------------------------------------------------
-xtransform& parameter::operator()( xtransform& lhs ) const
+xtransform& parameter::operator()( xtransform& transform ) const
 {
-    lhs.AddParameter( key_, expression_ );
-    return lhs;
+    transform.parameter( key_, expression_ );
+    return transform;
 }
 
 // -----------------------------------------------------------------------------
 // Name: parameter::operator<<
 // Created: SLI 2007-09-11
 // -----------------------------------------------------------------------------
-xtransform& xsl::operator<<( xtransform& lhs, const parameter& manipulator )
+xtransform& xsl::operator<<( xtransform& transform, const parameter& manipulator )
 {
-    return manipulator( lhs );
+    return manipulator( transform );
 }
