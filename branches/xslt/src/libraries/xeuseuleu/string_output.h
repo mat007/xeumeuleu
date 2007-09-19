@@ -43,7 +43,7 @@ namespace xsl
 {
 // =============================================================================
 /** @class  string_output
-    @brief  string_output
+    @brief  String output implementation
 */
 // Created: SLI 2007-09-10
 // =============================================================================
