@@ -251,12 +251,6 @@
 					RelativePath="..\..\src\libraries\xeumeuleu\beautifier.h">
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\document.cpp">
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\document.h">
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\error_handler.cpp">
 				</File>
 				<File
@@ -267,6 +261,12 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\trim.h">
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\xerces.cpp">
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\xerces.h">
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xerces_wrapper.h">
