@@ -42,7 +42,7 @@ namespace xsl
 
 // =============================================================================
 /** @class  xstringtransform
-    @brief  xml string transformation
+    @brief  Xsl string transformation
     @par    Using example
     @code
     xsl::xstringtransform xst( "transform.xsl" );
