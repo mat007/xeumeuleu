@@ -31,7 +31,6 @@
 */
 
 #include "file_output.h"
-#include <xalanc/XalanTransformer/XalanTransformer.hpp>
 
 using namespace xsl;
 using namespace XALAN_CPP_NAMESPACE;
