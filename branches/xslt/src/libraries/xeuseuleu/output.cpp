@@ -76,5 +76,5 @@ void output::transform( std::istream& is, const std::string& stylesheet )
 // -----------------------------------------------------------------------------
 void output::parameter( const std::string& key, const std::string& expression )
 {
-    parameters_.push_back( std::make_pair( key, expression ) );
+    parameters_.push_back( std::make_pair( key, "'" + expression + "'" ) );
 }

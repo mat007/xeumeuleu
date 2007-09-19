@@ -41,7 +41,7 @@ using namespace xsl;
 // -----------------------------------------------------------------------------
 parameter::parameter( const std::string& key, const std::string& expression )
     : key_       ( key )
-    , expression_( "'" + expression + "'" )
+    , expression_( expression )
 {
     // NOTHING
 }
