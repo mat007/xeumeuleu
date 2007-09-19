@@ -30,45 +30,26 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_string_output_member_h_
-#define _xeuseuleu_string_output_member_h_
+#include "xf_base_member.h"
+#include "file_output.h"
 
-#include <memory>
-#include "string_output.h"
+using namespace xsl;
 
-namespace xsl
-{
-// =============================================================================
-/** @class  base_member
-    @brief  Base member implementation
-*/
+// -----------------------------------------------------------------------------
+// Name: xf_base_member constructor
 // Created: SLI 2007-09-19
-// =============================================================================
-class string_output_member
+// -----------------------------------------------------------------------------
+xf_base_member::xf_base_member( const std::string& filename )
+    : pMember_( new file_output( filename ) )
 {
-public:
-    //! @name Constructors/Destructor
-    //@{
-             string_output_member()
-    {}
-    virtual ~string_output_member()
-    {}
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    string_output_member( const string_output_member& );            //!< Copy constructor
-    string_output_member& operator=( const string_output_member& ); //!< Assignment operator
-    //@}
-
-protected:
-    //! @name Member data
-    //@{
-    string_output member_;
-    //@}
-};
-
+    // NOTHING
 }
 
-#endif // _xeuseuleu_string_output_member_h_
+// -----------------------------------------------------------------------------
+// Name: xf_base_member destructor
+// Created: SLI 2007-09-19
+// -----------------------------------------------------------------------------
+xf_base_member::~xf_base_member()
+{
+    // NOTHING
+}

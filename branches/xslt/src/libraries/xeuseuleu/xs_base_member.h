@@ -30,37 +30,44 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_stringoutput_h_
-#define _xeuseuleu_stringoutput_h_
+#ifndef _xeuseuleu_xs_base_member_h_
+#define _xeuseuleu_xs_base_member_h_
 
-#include "transform.h"
-#include "os_base_member.h"
-#include "output.h"
-#include <string>
+#include <memory>
 
 namespace xsl
 {
+    class string_output;
+
 // =============================================================================
-/** @class  string_output
-    @brief  String output implementation
+/** @class  base_member
+    @brief  Base from member idiom base class
 */
-// Created: SLI 2007-09-10
+// Created: SLI 2007-09-19
 // =============================================================================
-class string_output : private transform, private os_base_member, public output
+class xs_base_member
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             string_output();
-    virtual ~string_output();
+             xs_base_member();
+    virtual ~xs_base_member();
     //@}
 
-    //! @name Operations
+private:
+    //! @name Copy/Assignment
     //@{
-    const std::string str() const;
+    xs_base_member( const xs_base_member& );            //!< Copy constructor
+    xs_base_member& operator=( const xs_base_member& ); //!< Assignment operator
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    std::auto_ptr< string_output > pMember_;
     //@}
 };
 
 }
 
-#endif // _xeuseuleu_stringoutput_h_
+#endif // _xeuseuleu_xs_base_member_h_

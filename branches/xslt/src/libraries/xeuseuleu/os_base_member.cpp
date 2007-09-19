@@ -30,37 +30,24 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_stringoutput_h_
-#define _xeuseuleu_stringoutput_h_
-
-#include "transform.h"
 #include "os_base_member.h"
-#include "output.h"
-#include <string>
 
-namespace xsl
+using namespace xsl;
+
+// -----------------------------------------------------------------------------
+// Name: os_base_member constructor
+// Created: SLI 2007-09-19
+// -----------------------------------------------------------------------------
+os_base_member::os_base_member()
 {
-// =============================================================================
-/** @class  string_output
-    @brief  String output implementation
-*/
-// Created: SLI 2007-09-10
-// =============================================================================
-class string_output : private transform, private os_base_member, public output
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             string_output();
-    virtual ~string_output();
-    //@}
-
-    //! @name Operations
-    //@{
-    const std::string str() const;
-    //@}
-};
-
+    // NOTHING
 }
 
-#endif // _xeuseuleu_stringoutput_h_
+// -----------------------------------------------------------------------------
+// Name: os_base_member destructor
+// Created: SLI 2007-09-19
+// -----------------------------------------------------------------------------
+os_base_member::~os_base_member()
+{
+    // NOTHING
+}

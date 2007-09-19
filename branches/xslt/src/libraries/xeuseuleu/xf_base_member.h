@@ -30,47 +30,45 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_file_output_member_h_
-#define _xeuseuleu_file_output_member_h_
+#ifndef _xeuseuleu_xf_base_member_h_
+#define _xeuseuleu_xf_base_member_h_
 
-#include "file_output.h"
-#include <memory>
 #include <string>
+#include <memory>
 
 namespace xsl
 {
+    class file_output;
+
 // =============================================================================
 /** @class  base_member
-    @brief  Base member implementation
+    @brief  Base from member idiom base class
 */
 // Created: SLI 2007-09-19
 // =============================================================================
-class file_output_member
+class xf_base_member
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit file_output_member( const std::string& filename )
-        : member_( filename )
-    {}
-    virtual ~file_output_member()
-    {}
+    explicit xf_base_member( const std::string& filename );
+    virtual ~xf_base_member();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    file_output_member( const file_output_member& );            //!< Copy constructor
-    file_output_member& operator=( const file_output_member& ); //!< Assignment operator
+    xf_base_member( const xf_base_member& );            //!< Copy constructor
+    xf_base_member& operator=( const xf_base_member& ); //!< Assignment operator
     //@}
 
 protected:
     //! @name Member data
     //@{
-    file_output member_;
+    std::auto_ptr< file_output > pMember_;
     //@}
 };
 
 }
 
-#endif // _xeuseuleu_file_output_member_h_
+#endif // _xeuseuleu_xf_base_member_h_

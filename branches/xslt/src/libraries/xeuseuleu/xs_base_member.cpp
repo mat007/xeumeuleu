@@ -30,44 +30,26 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_base_ostream_member_member_h_
-#define _xeuseuleu_base_ostream_member_member_h_
+#include "xs_base_member.h"
+#include "string_output.h"
 
-#include <sstream>
+using namespace xsl;
 
-namespace xsl
-{
-// =============================================================================
-/** @class  base_ostream_member
-    @brief  Base Ostringstream member implementation
-*/
+// -----------------------------------------------------------------------------
+// Name: xs_base_member constructor
 // Created: SLI 2007-09-19
-// =============================================================================
-class base_ostringstream_member
+// -----------------------------------------------------------------------------
+xs_base_member::xs_base_member()
+    : pMember_( new string_output() )
 {
-public:
-    //! @name Constructors/Destructor
-    //@{
-             base_ostringstream_member()
-    {}
-    virtual ~base_ostringstream_member()
-    {}
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    base_ostringstream_member( const base_ostringstream_member& );            //!< Copy constructor
-    base_ostringstream_member& operator=( const base_ostringstream_member& ); //!< Assignment operator
-    //@}
-
-protected:
-    //! @name Member data
-    //@{
-    std::ostringstream member_;
-    //@}
-};
-
+    // NOTHING
 }
 
-#endif // _xeuseuleu_base_ostream_member_member_h_
+// -----------------------------------------------------------------------------
+// Name: xs_base_member destructor
+// Created: SLI 2007-09-19
+// -----------------------------------------------------------------------------
+xs_base_member::~xs_base_member()
+{
+    // NOTHING
+}
