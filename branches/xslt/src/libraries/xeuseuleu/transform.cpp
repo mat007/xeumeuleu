@@ -30,9 +30,9 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
+#include "xalan.h"
 #include "transform.h"
 #include <xercesc/util/PlatformUtils.hpp>
-#include <xalanc/XalanTransformer/XalanTransformer.hpp>
 
 using namespace xsl;
 using namespace XALAN_CPP_NAMESPACE;

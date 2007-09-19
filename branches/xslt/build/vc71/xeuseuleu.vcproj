@@ -150,6 +150,9 @@
 				RelativePath="..\..\src\libraries\xeuseuleu\transform.h">
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\xalan.h">
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\xftransform.cpp">
 			</File>
 			<File
