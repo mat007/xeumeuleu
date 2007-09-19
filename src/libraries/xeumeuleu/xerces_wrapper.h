@@ -36,21 +36,21 @@
 namespace xml
 {
 // =============================================================================
-/** @class  xerces_wrapper
-    @brief  Xerces object wrapper to automatically release it when going out of scope
+/** @class  xerces_ptr
+    @brief  Xerces object wrapper to automatically release it
 */
 // Created: MAT 2006-03-20
 // =============================================================================
 template< typename T >
-class xerces_wrapper
+class xerces_ptr
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xerces_wrapper( T& object )
+    explicit xerces_ptr( T& object )
         : object_( object )
     {}
-    ~xerces_wrapper()
+    virtual ~xerces_ptr()
     {
         object_.release();
     }
@@ -62,13 +62,25 @@ public:
     {
         return &object_;
     }
+    const T* const operator->() const
+    {
+        return &object_;
+    }
+    T& operator*()
+    {
+        return object_;
+    }
+    const T& operator*() const
+    {
+        return object_;
+    }
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    xerces_wrapper( const xerces_wrapper& );            //!< Copy constructor
-    xerces_wrapper& operator=( const xerces_wrapper& ); //!< Assignment operator
+    xerces_ptr( const xerces_ptr& );            //!< Copy constructor
+    xerces_ptr& operator=( const xerces_ptr& ); //!< Assignment operator
     //@}
 
 private:

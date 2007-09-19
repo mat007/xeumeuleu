@@ -46,7 +46,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
 input_base_member::input_base_member( DOMNode& root )
-    : root_( root )
+    : pRoot_( root )
 {
     // NOTHING
 }
@@ -57,7 +57,7 @@ input_base_member::input_base_member( DOMNode& root )
 // -----------------------------------------------------------------------------
 input_base_member::~input_base_member()
 {
-    root_.release();
+    // NOTHING
 }
 
  // -----------------------------------------------------------------------------

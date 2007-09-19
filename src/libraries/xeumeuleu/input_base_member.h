@@ -34,6 +34,7 @@
 #define _xeumeuleu_input_base_member_h_
 
 #include "xerces.h"
+#include "xerces_wrapper.h"
 
 namespace xml
 {
@@ -71,7 +72,7 @@ protected:
 protected:
     //! @name Member data
     //@{
-    XERCES_CPP_NAMESPACE::DOMNode& root_;
+    const xerces_ptr< XERCES_CPP_NAMESPACE::DOMNode > pRoot_;
     //@}
 };
 

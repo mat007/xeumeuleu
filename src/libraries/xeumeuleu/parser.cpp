@@ -43,7 +43,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // Created: MCO 2007-01-16
 // -----------------------------------------------------------------------------
 parser::parser( DOMBuilder& builder )
-    : xerces_wrapper< XERCES_CPP_NAMESPACE::DOMBuilder >( builder )
+    : xerces_ptr< XERCES_CPP_NAMESPACE::DOMBuilder >( builder )
     , builder_( builder )
 {
     builder_.setFeature( XMLUni::fgXercesUserAdoptsDOMDocument, true );
