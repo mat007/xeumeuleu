@@ -41,8 +41,8 @@ namespace xsl
     class file_output;
 
 // =============================================================================
-/** @class  base_member
-    @brief  Base from member idiom base class
+/** @class  xf_base_member
+    @brief  Base from member idiom class
 */
 // Created: SLI 2007-09-19
 // =============================================================================
@@ -65,7 +65,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    std::auto_ptr< file_output > pMember_;
+    std::auto_ptr< file_output > pOutput_;
     //@}
 };
 

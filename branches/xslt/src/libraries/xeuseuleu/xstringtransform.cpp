@@ -40,7 +40,7 @@ using namespace xsl;
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
 xstringtransform::xstringtransform( const std::string& stylesheet )
-    : xtransform( *pMember_, stylesheet )
+    : xtransform( *pOutput_, stylesheet )
 {
     // NOTHING
 }
@@ -60,5 +60,5 @@ xstringtransform::~xstringtransform()
 // -----------------------------------------------------------------------------
 const std::string xstringtransform::str() const
 {
-    return pMember_->str();
+    return pOutput_->str();
 }

@@ -40,7 +40,7 @@ using namespace xsl;
 // Created: SLI 2007-09-19
 // -----------------------------------------------------------------------------
 xs_base_member::xs_base_member()
-    : pMember_( new string_output() )
+    : pOutput_( new string_output() )
 {
     // NOTHING
 }

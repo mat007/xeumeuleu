@@ -40,7 +40,7 @@ using namespace xsl;
 // Created: SLI 2007-09-19
 // -----------------------------------------------------------------------------
 xf_base_member::xf_base_member( const std::string& filename )
-    : pMember_( new file_output( filename ) )
+    : pOutput_( new file_output( filename ) )
 {
     // NOTHING
 }
