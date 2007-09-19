@@ -44,7 +44,7 @@ namespace xml
 */
 // Created: MCO 2007-01-16
 // =============================================================================
-class parser : public xerces_wrapper< XERCES_CPP_NAMESPACE::DOMBuilder >
+class parser : public xerces_ptr< XERCES_CPP_NAMESPACE::DOMBuilder >
 {
 public:
     //! @name Constructors/Destructor

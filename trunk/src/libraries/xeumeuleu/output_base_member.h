@@ -33,8 +33,9 @@
 #ifndef _xeumeuleu_output_base_member_h_
 #define _xeumeuleu_output_base_member_h_
 
-#include <string>
 #include "xerces.h"
+#include "xerces_wrapper.h"
+#include <string>
 
 namespace xml
 {
@@ -74,7 +75,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    XERCES_CPP_NAMESPACE::DOMDocument& document_;
+    xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > pDocument_;
     //@}
 };
 
