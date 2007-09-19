@@ -68,7 +68,7 @@ $(LIB)(%.o) : $(OBJ_DIR)/$(LIB_MODULE)/%.o ;
 
 $(DEP_DIR)/%.d : $(SRC_DIR)/%.cpp
 	@$(MD) $(shell dirname $@)
-	$(CXX) -E -MM -MG $(CXXFLAGS) $< | sed -e "s@^\(.*\).o:@\$@ \$$(OBJ_DIR)/$*.o:@" > $@
+	$(CXX) -E -MM -MG $(CXXFLAGS) $< | sed -e "s@^\(.*\).o:@\$@ \$../out/gcc/obj/$*.o:@" > $@
 
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(MAKECMDGOALS),realclean)
@@ -87,7 +87,8 @@ build : $(LIB)
 
 test : build $(TEST)
 	@$(MD) $(RUN_DIR)
-	@cd $(RUN_DIR); $(TEST) --log_level=warnings --data_directory=$(DATA_DIR)/$(TEST_MODULE)
+	echo test : $(TEST)
+	cd $(RUN_DIR); $(TEST) --log_level=warnings --data_directory=$(DATA_DIR)/$(TEST_MODULE)
 
 install export : build
 	$(MD) $(INC_EXPORT_DIR)
