@@ -32,7 +32,6 @@
 
 #include "string_output.h"
 #include <sstream>
-#include <xalanc/XalanTransformer/XalanTransformer.hpp>
 
 using namespace xsl;
 using namespace XALAN_CPP_NAMESPACE;
