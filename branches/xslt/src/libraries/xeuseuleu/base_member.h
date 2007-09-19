@@ -52,6 +52,8 @@ public:
     explicit base_member( std::auto_ptr< T > pMember )
         : pMember_( pMember )
     {}
+    virtual ~base_member()
+    {}
     //@}
 
 private:

@@ -30,8 +30,8 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeumeuleu_exception_h_
-#define _xeumeuleu_exception_h_
+#ifndef _xeuseuleu_exception_h_
+#define _xeuseuleu_exception_h_
 
 #include <stdexcept>
 
@@ -39,7 +39,7 @@ namespace xsl
 {
 // =============================================================================
 /** @class  exception
-@brief  Xml exception
+    @brief  Xsl exception
 */
 // Created: SLI 2007-09-12
 // =============================================================================
@@ -49,11 +49,10 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit exception( const std::string& message );
-    explicit exception( const std::runtime_error& chained );
     virtual ~exception() throw ();
     //@}
 };
 
 }
 
-#endif // _xeumeuleu_exception_h_
+#endif // _xeuseuleu_exception_h_
