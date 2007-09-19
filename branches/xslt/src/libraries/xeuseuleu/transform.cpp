@@ -30,13 +30,18 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#include "xalan.h"
 #include "transform.h"
-#include <xercesc/util/PlatformUtils.hpp>
+#include "xalan.h"
+#include "xeumeuleu/xerces.h"
 
 using namespace xsl;
 using namespace XALAN_CPP_NAMESPACE;
 using namespace XERCES_CPP_NAMESPACE;
+
+namespace
+{
+    unsigned int counter = 0;
+}
 
 // -----------------------------------------------------------------------------
 // Name: transform constructor
@@ -44,20 +49,11 @@ using namespace XERCES_CPP_NAMESPACE;
 // -----------------------------------------------------------------------------
 transform::transform()
 {
-    static class initializer_helper
+    if( counter++ == 0 )
     {
-    public:
-        initializer_helper()
-        {
-            XMLPlatformUtils::Initialize();
-            XalanTransformer::initialize();
-        }
-        ~initializer_helper()
-        {
-            XalanTransformer::terminate();
-            XMLPlatformUtils::Terminate();
-        }
-    } initializer;
+        XMLPlatformUtils::Initialize();
+        XalanTransformer::initialize();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -66,5 +62,9 @@ transform::transform()
 // -----------------------------------------------------------------------------
 transform::~transform()
 {
-    // NOTHING
+    if( --counter == 0 )
+    {
+        XalanTransformer::terminate();
+        XMLPlatformUtils::Terminate();
+    }
 }
