@@ -33,8 +33,8 @@
 #ifndef _xeumeuleu_error_h_
 #define _xeumeuleu_error_h_
 
+#include "xerces.h"
 #include <string>
-#include <xercesc/dom/DOMErrorHandler.hpp>
 
 namespace xml
 {

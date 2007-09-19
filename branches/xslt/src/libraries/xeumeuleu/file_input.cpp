@@ -34,7 +34,6 @@
 #include "translate.h"
 #include "exception.h"
 #include "input_imp.h"
-#include <xercesc/framework/LocalFileInputSource.hpp>
 #include <fstream>
 
 using namespace xml;
@@ -89,7 +88,6 @@ void file_input::check( const std::string& filename )
 DOMNode& file_input::build( const std::string& filename, const encoding* pEncoding, const grammar& grammar )
 {
     check( filename );
-    initialize();
     LocalFileInputSource buffer( static_cast< const XMLCh* const >( translate( filename ) ) );
     return parse( buffer, pEncoding, grammar );
 }

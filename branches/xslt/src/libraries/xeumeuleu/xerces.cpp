@@ -30,35 +30,40 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_document_h_
-#define _xeumeuleu_document_h_
+#include "xerces.h"
+#include "chained_exception.h"
 
-#include <string>
+using namespace xml;
+using namespace XERCES_CPP_NAMESPACE;
 
-namespace xml
+namespace
 {
-// =============================================================================
-/** @class  document
-    @brief  Document base class
-*/
-// Created: MAT 2006-01-03
-// =============================================================================
-class document
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             document();
-    virtual ~document();
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    static void initialize(); //!< Must be called before manipulating xerces
-    //@}
-};
-
+    unsigned int counter = 0;
 }
 
-#endif // _xeumeuleu_document_h_
+// -----------------------------------------------------------------------------
+// Name: xerces constructor
+// Created: MAT 2006-01-06
+// -----------------------------------------------------------------------------
+xerces::xerces()
+{
+    try
+    {
+        if( counter++ == 0 )
+            XMLPlatformUtils::Initialize();
+    }
+    catch( const XMLException& e )
+    {
+        throw chained_exception( e );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: xerces destructor
+// Created: MAT 2006-01-03
+// -----------------------------------------------------------------------------
+xerces::~xerces()
+{
+    if( --counter == 0 )
+        XMLPlatformUtils::Terminate();
+}

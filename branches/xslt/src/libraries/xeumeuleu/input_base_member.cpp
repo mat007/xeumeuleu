@@ -37,8 +37,6 @@
 #include "encoding.h"
 #include "grammar.h"
 #include "parser.h"
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/util/OutOfMemoryException.hpp>
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;

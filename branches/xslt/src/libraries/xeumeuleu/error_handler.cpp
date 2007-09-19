@@ -33,9 +33,8 @@
 #include "error_handler.h"
 #include "exception.h"
 #include "translate.h"
+#include "xerces.h"
 #include <sstream>
-#include <xercesc/util/XMLString.hpp>
-#include <xercesc/dom/DOMLocator.hpp>
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;

@@ -31,7 +31,7 @@
  */
 
 #include "string_output.h"
-#include <xercesc/framework/MemBufFormatTarget.hpp>
+#include "xerces.h"
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;

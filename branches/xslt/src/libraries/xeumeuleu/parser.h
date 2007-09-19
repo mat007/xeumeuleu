@@ -34,8 +34,7 @@
 #define _xeumeuleu_parser_h_
 
 #include "xerces_wrapper.h"
-#include <xercesc/dom/DOMBuilder.hpp>
-#include <xercesc/sax/InputSource.hpp>
+#include "xerces.h"
 
 namespace xml
 {

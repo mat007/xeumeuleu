@@ -34,7 +34,7 @@
 #define _xeumeuleu_sub_xistream_h_
 
 #include "xistream.h"
-#include <xercesc/dom/DOMDocument.hpp>
+#include "xerces.h"
 
 namespace xml
 {
