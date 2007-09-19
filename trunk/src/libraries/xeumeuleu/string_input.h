@@ -51,7 +51,7 @@ class string_input : private input_base_member, public input
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit string_input( const std::string& data, const grammar& grammar );
+             string_input( const std::string& data, const grammar& grammar );
              string_input( const std::string& data, const encoding& encoding, const grammar& grammar );
     virtual ~string_input();
     //@}
