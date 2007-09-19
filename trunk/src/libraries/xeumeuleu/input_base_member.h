@@ -34,7 +34,7 @@
 #define _xeumeuleu_input_base_member_h_
 
 #include "xerces.h"
-#include "xerces_wrapper.h"
+#include "xerces_ptr.h"
 
 namespace xml
 {
