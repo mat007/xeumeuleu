@@ -35,8 +35,7 @@
 #include "translate.h"
 #include "trim.h"
 #include "sub_output.h"
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/util/XMLChar.hpp>
+#include "xerces.h"
 #include <limits>
 
 using namespace xml;

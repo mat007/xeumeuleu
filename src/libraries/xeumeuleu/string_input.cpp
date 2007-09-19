@@ -33,7 +33,7 @@
 #include "string_input.h"
 #include "input_imp.h"
 #include "grammar.h"
-#include <xercesc/framework/MemBufInputSource.hpp>
+#include "xerces.h"
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
@@ -75,7 +75,6 @@ string_input::~string_input()
 // -----------------------------------------------------------------------------
 DOMNode& string_input::build( const std::string& data, const encoding* pEncoding, const grammar& grammar )
 {
-    initialize();
     MemBufInputSource buffer( reinterpret_cast< const XMLByte* >( data.c_str() ), data.size(), "string_input", false );
     return parse( buffer, pEncoding, grammar );
 }

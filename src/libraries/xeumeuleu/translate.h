@@ -33,9 +33,9 @@
 #ifndef _xeumeuleu_translate_h_
 #define _xeumeuleu_translate_h_
 
+#include "xerces.h"
 #include <string>
 #include <iostream>
-#include <xercesc/util/XMLString.hpp>
 
 namespace xml
 {

@@ -30,54 +30,44 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "document.h"
-#include "chained_exception.h"
+#ifndef _xeumeuleu_xerces_h_
+#define _xeumeuleu_xerces_h_
+
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/framework/LocalFileInputSource.hpp>
+#include <xercesc/framework/MemBufInputSource.hpp>
+#include <xercesc/framework/LocalFileFormatTarget.hpp>
+#include <xercesc/framework/XMLFormatter.hpp>
+#include <xercesc/framework/MemBufFormatTarget.hpp>
+#include <xercesc/framework/Wrapper4InputSource.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
+#include <xercesc/util/OutOfMemoryException.hpp>
+#include <xercesc/util/XMLFloat.hpp>
+#include <xercesc/util/XMLDouble.hpp>
+#include <xercesc/util/XMLInteger.hpp>
+#include <xercesc/util/XMLChar.hpp>
+#include <xercesc/util/XMLUniDefs.hpp>
+#include <xercesc/util/XMLString.hpp>
+#include <xercesc/validators/common/Grammar.hpp>
 
-using namespace xml;
-using namespace XERCES_CPP_NAMESPACE;
-
-// -----------------------------------------------------------------------------
-// Name: document constructor
-// Created: MAT 2006-01-06
-// -----------------------------------------------------------------------------
-document::document()
+namespace xml
 {
-    initialize();
+// =============================================================================
+/** @class  xerces
+    @brief  Xerces initializer based on the nifty-counter idiom
+*/
+// Created: MAT 2007-09-19
+// =============================================================================
+static class xerces
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+     xerces();
+    ~xerces();
+    //@}
+} initializer;
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: document destructor
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-document::~document()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: document::initialize
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-void document::initialize()
-{
-    try
-    {
-        static class initializer_helper
-        {
-        public:
-            initializer_helper()
-            {
-                XMLPlatformUtils::Initialize();
-            }
-            ~initializer_helper()
-            {
-                XMLPlatformUtils::Terminate();
-            }
-        } initializer;
-    }
-    catch( const XMLException& e )
-    {
-        throw chained_exception( e );
-    }
-}
+#endif // _xeumeuleu_xerces_h_

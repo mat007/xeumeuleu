@@ -49,7 +49,7 @@ class file_input : private input_base_member, public input
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit file_input( const std::string& filename, const grammar& grammar );
+             file_input( const std::string& filename, const grammar& grammar );
              file_input( const std::string& filename, const encoding& encoding, const grammar& grammar );
     virtual ~file_input();
     //@}

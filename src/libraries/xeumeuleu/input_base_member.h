@@ -33,9 +33,7 @@
 #ifndef _xeumeuleu_input_base_member_h_
 #define _xeumeuleu_input_base_member_h_
 
-#include "document.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/sax/InputSource.hpp>
+#include "xerces.h"
 
 namespace xml
 {
@@ -48,7 +46,7 @@ namespace xml
 */
 // Created: MAT 2006-03-19
 // =============================================================================
-class input_base_member : protected document
+class input_base_member
 {
 public:
     //! @name Constructors/Destructor

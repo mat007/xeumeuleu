@@ -33,7 +33,7 @@
 #include "grammar.h"
 #include "translate.h"
 #include "parser.h"
-#include <xercesc/validators/common/Grammar.hpp>
+#include "xerces.h"
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
