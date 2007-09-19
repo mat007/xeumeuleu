@@ -42,9 +42,7 @@ using namespace mockpp;
 BOOST_AUTO_TEST_CASE( parameters_are_sent_to_the_stylesheet )
 {
     xsl::xstringtransform xf( BOOST_RESOLVE( "parameter.xsl" ) );
-    xml::xistringstream xis(
-        "<root/>"
-    );
+    xml::xistringstream xis( "<root/>" );
     xf << xsl::parameter( "key1", "expression1" )
        << xsl::parameter( "key2", "expression2" )
        << xis;
