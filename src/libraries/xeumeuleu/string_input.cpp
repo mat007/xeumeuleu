@@ -44,7 +44,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // -----------------------------------------------------------------------------
 string_input::string_input( const std::string& data, const grammar& grammar )
     : input_base_member( build( data, 0, grammar ) )
-    , input( std::auto_ptr< input_base >( new input_imp( root_ ) ) )
+    , input( std::auto_ptr< input_base >( new input_imp( *pRoot_ ) ) )
 {
     // NOTHING
 }
@@ -55,7 +55,7 @@ string_input::string_input( const std::string& data, const grammar& grammar )
 // -----------------------------------------------------------------------------
 string_input::string_input( const std::string& data, const encoding& encoding, const grammar& grammar )
     : input_base_member( build( data, &encoding, grammar ) )
-    , input( std::auto_ptr< input_base >( new input_imp( root_ ) ) )
+    , input( std::auto_ptr< input_base >( new input_imp( *pRoot_ ) ) )
 {
     // NOTHING
 }

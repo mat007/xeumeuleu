@@ -39,7 +39,7 @@ using namespace xml;
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
 buffer_output::buffer_output()
-    : output( output_base_member::document_, output_base_member::document_ )
+    : output( *pDocument_, *pDocument_ )
 {
     // NOTHING
 }

@@ -41,7 +41,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // -----------------------------------------------------------------------------
 buffer_input::buffer_input( const DOMNode& root )
     : input_base_member( *root.cloneNode( true ) )
-    , input_imp( input_base_member::root_ )
+    , input_imp( *pRoot_ )
 {
     // NOTHING
 }

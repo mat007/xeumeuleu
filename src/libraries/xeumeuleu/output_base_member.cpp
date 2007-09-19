@@ -46,7 +46,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
 output_base_member::output_base_member()
-    : document_( build() )
+    : pDocument_( build() )
 {
     // NOTHING
 }
@@ -57,7 +57,7 @@ output_base_member::output_base_member()
 // -----------------------------------------------------------------------------
 output_base_member::~output_base_member()
 {
-    document_.release();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -96,11 +96,11 @@ void output_base_member::fill( XMLFormatTarget& destination, const std::string& 
     DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
     if( ! pImpl )
         throw xml::exception( "Internal error in 'output_base_member::fill' : DOMImplementation 'LS' not found" );
-    xerces_wrapper< DOMWriter > writer( *dynamic_cast< DOMImplementationLS* >( pImpl )->createDOMWriter() );
+    xerces_ptr< DOMWriter > pWriter( *dynamic_cast< DOMImplementationLS* >( pImpl )->createDOMWriter() );
     error_handler handler;
-    writer->setErrorHandler( &handler );
-    writer->setEncoding( translate( encoding ) );
-    writer->setFeature( XMLUni::fgDOMWRTFormatPrettyPrint, true );
-    beautifier target( destination, writer->getNewLine() );
-    writer->writeNode( &target, document_ );
+    pWriter->setErrorHandler( &handler );
+    pWriter->setEncoding( translate( encoding ) );
+    pWriter->setFeature( XMLUni::fgDOMWRTFormatPrettyPrint, true );
+    beautifier target( destination, pWriter->getNewLine() );
+    pWriter->writeNode( &target, *pDocument_ );
 }
