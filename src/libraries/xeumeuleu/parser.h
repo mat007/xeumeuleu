@@ -33,7 +33,7 @@
 #ifndef _xeumeuleu_parser_h_
 #define _xeumeuleu_parser_h_
 
-#include "xerces_wrapper.h"
+#include "xerces_ptr.h"
 #include "xerces.h"
 
 namespace xml

@@ -35,7 +35,7 @@
 #include "error_handler.h"
 #include "chained_exception.h"
 #include "beautifier.h"
-#include "xerces_wrapper.h"
+#include "xerces_ptr.h"
 #include "xerces.h"
 
 using namespace xml;

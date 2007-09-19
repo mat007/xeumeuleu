@@ -269,7 +269,7 @@
 					RelativePath="..\..\src\libraries\xeumeuleu\xerces.h">
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xerces_wrapper.h">
+					RelativePath="..\..\src\libraries\xeumeuleu\xerces_ptr.h">
 				</File>
 				<Filter
 					Name="input"
