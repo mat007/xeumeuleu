@@ -33,7 +33,6 @@
 #ifndef _xeuseuleu_base_ostream_member_member_h_
 #define _xeuseuleu_base_ostream_member_member_h_
 
-#include <memory>
 #include <sstream>
 
 namespace xsl
