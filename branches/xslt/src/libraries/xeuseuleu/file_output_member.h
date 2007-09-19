@@ -30,35 +30,47 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#include "string_output.h"
+#ifndef _xeuseuleu_file_output_member_h_
+#define _xeuseuleu_file_output_member_h_
 
-using namespace xsl;
-using namespace XALAN_CPP_NAMESPACE;
+#include "file_output.h"
+#include <memory>
+#include <string>
 
-// -----------------------------------------------------------------------------
-// Name: string_output constructor
-// Created: SLI 2007-09-10
-// -----------------------------------------------------------------------------
-string_output::string_output()
-    : output( std::auto_ptr< XSLTResultTarget >( new XSLTResultTarget( member_ ) ) )
+namespace xsl
 {
-    // NOTHING
+// =============================================================================
+/** @class  base_member
+    @brief  Base member implementation
+*/
+// Created: SLI 2007-09-19
+// =============================================================================
+class file_output_member
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit file_output_member( const std::string& filename )
+        : member_( filename )
+    {}
+    virtual ~file_output_member()
+    {}
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    file_output_member( const file_output_member& );            //!< Copy constructor
+    file_output_member& operator=( const file_output_member& ); //!< Assignment operator
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    file_output member_;
+    //@}
+};
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: string_output destructor
-// Created: SLI 2007-09-10
-// -----------------------------------------------------------------------------
-string_output::~string_output()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: string_output::str
-// Created: SLI 2007-09-10
-// -----------------------------------------------------------------------------
-const std::string string_output::str() const
-{
-    return member_.str();
-}
+#endif // _xeuseuleu_file_output_member_h_

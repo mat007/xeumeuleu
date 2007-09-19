@@ -40,8 +40,8 @@ using namespace xsl;
 // Created: SLI 2007-09-07
 // -----------------------------------------------------------------------------
 xftransform::xftransform( const std::string& stylesheet, const std::string& filename )
-    : base_member< file_output >( std::auto_ptr< file_output >( new file_output( filename ) ) )
-    , xtransform( *pMember_, stylesheet )
+    : file_output_member( filename )
+    , xtransform( member_, stylesheet )
 {
     // NOTHING
 }

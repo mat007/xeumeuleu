@@ -111,7 +111,7 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd">
 			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\base_member.h">
+				RelativePath="..\..\src\libraries\xeuseuleu\base_ostringstream_member.h">
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\exception.cpp">
@@ -124,6 +124,9 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\file_output.h">
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\file_output_member.h">
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\output.cpp">
@@ -142,6 +145,9 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\string_output.h">
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\string_output_member.h">
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\transform.cpp">

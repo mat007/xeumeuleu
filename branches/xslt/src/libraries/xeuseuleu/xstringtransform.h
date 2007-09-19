@@ -33,12 +33,11 @@
 #ifndef _xeuseuleu_xstringtransform_h_
 #define _xeuseuleu_xstringtransform_h_
 
-#include "base_member.h"
+#include "string_output_member.h"
 #include "xtransform.h"
 
 namespace xsl
 {
-    class string_output;
 
 // =============================================================================
 /** @class  xstringtransform
@@ -50,7 +49,7 @@ namespace xsl
 */
 // Created: SLI 2007-09-10
 // =============================================================================
-class xstringtransform : private base_member< string_output >, public xtransform
+class xstringtransform : private string_output_member, public xtransform
 {
 public:
     //! @name Constructors/Destructor

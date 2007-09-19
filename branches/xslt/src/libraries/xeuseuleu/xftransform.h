@@ -33,13 +33,11 @@
 #ifndef _xeuseuleu_xftransform_h_
 #define _xeuseuleu_xftransform_h_
 
-#include "base_member.h"
+#include "file_output_member.h"
 #include "xtransform.h"
 
 namespace xsl
 {
-    class file_output;
-
 // =============================================================================
 /** @class  xftransform
     @brief  Xsl file transform
@@ -50,7 +48,7 @@ namespace xsl
 */
 // Created: SLI 2007-09-07
 // =============================================================================
-class xftransform : private base_member< file_output >, public xtransform
+class xftransform : private file_output_member, public xtransform
 {
 public:
     //! @name Constructors/Destructor

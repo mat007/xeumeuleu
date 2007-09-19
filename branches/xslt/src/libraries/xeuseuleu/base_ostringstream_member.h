@@ -30,46 +30,45 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_base_member_h_
-#define _xeuseuleu_base_member_h_
+#ifndef _xeuseuleu_base_ostream_member_member_h_
+#define _xeuseuleu_base_ostream_member_member_h_
 
 #include <memory>
+#include <sstream>
 
 namespace xsl
 {
 // =============================================================================
-/** @class  base_member
-    @brief  Base member implementation
+/** @class  base_ostream_member
+    @brief  Base Ostringstream member implementation
 */
-// Created: SLI 2007-09-10
+// Created: SLI 2007-09-19
 // =============================================================================
-template< typename T >
-class base_member
+class base_ostringstream_member
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit base_member( std::auto_ptr< T > pMember )
-        : pMember_( pMember )
+             base_ostringstream_member()
     {}
-    virtual ~base_member()
+    virtual ~base_ostringstream_member()
     {}
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    base_member( const base_member& );            //!< Copy constructor
-    base_member& operator=( const base_member& ); //!< Assignment operator
+    base_ostringstream_member( const base_ostringstream_member& );            //!< Copy constructor
+    base_ostringstream_member& operator=( const base_ostringstream_member& ); //!< Assignment operator
     //@}
 
 protected:
     //! @name Member data
     //@{
-    const std::auto_ptr< T > pMember_;
+    std::ostringstream member_;
     //@}
 };
 
 }
 
-#endif // _xeuseuleu_base_member_h_
+#endif // _xeuseuleu_base_ostream_member_member_h_

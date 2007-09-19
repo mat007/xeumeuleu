@@ -34,10 +34,9 @@
 #define _xeuseuleu_stringoutput_h_
 
 #include "transform.h"
+#include "base_ostringstream_member.h"
 #include "output.h"
-#include "base_member.h"
 #include <string>
-#include <iosfwd>
 
 namespace xsl
 {
@@ -47,7 +46,7 @@ namespace xsl
 */
 // Created: SLI 2007-09-10
 // =============================================================================
-class string_output : private transform, private base_member< std::ostringstream >, public output
+class string_output : private transform, private base_ostringstream_member, public output
 {
 public:
     //! @name Constructors/Destructor

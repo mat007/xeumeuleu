@@ -30,35 +30,45 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
+#ifndef _xeuseuleu_string_output_member_h_
+#define _xeuseuleu_string_output_member_h_
+
+#include <memory>
 #include "string_output.h"
 
-using namespace xsl;
-using namespace XALAN_CPP_NAMESPACE;
-
-// -----------------------------------------------------------------------------
-// Name: string_output constructor
-// Created: SLI 2007-09-10
-// -----------------------------------------------------------------------------
-string_output::string_output()
-    : output( std::auto_ptr< XSLTResultTarget >( new XSLTResultTarget( member_ ) ) )
+namespace xsl
 {
-    // NOTHING
+// =============================================================================
+/** @class  base_member
+    @brief  Base member implementation
+*/
+// Created: SLI 2007-09-19
+// =============================================================================
+class string_output_member
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+             string_output_member()
+    {}
+    virtual ~string_output_member()
+    {}
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    string_output_member( const string_output_member& );            //!< Copy constructor
+    string_output_member& operator=( const string_output_member& ); //!< Assignment operator
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    string_output member_;
+    //@}
+};
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: string_output destructor
-// Created: SLI 2007-09-10
-// -----------------------------------------------------------------------------
-string_output::~string_output()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: string_output::str
-// Created: SLI 2007-09-10
-// -----------------------------------------------------------------------------
-const std::string string_output::str() const
-{
-    return member_.str();
-}
+#endif // _xeuseuleu_string_output_member_h_
