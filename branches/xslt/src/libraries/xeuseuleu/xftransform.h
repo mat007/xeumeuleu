@@ -42,7 +42,7 @@ namespace xsl
 
 // =============================================================================
 /** @class  xftransform
-    @brief  Xsl file transformation
+    @brief  Xsl file transform
     @par    Using example
     @code
     xsl::xftransform xft( "transform.xsl", "output.xml" );

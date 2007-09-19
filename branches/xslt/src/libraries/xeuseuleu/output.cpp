@@ -71,10 +71,10 @@ void output::transform( std::istream& is, const std::string& stylesheet )
 }
 
 // -----------------------------------------------------------------------------
-// Name: output::AddParameter
+// Name: output::parameter
 // Created: SLI 2007-09-11
 // -----------------------------------------------------------------------------
-void output::AddParameter( const std::string& key, const std::string& expression )
+void output::parameter( const std::string& key, const std::string& expression )
 {
     parameters_.push_back( std::make_pair( key, expression ) );
 }

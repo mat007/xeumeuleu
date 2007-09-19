@@ -42,7 +42,7 @@ namespace xsl
 
 // =============================================================================
 /** @class  xtransform
-    @brief  xtransform
+    @brief  Xsl transform base class
 */
 // Created: SLI 2007-09-10
 // =============================================================================
@@ -52,6 +52,11 @@ public:
     //! @name Constructors/Destructor
     //@{
     virtual ~xtransform();
+    //@}
+
+    //! @name Operations
+    //@{
+    void parameter( const std::string& key, const std::string& expression );
     //@}
 
     //! @name Operators
@@ -65,11 +70,6 @@ public:
         transform();
         return *this;
     }
-    //@}
-
-    //! @name Operations
-    //@{
-    void AddParameter( const std::string& key, const std::string& expression );
     //@}
 
 protected:

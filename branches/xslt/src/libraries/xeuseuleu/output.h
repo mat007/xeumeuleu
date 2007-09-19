@@ -43,7 +43,7 @@ namespace xsl
 {
 // =============================================================================
 /** @class  output
-    @brief  output
+    @brief  Output base class
 */
 // Created: SLI 2007-09-10
 // =============================================================================
@@ -57,8 +57,9 @@ public:
 
     //! @name Operations
     //@{
+    void parameter( const std::string& key, const std::string& expression );
+
     void transform( std::istream& is, const std::string& stylesheet );
-    void AddParameter( const std::string& key, const std::string& expression );
     //@}
 
 protected:

@@ -97,10 +97,10 @@ void xtransform::transform() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: xtransform::AddParameter
+// Name: xtransform::parameter
 // Created: SLI 2007-09-11
 // -----------------------------------------------------------------------------
-void xtransform::AddParameter( const std::string& key, const std::string& expression )
+void xtransform::parameter( const std::string& key, const std::string& expression )
 {
-    output_.AddParameter( key, expression );
+    output_.parameter( key, expression );
 }
