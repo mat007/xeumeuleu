@@ -51,13 +51,70 @@ input_base_member::input_base_member( DOMNode& root )
     // NOTHING
 }
 
+namespace
+{
+    void clean( const DOMNode* const pNode )
+    {
+        if( ! pNode )
+            return;
+        delete reinterpret_cast< DOMLocator* >( pNode->getUserData( translate( "locator" ) ) );
+        clean( pNode->getNextSibling() );
+        clean( pNode->getFirstChild() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: input_base_member destructor
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
 input_base_member::~input_base_member()
 {
-    // NOTHING
+    clean( pRoot_.get() );
+}
+
+namespace
+{
+    class locator : public DOMLocator
+    {
+    public:
+        locator( const std::string& uri, const XMLScanner& scanner, DOMNode& node )
+            : uri_   ( uri )
+            , line_  ( scanner.getLocator()->getLineNumber() )
+            , column_( scanner.getLocator()->getColumnNumber() )
+            , node_  ( node )
+        {}
+        virtual XMLSSize_t getLineNumber() const { return line_; }
+        virtual XMLSSize_t getColumnNumber() const { return column_; }
+        virtual XMLSSize_t getOffset() const { return -1; }
+        virtual DOMNode* getErrorNode() const { return &node_; }
+        virtual const XMLCh* getURI() const { return uri_; }
+        virtual void setLineNumber( const XMLSSize_t /*line*/ ) {}
+        virtual void setColumnNumber( const XMLSSize_t /*column*/ ) {}
+        virtual void setOffset( const XMLSSize_t /*offset*/ ) {}
+        virtual void setErrorNode( DOMNode* const /*pNode*/ ) {}
+        virtual void setURI( const XMLCh* const /*uri*/ ) {}
+    private:
+        const translate uri_;
+        const XMLSSize_t line_, column_;
+        DOMNode& node_;
+    };
+
+    class builder : public DOMBuilderImpl
+    {
+    public:
+        explicit builder( const std::string& uri )
+            : uri_( uri )
+        {}
+    private:
+        void startElement( const XMLElementDecl& elemDecl, const unsigned int urlId, const XMLCh* const elemPrefix, const RefVectorOf< XMLAttr >& attrList,
+                           const unsigned int attrCount, const bool isEmpty, const bool isRoot )
+        {
+            DOMBuilderImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, isEmpty, isRoot );
+            DOMNode* pNode = getCurrentNode();
+            pNode->setUserData( translate( "locator" ), new locator( uri_, *getScanner(), *pNode ), 0 );
+        }
+        const std::string uri_;
+    };
 }
 
  // -----------------------------------------------------------------------------
@@ -68,10 +125,8 @@ DOMNode& input_base_member::parse( InputSource& source, const encoding* pEncodin
 {
     try
     {
-        DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
-        if( ! pImpl )
-            throw xml::exception( "Internal error in 'input_base_member::parse' : DOMImplementation 'LS' not found" );
-        parser parser( *dynamic_cast< DOMImplementationLS* >( pImpl )->createDOMBuilder( DOMImplementationLS::MODE_SYNCHRONOUS, 0 ) );
+        builder builder( translate( source.getSystemId() ) );
+        parser parser( builder );
         grammar.configure( parser );
         if( pEncoding )
             source.setEncoding( translate( *pEncoding ) );

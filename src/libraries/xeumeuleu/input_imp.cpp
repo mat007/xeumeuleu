@@ -636,3 +636,28 @@ void input_imp::copy( output& destination ) const
 {
     destination.copy( *pCurrent_ );
 }
+
+namespace
+{
+    const std::string interpret( const DOMLocator& locator, const std::string& message )
+    {
+        std::stringstream stream;
+        stream << translate( locator.getURI() ).operator std::string()
+               << " (line " << locator.getLineNumber() << ", column " << locator.getColumnNumber() << ") : "
+               << translate( message ).operator std::string();
+        return stream.str();
+    }
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: input_imp::error
+// Created: MAT 2007-09-20
+// -----------------------------------------------------------------------------
+void input_imp::error( const std::string& message ) const
+{
+    const DOMLocator* pLocator = reinterpret_cast< DOMLocator* >( pCurrent_->getUserData( translate( "locator" ) ) );
+    if( ! pLocator )
+        throw exception( message );
+    throw exception( interpret( *pLocator, message ) );
+}

@@ -426,3 +426,12 @@ void xistream::copy( output& destination ) const
         pInput_->copy( destination );
     CATCH
 }
+
+// -----------------------------------------------------------------------------
+// Name: xistream::error
+// Created: MAT 2007-09-20
+// -----------------------------------------------------------------------------
+void xistream::error( const std::string& message ) const
+{
+    pInput_->error( message );
+}

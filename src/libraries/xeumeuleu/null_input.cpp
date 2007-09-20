@@ -354,3 +354,12 @@ void null_input::copy( output& /*destination*/ ) const
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: null_input::error
+// Created: MAT 2007-09-20
+// -----------------------------------------------------------------------------
+void null_input::error( const std::string& message ) const
+{
+    pInput_->error( message );
+}

@@ -76,6 +76,8 @@ public:
     virtual std::auto_ptr< input_base > branch( bool clone ) const;
 
     virtual void copy( output& destination ) const;
+
+    virtual void error( const std::string& message ) const;
     //@}
 
     //! @name Accessors
