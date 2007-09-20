@@ -200,24 +200,6 @@ void optional_input::read( unsigned long long& value ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::auto_ptr< input_base > optional_input::branch
-// Created: MAT 2006-03-20
-// -----------------------------------------------------------------------------
-std::auto_ptr< input_base > optional_input::branch( bool clone ) const
-{
-    return pInput_->branch( clone );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::copy
-// Created: MCO 2007-05-28
-// -----------------------------------------------------------------------------
-void optional_input::copy( output& destination ) const
-{
-    pInput_->copy( destination );
-}
-
-// -----------------------------------------------------------------------------
 // Name: optional_input::hasElement
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
@@ -380,4 +362,31 @@ void optional_input::nodes( const visitor& v ) const
 void optional_input::attributes( const visitor& v ) const
 {
     context_.reset( pInput_ ).attributes( v );
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::auto_ptr< input_base > optional_input::branch
+// Created: MAT 2006-03-20
+// -----------------------------------------------------------------------------
+std::auto_ptr< input_base > optional_input::branch( bool clone ) const
+{
+    return pInput_->branch( clone );
+}
+
+// -----------------------------------------------------------------------------
+// Name: optional_input::copy
+// Created: MCO 2007-05-28
+// -----------------------------------------------------------------------------
+void optional_input::copy( output& destination ) const
+{
+    pInput_->copy( destination );
+}
+
+// -----------------------------------------------------------------------------
+// Name: optional_input::error
+// Created: MAT 2007-09-20
+// -----------------------------------------------------------------------------
+void optional_input::error( const std::string& message ) const
+{
+    pInput_->error( message );
 }

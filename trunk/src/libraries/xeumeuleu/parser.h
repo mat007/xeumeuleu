@@ -62,14 +62,21 @@ public:
     //@{
     XERCES_CPP_NAMESPACE::DOMBuilder* operator->()
     {
-        return &*pBuilder_;
+        return &builder_;
     }
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    parser( const parser& );            //!< Copy constructor
+    parser& operator=( const parser& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    xerces_ptr< XERCES_CPP_NAMESPACE::DOMBuilder > pBuilder_;
+    XERCES_CPP_NAMESPACE::DOMBuilder& builder_;
     //@}
 };
 

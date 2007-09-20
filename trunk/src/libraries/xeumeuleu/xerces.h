@@ -34,6 +34,7 @@
 #define _xeumeuleu_xerces_h_
 
 #include <xercesc/dom/DOM.hpp>
+#include <xercesc/parsers/DOMBuilderImpl.hpp>
 #include <xercesc/framework/LocalFileInputSource.hpp>
 #include <xercesc/framework/MemBufInputSource.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
@@ -49,6 +50,7 @@
 #include <xercesc/util/XMLUniDefs.hpp>
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/validators/common/Grammar.hpp>
+#include <xercesc/internal/XMLScanner.hpp>
 
 namespace xml
 {

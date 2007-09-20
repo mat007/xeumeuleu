@@ -76,6 +76,18 @@ public:
     }
     //@}
 
+    //! @name Accessors
+    //@{
+    T* get()
+    {
+        return &object_;
+    }
+    const T* const get() const
+    {
+        return &object_;
+    }
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
