@@ -84,8 +84,8 @@ public:
     void attribute( const std::string& name, unsigned long& value ) const;
     void attribute( const std::string& name, unsigned long long& value ) const;
 
-    void nodes( const visitor& v );
-    void attributes( const visitor& v );
+    void nodes( const visitor& v ) const;
+    void attributes( const visitor& v ) const;
     //@}
 
     //! @name Modifiers
