@@ -29,9 +29,7 @@
     </target>
 
     <target name="xeuseuleu_test" depends="xeuseuleu,xeumeuleu" description="build and run tests">
-        <build-test name="xeuseuleu" libs="xeuseuleu,xeumeuleu,,xerces-c_2,Xalan-C_1">
-            <compilerarg value="-g"/>
-        </build-test>
+        <build-test name="xeuseuleu" libs="xeuseuleu,xeumeuleu,,xerces-c_2,Xalan-C_1"/>
     </target>
 
     <!--
@@ -80,6 +78,18 @@
                 <include name="caller*.h"/>
                 <include name="name_caller*.h"/>
                 <include name="optional.h"/>
+            </module>
+        </deploy>
+        <deploy>
+            <module name="xeuseuleu">
+                <include name="xsl.h"/>
+                <include name="exception.h"/>
+                <include name="parameter.h"/>
+                <include name="xftransform.h"/>
+                <include name="xstringtransform.h"/>
+                <include name="xs_base_member.h"/>
+                <include name="xtransform.h"/>
+                <include name="xf_base_member.h"/>
             </module>
         </deploy>
     </target>
