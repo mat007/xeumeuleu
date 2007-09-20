@@ -311,6 +311,12 @@
 						RelativePath="..\..\src\libraries\xeumeuleu\input_imp.h">
 					</File>
 					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\locator.cpp">
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\locator.h">
+					</File>
+					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\null_input.cpp">
 					</File>
 					<File
