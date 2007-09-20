@@ -376,7 +376,7 @@ void xistream::attribute( const std::string& name, unsigned long long& value ) c
 // Name: xistream::nodes
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-void xistream::nodes( const visitor& v )
+void xistream::nodes( const visitor& v ) const
 {
     TRY
         pInput_->nodes( v );
@@ -387,7 +387,7 @@ void xistream::nodes( const visitor& v )
 // Name: xistream::attributes
 // Created: MAT 2007-08-01
 // -----------------------------------------------------------------------------
-void xistream::attributes( const visitor& v )
+void xistream::attributes( const visitor& v ) const
 {
     TRY
         pInput_->attributes( v );
