@@ -4,6 +4,7 @@
  . added an operator to unserialize from an xml::xistream directly to an xml::xostream
  . added support for long long and unsigned long long
  . fixed a bug that caused an xibufferstream to become invalid when the xistream it had been created from was destroyed
+ . added a method to throw an exception within the current context of an xml::xistream
 
 1.2.2
 . added xml::attributes similar to xml::list but for attributes
