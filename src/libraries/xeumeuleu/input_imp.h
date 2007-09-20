@@ -124,10 +124,6 @@ private:
     const XMLCh* readAttribute( const std::string& name ) const;
 
     template< typename T > T convert( const XMLCh* from ) const;
-    template<> float  convert( const XMLCh* from ) const;
-    template<> double convert( const XMLCh* from ) const;
-    template<> bool   convert( const XMLCh* from ) const;
-    template<> int    convert( const XMLCh* from ) const;
     //@}
 
 private:
