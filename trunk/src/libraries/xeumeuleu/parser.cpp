@@ -43,13 +43,12 @@ using namespace XERCES_CPP_NAMESPACE;
 // Created: MCO 2007-01-16
 // -----------------------------------------------------------------------------
 parser::parser( DOMBuilder& builder )
-    : xerces_ptr< XERCES_CPP_NAMESPACE::DOMBuilder >( builder )
-    , builder_( builder )
+    : pBuilder_( builder )
 {
-    builder_.setFeature( XMLUni::fgXercesUserAdoptsDOMDocument, true );
-    builder_.setFeature( XMLUni::fgDOMNamespaces, true );
-    builder_.setFeature( XMLUni::fgDOMDatatypeNormalization, true );
-    builder_.setFeature( XMLUni::fgXercesSchema, true );
+    pBuilder_->setFeature( XMLUni::fgXercesUserAdoptsDOMDocument, true );
+    pBuilder_->setFeature( XMLUni::fgDOMNamespaces, true );
+    pBuilder_->setFeature( XMLUni::fgDOMDatatypeNormalization, true );
+    pBuilder_->setFeature( XMLUni::fgXercesSchema, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,9 +67,9 @@ parser::~parser()
 DOMNode& parser::parse( InputSource& source )
 {
     error_handler errorHandler;
-    builder_.setErrorHandler( &errorHandler );
+    pBuilder_->setErrorHandler( &errorHandler );
     Wrapper4InputSource input( &source, false );
-    DOMDocument* pDocument = builder_.parse( input );
+    DOMDocument* pDocument = pBuilder_->parse( input );
     if( ! pDocument )
         throw xml::exception( "Could not generate document" );
     return *pDocument;
