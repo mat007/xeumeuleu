@@ -35,6 +35,10 @@
         <p>
           Should an error happen manipulating a stream an exception of type <em>xml::exception</em> which derives from <em>std::exception</em> will be raised.
         </p>
+        <p>
+          Such an exception can also be raised manually by calling the <em>error</em> method on an <em>xml::xistream</em>.<br />
+          This allows to decorate a custom error message with the current context (line and column number for instance) if available.
+        </p>
       </section>
     </section>
     <section id="creation">
