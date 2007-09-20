@@ -33,8 +33,8 @@
 #ifndef _xeumeuleu_parser_h_
 #define _xeumeuleu_parser_h_
 
-#include "xerces_ptr.h"
 #include "xerces.h"
+#include "xerces_ptr.h"
 
 namespace xml
 {
@@ -44,7 +44,7 @@ namespace xml
 */
 // Created: MCO 2007-01-16
 // =============================================================================
-class parser : public xerces_ptr< XERCES_CPP_NAMESPACE::DOMBuilder >
+class parser
 {
 public:
     //! @name Constructors/Destructor
@@ -58,10 +58,18 @@ public:
     XERCES_CPP_NAMESPACE::DOMNode& parse( XERCES_CPP_NAMESPACE::InputSource& source );
     //@}
 
+    //! @name Operators
+    //@{
+    XERCES_CPP_NAMESPACE::DOMBuilder* operator->()
+    {
+        return &*pBuilder_;
+    }
+    //@}
+
 private:
     //! @name Member data
     //@{
-    XERCES_CPP_NAMESPACE::DOMBuilder& builder_;
+    xerces_ptr< XERCES_CPP_NAMESPACE::DOMBuilder > pBuilder_;
     //@}
 };
 
