@@ -141,6 +141,9 @@
 				RelativePath="..\..\src\tests\xeumeuleu_test\content_test.cpp">
 			</File>
 			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\error_test.cpp">
+			</File>
+			<File
 				RelativePath="..\..\src\tests\xeumeuleu_test\list_test.cpp">
 			</File>
 			<File

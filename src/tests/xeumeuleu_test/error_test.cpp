@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2007, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,47 +30,69 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "parser.h"
-#include "error_handler.h"
-#include "exception.h"
-#include "xerces.h"
+#include "xeumeuleu_test_pch.h"
+#include "xeumeuleu/xml.h"
 
-using namespace xml;
-using namespace XERCES_CPP_NAMESPACE;
+using namespace mockpp;
 
 // -----------------------------------------------------------------------------
-// Name: parser constructor
-// Created: MCO 2007-01-16
+// Name: error_from_above_root_throws_exception_without_context
+// Created: MAT 2007-09-20
 // -----------------------------------------------------------------------------
-parser::parser( DOMBuilder& builder )
-    : builder_( builder )
+BOOST_AUTO_TEST_CASE( error_from_above_root_throws_exception_without_context )
 {
-    builder_.setFeature( XMLUni::fgXercesUserAdoptsDOMDocument, true );
-    builder_.setFeature( XMLUni::fgDOMNamespaces, true );
-    builder_.setFeature( XMLUni::fgDOMDatatypeNormalization, true );
-    builder_.setFeature( XMLUni::fgXercesSchema, true );
+    const std::string expected = "this is my message";
+    xml::xistringstream xis( "<root/>" );
+    try
+    {
+        xis.error( expected );
+    }
+    catch( std::exception& e )
+    {
+        BOOST_CHECK_EQUAL( expected, e.what() );
+        return;
+    }
+    BOOST_FAIL( "should have thrown" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: parser destructor
-// Created: MCO 2007-01-16
+// Name: error_from_root_throws_exception_with_context_after_tag
+// Created: MAT 2007-09-20
 // -----------------------------------------------------------------------------
-parser::~parser()
+BOOST_AUTO_TEST_CASE( error_from_root_throws_exception_with_context_after_tag )
 {
-    // NOTHING
+    const std::string message = "this is my message";
+    xml::xistringstream xis( "<root/>" );
+    xis >> xml::start( "root" );
+    try
+    {
+        xis.error( message );
+    }
+    catch( std::exception& e )
+    {
+        BOOST_CHECK_EQUAL( "string_input (line 1, column 8) : " + message, e.what() );
+        return;
+    }
+    BOOST_FAIL( "should have thrown" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: parser::parse
-// Created: MCO 2007-01-16
+// Name: error_from_root_throws_exception_with_context_between_opening_and_closing_tag
+// Created: MAT 2007-09-20
 // -----------------------------------------------------------------------------
-DOMNode& parser::parse( InputSource& source )
+BOOST_AUTO_TEST_CASE( error_from_root_throws_exception_with_context_between_opening_and_closing_tag )
 {
-    error_handler errorHandler;
-    builder_.setErrorHandler( &errorHandler );
-    Wrapper4InputSource input( &source, false );
-    DOMDocument* pDocument = builder_.parse( input );
-    if( ! pDocument )
-        throw xml::exception( "Could not generate document" );
-    return *pDocument;
+    const std::string message = "this is my message";
+    xml::xistringstream xis( "<root></root>" );
+    xis >> xml::start( "root" );
+    try
+    {
+        xis.error( message );
+    }
+    catch( std::exception& e )
+    {
+        BOOST_CHECK_EQUAL( "string_input (line 1, column 7) : " + message, e.what() );
+        return;
+    }
+    BOOST_FAIL( "should have thrown" );
 }

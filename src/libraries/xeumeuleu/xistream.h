@@ -65,6 +65,8 @@ public:
     std::auto_ptr< input > branch( bool clone ) const;
 
     void copy( output& destination ) const;
+
+    void error( const std::string& message ) const;
     //@}
 
     //! @name Accessors
