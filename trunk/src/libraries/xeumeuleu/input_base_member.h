@@ -52,7 +52,7 @@ class input_base_member
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit input_base_member( XERCES_CPP_NAMESPACE::DOMNode& root );
+    explicit input_base_member( XERCES_CPP_NAMESPACE::DOMDocument& document );
     virtual ~input_base_member();
     //@}
 
@@ -66,13 +66,13 @@ private:
 protected:
     //! @name Helpers
     //@{
-    static XERCES_CPP_NAMESPACE::DOMNode& parse( XERCES_CPP_NAMESPACE::InputSource& source, const encoding* pEncoding, const grammar& grammar );
+    static XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source, const encoding* pEncoding, const grammar& grammar );
     //@}
 
 protected:
     //! @name Member data
     //@{
-    const xerces_ptr< XERCES_CPP_NAMESPACE::DOMNode > pRoot_;
+    xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > pDocument_;
     //@}
 };
 
