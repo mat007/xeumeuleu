@@ -45,8 +45,8 @@ using namespace XERCES_CPP_NAMESPACE;
 // Name: input_base_member constructor
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
-input_base_member::input_base_member( DOMNode& root )
-    : pRoot_( root )
+input_base_member::input_base_member( DOMDocument& document )
+    : pDocument_( document )
 {
     // NOTHING
 }
@@ -69,7 +69,7 @@ namespace
 // -----------------------------------------------------------------------------
 input_base_member::~input_base_member()
 {
-    clean( pRoot_.get() );
+    clean( pDocument_.get() );
 }
 
 namespace
@@ -121,7 +121,7 @@ namespace
 // Name: input_base_member::parse
 // Created: MAT 2006-01-10
 // -----------------------------------------------------------------------------
-DOMNode& input_base_member::parse( InputSource& source, const encoding* pEncoding, const grammar& grammar )
+DOMDocument& input_base_member::parse( InputSource& source, const encoding* pEncoding, const grammar& grammar )
 {
     try
     {

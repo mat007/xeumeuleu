@@ -55,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    XERCES_CPP_NAMESPACE::DOMNode& parse( XERCES_CPP_NAMESPACE::InputSource& source );
+    XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source );
     //@}
 
     //! @name Operators
