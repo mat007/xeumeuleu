@@ -37,6 +37,7 @@
 #include "encoding.h"
 #include "grammar.h"
 #include "parser.h"
+#include "locator.h"
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
@@ -55,11 +56,12 @@ namespace
 {
     void clean( const DOMNode* const pNode )
     {
-        if( ! pNode )
-            return;
-        delete reinterpret_cast< DOMLocator* >( pNode->getUserData( translate( "locator" ) ) );
-        clean( pNode->getNextSibling() );
-        clean( pNode->getFirstChild() );
+        if( pNode )
+        {
+            delete reinterpret_cast< DOMLocator* >( pNode->getUserData( translate( "locator" ) ) );
+            clean( pNode->getNextSibling() );
+            clean( pNode->getFirstChild() );
+        }
     }
 }
 
@@ -74,31 +76,6 @@ input_base_member::~input_base_member()
 
 namespace
 {
-    class locator : public DOMLocator
-    {
-    public:
-        locator( const std::string& uri, const XMLScanner& scanner, DOMNode& node )
-            : uri_   ( uri )
-            , line_  ( scanner.getLocator()->getLineNumber() )
-            , column_( scanner.getLocator()->getColumnNumber() )
-            , node_  ( node )
-        {}
-        virtual XMLSSize_t getLineNumber() const { return line_; }
-        virtual XMLSSize_t getColumnNumber() const { return column_; }
-        virtual XMLSSize_t getOffset() const { return -1; }
-        virtual DOMNode* getErrorNode() const { return &node_; }
-        virtual const XMLCh* getURI() const { return uri_; }
-        virtual void setLineNumber( const XMLSSize_t /*line*/ ) {}
-        virtual void setColumnNumber( const XMLSSize_t /*column*/ ) {}
-        virtual void setOffset( const XMLSSize_t /*offset*/ ) {}
-        virtual void setErrorNode( DOMNode* const /*pNode*/ ) {}
-        virtual void setURI( const XMLCh* const /*uri*/ ) {}
-    private:
-        const translate uri_;
-        const XMLSSize_t line_, column_;
-        DOMNode& node_;
-    };
-
     class builder : public DOMBuilderImpl
     {
     public:
