@@ -64,7 +64,7 @@ parser::~parser()
 // Name: parser::parse
 // Created: MCO 2007-01-16
 // -----------------------------------------------------------------------------
-DOMNode& parser::parse( InputSource& source )
+DOMDocument& parser::parse( InputSource& source )
 {
     error_handler errorHandler;
     builder_.setErrorHandler( &errorHandler );

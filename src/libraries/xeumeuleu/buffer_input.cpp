@@ -31,17 +31,39 @@
  */
 
 #include "buffer_input.h"
+#include "translate.h"
+#include "exception.h"
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
+
+namespace
+{
+    DOMDocument& build()
+    {
+        DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
+        if( ! pImpl )
+            throw xml::exception( "Internal error in 'buffer_input::build' : DOMImplementation 'LS' not found" );
+        return *pImpl->createDocument();
+    }
+    DOMNode& import( DOMDocument& document, DOMNode& node )
+    {
+        if( node.getNodeType() == DOMNode::DOCUMENT_NODE )
+        {
+            import( document, *node.getFirstChild() );
+            return document;
+        }
+        return *document.appendChild( document.importNode( &node, true ) );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: buffer_input constructor
 // Created: MCO 2007-04-27
 // -----------------------------------------------------------------------------
 buffer_input::buffer_input( const DOMNode& root )
-    : input_base_member( *root.cloneNode( true ) )
-    , input_imp( *pRoot_ )
+    : input_base_member( build() )
+    , input_imp( import( *pDocument_, const_cast< DOMNode& >( root ) ) )
 {
     // NOTHING
 }
