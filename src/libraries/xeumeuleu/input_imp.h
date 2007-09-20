@@ -123,18 +123,11 @@ private:
     const XMLCh* readValue() const;
     const XMLCh* readAttribute( const std::string& name ) const;
 
-    float     toFloat   ( const XMLCh* from ) const;
-    double    toDouble  ( const XMLCh* from ) const;
-    short     toShort   ( const XMLCh* from ) const;
-    int       toInteger ( const XMLCh* from ) const;
-    long      toLong    ( const XMLCh* from ) const;
-    long long toLongLong( const XMLCh* from ) const;
-    bool      toBoolean ( const XMLCh* from ) const;
-
-    unsigned short     toUnsignedShort   ( const XMLCh* from ) const;
-    unsigned int       toUnsignedInteger ( const XMLCh* from ) const;
-    unsigned long      toUnsignedLong    ( const XMLCh* from ) const;
-    unsigned long long toUnsignedLongLong( const XMLCh* from ) const;
+    template< typename T > T convert( const XMLCh* from ) const;
+    template<> float  convert( const XMLCh* from ) const;
+    template<> double convert( const XMLCh* from ) const;
+    template<> bool   convert( const XMLCh* from ) const;
+    template<> int    convert( const XMLCh* from ) const;
     //@}
 
 private:
