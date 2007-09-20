@@ -209,6 +209,8 @@ T input_imp::convert( const XMLCh* from ) const
     return result;
 }
 
+namespace xml
+{
 // -----------------------------------------------------------------------------
 // Name: input_imp::convert
 // Created: MAT 2007-09-20
@@ -278,6 +280,7 @@ bool input_imp::convert< bool >( const XMLCh* from ) const
     if( value == "false" || value == "0" )
         return false;
     throw xml::exception( "Value of " + context() + " is not a boolean" );
+}
 }
 
 // -----------------------------------------------------------------------------
