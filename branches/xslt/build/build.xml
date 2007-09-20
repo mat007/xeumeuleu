@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <project name="xeumeuleu" default="all">
 
-    <!--
-    <import file="../../../../dev/projects/tools/poney/src/poney.xml"/>
-    -->
     <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
     <!--
@@ -15,7 +12,7 @@
         <build-lib name="xeumeuleu"/>
     </target>
     
-    <target name="xeuseuleu" description="build library">
+    <target name="xeuseuleu" depends="xeumeuleu" description="build library">
         <build-lib name="xeuseuleu"/>
     </target>
 
@@ -79,8 +76,6 @@
                 <include name="name_caller*.h"/>
                 <include name="optional.h"/>
             </module>
-        </deploy>
-        <deploy>
             <module name="xeuseuleu">
                 <include name="xsl.h"/>
                 <include name="exception.h"/>
