@@ -48,4 +48,6 @@ BOOST_AUTO_TEST_CASE( tranformation_creates_a_file )
        << xml::end();
     std::ifstream file( filename.c_str() );
     BOOST_CHECK( file.is_open() );
+    file.close();
+    std::remove( filename.c_str() );
 }
