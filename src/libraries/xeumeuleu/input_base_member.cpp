@@ -54,13 +54,13 @@ input_base_member::input_base_member( DOMDocument& document )
 
 namespace
 {
-    void clean( const DOMNode* const pNode )
+    void clean( const DOMNode* pNode )
     {
-        if( pNode )
+        while( pNode )
         {
             delete reinterpret_cast< DOMLocator* >( pNode->getUserData( translate( "locator" ) ) );
-            clean( pNode->getNextSibling() );
             clean( pNode->getFirstChild() );
+            pNode = pNode->getNextSibling();
         }
     }
 }
