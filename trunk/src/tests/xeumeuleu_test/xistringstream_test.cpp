@@ -293,41 +293,38 @@ BOOST_AUTO_TEST_CASE( internal_schema_is_used_only_if_specified )
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml ) );
 }
 
-
 namespace
 {
-    struct Reader
+    class my_class
     {
-        void Read( xml::xistream& xis )
+    public:
+        void read( xml::xistream& xis )
         {
-            std::string test;
-            xis >> xml::attribute( "a", test );
+            xml::attribute< std::string >( xis, "a" );
         }
     };
-
-    std::string CreateHugeXml()
+    std::string create()
     {
         std::stringstream str;
-        str << "<root>\n";
-        const unsigned int hugeNumber = 100000;
-        for( unsigned i = 0; i < hugeNumber; ++i )
-            str << "  <element a='dummy'/>\n";
-        str << "</root>\n";
+        str << "<root>" << std::endl;
+        for( unsigned int i = 0; i < 100000; ++i )
+            str << "  <element a='dummy'/>" << std::endl;
+        str << "</root>" << std::endl;
         return str.str();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_hug_xml_is_okay
+// Name: reading_huge_xml_is_okay
 // Created: AGE 2007-10-22
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_hug_xml_is_okay )
+BOOST_AUTO_TEST_CASE( reading_huge_xml_is_okay )
 {
-    Reader reader;
+    my_class reader;
     {
-        xml::xistringstream xis( CreateHugeXml() );
+        xml::xistringstream xis( create() );
         xis >> xml::start( "root" )
-                >> xml::list( "element", reader, &Reader::Read )
+                >> xml::list( "element", reader, &my_class::read )
             >> xml::end();
     }
 }
