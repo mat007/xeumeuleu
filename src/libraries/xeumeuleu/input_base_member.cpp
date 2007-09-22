@@ -58,7 +58,7 @@ namespace
     {
         while( pNode )
         {
-            delete reinterpret_cast< DOMLocator* >( pNode->getUserData( translate( "locator" ) ) );
+            delete reinterpret_cast< locator* >( pNode->getUserData( translate( "locator" ) ) );
             clean( pNode->getFirstChild() );
             pNode = pNode->getNextSibling();
         }
