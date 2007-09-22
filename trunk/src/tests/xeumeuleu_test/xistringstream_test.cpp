@@ -292,3 +292,42 @@ BOOST_AUTO_TEST_CASE( internal_schema_is_used_only_if_specified )
     const std::string xml( "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />" );
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml ) );
 }
+
+
+namespace
+{
+    struct Reader
+    {
+        void Read( xml::xistream& xis )
+        {
+            std::string test;
+            xis >> xml::attribute( "a", test );
+        }
+    };
+
+    std::string CreateHugeXml()
+    {
+        std::stringstream str;
+        str << "<root>\n";
+        const unsigned int hugeNumber = 100000;
+        for( unsigned i = 0; i < hugeNumber; ++i )
+            str << "  <element a='dummy'/>\n";
+        str << "</root>\n";
+        return str.str();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_hug_xml_is_okay
+// Created: AGE 2007-10-22
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_hug_xml_is_okay )
+{
+    Reader reader;
+    {
+        xml::xistringstream xis( CreateHugeXml() );
+        xis >> xml::start( "root" )
+                >> xml::list( "element", reader, &Reader::Read )
+            >> xml::end();
+    }
+}
