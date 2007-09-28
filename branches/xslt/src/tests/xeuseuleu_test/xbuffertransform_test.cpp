@@ -47,19 +47,3 @@ BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_serialized )
 	xst << xbt << xis;
 	BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><buffer-root/>", xst.str() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: xbuffertransform_can_be_serialized
-// Created: SLI 2007-09-25
-// -----------------------------------------------------------------------------
-//BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_serialized )
-//{
-//	xsl::xbuffertransform xbt( BOOST_RESOLVE( "stylesheet1.xsl" ) );
-//	xsl::xstringtransform xst( BOOST_RESOLVE( "stylesheet2.xsl" ) );
-//	xml::xistringstream xis( "<root/>" );
-//	xst << xml::start( "root" )
-//			<< xbt << xis
-//			<< xbt << xis
-//		<< xml::end();
-//	BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><new-root><branch/><branch/></new-root>", xst.str() );
-//}
