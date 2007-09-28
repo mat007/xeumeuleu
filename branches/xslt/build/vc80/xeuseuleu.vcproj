@@ -15,8 +15,8 @@
 	<Configurations>
 		<Configuration
 			Name="debug|Win32"
-			OutputDirectory="../../out/libraries/$(ProjectName)/vc71/$(ConfigurationName)"
-			IntermediateDirectory="../../out/libraries/$(ProjectName)/vc71/$(ConfigurationName)"
+			OutputDirectory="../../out/libraries/$(ProjectName)/vc80/$(ConfigurationName)"
+			IntermediateDirectory="../../out/libraries/$(ProjectName)/vc80/$(ConfigurationName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			>
@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/lib$(ProjectName)-vc71-mt-gd.lib"
+				OutputFile="$(OutDir)/lib$(ProjectName)-vc80-mt-gd.lib"
 				AdditionalLibraryDirectories="$(OutDir)"
 			/>
 			<Tool
@@ -85,8 +85,8 @@
 		</Configuration>
 		<Configuration
 			Name="release|Win32"
-			OutputDirectory="../../out/libraries/$(ProjectName)/vc71/$(ConfigurationName)"
-			IntermediateDirectory="../../out/libraries/$(ProjectName)/vc71/$(ConfigurationName)"
+			OutputDirectory="../../out/libraries/$(ProjectName)/vc80/$(ConfigurationName)"
+			IntermediateDirectory="../../out/libraries/$(ProjectName)/vc80/$(ConfigurationName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			>
@@ -134,7 +134,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/lib$(ProjectName)-vc71-mt.lib"
+				OutputFile="$(OutDir)/lib$(ProjectName)-vc80-mt.lib"
 				AdditionalLibraryDirectories="$(OutDir)"
 			/>
 			<Tool
@@ -219,6 +219,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\xalan.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\xbuffertransform.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\xbuffertransform.h"
 				>
 			</File>
 			<File

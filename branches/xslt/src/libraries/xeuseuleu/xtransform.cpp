@@ -31,7 +31,8 @@
 */
 
 #include "xtransform.h"
-#include "output.h"
+#include "string_output.h"
+#include "xbuffertransform.h"
 #include <sstream>
 #include <fstream>
 
@@ -43,12 +44,12 @@ using namespace xsl;
 // -----------------------------------------------------------------------------
 xtransform::xtransform( output& output, const std::string& stylesheet )
     : output_    ( output )
-    , stylesheet_( stylesheet )
     , level_     ( 0 )
 {
     std::ifstream file( stylesheet.c_str() );
     if( ! file.is_open() )
         throw std::runtime_error( "Unable to open style sheet '" + stylesheet + "'" );
+    buffers_.push( std::make_pair( stylesheet, new xml::xostringstream() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,9 +67,9 @@ xtransform::~xtransform()
 // -----------------------------------------------------------------------------
 xtransform& xtransform::operator<<( const xml::start& start )
 {
-    stream_ << start;
-    ++level_;
-    return *this;
+	*buffers_.top().second << start;
+	++level_;
+	return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,22 +78,56 @@ xtransform& xtransform::operator<<( const xml::start& start )
 // -----------------------------------------------------------------------------
 xtransform& xtransform::operator<<( const xml::end& end )
 {
-    stream_ << end;
-    --level_;
+    *buffers_.top().second << end;
+	--level_;
     transform();
     return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: xtransform::operator<<
+// Created: SLI 2007-09-25
+// -----------------------------------------------------------------------------
+xtransform& xtransform::operator<<( const xsl::xbuffertransform& buffer )
+{
+	buffer.apply( *this );
+	return *this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: xtransform::add
+// Created: SLI 2007-09-26
+// -----------------------------------------------------------------------------
+void xtransform::add( const std::string& stylesheet )
+{
+    buffers_.push( std::make_pair( stylesheet, new xml::xostringstream() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: xtransform::transform
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
-void xtransform::transform() const
+void xtransform::transform()
 {
     if( level_ == 0 )
     {
-        std::istringstream is( stream_.str() );
-        output_.transform( is, stylesheet_ );
+        while( ! buffers_.empty() )
+        {
+            T_Buffer buffer = buffers_.top();
+            buffers_.pop();
+            std::istringstream is( buffer.second->str() );
+            delete buffer.second;
+            buffer.second = 0;
+            if( ! buffers_.empty() )
+            {
+                string_output output;
+                output.output::transform( is, buffer.first );
+                xml::xistringstream xis( output.str() );
+                *buffers_.top().second << xis;
+            }
+            else
+                output_.transform( is, buffer.first );
+        }
     }
 }
 

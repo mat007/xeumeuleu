@@ -30,8 +30,8 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_stringoutput_h_
-#define _xeuseuleu_stringoutput_h_
+#ifndef _xeuseuleu_string_output_h_
+#define _xeuseuleu_string_output_h_
 
 #include "transform.h"
 #include "os_base_member.h"
@@ -63,4 +63,4 @@ public:
 
 }
 
-#endif // _xeuseuleu_stringoutput_h_
+#endif // _xeuseuleu_string_output_h_

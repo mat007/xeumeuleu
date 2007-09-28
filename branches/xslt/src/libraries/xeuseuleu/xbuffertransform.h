@@ -30,87 +30,53 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_xtransform_h_
-#define _xeuseuleu_xtransform_h_
+#ifndef _xeuseuleu_xbuffertransform_h_
+#define _xeuseuleu_xbuffertransform_h_
 
-#include "xeumeuleu/xml.h"
 #include <string>
-#include <stack>
-#include <memory>
 
 namespace xsl
 {
-    class output;
-	class xbuffertransform;
+	class xtransform;
 
 // =============================================================================
-/** @class  xtransform
-    @brief  Xsl transform base class
+/** @class  xbuffertransform
+    @brief  Xsl chained transform
+    @par    Using example
+    @code
+    xsl::xbuffertransform xbt( "transform.xsl" );
+    @endcode
 */
-// Created: SLI 2007-09-10
+// Created: SLI 2007-09-07
 // =============================================================================
-class xtransform
+class xbuffertransform
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    virtual ~xtransform();
+    explicit xbuffertransform( const std::string& stylesheet );
+    virtual ~xbuffertransform();
     //@}
 
-    //! @name Operations
-    //@{
-    void parameter( const std::string& key, const std::string& expression );
-	void add( const std::string& stylesheet );
-    //@}
-
-    //! @name Operators
-    //@{
-    xtransform& operator<<( const xml::start& start );
-    xtransform& operator<<( const xml::end& end );
-	xtransform& operator<<( const xsl::xbuffertransform& buffer );
-
-    template< typename T > xtransform& operator<<( const T& value )
-    {
-	    *buffers_.top().second << value;
-        transform();
-        return *this;
-    }
-    //@}
-
-protected:
     //! @name Constructors/Destructor
     //@{
-    xtransform( output& output, const std::string& stylesheet );
-    //@}
+	void apply( xtransform& xst ) const;
+	//@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    xtransform( const xtransform& );            //!< Copy constructor
-    xtransform& operator=( const xtransform& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void transform();
-    //@}
-
-private:
-    //! @name Types
-    //@{
-	typedef std::pair< std::string, xml::xostringstream* > T_Buffer;
-	typedef std::stack< T_Buffer > T_Buffers;
+    xbuffertransform( const xbuffertransform& );            //!< Copy constructor
+    xbuffertransform& operator=( const xbuffertransform& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    output& output_;
-    unsigned int level_;
-	T_Buffers buffers_;
-    //@}
+	const std::string stylesheet_;
+	//@}
 };
 
 }
 
-#endif // _xeuseuleu_xtransform_h_
+#endif // _xeuseuleu_xbuffertransform_h_

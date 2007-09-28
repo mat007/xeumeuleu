@@ -28,15 +28,37 @@
 *   THEORY  OF  LIABILITY,  WHETHER IN  CONTRACT,  STRICT LIABILITY, OR TORT
 *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY  WAY  OUT OF  THE USE
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
-*/
+*/   
 
-#ifndef _xeuseuleu_xsl_h_
-#define _xeuseuleu_xsl_h_
-
-#include "xftransform.h"
-#include "xstringtransform.h"
 #include "xbuffertransform.h"
-#include "parameter.h"
-#include "exception.h"
+#include "xtransform.h"
 
-#endif // _xeuseuleu_xsl_h_
+using namespace xsl;
+
+// -----------------------------------------------------------------------------
+// Name: xbuffertransform constructor
+// Created: SLI 2007-09-26
+// -----------------------------------------------------------------------------
+xbuffertransform::xbuffertransform( const std::string& stylesheet )
+    : stylesheet_( stylesheet )
+{
+	// NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: xbuffertransform destructor
+// Created: SLI 2007-09-26
+// -----------------------------------------------------------------------------
+xbuffertransform::~xbuffertransform()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: xbuffertransform::apply
+// Created: SLI 2007-09-26
+// -----------------------------------------------------------------------------
+void xbuffertransform::apply( xtransform& xst ) const
+{
+	xst.add( stylesheet_ );
+}
