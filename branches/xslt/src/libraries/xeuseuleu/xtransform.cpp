@@ -33,8 +33,6 @@
 #include "xtransform.h"
 #include "string_output.h"
 #include "xbuffertransform.h"
-#include <sstream>
-#include <fstream>
 
 using namespace xsl;
 
@@ -42,14 +40,9 @@ using namespace xsl;
 // Name: xtransform constructor
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
-xtransform::xtransform( output& output, const std::string& stylesheet )
-    : output_    ( output )
-    , level_     ( 0 )
+xtransform::xtransform( output& output )
 {
-    std::ifstream file( stylesheet.c_str() );
-    if( ! file.is_open() )
-        throw std::runtime_error( "Unable to open style sheet '" + stylesheet + "'" );
-    buffers_.push( std::make_pair( stylesheet, new xml::xostringstream() ) );
+    buffers_.push( std::make_pair( 0, &output ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,8 +60,8 @@ xtransform::~xtransform()
 // -----------------------------------------------------------------------------
 xtransform& xtransform::operator<<( const xml::start& start )
 {
-	*buffers_.top().second << start;
-	++level_;
+	buffers_.top().second->apply( start );
+    ++buffers_.top().first;
 	return *this;
 }
 
@@ -78,8 +71,8 @@ xtransform& xtransform::operator<<( const xml::start& start )
 // -----------------------------------------------------------------------------
 xtransform& xtransform::operator<<( const xml::end& end )
 {
-    *buffers_.top().second << end;
-	--level_;
+    buffers_.top().second->apply( end );
+	--buffers_.top().first;
     transform();
     return *this;
 }
@@ -100,7 +93,7 @@ xtransform& xtransform::operator<<( const xsl::xbuffertransform& buffer )
 // -----------------------------------------------------------------------------
 void xtransform::add( const std::string& stylesheet )
 {
-    buffers_.push( std::make_pair( stylesheet, new xml::xostringstream() ) );
+    buffers_.push( std::make_pair( 0, new string_output( stylesheet ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,24 +102,16 @@ void xtransform::add( const std::string& stylesheet )
 // -----------------------------------------------------------------------------
 void xtransform::transform()
 {
-    if( level_ == 0 )
+    while( ! buffers_.empty() && buffers_.top().first == 0 )
     {
-        while( ! buffers_.empty() )
+        T_Buffer buffer = buffers_.top();
+        buffers_.pop();
+        buffer.second->transform();
+        if( ! buffers_.empty() )
         {
-            T_Buffer buffer = buffers_.top();
-            buffers_.pop();
-            std::istringstream is( buffer.second->str() );
+            buffers_.top().second->apply( *buffer.second );
             delete buffer.second;
             buffer.second = 0;
-            if( ! buffers_.empty() )
-            {
-                string_output output;
-                output.output::transform( is, buffer.first );
-                xml::xistringstream xis( output.str() );
-                *buffers_.top().second << xis;
-            }
-            else
-                output_.transform( is, buffer.first );
         }
     }
 }
@@ -137,5 +122,5 @@ void xtransform::transform()
 // -----------------------------------------------------------------------------
 void xtransform::parameter( const std::string& key, const std::string& expression )
 {
-    output_.parameter( key, expression );
+    buffers_.top().second->parameter( key, expression );
 }

@@ -34,6 +34,7 @@
 #define _xeuseuleu_xs_base_member_h_
 
 #include <memory>
+#include <string>
 
 namespace xsl
 {
@@ -50,7 +51,7 @@ class xs_base_member
 public:
     //! @name Constructors/Destructor
     //@{
-             xs_base_member();
+    explicit xs_base_member( const std::string& stylesheet );
     virtual ~xs_base_member();
     //@}
 

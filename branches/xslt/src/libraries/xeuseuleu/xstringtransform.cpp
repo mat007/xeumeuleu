@@ -40,7 +40,8 @@ using namespace xsl;
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
 xstringtransform::xstringtransform( const std::string& stylesheet )
-    : xtransform( *pOutput_, stylesheet )
+    : xs_base_member( stylesheet ) 
+    , xtransform( *pOutput_ )
 {
     // NOTHING
 }

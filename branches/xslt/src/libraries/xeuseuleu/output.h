@@ -34,10 +34,12 @@
 #define _xeuseuleu_output_h_
 
 #include "xalan.h"
+#include "xeumeuleu/xml.h"
 #include <memory>
 #include <string>
 #include <vector>
 #include <iosfwd>
+#include <sstream>
 
 namespace xsl
 {
@@ -59,13 +61,20 @@ public:
     //@{
     void parameter( const std::string& key, const std::string& expression );
 
-    void transform( std::istream& is, const std::string& stylesheet );
+    void transform();
+
+    void apply( const output& output );
+
+    template< typename T > void apply( const T& value )
+    {
+        stream_ << value;
+    }
     //@}
 
 protected:
     //! @name Constructors/Destructor
     //@{
-    explicit output( std::auto_ptr< XALAN_CPP_NAMESPACE::XSLTResultTarget > pTarget );
+    output( std::auto_ptr< XALAN_CPP_NAMESPACE::XSLTResultTarget > pTarget, const std::string& stylesheet );
     //@}
 
 private:
@@ -86,7 +95,10 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< XALAN_CPP_NAMESPACE::XSLTResultTarget > pTarget_;
+    const std::string stylesheet_;
     T_Parameters parameters_;
+    xml::xostringstream stream_;
+    std::ostringstream str_;
     //@}
 };
 

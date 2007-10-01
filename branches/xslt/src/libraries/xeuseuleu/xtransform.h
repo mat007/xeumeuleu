@@ -34,13 +34,13 @@
 #define _xeuseuleu_xtransform_h_
 
 #include "xeumeuleu/xml.h"
+#include "output.h"
 #include <string>
 #include <stack>
 #include <memory>
 
 namespace xsl
 {
-    class output;
 	class xbuffertransform;
 
 // =============================================================================
@@ -71,7 +71,7 @@ public:
 
     template< typename T > xtransform& operator<<( const T& value )
     {
-	    *buffers_.top().second << value;
+	    buffers_.top().second->apply( value );
         transform();
         return *this;
     }
@@ -80,7 +80,7 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    xtransform( output& output, const std::string& stylesheet );
+    explicit xtransform( output& output );
     //@}
 
 private:
@@ -98,15 +98,13 @@ private:
 private:
     //! @name Types
     //@{
-	typedef std::pair< std::string, xml::xostringstream* > T_Buffer;
+	typedef std::pair< unsigned int, output* > T_Buffer;
 	typedef std::stack< T_Buffer > T_Buffers;
     //@}
 
 private:
     //! @name Member data
     //@{
-    output& output_;
-    unsigned int level_;
 	T_Buffers buffers_;
     //@}
 };

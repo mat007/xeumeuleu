@@ -34,8 +34,8 @@
 #define _xeuseuleu_string_output_h_
 
 #include "transform.h"
-#include "os_base_member.h"
 #include "output.h"
+#include "os_base_member.h"
 #include <string>
 
 namespace xsl
@@ -46,12 +46,12 @@ namespace xsl
 */
 // Created: SLI 2007-09-10
 // =============================================================================
-class string_output : private transform, private os_base_member, public output
+class string_output : private os_base_member,private transform, public output
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             string_output();
+    explicit string_output( const std::string& stylesheet );
     virtual ~string_output();
     //@}
 

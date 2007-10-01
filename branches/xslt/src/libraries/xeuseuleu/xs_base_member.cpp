@@ -39,8 +39,8 @@ using namespace xsl;
 // Name: xs_base_member constructor
 // Created: SLI 2007-09-19
 // -----------------------------------------------------------------------------
-xs_base_member::xs_base_member()
-    : pOutput_( new string_output() )
+xs_base_member::xs_base_member( const std::string& stylesheet )
+    : pOutput_( new string_output( stylesheet ) )
 {
     // NOTHING
 }

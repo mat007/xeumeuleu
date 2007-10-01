@@ -50,7 +50,7 @@ class file_output : private transform, public output
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit file_output( const std::string& filename );
+    explicit file_output( const std::string& stylesheet, const std::string& filename );
     virtual ~file_output();
     //@}
 

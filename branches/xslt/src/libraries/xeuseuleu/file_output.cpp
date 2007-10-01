@@ -39,8 +39,8 @@ using namespace XALAN_CPP_NAMESPACE;
 // Name: file_output constructor
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
-file_output::file_output( const std::string& filename )
-    : output( std::auto_ptr< XSLTResultTarget >( new XSLTResultTarget( filename.c_str() ) ) )
+file_output::file_output( const std::string& stylesheet, const std::string& filename )
+    : output( std::auto_ptr< XSLTResultTarget >( new XSLTResultTarget( filename.c_str() ) ), stylesheet )
 {
     // NOTHING
 }

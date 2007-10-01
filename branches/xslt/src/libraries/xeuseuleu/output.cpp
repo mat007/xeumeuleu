@@ -32,6 +32,7 @@
 
 #include "output.h"
 #include "exception.h"
+#include <fstream>
 
 using namespace xsl;
 using namespace XALAN_CPP_NAMESPACE;
@@ -40,10 +41,13 @@ using namespace XALAN_CPP_NAMESPACE;
 // Name: output constructor
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
-output::output( std::auto_ptr< XSLTResultTarget > pTarget )
-    : pTarget_( pTarget )
+output::output( std::auto_ptr< XSLTResultTarget > pTarget, const std::string& stylesheet )
+    : pTarget_   ( pTarget )
+    , stylesheet_( stylesheet )
 {
-    // NOTHING
+    std::ifstream file( stylesheet.c_str() );
+    if( ! file.is_open() )
+        throw std::runtime_error( "Unable to open style sheet '" + stylesheet + "'" );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,15 +63,18 @@ output::~output()
 // Name: output::transform
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
-void output::transform( std::istream& is, const std::string& stylesheet )
+void output::transform()
 {
+    std::istringstream is( stream_.str() );
     XSLTInputSource in( &is );
-    XSLTInputSource xsl( stylesheet.c_str() );
+    XSLTInputSource xsl( stylesheet_.c_str() );
     XalanTransformer transformer;
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
-    if( transformer.transform( in, xsl, *pTarget_ ) )
+    if( transformer.transform( in, xsl, str_ ) )
         throw exception( transformer.getLastError() );
+    if( pTarget_->getByteStream() != 0 )
+       *pTarget_->getByteStream() << str_.str();
 }
 
 // -----------------------------------------------------------------------------
@@ -77,4 +84,14 @@ void output::transform( std::istream& is, const std::string& stylesheet )
 void output::parameter( const std::string& key, const std::string& expression )
 {
     parameters_.push_back( std::make_pair( key, "'" + expression + "'" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: output::apply
+// Created: SLI 2007-09-28
+// -----------------------------------------------------------------------------
+void output::apply( const output& output )
+{
+    xml::xistringstream xis( output.str_.str() );
+    stream_ << xis;
 }
