@@ -33,9 +33,9 @@
 #ifndef _xeuseuleu_fileoutput_h_
 #define _xeuseuleu_fileoutput_h_
 
+#include "of_base_member.h"
 #include "transform.h"
 #include "output.h"
-#include "of_base_member.h"
 #include <string>
 
 namespace xsl
