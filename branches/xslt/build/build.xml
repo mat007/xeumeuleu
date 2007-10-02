@@ -85,6 +85,7 @@
                 <include name="xstringtransform.h"/>
                 <include name="xs_base_member.h"/>
                 <include name="xtransform.h"/>
+                <include name="xbuffertransform.h"/>
                 <include name="buffer.h"/>
                 <include name="output.h"/>
             </module>
