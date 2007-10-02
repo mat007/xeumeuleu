@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeuseuleu_fileoutput_h_
-#define _xeuseuleu_fileoutput_h_
+#ifndef _xeuseuleu_file_output_h_
+#define _xeuseuleu_file_output_h_
 
 #include "of_base_member.h"
 #include "transform.h"
@@ -51,7 +51,7 @@ class file_output : private of_base_member, private transform, public output
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit file_output( const std::string& stylesheet, const std::string& filename );
+             file_output( const std::string& stylesheet, const std::string& filename );
     virtual ~file_output();
     //@}
 
@@ -65,4 +65,4 @@ private:
 
 }
 
-#endif // _xeuseuleu_fileoutput_h_
+#endif // _xeuseuleu_file_output_h_
