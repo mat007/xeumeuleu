@@ -162,6 +162,14 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\buffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\buffer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\exception.cpp"
 				>
 			</File>

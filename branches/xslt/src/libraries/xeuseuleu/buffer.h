@@ -30,68 +30,67 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeuseuleu_xtransform_h_
-#define _xeuseuleu_xtransform_h_
+#ifndef _xeuseuleu_buffer_h_
+#define _xeuseuleu_buffer_h_
 
-#include "xeumeuleu/xml.h"
-#include "buffer.h"
+#include "output.h"
 
 namespace xsl
 {
-    class xbuffertransform;
-
 // =============================================================================
-/** @class  xtransform
-    @brief  Xsl transform base class
+/** @class  buffer
+    @brief  Buffer implementation
 */
-// Created: SLI 2007-09-10
+// Created: MCO 2007-10-02
 // =============================================================================
-class xtransform
+class buffer
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    virtual ~xtransform();
+                 buffer( output& output, std::auto_ptr< buffer > pNext );
+        explicit buffer( output& output );
+                ~buffer();
     //@}
 
     //! @name Operations
     //@{
     void parameter( const std::string& key, const std::string& expression );
 
-    void add( const std::string& stylesheet );
-    //@}
+    buffer* apply( const xml::start& start );
+    buffer* apply( const xml::end& end );
 
-    //! @name Operators
-    //@{
-    xtransform& operator<<( const xsl::xbuffertransform& buffer );
-
-    template< typename T > xtransform& operator<<( const T& value )
+    template< typename T > buffer* apply( const T& value )
     {
-        pBuffer_.reset( pBuffer_->apply( value ) );
-        return *this;
+        output_.apply( value ); // $$$$ MAT : this forces to include "output.h" which in turn includes "xalan.h" !
+        return transform();
     }
-    //@}
-
-protected:
-    //! @name Constructors/Destructor
-    //@{
-    explicit xtransform( output& output );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    xtransform( const xtransform& );            //!< Copy constructor
-    xtransform& operator=( const xtransform& ); //!< Assignment operator
+    buffer( const buffer& );            //!< Copy constructor
+    buffer& operator=( const buffer& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    buffer* transform();
+    buffer* chain();
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< buffer > pBuffer_;
+    output& output_;
+    bool owned_; // $$$$ MAT : not so great...
+    std::auto_ptr< buffer > pNext_;
+    unsigned int level_;
     //@}
 };
 
 }
 
-#endif // _xeuseuleu_xtransform_h_
+#endif // _xeuseuleu_buffer_h_
