@@ -33,7 +33,6 @@
 #ifndef _xeuseuleu_xtransform_h_
 #define _xeuseuleu_xtransform_h_
 
-#include "xeumeuleu/xml.h"
 #include "buffer.h"
 
 namespace xsl
