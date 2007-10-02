@@ -38,7 +38,6 @@
 
 namespace xsl
 {
-
 // =============================================================================
 /** @class  xstringtransform
     @brief  Xsl string transform
