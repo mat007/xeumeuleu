@@ -33,7 +33,6 @@
 #include "file_output.h"
 
 using namespace xsl;
-using namespace XALAN_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: file_output constructor
