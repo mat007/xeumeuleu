@@ -50,15 +50,15 @@ BOOST_AUTO_TEST_CASE( unexisting_style_sheet_file_throws )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( tranformation_is_applied_at_end_root_level )
 {
-    xsl::xstringtransform xf( BOOST_RESOLVE( "stylesheet.xsl" ) );
-    xf << xml::start( "root" )
-           << xml::start( "element" )
-           << xml::end()
-           << xml::start( "element" )
-           << xml::end();
-    BOOST_CHECK( xf.str().empty() );
-    xf << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><new-root><transformed/><transformed/></new-root>", xf.str() );
+    xsl::xstringtransform xst( BOOST_RESOLVE( "stylesheet.xsl" ) );
+    xst << xml::start( "root" )
+            << xml::start( "element" )
+            << xml::end()
+            << xml::start( "element" )
+            << xml::end();
+    BOOST_CHECK( xst.str().empty() );
+    xst << xml::end();
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><new-root><transformed/><transformed/></new-root>", xst.str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,13 +67,13 @@ BOOST_AUTO_TEST_CASE( tranformation_is_applied_at_end_root_level )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( tranformation_from_an_xistream_is_valid )
 {
-    xsl::xstringtransform xf( BOOST_RESOLVE( "stylesheet.xsl" ) );
+    xsl::xstringtransform xst( BOOST_RESOLVE( "stylesheet.xsl" ) );
     xml::xistringstream xis(
         "<root>"
             "<element/>"
             "<element/>"
         "</root>"
     );
-    xf << xis;
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><new-root><transformed/><transformed/></new-root>", xf.str() );
+    xst << xis;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><new-root><transformed/><transformed/></new-root>", xst.str() );
 }
