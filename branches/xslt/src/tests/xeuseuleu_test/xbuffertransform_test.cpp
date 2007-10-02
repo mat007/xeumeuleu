@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_inserted_in_the_serialization_flow
 BOOST_AUTO_TEST_CASE( xbuffertransform_can_have_parameters )
 {
     xsl::xstringtransform xst( BOOST_RESOLVE( "stylesheet.xsl" ) );
-    xsl::xbuffertransform xbt( BOOST_RESOLVE( "parameter.xsl" ) );
+    xsl::xbuffertransform xbt( BOOST_RESOLVE( "parameter_test.xsl" ) );
     xml::xistringstream xis( "<root/>" );
     xst << xbt << xsl::parameter( "key1", "expression1" )
                << xsl::parameter( "key2", "expression2" )
