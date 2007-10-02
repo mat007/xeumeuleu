@@ -60,6 +60,7 @@ public:
     //! @name Operations
     //@{
     void parameter( const std::string& key, const std::string& expression );
+
     void add( const std::string& stylesheet );
     //@}
 

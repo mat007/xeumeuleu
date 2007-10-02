@@ -67,7 +67,7 @@ public:
 
     template< typename T > void apply( const T& value )
     {
-        stream_ << value;
+        xos_ << value;
     }
     //@}
 
@@ -84,6 +84,11 @@ private:
     output& operator=( const output& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void transform( XALAN_CPP_NAMESPACE::XSLTInputSource& in, XALAN_CPP_NAMESPACE::XSLTInputSource& xsl );
+    //@}
+
 private:
     //! @name Types
     //@{
@@ -97,8 +102,8 @@ private:
     std::ostream& target_;
     const std::string stylesheet_;
     T_Parameters parameters_;
-    xml::xostringstream stream_;
-    std::ostringstream str_;
+    xml::xostringstream xos_;
+    std::ostringstream buffer_;
     //@}
 };
 
