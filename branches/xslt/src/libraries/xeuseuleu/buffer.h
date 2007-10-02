@@ -62,7 +62,7 @@ public:
 
     template< typename T > buffer* apply( const T& value )
     {
-        output_.apply( value ); // $$$$ MAT : this forces to include "output.h" which in turn includes "xalan.h" !
+        output_.apply( value );
         return transform();
     }
     //@}

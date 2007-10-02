@@ -33,12 +33,9 @@
 #ifndef _xeuseuleu_output_h_
 #define _xeuseuleu_output_h_
 
-#include "xalan.h"
 #include "xeumeuleu/xml.h"
-#include <memory>
 #include <string>
 #include <vector>
-#include <iosfwd>
 #include <sstream>
 
 namespace xsl
@@ -82,11 +79,6 @@ private:
     //@{
     output( const output& );            //!< Copy constructor
     output& operator=( const output& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void transform( XALAN_CPP_NAMESPACE::XSLTInputSource& in, XALAN_CPP_NAMESPACE::XSLTInputSource& xsl );
     //@}
 
 private:

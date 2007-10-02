@@ -32,6 +32,7 @@
 
 #include "output.h"
 #include "exception.h"
+#include "xalan.h"
 #include <fstream>
 
 using namespace xsl;
@@ -68,21 +69,12 @@ void output::transform()
     std::istringstream is( xos_.str() );
     XSLTInputSource in( &is );
     XSLTInputSource xsl( stylesheet_.c_str() );
-    transform( in, xsl );
-    target_ << buffer_.str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: output::transform
-// Created: MCO 2007-10-02
-// -----------------------------------------------------------------------------
-void output::transform( XSLTInputSource& in, XSLTInputSource& xsl )
-{
     XalanTransformer transformer;
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
     if( transformer.transform( in, xsl, buffer_ ) )
         throw exception( transformer.getLastError() );
+    target_ << buffer_.str();
 }
 
 // -----------------------------------------------------------------------------
