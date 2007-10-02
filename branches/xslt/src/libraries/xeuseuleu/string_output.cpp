@@ -33,14 +33,13 @@
 #include "string_output.h"
 
 using namespace xsl;
-using namespace XALAN_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: string_output constructor
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
 string_output::string_output( const std::string& stylesheet )
-    : output( std::auto_ptr< XSLTResultTarget >( new XSLTResultTarget( os_ ) ), stylesheet )
+    : output( os_, stylesheet )
 {
     // NOTHING
 }

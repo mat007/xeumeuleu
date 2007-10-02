@@ -74,7 +74,7 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    output( std::auto_ptr< XALAN_CPP_NAMESPACE::XSLTResultTarget > pTarget, const std::string& stylesheet );
+    output( std::ostream& target, const std::string& stylesheet );
     //@}
 
 private:
@@ -94,7 +94,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< XALAN_CPP_NAMESPACE::XSLTResultTarget > pTarget_;
+    std::ostream& target_;
     const std::string stylesheet_;
     T_Parameters parameters_;
     xml::xostringstream stream_;

@@ -178,6 +178,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\of_base_member.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\of_base_member.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\os_base_member.cpp"
 				>
 			</File>

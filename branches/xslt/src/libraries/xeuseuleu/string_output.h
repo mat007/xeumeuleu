@@ -46,7 +46,7 @@ namespace xsl
 */
 // Created: SLI 2007-09-10
 // =============================================================================
-class string_output : private os_base_member,private transform, public output
+class string_output : private os_base_member, private transform, public output
 {
 public:
     //! @name Constructors/Destructor

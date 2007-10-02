@@ -41,8 +41,8 @@ using namespace XALAN_CPP_NAMESPACE;
 // Name: output constructor
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
-output::output( std::auto_ptr< XSLTResultTarget > pTarget, const std::string& stylesheet )
-    : pTarget_   ( pTarget )
+output::output( std::ostream& target, const std::string& stylesheet )
+    : target_    ( target )
     , stylesheet_( stylesheet )
 {
     std::ifstream file( stylesheet.c_str() );
@@ -73,8 +73,7 @@ void output::transform()
         transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
     if( transformer.transform( in, xsl, str_ ) )
         throw exception( transformer.getLastError() );
-    if( pTarget_->getByteStream() != 0 )
-       *pTarget_->getByteStream() << str_.str();
+    target_ << str_.str();
 }
 
 // -----------------------------------------------------------------------------

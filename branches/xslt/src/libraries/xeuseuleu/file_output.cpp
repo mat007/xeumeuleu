@@ -40,7 +40,8 @@ using namespace XALAN_CPP_NAMESPACE;
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
 file_output::file_output( const std::string& stylesheet, const std::string& filename )
-    : output( std::auto_ptr< XSLTResultTarget >( new XSLTResultTarget( filename.c_str() ) ), stylesheet )
+    : of_base_member( filename )
+    , output( os_, stylesheet )
 {
     // NOTHING
 }

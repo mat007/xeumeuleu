@@ -30,39 +30,25 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_fileoutput_h_
-#define _xeuseuleu_fileoutput_h_
-
-#include "transform.h"
-#include "output.h"
 #include "of_base_member.h"
-#include <string>
 
-namespace xsl
+using namespace xsl;
+
+// -----------------------------------------------------------------------------
+// Name: of_base_member constructor
+// Created: SLI 2007-09-19
+// -----------------------------------------------------------------------------
+of_base_member::of_base_member( const std::string& filename )
+    : os_( filename.c_str() )
 {
-// =============================================================================
-/** @class  file_output
-    @brief  File output implementation
-*/
-// Created: SLI 2007-09-10
-// =============================================================================
-class file_output : private of_base_member, private transform, public output
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-    explicit file_output( const std::string& stylesheet, const std::string& filename );
-    virtual ~file_output();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    file_output( const file_output& );            //!< Copy constructor
-    file_output& operator=( const file_output& ); //!< Assignment operator
-    //@}
-};
-
+    // NOTHING
 }
 
-#endif // _xeuseuleu_fileoutput_h_
+// -----------------------------------------------------------------------------
+// Name: of_base_member destructor
+// Created: SLI 2007-09-19
+// -----------------------------------------------------------------------------
+of_base_member::~of_base_member()
+{
+    // NOTHING
+}

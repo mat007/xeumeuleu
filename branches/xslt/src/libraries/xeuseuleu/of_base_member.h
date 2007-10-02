@@ -30,39 +30,43 @@
 *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
 */
 
-#ifndef _xeuseuleu_fileoutput_h_
-#define _xeuseuleu_fileoutput_h_
+#ifndef _xeuseuleu_of_base_member_member_h_
+#define _xeuseuleu_of_base_member_member_h_
 
-#include "transform.h"
-#include "output.h"
-#include "of_base_member.h"
 #include <string>
+#include <fstream>
 
 namespace xsl
 {
 // =============================================================================
-/** @class  file_output
-    @brief  File output implementation
+/** @class  of_base_member
+    @brief  Base from member idiom base class
 */
-// Created: SLI 2007-09-10
+// Created: SLI 2007-09-19
 // =============================================================================
-class file_output : private of_base_member, private transform, public output
+class of_base_member
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit file_output( const std::string& stylesheet, const std::string& filename );
-    virtual ~file_output();
+    explicit of_base_member( const std::string& filename );
+    virtual ~of_base_member();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    file_output( const file_output& );            //!< Copy constructor
-    file_output& operator=( const file_output& ); //!< Assignment operator
+    of_base_member( const of_base_member& );            //!< Copy constructor
+    of_base_member& operator=( const of_base_member& ); //!< Assignment operator
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    std::ofstream os_;
     //@}
 };
 
 }
 
-#endif // _xeuseuleu_fileoutput_h_
+#endif // _xeuseuleu_of_base_member_member_h_
