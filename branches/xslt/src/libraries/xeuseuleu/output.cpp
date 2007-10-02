@@ -47,7 +47,7 @@ output::output( std::ostream& target, const std::string& stylesheet )
 {
     std::ifstream file( stylesheet.c_str() );
     if( ! file.is_open() )
-        throw std::runtime_error( "Unable to open style sheet '" + stylesheet + "'" );
+        throw exception( "Unable to open style sheet '" + stylesheet + "'" );
 }
 
 // -----------------------------------------------------------------------------
