@@ -41,8 +41,8 @@ using namespace mockpp;
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_serialized )
 {
-    xsl::xbuffertransform xbt( BOOST_RESOLVE( "stylesheet.xsl" ) );
     xsl::xstringtransform xst( BOOST_RESOLVE( "buffer_test.xsl" ) );
+    xsl::xbuffertransform xbt( BOOST_RESOLVE( "stylesheet.xsl" ) );
     xml::xistringstream xis( "<root/>" );
     xst << xbt << xis;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><buffer-root/>", xst.str() );
@@ -54,8 +54,8 @@ BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_serialized )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_inserted_in_the_serialization_flow )
 {
-    xsl::xbuffertransform xbt( BOOST_RESOLVE( "stylesheet.xsl" ) );
     xsl::xstringtransform xst( BOOST_RESOLVE( "flow_test.xsl" ) );
+    xsl::xbuffertransform xbt( BOOST_RESOLVE( "stylesheet.xsl" ) );
     xml::xistringstream xis( "<root/>" );
     xst << xml::start( "root" )
             << xbt << xis

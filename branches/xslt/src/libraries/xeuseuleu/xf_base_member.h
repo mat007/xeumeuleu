@@ -51,7 +51,7 @@ class xf_base_member
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xf_base_member( const std::string& stylesheet, const std::string& filename );
+             xf_base_member( const std::string& stylesheet, const std::string& filename );
     virtual ~xf_base_member();
     //@}
 
@@ -65,7 +65,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    std::auto_ptr< file_output > pOutput_;
+    const std::auto_ptr< file_output > pOutput_;
     //@}
 };
 
