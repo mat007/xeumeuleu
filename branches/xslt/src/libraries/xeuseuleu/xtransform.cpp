@@ -60,9 +60,9 @@ xtransform::~xtransform()
 // -----------------------------------------------------------------------------
 xtransform& xtransform::operator<<( const xml::start& start )
 {
-	buffers_.top().second->apply( start );
+    buffers_.top().second->apply( start );
     ++buffers_.top().first;
-	return *this;
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ xtransform& xtransform::operator<<( const xml::start& start )
 xtransform& xtransform::operator<<( const xml::end& end )
 {
     buffers_.top().second->apply( end );
-	--buffers_.top().first;
+    --buffers_.top().first;
     transform();
     return *this;
 }
@@ -83,8 +83,8 @@ xtransform& xtransform::operator<<( const xml::end& end )
 // -----------------------------------------------------------------------------
 xtransform& xtransform::operator<<( const xsl::xbuffertransform& buffer )
 {
-	buffer.apply( *this );
-	return *this;
+    buffer.apply( *this );
+    return *this;
 }
 
 // -----------------------------------------------------------------------------

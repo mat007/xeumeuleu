@@ -42,7 +42,7 @@ using namespace xsl;
 xbuffertransform::xbuffertransform( const std::string& stylesheet )
     : stylesheet_( stylesheet )
 {
-	// NOTHING
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -60,5 +60,5 @@ xbuffertransform::~xbuffertransform()
 // -----------------------------------------------------------------------------
 void xbuffertransform::apply( xtransform& xst ) const
 {
-	xst.add( stylesheet_ );
+    xst.add( stylesheet_ );
 }

@@ -41,7 +41,7 @@
 
 namespace xsl
 {
-	class xbuffertransform;
+    class xbuffertransform;
 
 // =============================================================================
 /** @class  xtransform
@@ -60,18 +60,18 @@ public:
     //! @name Operations
     //@{
     void parameter( const std::string& key, const std::string& expression );
-	void add( const std::string& stylesheet );
+    void add( const std::string& stylesheet );
     //@}
 
     //! @name Operators
     //@{
     xtransform& operator<<( const xml::start& start );
     xtransform& operator<<( const xml::end& end );
-	xtransform& operator<<( const xsl::xbuffertransform& buffer );
+    xtransform& operator<<( const xsl::xbuffertransform& buffer );
 
     template< typename T > xtransform& operator<<( const T& value )
     {
-	    buffers_.top().second->apply( value );
+        buffers_.top().second->apply( value );
         transform();
         return *this;
     }
@@ -98,14 +98,14 @@ private:
 private:
     //! @name Types
     //@{
-	typedef std::pair< unsigned int, output* > T_Buffer;
-	typedef std::stack< T_Buffer > T_Buffers;
+    typedef std::pair< unsigned int, output* > T_Buffer;
+    typedef std::stack< T_Buffer > T_Buffers;
     //@}
 
 private:
     //! @name Member data
     //@{
-	T_Buffers buffers_;
+    T_Buffers buffers_;
     //@}
 };
 

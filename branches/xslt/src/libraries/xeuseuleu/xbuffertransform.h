@@ -37,7 +37,7 @@
 
 namespace xsl
 {
-	class xtransform;
+    class xtransform;
 
 // =============================================================================
 /** @class  xbuffertransform
@@ -60,8 +60,8 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-	void apply( xtransform& xst ) const;
-	//@}
+    void apply( xtransform& xst ) const;
+    //@}
 
 private:
     //! @name Copy/Assignment
@@ -73,8 +73,8 @@ private:
 private:
     //! @name Member data
     //@{
-	const std::string stylesheet_;
-	//@}
+    const std::string stylesheet_;
+    //@}
 };
 
 }
