@@ -30,27 +30,67 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xftransform.h"
-#include "file_output.h"
+#ifndef _xeuseuleu_buffer_h_
+#define _xeuseuleu_buffer_h_
 
-using namespace xsl;
+#include "output.h"
 
-// -----------------------------------------------------------------------------
-// Name: xftransform constructor
-// Created: SLI 2007-09-07
-// -----------------------------------------------------------------------------
-xftransform::xftransform( const std::string& stylesheet, const std::string& filename )
-    : xf_base_member( stylesheet, filename )
-    , xtransform( *pOutput_ )
+namespace xsl
 {
-    // NOTHING
+// =============================================================================
+/** @class  buffer
+    @brief  Buffer implementation
+*/
+// Created: MCO 2007-10-02
+// =============================================================================
+class buffer
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+                 buffer( output& output, std::auto_ptr< buffer > pNext );
+        explicit buffer( output& output );
+                ~buffer();
+    //@}
+
+    //! @name Operations
+    //@{
+    void parameter( const std::string& key, const std::string& expression );
+
+    buffer* apply( const xml::start& start );
+    buffer* apply( const xml::end& end );
+
+    template< typename T > buffer* apply( const T& value )
+    {
+        output_.apply( value );
+        return transform();
+    }
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    buffer( const buffer& );            //!< Copy constructor
+    buffer& operator=( const buffer& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    buffer* transform();
+    buffer* chain();
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    output& output_;
+    bool owned_; // $$$$ MAT : not so great...
+    std::auto_ptr< buffer > pNext_;
+    unsigned int level_;
+    //@}
+};
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: xftransform destructor
-// Created: SLI 2007-09-07
-// -----------------------------------------------------------------------------
-xftransform::~xftransform()
-{
-    // NOTHING
-}
+#endif // _xeuseuleu_buffer_h_

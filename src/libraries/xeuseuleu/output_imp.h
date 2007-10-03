@@ -30,27 +30,59 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xftransform.h"
-#include "file_output.h"
+#ifndef _xsl_output_imp_h_
+#define _xsl_output_imp_h_
 
-using namespace xsl;
+#include "xeumeuleu/xml.h"
+#include <string>
+#include <vector>
 
-// -----------------------------------------------------------------------------
-// Name: xftransform constructor
-// Created: SLI 2007-09-07
-// -----------------------------------------------------------------------------
-xftransform::xftransform( const std::string& stylesheet, const std::string& filename )
-    : xf_base_member( stylesheet, filename )
-    , xtransform( *pOutput_ )
+namespace xsl
 {
-    // NOTHING
+// =============================================================================
+/** @class  output_imp
+    @brief  Transformation helper
+*/
+// Created: SLI 2007-07-06
+// =============================================================================
+class output_imp
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit output_imp( const std::string& stylesheet );
+    virtual ~output_imp();
+    //@}
+
+    //! @name Operations
+    //@{
+    void parameter( const std::string& key, const std::string& expression );
+
+    std::string transform( const std::string& input );
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    output_imp( const output_imp& );            //!< Copy constructor
+    output_imp& operator=( const output_imp& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< std::pair< std::string, std::string > > T_Parameters;
+    typedef T_Parameters::const_iterator                       CIT_Parameters;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const std::string stylesheet_;
+    T_Parameters parameters_;
+    //@}
+};
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: xftransform destructor
-// Created: SLI 2007-09-07
-// -----------------------------------------------------------------------------
-xftransform::~xftransform()
-{
-    // NOTHING
-}
+#endif // _xsl_output_imp_h_

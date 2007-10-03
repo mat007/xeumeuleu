@@ -30,27 +30,59 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xftransform.h"
-#include "file_output.h"
+#include "output_imp.h"
+#include "exception.h"
+#include "xalan.h"
+#include <fstream>
+#include <sstream>
 
 using namespace xsl;
+using namespace XALAN_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
-// Name: xftransform constructor
-// Created: SLI 2007-09-07
+// Name: output_imp constructor
+// Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-xftransform::xftransform( const std::string& stylesheet, const std::string& filename )
-    : xf_base_member( stylesheet, filename )
-    , xtransform( *pOutput_ )
+output_imp::output_imp( const std::string& stylesheet )
+    : stylesheet_( stylesheet )
+{
+    std::ifstream file( stylesheet.c_str() );
+    if( ! file.is_open() )
+        throw exception( "Unable to open style sheet '" + stylesheet + "'" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: output_imp destructor
+// Created: SLI 2007-10-03
+// -----------------------------------------------------------------------------
+output_imp::~output_imp()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: xftransform destructor
-// Created: SLI 2007-09-07
+// Name: output_imp::parameter
+// Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-xftransform::~xftransform()
+void output_imp::parameter( const std::string& key, const std::string& expression )
 {
-    // NOTHING
+    parameters_.push_back( std::make_pair( key, "'" + expression + "'" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: output_imp::transform
+// Created: SLI 2007-10-03
+// -----------------------------------------------------------------------------
+std::string output_imp::transform( const std::string& input )
+{
+    std::istringstream is( input );
+    XSLTInputSource in( &is );
+    XSLTInputSource xsl( stylesheet_.c_str() );
+    XalanTransformer output_imp;
+    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+        output_imp.setStylesheetParam( it->first.c_str(), it->second.c_str() );
+    std::ostringstream os;
+    if( output_imp.transform( in, xsl, os ) )
+        throw exception( output_imp.getLastError() );
+    return os.str();
 }

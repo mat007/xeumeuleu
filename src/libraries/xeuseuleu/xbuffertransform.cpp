@@ -30,27 +30,35 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xftransform.h"
-#include "file_output.h"
+#include "xbuffertransform.h"
+#include "xtransform.h"
 
 using namespace xsl;
 
 // -----------------------------------------------------------------------------
-// Name: xftransform constructor
-// Created: SLI 2007-09-07
+// Name: xbuffertransform constructor
+// Created: SLI 2007-09-26
 // -----------------------------------------------------------------------------
-xftransform::xftransform( const std::string& stylesheet, const std::string& filename )
-    : xf_base_member( stylesheet, filename )
-    , xtransform( *pOutput_ )
+xbuffertransform::xbuffertransform( const std::string& stylesheet )
+    : stylesheet_( stylesheet )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: xftransform destructor
-// Created: SLI 2007-09-07
+// Name: xbuffertransform destructor
+// Created: SLI 2007-09-26
 // -----------------------------------------------------------------------------
-xftransform::~xftransform()
+xbuffertransform::~xbuffertransform()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: xbuffertransform::apply
+// Created: SLI 2007-09-26
+// -----------------------------------------------------------------------------
+void xbuffertransform::apply( xtransform& xst ) const
+{
+    xst.add( stylesheet_ );
 }

@@ -15,8 +15,8 @@
 	<Configurations>
 		<Configuration
 			Name="debug|Win32"
-			OutputDirectory="../../out/libraries/$(ProjectName)/vc71/$(ConfigurationName)"
-			IntermediateDirectory="../../out/libraries/$(ProjectName)/vc71/$(ConfigurationName)"
+			OutputDirectory="../../out/libraries/$(ProjectName)/vc80/$(ConfigurationName)"
+			IntermediateDirectory="../../out/libraries/$(ProjectName)/vc80/$(ConfigurationName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			>
@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/lib$(ProjectName)-vc71-mt-gd.lib"
+				OutputFile="$(OutDir)/lib$(ProjectName)-vc80-mt-gd.lib"
 				AdditionalLibraryDirectories="$(OutDir)"
 			/>
 			<Tool
@@ -85,8 +85,8 @@
 		</Configuration>
 		<Configuration
 			Name="release|Win32"
-			OutputDirectory="../../out/libraries/$(ProjectName)/vc71/$(ConfigurationName)"
-			IntermediateDirectory="../../out/libraries/$(ProjectName)/vc71/$(ConfigurationName)"
+			OutputDirectory="../../out/libraries/$(ProjectName)/vc80/$(ConfigurationName)"
+			IntermediateDirectory="../../out/libraries/$(ProjectName)/vc80/$(ConfigurationName)"
 			ConfigurationType="4"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			>
@@ -134,7 +134,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/lib$(ProjectName)-vc71-mt.lib"
+				OutputFile="$(OutDir)/lib$(ProjectName)-vc80-mt.lib"
 				AdditionalLibraryDirectories="$(OutDir)"
 			/>
 			<Tool
@@ -162,6 +162,14 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\buffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\buffer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\exception.cpp"
 				>
 			</File>
@@ -178,6 +186,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\of_base_member.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\of_base_member.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\os_base_member.cpp"
 				>
 			</File>
@@ -191,6 +207,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\output.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\output_imp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\output_imp.h"
 				>
 			</File>
 			<File
@@ -219,6 +243,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\xalan.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\xbuffertransform.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\xbuffertransform.h"
 				>
 			</File>
 			<File
