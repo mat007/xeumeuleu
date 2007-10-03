@@ -30,69 +30,59 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeuseuleu_output_h_
-#define _xeuseuleu_output_h_
+#ifndef _xsl_transformer_h_
+#define _xsl_transformer_h_
 
 #include "xeumeuleu/xml.h"
 #include <string>
-#include <sstream>
-#include <memory>
+#include <vector>
 
 namespace xsl
 {
-    class transformer;
-
 // =============================================================================
-/** @class  output
-    @brief  Output base class
+/** @class  transformer
+    @brief  Transformation helper
 */
-// Created: SLI 2007-09-10
+// Created: SLI 2007-07-06
 // =============================================================================
-class output
+class transformer
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    virtual ~output();
+    explicit transformer( const std::string& stylesheet );
+    virtual ~transformer();
     //@}
 
     //! @name Operations
     //@{
     void parameter( const std::string& key, const std::string& expression );
 
-    void transform();
-
-    void apply( const output& output );
-
-    template< typename T > void apply( const T& value )
-    {
-        xos_ << value;
-    }
-    //@}
-
-protected:
-    //! @name Constructors/Destructor
-    //@{
-    output( std::ostream& target, const std::string& stylesheet );
+    std::string transform( const std::string& input );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    output( const output& );            //!< Copy constructor
-    output& operator=( const output& ); //!< Assignment operator
+    transformer( const transformer& );            //!< Copy constructor
+    transformer& operator=( const transformer& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< std::pair< std::string, std::string > > T_Parameters;
+    typedef T_Parameters::const_iterator                       CIT_Parameters;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::ostream& target_;
-    xml::xostringstream xos_;
-    std::ostringstream buffer_;
-    std::auto_ptr< transformer > pTransformer_;
+    const std::string stylesheet_;
+    T_Parameters parameters_;
     //@}
 };
 
 }
 
-#endif // _xeuseuleu_output_h_
+#endif // _xsl_transformer_h_

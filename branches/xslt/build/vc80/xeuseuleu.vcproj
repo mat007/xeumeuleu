@@ -234,6 +234,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\transformer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\transformer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\xalan.h"
 				>
 			</File>

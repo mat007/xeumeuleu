@@ -30,56 +30,59 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "output.h"
 #include "transformer.h"
+#include "exception.h"
+#include "xalan.h"
+#include <fstream>
+#include <sstream>
 
 using namespace xsl;
+using namespace XALAN_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
-// Name: output constructor
-// Created: SLI 2007-09-10
+// Name: transformer constructor
+// Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-output::output( std::ostream& target, const std::string& stylesheet )
-    : target_      ( target )
-    , pTransformer_( new transformer( stylesheet ) )
+transformer::transformer( const std::string& stylesheet )
+    : stylesheet_( stylesheet )
+{
+    std::ifstream file( stylesheet.c_str() );
+    if( ! file.is_open() )
+        throw exception( "Unable to open style sheet '" + stylesheet + "'" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: transformer destructor
+// Created: SLI 2007-10-03
+// -----------------------------------------------------------------------------
+transformer::~transformer()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: output destructor
-// Created: SLI 2007-09-10
+// Name: transformer::parameter
+// Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-output::~output()
+void transformer::parameter( const std::string& key, const std::string& expression )
 {
-    // NOTHING
+    parameters_.push_back( std::make_pair( key, "'" + expression + "'" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: output::transform
-// Created: SLI 2007-09-10
+// Name: transformer::transform
+// Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-void output::transform()
+std::string transformer::transform( const std::string& input )
 {
-    buffer_ << pTransformer_->transform( xos_.str() );
-    target_ << buffer_.str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: output::parameter
-// Created: SLI 2007-09-11
-// -----------------------------------------------------------------------------
-void output::parameter( const std::string& key, const std::string& expression )
-{
-    pTransformer_->parameter( key, expression );
-}
-
-// -----------------------------------------------------------------------------
-// Name: output::apply
-// Created: SLI 2007-09-28
-// -----------------------------------------------------------------------------
-void output::apply( const output& output )
-{
-    xml::xistringstream xis( output.buffer_.str() );
-    xos_ << xis;
+    std::istringstream is( input );
+    XSLTInputSource in( &is );
+    XSLTInputSource xsl( stylesheet_.c_str() );
+    XalanTransformer transformer;
+    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+        transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
+    std::ostringstream os;
+    if( transformer.transform( in, xsl, os ) )
+        throw exception( transformer.getLastError() );
+    return os.str();
 }
