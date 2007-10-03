@@ -30,7 +30,7 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "transformer.h"
+#include "output_imp.h"
 #include "exception.h"
 #include "xalan.h"
 #include <fstream>
@@ -40,10 +40,10 @@ using namespace xsl;
 using namespace XALAN_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
-// Name: transformer constructor
+// Name: output_imp constructor
 // Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-transformer::transformer( const std::string& stylesheet )
+output_imp::output_imp( const std::string& stylesheet )
     : stylesheet_( stylesheet )
 {
     std::ifstream file( stylesheet.c_str() );
@@ -52,37 +52,37 @@ transformer::transformer( const std::string& stylesheet )
 }
 
 // -----------------------------------------------------------------------------
-// Name: transformer destructor
+// Name: output_imp destructor
 // Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-transformer::~transformer()
+output_imp::~output_imp()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: transformer::parameter
+// Name: output_imp::parameter
 // Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-void transformer::parameter( const std::string& key, const std::string& expression )
+void output_imp::parameter( const std::string& key, const std::string& expression )
 {
     parameters_.push_back( std::make_pair( key, "'" + expression + "'" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: transformer::transform
+// Name: output_imp::transform
 // Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-std::string transformer::transform( const std::string& input )
+std::string output_imp::transform( const std::string& input )
 {
     std::istringstream is( input );
     XSLTInputSource in( &is );
     XSLTInputSource xsl( stylesheet_.c_str() );
-    XalanTransformer transformer;
+    XalanTransformer output_imp;
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
-        transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
+        output_imp.setStylesheetParam( it->first.c_str(), it->second.c_str() );
     std::ostringstream os;
-    if( transformer.transform( in, xsl, os ) )
-        throw exception( transformer.getLastError() );
+    if( output_imp.transform( in, xsl, os ) )
+        throw exception( output_imp.getLastError() );
     return os.str();
 }

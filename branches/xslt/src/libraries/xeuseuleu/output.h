@@ -40,7 +40,7 @@
 
 namespace xsl
 {
-    class transformer;
+    class output_imp;
 
 // =============================================================================
 /** @class  output
@@ -89,7 +89,7 @@ private:
     std::ostream& target_;
     xml::xostringstream xos_;
     std::ostringstream buffer_;
-    std::auto_ptr< transformer > pTransformer_;
+    std::auto_ptr< output_imp > pTransformer_;
     //@}
 };
 

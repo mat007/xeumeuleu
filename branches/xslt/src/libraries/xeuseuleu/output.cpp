@@ -31,7 +31,7 @@
  */
 
 #include "output.h"
-#include "transformer.h"
+#include "output_imp.h"
 
 using namespace xsl;
 
@@ -41,7 +41,7 @@ using namespace xsl;
 // -----------------------------------------------------------------------------
 output::output( std::ostream& target, const std::string& stylesheet )
     : target_      ( target )
-    , pTransformer_( new transformer( stylesheet ) )
+    , pTransformer_( new output_imp( stylesheet ) )
 {
     // NOTHING
 }

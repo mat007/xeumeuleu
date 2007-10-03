@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xsl_transformer_h_
-#define _xsl_transformer_h_
+#ifndef _xsl_output_imp_h_
+#define _xsl_output_imp_h_
 
 #include "xeumeuleu/xml.h"
 #include <string>
@@ -40,18 +40,18 @@
 namespace xsl
 {
 // =============================================================================
-/** @class  transformer
+/** @class  output_imp
     @brief  Transformation helper
 */
 // Created: SLI 2007-07-06
 // =============================================================================
-class transformer
+class output_imp
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit transformer( const std::string& stylesheet );
-    virtual ~transformer();
+    explicit output_imp( const std::string& stylesheet );
+    virtual ~output_imp();
     //@}
 
     //! @name Operations
@@ -64,8 +64,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    transformer( const transformer& );            //!< Copy constructor
-    transformer& operator=( const transformer& ); //!< Assignment operator
+    output_imp( const output_imp& );            //!< Copy constructor
+    output_imp& operator=( const output_imp& ); //!< Assignment operator
     //@}
 
 private:
@@ -85,4 +85,4 @@ private:
 
 }
 
-#endif // _xsl_transformer_h_
+#endif // _xsl_output_imp_h_

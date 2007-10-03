@@ -210,6 +210,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\output_imp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\output_imp.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\parameter.cpp"
 				>
 			</File>
@@ -231,14 +239,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\transform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\transformer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\transformer.h"
 				>
 			</File>
 			<File
