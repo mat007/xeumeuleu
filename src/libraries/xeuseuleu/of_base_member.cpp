@@ -30,27 +30,25 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xftransform.h"
-#include "file_output.h"
+#include "of_base_member.h"
 
 using namespace xsl;
 
 // -----------------------------------------------------------------------------
-// Name: xftransform constructor
-// Created: SLI 2007-09-07
+// Name: of_base_member constructor
+// Created: SLI 2007-09-19
 // -----------------------------------------------------------------------------
-xftransform::xftransform( const std::string& stylesheet, const std::string& filename )
-    : xf_base_member( stylesheet, filename )
-    , xtransform( *pOutput_ )
+of_base_member::of_base_member( const std::string& filename )
+    : os_( filename.c_str() )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: xftransform destructor
-// Created: SLI 2007-09-07
+// Name: of_base_member destructor
+// Created: SLI 2007-09-19
 // -----------------------------------------------------------------------------
-xftransform::~xftransform()
+of_base_member::~of_base_member()
 {
     // NOTHING
 }

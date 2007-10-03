@@ -30,27 +30,51 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xftransform.h"
-#include "file_output.h"
+#include "xeuseuleu_test_pch.h"
+#include "xeuseuleu/xsl.h"
 
-using namespace xsl;
+using namespace mockpp;
 
 // -----------------------------------------------------------------------------
-// Name: xftransform constructor
-// Created: SLI 2007-09-07
+// Name: xbuffertransform_can_be_serialized
+// Created: SLI 2007-09-25
 // -----------------------------------------------------------------------------
-xftransform::xftransform( const std::string& stylesheet, const std::string& filename )
-    : xf_base_member( stylesheet, filename )
-    , xtransform( *pOutput_ )
+BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_serialized )
 {
-    // NOTHING
+    xsl::xstringtransform xst( BOOST_RESOLVE( "buffer_test.xsl" ) );
+    xsl::xbuffertransform xbt( BOOST_RESOLVE( "stylesheet.xsl" ) );
+    xml::xistringstream xis( "<root/>" );
+    xst << xbt << xis;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><buffer-root/>", xst.str() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: xftransform destructor
-// Created: SLI 2007-09-07
+// Name: xbuffertransform_can_be_inserted_in_the_serialization_flow
+// Created: SLI 2007-09-28
 // -----------------------------------------------------------------------------
-xftransform::~xftransform()
+BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_inserted_in_the_serialization_flow )
 {
-    // NOTHING
+    xsl::xstringtransform xst( BOOST_RESOLVE( "flow_test.xsl" ) );
+    xsl::xbuffertransform xbt( BOOST_RESOLVE( "stylesheet.xsl" ) );
+    xml::xistringstream xis( "<root/>" );
+    xst << xml::start( "root" )
+            << xbt << xis
+            << xbt << xis
+        << xml::end();
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><flow-root><element/><element/></flow-root>", xst.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: xbuffertransform_can_have_parameters
+// Created: SLI 2007-09-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( xbuffertransform_can_have_parameters )
+{
+    xsl::xstringtransform xst( BOOST_RESOLVE( "stylesheet.xsl" ) );
+    xsl::xbuffertransform xbt( BOOST_RESOLVE( "parameter_test.xsl" ) );
+    xml::xistringstream xis( "<root/>" );
+    xst << xbt << xsl::parameter( "key1", "expression1" )
+               << xsl::parameter( "key2", "expression2" )
+               << xis;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><new-root key1=\"expression1\" key2=\"expression2\"/>", xst.str() );
 }

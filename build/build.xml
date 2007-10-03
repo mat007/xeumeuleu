@@ -81,10 +81,13 @@
                 <include name="exception.h"/>
                 <include name="parameter.h"/>
                 <include name="xftransform.h"/>
+                <include name="xf_base_member.h"/>
                 <include name="xstringtransform.h"/>
                 <include name="xs_base_member.h"/>
                 <include name="xtransform.h"/>
-                <include name="xf_base_member.h"/>
+                <include name="xbuffertransform.h"/>
+                <include name="buffer.h"/>
+                <include name="output.h"/>
             </module>
         </deploy>
     </target>

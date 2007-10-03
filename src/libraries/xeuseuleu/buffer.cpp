@@ -30,57 +30,99 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xtransform.h"
-#include "string_output.h"
 #include "buffer.h"
-#include "xbuffertransform.h"
 
 using namespace xsl;
 
 // -----------------------------------------------------------------------------
-// Name: xtransform constructor
-// Created: SLI 2007-09-10
+// Name: buffer constructor
+// Created: MCO 2007-10-02
 // -----------------------------------------------------------------------------
-xtransform::xtransform( output& output )
-    : pBuffer_( new buffer( output ) )
+buffer::buffer( output& output, std::auto_ptr< buffer > pNext )
+    : output_( output )
+    , owned_ ( true )
+    , pNext_ ( pNext )
+    , level_ ( 0 )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: xtransform destructor
-// Created: SLI 2007-09-10
+// Name: buffer constructor
+// Created: MCO 2007-10-02
 // -----------------------------------------------------------------------------
-xtransform::~xtransform()
+buffer::buffer( output& output )
+    : output_( output )
+    , owned_ ( false )
+    , level_ ( 0 )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: xtransform::operator<<
-// Created: SLI 2007-09-25
+// Name: buffer destructor
+// Created: MCO 2007-10-02
 // -----------------------------------------------------------------------------
-xtransform& xtransform::operator<<( const xsl::xbuffertransform& buffer )
+buffer::~buffer()
 {
-    buffer.apply( *this );
-    return *this;
+    if( owned_ )
+        delete &output_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xtransform::add
-// Created: SLI 2007-09-26
+// Name: buffer::parameter
+// Created: MCO 2007-10-02
 // -----------------------------------------------------------------------------
-void xtransform::add( const std::string& stylesheet )
+void buffer::parameter( const std::string& key, const std::string& expression )
 {
-    buffer* pBuffer = new buffer( *new string_output( stylesheet ), pBuffer_ );
-    pBuffer_.reset( pBuffer );
+    output_.parameter( key, expression );
 }
 
 // -----------------------------------------------------------------------------
-// Name: xtransform::parameter
-// Created: SLI 2007-09-11
+// Name: buffer::apply
+// Created: MCO 2007-10-02
 // -----------------------------------------------------------------------------
-void xtransform::parameter( const std::string& key, const std::string& expression )
+buffer* buffer::apply( const xml::start& start )
 {
-    pBuffer_->parameter( key, expression );
+    output_.apply( start );
+    ++level_;
+    return this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: buffer::apply
+// Created: MCO 2007-10-02
+// -----------------------------------------------------------------------------
+buffer* buffer::apply( const xml::end& end )
+{
+    output_.apply( end );
+    --level_;
+    return transform();
+}
+
+// -----------------------------------------------------------------------------
+// Name: buffer::transform
+// Created: MCO 2007-10-02
+// -----------------------------------------------------------------------------
+buffer* buffer::transform()
+{
+    if( level_ == 0 )
+    {
+        output_.transform();
+        if( pNext_.get() )
+            return chain();
+    }
+    return this;
+}
+
+// -----------------------------------------------------------------------------
+// Name: buffer::chain
+// Created: MCO 2007-10-02
+// -----------------------------------------------------------------------------
+buffer* buffer::chain()
+{
+    buffer* pNext = pNext_->apply( output_ );
+    if( pNext != pNext_.get() )
+        return pNext;
+    return pNext_.release();
 }

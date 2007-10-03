@@ -30,27 +30,53 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xftransform.h"
-#include "file_output.h"
+#ifndef _xeuseuleu_xbuffertransform_h_
+#define _xeuseuleu_xbuffertransform_h_
 
-using namespace xsl;
+#include <string>
 
-// -----------------------------------------------------------------------------
-// Name: xftransform constructor
-// Created: SLI 2007-09-07
-// -----------------------------------------------------------------------------
-xftransform::xftransform( const std::string& stylesheet, const std::string& filename )
-    : xf_base_member( stylesheet, filename )
-    , xtransform( *pOutput_ )
+namespace xsl
 {
-    // NOTHING
+    class xtransform;
+
+// =============================================================================
+/** @class  xbuffertransform
+    @brief  Xsl chained transform
+    @par    Using example
+    @code
+    xsl::xbuffertransform xbt( "transform.xsl" );
+    @endcode
+*/
+// Created: SLI 2007-09-07
+// =============================================================================
+class xbuffertransform
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit xbuffertransform( const std::string& stylesheet );
+    virtual ~xbuffertransform();
+    //@}
+
+    //! @name Constructors/Destructor
+    //@{
+    void apply( xtransform& xst ) const;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    xbuffertransform( const xbuffertransform& );            //!< Copy constructor
+    xbuffertransform& operator=( const xbuffertransform& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const std::string stylesheet_;
+    //@}
+};
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: xftransform destructor
-// Created: SLI 2007-09-07
-// -----------------------------------------------------------------------------
-xftransform::~xftransform()
-{
-    // NOTHING
-}
+#endif // _xeuseuleu_xbuffertransform_h_
