@@ -30,27 +30,43 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xftransform.h"
-#include "file_output.h"
+#ifndef _xeuseuleu_of_base_member_member_h_
+#define _xeuseuleu_of_base_member_member_h_
 
-using namespace xsl;
+#include <string>
+#include <fstream>
 
-// -----------------------------------------------------------------------------
-// Name: xftransform constructor
-// Created: SLI 2007-09-07
-// -----------------------------------------------------------------------------
-xftransform::xftransform( const std::string& stylesheet, const std::string& filename )
-    : xf_base_member( stylesheet, filename )
-    , xtransform( *pOutput_ )
+namespace xsl
 {
-    // NOTHING
+// =============================================================================
+/** @class  of_base_member
+    @brief  Base from member idiom base class
+*/
+// Created: SLI 2007-09-19
+// =============================================================================
+class of_base_member
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit of_base_member( const std::string& filename );
+    virtual ~of_base_member();
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    of_base_member( const of_base_member& );            //!< Copy constructor
+    of_base_member& operator=( const of_base_member& ); //!< Assignment operator
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    std::ofstream os_;
+    //@}
+};
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: xftransform destructor
-// Created: SLI 2007-09-07
-// -----------------------------------------------------------------------------
-xftransform::~xftransform()
-{
-    // NOTHING
-}
+#endif // _xeuseuleu_of_base_member_member_h_
