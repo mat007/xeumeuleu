@@ -83,6 +83,6 @@ std::string output_imp::transform( const std::string& input )
         output_imp.setStylesheetParam( it->first.c_str(), it->second.c_str() );
     std::ostringstream os;
     if( output_imp.transform( in, xsl, os ) )
-        throw exception( output_imp.getLastError() );
+        throw exception( stylesheet_ + ": " + output_imp.getLastError() );
     return os.str();
 }
