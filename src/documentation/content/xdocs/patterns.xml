@@ -255,6 +255,47 @@ private:
     }
 };]]></source>
     </section>
+    <section id="const-stream">
+      <title>Turning a non-constant input stream into constant</title>
+      <p>
+        The <strong>xml::xisubstream</strong> implementation has proven to be useful because its constructor takes a <strong>constant</strong> reference to an <em>xml::xistream</em>.<br />
+        Therefore instead of the following code :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    void process( xml::xistream& xis ) const
+    {
+        // read from xis
+    }
+};]]></source>
+      <p>
+        It's possible to write a method taking a constant reference to the stream and still be able to read from it :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    void process( const xml::xistream& xis ) const
+    {
+        xml::xisubstream xiss( xis );
+        // read from xiss
+    }
+};]]></source>
+      <p>
+        Or even directly :
+      </p>
+      <source><![CDATA[class my_class
+{
+public:
+    void process( xml::xisubstream xiss ) const
+    {
+        // read from xiss
+    }
+};]]></source>
+      <p>
+        Because the constructor for <strong>xml::xisubstream</strong> has deliberately not been declared explicit.
+      </p>
+    </section>
     <section id="modular">
       <title>Organizing serialization in modular systems</title>
       <p>
