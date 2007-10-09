@@ -43,9 +43,16 @@ See http://forrest.apache.org/docs/linking.html for more info
 
   <info label="Information" tab="home">
     <page         label="Welcome"      href="index.html"/>
-    <overview     label="Overview"     href="overview.html"/>
-    <manual       label="Manual"       href="manual.html"/>
-    <patterns     label="Patterns"     href="patterns.html"/>
+    <xml label="XML">
+      <overview     label="Overview"     href="xml/overview.html"/>
+      <manual       label="Manual"       href="xml/manual.html"/>
+      <patterns     label="Patterns"     href="xml/patterns.html"/>
+    </xml>
+    <xslt label="XSLT">
+      <overview     label="Overview"     href="xslt/overview.html"/>
+      <manual       label="Manual"       href="xslt/manual.html"/>
+      <patterns     label="Patterns"     href="xslt/patterns.html"/>
+    </xslt>
     <faq          label="FAQ"          href="faq.html"/>
     <license      label="License"      href="license.html"/>
     <installation label="Installation" href="installation.html"/>
@@ -68,7 +75,7 @@ See http://forrest.apache.org/docs/linking.html for more info
   -->
   <external-refs>
     <xerces     href="http://xml.apache.org/xerces-c" />
-    <boost.test href="http://boost.org/libs/test/doc/index.html" />
+    <boost.test href="http://boost.org/libs/test/doc/index.html"/>
     <mockpp     href="http://mockpp.soureforge.net" />
   </external-refs>
 
