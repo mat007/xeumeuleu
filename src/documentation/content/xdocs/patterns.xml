@@ -293,8 +293,13 @@ public:
     }
 };]]></source>
       <p>
-        Because the constructor for <strong>xml::xisubstream</strong> has deliberately not been declared explicit.
+        Because the constructor for <strong>xml::xisubstream</strong> is deliberately not declared explicit.
       </p>
+      <p>
+        What is then even more interesting is the possibility to create the <em>xml::xistream</em> as a temporary variable at the method call location :
+      </p>
+      <source><![CDATA[my_class my_instance;
+my_instance.process( xml::xifstream( "my_file.xml" ) );]]></source>
     </section>
     <section id="modular">
       <title>Organizing serialization in modular systems</title>
