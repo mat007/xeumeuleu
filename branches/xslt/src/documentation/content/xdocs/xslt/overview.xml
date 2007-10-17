@@ -22,72 +22,38 @@
   </header>
   <body>
     <section id="what-is">
-      <title>What is XeuMeuLeu</title>
+      <title>What is XeuSeuLeu</title>
       <p>
-        XeuMeuLeu is an open-source cross-platform C++ stream oriented interface on top of <a href="ext:xerces">Apache Xerces</a>.<br />
-        It aims at hiding <a href="ext:xerces">Apache Xerces</a> complexity and providing an easy means to read and write XML.
+        XeuSeuLeu is an open-source cross-platform C++ stream oriented interface on top of <a href="ext:xalan">Apache Xalan</a>.<br />
+        It aims at hiding <a href="ext:xalan">Apache Xalan</a> complexity and providing an easy means to transform XML.
       </p>
       <p>
         The following features are available :
       </p>
       <ul>
-        <li>source can be a string, a file, a url, any std::istream or an internal buffer</li>
-        <li>destination can be a string, a file or an internal buffer</li>
-        <li>encoding can be any of the encodings supported by Apache Xerces</li>
-        <li>output is formated for human readability</li>
-        <li>input can be validated against an XML schema definition</li>
+        <li>-- TO DO --</li>
       </ul>
     </section>
 
     <section id="what-is-not">
-      <title>What XeuMeuLeu is not</title>
+      <title>What XeuSeuLeu is not</title>
       <p>
-        XeuMeuLeu is not an XML parser as it relies on <a href="ext:xerces">Apache Xerces</a> for this.
-      </p>
-      <p>
-        XeuMeuLeu does not turn <a href="ext:xerces">Apache Xerces</a> into a pull-parser, XML documents are parsed in memory when a stream is created or flushed to the stream when the document is complete.
-      </p>
-      <p>
-        XeuMeuLeu is not a data-binding framework, it does not automatically (un)serialize objects.
+        -- TO DO --
       </p>
     </section>
 
     <section id="why">
-      <title>Why use XeuMeuLeu</title>
+      <title>Why use XeuSeuLeu</title>
       <p>
-        Because of the following benefits :
+        -- TO DO --
       </p>
-      <ul>
-        <li>the high-level stream oriented design allows to quickly write easy and simple code</li>
-        <li>the underlying use of Apache Xerces ensures proper parsing and full features support</li>
-        <li>the open-source license guarantees code availability and free use</li>
-        <li>the unit tests coverage greatly helps reducing the risk of bugs within the library</li>
-      </ul>
     </section>
 
     <section id="what-looks">
-      <title>What XeuMeuLeu looks like</title>
+      <title>What XeuSeuLeu looks like</title>
       <p>
-        Given the following XML document :
+        -- TO DO --
       </p>
-      <source><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<document>
-  <element name="my_element" />
-  <another-element>my content</another-element>
-</document>]]></source>
-      <p>
-        The code to parse it would be :
-      </p>
-      <source><![CDATA[#include <xeumeuleu/xml.h>
-#include <string>
-
-std::string name, content;
-xml::xifstream xis( "my_document.xml" );
-xis >> xml::start( "document" )
-      >> xml::start( "element" )
-        >> xml::attribute( "name", name )
-      >> xml::end()
-      >> xml::content( "another-element", content );]]></source>
     </section>
 
   </body>
