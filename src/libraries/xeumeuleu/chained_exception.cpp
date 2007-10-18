@@ -41,10 +41,9 @@ namespace
 {
     const std::string interpret( const XMLException& chained )
     {
-        const std::string file( chained.getSrcFile() );
+        const std::string file( *chained.getSrcFile() == '\0' ? "?" : chained.getSrcFile() );
         std::stringstream stream;
-        stream << file << (file.empty() ? "?" : "")
-               << " (line " << chained.getSrcLine() << ") : "
+        stream << file << " (line " << chained.getSrcLine() << ") : "
                << translate( chained.getMessage() ).operator std::string();
         return stream.str();
     }
