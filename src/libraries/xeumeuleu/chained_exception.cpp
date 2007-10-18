@@ -32,16 +32,30 @@
 
 #include "chained_exception.h"
 #include "translate.h"
+#include <sstream>
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
+
+namespace
+{
+    const std::string interpret( const XMLException& chained )
+    {
+        const std::string file( chained.getSrcFile() );
+        std::stringstream stream;
+        stream << file << (file.empty() ? "?" : "")
+               << " (line " << chained.getSrcLine() << ") : "
+               << translate( chained.getMessage() ).operator std::string();
+        return stream.str();
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: chained_exception constructor
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
 chained_exception::chained_exception( const XMLException& chained )
-    : xml::exception( translate( chained.getMessage() ) )
+    : xml::exception( interpret( chained ) )
 {
     // NOTHING
 }
