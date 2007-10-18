@@ -43,9 +43,24 @@
     <section id="creation">
      <title>Creating a stylesheet</title>
      <p>
-       -- TO DO --
+       The following code creates a stylesheet from an XSL document <em>stylesheet.xsl</em> to write a document to a file <em>file.output</em> :
      </p>
-     
+     <source><![CDATA[xsl::xftransform xf( "stylesheet.xsl", "file.output" );]]></source>
+      <p>
+        The following code creates a stylesheet from an XSL document <em>stylesheet.xsl</em> to write an XML document to an <em>std::string</em> :
+      </p>
+      <source><![CDATA[xsl::xstringtransform xst( "stylesheet.xsl" );]]></source>
+      <p>
+        After the transformation is finished the resulting XML document can be retrieved :
+      </p>
+      <source><![CDATA[const std::string xml = xst.str();]]></source>
+     <p>
+       The following code creates a stylesheet from an XSL document <em>stylesheet.xsl</em> :
+     </p>
+     <source><![CDATA[xsl::xbuffertransform xbt( "stylesheet.xsl" );]]></source>
+     <p>
+       The purpose of this type of stylesheet is to chain XML transformations in another stylesheet.
+     </p>      
     </section>
     <section id="transformation">
      <title>Transforming the tree</title>
