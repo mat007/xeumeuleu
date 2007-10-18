@@ -577,7 +577,6 @@ namespace
                << translate( message ).operator std::string();
         return stream.str();
     }
-
 }
 
 // -----------------------------------------------------------------------------
