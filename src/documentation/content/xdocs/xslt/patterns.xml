@@ -21,11 +21,15 @@
     <title>Patterns</title>
   </header>
   <body>
-    <section id="chained">
-      <title>Chained Transformations</title>
+    <section id="file">
+      <title>Transform an XML file into another file</title>
       <p>
-        TODO
+        A simple way for file to file transformation is:
       </p>
+      <source><![CDATA[xml::xifstream xis( "input.xml" );
+xsl::xftransform xf( "stylesheet.xsl", "file.output" );
+xf << xis;]]>
+      </source>
     </section>
   </body>
 </document>
