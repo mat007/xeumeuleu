@@ -38,11 +38,11 @@ using namespace mockpp;
 
 namespace
 {
-    const std::string load( const char* filename )
+    const std::string load( const std::string& filename )
     {
-        std::ifstream ifs( filename );
+        std::ifstream ifs( filename.c_str() );
         if( ! ifs )
-            throw std::runtime_error( ( std::string( "file " ) + filename + " not found" ).c_str() );
+            throw std::runtime_error( "File " + filename + " not found" );
         return std::string( std::istreambuf_iterator< char >( ifs ), std::istreambuf_iterator< char >() );
     }
 }
@@ -75,6 +75,6 @@ BOOST_AUTO_TEST_CASE( streaming_elements_creates_a_valid_file )
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element>\n"
                        "  <child/>\n"
-                       "</element>\n", load( filename.c_str() ) );
+                       "</element>\n", load( filename ) );
     std::remove( filename.c_str() );
 }
