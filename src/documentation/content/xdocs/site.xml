@@ -43,13 +43,12 @@ See http://forrest.apache.org/docs/linking.html for more info
 
   <info label="Information" tab="home">
     <page         label="Welcome"      href="index.html"/>
+    <overview     label="Overview"     href="overview.html"/>
     <xml label="XML">
-      <overview     label="Overview"     href="xml/overview.html"/>
       <manual       label="Manual"       href="xml/manual.html"/>
       <patterns     label="Patterns"     href="xml/patterns.html"/>
     </xml>
     <xslt label="XSLT">
-      <overview     label="Overview"     href="xslt/overview.html"/>
       <manual       label="Manual"       href="xslt/manual.html"/>
       <patterns     label="Patterns"     href="xslt/patterns.html"/>
     </xslt>

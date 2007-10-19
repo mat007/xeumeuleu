@@ -65,8 +65,27 @@
     <section id="transformation">
      <title>Transforming the tree</title>
      <p>
-       -- TO DO --
+       The purpose of XeuSeuLeu stylesheet is to transform an XML document built with XeuMeuLeu. As an example:
      </p>
+     <source><![CDATA[xsl::xstringtransform xst( "stylesheet.xsl" );
+xst << xml::start( "root" )
+        << xml::start( "element" )
+        << xml::end()
+    << xml::end();]]></source>
+    <p>
+      Technically the transformation is performed when the document is valid and complete (ie: after the last xml::end).
+    </p>
+    <p>
+      Corollary the following code is valid :
+    </p>
+    <source><![CDATA[xsl::xstringtransform xst( "stylesheet.xsl" );
+xml::xistringstream xis(
+  "<root>"
+    "<element/>"
+  "</root>"
+);
+xst << xis;
+]]></source>
      <section id="buffer">
        <title>Chained transformations</title>
        <p>
