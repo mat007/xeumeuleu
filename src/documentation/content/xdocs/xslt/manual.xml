@@ -89,14 +89,25 @@ xst << xis;
      <section id="buffer">
        <title>Chained transformations</title>
        <p>
-         -- TO DO --
+         -- TODO --
        </p>
      </section>
      <section id="parameter">
        <title>Stylesheet parameter</title>
        <p>
-         -- TO DO --
+         The user can add stylesheet parameters thanks to <strong>xsl::parameter</strong>. As an example with the next XSL document :
        </p>
+       <source><![CDATA[<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:param name="mykey" select="'default'"/>
+  <xsl:template match="/root"/>
+</xsl:stylesheet>]]></source>
+       <p>
+         The following code is valid:
+       </p>
+       <source><![CDATA[xsl::xstringtransform xf( "stylesheet.xsl" );
+xml::xistringstream xis( "<root/>" );
+xf << xsl::parameter( "mykey", "expression" )
+   << xis;]]></source>
      </section>
     </section>
   </body>
