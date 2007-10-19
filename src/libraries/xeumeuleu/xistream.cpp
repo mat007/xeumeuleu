@@ -42,8 +42,8 @@ using namespace XERCES_CPP_NAMESPACE;
 #define TRY try {
 #define CATCH } \
             catch( const OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
-            catch( const XMLException& e ) { throw chained_exception( e ); } \
-            catch( const DOMException& e ) { throw chained_exception( e ); }
+            catch( const XMLException& e ) { error( chained_exception( e ).what() ); } \
+            catch( const DOMException& e ) { error( chained_exception( e ).what() ); }
 
 // -----------------------------------------------------------------------------
 // Name: xistream constructor
