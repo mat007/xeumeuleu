@@ -42,8 +42,8 @@ using namespace XERCES_CPP_NAMESPACE;
 #define TRY try {
 #define CATCH } \
             catch( const OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
-            catch( const XMLException& e ) { error( chained_exception( e ).what() ); } \
-            catch( const DOMException& e ) { error( chained_exception( e ).what() ); }
+            catch( const XMLException& e ) { error( chained_exception( e ).what() ); throw; } \
+            catch( const DOMException& e ) { error( chained_exception( e ).what() ); throw; }
 
 // -----------------------------------------------------------------------------
 // Name: xistream constructor
@@ -414,7 +414,6 @@ std::auto_ptr< input > xistream::branch( bool clone ) const
     TRY
         return pInput_->branch( clone );
     CATCH
-    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
