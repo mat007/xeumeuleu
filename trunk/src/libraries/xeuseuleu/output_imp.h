@@ -58,7 +58,7 @@ public:
     //@{
     void parameter( const std::string& key, const std::string& expression );
 
-    std::string transform( const std::string& input );
+    const std::string transform( const std::string& input ) const;
     //@}
 
 private:
