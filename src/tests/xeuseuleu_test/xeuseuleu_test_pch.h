@@ -33,7 +33,7 @@
 #ifndef __xeuseuleu_test_pch_h_
 #define __xeuseuleu_test_pch_h_
 
-#if _MSC_VER <= 1300
+#if (defined _MSC_VER && _MSC_VER <= 1300)
 #   pragma warning( disable : 4127 )
 #   pragma warning( disable : 4702 )
 #endif
