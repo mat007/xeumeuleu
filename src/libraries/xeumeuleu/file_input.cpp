@@ -78,7 +78,7 @@ void file_input::check( const std::string& filename )
 {
     std::ifstream file( filename.c_str() );
     if( ! file.is_open() )
-        throw exception( "Unable to open file '" + filename + "'" );
+        throw xml::exception( "Unable to open file '" + filename + "'" );
 }
 
 // -----------------------------------------------------------------------------
