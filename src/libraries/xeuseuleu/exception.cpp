@@ -38,7 +38,7 @@ using namespace xsl;
 // Name: exception constructor
 // Created: SLI 2007-09-12
 // -----------------------------------------------------------------------------
-exception::exception( const std::string& message )
+xsl::exception::exception( const std::string& message )
     : std::runtime_error( message )
 {
     // NOTHING
@@ -48,7 +48,7 @@ exception::exception( const std::string& message )
 // Name: exception destructor
 // Created: SLI 2007-09-12
 // -----------------------------------------------------------------------------
-exception::~exception() throw ()
+xsl::exception::~exception() throw ()
 {
     // NOTHING
 }
