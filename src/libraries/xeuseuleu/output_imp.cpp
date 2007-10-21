@@ -48,7 +48,7 @@ output_imp::output_imp( const std::string& stylesheet )
 {
     std::ifstream file( stylesheet.c_str() );
     if( ! file.is_open() )
-        throw exception( "Unable to open style sheet '" + stylesheet + "'" );
+        throw xsl::exception( "Unable to open style sheet '" + stylesheet + "'" );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,11 +78,11 @@ std::string output_imp::transform( const std::string& input )
     std::istringstream is( input );
     XSLTInputSource in( &is );
     XSLTInputSource xsl( stylesheet_.c_str() );
-    XalanTransformer output_imp;
+    XalanTransformer transformer;
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
-        output_imp.setStylesheetParam( it->first.c_str(), it->second.c_str() );
+        transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
     std::ostringstream os;
-    if( output_imp.transform( in, xsl, os ) )
-        throw exception( stylesheet_ + ": " + output_imp.getLastError() );
+    if( transformer.transform( in, xsl, os ) )
+        throw xsl::exception( stylesheet_ + " : " + transformer.getLastError() );
     return os.str();
 }
