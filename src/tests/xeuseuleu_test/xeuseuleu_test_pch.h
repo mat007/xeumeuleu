@@ -33,11 +33,6 @@
 #ifndef __xeuseuleu_test_pch_h_
 #define __xeuseuleu_test_pch_h_
 
-#ifdef _MSC_VER
-#   pragma warning( disable : 4127 )
-#   pragma warning( disable : 4702 )
-#endif
-
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
