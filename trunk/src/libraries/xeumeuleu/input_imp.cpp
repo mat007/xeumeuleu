@@ -587,6 +587,6 @@ void input_imp::error( const std::string& message ) const
 {
     const DOMLocator* pLocator = reinterpret_cast< DOMLocator* >( pCurrent_->getUserData( translate( "locator" ) ) );
     if( ! pLocator )
-        throw exception( message );
-    throw exception( interpret( *pLocator, message ) );
+        throw xml::exception( message );
+    throw xml::exception( interpret( *pLocator, message ) );
 }
