@@ -33,9 +33,13 @@
 #ifndef __xeumeuleu_bench_pch_h_
 #define __xeumeuleu_bench_pch_h_
 
-#pragma warning( push, 0 )
+#ifdef _MSC_VER
+#   pragma warning( push, 0 )
+#endif
 #include <boost/date_time/posix_time/posix_time.hpp>
-#pragma warning( pop )
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 #include <iostream>
 
 #endif // __xeumeuleu_bench_pch_h_
