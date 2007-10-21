@@ -104,8 +104,8 @@ xostream& xostream::operator<<( const std::string& value )
 {
     TRY
         output_.write( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -116,8 +116,8 @@ xostream& xostream::operator<<( float value )
 {
     TRY
         output_.write( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -128,8 +128,8 @@ xostream& xostream::operator<<( double value )
 {
     TRY
         output_.write( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -140,8 +140,8 @@ xostream& xostream::operator<<( int value )
 {
     TRY
         output_.write( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -152,8 +152,8 @@ xostream& xostream::operator<<( long value )
 {
     TRY
         output_.write( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -164,8 +164,8 @@ xostream& xostream::operator<<( long long value )
 {
     TRY
         output_.write( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -176,8 +176,8 @@ xostream& xostream::operator<<( bool value )
 {
     TRY
         output_.write( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -188,8 +188,8 @@ xostream& xostream::operator<<( unsigned int value )
 {
     TRY
         output_.write( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -200,8 +200,8 @@ xostream& xostream::operator<<( unsigned long value )
 {
     TRY
         output_.write( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -212,8 +212,8 @@ xostream& xostream::operator<<( unsigned long long value )
 {
     TRY
         output_.write( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -224,8 +224,8 @@ xostream& xostream::operator<<( const xobufferstream& xobs )
 {
     TRY
         xobs.attach( output_ );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -236,8 +236,8 @@ xostream& xostream::operator<<( const xistream& xis )
 {
     TRY
         xis.copy( output_ );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------

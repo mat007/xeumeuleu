@@ -94,8 +94,8 @@ xistream& xistream::operator>>( std::string& value )
 {
     TRY
         pInput_->read( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,8 +106,8 @@ xistream& xistream::operator>>( float& value )
 {
     TRY
         pInput_->read( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -118,8 +118,8 @@ xistream& xistream::operator>>( double& value )
 {
     TRY
         pInput_->read( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -130,8 +130,8 @@ xistream& xistream::operator>>( int& value )
 {
     TRY
         pInput_->read( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -142,8 +142,8 @@ xistream& xistream::operator>>( long& value )
 {
     TRY
         pInput_->read( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -154,8 +154,8 @@ xistream& xistream::operator>>( long long& value )
 {
     TRY
         pInput_->read( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -166,8 +166,8 @@ xistream& xistream::operator>>( short& value )
 {
     TRY
         pInput_->read( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -178,8 +178,8 @@ xistream& xistream::operator>>( bool& value )
 {
     TRY
         pInput_->read( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -190,8 +190,8 @@ xistream& xistream::operator>>( unsigned int& value )
 {
     TRY
         pInput_->read( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -202,8 +202,8 @@ xistream& xistream::operator>>( unsigned short& value )
 {
     TRY
         pInput_->read( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -214,8 +214,8 @@ xistream& xistream::operator>>( unsigned long& value )
 {
     TRY
         pInput_->read( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
@@ -226,8 +226,8 @@ xistream& xistream::operator>>( unsigned long long& value )
 {
     TRY
         pInput_->read( value );
-        return *this;
     CATCH
+    return *this;
 }
 
 // -----------------------------------------------------------------------------
