@@ -32,7 +32,6 @@
 
 #include "chained_exception.h"
 #include "translate.h"
-#include <sstream>
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
