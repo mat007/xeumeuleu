@@ -414,6 +414,7 @@ std::auto_ptr< input > xistream::branch( bool clone ) const
     TRY
         return pInput_->branch( clone );
     CATCH
+    throw std::runtime_error( __FUNCTION__ );
 }
 
 // -----------------------------------------------------------------------------
