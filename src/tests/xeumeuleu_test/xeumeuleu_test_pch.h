@@ -33,6 +33,11 @@
 #ifndef __xeumeuleu_test_pch_h_
 #define __xeumeuleu_test_pch_h_
 
+#if _MSC_VER <= 1300
+#   pragma warning( disable : 4127 )
+#   pragma warning( disable : 4702 )
+#endif
+
 #include <boost/test/auto_unit_test.hpp>
 
 #define BOOST_LIB_NAME boost_unit_test_framework
