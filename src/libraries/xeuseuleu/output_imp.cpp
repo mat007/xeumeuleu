@@ -73,7 +73,7 @@ void output_imp::parameter( const std::string& key, const std::string& expressio
 // Name: output_imp::transform
 // Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-std::string output_imp::transform( const std::string& input )
+const std::string output_imp::transform( const std::string& input ) const
 {
     std::istringstream is( input );
     XSLTInputSource in( &is );
