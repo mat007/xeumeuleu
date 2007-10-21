@@ -33,6 +33,10 @@
 #ifndef _xeumeuleu_xerces_h_
 #define _xeumeuleu_xerces_h_
 
+#ifdef __GNUC__
+#   pragma GCC system_header
+#endif
+
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/parsers/DOMBuilderImpl.hpp>
 #include <xercesc/framework/LocalFileInputSource.hpp>
