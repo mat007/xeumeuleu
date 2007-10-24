@@ -211,6 +211,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\attributes.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\cdata.cpp"
 					>
 				</File>
@@ -232,10 +236,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\list.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\manipulator.h"
 					>
 				</File>
 				<File
