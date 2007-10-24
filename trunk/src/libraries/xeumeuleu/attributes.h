@@ -61,7 +61,7 @@ public:
 // Created: MAT 2007-08-01
 // -----------------------------------------------------------------------------
 template< typename T >
-xistream& operator>>( xistream& xis, const attributes_visitor< T >& manipulator )
+const xistream& operator>>( const xistream& xis, const attributes_visitor< T >& manipulator )
 {
     xis.attributes( manipulator );
     return xis;
