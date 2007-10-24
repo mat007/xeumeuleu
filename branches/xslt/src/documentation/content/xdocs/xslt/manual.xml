@@ -89,8 +89,29 @@ xst << xis;
      <section id="buffer">
        <title>Chained transformations</title>
        <p>
-         -- TODO --
+         Sometimes the user has to perform complex transformations on XML document. 
+         On way to avoid a complex and monolithic stylesheet is to divid it into chained small steps ( and so on small stylesheets ).
+         The <strong>xsl::xbuffertransform</strong> is here to simply the code of chained transformations.
        </p>
+       <p>
+         The final transformation <strong>cannot be</strong> an xsl::xbuffertransform, it must be used with an xsl::xtransform. The following code is valid:
+       </p>
+       <source><![CDATA[xsl::xstringtransform xst( "final-stylesheet.xsl" );
+xsl::xbuffertransform xbt( "first-stylesheet.xsl" );
+xml::xistringstream xis( "<root/>" );
+xst << xbt << xis;]]>
+       </source>
+       <p>
+         Contrary to an xsl::xtransform (which xsl::xbuffertransform is <strong>not</strong>), xsl::xbuffertransform's output <strong>has to be</strong> an XML document.
+       </p>
+       <p>The xsl::xbuffertransform can be used as many times as the user wants, like the following code:</p>
+       <source><![CDATA[xsl::xbuffertransform xbt( "first-stylesheet.xsl" );
+xsl::xstringtransform xst( "final-stylesheet.xsl" );
+xml::xistringstream xis( "<root/>" );
+xst << xml::start( "root" )
+      << xbt << xis
+      << xbt << xis
+    << xml::end();]]></source>
      </section>
      <section id="parameter">
        <title>Stylesheet parameter</title>
@@ -108,6 +129,15 @@ xst << xis;
 xml::xistringstream xis( "<root/>" );
 xf << xsl::parameter( "mykey", "expression" )
    << xis;]]></source>
+       <p>
+         Parameters are available on xsl::xbuffertransform. The following code is valid:
+       </p>
+       <source><![CDATA[xsl::xbuffertransform xbt( "first-stylesheet.xsl" );
+xsl::xstringtransform xst( "final-stylesheet.xsl" );
+xml::xistringstream xis( "<root/>" );
+xst << xbt << xsl::parameter( "key", "expression" )
+           << xis;]]>
+       </source>
      </section>
     </section>
   </body>
