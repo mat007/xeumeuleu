@@ -92,7 +92,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd ../../run/vc80&#x0D;&#x0A;&quot;$(TargetDir)$(TargetName).exe&quot; --result_code=no --report_level=no --log_level=messages --data_directory=../../data/tests/$(ProjectName) "
+				CommandLine="cd ../../run/vc80&#x0D;&#x0A;&quot;$(TargetDir)$(TargetName).exe&quot; --result_code=no --report_level=no --log_level=messages --data_directory=../../data/tests/$(ProjectName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -176,7 +176,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd ../../run/vc80&#x0D;&#x0A;&quot;$(TargetDir)$(TargetName).exe&quot; --result_code=no --report_level=no --log_level=messages --data_directory=../../data/tests/$(ProjectName) "
+				CommandLine="cd ../../run/vc80&#x0D;&#x0A;&quot;$(TargetDir)$(TargetName).exe&quot; --result_code=no --report_level=no --log_level=messages --data_directory=../../data/tests/$(ProjectName)&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -192,11 +192,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\attributes_test.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\xeumeuleu_test\cdata_test.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\tests\xeumeuleu_test\content_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\error_test.cpp"
 				>
 			</File>
 			<File

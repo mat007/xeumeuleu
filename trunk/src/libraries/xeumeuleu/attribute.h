@@ -60,7 +60,7 @@ public:
 
     //! @name Operators
     //@{
-    const xistream& operator()( const xistream& xis ) const
+    xistream& operator()( xistream& xis ) const
     {
         xis.attribute( name_, value_ );
         return xis;
@@ -90,7 +90,7 @@ private:
 // Name: operator>>
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-template< typename T > const xistream& operator>>( const xistream& xis, const attribute_manipulator< T >& manipulator )
+template< typename T > xistream& operator>>( xistream& xis, const attribute_manipulator< T >& manipulator )
 {
     return manipulator( xis );
 }
@@ -129,7 +129,7 @@ template< typename T > attribute_manipulator< T > attribute( const std::string& 
 template< typename T > T attribute( const xistream& xis, const std::string& name )
 {
     T value;
-    xis >> attribute( name, value );
+    xis.attribute( name, value );
     return value;
 }
 
