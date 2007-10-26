@@ -83,7 +83,7 @@
           Two directories will be created in the project root directory :
         </p>
         <ul>
-          <li><em>lib</em> will contain the XeuMeuLeu library files</li>
+          <li><em>lib/vc71</em> will contain the XeuMeuLeu library files</li>
           <li><em>include</em> will contain the headers needed in order to use XeuMeuLeu</li>
         </ul>
         <p>
