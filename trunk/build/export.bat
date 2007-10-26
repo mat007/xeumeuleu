@@ -2,8 +2,10 @@
 
 md ..\lib\
 
-xcopy /Y "..\out\libraries\xeumeuleu\vc71\release\xeumeuleu.lib" ..\lib\
-xcopy /Y "..\out\libraries\xeumeuleu\vc71\debug\xeumeuleu_d.lib" ..\lib\
+xcopy /Y "..\out\libraries\xeumeuleu\vc71\release\xeumeuleu.lib" ..\lib\vc71\
+xcopy /Y "..\out\libraries\xeumeuleu\vc71\debug\xeumeuleu_d.lib" ..\lib\vc71\
+xcopy /Y "..\out\libraries\xeumeuleu\vc80\release\xeumeuleu.lib" ..\lib\vc80\
+xcopy /Y "..\out\libraries\xeumeuleu\vc80\debug\xeumeuleu_d.lib" ..\lib\vc80\
 
 set INCLUDE_DIR=..\include\xeumeuleu
 md %INCLUDE_DIR%
