@@ -36,18 +36,37 @@
 
 using namespace mockpp;
 
+namespace
+{
+    void BOOST_CHECK_FILE_EXISTS( const std::string& filename )
+    {
+        std::ifstream file( filename.c_str() );
+        BOOST_CHECK( file.is_open() );
+        file.close();
+        std::remove( filename.c_str() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: tranformation_creates_a_file
 // Created: SLI 2007-09-07
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( tranformation_creates_a_file )
 {
-    const std::string filename = "output.xml";
-    xsl::xftransform xf( BOOST_RESOLVE( "stylesheet.xsl" ), filename );
+    const std::string output = "output.xml";
+    xsl::xftransform xf( BOOST_RESOLVE( "stylesheet.xsl" ), output );
     xf << xml::start( "root" )
        << xml::end();
-    std::ifstream file( filename.c_str() );
-    BOOST_CHECK( file.is_open() );
-    file.close();
-    std::remove( filename.c_str() );
+    BOOST_CHECK_FILE_EXISTS( output );
+}
+
+// -----------------------------------------------------------------------------
+// Name: file_to_file_transformation_in_one_line
+// Created: MCO 2007-10-26
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( file_to_file_transformation_in_one_line )
+{
+    const std::string output = "output.xml";
+    xsl::xftransform( BOOST_RESOLVE( "stylesheet.xsl" ), output ) << xml::xifstream( BOOST_RESOLVE( "input.xml" ) );
+    BOOST_CHECK_FILE_EXISTS( output );
 }
