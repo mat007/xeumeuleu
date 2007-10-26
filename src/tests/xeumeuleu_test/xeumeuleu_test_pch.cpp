@@ -55,7 +55,7 @@ namespace
     return 0;
 }
 
-std::string BOOST_RESOLVE( const std::string& filename )
+const std::string BOOST_RESOLVE( const std::string& filename )
 {
     if( data_directory.empty() )
         return filename;
