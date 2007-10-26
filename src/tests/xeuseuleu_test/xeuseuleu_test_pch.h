@@ -33,9 +33,15 @@
 #ifndef __xeuseuleu_test_pch_h_
 #define __xeuseuleu_test_pch_h_
 
-#if (defined _MSC_VER && _MSC_VER <= 1310)
-#   pragma warning( disable : 4127 )
-#   pragma warning( disable : 4702 )
+#ifdef _MSC_VER
+#   pragma warning( disable : 4355 )
+#   if _MSC_VER <= 1310
+#       pragma warning( disable : 4127 )
+#       pragma warning( disable : 4702 )
+#   endif
+#   pragma warning( push, 0 )
+#elif defined __GNUC__
+#   pragma GCC system_header
 #endif
 
 #include <boost/test/auto_unit_test.hpp>
@@ -49,6 +55,10 @@
 #define MOCKPP_ENABLE_DEFAULT_FORMATTER
 #include <mockpp/chaining/CountedChainableMethod.h>
 #include <mockpp/chaining/ChainingMockObjectSupport.h>
+
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
