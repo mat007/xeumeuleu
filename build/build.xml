@@ -53,7 +53,7 @@
       export
     ============================================================================
     -->
-    <target name="export" depends="build,test" description="export the distribution">
+    <target name="export" depends="build" description="export the distribution">
         <deploy>
             <module name="xeumeuleu">
                 <include name="xml.h"/>
@@ -98,7 +98,7 @@
       package
     ============================================================================
     -->
-    <target name="package" description="package the distribution">
+    <target name="package" depends="generate-vc71" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/xeumeuleu.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user"/>
         <tar destfile="${dist.dir}/xeumeuleu.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user" compression="bzip2"/>
