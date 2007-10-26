@@ -60,6 +60,6 @@
 #   pragma warning( pop )
 #endif
 
-std::string BOOST_RESOLVE( const std::string& filename );
+const std::string BOOST_RESOLVE( const std::string& filename );
 
 #endif // __xeumeuleu_test_pch_h_
