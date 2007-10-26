@@ -84,8 +84,7 @@ xml::xistringstream xis(
     "<element/>"
   "</root>"
 );
-xst << xis;
-]]></source>
+xst << xis;]]></source>
      <section id="buffer">
        <title>Chained transformations</title>
        <p>
@@ -136,8 +135,7 @@ xf << xsl::parameter( "mykey", "expression" )
 xsl::xstringtransform xst( "final-stylesheet.xsl" );
 xml::xistringstream xis( "<root/>" );
 xst << xbt << xsl::parameter( "key", "expression" )
-           << xis;]]>
-       </source>
+           << xis;]]></source>
      </section>
     </section>
   </body>

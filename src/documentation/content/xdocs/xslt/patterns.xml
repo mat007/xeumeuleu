@@ -26,10 +26,7 @@
       <p>
         A simple way for file to file transformation is:
       </p>
-      <source><![CDATA[xml::xifstream xis( "input.xml" );
-xsl::xftransform xf( "stylesheet.xsl", "file.output" );
-xf << xis;]]>
-      </source>
+      <source><![CDATA[xsl::xftransform( "stylesheet.xsl", "file.output" ) << xml::xifstream( "input.xml" );]]></source>
     </section>
   </body>
 </document>
