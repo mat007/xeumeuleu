@@ -42,7 +42,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				PrecompiledHeaderThrough="$(ProjectName)_pch.h"
 				PrecompiledHeaderFile="$(IntDir)/$(ProjectName).pch"
 				AssemblerListingLocation="$(IntDir)/"
@@ -123,7 +123,7 @@
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				PrecompiledHeaderThrough="$(ProjectName)_pch.h"
 				PrecompiledHeaderFile="$(IntDir)/$(ProjectName).pch"
 				AssemblerListingLocation="$(IntDir)/"
@@ -186,30 +186,6 @@
 			>
 			<File
 				RelativePath="..\..\src\applications\xeumeuleu_bench\xeumeuleu_bench.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\applications\xeumeuleu_bench\xeumeuleu_bench_pch.cpp"
-				>
-				<FileConfiguration
-					Name="debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\..\src\applications\xeumeuleu_bench\xeumeuleu_bench_pch.h"
 				>
 			</File>
 		</Filter>
