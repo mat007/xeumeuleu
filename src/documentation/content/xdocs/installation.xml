@@ -103,14 +103,15 @@
         <ol>
           <li>install the dependencies</li>
           <li>open <em>build/makefile</em></li>
-          <li>change the <em>INC_DIRS</em> and <em>LIB_DIRS</em> variables at the top in order to indicate the location of the dependencies</li>
+          <li>set <em>PLATFORM</em> to something meaningful (it's only used as part of the final export directory name)</li>
+          <li>change the <em>INC_DIRS</em> and <em>LIB_DIRS</em> variables at the top in order to indicate the location of the dependencies, separated by whitespaces</li>
           <li>run <em>make</em> from the <em>build</em> directory</li>
         </ol>
         <p>
           Two directories will be created in the project root directory :
         </p>
         <ul>
-          <li><em>lib</em> will contain the XeuMeuLeu library files</li>
+          <li><em>lib/$(PLATFORM)</em> will contain the XeuMeuLeu library files</li>
           <li><em>include</em> will contain the headers needed in order to use XeuMeuLeu</li>
         </ul>
       </section>
