@@ -59,14 +59,3 @@ BOOST_AUTO_TEST_CASE( tranformation_creates_a_file )
        << xml::end();
     BOOST_CHECK_FILE_EXISTS( output );
 }
-
-// -----------------------------------------------------------------------------
-// Name: file_to_file_transformation_in_one_line
-// Created: MCO 2007-10-26
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( file_to_file_transformation_in_one_line )
-{
-    const std::string output = "output.xml";
-    xsl::xftransform( BOOST_RESOLVE( "stylesheet.xsl" ), output ) << xml::xifstream( BOOST_RESOLVE( "input.xml" ) );
-    BOOST_CHECK_FILE_EXISTS( output );
-}
