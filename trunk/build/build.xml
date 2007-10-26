@@ -12,7 +12,7 @@
     <target name="xeumeuleu" description="build library">
         <build-lib name="xeumeuleu"/>
     </target>
-    
+
     <target name="xeuseuleu" depends="xeumeuleu" description="build library">
         <build-lib name="xeuseuleu"/>
     </target>
@@ -137,7 +137,7 @@
         <forrest/>
     </target>
 
-    <target name="site" description="deploy web site">
+    <target name="site" depends="documentation" description="deploy web site">
         <zip destfile="${doc.dir}/site.zip">
             <fileset dir="${doc.dir}/site"/>
         </zip>
