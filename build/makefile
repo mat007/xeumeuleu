@@ -11,7 +11,7 @@ LIBS = xerces-c_2 libboost_unit_test_framework-cygwin-mt-1_34 mockpp
 
 EXPORTS = xml.h exception.h xi*.h xo*.h encoding.h grammar.h start.h end.h \
           content.h cdata.h attribute.h filter.h adapter.h list.h name_list.h \
-           attributes.h visitor.h caller*.h name_caller*.h optional.h
+          attributes.h visitor.h caller*.h name_caller*.h optional.h
 
 # tools
 CXX = g++
