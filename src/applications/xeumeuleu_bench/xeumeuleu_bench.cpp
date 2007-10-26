@@ -30,8 +30,15 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_bench_pch.h"
 #include "xeumeuleu/xml.h"
+#ifdef _MSC_VER
+#   pragma warning( push, 0 )
+#endif
+#include <boost/date_time/posix_time/posix_time.hpp>
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
+#include <iostream>
 
 using namespace boost::posix_time;
 
