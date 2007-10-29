@@ -43,6 +43,9 @@
     <section id="creation">
      <title>Creating a stylesheet</title>
      <p>
+        The next step is to create the proper stylesheet depending on the needs. 
+     </p>
+     <p>
        The following code creates a stylesheet from an XSL document <em>stylesheet.xsl</em> to write a document to a file <em>file.output</em> :
      </p>
      <source><![CDATA[xsl::xftransform xf( "stylesheet.xsl", "file.output" );]]></source>
@@ -98,8 +101,7 @@ xst << xis;]]></source>
        <source><![CDATA[xsl::xstringtransform xst( "final-stylesheet.xsl" );
 xsl::xbuffertransform xbt( "first-stylesheet.xsl" );
 xml::xistringstream xis( "<root/>" );
-xst << xbt << xis;]]>
-       </source>
+xst << xbt << xis;]]></source>
        <p>
          Contrary to an xsl::xtransform (which xsl::xbuffertransform is <strong>not</strong>), xsl::xbuffertransform's output <strong>has to be</strong> an XML document.
        </p>
