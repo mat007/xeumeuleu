@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <project name="xeumeuleu" default="all">
 
-    <property environment="env"/>
-    <import file="${env.PONEY_HOME}/poney.xml"/>
+    <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
     <!--
     ============================================================================
