@@ -161,3 +161,14 @@ BOOST_AUTO_TEST_CASE( read_unexisting_attribute_directly_with_default_value_is_v
     const std::string value = "the default value";
     BOOST_CHECK_EQUAL( value, xml::attribute( xis, "attribute", value ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: read_from_root_attribute_directly_with_default_value_is_valid
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( read_from_root_attribute_directly_with_default_value_is_valid )
+{
+    xml::xistringstream xis( "<element/>" );
+    const std::string value = "the default value";
+    BOOST_CHECK_EQUAL( value, xml::attribute( xis, "attribute", value ) );
+}
