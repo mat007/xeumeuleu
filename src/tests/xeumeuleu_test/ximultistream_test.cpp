@@ -124,10 +124,10 @@ BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_a_non_existing_attribute_thr
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_non_existing_attribute_from_existing_branch_throws
+// Name: reading_from_an_ximultistream_a_non_existing_attribute_from_existing_branch_throws
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_non_existing_attribute_from_existing_branch_throws )
+BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_a_non_existing_attribute_from_existing_branch_throws )
 {
     xml::xistringstream xis1( "<root-1/>" );
     xml::xistringstream xis2( "<root-2/>" );
@@ -137,10 +137,10 @@ BOOST_AUTO_TEST_CASE( reading_non_existing_attribute_from_existing_branch_throws
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_from_first_branch_then_second_branch_is_transparent
+// Name: reading_from_an_ximultistream_from_first_branch_then_second_branch_is_transparent
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_from_first_branch_then_second_branch_is_transparent )
+BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_from_first_branch_then_second_branch_is_transparent )
 {
     xml::xistringstream xis1( "<root-1 attribute-1='stream-1'/>" );
     xml::xistringstream xis2( "<root-2 attribute-2='stream-2'/>" );
@@ -157,16 +157,33 @@ BOOST_AUTO_TEST_CASE( reading_from_first_branch_then_second_branch_is_transparen
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_from_second_branch_does_not_change_stream_precedence
+// Name: reading_from_an_ximultistream_from_second_branch_does_not_change_stream_precedence
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_from_second_branch_does_not_change_stream_precedence )
+BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_from_second_branch_does_not_change_stream_precedence )
 {
-    xml::xistringstream xis1( "<root attribute='stream-1'></root>" );
+    xml::xistringstream xis1( "<root attribute='stream-1'/>" );
     xml::xistringstream xis2( "<root attribute='stream-2'><element/></root>" );
     xml::ximultistream xis( xis1, xis2 );
     xis >> xml::start( "root" )
             >> xml::start( "element" )
             >> xml::end();
+    BOOST_CHECK_EQUAL( "stream-1", xml::attribute< std::string >( xis, "attribute" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: an_ximultistring_can_be_wrapped_by_an_xisubstream
+// Created: MAT 2008-01-07
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( an_ximultistring_can_be_wrapped_by_an_xisubstream )
+{
+    xml::xistringstream xis1( "<root-1 attribute='stream-1'/>" );
+    xml::xistringstream xis2( "<root-2 attribute='stream-2'/>" );
+    xml::ximultistream xis( xis1, xis2 );
+    {
+        xml::xisubstream xiss( xis );
+        xiss >> xml::start( "root-2" );
+    }
+    xis >> xml::start( "root-1" );
     BOOST_CHECK_EQUAL( "stream-1", xml::attribute< std::string >( xis, "attribute" ) );
 }
