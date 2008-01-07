@@ -368,9 +368,9 @@ void optional_input::attributes( const visitor& v ) const
 // Name: std::auto_ptr< input_base > optional_input::branch
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-std::auto_ptr< input_base > optional_input::branch( bool clone ) const
+std::auto_ptr< input_base > optional_input::branch( bool clone, input_context& context ) const
 {
-    return pInput_->branch( clone );
+    return pInput_->branch( clone, context );
 }
 
 // -----------------------------------------------------------------------------
