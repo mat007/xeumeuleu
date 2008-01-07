@@ -30,29 +30,37 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xml_h_
-#define _xeumeuleu_xml_h_
-
-#include "xistringstream.h"
-#include "xostringstream.h"
-#include "xifstream.h"
-#include "xofstream.h"
-#include "xobufferstream.h"
-#include "xibufferstream.h"
-#include "xosubstream.h"
-#include "xisubstream.h"
-#include "xistreamstream.h"
 #include "ximultistream.h"
-#include "exception.h"
-#include "start.h"
-#include "end.h"
-#include "content.h"
-#include "cdata.h"
-#include "attribute.h"
-#include "list.h"
-#include "name_list.h"
-#include "attributes.h"
-#include "optional.h"
-#include "grammar.h"
+#include "multi_input.h"
+#include "input.h"
 
-#endif // _xeumeuleu_xml_h_
+using namespace xml;
+
+namespace
+{
+    std::auto_ptr< input > tie( const xistream& xis1, const xistream& xis2 )
+    {
+        std::auto_ptr< input > result( xis1.branch( false ) );
+        result->attach( xis2.branch( false ) );
+        return result;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ximultistream constructor
+// Created: MAT 2008-01-07
+// -----------------------------------------------------------------------------
+ximultistream::ximultistream( const xistream& xis1, const xistream& xis2 )
+    : xistream( tie( xis1, xis2 ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ximultistream destructor
+// Created: MAT 2008-01-07
+// -----------------------------------------------------------------------------
+ximultistream::~ximultistream()
+{
+    // NOTHING
+}

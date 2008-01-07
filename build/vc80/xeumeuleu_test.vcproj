@@ -252,6 +252,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\xeumeuleu\src\tests\xeumeuleu_test\ximultistream_test.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\xeumeuleu_test\xistreamstream_test.cpp"
 				>
 			</File>

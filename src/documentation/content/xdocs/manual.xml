@@ -79,6 +79,15 @@ xml::xistreamstream xis( stream );]]></source>
           The purpose of this stream implementation is to perform operations on <em>xiss</em> without impacting <em>xis</em>.<br />
           Obviously the life-time of the sub-stream must not exceed the life-time of the underlying stream.
         </p>
+        <p>
+          The following code combines two streams <em>xis1</em> and <em>xis2</em> into a single stream :
+        </p>
+        <source><![CDATA[xml::ximultistream xis( xis1, xis2 );]]></source>
+        <p>
+          The purpose of this stream implementation is to read from two streams transparently as if there was one stream.<br />
+          If one piece of data is available in both streams, the first one takes precedence, otherwise it is pulled from any of the streams as needed.<br />
+          The life-time of the composite stream must not exceed the life-time of the underlying streams.
+        </p>
       </section>
       <section id="output">
         <title>Output streams</title>
