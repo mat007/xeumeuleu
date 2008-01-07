@@ -37,8 +37,6 @@
 
 namespace xml
 {
-    class input_context;
-
 // =============================================================================
 /** @class  multi_input
     @brief  Multi input implementation
@@ -72,7 +70,7 @@ public:
     virtual void read( unsigned long& value ) const;
     virtual void read( unsigned long long& value ) const;
 
-    virtual std::auto_ptr< input_base > branch( bool clone ) const;
+    virtual std::auto_ptr< input_base > branch( bool clone, input_context& context ) const;
 
     virtual void copy( output& destination ) const;
 

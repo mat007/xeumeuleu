@@ -381,9 +381,9 @@ void multi_input::attributes( const visitor& v ) const
 // Name: multi_input::branch
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-std::auto_ptr< input_base > multi_input::branch( bool clone ) const
+std::auto_ptr< input_base > multi_input::branch( bool clone, input_context& context ) const
 {
-    return std::auto_ptr< input_base >( new multi_input( pInput1_->branch( clone ), pInput2_->branch( clone ), context_ ) );
+    return std::auto_ptr< input_base >( new multi_input( pInput1_->branch( clone, context ), pInput2_->branch( clone, context ), context ) );
 }
 
 // -----------------------------------------------------------------------------
