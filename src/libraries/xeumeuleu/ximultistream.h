@@ -30,89 +30,37 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_input_h_
-#define _xeumeuleu_input_h_
+#ifndef _xeumeuleu_ximultistream_h_
+#define _xeumeuleu_ximultistream_h_
 
-#include "input_context.h"
-#include "input_base.h"
-#include <string>
-#include <memory>
+#include "xistream.h"
 
 namespace xml
 {
 // =============================================================================
-/** @class  input
-    @brief  Input
+/** @class  ximultistream
+    @brief  Xml input multi-stream
+    @par    Using example
+    @code
+    xml::xistream& xis1 = ...
+    xml::xistream& xis2 = ...
+    xml::ximultistream xims( xis1, xis2 );
+    xims >> ...
+    @endcode
+    @warning the life of the multi-stream must not exceed the life of the underlying wrapped stream.
 */
-// Created: MAT 2006-01-04
+// Created: MAT 2008-01-07
 // =============================================================================
-class input : private input_context
+class ximultistream : public xistream
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit input( std::auto_ptr< input_base > pInput );
-    virtual ~input();
-    //@}
-
-    //! @name Operations
-    //@{
-    void start( const std::string& tag );
-    void end();
-
-    template< typename T > void read( T& value ) const
-    {
-        pInput_->read( value );
-    }
-
-    std::auto_ptr< input > branch( bool clone ) const;
-
-    void copy( output& destination ) const;
-
-    void error( const std::string& message ) const;
-    //@}
-
-    //! @name Accessors
-    //@{
-    bool hasElement( const std::string& tag ) const;
-    bool hasAttribute( const std::string& name ) const;
-    bool hasContent() const;
-
-    template< typename T > void attribute( const std::string& name, T& value ) const
-    {
-        pInput_->attribute( name, value );
-    }
-
-    void nodes( const visitor& v ) const;
-    void attributes( const visitor& v ) const;
-    //@}
-
-    //! @name Modifiers
-    //@{
-    void optional();
-
-    void attach( std::auto_ptr< input > pInput );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    input( const input& );            //!< Copy constructor
-    input& operator=( const input& ); //!< Assignment operator
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual input_base& reset( std::auto_ptr< input_base > pInput );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::auto_ptr< input_base > pInput_;
+             ximultistream( const xistream& xis1, const xistream& xis2 );
+    virtual ~ximultistream();
     //@}
 };
 
 }
 
-#endif // _xeumeuleu_input_h_
+#endif // _xeumeuleu_ximultistream_h_

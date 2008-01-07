@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="xeumeuleu"
 	ProjectGUID="{DC8EF64E-152E-4157-A558-C4E17181B2DE}"
 	>
@@ -354,6 +354,14 @@
 					Name="input"
 					>
 					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\branch_input.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\branch_input.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\buffer_input.cpp"
 						>
 					</File>
@@ -407,6 +415,14 @@
 					</File>
 					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\locator.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\multi_input.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\multi_input.h"
 						>
 					</File>
 					<File
@@ -520,6 +536,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xifstream.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\xeumeuleu\src\libraries\xeumeuleu\ximultistream.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\xeumeuleu\src\libraries\xeumeuleu\ximultistream.h"
 					>
 				</File>
 				<File

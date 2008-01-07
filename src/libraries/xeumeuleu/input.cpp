@@ -32,6 +32,7 @@
 
 #include "input.h"
 #include "optional_input.h"
+#include "multi_input.h"
 
 using namespace xml;
 
@@ -100,6 +101,33 @@ void input::error( const std::string& message ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: input::hasElement
+// Created: MAT 2007-11-04
+// -----------------------------------------------------------------------------
+bool input::hasElement( const std::string& tag ) const
+{
+    return pInput_->hasElement( tag );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input::hasAttribute
+// Created: MAT 2007-11-04
+// -----------------------------------------------------------------------------
+bool input::hasAttribute( const std::string& name ) const
+{
+    return pInput_->hasAttribute( name );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input::hasContent
+// Created: MAT 2007-11-04
+// -----------------------------------------------------------------------------
+bool input::hasContent() const
+{
+    return pInput_->hasContent();
+}
+
+// -----------------------------------------------------------------------------
 // Name: input::nodes
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
@@ -124,6 +152,15 @@ void input::attributes( const visitor& v ) const
 void input::optional()
 {
     pInput_.reset( new optional_input( pInput_, *this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: input::attach
+// Created: MAT 2008-01-07
+// -----------------------------------------------------------------------------
+void input::attach( std::auto_ptr< input > pInput )
+{
+    pInput_.reset( new multi_input( pInput_, pInput->pInput_, *this ) );
 }
 
 // -----------------------------------------------------------------------------
