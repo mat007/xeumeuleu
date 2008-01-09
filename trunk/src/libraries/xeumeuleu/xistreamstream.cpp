@@ -37,7 +37,7 @@ using namespace xml;
 
 namespace
 {
-    std::string load( std::basic_istream< char >& stream )
+    const std::string load( std::basic_istream< char >& stream )
     {
         return std::string( std::istreambuf_iterator< char >( stream ), std::istreambuf_iterator< char >() );
     }
