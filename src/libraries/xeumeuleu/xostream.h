@@ -120,7 +120,8 @@ private:
 // Name: operator<<
 // Created: MAT 2008-01-19
 // -----------------------------------------------------------------------------
-template< typename T > xostream& operator<<( xostream& xos, const T& value )
+template< typename T >
+xostream& operator<<( xostream& xos, const T& value )
 {
     xos.write( value );
     return xos;
