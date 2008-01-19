@@ -98,7 +98,8 @@ private:
 // Name: operator>>
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-template< typename T > xistream& operator>>( xistream& xis, const content_manipulator< T >& manipulator )
+template< typename T >
+xistream& operator>>( xistream& xis, const content_manipulator< T >& manipulator )
 {
     return manipulator( xis );
 }
@@ -107,7 +108,8 @@ template< typename T > xistream& operator>>( xistream& xis, const content_manipu
 // Name: operator<<
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-template< typename T > xostream& operator<<( xostream& xos, const content_manipulator< T >& manipulator )
+template< typename T >
+xostream& operator<<( xostream& xos, const content_manipulator< T >& manipulator )
 {
     return manipulator( xos );
 }
@@ -116,7 +118,8 @@ template< typename T > xostream& operator<<( xostream& xos, const content_manipu
 // Name: content
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-template< typename T > content_manipulator< const T > content( const std::string& tag, const T& value )
+template< typename T >
+content_manipulator< const T > content( const std::string& tag, const T& value )
 {
     return content_manipulator< const T >( tag, value );
 }
@@ -125,7 +128,8 @@ template< typename T > content_manipulator< const T > content( const std::string
 // Name: content
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-template< typename T > content_manipulator< T > content( const std::string& tag, T& value )
+template< typename T >
+content_manipulator< T > content( const std::string& tag, T& value )
 {
     return content_manipulator< T >( tag, value );
 }
@@ -134,7 +138,8 @@ template< typename T > content_manipulator< T > content( const std::string& tag,
 // Name: content
 // Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
-template< typename T > T content( xistream& xis, const std::string& tag )
+template< typename T >
+T content( xistream& xis, const std::string& tag )
 {
     T value;
     xis >> content( tag, value );
@@ -145,7 +150,8 @@ template< typename T > T content( xistream& xis, const std::string& tag )
 // Name: content
 // Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
-template< typename T > T content( xistream& xis, const std::string& tag, const T& defaultValue )
+template< typename T >
+T content( xistream& xis, const std::string& tag, const T& defaultValue )
 {
     T value = defaultValue;
     xis >> optional() >> start( tag ) >> optional() >> value >> end();
