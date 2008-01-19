@@ -87,157 +87,144 @@ void xistream::end()
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::operator>>
+// Name: xistream::read
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-xistream& xistream::operator>>( std::string& value )
+void xistream::read( std::string& value ) const
 {
     TRY
         pInput_->read( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::operator>>
+// Name: xistream::read
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-xistream& xistream::operator>>( float& value )
+void xistream::read( float& value ) const
 {
     TRY
         pInput_->read( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::operator>>
+// Name: xistream::read
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-xistream& xistream::operator>>( double& value )
+void xistream::read( double& value ) const
 {
     TRY
         pInput_->read( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::operator>>
+// Name: xistream::read
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-xistream& xistream::operator>>( int& value )
+void xistream::read( int& value ) const
 {
     TRY
         pInput_->read( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::operator>>
+// Name: xistream::read
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-xistream& xistream::operator>>( long& value )
+void xistream::read( long& value ) const
 {
     TRY
         pInput_->read( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::operator>>
+// Name: xistream::read
 // Created: MAT 2007-09-18
 // -----------------------------------------------------------------------------
-xistream& xistream::operator>>( long long& value )
+void xistream::read( long long& value ) const
 {
     TRY
         pInput_->read( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::operator>>
+// Name: xistream::read
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-xistream& xistream::operator>>( short& value )
+void xistream::read( short& value ) const
 {
     TRY
         pInput_->read( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::operator>>
+// Name: xistream::read
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-xistream& xistream::operator>>( bool& value )
+void xistream::read( bool& value ) const
 {
     TRY
         pInput_->read( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::operator>>
+// Name: xistream::read
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-xistream& xistream::operator>>( unsigned int& value )
+void xistream::read( unsigned int& value ) const
 {
     TRY
         pInput_->read( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::operator>>
+// Name: xistream::read
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-xistream& xistream::operator>>( unsigned short& value )
+void xistream::read( unsigned short& value ) const
 {
     TRY
         pInput_->read( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::operator>>
+// Name: xistream::read
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-xistream& xistream::operator>>( unsigned long& value )
+void xistream::read( unsigned long& value ) const
 {
     TRY
         pInput_->read( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::operator>>
+// Name: xistream::read
 // Created: MAT 2007-09-18
 // -----------------------------------------------------------------------------
-xistream& xistream::operator>>( unsigned long long& value )
+void xistream::read( unsigned long long& value ) const
 {
     TRY
         pInput_->read( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::operator>>
+// Name: xistream::read
 // Created: MAT 2007-09-09
 // -----------------------------------------------------------------------------
-xistream& xistream::operator>>( xostream& xos )
+void xistream::read( xostream& xos ) const
 {
     xos << *this;
-    return *this;
 }
 
 // -----------------------------------------------------------------------------

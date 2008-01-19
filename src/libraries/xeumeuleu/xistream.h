@@ -71,6 +71,20 @@ public:
 
     //! @name Accessors
     //@{
+    void read( std::string& value ) const;
+    void read( float& value ) const;
+    void read( double& value ) const;
+    void read( short& value ) const;
+    void read( int& value ) const;
+    void read( long& value ) const;
+    void read( long long& value ) const;
+    void read( bool& value ) const;
+    void read( unsigned short& value ) const;
+    void read( unsigned int& value ) const;
+    void read( unsigned long& value ) const;
+    void read( unsigned long long& value ) const;
+    void read( xostream& xos ) const;
+
     void attribute( const std::string& name, std::string& value ) const;
     void attribute( const std::string& name, float& value ) const;
     void attribute( const std::string& name, double& value ) const;
@@ -93,24 +107,6 @@ public:
     void optional();
     //@}
 
-    //! @name Operators
-    //@{
-    xistream& operator>>( std::string& value );
-    xistream& operator>>( float& value );
-    xistream& operator>>( double& value );
-    xistream& operator>>( short& value );
-    xistream& operator>>( int& value );
-    xistream& operator>>( long& value );
-    xistream& operator>>( long long& value );
-    xistream& operator>>( bool& value );
-    xistream& operator>>( unsigned short& value );
-    xistream& operator>>( unsigned int& value );
-    xistream& operator>>( unsigned long& value );
-    xistream& operator>>( unsigned long long& value );
-
-    xistream& operator>>( xostream& xos );
-    //@}
-
 protected:
     //! @name Constructors/Destructor
     //@{
@@ -130,6 +126,26 @@ private:
     std::auto_ptr< input > pInput_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: operator>>
+// Created: MAT 2008-01-19
+// -----------------------------------------------------------------------------
+inline xistream& operator>>( xistream& xis, xostream& xos )
+{
+    xis.read( xos );
+    return xis;
+}
+
+// -----------------------------------------------------------------------------
+// Name: operator>>
+// Created: MAT 2008-01-19
+// -----------------------------------------------------------------------------
+template< typename T > xistream& operator>>( xistream& xis, T& value )
+{
+    xis.read( value );
+    return xis;
+}
 
 }
 
