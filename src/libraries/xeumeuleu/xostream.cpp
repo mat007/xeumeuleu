@@ -88,156 +88,144 @@ void xostream::end()
 }
 
 // -----------------------------------------------------------------------------
-// Name: xostream::operator<<
+// Name: xostream::write
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-xostream& xostream::operator<<( const char* value )
+void xostream::write( const char* value )
 {
-    return *this << std::string( value );
+    write( std::string( value ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: xostream::operator<<
+// Name: xostream::write
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-xostream& xostream::operator<<( const std::string& value )
-{
-    TRY
-        output_.write( value );
-    CATCH
-    return *this;
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::operator<<
-// Created: MAT 2006-01-04
-// -----------------------------------------------------------------------------
-xostream& xostream::operator<<( float value )
+void xostream::write( const std::string& value )
 {
     TRY
         output_.write( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xostream::operator<<
+// Name: xostream::write
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-xostream& xostream::operator<<( double value )
+void xostream::write( float value )
 {
     TRY
         output_.write( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xostream::operator<<
+// Name: xostream::write
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-xostream& xostream::operator<<( int value )
+void xostream::write( double value )
 {
     TRY
         output_.write( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xostream::operator<<
+// Name: xostream::write
+// Created: MAT 2006-01-04
+// -----------------------------------------------------------------------------
+void xostream::write( int value )
+{
+    TRY
+        output_.write( value );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xostream::write
 // Created: MAT 2007-01-25
 // -----------------------------------------------------------------------------
-xostream& xostream::operator<<( long value )
+void xostream::write( long value )
 {
     TRY
         output_.write( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xostream::operator<<
+// Name: xostream::write
 // Created: MAT 2007-09-18
 // -----------------------------------------------------------------------------
-xostream& xostream::operator<<( long long value )
+void xostream::write( long long value )
 {
     TRY
         output_.write( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xostream::operator<<
+// Name: xostream::write
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-xostream& xostream::operator<<( bool value )
+void xostream::write( bool value )
 {
     TRY
         output_.write( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xostream::operator<<
+// Name: xostream::write
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-xostream& xostream::operator<<( unsigned int value )
+void xostream::write( unsigned int value )
 {
     TRY
         output_.write( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xostream::operator<<
+// Name: xostream::write
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-xostream& xostream::operator<<( unsigned long value )
+void xostream::write( unsigned long value )
 {
     TRY
         output_.write( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xostream::operator<<
+// Name: xostream::write
 // Created: MAT 2007-09-18
 // -----------------------------------------------------------------------------
-xostream& xostream::operator<<( unsigned long long value )
+void xostream::write( unsigned long long value )
 {
     TRY
         output_.write( value );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xostream::operator<<
+// Name: xostream::write
 // Created: MAT 2006-03-07
 // -----------------------------------------------------------------------------
-xostream& xostream::operator<<( const xobufferstream& xobs )
+void xostream::write( const xobufferstream& xobs )
 {
     TRY
         xobs.attach( output_ );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: xostream::operator<<
+// Name: xostream::write
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
-xostream& xostream::operator<<( const xistream& xis )
+void xostream::write( const xistream& xis )
 {
     TRY
         xis.copy( output_ );
     CATCH
-    return *this;
 }
 
 // -----------------------------------------------------------------------------

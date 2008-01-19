@@ -131,16 +131,6 @@ private:
 // Name: operator>>
 // Created: MAT 2008-01-19
 // -----------------------------------------------------------------------------
-inline xistream& operator>>( xistream& xis, xostream& xos )
-{
-    xis.read( xos );
-    return xis;
-}
-
-// -----------------------------------------------------------------------------
-// Name: operator>>
-// Created: MAT 2008-01-19
-// -----------------------------------------------------------------------------
 template< typename T > xistream& operator>>( xistream& xis, T& value )
 {
     xis.read( value );
