@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2008, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,30 +30,36 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xml_h_
-#define _xeumeuleu_xml_h_
+#ifndef _xeumeuleu_value_h_
+#define _xeumeuleu_value_h_
 
-#include "xistringstream.h"
-#include "xostringstream.h"
-#include "xifstream.h"
-#include "xofstream.h"
-#include "xobufferstream.h"
-#include "xibufferstream.h"
-#include "xosubstream.h"
-#include "xisubstream.h"
-#include "xistreamstream.h"
-#include "ximultistream.h"
-#include "exception.h"
-#include "start.h"
-#include "end.h"
-#include "content.h"
-#include "cdata.h"
-#include "attribute.h"
-#include "list.h"
-#include "name_list.h"
-#include "attributes.h"
-#include "optional.h"
-#include "grammar.h"
-#include "value.h"
+#include "xistream.h"
 
-#endif // _xeumeuleu_xml_h_
+namespace xml
+{
+
+// -----------------------------------------------------------------------------
+// Name: value
+// Created: MAT 2008-01-19
+// -----------------------------------------------------------------------------
+template< typename T > T value( xistream& xis )
+{
+    T value;
+    xis >> value;
+    return value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: value
+// Created: MAT 2008-01-19
+// -----------------------------------------------------------------------------
+template< typename T > T value( xistream& xis, const T& defaultValue )
+{
+    T value = defaultValue;
+    xis >> optional() >> value;
+    return value;
+}
+
+}
+
+#endif // _xeumeuleu_value_h_

@@ -259,6 +259,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\value.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\visitor.h"
 					>
 				</File>

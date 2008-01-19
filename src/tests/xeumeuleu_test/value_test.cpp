@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2008, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,30 +30,40 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xml_h_
-#define _xeumeuleu_xml_h_
+#include "xeumeuleu_test_pch.h"
+#include "xeumeuleu/xml.h"
 
-#include "xistringstream.h"
-#include "xostringstream.h"
-#include "xifstream.h"
-#include "xofstream.h"
-#include "xobufferstream.h"
-#include "xibufferstream.h"
-#include "xosubstream.h"
-#include "xisubstream.h"
-#include "xistreamstream.h"
-#include "ximultistream.h"
-#include "exception.h"
-#include "start.h"
-#include "end.h"
-#include "content.h"
-#include "cdata.h"
-#include "attribute.h"
-#include "list.h"
-#include "name_list.h"
-#include "attributes.h"
-#include "optional.h"
-#include "grammar.h"
-#include "value.h"
+using namespace mockpp;
 
-#endif // _xeumeuleu_xml_h_
+// -----------------------------------------------------------------------------
+// Name: node_content_can_be_read_with_helper
+// Created: MCO 2008-01-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( node_content_can_be_read_with_helper )
+{
+    xml::xistringstream xis( "<element>the content</element>");
+    xis >> xml::start( "element" );
+    BOOST_CHECK_EQUAL( "the content", xml::value< std::string >( xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: empty_node_content_read_with_helper_throws
+// Created: MCO 2008-01-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( empty_node_content_read_with_helper_throws )
+{
+    xml::xistringstream xis( "<element/>");
+    xis >> xml::start( "element" );
+    BOOST_CHECK_THROW( xml::value< std::string >( xis ), xml::exception );
+}
+
+// -----------------------------------------------------------------------------
+// Name: empty_node_content_read_with_helper_throws
+// Created: MCO 2008-01-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( empty_node_content_read_with_helper_and_default_value_returns_default_value )
+{
+    xml::xistringstream xis( "<element/>");
+    xis >> xml::start( "element" );
+    BOOST_CHECK_EQUAL( "the content", xml::value< std::string >( xis, "the content" ) );
+}
