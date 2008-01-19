@@ -42,7 +42,7 @@ namespace
     public:
         mock_custom_class()
             : mockpp::ChainableMockObject( "mock_custom_class", 0 )
-            , process_mocker             ( "process", this )
+            , process_mocker( "process", this )
         {}
         void process( const std::string& name, xml::xistream& xis )
         {
