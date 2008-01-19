@@ -1,6 +1,7 @@
 1.3.0
 . added support for XSLT using xalan-c
 . added xml::ximultistream implementing a composite of input streams
+. added xml::value helper to read directly from an xml::xistream
 
 1.2.2
 . fixed output indentation issues when serializing an xml::xistream directly into an xml::xostream
