@@ -131,7 +131,8 @@ private:
 // Name: operator>>
 // Created: MAT 2008-01-19
 // -----------------------------------------------------------------------------
-template< typename T > xistream& operator>>( xistream& xis, T& value )
+template< typename T >
+xistream& operator>>( xistream& xis, T& value )
 {
     xis.read( value );
     return xis;
