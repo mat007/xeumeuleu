@@ -90,7 +90,8 @@ private:
 // Name: operator>>
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-template< typename T > xistream& operator>>( xistream& xis, const attribute_manipulator< T >& manipulator )
+template< typename T >
+xistream& operator>>( xistream& xis, const attribute_manipulator< T >& manipulator )
 {
     return manipulator( xis );
 }
@@ -99,7 +100,8 @@ template< typename T > xistream& operator>>( xistream& xis, const attribute_mani
 // Name: operator<<
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-template< typename T > xostream& operator<<( xostream& xos, const attribute_manipulator< T >& manipulator )
+template< typename T >
+xostream& operator<<( xostream& xos, const attribute_manipulator< T >& manipulator )
 {
     return manipulator( xos );
 }
@@ -108,7 +110,8 @@ template< typename T > xostream& operator<<( xostream& xos, const attribute_mani
 // Name: attribute
 // Created: MAT 2006-01-06
 // -----------------------------------------------------------------------------
-template< typename T > attribute_manipulator< const T > attribute( const std::string& name, const T& value )
+template< typename T >
+attribute_manipulator< const T > attribute( const std::string& name, const T& value )
 {
     return attribute_manipulator< const T >( name, value );
 }
@@ -117,7 +120,8 @@ template< typename T > attribute_manipulator< const T > attribute( const std::st
 // Name: attribute
 // Created: MAT 2006-01-06
 // -----------------------------------------------------------------------------
-template< typename T > attribute_manipulator< T > attribute( const std::string& name, T& value )
+template< typename T >
+attribute_manipulator< T > attribute( const std::string& name, T& value )
 {
     return attribute_manipulator< T >( name, value );
 }
@@ -126,7 +130,8 @@ template< typename T > attribute_manipulator< T > attribute( const std::string& 
 // Name: attribute
 // Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
-template< typename T > T attribute( const xistream& xis, const std::string& name )
+template< typename T >
+T attribute( const xistream& xis, const std::string& name )
 {
     T value;
     xis.attribute( name, value );
@@ -137,7 +142,8 @@ template< typename T > T attribute( const xistream& xis, const std::string& name
 // Name: attribute
 // Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
-template< typename T > T attribute( xistream& xis, const std::string& name, const T& defaultValue )
+template< typename T >
+T attribute( xistream& xis, const std::string& name, const T& defaultValue )
 {
     T value = defaultValue;
     xis >> optional() >> attribute( name, value );
