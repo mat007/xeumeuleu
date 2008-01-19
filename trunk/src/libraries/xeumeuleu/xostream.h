@@ -66,6 +66,21 @@ public:
 
     //! @name Modifiers
     //@{
+    void write( const char* value );
+    void write( const std::string& value );
+    void write( float value );
+    void write( double value );
+    void write( int value );
+    void write( long value );
+    void write( long long value );
+    void write( bool value );
+    void write( unsigned int value );
+    void write( unsigned long value );
+    void write( unsigned long long value );
+
+    void write( const xobufferstream& xobs );
+    void write( const xistream& xis );
+
     void attribute( const std::string& name, const char* value );
     void attribute( const std::string& name, const std::string& value );
     void attribute( const std::string& name, float value );
@@ -79,24 +94,6 @@ public:
     void attribute( const std::string& name, unsigned long long value );
 
     void cdata( const std::string& content );
-    //@}
-
-    //! @name Operators
-    //@{
-    xostream& operator<<( const char* value );
-    xostream& operator<<( const std::string& value );
-    xostream& operator<<( float value );
-    xostream& operator<<( double value );
-    xostream& operator<<( int value );
-    xostream& operator<<( long value );
-    xostream& operator<<( long long value );
-    xostream& operator<<( bool value );
-    xostream& operator<<( unsigned int value );
-    xostream& operator<<( unsigned long value );
-    xostream& operator<<( unsigned long long value );
-
-    xostream& operator<<( const xobufferstream& xobs );
-    xostream& operator<<( const xistream& xis );
     //@}
 
 protected:
@@ -118,6 +115,16 @@ private:
     output& output_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: operator<<
+// Created: MAT 2008-01-19
+// -----------------------------------------------------------------------------
+template< typename T > xostream& operator<<( xostream& xos, const T& value )
+{
+    xos.write( value );
+    return xos;
+}
 
 }
 
