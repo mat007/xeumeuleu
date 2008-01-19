@@ -384,15 +384,23 @@ public:
         </p>
         <source><![CDATA[xos << xml::content( "element", xml::cdata( "the CDATA section of the node" ) );]]></source>
         <p>
-          Reading the content of a given node is also possible using the following helper function, either :
+          Reading the content of a node is also possible using the following helper function, either :
+        </p>
+        <source><![CDATA[const std::string result = xml::value< std::string >( xis );]]></source>
+        <p>
+          Or by providing a default value if content is optional :
+        </p>
+        <source><![CDATA[const std::string result = xml::value< std::string >( xis, "a default value" );]]></source>
+        <p>
+          Alternatively another helper function reads the content inside a given node directly :
         </p>
         <source><![CDATA[const std::string result = xml::content< std::string >( xis, "element" );]]></source>
         <p>
-          Or by providing a default value if the node and/or its content is optional :
+          Or also by providing a default value if the node and/or its content is optional :
         </p>
         <source><![CDATA[const std::string result = xml::content( xis, "element", "a default value" );]]></source>
         <p>
-          Note that the first version requires the template to be explicited whereas the second version deduces it from the default value parameter type.
+          Note that the first forms require the template to be explicited whereas the second forms deduce it from the default value parameter type.
         </p>
       </section>
       <section id="attributes">
