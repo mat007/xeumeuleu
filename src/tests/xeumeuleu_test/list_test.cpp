@@ -164,7 +164,7 @@ namespace
     public:
         mock_custom_class()
             : mockpp::ChainableMockObject( "mock_custom_class", 0 )
-            , process_mocker             ( "process", this )
+            , process_mocker( "process", this )
         {}
         void process( xml::xistream& xis )
         {
@@ -202,7 +202,7 @@ namespace
     public:
         mock_custom_class_with_parameters()
             : mockpp::ChainableMockObject( "mock_custom_class_with_parameters", 0 )
-            , process_mocker             ( "process", this )
+            , process_mocker( "process", this )
         {}
         void process( xml::xistream& xis, int p1, const float p2 )
         {
@@ -244,7 +244,7 @@ namespace
     public:
         mock_custom_class_with_polymorphic_parameter()
             : mockpp::ChainableMockObject( "mock_custom_class_with_polymorphic_parameter", 0 )
-            , process_mocker             ( "process", this )
+            , process_mocker( "process", this )
         {}
         void process( xml::xistream& xis, an_interface& p1 )
         {
@@ -310,7 +310,7 @@ namespace
     public:
         mock_custom_class_name_list_with_parameters()
             : mockpp::ChainableMockObject( "mock_custom_class_name_list_with_parameters", 0 )
-            , process_mocker             ( "process", this )
+            , process_mocker( "process", this )
         {}
         void process( const std::string& name, xml::xistream& xis, int p1 )
         {
@@ -349,7 +349,7 @@ namespace
     public:
         mock_custom_class_name_list()
             : mockpp::ChainableMockObject( "mock_custom_class_name_list", 0 )
-            , process_mocker             ( "process", this )
+            , process_mocker( "process", this )
         {}
         void process( const std::string& name, xml::xistream& xis )
         {
