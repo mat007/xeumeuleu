@@ -33,6 +33,7 @@
 #include "buffer_input.h"
 #include "translate.h"
 #include "exception.h"
+#include "locator.h"
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
@@ -46,6 +47,18 @@ namespace
             throw xml::exception( "Internal error in 'buffer_input::build' : DOMImplementation 'LS' not found" );
         return *pImpl->createDocument();
     }
+    void copy( DOMNode* pFrom, DOMNode* pTo )
+    {
+        while( pFrom && pTo )
+        {
+            const locator* pLocator = reinterpret_cast< locator* >( pFrom->getUserData( translate( "locator" ) ) );
+            if( pLocator )
+                pTo->setUserData( translate( "locator" ), new locator( *pLocator, *pTo ), 0 );
+            copy( pFrom->getFirstChild(), pTo->getFirstChild() );
+            pFrom = pFrom->getNextSibling();
+            pTo = pTo->getNextSibling();
+        }
+    }
     DOMNode& import( DOMDocument& document, DOMNode& node )
     {
         if( node.getNodeType() == DOMNode::DOCUMENT_NODE )
@@ -53,7 +66,9 @@ namespace
             import( document, *node.getFirstChild() );
             return document;
         }
-        return *document.appendChild( document.importNode( &node, true ) );
+        DOMNode& added = *document.appendChild( document.importNode( &node, true ) );
+        copy( &node, &added );
+        return added;
     }
 }
 
