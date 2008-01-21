@@ -51,6 +51,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              locator( const std::string& uri, const XERCES_CPP_NAMESPACE::XMLScanner& scanner, XERCES_CPP_NAMESPACE::DOMNode& node );
+             locator( const locator& rhs, XERCES_CPP_NAMESPACE::DOMNode& node );
     virtual ~locator();
     //@}
 

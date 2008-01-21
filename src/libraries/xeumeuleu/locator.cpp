@@ -49,6 +49,19 @@ locator::locator( const std::string& uri, const XMLScanner& scanner, DOMNode& no
 }
 
 // -----------------------------------------------------------------------------
+// Name: locator constructor
+// Created: MAT 2008-01-20
+// -----------------------------------------------------------------------------
+locator::locator( const locator& rhs, DOMNode& node )
+    : uri_   ( std::string( rhs.uri_ ) )
+    , line_  ( rhs.line_ )
+    , column_( rhs.column_ )
+    , node_  ( node )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: locator destructor
 // Created: MAT 2007-09-20
 // -----------------------------------------------------------------------------
