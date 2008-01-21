@@ -96,3 +96,25 @@ BOOST_AUTO_TEST_CASE( error_from_root_throws_exception_with_context_between_open
     }
     BOOST_FAIL( "should have thrown" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: error_context_is_transmitted_from_an_xistream_to_an_xibufferstream
+// Created: MAT 2007-09-20
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( error_context_is_transmitted_from_an_xistream_to_an_xibufferstream )
+{
+    const std::string message = "this is my message";
+    xml::xistringstream xis( "<root></root>" );
+    xml::xibufferstream xibs( xis );
+    xibs >> xml::start( "root" );
+    try
+    {
+        xibs.error( message );
+    }
+    catch( std::exception& e )
+    {
+        BOOST_CHECK_EQUAL( "string_input (line 1, column 7) : " + message, e.what() );
+        return;
+    }
+    BOOST_FAIL( "should have thrown" );
+}
