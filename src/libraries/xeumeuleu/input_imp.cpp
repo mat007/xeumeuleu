@@ -165,7 +165,7 @@ void input_imp::start( const std::string& tag )
 {
     const DOMNode* pChild = findChild( tag );
     if( ! pChild )
-        throw xml::exception( context() + " does not have a child named '" + tag + "'" );
+        throw xml::exception( location() + context() + " does not have a child named '" + tag + "'" );
     pCurrent_ = pChild;
 }
 
@@ -176,10 +176,10 @@ void input_imp::start( const std::string& tag )
 void input_imp::end()
 {
     if( pCurrent_ == &root_ )
-        throw xml::exception( "Cannot move up from " + context() );
+        throw xml::exception( location() + "Cannot move up from " + context() );
     const DOMNode* pParent = pCurrent_->getParentNode();
     if( ! pParent )
-        throw xml::exception( context() + " has no parent" );
+        throw xml::exception( location() + context() + " has no parent" );
     pCurrent_ = pParent;
 }
 
@@ -191,7 +191,7 @@ const XMLCh* input_imp::readValue() const
 {
     const DOMNode* pChild = findContent();
     if( ! pChild )
-        throw xml::exception( context() + " does not have a content" );
+        throw xml::exception( location() + context() + " does not have a content" );
     return pChild->getNodeValue();
 }
 
@@ -205,7 +205,7 @@ T input_imp::convert( const XMLCh* from ) const
     const double value = XMLDouble( from ).getValue();
     const T result = static_cast< T >( value );
     if( static_cast< double >( result ) != value )
-        throw xml::exception( "Value of " + context() + " is not a " + typeid( T ).name() );
+        throw xml::exception( location() + "Value of " + context() + " is not a " + typeid( T ).name() );
     return result;
 }
 
@@ -220,7 +220,7 @@ float input_imp::convert< float >( const XMLCh* from ) const
 {
     const XMLFloat value( from );
     if( value.isDataOverflowed() )
-        throw xml::exception( "Value of " + context() + " overflowed (probably a double instead of a float)" );
+        throw xml::exception( location() + "Value of " + context() + " overflowed (probably a double instead of a float)" );
     switch( value.getType() )
     {
         case XMLDouble::NegINF :
@@ -243,7 +243,7 @@ double input_imp::convert< double >( const XMLCh* from ) const
 {
     const XMLDouble value( from );
     if( value.isDataOverflowed() )
-        throw xml::exception( "Value of " + context() + " overflowed (probably more than a double)" );
+        throw xml::exception( location() + "Value of " + context() + " overflowed (probably more than a double)" );
     switch( value.getType() )
     {
         case XMLDouble::NegINF :
@@ -279,7 +279,8 @@ bool input_imp::convert< bool >( const XMLCh* from ) const
         return true;
     if( value == "false" || value == "0" )
         return false;
-    throw xml::exception( "Value of " + context() + " is not a boolean" );
+    throw xml::exception( location() + "Value of " + context() + " is not a boolean" );
+
 }
 }
 
@@ -399,7 +400,7 @@ const XMLCh* input_imp::readAttribute( const std::string& name ) const
 {
     const DOMNode* pAttribute = findAttribute( name );
     if( ! pAttribute )
-        throw xml::exception( context() + " does not have an attribute '" + trim( name ) + "'" );
+        throw xml::exception( location() + context() + " does not have an attribute '" + trim( name ) + "'" );
     return pAttribute->getNodeValue();
 }
 
@@ -567,16 +568,21 @@ void input_imp::copy( output& destination ) const
     destination.copy( *pCurrent_ );
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: input_imp::location
+// Created: MAT 2007-09-20
+// -----------------------------------------------------------------------------
+const std::string input_imp::location() const
 {
-    const std::string interpret( const DOMLocator& locator, const std::string& message )
+    const DOMLocator* pLocator = reinterpret_cast< DOMLocator* >( pCurrent_->getUserData( translate( "locator" ) ) );
+    if( pLocator )
     {
         std::stringstream stream;
-        stream << translate( locator.getURI() ).operator std::string()
-               << " (line " << locator.getLineNumber() << ", column " << locator.getColumnNumber() << ") : "
-               << translate( message ).operator std::string();
+        stream << translate( pLocator->getURI() ).operator std::string()
+               << " (line " << pLocator->getLineNumber() << ", column " << pLocator->getColumnNumber() << ") : ";
         return stream.str();
     }
+    return "";
 }
 
 // -----------------------------------------------------------------------------
@@ -585,8 +591,5 @@ namespace
 // -----------------------------------------------------------------------------
 void input_imp::error( const std::string& message ) const
 {
-    const DOMLocator* pLocator = reinterpret_cast< DOMLocator* >( pCurrent_->getUserData( translate( "locator" ) ) );
-    if( pLocator )
-       throw xml::exception( interpret( *pLocator, message ) );
-    throw xml::exception( message );
+    throw xml::exception( location() + message );
 }
