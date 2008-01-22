@@ -112,6 +112,7 @@ private:
 
     //! @name Helpers
     //@{
+    const std::string location() const;
     const std::string context() const;
 
     const XERCES_CPP_NAMESPACE::DOMNode* findChild    ( const std::string& name ) const;
