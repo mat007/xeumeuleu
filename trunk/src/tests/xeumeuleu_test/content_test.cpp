@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE( reading_empty_content_throws_proper_exception )
     }
     catch( std::exception& e )
     {
-        BOOST_CHECK_EQUAL( "node 'element' does not have a content", e.what() );
+        BOOST_CHECK_EQUAL( "string_input (line 1, column 11) : node 'element' does not have a content", e.what() );
         return;
     }
     BOOST_FAIL( "should have thrown" );
