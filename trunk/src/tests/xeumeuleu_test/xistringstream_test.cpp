@@ -35,6 +35,11 @@
 
 using namespace mockpp;
 
+namespace
+{
+    const xml::xistringstream xis( "<static-stream-is-valid/>" );
+}
+
 // -----------------------------------------------------------------------------
 // Name: creating_empty_document_throws_an_exception
 // Created: MCO 2006-01-03
@@ -315,10 +320,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_huge_xml_is_okay
+// Name: reading_huge_xml_is_valid
 // Created: AGE 2007-10-22
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_huge_xml_is_okay )
+BOOST_AUTO_TEST_CASE( reading_huge_xml_is_valid )
 {
     my_class reader;
     {
