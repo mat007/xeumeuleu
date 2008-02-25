@@ -32,7 +32,6 @@
 
 #include "transform.h"
 #include "xalan.h"
-#include "xeumeuleu/xerces.h"
 
 using namespace xsl;
 using namespace XALAN_CPP_NAMESPACE;
@@ -49,11 +48,9 @@ namespace
 // -----------------------------------------------------------------------------
 transform::transform()
 {
+    XMLPlatformUtils::Initialize();
     if( counter++ == 0 )
-    {
-        XMLPlatformUtils::Initialize();
         XalanTransformer::initialize();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -63,8 +60,6 @@ transform::transform()
 transform::~transform()
 {
     if( --counter == 0 )
-    {
         XalanTransformer::terminate();
-        XMLPlatformUtils::Terminate();
-    }
+    XMLPlatformUtils::Terminate();
 }
