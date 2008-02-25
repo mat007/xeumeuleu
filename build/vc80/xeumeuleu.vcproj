@@ -327,6 +327,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\document.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\document.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\error_handler.cpp"
 					>
 				</File>

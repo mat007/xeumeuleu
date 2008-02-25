@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2007, Mathieu Champlon
+ *   Copyright (c) 2008, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,38 +30,27 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_buffer_input_h_
-#define _xeumeuleu_buffer_input_h_
-
-#include "document.h"
-#include "input_base_member.h"
-#include "input_imp.h"
+#ifndef _xeumeuleu_document_h_
+#define _xeumeuleu_document_h_
 
 namespace xml
 {
 // =============================================================================
-/** @class  buffer_input
-    @brief  Buffer input
+/** @class  document
+    @brief  Document base class
 */
-// Created: MCO 2007-04-27
+// Created: MAT 2008-02-25
 // =============================================================================
-class buffer_input : private document, private input_base_member, public input_imp
+class document
 {
-public:
+protected:
     //! @name Constructors/Destructor
     //@{
-    explicit buffer_input( const XERCES_CPP_NAMESPACE::DOMNode& root );
-    virtual ~buffer_input();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    buffer_input( const buffer_input& );            //!< Copy constructor
-    buffer_input& operator=( const buffer_input& ); //!< Assignment operator
+             document();
+    virtual ~document();
     //@}
 };
 
 }
 
-#endif // _xeumeuleu_buffer_input_h_
+#endif // _xeumeuleu_document_h_
