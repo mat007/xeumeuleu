@@ -4,6 +4,7 @@
 . added xml::value helper to read directly from an xml::xistream
 . fixed error context not being transmitted from an xml::xistream to an xml::xibufferstream
 . added error context in xml::xistream exceptions thrown during read
+. fixed a crash when creating a stream at namespace scope
 
 1.2.2
 . fixed output indentation issues when serializing an xml::xistream directly into an xml::xostream

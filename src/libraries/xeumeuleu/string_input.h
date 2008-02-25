@@ -33,6 +33,7 @@
 #ifndef _xeumeuleu_string_input_h_
 #define _xeumeuleu_string_input_h_
 
+#include "document.h"
 #include "input_base_member.h"
 #include "input.h"
 
@@ -46,7 +47,7 @@ namespace xml
 */
 // Created: MAT 2006-01-04
 // =============================================================================
-class string_input : private input_base_member, public input
+class string_input : private document, private input_base_member, public input
 {
 public:
     //! @name Constructors/Destructor

@@ -33,6 +33,7 @@
 #ifndef _xeumeuleu_output_base_member_h_
 #define _xeumeuleu_output_base_member_h_
 
+#include "document.h"
 #include "xerces.h"
 #include "xerces_ptr.h"
 #include <string>
@@ -45,7 +46,7 @@ namespace xml
 */
 // Created: MAT 2006-03-19
 // =============================================================================
-class output_base_member
+class output_base_member : private document
 {
 public:
     //! @name Constructors/Destructor
