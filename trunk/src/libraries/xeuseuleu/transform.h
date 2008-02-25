@@ -43,7 +43,7 @@ namespace xsl
 // =============================================================================
 class transform
 {
-public:
+protected:
     //! @name Constructors/Destructor
     //@{
              transform();
