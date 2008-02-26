@@ -42,18 +42,27 @@
 
 using namespace boost::posix_time;
 
+namespace
+{
+//    const int FILES = 100000;
+//    const int NODES = 1;
+    const int FILES = 1;
+    const int NODES = 1000000;
+}
+
 int main( int /*argc*/, char* /*argv[]*/ )
 {
     const ptime start = microsec_clock::local_time();
-    for( int i = 0; i < 100000; ++i )
+    for( int file = 0; file < FILES; ++file )
     {
         xml::xofstream xos( "bench.xml" );
-        xos << xml::start( "root" )
-                << xml::content( "element", 12.f )
-                << xml::start( "another" )
+        xos << xml::start( "root" );
+        for( int node = 0; node < NODES; ++node )
+            xos << xml::start( "element" )
+                    << 12.f
                     << xml::attribute( "id", 27.f )
-                << xml::end()
-            << xml::end();
+                << xml::end();
+        xos << xml::end();
     }
     const time_duration duration = microsec_clock::local_time() - start;
     std::cout << "duration : " << duration << std::endl;
