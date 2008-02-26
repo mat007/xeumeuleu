@@ -48,21 +48,6 @@ namespace
         return "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                "<element>" + value + "</element>\n";
     }
-    template< typename T > void check_numeric_limits()
-    {
-        {
-            const T value = std::numeric_limits< T >::max();
-            std::stringstream stream;
-            stream << value;
-            BOOST_CHECK_EQUAL( format( stream.str() ), write< T >( value ) );
-        }
-        {
-            const T value = std::numeric_limits< T >::min();
-            std::stringstream stream;
-            stream << value;
-            BOOST_CHECK_EQUAL( format( stream.str() ), write< T >( value ) );
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -92,6 +77,25 @@ BOOST_AUTO_TEST_CASE( reading_empty_content_throws_proper_exception )
 BOOST_AUTO_TEST_CASE( streaming_content_writes_text_content_as_it_is )
 {
     BOOST_CHECK_EQUAL( format(" this is the content  "), write< char* >( " this is the content  " ) );
+}
+
+namespace
+{
+    template< typename T > void check_numeric_limits()
+    {
+        {
+            const T value = std::numeric_limits< T >::max();
+            std::stringstream stream;
+            stream << value;
+            BOOST_CHECK_EQUAL( format( stream.str() ), write< T >( value ) );
+        }
+        {
+            const T value = std::numeric_limits< T >::min();
+            std::stringstream stream;
+            stream << value;
+            BOOST_CHECK_EQUAL( format( stream.str() ), write< T >( value ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -134,10 +138,9 @@ BOOST_AUTO_TEST_CASE( streaming_content_writes_node_special_value_content )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( streaming_stack_content_writes_node_content )
 {
-    xml::xostringstream xos;
-    xos << xml::content( "element", 7 );
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element>7</element>\n", xos.str() );
+    BOOST_CHECK_EQUAL( format( "7" ), write< int >( 7 ) );
+    BOOST_CHECK_EQUAL( format( "17.23" ), write< double >( 17.23 ) );
+    BOOST_CHECK_EQUAL( format( "1.23" ), write< float >( 1.23f ) );
 }
 
 namespace
@@ -159,7 +162,9 @@ BOOST_AUTO_TEST_CASE( streaming_content_reads_node_content )
 {
     BOOST_CHECK_EQUAL( " this is the value ", read< std::string >( "this is the value" ) );
     BOOST_CHECK_EQUAL( 1.23f, read< float >( "1.23" ) );
+    BOOST_CHECK_EQUAL( 17.23f, read< float >( "17.23" ) );
     BOOST_CHECK_EQUAL( 1e+99, read< double >( "1e+99" ) );
+    BOOST_CHECK_EQUAL( 17.23, read< double >( "17.23" ) );
     BOOST_CHECK_EQUAL( 12, read< int >( "12" ) );
     BOOST_CHECK_EQUAL( 32767, read< short >( "32767" ) );
     BOOST_CHECK_EQUAL( true, read< bool >( "true" ) );

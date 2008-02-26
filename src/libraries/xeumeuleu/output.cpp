@@ -204,21 +204,36 @@ bool output::isRoot() const
     return pCurrent_ == &root_;
 }
 
+namespace
+{
+    template< typename T > inline std::string convert( T value )
+    {
+        if( value == std::numeric_limits< T >::infinity() )
+            return "INF";
+        if( value == - std::numeric_limits< T >::infinity() )
+            return "-INF";
+        if( value != value )
+            return "NaN";
+        static char buffer[255];
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4996 )
+#endif
+        sprintf( buffer, "%g", value );
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
+        return buffer;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: output::serialize
 // Created: MAT 2007-01-29
 // -----------------------------------------------------------------------------
 std::string output::serialize( float value ) const
 {
-    if( value == std::numeric_limits< float >::infinity() )
-        return "INF";
-    if( value == - std::numeric_limits< float >::infinity() )
-        return "-INF";
-    if( value != value )
-        return "NaN";
-    std::stringstream stream;
-    stream << value;
-    return stream.str();
+    return convert( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -227,13 +242,5 @@ std::string output::serialize( float value ) const
 // -----------------------------------------------------------------------------
 std::string output::serialize( double value ) const
 {
-    if( value == std::numeric_limits< double >::infinity() )
-        return "INF";
-    if( value == - std::numeric_limits< double >::infinity() )
-        return "-INF";
-    if( value != value )
-        return "NaN";
-    std::stringstream stream;
-    stream << value;
-    return stream.str();
+    return convert( value );
 }
