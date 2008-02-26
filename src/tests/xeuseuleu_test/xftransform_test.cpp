@@ -34,28 +34,19 @@
 #include "xeuseuleu/xsl.h"
 #include <fstream>
 
-using namespace mockpp;
-
-namespace
-{
-    void BOOST_CHECK_FILE_EXISTS( const std::string& filename )
-    {
-        std::ifstream file( filename.c_str() );
-        BOOST_CHECK( file.is_open() );
-        file.close();
-        std::remove( filename.c_str() );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: tranformation_creates_a_file
 // Created: SLI 2007-09-07
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( tranformation_creates_a_file )
 {
-    const std::string output = "output.xml";
-    xsl::xftransform xf( BOOST_RESOLVE( "stylesheet.xsl" ), output );
-    xf << xml::start( "root" )
-       << xml::end();
-    BOOST_CHECK_FILE_EXISTS( output );
+    const std::string filename = "file";
+    {
+        xsl::xftransform xf( BOOST_RESOLVE( "stylesheet.xsl" ), filename );
+        xf << xml::start( "root" )
+           << xml::end();
+        BOOST_CHECK( std::ifstream( filename.c_str() ).is_open() );
+    }
+    std::remove( filename.c_str() );
+    BOOST_CHECK( ! std::ifstream( filename.c_str() ).is_open() );
 }
