@@ -147,7 +147,7 @@ BOOST_AUTO_TEST_CASE( streaming_extended_character_into_ISO_8859_1_makes_a_valid
 BOOST_AUTO_TEST_CASE( streaming_extended_character_into_UTF_16_makes_a_valid_document )
 {
     BOOST_TODO; // $$$$ MAT 2006-04-23: must think about adding support for std::wstring ?
-//    xml::xowstringstream xos( "UTF-16" );
+//    xml::xowstringstream xos( xml::encoding( "UTF-16" ) );
 //    xos << xml::content( "element", "ça c'est sûr !" );
 //    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"no\" ?>\n"
 //                       "<element>ça c'est sûr !</element>\n", xos.str() );
