@@ -101,6 +101,7 @@ void output_base_member::fill( XMLFormatTarget& destination, const std::string& 
     pWriter->setErrorHandler( &handler );
     pWriter->setEncoding( translate( encoding ) );
     pWriter->setFeature( XMLUni::fgDOMWRTFormatPrettyPrint, true );
+    pWriter->setFeature( XMLUni:: fgDOMWRTBOM, true );
     beautifier target( destination, pWriter->getNewLine() );
     pWriter->writeNode( &target, *pDocument_ );
 }
