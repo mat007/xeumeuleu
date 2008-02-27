@@ -6,6 +6,7 @@
 . added error context in xml::xistream exceptions thrown during read
 . fixed a crash when creating a stream at namespace scope
 . optimized floating point numbers output
+. fixed missing byte-order-mark at beginning of output when relevant
 
 1.2.2
 . fixed output indentation issues when serializing an xml::xistream directly into an xml::xostream
