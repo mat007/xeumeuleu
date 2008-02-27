@@ -25,27 +25,29 @@
       <title>Components</title>
       <p>
         XeuMeuLeu is made of two distinct libraries :
-        <ul>
-          <li>xeumeuleu : handles XML reading and writing</li>
-          <li>xeuseuleu : copes with XSL transformation</li>
-        </ul>
       </p>
+      <ul>
+        <li>xeumeuleu : handles XML reading and writing</li>
+        <li>xeuseuleu : copes with XSL transformation</li>
+      </ul>
       <p/>
       <p>
         In order to find what dependencies are forced upon at link time, the easiest it to check the following :
-        <ul>
-          If <em>xeumeuleu/xml.h</em> is included the following libraries must be linked against :
+      </p>
+      <ul>
+        <li>If <em>xeumeuleu/xml.h</em> is included the following libraries must be linked against :
           <ul>
             <li>xeumeuleu</li>
             <li>xerces-c_2</li>
           </ul>
-          If <em>xeumeuleu/xsl.h</em> is included the following libraries must be added to the previous list :
+        </li>
+        <li>If <em>xeumeuleu/xsl.h</em> is included the following libraries must be added to the previous list :
           <ul>
             <li>xeuseuleu</li>
             <li>xalan-c_1</li>
           </ul>
-        </ul>
-      </p>
+        </li>
+      </ul>
       <p/>
       <p>
         Therefore <a href="ext:xalan">Apache Xalan</a> is not needed if only the XML library (e.g. xeumeuleu) is used.
@@ -102,11 +104,11 @@
         </p>
         <p>
           The following platforms are <strong>not</strong> supported :
-          <ul>
-            <li>Microsoft Visual Studio 6</li>
-            <li>Microsoft Visual Studio .NET</li>
-          </ul>
         </p>
+        <ul>
+          <li>Microsoft Visual Studio 6</li>
+          <li>Microsoft Visual Studio .NET</li>
+        </ul>
         <p>
           In order to compile with Microsoft Visual Studio follow the steps :
         </p>
