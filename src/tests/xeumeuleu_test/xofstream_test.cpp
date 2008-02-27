@@ -53,7 +53,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( empty_tree_does_not_create_any_file )
 {
-    const std::string filename( "no_file" );
+    const std::string filename = "no_file.xml";
     {
         xml::xofstream xos( filename );
     }
@@ -66,15 +66,37 @@ BOOST_AUTO_TEST_CASE( empty_tree_does_not_create_any_file )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( streaming_elements_creates_a_valid_file )
 {
-    const std::string filename( "valid_file" );
+    const std::string filename = "valid_file.xml";
     xml::xofstream xos( filename );
     xos << xml::start( "element" )
             << xml::start( "child" ) << xml::end()
         << xml::end();
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element>\n"
-                       "  <child/>\n"
-                       "</element>\n", load( filename ) );
+    BOOST_REQUIRE_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                         "<element>\n"
+                         "  <child/>\n"
+                         "</element>\n", load( filename ) );
+    std::remove( filename.c_str() );
+    BOOST_CHECK( ! std::ifstream( filename.c_str() ).is_open() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: utf_16_encoded_file_starts_with_byte_mark_order
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( utf_16_encoded_file_starts_with_byte_mark_order )
+{
+    const std::string filename = "valid_utf_16_file.xml";
+    xml::xofstream xos( filename, xml::encoding( "UTF-16LE" ) );
+    xos << xml::content( "element", "this is the content !" );
+    {
+        std::ifstream ifs( filename.c_str() );
+        if( ! ifs )
+            throw std::runtime_error( "File " + filename + " not found" );
+        char actual[2];
+        ifs.read( reinterpret_cast< char* >( &actual ), sizeof( actual ) );
+        BOOST_REQUIRE_EQUAL( '\xFF', actual[0] );
+        BOOST_REQUIRE_EQUAL( '\xFE', actual[1] );
+    }
     std::remove( filename.c_str() );
     BOOST_CHECK( ! std::ifstream( filename.c_str() ).is_open() );
 }
