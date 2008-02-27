@@ -64,8 +64,8 @@
       </p>
       <ul>
         <li>the high-level stream oriented design allows to quickly write easy and simple code</li>
-        <li>the underlying use of Apache Xerces ensures proper parsing and full features support</li>
-        <li>the open-source license guarantees code availability and free use</li>
+        <li>the underlying use of <a href="ext:xerces">Apache Xerces</a> as well as <a href="ext:xalan">Apache Xalan</a> ensures a wide range of features</li>
+        <li>the open-source license guarantees code availability and usability even for commercial applications</li>
         <li>the unit tests coverage greatly helps reducing the risk of bugs within the library</li>
       </ul>
     </section>
