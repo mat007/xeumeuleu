@@ -67,10 +67,12 @@ See http://forrest.apache.org/docs/linking.html for more info
   </all>
   -->
   <external-refs>
-    <xerces           href="http://xml.apache.org/xerces-c" />
-    <xerces-encodings href="http://xml.apache.org/xerces-c/faq-parse.html#faq-21" />
-    <boost.test       href="http://boost.org/libs/test/doc/index.html" />
-    <mockpp           href="http://mockpp.soureforge.net" />
+    <xerces href="http://xml.apache.org/xerces-c/">
+      <encodings href="faq-parse.html#faq-21"/>
+    </xerces>
+    <xalan href="http://xml.apache.org/xalan-c/"/>
+    <boost.test href="http://boost.org/libs/test/doc/index.html"/>
+    <mockpp href="http://mockpp.soureforge.net/"/>
   </external-refs>
 
 </site>
