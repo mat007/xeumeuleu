@@ -42,10 +42,15 @@ See http://forrest.apache.org/docs/linking.html for more info
 <site label="XeuMeuLeu" xmlns="http://apache.org/forrest/linkmap/1.0">
 
   <info label="Information" tab="home">
-    <page         label="Welcome"      href="index.html"/>
-    <overview     label="Overview"     href="overview.html"/>
-    <manual       label="Manual"       href="manual.html"/>
-    <patterns     label="Patterns"     href="patterns.html"/>
+    <page label="Overview" href="index.html"/>
+    <xml label="XML">
+      <xml-manual   label="Manual"   href="xml/manual.html"/>
+      <xml-patterns label="Patterns" href="xml/patterns.html"/>
+    </xml>
+    <xslt label="XSL">
+      <xsl-manual   label="Manual"   href="xsl/manual.html"/>
+      <xsl-patterns label="Patterns" href="xsl/patterns.html"/>
+    </xslt>
     <faq          label="FAQ"          href="faq.html"/>
     <license      label="License"      href="license.html"/>
     <installation label="Installation" href="installation.html"/>
