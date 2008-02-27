@@ -42,7 +42,7 @@ using namespace mockpp;
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_with_non_existing_file_throws_a_verbose_exception )
 {
-    const std::string filename( "directory/non_existing_file" );
+    const std::string filename = "directory/non_existing_file.xml";
     try
     {
         xml::xifstream xis( filename );
@@ -61,9 +61,9 @@ BOOST_AUTO_TEST_CASE( creating_with_non_existing_file_throws_a_verbose_exception
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_with_existing_empty_file_throws_an_exception )
 {
-    const std::string filename( "empty_file" );
+    const std::string filename = "empty_file.xml";
     std::ofstream( filename.c_str() ).close();
-    BOOST_CHECK_THROW( xml::xifstream xis( filename ), xml::exception );
+    BOOST_REQUIRE_THROW( xml::xifstream xis( filename ), xml::exception );
     std::remove( filename.c_str() );
     BOOST_CHECK( ! std::ifstream( filename.c_str() ).is_open() );
 }
@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE( creating_with_existing_empty_file_throws_an_exception )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_with_valid_file )
 {
-    const std::string filename( "valid_file" );
+    const std::string filename = "valid_file.xml";
     {
         std::ofstream file( filename.c_str() );
         file << "<element/>";
