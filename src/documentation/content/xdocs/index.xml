@@ -34,7 +34,7 @@
       <ul>
         <li>source can be a string, a file, a url, any std::istream or an internal buffer</li>
         <li>destination can be a string, a file or an internal buffer</li>
-        <li>encoding can be any of the <a href="site:xerces/encodings">encodings supported by Apache Xerces</a></li>
+        <li>encoding can be any of the <a href="ext:xerces/encodings">encodings supported by Apache Xerces</a></li>
         <li>output is formated for human readability</li>
         <li>input can be validated against an XML schema definition (XSD)</li>
         <li>transformations can be applied using the extensible stylesheet language (XSL)</li>
