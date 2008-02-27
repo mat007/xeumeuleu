@@ -21,19 +21,58 @@
     <title>Installation</title>
   </header>
   <body>
+    <section id="components">
+      <title>Components</title>
+      <p>
+        XeuMeuLeu is made of two distinct libraries :
+        <ul>
+          <li>xeumeuleu : handles XML reading and writing</li>
+          <li>xeuseuleu : copes with XSL transformation</li>
+        </ul>
+      </p>
+      <p/>
+      <p>
+        In order to find what dependencies are forced upon at link time, the easiest it to check the following :
+        <ul>
+          If <em>xeumeuleu/xml.h</em> is included the following libraries must be linked against :
+          <ul>
+            <li>xeumeuleu</li>
+            <li>xerces-c_2</li>
+          </ul>
+          If <em>xeumeuleu/xsl.h</em> is included the following libraries must be added to the previous list :
+          <ul>
+            <li>xeuseuleu</li>
+            <li>xalan-c_1</li>
+          </ul>
+        </ul>
+      </p>
+      <p/>
+      <p>
+        Therefore <a href="ext:xalan">Apache Xalan</a> is not needed if only the XML library (e.g. xeumeuleu) is used.
+      </p>
+    </section>
     <section id="dependencies">
       <title>Dependencies</title>
       <p>
-        XeuMeuLeu itself only requires <a href="ext:xerces">Apache Xerces</a>, however in order to compile and run the unit tests the <a href="ext:boost.test">Boost Test library</a> and <a href="ext:mockpp">Mockpp</a> are needed.
+        Strictly speaking the only dependencies required are <a href="ext:xerces">Apache Xerces</a> and <a href="ext:xalan">Apache Xalan</a>.<br />
+        However additional libraries are needed in order to run the unit tests : the <a href="ext:boost.test">Boost Test library</a> and <a href="ext:mockpp">Mockpp</a>.
       </p>
       <section id="xerces">
         <title>Apache Xerces</title>
         <p>
-          Refer to the <a href="http://xml.apache.org/xerces-c/install.html">Apache Xerces installation</a>.<br />
-          If a binary distribution does not exist for your platform you will have to build it.
+          Refer to the <a href="ext:xerces/installation">Apache Xerces installation documentation</a>.
         </p>
         <p>
-          XeuMeuLeu has been tested with Apache Xerces 2.7.0 and 2.8.0.
+          XeuMeuLeu has been reported to work successfully with Apache Xerces 2.7.0 and 2.8.0.
+        </p>
+      </section>
+      <section id="xalan">
+        <title>Apache Xalan</title>
+        <p>
+          Refer to the <a href="ext:xalan/installation">Apache Xalan installation documentation</a>.
+        </p>
+        <p>
+          XeuMeuLeu has been reported to work successfully with Apache Xalan 1.10.
         </p>
       </section>
       <section id="boost">
@@ -48,32 +87,32 @@
       <section id="mockpp">
         <title>Mockpp</title>
         <p>
-          Refer to the <a href="http://mockpp.sourceforge.net/install-en.html#install">Mockpp installation</a> instructions in order to install it.<br />
+          Refer to the <a href="ext:mockpp/installation">Mockpp installation</a> instructions in order to install it.<br />
           Note that you do not need CppUnit if you do not wish to run Mockpp unit tests.
         </p>
       </section>
     </section>
     <section id="compilation">
       <title>Compilation</title>
-      <p>
-        The following platforms are <strong>not</strong> supported :
-      </p>
-      <ul>
-        <li>Microsoft Visual Studio 6</li>
-        <li>Microsoft Visual Studio .NET</li>
-      </ul>
       <section id="msvc">
         <title>Microsoft Visual Studio (MSVC)</title>
-        <note>
-          The following instructions are for compiling with <em>Microsoft Visual Studio .NET 2003</em>.<br />
-          Replace <em>vc71</em> with <em>vc80</em> for compiling with <em>Microsoft Visual Studio 8</em>.
-        </note>
         <p>
-          In order to compile XeuMeuLeu with Microsoft Visual Studio follow the steps :
+          The instructions are for compiling with <em>Microsoft Visual Studio .NET 2003</em>.<br />
+          Replace <em>vc71</em> with <em>vc80</em> for <em>Microsoft Visual Studio 8</em>.
+        </p>
+        <p>
+          The following platforms are <strong>not</strong> supported :
+          <ul>
+            <li>Microsoft Visual Studio 6</li>
+            <li>Microsoft Visual Studio .NET</li>
+          </ul>
+        </p>
+        <p>
+          In order to compile with Microsoft Visual Studio follow the steps :
         </p>
         <ol>
           <li>install the dependencies</li>
-          <li>if needed copy the xerces dll in a directory called <em>run/vc71</em> to be created in the project root directory</li>
+          <li>if needed copy the xerces and xalan dlls in a directory called <em>run/vc71</em> to be created in the project root directory</li>
           <li>open the solution located in <em>build/vc71</em></li>
           <li>in <em>Tools / Options / Projects / VC++ Directories</em> add include and library directories pointing to the dependencies</li>
           <li>build the solution</li>
@@ -83,27 +122,27 @@
           Two directories will be created in the project root directory :
         </p>
         <ul>
-          <li><em>lib/vc71</em> will contain the XeuMeuLeu library files</li>
-          <li><em>include</em> will contain the headers needed in order to use XeuMeuLeu</li>
+          <li><em>lib/vc71</em> will contain the library files</li>
+          <li><em>include</em> will contain the header files</li>
         </ul>
         <p>
           The tests are run as a post-build step when building the solution.<br />
-          If needed however launching <em>xeumeuleu_test</em> with <em>ctrl-F5</em> requires some additional project properties to be set :
+          Manually running <em>xeumeuleu_test</em> or <em>xeuseuleu_test</em> with <em>ctrl-F5</em> requires some additional project properties to be set :
         </p>
         <ul>
-          <li>Set <em>Debugging</em> / <em>Command Arguments</em> to <em>--data_directory=../../data/tests/xeumeuleu_test</em></li>
+          <li>Set <em>Debugging</em> / <em>Command Arguments</em> to <em>--data_directory=../../data/tests/$(ProjectName)</em></li>
           <li>Set <em>Debugging</em> / <em>Working Directory</em> to <em>../../run/vc71</em></li>
         </ul>
       </section>
       <section id="gcc">
         <title>Gnu C++ Compiler (GCC)</title>
         <p>
-          In order to compile XeuMeuLeu with Gnu C++ Compiler follow the steps :
+          In order to compile with Gnu C++ Compiler follow the steps :
         </p>
         <ol>
           <li>install the dependencies</li>
           <li>open <em>build/makefile</em></li>
-          <li>set <em>PLATFORM</em> to something meaningful (it's only used as part of the final export directory name)</li>
+          <li>set <em>PLATFORM</em> to something meaningful (for instance <em>cygwin</em>, it's only used as part of the final export directory name anyway)</li>
           <li>change the <em>INC_DIRS</em> and <em>LIB_DIRS</em> variables at the top in order to indicate the location of the dependencies, separated by whitespaces</li>
           <li>run <em>make</em> from the <em>build</em> directory</li>
         </ol>
@@ -111,8 +150,8 @@
           Two directories will be created in the project root directory :
         </p>
         <ul>
-          <li><em>lib/PLATFORM</em> will contain the XeuMeuLeu library files</li>
-          <li><em>include</em> will contain the headers needed in order to use XeuMeuLeu</li>
+          <li><em>lib/PLATFORM</em> will contain the library files</li>
+          <li><em>include</em> will contain the header files</li>
         </ul>
       </section>
     </section>

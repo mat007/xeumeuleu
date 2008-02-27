@@ -21,28 +21,19 @@
     <title>Manual</title>
   </header>
   <body>
-    <section id="general">
-      <title>General</title>
+    <section id="usage">
+      <title>Using the library</title>
       <p>
-        The first step explains how to include the library and how errors are reported back to the user.
+        Only one include statement is necessary :
       </p>
-      <section id="include">
-        <title>Including the library</title>
-        <p>
-          In order to use the library only one include statement is necessary :
-        </p>
-        <source><![CDATA[#include <xeumeuleu/xml.h>]]></source>
-      </section>
-      <section id="error">
-        <title>Error management</title>
-        <p>
-          Should an error happen manipulating a stream an exception of type <em>xml::exception</em> which derives from <em>std::exception</em> will be raised.
-        </p>
-        <p>
-          Such an exception can also be raised manually by calling the <em>error</em> method on an <em>xml::xistream</em>.<br />
-          This allows to decorate a custom error message with the current context (file name and/or line and column numbers) if available.
-        </p>
-      </section>
+      <source><![CDATA[#include <xeumeuleu/xml.h>]]></source>
+      <p>
+        Should an error happen manipulating a stream an exception of type <em>xml::exception</em> which derives from <em>std::exception</em> will be raised.
+      </p>
+      <p>
+        Such an exception can also be raised manually by calling the <em>error</em> method on an <em>xml::xistream</em>.<br />
+        This can be used to decorate a custom error message with the context of the error (file name and/or line and column numbers) if available.
+      </p>
     </section>
     <section id="creation">
       <title>Creating a stream</title>
