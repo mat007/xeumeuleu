@@ -58,6 +58,8 @@ public:
     //! @name Operations
     //@{
     virtual void writeChars( const XMLByte* const toWrite, const unsigned int count, XERCES_CPP_NAMESPACE::XMLFormatter* const formatter );
+
+    virtual void flush();
     //@}
 
 private:

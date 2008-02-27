@@ -90,3 +90,12 @@ void beautifier::writeChars( const XMLByte* const toWrite, const unsigned int co
         discardNewLine_ = false;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: beautifier::flush
+// Created: MAT 2008-02-27
+// -----------------------------------------------------------------------------
+void beautifier::flush()
+{
+    target_.flush();
+}
