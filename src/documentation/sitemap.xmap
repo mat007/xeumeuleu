@@ -61,6 +61,10 @@
       <map:read src="{lm:{0}}" mime-type="image/png"/>
     </map:match>
 
+    <map:match pattern="reference/**.css">
+      <map:read src="{lm:{0}}"/>
+    </map:match>
+
     <map:match pattern="reports/*_test.xml">
       <map:generate src="{lm:{0}}"/>
       <map:transform src="{properties:resources.stylesheets}/boost.test.xsl"/>
