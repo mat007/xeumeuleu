@@ -50,6 +50,10 @@
       <location src="{properties:temp-dir}/../{0}" />
     </match>
 
+    <match pattern="reference/**.css">
+      <location src="{properties:temp-dir}/../{0}" />
+    </match>
+
     <match pattern="reports/*.xml">
       <location src="{properties:temp-dir}/../../{0}" />
     </match>
