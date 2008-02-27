@@ -73,11 +73,16 @@ See http://forrest.apache.org/docs/linking.html for more info
   -->
   <external-refs>
     <xerces href="http://xml.apache.org/xerces-c/">
+      <installation href="install.html"/>
       <encodings href="faq-parse.html#faq-21"/>
     </xerces>
-    <xalan href="http://xml.apache.org/xalan-c/"/>
+    <xalan href="http://xml.apache.org/xalan-c/">
+      <installation href="install.html"/>
+    </xalan>
     <boost.test href="http://boost.org/libs/test/doc/index.html"/>
-    <mockpp href="http://mockpp.soureforge.net/"/>
+    <mockpp href="http://mockpp.sourceforge.net/">
+      <installation href="install-en.html#install"/>
+    </mockpp>
   </external-refs>
 
 </site>
