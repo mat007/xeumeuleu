@@ -142,6 +142,9 @@ xos << xobs;]]></source>
           Or :
         </p>
         <source><![CDATA[xml::xifstream xis( "file.xml", xml::encoding( "ISO-8859-1" ) );]]></source>
+        <p>
+          For the list of possible encoding values see "<a href="site:xerces-encodings">What encodings are supported by Xerces-C / XML4C?</a>".
+        </p>
       </section>
       <section id="validation">
         <title>Validation</title>
