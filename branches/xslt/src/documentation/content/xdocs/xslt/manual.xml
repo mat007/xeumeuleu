@@ -43,12 +43,12 @@
     <section id="creation">
      <title>Creating a stylesheet</title>
      <p>
-        The next step is to create the proper stylesheet depending on the needs. 
+        The next step is to create the proper stylesheet depending on the needs.
      </p>
      <p>
        The following code creates a stylesheet from an XSL document <em>stylesheet.xsl</em> to write a document to a file <em>file.output</em> :
      </p>
-     <source><![CDATA[xsl::xftransform xf( "stylesheet.xsl", "file.output" );]]></source>
+     <source><![CDATA[xsl::xftransform xft( "stylesheet.xsl", "file.output" );]]></source>
       <p>
         The following code creates a stylesheet from an XSL document <em>stylesheet.xsl</em> to write an XML document to an <em>std::string</em> :
       </p>
@@ -63,7 +63,7 @@
      <source><![CDATA[xsl::xbuffertransform xbt( "stylesheet.xsl" );]]></source>
      <p>
        The purpose of this type of stylesheet is to chain XML transformations in another stylesheet.
-     </p>      
+     </p>
     </section>
     <section id="transformation">
      <title>Transforming the tree</title>
@@ -91,7 +91,7 @@ xst << xis;]]></source>
      <section id="buffer">
        <title>Chained transformations</title>
        <p>
-         Sometimes the user has to perform complex transformations on XML document. 
+         Sometimes the user has to perform complex transformations on XML document.
          On way to avoid a complex and monolithic stylesheet is to divid it into chained small steps ( and so on small stylesheets ).
          The <strong>xsl::xbuffertransform</strong> is here to simply the code of chained transformations.
        </p>
