@@ -26,7 +26,7 @@
     </target>
 
     <target name="xeuseuleu_test" depends="xeuseuleu,xeumeuleu" description="build and run tests">
-        <build-test name="xeuseuleu" libs="xeuseuleu,xeumeuleu,,xerces-c_2,Xalan-C_1"/>
+        <build-test name="xeuseuleu" libs="xeuseuleu,xeumeuleu,xerces-c_2,Xalan-C_1"/>
     </target>
 
     <!--
