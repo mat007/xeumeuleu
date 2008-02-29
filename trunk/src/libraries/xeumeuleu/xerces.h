@@ -56,24 +56,4 @@
 #include <xercesc/validators/common/Grammar.hpp>
 #include <xercesc/internal/XMLScanner.hpp>
 
-namespace xml
-{
-// =============================================================================
-/** @class  xerces
-    @brief  Xerces initializer based on the nifty-counter idiom
-*/
-// Created: MAT 2007-09-19
-// =============================================================================
-static class xerces
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-     xerces();
-    ~xerces();
-    //@}
-} initializer;
-
-}
-
 #endif // _xeumeuleu_xerces_h_
