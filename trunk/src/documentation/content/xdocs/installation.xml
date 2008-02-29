@@ -143,10 +143,10 @@
         </p>
         <ol>
           <li>install the dependencies</li>
-          <li>open <em>build/makefile</em></li>
+          <li>open <em>build/make/makefile</em></li>
           <li>set <em>PLATFORM</em> to something meaningful (for instance <em>cygwin</em>, it's only used as part of the final export directory name anyway)</li>
           <li>change the <em>INC_DIRS</em> and <em>LIB_DIRS</em> variables at the top in order to indicate the location of the dependencies, separated by whitespaces</li>
-          <li>run <em>make</em> from the <em>build</em> directory</li>
+          <li>run <em>make</em> from the <em>build/make</em> directory</li>
         </ol>
         <p>
           Two directories will be created in the project root directory :
