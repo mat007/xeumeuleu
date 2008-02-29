@@ -79,7 +79,8 @@ See http://forrest.apache.org/docs/linking.html for more info
     <xalan href="http://xml.apache.org/xalan-c/">
       <installation href="install.html"/>
     </xalan>
-    <boost.test href="http://boost.org/libs/test/doc/index.html"/>
+    <boost.test href="http://www.boost.org/libs/test/doc/index.html"/>
+    <boost.bind href="http://www.boost.org/libs/bind/bind.html"/>
     <mockpp href="http://mockpp.sourceforge.net/">
       <installation href="install-en.html#install"/>
     </mockpp>
