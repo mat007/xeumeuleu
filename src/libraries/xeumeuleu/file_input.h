@@ -59,7 +59,6 @@ private:
     //! @name Helpers
     //@{
     static XERCES_CPP_NAMESPACE::DOMDocument& build( const std::string& filename, const encoding* pEncoding, const grammar& grammar );
-    static void check( const std::string& filename );
     //@}
 };
 
