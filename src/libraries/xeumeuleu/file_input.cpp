@@ -71,23 +71,13 @@ file_input::~file_input()
 }
 
 // -----------------------------------------------------------------------------
-// Name: file_input::check
-// Created: MAT 2006-02-06
-// -----------------------------------------------------------------------------
-void file_input::check( const std::string& filename )
-{
-    std::ifstream file( filename.c_str() );
-    if( ! file.is_open() )
-        throw xml::exception( "Unable to open file '" + filename + "'" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: file_input::build
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
 DOMDocument& file_input::build( const std::string& filename, const encoding* pEncoding, const grammar& grammar )
 {
-    check( filename );
+    if( ! std::ifstream( filename.c_str() ).is_open() )
+        throw xml::exception( "Unable to open file '" + filename + "'" );
     LocalFileInputSource buffer( static_cast< const XMLCh* const >( translate( filename ) ) );
     return parse( buffer, pEncoding, grammar );
 }
