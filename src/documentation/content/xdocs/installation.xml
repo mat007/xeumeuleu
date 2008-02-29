@@ -44,7 +44,8 @@
         <li>If <em>xeumeuleu/xsl.h</em> is included the following libraries must be added to the previous list :
           <ul>
             <li>xeuseuleu</li>
-            <li>xalan-c_1</li>
+            <li>Xalan-c_1</li>
+            <li>XalanMessages_1_10</li>
           </ul>
         </li>
       </ul>
