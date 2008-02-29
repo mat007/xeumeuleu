@@ -1,17 +1,11 @@
 #!/usr/bin/make
 
-# configuration
-PLATFORM = cygwin
-INC_DIRS = ../include
-LIB_DIRS = ../lib/$(PLATFORM)
-RUN_DIR = ../run/$(PLATFORM)
+NAME = xeuseuleu
+LIBS = xeumeuleu xerces-c_2 Xalan-C_1 libboost_unit_test_framework-cygwin-mt-1_34 mockpp
 
-NAME = xeumeuleu
-LIBS = xerces-c_2 libboost_unit_test_framework-cygwin-mt-1_34 mockpp
-
-EXPORTS = xml.h exception.h xi*.h xo*.h encoding.h grammar.h start.h end.h \
-          content.h cdata.h attribute.h filter.h adapter.h list.h name_list.h \
-          attributes.h visitor.h caller*.h name_caller*.h optional.h value.h
+EXPORTS = xsl.h exception.h parameter.h xftransform.h xf_base_member.h \
+          xstringtransform.h xs_base_member.h xtransform.h \
+          xbuffertransform.h buffer.h output.h
 
 # tools
 CXX = g++
@@ -24,13 +18,13 @@ RM = rm -r -f
 location = $(shell mkdir -p $(1); cd $(1); pwd)
 
 # project layout
-OUT_DIR = ../out/gcc
-SRC_DIR = ../src
-DATA_DIR = $(call location,../data)
+OUT_DIR = ../../out/gcc
+SRC_DIR = ../../src
+DATA_DIR = $(call location,../../data)
 OBJ_DIR = $(OUT_DIR)/obj
 DEP_DIR = $(OUT_DIR)/dep
-INC_EXPORT_DIR = ../include/$(NAME)
-LIB_EXPORT_DIR = ../lib/$(PLATFORM)
+INC_EXPORT_DIR = ../../include/$(NAME)
+LIB_EXPORT_DIR = ../../lib/$(PLATFORM)
 
 LIB = $(OUT_DIR)/lib$(NAME).a
 TEST = $(call location,$(OUT_DIR))/$(NAME)_test
@@ -52,7 +46,7 @@ LDFLAGS = $(LIB_DIRS:%=-L%)
 # rules
 default : export
 
-.PHONY : FORCE all build test install export clean realclean
+.PHONY : FORCE default build test install export clean realclean
 FORCE : ;
 .DELETE_ON_ERROR :
 
@@ -68,7 +62,7 @@ $(LIB)(%.o) : $(OBJ_DIR)/$(LIB_MODULE)/%.o ;
 
 $(DEP_DIR)/%.d : $(SRC_DIR)/%.cpp
 	@$(MD) $(shell dirname $@)
-	$(CXX) -E -MM -MG $(CXXFLAGS) $< | sed -e "s@^\(.*\).o:@\$@ \$../out/gcc/obj/$*.o:@" > $@
+	$(CXX) -E -MM -MG $(CXXFLAGS) $< | sed -e "s@^\(.*\).o:@\$@ \$../../out/gcc/obj/$*.o:@" > $@
 
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(MAKECMDGOALS),realclean)
