@@ -44,8 +44,7 @@
         <li>If <em>xeumeuleu/xsl.h</em> is included the following libraries must be added to the previous list :
           <ul>
             <li>xeuseuleu</li>
-            <li>Xalan-c_1</li>
-            <li>XalanMessages_1_10</li>
+            <li>Xalan-C_1</li>
           </ul>
         </li>
       </ul>
@@ -155,6 +154,14 @@
         <ul>
           <li><em>lib/PLATFORM</em> will contain the library files</li>
           <li><em>include</em> will contain the header files</li>
+        </ul>
+        <p>
+          The following specific targets can be used with <em>make</em> :
+        </p>
+        <ul>
+          <li><em>test</em> : build and run unit tests</li>
+          <li><em>xeumeuleu</em> : build only the <em>xeumeuleu</em> library</li>
+          <li><em>xeuseuleu</em> : build only the <em>xeuseuleu</em> library</li>
         </ul>
       </section>
     </section>
