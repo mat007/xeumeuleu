@@ -100,8 +100,13 @@
     -->
     <target name="package" depends="generate-vc71" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
-        <zip destfile="${dist.dir}/xeumeuleu.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user"/>
-        <tar destfile="${dist.dir}/xeumeuleu.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user" compression="bzip2"/>
+        <zip destfile="${dist.dir}/xeumeuleu-src.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user"/>
+        <tar destfile="${dist.dir}/xeumeuleu-src.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user" compression="bzip2"/>
+        <zip destfile="${dist.dir}/xeumeuleu-bin-${platform}.zip">
+            <zipfileset prefix="include" dir="${include.dir}" includes="xeumeuleu/**,xeuseuleu/**"/>
+            <zipfileset prefix="lib/${platform}" dir="${lib.dir}" includes="*xeumeuleu.*,*xeuseuleu.*,*xerces-c_2.*,*Xalan-C_1.*" excludes="**/*.pdb"/>
+            <zipfileset prefix="run/${platform}" dir="${run.dir}" includes="*xerces-c_2_7.*,*Xalan-C_1_10.*,*XalanMessages_1_10.*"/>
+        </zip>
     </target>
 
     <target name="generate-vc71" description="create vc71 build files from vc80 files">
