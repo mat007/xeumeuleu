@@ -351,10 +351,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xerces.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xerces.h"
 					>
 				</File>
