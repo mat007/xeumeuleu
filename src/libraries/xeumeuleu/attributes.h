@@ -69,6 +69,16 @@ xistream& operator>>( xistream& xis, const attributes_visitor< T >& manipulator 
 
 // -----------------------------------------------------------------------------
 // Name: attributes
+// Created: MAT 2008-02-29
+// -----------------------------------------------------------------------------
+template< typename F >
+attributes_visitor< F > attributes( F functor )
+{
+    return attributes_visitor< F >( functor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: attributes
 // Created: MAT 2007-08-01
 // -----------------------------------------------------------------------------
 template< typename T >

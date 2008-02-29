@@ -69,6 +69,16 @@ xistream& operator>>( xistream& xis, const list_name_visitor< T >& manipulator )
 
 // -----------------------------------------------------------------------------
 // Name: list
+// Created: MAT 2008-02-29
+// -----------------------------------------------------------------------------
+template< typename F >
+list_name_visitor< F > list( F functor )
+{
+    return list_name_visitor< F >( functor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: list
 // Created: AGE 2006-08-30
 // -----------------------------------------------------------------------------
 template< typename T >
