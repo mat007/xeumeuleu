@@ -34,7 +34,7 @@
   -->
 
   <tab id="home" label="Home" dir=""/>
-  <tab id="reports" label="Reports" href="reports/xeumeuleu_test.html"/>
+  <tab id="reports" label="Reports" href="reports/all_test.html"/>
   <tab id="project" label="Project" href="http://sourceforge.net/projects/xeumeuleu"/>
   <!--
   <tab id="samples" label="Samples" dir="samples" indexfile="sample.html">

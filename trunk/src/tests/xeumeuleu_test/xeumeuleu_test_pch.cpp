@@ -47,10 +47,21 @@ namespace
                 data_directory = argument.substr( n+1 );
         }
     }
+    const std::string extract_name( const std::string& path )
+    {
+        const std::size_t separator = path.find_last_of( "/\\" );
+        return path.substr( std::max( std::size_t(), separator ) );
+    }
+    void set_master_suite_name( const std::string& path )
+    {
+        const std::string name = path.substr( path.find_last_of( "/\\" ) + 1 );
+        boost::unit_test::framework::master_test_suite().p_name.set( name );
+    }
 }
 
 ::boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] )
 {
+    set_master_suite_name( argv[0] );
     set_data_directory( argc, argv );
     return 0;
 }
