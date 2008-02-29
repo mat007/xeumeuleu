@@ -32,6 +32,7 @@
 
 #include "xeumeuleu_test_pch.h"
 #include "xeumeuleu/xml.h"
+#include <boost/bind.hpp>
 
 using namespace mockpp;
 
@@ -81,4 +82,107 @@ BOOST_AUTO_TEST_CASE( read_attributes_from_element_without_attribute_does_not_ca
     xis >> xml::start( "element" )
             >> xml::attributes( mock_custom, &mock_custom_class::process )
         >> xml::end();
+}
+
+namespace
+{
+    mockpp::ChainableMockObject my_function_mock( "my_function_mock" );
+    mockpp::ChainableMockMethod< void > my_function_mocker( "my_function", &my_function_mock );
+    void my_name_function( const std::string&, xml::xistream& )
+    {
+        my_function_mocker.forward();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: attributes_accepts_function_as_functor
+// Created: MAT 2008-02-29
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( attributes_accepts_function_as_functor )
+{
+    xml::xistringstream xis( "<element attribute='my_attribute'/>" );
+    xis >> xml::start( "element" );
+    my_function_mock.reset();
+    my_function_mocker.expects( mockpp::once() );
+    xis >> xml::attributes( my_name_function );
+    my_function_mock.verify();
+}
+
+namespace
+{
+    class my_functor_class
+    {
+    public:
+        void operator()( const std::string&, xml::xistream& ) const
+        {
+            my_function_mocker.forward();
+        }
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: attributes_accepts_functor_as_functor_and_makes_an_internal_copy
+// Created: MAT 2008-02-29
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( attributes_accepts_functor_as_functor_and_makes_an_internal_copy )
+{
+    xml::xistringstream xis( "<element attribute='my_attribute'/>" );
+    xis >> xml::start( "element" );
+    my_function_mock.reset();
+    my_function_mocker.expects( mockpp::once() );
+    xis >> xml::attributes( my_functor_class() );
+    my_function_mock.verify();
+}
+
+namespace
+{
+    class my_bindable_class : public mockpp::ChainableMockObject
+    {
+    public:
+        my_bindable_class()
+            : mockpp::ChainableMockObject( "my_bindable_class", 0 )
+            , my_method_mocker( "my_method", this )
+        {}
+
+        void my_method_1( xml::xistream& )
+        {
+            my_method_mocker.forward();
+        }
+        void const_my_method_1( xml::xistream& ) const
+        {
+            my_method_mocker.forward();
+        }
+        void my_method_2( const std::string&, xml::xistream& )
+        {
+            my_method_mocker.forward();
+        }
+        void const_my_method_2( const std::string&, xml::xistream& ) const
+        {
+            my_method_mocker.forward();
+        }
+
+        mockpp::ChainableMockMethod< void > my_method_mocker;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: attributes_accepts_boost_bind_as_functor
+// Created: MAT 2008-02-29
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( attributes_accepts_boost_bind_as_functor )
+{
+    xml::xistringstream xis( "<element attribute='my_attribute'/>" );
+    xis >> xml::start( "element" );
+    {
+        my_bindable_class my_instance;
+        my_instance.my_method_mocker.expects( mockpp::once() );
+        xis >> xml::attributes( boost::bind( &my_bindable_class::my_method_2, boost::ref( my_instance ), _1, _2 ) );
+        my_instance.verify();
+    }
+    {
+        my_bindable_class my_instance;
+        my_instance.my_method_mocker.expects( mockpp::once() );
+        xis >> xml::attributes( boost::bind( &my_bindable_class::const_my_method_2, boost::ref( my_instance ), _1, _2 ) );
+        my_instance.verify();
+    }
 }

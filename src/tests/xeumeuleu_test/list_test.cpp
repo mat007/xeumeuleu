@@ -32,6 +32,7 @@
 
 #include "xeumeuleu_test_pch.h"
 #include "xeumeuleu/xml.h"
+#include <boost/bind.hpp>
 
 using namespace mockpp;
 
@@ -400,4 +401,138 @@ BOOST_AUTO_TEST_CASE( msvc_does_not_issue_packing_related_warning_C4355_or_C4121
     xml::xistringstream xis( "<element/>" );
     a_class_virtually_inheriting_from_another my_instance;
     xis >> xml::list( "element", my_instance, &a_class_virtually_inheriting_from_another::process );
+}
+
+namespace
+{
+    mockpp::ChainableMockObject my_function_mock( "my_function_mock" );
+    mockpp::ChainableMockMethod< void > my_function_mocker( "my_function", &my_function_mock );
+    void my_function( xml::xistream& )
+    {
+        my_function_mocker.forward();
+    }
+    void my_name_function( const std::string&, xml::xistream& )
+    {
+        my_function_mocker.forward();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: list_accepts_function_as_functor
+// Created: MAT 2008-02-29
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( list_accepts_function_as_functor )
+{
+    xml::xistringstream xis( "<element/>" );
+    my_function_mock.reset();
+    {
+        my_function_mocker.expects( mockpp::once() );
+        xis >> xml::list( "element", my_function );
+        my_function_mock.verify();
+    }
+    {
+        my_function_mocker.expects( mockpp::once() );
+        xis >> xml::list( my_name_function );
+        my_function_mock.verify();
+    }
+}
+
+namespace
+{
+    class my_functor_class
+    {
+    public:
+        void operator()( xml::xistream& ) const
+        {
+            my_function_mocker.forward();
+        }
+        void operator()( const std::string&, xml::xistream& ) const
+        {
+            my_function_mocker.forward();
+        }
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: list_accepts_functor_as_functor_and_makes_an_internal_copy
+// Created: MAT 2008-02-29
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( list_accepts_functor_as_functor_and_makes_an_internal_copy )
+{
+    xml::xistringstream xis( "<element/>" );
+    my_function_mock.reset();
+    {
+        my_function_mocker.expects( mockpp::once() );
+        xis >> xml::list( "element", my_functor_class() );
+        my_function_mock.verify();
+    }
+    {
+        my_function_mocker.expects( mockpp::once() );
+        xis >> xml::list( my_functor_class() );
+        my_function_mock.verify();
+    }
+}
+
+namespace
+{
+    class my_bindable_class : public mockpp::ChainableMockObject
+    {
+    public:
+        my_bindable_class()
+            : mockpp::ChainableMockObject( "my_bindable_class", 0 )
+            , my_method_mocker( "my_method", this )
+        {}
+
+        void my_method_1( xml::xistream& )
+        {
+            my_method_mocker.forward();
+        }
+        void const_my_method_1( xml::xistream& ) const
+        {
+            my_method_mocker.forward();
+        }
+        void my_method_2( const std::string&, xml::xistream& )
+        {
+            my_method_mocker.forward();
+        }
+        void const_my_method_2( const std::string&, xml::xistream& ) const
+        {
+            my_method_mocker.forward();
+        }
+
+        mockpp::ChainableMockMethod< void > my_method_mocker;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: list_accepts_boost_bind_as_functor
+// Created: MAT 2008-02-29
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( list_accepts_boost_bind_as_functor )
+{
+    xml::xistringstream xis( "<element/>" );
+    {
+        my_bindable_class my_instance;
+        my_instance.my_method_mocker.expects( mockpp::once() );
+        xis >> xml::list( "element", boost::bind( &my_bindable_class::my_method_1, boost::ref( my_instance ), _1 ) );
+        my_instance.verify();
+    }
+    {
+        my_bindable_class my_instance;
+        my_instance.my_method_mocker.expects( mockpp::once() );
+        xis >> xml::list( "element", boost::bind( &my_bindable_class::const_my_method_1, boost::ref( my_instance ), _1 ) );
+        my_instance.verify();
+    }
+    {
+        my_bindable_class my_instance;
+        my_instance.my_method_mocker.expects( mockpp::once() );
+        xis >> xml::list( boost::bind( &my_bindable_class::my_method_2, boost::ref( my_instance ), _1, _2 ) );
+        my_instance.verify();
+    }
+    {
+        my_bindable_class my_instance;
+        my_instance.my_method_mocker.expects( mockpp::once() );
+        xis >> xml::list( boost::bind( &my_bindable_class::const_my_method_2, boost::ref( my_instance ), _1, _2 ) );
+        my_instance.verify();
+    }
 }

@@ -301,6 +301,39 @@ public:
       <p>
         The <em>name</em> argument will be <em>first-element</em>, <em>second-element</em> and then <em>third-element</em> : the order of the calls matches the order of the elements in the document.
       </p>
+      <p>
+        Additionally STL-style functors are compatible with <strong>xml::list</strong>, for instance the function :
+      </p>
+      <source><![CDATA[void my_function( xml::xistream& xis )
+{
+  xis >> ...
+}]]></source>
+      <p>
+        Can be used to read data with :
+      </p>
+      <source><![CDATA[xis >> xml::start( "root" )
+    >> xml::list( my_instance, my_function )
+  >> xml::end();]]></source>
+      <p>
+        In the same way, the following functor :
+      </p>
+      <source><![CDATA[class my_functor
+{
+public:
+  void operator()( xml::xistream& xis )
+  {
+    xis >> ...
+  }
+};]]></source>
+      <p>
+        Can be used like this :
+      </p>
+      <source><![CDATA[xis >> xml::start( "root" )
+    >> xml::list( my_instance, my_functor() )
+  >> xml::end();]]></source>
+      <p>
+        In this case a copy of the functor is made internally (similarly to most of the STL algorithms).
+      </p>
       </section>
       <section id="optional-element">
         <title>Optional elements</title>
@@ -448,6 +481,39 @@ public:
       <p>
         The functor will be called a first time with <em>name</em> equal to <em>first</em> and a second time with <em>name</em> equal to <em>second</em>.
         The <em>xis</em> parameter will be an input stream already placed on the <em>root</em> node.
+      </p>
+      <p>
+        Additionally STL-style functors are compatible with <strong>xml::attributes</strong>, for instance the function :
+      </p>
+      <source><![CDATA[void my_function( xml::xistream& xis )
+{
+  xis >> ...
+}]]></source>
+      <p>
+        Can be used to read data with :
+      </p>
+      <source><![CDATA[xis >> xml::start( "root" )
+    >> xml::attributes( my_instance, my_function )
+  >> xml::end();]]></source>
+      <p>
+        In the same way, the following functor :
+      </p>
+      <source><![CDATA[class my_functor
+{
+public:
+  void operator()( xml::xistream& xis )
+  {
+    xis >> ...
+  }
+};]]></source>
+      <p>
+        Can be used like this :
+      </p>
+      <source><![CDATA[xis >> xml::start( "root" )
+    >> xml::attributes( my_instance, my_functor() )
+  >> xml::end();]]></source>
+      <p>
+        In this case a copy of the functor is made internally (similarly to most of the STL algorithms).
       </p>
       </section>
       <section id="optional-data">
