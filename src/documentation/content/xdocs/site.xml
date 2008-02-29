@@ -59,7 +59,7 @@ See http://forrest.apache.org/docs/linking.html for more info
   </info>
 
   <reports label="Reports" tab="reports">
-    <report label="Unit Tests"          href="reports/xeumeuleu_test.html"/>
+    <report label="Unit Tests"          href="reports/all_test.html"/>
     <report label="Metrics"             href="reports/xeumeuleu-cppncss.html"/>
     <report label="Copy/Paste Detector" href="reports/xeumeuleu-cpd.html"/>
     <report label="Reference"           href="reference/xeumeuleu/html/index.html"/>
