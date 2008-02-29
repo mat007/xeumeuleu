@@ -132,8 +132,11 @@
             <define name="CATCH"/>
             <macro name="BOOST_CHECK_THROW"/>
             <macro name="BOOST_CHECK_NO_THROW"/>
+            <macro name="BOOST_REQUIRE_THROW"/>
+            <macro name="BOOST_REQUIRE_NO_THROW"/>
         </cppncss-report>
         <doxygen-report/>
+        <tests-report/>
         <forrest/>
     </target>
 
