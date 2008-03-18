@@ -50,18 +50,3 @@ BOOST_AUTO_TEST_CASE( tranformation_creates_a_file )
     std::remove( filename.c_str() );
     BOOST_CHECK( ! std::ifstream( filename.c_str() ).is_open() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: file_to_file_pattern_is_valid
-// Created: SLI 2007-09-07
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( file_to_file_pattern_is_valid )
-{
-    const std::string filename = "file";
-    {
-		xsl::xftransform( BOOST_RESOLVE( "stylesheet.xsl" ), filename ) << xml::xifstream( BOOST_RESOLVE( "input.xml" ) );
-        BOOST_REQUIRE( std::ifstream( filename.c_str() ).is_open() );
-    }
-    std::remove( filename.c_str() );
-    BOOST_CHECK( ! std::ifstream( filename.c_str() ).is_open() );
-}
