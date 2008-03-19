@@ -46,8 +46,7 @@ using namespace XALAN_CPP_NAMESPACE;
 output_imp::output_imp( const std::string& stylesheet )
     : stylesheet_( stylesheet )
 {
-    std::ifstream file( stylesheet.c_str() );
-    if( ! file.is_open() )
+    if( ! std::ifstream( stylesheet.c_str() ) )
         throw xsl::exception( "Unable to open style sheet '" + stylesheet + "'" );
 }
 

@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE( empty_tree_does_not_create_any_file )
     {
         xml::xofstream xos( filename );
     }
-    BOOST_CHECK( ! std::ifstream( filename.c_str() ).is_open() );
+    BOOST_CHECK( ! std::ifstream( filename.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE( streaming_elements_creates_a_valid_file )
                          "  <child/>\n"
                          "</element>\n", load( filename ) );
     std::remove( filename.c_str() );
-    BOOST_CHECK( ! std::ifstream( filename.c_str() ).is_open() );
+    BOOST_CHECK( ! std::ifstream( filename.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,5 +98,5 @@ BOOST_AUTO_TEST_CASE( utf_16_encoded_file_starts_with_byte_mark_order )
         BOOST_REQUIRE_EQUAL( '\xFE', actual[1] );
     }
     std::remove( filename.c_str() );
-    BOOST_CHECK( ! std::ifstream( filename.c_str() ).is_open() );
+    BOOST_CHECK( ! std::ifstream( filename.c_str() ) );
 }
