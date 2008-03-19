@@ -76,7 +76,7 @@ file_input::~file_input()
 // -----------------------------------------------------------------------------
 DOMDocument& file_input::build( const std::string& filename, const encoding* pEncoding, const grammar& grammar )
 {
-    if( ! std::ifstream( filename.c_str() ).is_open() )
+    if( ! std::ifstream( filename.c_str() ) )
         throw xml::exception( "Unable to open file '" + filename + "'" );
     LocalFileInputSource buffer( static_cast< const XMLCh* const >( translate( filename ) ) );
     return parse( buffer, pEncoding, grammar );
