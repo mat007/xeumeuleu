@@ -45,8 +45,7 @@ BOOST_AUTO_TEST_CASE( tranformation_creates_a_file )
         xsl::xftransform xf( BOOST_RESOLVE( "stylesheet.xsl" ), filename );
         xf << xml::start( "root" )
            << xml::end();
-        BOOST_REQUIRE( std::ifstream( filename.c_str() ) );
+        BOOST_REQUIRE( ! std::ifstream( filename.c_str() ).fail() );
     }
     std::remove( filename.c_str() );
-    BOOST_CHECK( ! std::ifstream( filename.c_str() ) );
 }
