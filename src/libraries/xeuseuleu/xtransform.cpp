@@ -72,8 +72,7 @@ xtransform& xtransform::operator<<( const xsl::xbuffertransform& buffer )
 // -----------------------------------------------------------------------------
 void xtransform::add( const std::string& stylesheet )
 {
-    buffer* pBuffer = new buffer( *new string_output( stylesheet ), pBuffer_ );
-    pBuffer_.reset( pBuffer );
+    pBuffer_.reset( new buffer( *new string_output( stylesheet ), pBuffer_ ) );
 }
 
 // -----------------------------------------------------------------------------

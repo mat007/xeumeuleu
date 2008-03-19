@@ -48,9 +48,9 @@ class buffer
 public:
     //! @name Constructors/Destructor
     //@{
-                 buffer( output& output, std::auto_ptr< buffer > pNext );
-        explicit buffer( output& output );
-                ~buffer();
+             buffer( output& output, std::auto_ptr< buffer > pNext );
+    explicit buffer( output& output );
+            ~buffer();
     //@}
 
     //! @name Operations
