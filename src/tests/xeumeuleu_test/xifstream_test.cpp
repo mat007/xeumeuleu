@@ -65,7 +65,6 @@ BOOST_AUTO_TEST_CASE( creating_with_existing_empty_file_throws_an_exception )
     std::ofstream( filename.c_str() ).close();
     BOOST_REQUIRE_THROW( xml::xifstream xis( filename ), xml::exception );
     std::remove( filename.c_str() );
-    BOOST_CHECK( ! std::ifstream( filename.c_str() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,5 +81,4 @@ BOOST_AUTO_TEST_CASE( creating_with_valid_file )
     xml::xifstream xis( filename );
     xis >> xml::start( "element" ) >> xml::end();
     std::remove( filename.c_str() );
-    BOOST_CHECK( ! std::ifstream( filename.c_str() ) );
 }
