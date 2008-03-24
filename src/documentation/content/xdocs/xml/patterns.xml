@@ -319,7 +319,7 @@ public:
       </p>
       <source><![CDATA[my_class my_instance;
 xis >> xml::start( "root" )
-    >> xml::list( my_instance, boost::bind( &my_class::my_method, my_instance, _1 ) )
+    >> xml::list( boost::bind( &my_class::my_method, my_instance, _1 ) )
   >> xml::end();]]></source>
       <p>
         In case of using the alternate version of <strong>xml::list</strong> requiring an argument for the name of the node :
@@ -337,7 +337,7 @@ public:
       </p>
       <source><![CDATA[my_class my_instance;
 xis >> xml::start( "root" )
-    >> xml::list( my_instance, boost::bind( &my_class::my_method, my_instance, _1, _2 ) )
+    >> xml::list( boost::bind( &my_class::my_method, my_instance, _1, _2 ) )
   >> xml::end();]]></source>
     </section>
     <section id="class-instance">
