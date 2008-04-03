@@ -75,7 +75,7 @@
                 <include name="caller*.h"/>
                 <include name="name_caller*.h"/>
                 <include name="optional.h"/>
-                <include name="value.h"/>
+                <include name="helpers.h"/>
             </module>
             <module name="xeuseuleu">
                 <include name="xsl.h"/>
@@ -98,7 +98,7 @@
       package
     ============================================================================
     -->
-    <target name="package" depends="generate-vc71" description="package the distribution">
+    <target name="package" depends="export,generate-vc71" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/xeumeuleu-src.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user"/>
         <tar destfile="${dist.dir}/xeumeuleu-src.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user" compression="bzip2"/>

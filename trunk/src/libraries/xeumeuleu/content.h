@@ -134,30 +134,6 @@ content_manipulator< T > content( const std::string& tag, T& value )
     return content_manipulator< T >( tag, value );
 }
 
-// -----------------------------------------------------------------------------
-// Name: content
-// Created: MAT 2007-07-11
-// -----------------------------------------------------------------------------
-template< typename T >
-T content( xistream& xis, const std::string& tag )
-{
-    T value;
-    xis >> content( tag, value );
-    return value;
-}
-
-// -----------------------------------------------------------------------------
-// Name: content
-// Created: MAT 2007-07-11
-// -----------------------------------------------------------------------------
-template< typename T >
-T content( xistream& xis, const std::string& tag, const T& defaultValue )
-{
-    T value = defaultValue;
-    xis >> optional() >> start( tag ) >> optional() >> value >> end();
-    return value;
-}
-
 }
 
 #endif // _xeumeuleu_content_h_

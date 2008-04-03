@@ -30,10 +30,12 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_value_h_
-#define _xeumeuleu_value_h_
+#ifndef _xeumeuleu_helpers_h_
+#define _xeumeuleu_helpers_h_
 
-#include "xistream.h"
+#include "xisubstream.h"
+#include "attribute.h"
+#include "content.h"
 
 namespace xml
 {
@@ -42,10 +44,11 @@ namespace xml
 // Name: value
 // Created: MAT 2008-01-19
 // -----------------------------------------------------------------------------
-template< typename T > T value( xistream& xis )
+template< typename T >
+T value( const xistream& xis )
 {
     T value;
-    xis >> value;
+    xis.read( value );
     return value;
 }
 
@@ -53,13 +56,62 @@ template< typename T > T value( xistream& xis )
 // Name: value
 // Created: MAT 2008-01-19
 // -----------------------------------------------------------------------------
-template< typename T > T value( xistream& xis, const T& defaultValue )
+template< typename T >
+T value( xisubstream xis, const T& defaultValue )
 {
     T value = defaultValue;
     xis >> optional() >> value;
     return value;
 }
 
+// -----------------------------------------------------------------------------
+// Name: attribute
+// Created: MAT 2007-07-11
+// -----------------------------------------------------------------------------
+template< typename T >
+T attribute( const xistream& xis, const std::string& name )
+{
+    T value;
+    xis.attribute( name, value );
+    return value;
 }
 
-#endif // _xeumeuleu_value_h_
+// -----------------------------------------------------------------------------
+// Name: attribute
+// Created: MAT 2007-07-11
+// -----------------------------------------------------------------------------
+template< typename T >
+T attribute( xisubstream xis, const std::string& name, const T& defaultValue )
+{
+    T value = defaultValue;
+    xis >> optional() >> attribute( name, value );
+    return value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: content
+// Created: MAT 2007-07-11
+// -----------------------------------------------------------------------------
+template< typename T >
+T content( xisubstream xis, const std::string& tag )
+{
+    T value;
+    xis >> content( tag, value );
+    return value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: content
+// Created: MAT 2007-07-11
+// -----------------------------------------------------------------------------
+template< typename T >
+T content( xisubstream xis, const std::string& tag, const T& defaultValue )
+{
+    T value = defaultValue;
+    xis >> optional() >> start( tag ) >> optional() >> value >> end();
+    return value;
+}
+
+}
+
+#endif // _xeumeuleu_helpers_h_
