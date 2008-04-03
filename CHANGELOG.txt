@@ -5,7 +5,7 @@
 . fixed error context not being transmitted from an xml::xistream to an xml::xibufferstream
 . added error context in xml::xistream exceptions thrown during read
 . fixed a crash when creating a stream at namespace scope
-. optimized floating point numbers output
+. optimized floating point numbers output speed
 . fixed missing byte-order-mark at beginning of output when relevant
 . added support for STL-style functors in xml::list and xml::attributes
 
