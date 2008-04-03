@@ -319,7 +319,7 @@ public:
       </p>
       <source><![CDATA[my_class my_instance;
 xis >> xml::start( "root" )
-    >> xml::list( boost::bind( &my_class::my_method, my_instance, _1 ) )
+    >> xml::list( boost::bind( "element", &my_class::my_method, my_instance, _1 ) )
   >> xml::end();]]></source>
       <p>
         In case of using the alternate version of <strong>xml::list</strong> requiring an argument for the name of the node :
@@ -340,16 +340,34 @@ xis >> xml::start( "root" )
     >> xml::list( boost::bind( &my_class::my_method, my_instance, _1, _2 ) )
   >> xml::end();]]></source>
     </section>
-    <section id="class-instance">
-      <title>Loading class and instance data</title>
+    <section id="proxy">
+      <title>Manipulating proxy input streams</title>
       <p>
-        Typical use case : in a factory to create an object from class data + instance data
+        Using <strong>xml::ximultistream</strong> enables interresting use cases for :
       </p>
-    </section>
-    <section id="modular">
-      <title>Organizing serialization in modular systems</title>
+      <ul>
+        <li>falling back on a piece of data</li>
+        <li>overriding a piece of data</li>
+      </ul>
       <p>
-        TODO
+        Here is an example of data fallback :
+      </p>
+      <source><![CDATA[xml::xostringstream xos;
+xos << xml::content( "element", xml::attribute( "mandatory", false ) );
+xml::xistringstream xiss( xos.str() );
+xml::ximultistream xims( xis, xiss );
+bool mandatory;
+xims >> xml::start( "element" )
+       >> xml::attribute( "mandatory", mandatory );]]></source>
+      <p>
+        If <em>xis</em> does not have an <em>element</em> node and/or a <em>mandatory</em> attribute the reading won't fail but use the branch provided by <em>xiss</em>.
+      </p>
+      <p>
+        An example of data override can simply be achieved by inverting the streams when creating the <strong>xml::ximultistream</strong> in the previous example :
+      </p>
+      <source><![CDATA[xml::ximultistream xims( xiss, xis );]]></source>
+      <p>
+        This way whatever contains <em>xis</em> is ignored because <em>xiss</em> provides the data first.
       </p>
     </section>
   </body>
