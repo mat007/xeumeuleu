@@ -235,6 +235,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\helpers.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\list.h"
 					>
 				</File>
@@ -256,10 +260,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\start.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\value.h"
 					>
 				</File>
 				<File

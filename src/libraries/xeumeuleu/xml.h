@@ -54,6 +54,6 @@
 #include "attributes.h"
 #include "optional.h"
 #include "grammar.h"
-#include "value.h"
+#include "helpers.h"
 
 #endif // _xeumeuleu_xml_h_
