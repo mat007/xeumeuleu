@@ -8,6 +8,7 @@
 . optimized floating point numbers output speed
 . fixed missing byte-order-mark at beginning of output when relevant
 . added support for STL-style functors in xml::list and xml::attributes
+. fixed const-correctness in various locations
 
 1.2.2
 . fixed output indentation issues when serializing an xml::xistream directly into an xml::xostream

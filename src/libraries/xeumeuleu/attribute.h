@@ -143,10 +143,10 @@ T attribute( const xistream& xis, const std::string& name )
 // Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
 template< typename T >
-T attribute( xistream& xis, const std::string& name, const T& defaultValue )
+T attribute( const xistream& xis, const std::string& name, const T& defaultValue )
 {
     T value = defaultValue;
-    xis >> optional() >> attribute( name, value );
+    const_cast< xistream& >( xis ) >> optional() >> attribute( name, value );
     return value;
 }
 
