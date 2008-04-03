@@ -78,7 +78,7 @@ which will be used to configure the chosen Forrest skin.
   <!-- optional group logo
        default skin: renders it at the top-left corner -->
   <group-name>XeuMeuLeu</group-name>
-  <group-description>XeuMeuLeu Description</group-description>
+  <group-description></group-description>
   <group-url>http://xeumeuleu.org</group-url>
   <group-logo>images/group.png</group-logo>
   <!-- Alternative static image:
@@ -230,6 +230,9 @@ which will be used to configure the chosen Forrest skin.
     }
     table.bodyTable tr.b {
       background-color: #eee;
+    }
+    h4 {
+      background-color: #ddd;
     }
   </extra-css>
 
