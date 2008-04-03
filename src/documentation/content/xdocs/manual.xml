@@ -40,7 +40,7 @@
       <section id="xml-creation">
         <title>Creating a stream</title>
         <p>
-          The next step is to create the proper stream depending on the needs.
+          The first step is to create the proper stream depending on the needs.
         </p>
         <section id="xml-input">
           <title>Input streams</title>
@@ -541,125 +541,112 @@ public:
     </section>
     <section id="xsl">
       <title>XSL</title>
-      <section id="xsl-general">
-        <title>General</title>
+      <section id="xsl-usage">
+        <title>Using the library</title>
         <p>
-          The first step explains how to include the library and how errors are reported back to the user.
+          Only one include statement is necessary :
         </p>
-        <section id="xsl-include">
-          <title>Including the library</title>
-          <p>
-            In order to use the library only one include statement is necessary :
-          </p>
-          <source><![CDATA[#include <xeuseuleu/xsl.h>]]></source>
-        </section>
-        <section id="xsl-error">
-          <title>Error management</title>
-          <p>
-            Should an error happen manipulating a stream an exception of type <em>xsl::exception</em> which derives from <em>std::exception</em> will be raised.
-          </p>
-        </section>
+        <source><![CDATA[#include <xeuseuleu/xsl.h>]]></source>
+        <p>
+          Should an error happen manipulating a transformation an exception of type <em>xsl::exception</em> which derives from <em>std::exception</em> will be raised.
+        </p>
       </section>
       <section id="xsl-creation">
-       <title>Creating a stylesheet</title>
+       <title>Creating a transformation</title>
        <p>
-          The next step is to create the proper stylesheet depending on the needs.
+          The first step is to create the proper transformation depending on the needs.
        </p>
        <p>
-         The following code creates a stylesheet from an XSL document <em>stylesheet.xsl</em> to write a document to a file <em>file.output</em> :
+         The following code creates a transformation from an XSL document <em>stylesheet.xsl</em> to write the resulting output to a file <em>output</em> :
        </p>
-       <source><![CDATA[xsl::xftransform xft( "stylesheet.xsl", "file.output" );]]></source>
+       <source><![CDATA[xsl::xftransform xft( "stylesheet.xsl", "output" );]]></source>
         <p>
-          The following code creates a stylesheet from an XSL document <em>stylesheet.xsl</em> to write an XML document to an <em>std::string</em> :
+          The following code creates a transformation from an XSL document <em>stylesheet.xsl</em> to write the resulting output to an <em>std::string</em> :
         </p>
         <source><![CDATA[xsl::xstringtransform xst( "stylesheet.xsl" );]]></source>
         <p>
-          After the transformation is finished the resulting XML document can be retrieved :
+          After the transformation is finished the resulting output can be retrieved :
         </p>
         <source><![CDATA[const std::string xml = xst.str();]]></source>
        <p>
-         The following code creates a stylesheet from an XSL document <em>stylesheet.xsl</em> :
+         The following code creates a transformation from an XSL document <em>stylesheet.xsl</em> to write the resulting output in a buffer :
        </p>
        <source><![CDATA[xsl::xbuffertransform xbt( "stylesheet.xsl" );]]></source>
        <p>
-         The purpose of this type of stylesheet is to chain XML transformations in another stylesheet.
+         The purpose of this type of transformation is to chain transformations.
        </p>
       </section>
       <section id="xsl-transformation">
-       <title>Transforming the tree</title>
+       <title>Performing a transformation</title>
        <p>
-         The purpose of XeuSeuLeu stylesheet is to transform an XML document built with XeuMeuLeu. As an example:
+         A transformation outputs a result when receiving an XML input.<br />
+         For instance the following code manually injects XML :
        </p>
        <source><![CDATA[xsl::xstringtransform xst( "stylesheet.xsl" );
 xst << xml::start( "root" )
-        << xml::start( "element" )
-        << xml::end()
+      << xml::content( "element", 42 )
     << xml::end();]]></source>
-      <p>
-        Technically the transformation is performed when the document is valid and complete (ie: after the last xml::end).
-      </p>
-      <p>
-        Corollary the following code is valid :
-      </p>
-      <source><![CDATA[xsl::xstringtransform xst( "stylesheet.xsl" );
+       <p>
+         The transformation is actually performed when the input document is valid and has been completely received, therefore after the <strong>xml::end</strong> in this example.
+       </p>
+       <p>
+         The following demonstrates the possibility to directly send an <strong>xml::xistream</strong> to be transformed :
+       </p>
+       <source><![CDATA[xsl::xstringtransform xst( "stylesheet.xsl" );
 xml::xistringstream xis(
   "<root>"
     "<element/>"
   "</root>"
 );
 xst << xis;]]></source>
-       <section id="xsl-buffer">
-         <title>Chained transformations</title>
-         <p>
-           Sometimes the user has to perform complex transformations on XML document.
-           On way to avoid a complex and monolithic stylesheet is to divid it into chained small steps ( and so on small stylesheets ).
-           The <strong>xsl::xbuffertransform</strong> is here to simply the code of chained transformations.
-         </p>
-         <p>
-           The final transformation <strong>cannot be</strong> an xsl::xbuffertransform, it must be used with an xsl::xtransform. The following code is valid:
-         </p>
-         <source><![CDATA[xsl::xstringtransform xst( "final-stylesheet.xsl" );
-xsl::xbuffertransform xbt( "first-stylesheet.xsl" );
+     </section>
+     <section id="xsl-chaining">
+       <title>Chaining transformations</title>
+       <p>
+         In order to avoid a complex and monolithic stylesheet one solution is to divide it into several smaller stylesheets.<br />
+         The <strong>xsl::xbuffertransform</strong> has been introduced specifically for the purpose of applying several transformations one after another.
+       </p>
+       <p>
+         For instance to apply <em>stylesheet-1.xsl</em> then <em>stylesheet-2.xsl</em> :
+       </p>
+       <source><![CDATA[xsl::xstringtransform xst( "stylesheet-2.xsl" );
+xsl::xbuffertransform xbt( "stylesheet-1.xsl" );
 xml::xistringstream xis( "<root/>" );
 xst << xbt << xis;]]></source>
-         <p>
-           Contrary to an xsl::xtransform (which xsl::xbuffertransform is <strong>not</strong>), xsl::xbuffertransform's output <strong>has to be</strong> an XML document.
-         </p>
-         <p>The xsl::xbuffertransform can be used as many times as the user wants, like the following code:</p>
-         <source><![CDATA[xsl::xbuffertransform xbt( "first-stylesheet.xsl" );
-xsl::xstringtransform xst( "final-stylesheet.xsl" );
+       <p>
+         The final transformation cannot be an <strong>xsl::xbuffertransform</strong>.
+       </p>
+       <p>
+         Moreover the output generated by an <strong>xsl::xbuffertransform</strong> must be an XML document because it is handed as input to the next transformation.
+       </p>
+       <p>
+         An <strong>xsl::xbuffertransform</strong> can be used as many times as needed, for example :
+       </p>
+       <source><![CDATA[xsl::xstringtransform xst( "stylesheet-2.xsl" );
+xsl::xbuffertransform xbt( "stylesheet-1.xsl" );
 xml::xistringstream xis( "<root/>" );
 xst << xml::start( "root" )
       << xbt << xis
       << xbt << xis
     << xml::end();]]></source>
-       </section>
-       <section id="xsl-parameter">
-         <title>Stylesheet parameter</title>
-         <p>
-           The user can add stylesheet parameters thanks to <strong>xsl::parameter</strong>. As an example with the next XSL document :
-         </p>
-         <source><![CDATA[<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:param name="mykey" select="'default'"/>
-  <xsl:template match="/root"/>
+     </section>
+     <section id="xsl-parameter">
+       <title>Stylesheet parameters</title>
+       <p>
+         Stylesheet parameters can be defined by using <strong>xsl::parameter</strong>, for example with the XSL document being :
+       </p>
+       <source><![CDATA[<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:param name="my-key" select="'default'"/>
+<xsl:template match="/root"/>
 </xsl:stylesheet>]]></source>
-         <p>
-           The following code is valid:
-         </p>
-         <source><![CDATA[xsl::xstringtransform xf( "stylesheet.xsl" );
+       <p>
+         The following code sets the parameter <em>my-key</em> to <em>expression</em> :
+       </p>
+       <source><![CDATA[xsl::xstringtransform xst( "stylesheet.xsl" );
 xml::xistringstream xis( "<root/>" );
-xf << xsl::parameter( "mykey", "expression" )
-   << xis;]]></source>
-         <p>
-           Parameters are available on xsl::xbuffertransform. The following code is valid:
-         </p>
-         <source><![CDATA[xsl::xbuffertransform xbt( "first-stylesheet.xsl" );
-xsl::xstringtransform xst( "final-stylesheet.xsl" );
-xml::xistringstream xis( "<root/>" );
-xst << xbt << xsl::parameter( "key", "expression" )
-           << xis;]]></source>
-       </section>
-      </section>
+xst << xsl::parameter( "my-key", "expression" )
+    << xis;]]></source>
+     </section>
     </section>
   </body>
 </document>
