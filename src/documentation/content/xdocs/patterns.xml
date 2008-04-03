@@ -378,23 +378,82 @@ xims >> xml::start( "element" )
         <section id="xsl-file-to-file">
         <title>Performing a file to file transformation</title>
         <p>
-          The most simple way for a file to file transformation based on a given stylesheet is :
+          The most simple way to perform a file to file transformation based on a given stylesheet is :
         </p>
         <source><![CDATA[xsl::xftransform xst( "stylesheet.xsl", "output" );
 xst << xml::xifstream( "input.xml" );]]></source>
       </section>
-        <section id="files-fusion">
-        <title>Performing a fusion between several xml files before a transformation</title>
+        <section id="xsl-fusion">
+        <title>Fusionning several xml files before applying a transformation</title>
         <p>
-          In case of using too complex parameters (basically another xml tree) to perform a dynamic transformation, <strong>xsl::parameter</strong> is <em>not</em>
-          sufficient. A way is using xml fusion thanks to this pattern :
+          Combining several XML documents before applying a transformation can be used to dynamically configure the transformation.<br />
+          It has proven to be usefull when <strong>xsl::parameter</strong> cannot be used because of the complexity of the customization required.
         </p>
-        <source><![CDATA[xsl::xftransform xst( "stylesheet.xsl", "output" );
+        <p>
+          For instance given the following <em>input.xml</em> file :
+        </p>
+        <source><![CDATA[<elements>
+  <element id="1" type="type1"/>
+  <element id="2" type="type2"/>
+  <element id="3" type="type3"/>
+</elements>]]></source>
+        <p>
+          And the following <em>parameters.xml</em> file :
+        </p>
+        <source><![CDATA[<types>
+  <type name="type1">
+    <subelements>
+      <subelement name="sub1"/>
+    </subelements>
+  </type>
+  <type name="type2">
+    <subelements>
+      <subelement name="sub2"/>
+      <subelement name="sub3"/>
+    </subelements>
+  </type>
+</types>]]></source>
+        <p>
+          They can be combined in order to apply the following <em>stylesheet.xsl</em> :
+        </p>
+        <source><![CDATA[<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:template match="/root/elements">
+    <xsl:copy>
+      <xsl:apply-templates select="element"/>
+    </xsl:copy>
+  </xsl:template>
+  <xsl:template match="element">
+    <xsl:copy>
+      <xsl:variable name="type" select="@type"/>
+      <xsl:copy-of select="@id"/>
+      <xsl:copy-of select="/root/types/type[@name=$type]/subelements"/>
+    </xsl:copy>
+  </xsl:template>
+</xsl:stylesheet>]]></source>
+        <p>
+          Using to the following code :
+        </p>
+        <source><![CDATA[xsl::xftransform xst( "stylesheet.xsl", "output.xml" );
 xst << xml::start( "root" )
       << xml::xifstream( "input.xml" )
       << xml::xifstream( "parameters.xml" )
     << xml::end();]]></source>
-      </section>      
+        <p>
+          Yields the following <em>output.xml</em> :
+        </p>
+        <source><![CDATA[<elements>
+  <element id="1">
+    <subelement name="sub1"/>
+  </element>
+  <element id="2">
+    <subelement name="sub2"/>
+    <subelement name="sub3"/>
+  </element>
+  <element id="3">
+    <subelement name="sub1"/>
+  </element>
+</elements>]]></source>
+      </section>
     </section>
   </body>
 </document>
