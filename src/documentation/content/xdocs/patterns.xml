@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2005 The Apache Software Foundation or its licensors,
+  as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Patterns</title>
+  </header>
+  <body>
+    <section id="xml">
+      <title>XML</title>
+      <section id="xml-switch">
+        <title>Handling different documents</title>
+        <p>
+          The <strong>xml::list</strong> feature can be used in order to provide a switch-like structure to process several documents with different root elements.<br />
+          Given for example the following documents :
+        </p>
+        <source><![CDATA[<document-1>
+  <element-1>content</element-1>
+</document-1>]]></source>
+        <source><![CDATA[<document-2>
+  <element-2 />
+</document-2>]]></source>
+        <source><![CDATA[<document-3>
+  <element-3 attribute="something" />
+</document-3>]]></source>
+        <p>
+          A code able to unserialize all of them from a single entry point could be :
+        </p>
+        <source><![CDATA[class my_class
+{
+public:
+    my_class( xml::xistream& xis )
+    {
+        xis >> xml::list( "document-1", *this, &my_class::read_document_1 )
+            >> xml::list( "document-2", *this, &my_class::read_document_2 )
+            >> xml::list( "document-3", *this, &my_class::read_document_3 );
+    }
+
+private:
+    void read_document_1( xml::xistream& xis )
+    {
+        std::string content;
+        xis >> xml::content( "element-1", content );
+    }
+
+    void read_document_2( xml::xistream& xis )
+    {
+        xis >> xml::start( "element-2" )
+            >> xml::end();
+    }
+
+    void read_document_3( xml::xistream& xis )
+    {
+        std::string attribute;
+        xis >> xml::attribute( "attribute", attribute );
+    }
+};]]></source>
+      </section>
+      <section id="xml-exists">
+        <title>Testing for the existence of an element</title>
+        <p>
+          If the requirement is only to test whether a given element exists or not during unserialization, the following code sample can be used :
+        </p>
+        <source><![CDATA[class my_class
+{
+public:
+    my_class( xml::xistream& xis )
+    {
+        bool exists = false;
+        xis >> xml::list( "element", *this, &my_class::check, exists );
+    }
+
+private:
+    void check( xml::xistream& xis, bool& exists ) const
+    {
+        exists = true;
+    }
+};]]></source>
+      </section>
+      <section id="xml-factorization">
+        <title>Factorizing the unserialization of similar nodes</title>
+        <p>
+          If different nodes have elements and/or attributes in common, factorization can sometimes significantly reduce the amount of code.<br />
+          Most of the time the benefits are better when the code logics behind those elements indicate that they are very tied together.<br />
+        </p>
+        <p>
+          For example given the following document :
+        </p>
+        <source><![CDATA[<document>
+  <element-1 name="name 1">content</element-1>
+  <element-2 name="name 2"/>
+  <element-3 name="name 3" attribute="something" />
+</document-3>]]></source>
+        <p>
+          A possible factorization can be :
+        </p>
+        <source><![CDATA[class my_class
+{
+public:
+    my_class( xml::xistream& xis )
+    {
+        process( xis, "element-1", &my_class::read_element_1 );
+        process( xis, "element-2", &my_class::read_element_2 );
+        process( xis, "element-3", &my_class::read_element_3 );
+    }
+
+private:
+    template< typename T >
+    void process( xml::xistream& xis, const std::string& element, T functor ) const
+    {
+        std::string name;
+        xis >> xml::start( element )
+            >> xml::attribute( "name", name );
+        (this->*functor)( xis, name );
+        xis >> xml::end();
+    }
+
+    void read_element_1( xml::xistream& xis, const std::string& name )
+    {
+        std::string content;
+        xis >> content;
+    }
+
+    void read_element_2( xml::xistream& xis, const std::string& name )
+    {
+    }
+
+    void read_element_3( xml::xistream& xis, const std::string& name )
+    {
+        std::string attribute;
+        xis >> xml::attribute( "attribute", attribute );
+    }
+};]]></source>
+      <p>
+        Note the use of a template helper method which allows the user not to have to worry about the exact type of the functor.
+      </p>
+      </section>
+      <section id="xml-factory-method">
+        <title>Creating objects depending on the type of a node</title>
+        <p>
+          Using the factory design pattern decouples concrete object instantiation from object manipulation.
+        </p>
+        <p>
+          For example if a collection of objects must be instantiated from different concrete classes implementing the same interface, the factory definition may look like :
+        </p>
+        <source><![CDATA[class my_factory
+{
+public:
+    virtual my_interface* create( const std::string& type, xml::xistream& xis ) = 0;
+};]]></source>
+        <p>
+          The following code demonstrates how to create all objects from the collection with the factory and add them to a vector :
+        </p>
+        <source><![CDATA[class my_class
+{
+public:
+    my_class( my_factory& factory )
+        : factory_( factory )
+    {}
+
+    void load( xml::xistream& xis )
+    {
+        xis >> xml::list( *this, &my_class::create );
+    }
+
+private:
+    void create( const std::string& type, xml::xistream& xis )
+    {
+        collection_.push_back( factory_.create( type, xis ) );
+    }
+
+private:
+    my_factory& factory_;
+    std::vector< my_interface* > collection_;
+};]]></source>
+        <p>
+          The implementation of the factory requires testing the type of the element to be created, for example :
+        </p>
+        <source><![CDATA[class my_factory_imp : public my_factory
+{
+public:
+    virtual interface* create( const std::string& type, xml::xistream& xis )
+    {
+        if( type == "first_type" )
+            return new first_type( xis );
+        if( type == "second_type" )
+            return new second_type( xis );
+        if( type == "third_type" )
+            return new third_type( xis );
+        return 0;
+    }
+};]]></source>
+        <p>
+          Moving the instantiation code to a factory provides better extensibility.<br />
+          Adding support for new types is thus possible without changing the existing code, only by using a different factory, for example :
+        </p>
+        <source><![CDATA[class my_extended_factory_imp : public my_factory_imp
+{
+public:
+    virtual interface* create( const std::string& type, xml::xistream& xis )
+    {
+        if( type == "extended_type" )
+            return new extended_type( xis );
+        if( type == "another_extended_type" )
+            return new another_extended_type( xis );
+        return my_factory_imp::create( type, xis );
+    }
+};]]></source>
+      </section>
+      <section id="xml-filtering">
+        <title>Reading, filtering and writing back</title>
+        <p>
+          Assuming the goal is to load a document from a file, change the content of one given element under the root element, then write it back to the same file copying all other elements and attributes, one way to deal with it could be :
+        </p>
+        <source><![CDATA[class my_class
+{
+public:
+    void process( const std::string& filename, const std::string& element, const std::string& content ) const
+    {
+        xml::xifstream xis( filename );
+        xml::xofstream xos( filename );
+        xos << xml::start( "root" );
+        xis >> xml::start( "root" )
+              >> xml::attributes( *this, &my_class::copy, xos )
+              >> xml::list( *this, &my_class::filter, xos, element, content );
+        xos << xml::end();
+    }
+private:
+    void filter( const std::string& type, xml::xistream& xis, xml::xostream& xos, const std::string& element, const std::string& content ) const
+    {
+        xos << xml::start( type );
+        xis >> xml::attributes( *this, &my_class::copy, xos );
+        if( type == element )
+            xos << content;
+         else
+            xos << xis;
+        xos << xml::end();
+    }
+    void copy( const std::string& attribute, xml::xistream& xis, xml::xostream& xos ) const
+    {
+        xos << xml::attribute( attribute, xml::attribute< std::string >( xis, attribute ) );
+    }
+};]]></source>
+      </section>
+      <section id="xml-const-stream">
+        <title>Turning a non-constant input stream into constant</title>
+        <p>
+          The <strong>xml::xisubstream</strong> implementation has proven to be useful because its constructor takes a <strong>constant</strong> reference to an <em>xml::xistream</em>.<br />
+          Therefore instead of the following code :
+        </p>
+        <source><![CDATA[class my_class
+{
+public:
+    void process( xml::xistream& xis ) const
+    {
+        // read from xis
+    }
+};]]></source>
+        <p>
+          It's possible to write a method taking a constant reference to the stream and still be able to read from it :
+        </p>
+        <source><![CDATA[class my_class
+{
+public:
+    void process( const xml::xistream& xis ) const
+    {
+        xml::xisubstream xiss( xis );
+        // read from xiss
+    }
+};]]></source>
+        <p>
+          Or even directly :
+        </p>
+        <source><![CDATA[class my_class
+{
+public:
+    void process( xml::xisubstream xiss ) const
+    {
+        // read from xiss
+    }
+};]]></source>
+        <p>
+          Because the constructor for <strong>xml::xisubstream</strong> is deliberately not declared explicit.
+        </p>
+        <p>
+          What is then even more interesting is the possibility to create the <em>xml::xistream</em> as a temporary variable at the method call location :
+        </p>
+        <source><![CDATA[my_class my_instance;
+my_instance.process( xml::xifstream( "my_file.xml" ) );]]></source>
+      </section>
+      <section id="xml-boost.bind">
+        <title>Using Boost.Bind</title>
+        <p>
+          <a href="ext:boost.bind">Boost.Bind</a> can be used to create a functor for calling <strong>xml::list</strong> (or <strong>xml::attributes</strong>) :
+        </p>
+        <source><![CDATA[class my_class
+{
+public:
+  void my_method( xml::xistream& xis )
+  {
+    xis >> ...
+  }
+};]]></source>
+        <p>
+          With the actual unserialization code being :
+        </p>
+        <source><![CDATA[my_class my_instance;
+xis >> xml::start( "root" )
+    >> xml::list( boost::bind( "element", &my_class::my_method, my_instance, _1 ) )
+  >> xml::end();]]></source>
+        <p>
+          In case of using the alternate version of <strong>xml::list</strong> requiring an argument for the name of the node :
+        </p>
+        <source><![CDATA[class my_class
+{
+public:
+  void my_method( const std::string& name, xml::xistream& xis )
+  {
+    xis >> ...
+  }
+};]]></source>
+        <p>
+          The code would be :
+        </p>
+        <source><![CDATA[my_class my_instance;
+xis >> xml::start( "root" )
+    >> xml::list( boost::bind( &my_class::my_method, my_instance, _1, _2 ) )
+  >> xml::end();]]></source>
+      </section>
+      <section id="xml-proxy">
+        <title>Manipulating proxy input streams</title>
+        <p>
+          Using <strong>xml::ximultistream</strong> enables interresting use cases for :
+        </p>
+        <ul>
+          <li>falling back on a piece of data</li>
+          <li>overriding a piece of data</li>
+        </ul>
+        <p>
+          Here is an example of data fallback :
+        </p>
+        <source><![CDATA[xml::xostringstream xos;
+xos << xml::content( "element", xml::attribute( "mandatory", false ) );
+xml::xistringstream xiss( xos.str() );
+xml::ximultistream xims( xis, xiss );
+bool mandatory;
+xims >> xml::start( "element" )
+       >> xml::attribute( "mandatory", mandatory );]]></source>
+        <p>
+          If <em>xis</em> does not have an <em>element</em> node and/or a <em>mandatory</em> attribute the reading won't fail but use the branch provided by <em>xiss</em>.
+        </p>
+        <p>
+          An example of data override can simply be achieved by inverting the streams when creating the <strong>xml::ximultistream</strong> in the previous example :
+        </p>
+        <source><![CDATA[xml::ximultistream xims( xiss, xis );]]></source>
+        <p>
+          This way whatever contains <em>xis</em> is ignored because <em>xiss</em> provides the data first.
+        </p>
+      </section>
+    </section>
+    <section id="xsl">
+      <title>XSL</title>
+        <section id="xsl-file-to-file">
+        <title>Performing a file to file transformation</title>
+        <p>
+          The most simple way for a file to file transformation based on a given stylesheet is :
+        </p>
+        <source><![CDATA[xsl::xftransform xst( "stylesheet.xsl", "output" );
+xst << xml::xifstream( "input.xml" );]]></source>
+      </section>
+    </section>
+  </body>
+</document>
