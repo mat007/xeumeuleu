@@ -383,6 +383,18 @@ xims >> xml::start( "element" )
         <source><![CDATA[xsl::xftransform xst( "stylesheet.xsl", "output" );
 xst << xml::xifstream( "input.xml" );]]></source>
       </section>
+        <section id="files-fusion">
+        <title>Performing a fusion between several xml files before a transformation</title>
+        <p>
+          In case of using too complex parameters (basically another xml tree) to perform a dynamic transformation, <strong>xsl::parameter</strong> is <em>not</em>
+          sufficient. A way is using xml fusion thanks to this pattern :
+        </p>
+        <source><![CDATA[xsl::xftransform xst( "stylesheet.xsl", "output" );
+xst << xml::start( "root" )
+      << xml::xifstream( "input.xml" )
+      << xml::xifstream( "parameters.xml" )
+    << xml::end();]]></source>
+      </section>      
     </section>
   </body>
 </document>
