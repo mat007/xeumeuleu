@@ -57,13 +57,12 @@ xtransform::~xtransform()
 }
 
 // -----------------------------------------------------------------------------
-// Name: xtransform::operator<<
+// Name: xtransform::write
 // Created: SLI 2007-09-25
 // -----------------------------------------------------------------------------
-xtransform& xtransform::operator<<( const xsl::xbuffertransform& buffer )
+void xtransform::write( const xsl::xbuffertransform& buffer )
 {
     buffer.apply( *this );
-    return *this;
 }
 
 // -----------------------------------------------------------------------------
