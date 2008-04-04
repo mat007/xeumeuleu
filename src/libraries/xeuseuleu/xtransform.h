@@ -58,16 +58,12 @@ public:
     void parameter( const std::string& key, const std::string& expression );
 
     void add( const std::string& stylesheet );
-    //@}
 
-    //! @name Operators
-    //@{
-    xtransform& operator<<( const xsl::xbuffertransform& buffer );
+    void write( const xsl::xbuffertransform& buffer );
 
-    template< typename T > xtransform& operator<<( const T& value )
+    template< typename T > void write( const T& value )
     {
         pBuffer_.reset( pBuffer_->apply( value ) );
-        return *this;
     }
     //@}
 
@@ -90,6 +86,17 @@ private:
     std::auto_ptr< buffer > pBuffer_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: operator<<
+// Created: MAT 2008-04-04
+// -----------------------------------------------------------------------------
+template< typename T >
+xtransform& operator<<( xtransform& xt, const T& value )
+{
+    xt.write( value );
+    return xt;
+}
 
 }
 
