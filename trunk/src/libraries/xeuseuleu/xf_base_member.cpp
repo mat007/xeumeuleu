@@ -46,6 +46,16 @@ xf_base_member::xf_base_member( const std::string& stylesheet, const std::string
 }
 
 // -----------------------------------------------------------------------------
+// Name: xf_base_member constructor
+// Created: SLI 2008-04-04
+// -----------------------------------------------------------------------------
+xf_base_member::xf_base_member( std::istream& stylesheet, const std::string& filename )
+    : pOutput_( new file_output( stylesheet, filename ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: xf_base_member destructor
 // Created: SLI 2007-09-19
 // -----------------------------------------------------------------------------

@@ -74,6 +74,7 @@ protected:
     //! @name Constructors/Destructor
     //@{
     output( std::ostream& target, const std::string& stylesheet );
+    output( std::ostream& target, std::istream& stylesheet );
     //@}
 
 private:

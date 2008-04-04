@@ -45,6 +45,16 @@ string_output::string_output( const std::string& stylesheet )
 }
 
 // -----------------------------------------------------------------------------
+// Name: string_output constructor
+// Created: SLI 2008-04-04
+// -----------------------------------------------------------------------------
+string_output::string_output( std::istream& stylesheet )
+    : output( os_, stylesheet )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: string_output destructor
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------

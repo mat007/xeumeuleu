@@ -50,36 +50,15 @@ class output_imp
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit output_imp( const std::string& stylesheet );
-    virtual ~output_imp();
+    explicit output_imp() {}
+    virtual ~output_imp() {}
     //@}
 
     //! @name Operations
     //@{
-    void parameter( const std::string& key, const std::string& expression );
+    virtual void parameter( const std::string& key, const std::string& expression ) = 0;
 
-    const std::string transform( const std::string& input ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    output_imp( const output_imp& );            //!< Copy constructor
-    output_imp& operator=( const output_imp& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< std::pair< std::string, std::string > > T_Parameters;
-    typedef T_Parameters::const_iterator                       CIT_Parameters;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const std::string stylesheet_;
-    T_Parameters parameters_;
+    virtual const std::string transform( const std::string& input ) const = 0;
     //@}
 };
 

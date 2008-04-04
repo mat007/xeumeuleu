@@ -30,7 +30,7 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "output_imp.h"
+#include "file_output_imp.h"
 #include "exception.h"
 #include "xalan.h"
 #include <fstream>
@@ -40,10 +40,10 @@ using namespace xsl;
 using namespace XALAN_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
-// Name: output_imp constructor
+// Name: file_output_imp constructor
 // Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-output_imp::output_imp( const std::string& stylesheet )
+file_output_imp::file_output_imp( const std::string& stylesheet )
     : stylesheet_( stylesheet )
 {
     if( ! std::ifstream( stylesheet.c_str() ) )
@@ -51,28 +51,28 @@ output_imp::output_imp( const std::string& stylesheet )
 }
 
 // -----------------------------------------------------------------------------
-// Name: output_imp destructor
+// Name: file_output_imp destructor
 // Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-output_imp::~output_imp()
+file_output_imp::~file_output_imp()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: output_imp::parameter
+// Name: file_output_imp::parameter
 // Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-void output_imp::parameter( const std::string& key, const std::string& expression )
+void file_output_imp::parameter( const std::string& key, const std::string& expression )
 {
     parameters_.push_back( std::make_pair( key, "'" + expression + "'" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: output_imp::transform
+// Name: file_output_imp::transform
 // Created: SLI 2007-10-03
 // -----------------------------------------------------------------------------
-const std::string output_imp::transform( const std::string& input ) const
+const std::string file_output_imp::transform( const std::string& input ) const
 {
     std::istringstream is( input );
     XSLTInputSource in( &is );

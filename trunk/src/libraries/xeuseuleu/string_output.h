@@ -52,6 +52,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit string_output( const std::string& stylesheet );
+    explicit string_output( std::istream& stylesheet );
     virtual ~string_output();
     //@}
 

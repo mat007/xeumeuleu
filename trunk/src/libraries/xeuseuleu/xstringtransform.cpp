@@ -47,6 +47,18 @@ xstringtransform::xstringtransform( const std::string& stylesheet )
 }
 
 // -----------------------------------------------------------------------------
+// Name: xstringtransform constructor
+// Created: SLI 2008-04-04
+// -----------------------------------------------------------------------------
+xstringtransform::xstringtransform( std::istream& stylesheet )
+    : xs_base_member( stylesheet )
+    , xtransform( *pOutput_ )
+{
+    // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: xstringtransform destructor
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
