@@ -46,6 +46,17 @@ xs_base_member::xs_base_member( const std::string& stylesheet )
 }
 
 // -----------------------------------------------------------------------------
+// Name: xs_base_member constructor
+// Created: SLI 2008-04-04
+// -----------------------------------------------------------------------------
+xs_base_member::xs_base_member( std::istream& stylesheet )
+    : pOutput_( new string_output( stylesheet ) )
+{
+    // NOTHING
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: xs_base_member destructor
 // Created: SLI 2007-09-19
 // -----------------------------------------------------------------------------

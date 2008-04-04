@@ -75,6 +75,15 @@ void xtransform::add( const std::string& stylesheet )
 }
 
 // -----------------------------------------------------------------------------
+// Name: xtransform::add
+// Created: SLI 2008-04-04
+// -----------------------------------------------------------------------------
+void xtransform::add( std::istream& stylesheet )
+{
+    pBuffer_.reset( new buffer( *new string_output( stylesheet ), pBuffer_ ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: xtransform::parameter
 // Created: SLI 2007-09-11
 // -----------------------------------------------------------------------------

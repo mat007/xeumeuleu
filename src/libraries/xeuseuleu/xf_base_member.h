@@ -52,6 +52,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              xf_base_member( const std::string& stylesheet, const std::string& filename );
+             xf_base_member( std::istream& stylesheet, const std::string& filename );
     virtual ~xf_base_member();
     //@}
 

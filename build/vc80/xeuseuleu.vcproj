@@ -170,6 +170,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\buffer_output_imp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\buffer_output_imp.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\exception.cpp"
 				>
 			</File>
@@ -183,6 +191,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\file_output.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\file_output_imp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeuseuleu\file_output_imp.h"
 				>
 			</File>
 			<File
@@ -207,10 +223,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\output.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\output_imp.cpp"
 				>
 			</File>
 			<File

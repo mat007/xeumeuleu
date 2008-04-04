@@ -54,6 +54,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              xftransform( const std::string& stylesheet, const std::string& filename );
+             xftransform( std::istream& stylesheet, const std::string& filename );
     virtual ~xftransform();
     //@}
 };

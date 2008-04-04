@@ -52,6 +52,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit xs_base_member( const std::string& stylesheet );
+    explicit xs_base_member( std::istream& stylesheet );
     virtual ~xs_base_member();
     //@}
 
