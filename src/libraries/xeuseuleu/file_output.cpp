@@ -46,6 +46,17 @@ file_output::file_output( const std::string& stylesheet, const std::string& file
 }
 
 // -----------------------------------------------------------------------------
+// Name: file_output constructor
+// Created: SLI 2008-04-04
+// -----------------------------------------------------------------------------
+file_output::file_output( std::istream& stylesheet, const std::string& filename )
+    : of_base_member( filename )
+    , output( os_, stylesheet )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: file_output destructor
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------

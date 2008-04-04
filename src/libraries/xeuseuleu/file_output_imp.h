@@ -30,38 +30,60 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xftransform.h"
-#include "file_output.h"
+#ifndef _xsl_file_output_imp_h_
+#define _xsl_file_output_imp_h_
 
-using namespace xsl;
+#include "output_imp.h"
+#include "xeumeuleu/xml.h"
+#include <string>
+#include <vector>
 
-// -----------------------------------------------------------------------------
-// Name: xftransform constructor
-// Created: SLI 2007-09-07
-// -----------------------------------------------------------------------------
-xftransform::xftransform( const std::string& stylesheet, const std::string& filename )
-    : xf_base_member( stylesheet, filename )
-    , xtransform( *pOutput_ )
+namespace xsl
 {
-    // NOTHING
+// =============================================================================
+/** @class  file_output_imp
+    @brief  Transformation helper
+*/
+// Created: SLI 2007-07-06
+// =============================================================================
+class file_output_imp : public output_imp
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit file_output_imp( const std::string& stylesheet );
+    virtual ~file_output_imp();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void parameter( const std::string& key, const std::string& expression );
+
+    virtual const std::string transform( const std::string& input ) const;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    file_output_imp( const file_output_imp& );            //!< Copy constructor
+    file_output_imp& operator=( const file_output_imp& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< std::pair< std::string, std::string > > T_Parameters;
+    typedef T_Parameters::const_iterator                       CIT_Parameters;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const std::string stylesheet_;
+    T_Parameters parameters_;
+    //@}
+};
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: xftransform constructor
-// Created: SLI 2008-04-04
-// -----------------------------------------------------------------------------
-xftransform::xftransform( std::istream& stylesheet, const std::string& filename )
-    : xf_base_member( stylesheet, filename )
-    , xtransform( *pOutput_ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: xftransform destructor
-// Created: SLI 2007-09-07
-// -----------------------------------------------------------------------------
-xftransform::~xftransform()
-{
-    // NOTHING
-}
+#endif // _xsl_file_output_imp_h_

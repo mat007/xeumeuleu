@@ -45,6 +45,37 @@ BOOST_AUTO_TEST_CASE( unexisting_style_sheet_file_throws )
 }
 
 // -----------------------------------------------------------------------------
+// Name: stylesheet_can_be_a_stream
+// Created: SLI 2008-04-04
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( stylesheet_can_be_a_stream )
+{
+    std::istringstream stylesheet(
+    "<?xml version='1.0' encoding='ISO-8859-1'?>"
+        "<xsl:stylesheet version='1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform'>"
+            "<xsl:template match='/root'>"
+                "<new-root>"
+                    "<xsl:copy-of select='@*'/>"
+                    "<xsl:apply-templates select='element'/>"
+                "</new-root>"
+            "</xsl:template>"
+            "<xsl:template match='element'>"
+                "<transformed/>"
+            "</xsl:template>"
+        "</xsl:stylesheet>"
+    );
+    xsl::xstringtransform xst( stylesheet );
+    xml::xistringstream xis(
+        "<root>"
+            "<element/>"
+            "<element/>"
+        "</root>"
+    );
+    xst << xis;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><new-root><transformed/><transformed/></new-root>", xst.str() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: tranformation_is_applied_at_end_root_level
 // Created: SLI 2007-09-07
 // -----------------------------------------------------------------------------

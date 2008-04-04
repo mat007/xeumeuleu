@@ -58,6 +58,7 @@ public:
     void parameter( const std::string& key, const std::string& expression );
 
     void add( const std::string& stylesheet );
+    void add( std::istream& stylesheet );
 
     void write( const xsl::xbuffertransform& buffer );
 

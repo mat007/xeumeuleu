@@ -54,6 +54,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit xstringtransform( const std::string& stylesheet );
+    explicit xstringtransform( std::istream& stylesheet );
     virtual ~xstringtransform();
     //@}
 

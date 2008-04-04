@@ -41,6 +41,17 @@ using namespace xsl;
 // -----------------------------------------------------------------------------
 xbuffertransform::xbuffertransform( const std::string& stylesheet )
     : stylesheet_( stylesheet )
+    , pStream_   ( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: xbuffertransform constructor
+// Created: SLI 2008-04-04
+// -----------------------------------------------------------------------------
+xbuffertransform::xbuffertransform( std::istream& stylesheet )
+    : pStream_( &stylesheet )
 {
     // NOTHING
 }
@@ -60,5 +71,8 @@ xbuffertransform::~xbuffertransform()
 // -----------------------------------------------------------------------------
 void xbuffertransform::apply( xtransform& xst ) const
 {
-    xst.add( stylesheet_ );
+    if( pStream_ == 0 )
+        xst.add( stylesheet_ );
+    else
+        xst.add( *pStream_ );
 }

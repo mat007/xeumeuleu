@@ -55,6 +55,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit xbuffertransform( const std::string& stylesheet );
+    explicit xbuffertransform( std::istream& stylesheet );
     virtual ~xbuffertransform();
     //@}
 
@@ -74,6 +75,7 @@ private:
     //! @name Member data
     //@{
     const std::string stylesheet_;
+    std::istream* pStream_;
     //@}
 };
 

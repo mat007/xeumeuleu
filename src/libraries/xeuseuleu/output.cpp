@@ -31,7 +31,8 @@
  */
 
 #include "output.h"
-#include "output_imp.h"
+#include "file_output_imp.h"
+#include "buffer_output_imp.h"
 
 using namespace xsl;
 
@@ -41,7 +42,18 @@ using namespace xsl;
 // -----------------------------------------------------------------------------
 output::output( std::ostream& target, const std::string& stylesheet )
     : target_      ( target )
-    , pTransformer_( new output_imp( stylesheet ) )
+    , pTransformer_( new file_output_imp( stylesheet ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: output constructor
+// Created: SLI 2008-04-04
+// -----------------------------------------------------------------------------
+output::output( std::ostream& target, std::istream& stylesheet )
+    : target_      ( target )
+    , pTransformer_( new buffer_output_imp( stylesheet ) )
 {
     // NOTHING
 }
