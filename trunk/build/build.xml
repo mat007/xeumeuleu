@@ -46,7 +46,7 @@
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>
     </target>
-
+    <target name="rebuild" depends="clean,build"/>
     <!--
     ============================================================================
       export
@@ -175,6 +175,6 @@
         <update name="xalan-c"/>
     </target>
 
-    <target name="all" depends="configure,build,test,export,package,documentation" description="build, run tests, package distribution and create web site"/>
+    <target name="all" depends="configure,build,test,package,documentation" description="build, run tests, package distribution and create web site"/>
 
 </project>
