@@ -46,7 +46,7 @@
     <target name="clean" description="clean intermediate build artifacts">
         <delete dir="${out.dir}"/>
     </target>
-    <target name="rebuild" depends="clean,build"/>
+
     <!--
     ============================================================================
       export
