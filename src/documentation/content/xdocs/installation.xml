@@ -100,7 +100,7 @@
         <title>Microsoft Visual Studio (MSVC)</title>
         <p>
           The instructions are for compiling with <em>Microsoft Visual Studio .NET 2003</em>.<br />
-          Replace <em>vc71</em> with <em>vc80</em> for <em>Microsoft Visual Studio 8</em>.
+          Replace <em>vc71</em> with <em>vc80</em> (resp. <em>vc90</em>) for <em>Microsoft Visual Studio 2005</em> (resp. <em>Microsoft Visual Studio 2008</em>).
         </p>
         <p>
           The following platforms are <strong>not</strong> supported :
