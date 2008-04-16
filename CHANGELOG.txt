@@ -1,5 +1,5 @@
 1.3.0
-. added support for XSLT using xalan-c
+. added support for XSLT using Apache Xalan
 . added xml::ximultistream implementing a composite of input streams
 . added xml::value helper to read directly from an xml::xistream
 . fixed error context not being transmitted from an xml::xistream to an xml::xibufferstream
