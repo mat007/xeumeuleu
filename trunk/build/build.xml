@@ -99,7 +99,9 @@
       package
     ============================================================================
     -->
-    <target name="package" depends="export,generate-vc71" description="package the distribution">
+    <target name="package" depends="-package,-apache-license" description="package the distribution"/>
+
+    <target name="-package" depends="export,generate-vc71">
         <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/xeumeuleu-src.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user"/>
         <tar destfile="${dist.dir}/xeumeuleu-src.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user" compression="bzip2"/>
@@ -108,6 +110,16 @@
             <zipfileset prefix="include" dir="${include.dir}" includes="xeumeuleu/**,xeuseuleu/**"/>
             <zipfileset prefix="lib/${platform}" dir="${lib.dir}" includes="*xeumeuleu.*,*xeuseuleu.*,*xerces*.*,*xalan-*.*,*Xalan-*.*" excludes="*.pdb,*D.*"/>
             <zipfileset prefix="run/${platform}" dir="${run.dir}" includes="*xerces*.*,*xalan*.*,*Xalan*.*" excludes="*D.*"/>
+        </zip>
+    </target>
+
+    <target name="-apache-license">
+        <copy todir="${out.dir}">
+            <url url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+        </copy>
+        <fixcrlf srcdir="${out.dir}" includes="licenses/LICENSE-2.0.txt"/>
+        <zip destfile="${dist.dir}/xeumeuleu-bin-${platform}.zip" update="true">
+            <zipfileset dir="${out.dir}" fullpath="lib/${platform}/APACHE-LICENSE-2.0.txt" includes="licenses/LICENSE-2.0.txt"/>
         </zip>
     </target>
 
