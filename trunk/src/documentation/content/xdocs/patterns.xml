@@ -311,36 +311,36 @@ my_instance.process( xml::xifstream( "my_file.xml" ) );]]></source>
         <source><![CDATA[class my_class
 {
 public:
-  void my_method( xml::xistream& xis )
-  {
-    xis >> ...
-  }
+    void my_method( xml::xistream& xis )
+    {
+        // read from xis
+    }
 };]]></source>
         <p>
           With the actual unserialization code being :
         </p>
         <source><![CDATA[my_class my_instance;
 xis >> xml::start( "root" )
-    >> xml::list( boost::bind( "element", &my_class::my_method, my_instance, _1 ) )
-  >> xml::end();]]></source>
+      >> xml::list( boost::bind( "element", &my_class::my_method, my_instance, _1 ) )
+    >> xml::end();]]></source>
         <p>
           In case of using the alternate version of <strong>xml::list</strong> requiring an argument for the name of the node :
         </p>
         <source><![CDATA[class my_class
 {
 public:
-  void my_method( const std::string& name, xml::xistream& xis )
-  {
-    xis >> ...
-  }
+    void my_method( const std::string& name, xml::xistream& xis )
+    {
+        // read from xis
+    }
 };]]></source>
         <p>
           The code would be :
         </p>
         <source><![CDATA[my_class my_instance;
 xis >> xml::start( "root" )
-    >> xml::list( boost::bind( &my_class::my_method, my_instance, _1, _2 ) )
-  >> xml::end();]]></source>
+      >> xml::list( boost::bind( &my_class::my_method, my_instance, _1, _2 ) )
+    >> xml::end();]]></source>
       </section>
       <section id="xml-proxy">
         <title>Manipulating proxy input streams</title>
@@ -383,8 +383,8 @@ xims >> xml::start( "element" )
         <source><![CDATA[xsl::xftransform xst( "stylesheet.xsl", "output" );
 xst << xml::xifstream( "input.xml" );]]></source>
       </section>
-        <section id="xsl-fusion">
-        <title>Fusionning several xml files before applying a transformation</title>
+        <section id="xsl-merge">
+        <title>Merging several xml files before applying a transformation</title>
         <p>
           Combining several XML documents before applying a transformation can be used to dynamically configure the transformation.<br />
           It has proven to be usefull when <strong>xsl::parameter</strong> cannot be used because of the complexity of the customization required.
