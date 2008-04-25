@@ -36,10 +36,10 @@
 using namespace mockpp;
 
 // -----------------------------------------------------------------------------
-// Name: empty_sub_stream_does_not_modify_stream
+// Name: empty_buffer_stream_does_not_modify_stream
 // Created: MCO 2006-03-07
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( empty_sub_stream_does_not_modify_stream )
+BOOST_AUTO_TEST_CASE( empty_buffer_stream_does_not_modify_stream )
 {
     xml::xobufferstream xobs;
     xml::xostringstream xos;
@@ -49,10 +49,10 @@ BOOST_AUTO_TEST_CASE( empty_sub_stream_does_not_modify_stream )
 }
 
 // -----------------------------------------------------------------------------
-// Name: element_in_sub_stream_is_inserted_in_stream
+// Name: element_in_buffer_stream_is_inserted_in_stream
 // Created: MCO 2006-03-07
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( element_in_sub_stream_is_inserted_in_stream )
+BOOST_AUTO_TEST_CASE( element_in_buffer_stream_is_inserted_in_stream )
 {
     xml::xobufferstream xobs;
     xobs << xml::start( "sub-node" ) << xml::end();
@@ -65,10 +65,10 @@ BOOST_AUTO_TEST_CASE( element_in_sub_stream_is_inserted_in_stream )
 }
 
 // -----------------------------------------------------------------------------
-// Name: element_in_sub_stream_is_copied_to_an_empty_stream
+// Name: element_in_buffer_stream_is_copied_to_an_empty_stream
 // Created: MCO 2006-03-07
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( element_in_sub_stream_is_copied_to_an_empty_stream )
+BOOST_AUTO_TEST_CASE( element_in_buffer_stream_is_copied_to_an_empty_stream )
 {
     xml::xobufferstream xobs;
     xobs << xml::start( "element" ) << xml::end();
@@ -79,10 +79,10 @@ BOOST_AUTO_TEST_CASE( element_in_sub_stream_is_copied_to_an_empty_stream )
 }
 
 // -----------------------------------------------------------------------------
-// Name: adding_two_sub_streams_in_an_empty_stream_throws_an_exception
+// Name: adding_two_buffer_streams_in_an_empty_stream_throws_an_exception
 // Created: MCO 2006-03-07
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( adding_two_sub_streams_in_an_empty_stream_throws_an_exception )
+BOOST_AUTO_TEST_CASE( adding_two_buffer_streams_in_an_empty_stream_throws_an_exception )
 {
     xml::xobufferstream xobs;
     xobs << xml::start( "element" ) << xml::end();
@@ -92,10 +92,10 @@ BOOST_AUTO_TEST_CASE( adding_two_sub_streams_in_an_empty_stream_throws_an_except
 }
 
 // -----------------------------------------------------------------------------
-// Name: adding_several_times_a_sub_stream_duplicates_the_branch
+// Name: adding_several_times_a_buffer_stream_duplicates_the_branch
 // Created: MCO 2006-03-07
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( adding_several_times_a_sub_stream_duplicates_the_branch )
+BOOST_AUTO_TEST_CASE( adding_several_times_a_buffer_stream_duplicates_the_branch )
 {
     xml::xobufferstream xobs;
     xobs << xml::start( "sub-node" ) << xml::end();

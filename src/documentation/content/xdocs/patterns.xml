@@ -369,7 +369,7 @@ xims >> xml::start( "element" )
         </p>
         <source><![CDATA[xml::ximultistream xims( xiss, xis );]]></source>
         <p>
-          This way whatever contains <em>xis</em> is ignored because <em>xiss</em> provides the data first.
+          This way whatever contains <em>xis</em> is ignored if <em>xiss</em> provides the data first.
         </p>
       </section>
     </section>
