@@ -350,9 +350,9 @@ void branch_input::attributes( const visitor& v ) const
 // Name: std::auto_ptr< input_base > branch_input::branch
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-std::auto_ptr< input_base > branch_input::branch( bool clone, input_context& context ) const
+std::auto_ptr< input_base > branch_input::branch( bool clone ) const
 {
-    return pInput1_->branch( clone, context );
+    return pInput1_->branch( clone );
 }
 
 // -----------------------------------------------------------------------------

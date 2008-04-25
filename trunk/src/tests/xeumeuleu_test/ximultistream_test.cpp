@@ -145,15 +145,14 @@ BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_from_first_branch_then_secon
     xml::xistringstream xis1( "<root-1 attribute-1='stream-1'/>" );
     xml::xistringstream xis2( "<root-2 attribute-2='stream-2'/>" );
     xml::ximultistream xis( xis1, xis2 );
-    std::string value1, value2;
+    std::string actual1, actual2;
     xis >> xml::start( "root-1" )
-            >> xml::attribute( "attribute-1", value1 )
+            >> xml::attribute( "attribute-1", actual1 )
         >> xml::end()
         >> xml::start( "root-2" )
-            >> xml::attribute( "attribute-2", value2 )
-        >> xml::end();
-    BOOST_CHECK_EQUAL( "stream-1", value1 );
-    BOOST_CHECK_EQUAL( "stream-2", value2 );
+            >> xml::attribute( "attribute-2", actual2 );
+    BOOST_CHECK_EQUAL( "stream-1", actual1 );
+    BOOST_CHECK_EQUAL( "stream-2", actual2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -186,4 +185,29 @@ BOOST_AUTO_TEST_CASE( an_ximultistring_can_be_wrapped_by_an_xisubstream )
     }
     xis >> xml::start( "root-1" );
     BOOST_CHECK_EQUAL( "stream-1", xml::attribute< std::string >( xis, "attribute" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: an_ximultistring_can_be_wrapped_by_another_ximultistring
+// Created: MAT 2008-04-25
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( an_ximultistring_can_be_wrapped_by_another_ximultistring )
+{
+    xml::xistringstream xis1( "<root-1 attribute='stream-1'/>" );
+    xml::xistringstream xis2( "<root-2 attribute='stream-2'/>" );
+    xml::xistringstream xis3( "<root-3 attribute='stream-3'/>" );
+    xml::ximultistream xims( xis1, xis2 );
+    xml::ximultistream xis( xims, xis3 );
+    std::string actual1, actual2, actual3;
+    xis >> xml::start( "root-1" )
+            >> xml::attribute( "attribute", actual1 )
+        >> xml::end()
+        >> xml::start( "root-2" )
+            >> xml::attribute( "attribute", actual2 )
+        >> xml::end()
+        >> xml::start( "root-3" )
+            >> xml::attribute( "attribute", actual3 );
+    BOOST_CHECK_EQUAL( "stream-1", actual1 );
+    BOOST_CHECK_EQUAL( "stream-2", actual2 );
+    BOOST_CHECK_EQUAL( "stream-3", actual3 );
 }
