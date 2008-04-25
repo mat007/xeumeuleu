@@ -83,8 +83,10 @@ void null_input::start( const std::string& /*tag*/ )
 // -----------------------------------------------------------------------------
 void null_input::end()
 {
-    if( --level_ <= 0 && pContext_ )
+    if( --level_ == 0 && pContext_ )
         pContext_->reset( pInput_ );
+    else if( level_ < 0 )
+        throw xml::exception( "Cannot move up from root" );
 }
 
 // -----------------------------------------------------------------------------

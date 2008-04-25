@@ -121,3 +121,15 @@ BOOST_AUTO_TEST_CASE( creating_sub_stream_on_sub_stream_is_valid )
     xml::xisubstream xisss( xiss );
     BOOST_CHECK_NO_THROW( xisss >> xml::start( "element" ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: sub_stream_created_after_optional_throws_when_moving_up_from_root
+// Created: MCO 2008-05-25
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_throws_when_moving_up_from_root )
+{
+    xml::xistringstream xis( "<element/>" );
+    xis >> xml::start( "element" ) >> xml::optional() >> xml::start( "non-existing" );
+    xml::xisubstream xiss( xis );
+    BOOST_CHECK_THROW( xiss >> xml::end() >> xml::end(), xml::exception );
+}
