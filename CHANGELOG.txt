@@ -1,6 +1,7 @@
 1.3.1
 . fixed a crash when cascading several xml::ximultistream wrappers
 . added an exception when trying to move up from the root of an xml::xisubstream created on an optional non-existing branch
+. fixed a crash when calling error on an xml::xisubstream created on an optional non-existing branch
 
 1.3.0
 . added support for XSLT using Apache Xalan

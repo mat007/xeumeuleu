@@ -374,5 +374,7 @@ void null_input::copy( output& /*destination*/ ) const
 // -----------------------------------------------------------------------------
 void null_input::error( const std::string& message ) const
 {
+    if( ! pInput_.get() )
+        throw xml::exception( message );
     pInput_->error( message );
 }
