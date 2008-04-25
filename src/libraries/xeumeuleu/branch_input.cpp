@@ -45,7 +45,7 @@ branch_input::branch_input( std::auto_ptr< input_base > pInput1, std::auto_ptr< 
     , pInput2_( pInput2 )
     , context_( context )
     , invert_ ( invert )
-    , level_  ( 1 )
+    , level_  ( 0 )
 {
     // NOTHING
 }

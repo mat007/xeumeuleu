@@ -91,15 +91,9 @@ bool multi_input::hasContent() const
 void multi_input::start( const std::string& tag )
 {
     if( pInput1_->hasElement( tag ) && ! pInput2_->hasElement( tag ) )
-    {
-        pInput1_->start( tag );
-        context_.reset( std::auto_ptr< input_base >( new branch_input( pInput1_, pInput2_, context_, false ) ) );
-    }
+        context_.reset( std::auto_ptr< input_base >( new branch_input( pInput1_, pInput2_, context_, false ) ) ).start( tag );
     else if( pInput2_->hasElement( tag ) && ! pInput1_->hasElement( tag ) )
-    {
-        pInput2_->start( tag );
-        context_.reset( std::auto_ptr< input_base >( new branch_input( pInput2_, pInput1_, context_, true ) ) );
-    }
+        context_.reset( std::auto_ptr< input_base >( new branch_input( pInput2_, pInput1_, context_, true ) ) ).start( tag );
     else
     {
         pInput1_->start( tag );
