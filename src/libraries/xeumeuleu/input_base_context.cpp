@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2007, Mathieu Champlon
+ *   Copyright (c) 2006, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,374 +30,340 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "multi_input.h"
-#include "input_context.h"
-#include "branch_input.h"
 #include "input_base_context.h"
 
 using namespace xml;
 
 // -----------------------------------------------------------------------------
-// Name: multi_input constructor
-// Created: MAT 2008-01-07
+// Name: input_base_context constructor
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-multi_input::multi_input( std::auto_ptr< input_base > pInput1, std::auto_ptr< input_base > pInput2, input_context& context )
-    : pInput1_( pInput1 )
-    , pInput2_( pInput2 )
-    , context_( context )
+input_base_context::input_base_context()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input destructor
-// Created: MAT 2008-01-07
+// Name: input_base_context destructor
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-multi_input::~multi_input()
+input_base_context::~input_base_context()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::hasElement
-// Created: MAT 2008-01-07
+// Name: input_base_context::reset
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-bool multi_input::hasElement( const std::string& tag ) const
+input_base& input_base_context::reset( std::auto_ptr< input_base > pInput )
 {
-    return pInput1_->hasElement( tag ) || pInput2_->hasElement( tag );
+    pInput_ = pInput;
+    return *pInput_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::hasAttribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::start
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-bool multi_input::hasAttribute( const std::string& name ) const
+void input_base_context::start( const std::string& tag )
 {
-    return pInput1_->hasAttribute( name ) || pInput2_->hasAttribute( name );
+    pInput_->start( tag );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::hasContent
-// Created: MAT 2008-01-07
+// Name: input_base_context::end
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-bool multi_input::hasContent() const
+void input_base_context::end()
 {
-    return pInput1_->hasContent() || pInput2_->hasContent();
+    pInput_->end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::start
-// Created: MAT 2008-01-07
+// Name: input_base_context::read
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::start( const std::string& tag )
+void input_base_context::read( std::string& value ) const
 {
-    if( pInput1_->hasElement( tag ) && ! pInput2_->hasElement( tag ) )
-        context_.reset( std::auto_ptr< input_base >( new branch_input( pInput1_, pInput2_, context_, false ) ) ).start( tag );
-    else if( pInput2_->hasElement( tag ) && ! pInput1_->hasElement( tag ) )
-        context_.reset( std::auto_ptr< input_base >( new branch_input( pInput2_, pInput1_, context_, true ) ) ).start( tag );
-    else
-    {
-        pInput1_->start( tag );
-        pInput2_->start( tag );
-    }
+    pInput_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::end
-// Created: MAT 2008-01-07
+// Name: input_base_context::read
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::end()
+void input_base_context::read( float& value ) const
 {
-    pInput1_->end();
-    pInput2_->end();
+    pInput_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::readContent
-// Created: MAT 2008-01-07
+// Name: input_base_context::read
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-template< typename T > void multi_input::readContent( T& value ) const
+void input_base_context::read( double& value ) const
 {
-    if( pInput1_->hasContent() )
-        pInput1_->read( value );
-    else
-        pInput2_->read( value );
+    pInput_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::readAttribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::read
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-template< typename T > void multi_input::readAttribute( const std::string& name, T& value ) const
+void input_base_context::read( short& value ) const
 {
-    if( pInput1_->hasAttribute( name ) )
-        pInput1_->attribute( name, value );
-    else
-        pInput2_->attribute( name, value );
+    pInput_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::read
-// Created: MAT 2008-01-07
+// Name: input_base_context::read
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::read( std::string& value ) const
+void input_base_context::read( int& value ) const
 {
-    readContent( value );
+    pInput_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::read
-// Created: MAT 2008-01-07
+// Name: input_base_context::read
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::read( float& value ) const
+void input_base_context::read( long& value ) const
 {
-    readContent( value );
+    pInput_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::read
-// Created: MAT 2008-01-07
+// Name: input_base_context::read
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::read( double& value ) const
+void input_base_context::read( long long& value ) const
 {
-    readContent( value );
+    pInput_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::read
-// Created: MAT 2008-01-07
+// Name: input_base_context::read
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::read( short& value ) const
+void input_base_context::read( bool& value ) const
 {
-    readContent( value );
+    pInput_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::read
-// Created: MAT 2008-01-07
+// Name: input_base_context::read
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::read( int& value ) const
+void input_base_context::read( unsigned short& value ) const
 {
-    readContent( value );
+    pInput_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::read
-// Created: MAT 2008-01-07
+// Name: input_base_context::read
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::read( long& value ) const
+void input_base_context::read( unsigned int& value ) const
 {
-    readContent( value );
+    pInput_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::read
-// Created: MAT 2008-01-07
+// Name: input_base_context::read
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::read( long long& value ) const
+void input_base_context::read( unsigned long& value ) const
 {
-    readContent( value );
+    pInput_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::read
-// Created: MAT 2008-01-07
+// Name: input_base_context::read
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::read( bool& value ) const
+void input_base_context::read( unsigned long long& value ) const
 {
-    readContent( value );
+    pInput_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::read
-// Created: MAT 2008-01-07
+// Name: input_base_context::hasElement
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::read( unsigned short& value ) const
+bool input_base_context::hasElement( const std::string& tag ) const
 {
-    readContent( value );
+    return pInput_->hasElement( tag );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::read
-// Created: MAT 2008-01-07
+// Name: input_base_context::hasAttribute
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::read( unsigned int& value ) const
+bool input_base_context::hasAttribute( const std::string& name ) const
 {
-    readContent( value );
+    return pInput_->hasAttribute( name );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::read
-// Created: MAT 2008-01-07
+// Name: input_base_context::hasContent
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::read( unsigned long& value ) const
+bool input_base_context::hasContent() const
 {
-    readContent( value );
+    return pInput_->hasContent();
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::read
-// Created: MAT 2008-01-07
+// Name: input_base_context::attribute
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::read( unsigned long long& value ) const
+void input_base_context::attribute( const std::string& name, std::string& value ) const
 {
-    readContent( value );
+    pInput_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::attribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::attribute
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::attribute( const std::string& name, std::string& value ) const
+void input_base_context::attribute( const std::string& name, float& value ) const
 {
-    readAttribute( name, value );
+    pInput_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::attribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::attribute
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::attribute( const std::string& name, float& value ) const
+void input_base_context::attribute( const std::string& name, double& value ) const
 {
-    readAttribute( name, value );
+    pInput_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::attribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::attribute
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::attribute( const std::string& name, double& value ) const
+void input_base_context::attribute( const std::string& name, short& value ) const
 {
-    readAttribute( name, value );
+    pInput_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::attribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::attribute
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::attribute( const std::string& name, short& value ) const
+void input_base_context::attribute( const std::string& name, int& value ) const
 {
-    readAttribute( name, value );
+    pInput_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::attribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::attribute
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::attribute( const std::string& name, int& value ) const
+void input_base_context::attribute( const std::string& name, long& value ) const
 {
-    readAttribute( name, value );
+    pInput_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::attribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::attribute
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::attribute( const std::string& name, long& value ) const
+void input_base_context::attribute( const std::string& name, long long& value ) const
 {
-    readAttribute( name, value );
+    pInput_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::attribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::attribute
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::attribute( const std::string& name, long long& value ) const
+void input_base_context::attribute( const std::string& name, bool& value ) const
 {
-    readAttribute( name, value );
+    pInput_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::attribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::attribute
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::attribute( const std::string& name, bool& value ) const
+void input_base_context::attribute( const std::string& name, unsigned short& value ) const
 {
-    readAttribute( name, value );
+    pInput_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::attribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::attribute
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::attribute( const std::string& name, unsigned short& value ) const
+void input_base_context::attribute( const std::string& name, unsigned int& value ) const
 {
-    readAttribute( name, value );
+    pInput_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::attribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::attribute
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::attribute( const std::string& name, unsigned int& value ) const
+void input_base_context::attribute( const std::string& name, unsigned long& value ) const
 {
-    readAttribute( name, value );
+    pInput_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::attribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::attribute
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::attribute( const std::string& name, unsigned long& value ) const
+void input_base_context::attribute( const std::string& name, unsigned long long& value ) const
 {
-    readAttribute( name, value );
+    pInput_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::attribute
-// Created: MAT 2008-01-07
+// Name: input_base_context::nodes
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::attribute( const std::string& name, unsigned long long& value ) const
+void input_base_context::nodes( const visitor& v ) const
 {
-    readAttribute( name, value );
+    pInput_->nodes( v );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::nodes
-// Created: MAT 2008-01-07
+// Name: input_base_context::attributes
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::nodes( const visitor& v ) const
+void input_base_context::attributes( const visitor& v ) const
 {
-    pInput1_->nodes( v );
-    pInput2_->nodes( v );
+    pInput_->attributes( v );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::attributes
-// Created: MAT 2008-01-07
+// Name: std::auto_ptr< input_base > input_base_context::branch
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::attributes( const visitor& v ) const
+std::auto_ptr< input_base > input_base_context::branch( bool clone ) const
 {
-    pInput1_->attributes( v );
-    pInput2_->attributes( v );
+    return pInput_->branch( clone );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::branch
-// Created: MAT 2008-01-07
+// Name: input_base_context::copy
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-std::auto_ptr< input_base > multi_input::branch( bool clone ) const
+void input_base_context::copy( output& destination ) const
 {
-    std::auto_ptr< input_base_context > pContext( new input_base_context() );
-    pContext->reset( std::auto_ptr< input_base >( new multi_input( pInput1_->branch( clone ), pInput2_->branch( clone ), *pContext ) ) );
-    return pContext;
+    pInput_->copy( destination );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::copy
-// Created: MAT 2008-01-07
+// Name: input_base_context::error
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-void multi_input::copy( output& destination ) const
+void input_base_context::error( const std::string& message ) const
 {
-    pInput1_->copy( destination );
-    pInput2_->copy( destination );
-}
-
-// -----------------------------------------------------------------------------
-// Name: multi_input::error
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void multi_input::error( const std::string& message ) const
-{
-    pInput2_->error( message );
+    pInput_->error( message );
 }

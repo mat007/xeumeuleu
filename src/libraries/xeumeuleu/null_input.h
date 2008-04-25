@@ -37,6 +37,8 @@
 
 namespace xml
 {
+    class input_context;
+
 // =============================================================================
 /** @class  null_input
     @brief  Null input state implementation
@@ -70,7 +72,7 @@ public:
     virtual void read( unsigned long& value ) const;
     virtual void read( unsigned long long& value ) const;
 
-    virtual std::auto_ptr< input_base > branch( bool clone, input_context& context ) const;
+    virtual std::auto_ptr< input_base > branch( bool clone ) const;
 
     virtual void copy( output& destination ) const;
 
@@ -101,6 +103,11 @@ public:
     //@}
 
 private:
+    //! @name Constructors/Destructor
+    //@{
+    null_input();
+    //@}
+
     //! @name Copy/Assignment
     //@{
     null_input( const null_input& );            //!< Copy constructor
@@ -111,7 +118,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< input_base > pInput_;
-    input_context& context_;
+    input_context* pContext_;
     int level_;
     //@}
 };

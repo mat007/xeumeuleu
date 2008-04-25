@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2007, Mathieu Champlon
+ *   Copyright (c) 2006, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,28 +30,27 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_branch_input_h_
-#define _xeumeuleu_branch_input_h_
+#ifndef _xeumeuleu_input_base_context_h_
+#define _xeumeuleu_input_base_context_h_
 
 #include "input_base.h"
+#include "input_context.h"
 
 namespace xml
 {
-    class input_context;
-
 // =============================================================================
-/** @class  branch_input
-    @brief  Input state to handle branch manipulation
+/** @class  input_base_context
+    @brief  Input base context adapter implementation
 */
-// Created: MAT 2008-01-07
+// Created: MAT 2008-04-25
 // =============================================================================
-class branch_input : public input_base
+class input_base_context : public input_base, public input_context
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             branch_input( std::auto_ptr< input_base > pInput1, std::auto_ptr< input_base > pInput2, input_context& context, bool invert );
-    virtual ~branch_input();
+             input_base_context();
+    virtual ~input_base_context();
     //@}
 
     //! @name Operations
@@ -62,8 +61,8 @@ public:
     virtual void read( std::string& value ) const;
     virtual void read( float& value ) const;
     virtual void read( double& value ) const;
-    virtual void read( short& value ) const;
     virtual void read( int& value ) const;
+    virtual void read( short& value ) const;
     virtual void read( long& value ) const;
     virtual void read( long long& value ) const;
     virtual void read( bool& value ) const;
@@ -77,6 +76,8 @@ public:
     virtual void copy( output& destination ) const;
 
     virtual void error( const std::string& message ) const;
+
+    virtual input_base& reset( std::auto_ptr< input_base > pInput );
     //@}
 
     //! @name Accessors
@@ -103,23 +104,12 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    branch_input( const branch_input& );            //!< Copy constructor
-    branch_input& operator=( const branch_input& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
-    std::auto_ptr< input_base > pInput1_;
-    std::auto_ptr< input_base > pInput2_;
-    input_context& context_;
-    bool invert_;
-    unsigned int level_;
+    std::auto_ptr< input_base > pInput_;
     //@}
 };
 
 }
 
-#endif // _xeumeuleu_branch_input_h_
+#endif // _xeumeuleu_input_base_context_h_
