@@ -379,8 +379,9 @@ void multi_input::attributes( const visitor& v ) const
 std::auto_ptr< input_base > multi_input::branch( bool clone ) const
 {
     std::auto_ptr< input_base_context > pContext( new input_base_context() );
-    pContext->reset( std::auto_ptr< input_base >( new multi_input( pInput1_->branch( clone ), pInput2_->branch( clone ), *pContext ) ) );
-    return pContext;
+    std::auto_ptr< input_base > pInput( new multi_input( pInput1_->branch( clone ), pInput2_->branch( clone ), *pContext ) );
+    pContext->reset( pInput );
+    return std::auto_ptr< input_base >( pContext );
 }
 
 // -----------------------------------------------------------------------------
