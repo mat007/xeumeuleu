@@ -552,7 +552,7 @@ void input_imp::attributes( const visitor& v ) const
 // Name: input_imp::branch
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
-std::auto_ptr< input_base > input_imp::branch( bool clone, input_context& /*context*/ ) const
+std::auto_ptr< input_base > input_imp::branch( bool clone ) const
 {
     if( clone )
         return std::auto_ptr< input_base >( new buffer_input( *pCurrent_ ) );

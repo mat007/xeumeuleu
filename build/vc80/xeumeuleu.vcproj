@@ -398,6 +398,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\input_base_context.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\input_base_context.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\input_base_member.cpp"
 						>
 					</File>

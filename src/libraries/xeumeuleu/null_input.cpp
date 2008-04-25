@@ -41,9 +41,20 @@ using namespace xml;
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
 null_input::null_input( std::auto_ptr< input_base > pInput, input_context& context )
-    : pInput_ ( pInput )
-    , context_( context )
-    , level_  ( 0 )
+    : pInput_  ( pInput )
+    , pContext_( &context )
+    , level_   ( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: null_input constructor
+// Created: MAT 2008-05-25
+// -----------------------------------------------------------------------------
+null_input::null_input()
+    : pContext_( 0 )
+    , level_   ( 0 )
 {
     // NOTHING
 }
@@ -72,8 +83,8 @@ void null_input::start( const std::string& /*tag*/ )
 // -----------------------------------------------------------------------------
 void null_input::end()
 {
-    if( --level_ <= 0 && pInput_.get() )
-        context_.reset( pInput_ );
+    if( --level_ <= 0 && pContext_ )
+        pContext_->reset( pInput_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -341,9 +352,9 @@ void null_input::attributes( const visitor& /*v*/ ) const
 // Name: null_input::branch
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
-std::auto_ptr< input_base > null_input::branch( bool /*clone*/, input_context& context ) const
+std::auto_ptr< input_base > null_input::branch( bool /*clone*/ ) const
 {
-    return std::auto_ptr< input_base >( new null_input( std::auto_ptr< input_base >(), context ) );
+    return std::auto_ptr< input_base >( new null_input() );
 }
 
 // -----------------------------------------------------------------------------

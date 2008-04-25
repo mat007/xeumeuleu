@@ -40,7 +40,6 @@ namespace xml
 {
     class visitor;
     class output;
-    class input_context;
 
 // =============================================================================
 /** @class  input_base
@@ -75,7 +74,7 @@ public:
     virtual void read( unsigned long& value ) const = 0;
     virtual void read( unsigned long long& value ) const = 0;
 
-    virtual std::auto_ptr< input_base > branch( bool clone, input_context& context ) const = 0;
+    virtual std::auto_ptr< input_base > branch( bool clone ) const = 0;
 
     virtual void copy( output& destination ) const = 0;
 
