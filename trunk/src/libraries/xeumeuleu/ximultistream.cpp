@@ -31,7 +31,6 @@
  */
 
 #include "ximultistream.h"
-#include "multi_input.h"
 #include "input.h"
 
 using namespace xml;
@@ -40,9 +39,9 @@ namespace
 {
     std::auto_ptr< input > tie( const xistream& xis1, const xistream& xis2 )
     {
-        std::auto_ptr< input > result( xis1.branch( false ) );
-        result->attach( xis2.branch( false ) );
-        return result;
+        std::auto_ptr< input > pInput( xis1.branch( false ) );
+        pInput->attach( xis2.branch( false ) );
+        return pInput;
     }
 }
 

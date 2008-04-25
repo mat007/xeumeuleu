@@ -79,9 +79,9 @@ void input::end()
 // -----------------------------------------------------------------------------
 std::auto_ptr< input > input::branch( bool clone ) const
 {
-    std::auto_ptr< input > result( new input( std::auto_ptr< input_base >() ) );
-    result->pInput_ = pInput_->branch( clone, *result );
-    return result;
+    std::auto_ptr< input > pInput( new input( std::auto_ptr< input_base >() ) );
+    pInput->pInput_ = pInput_->branch( clone, *pInput );
+    return pInput;
 }
 
 // -----------------------------------------------------------------------------
