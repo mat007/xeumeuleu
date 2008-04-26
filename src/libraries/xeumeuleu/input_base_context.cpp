@@ -31,6 +31,7 @@
  */
 
 #include "input_base_context.h"
+#include "null_input.h"
 
 using namespace xml;
 
@@ -39,6 +40,7 @@ using namespace xml;
 // Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
 input_base_context::input_base_context()
+    : pInput_( new null_input() )
 {
     // NOTHING
 }
