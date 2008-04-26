@@ -50,6 +50,7 @@ class null_input : public input_base
 public:
     //! @name Constructors/Destructor
     //@{
+             null_input();
              null_input( std::auto_ptr< input_base > pInput, input_context& context );
     virtual ~null_input();
     //@}
@@ -103,11 +104,6 @@ public:
     //@}
 
 private:
-    //! @name Constructors/Destructor
-    //@{
-    null_input();
-    //@}
-
     //! @name Copy/Assignment
     //@{
     null_input( const null_input& );            //!< Copy constructor
