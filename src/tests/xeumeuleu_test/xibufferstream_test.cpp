@@ -42,7 +42,7 @@ using namespace mockpp;
 BOOST_AUTO_TEST_CASE( created_buffer_stream_starts_from_current_stream_level )
 {
     xml::xistringstream xis( "<element>"
-                               "  <sub-node/>"
+                             "  <sub-node/>"
                              "</element>" );
     xis >> xml::start( "element" );
     xml::xibufferstream xiss( xis );
