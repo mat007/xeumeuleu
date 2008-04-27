@@ -6,6 +6,8 @@ xcopy /Y "..\out\libraries\xeumeuleu\vc71\release\xeumeuleu.lib" ..\lib\vc71\
 xcopy /Y "..\out\libraries\xeumeuleu\vc71\debug\xeumeuleu_d.lib" ..\lib\vc71\
 xcopy /Y "..\out\libraries\xeumeuleu\vc80\release\xeumeuleu.lib" ..\lib\vc80\
 xcopy /Y "..\out\libraries\xeumeuleu\vc80\debug\xeumeuleu_d.lib" ..\lib\vc80\
+xcopy /Y "..\out\libraries\xeumeuleu\vc90\release\xeumeuleu.lib" ..\lib\vc90\
+xcopy /Y "..\out\libraries\xeumeuleu\vc90\debug\xeumeuleu_d.lib" ..\lib\vc90\
 
 set INCLUDE_DIR=..\include\xeumeuleu
 md %INCLUDE_DIR%
@@ -32,3 +34,4 @@ xcopy /Y "%SRC_DIR%\visitor.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\caller*.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\name_caller*.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\optional.h" %INCLUDE_DIR%
+xcopy /Y "%SRC_DIR%\helpers.h" %INCLUDE_DIR%
