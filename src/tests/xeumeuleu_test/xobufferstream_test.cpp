@@ -36,6 +36,17 @@
 using namespace mockpp;
 
 // -----------------------------------------------------------------------------
+// Name: a_buffer_stream_can_be_used_for_writing_and_reading
+// Created: MCO 2008-04-26
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( a_buffer_stream_can_be_used_for_writing_and_reading )
+{
+    xml::xobufferstream xbs;
+    xbs << xml::start( "root" );
+    xbs >> xml::start( "root" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: empty_buffer_stream_does_not_modify_stream
 // Created: MCO 2006-03-07
 // -----------------------------------------------------------------------------

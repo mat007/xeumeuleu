@@ -603,6 +603,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\xob_base_member.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\xob_base_member.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xobufferstream.cpp"
 					>
 				</File>

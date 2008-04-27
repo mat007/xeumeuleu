@@ -32,7 +32,6 @@
 
 #include "xostream.h"
 #include "output.h"
-#include "xobufferstream.h"
 #include "chained_exception.h"
 #include "xistream.h"
 #include "xerces.h"
@@ -203,17 +202,6 @@ void xostream::write( unsigned long long value )
 {
     TRY
         output_.write( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::write
-// Created: MAT 2006-03-07
-// -----------------------------------------------------------------------------
-void xostream::write( const xobufferstream& xobs )
-{
-    TRY
-        xobs.attach( output_ );
     CATCH
 }
 

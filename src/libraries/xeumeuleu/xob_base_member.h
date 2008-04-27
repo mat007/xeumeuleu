@@ -30,39 +30,37 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_buffer_output_h_
-#define _xeumeuleu_buffer_output_h_
+#ifndef _xeumeuleu_xob_base_member_h_
+#define _xeumeuleu_xob_base_member_h_
 
-#include "output_base_member.h"
-#include "output.h"
+#include <memory>
 
 namespace xml
 {
-    class input_base;
+    class buffer_output;
 
 // =============================================================================
-/** @class  buffer_output
-    @brief  Buffer output
+/** @class  xob_base_member
+    @brief  Base from member idiom base class
 */
-// Created: MAT 2006-03-20
+// Created: MAT 2008-05-26
 // =============================================================================
-class buffer_output : private output_base_member, public output
+class xob_base_member
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             buffer_output();
-    virtual ~buffer_output();
+             xob_base_member();
+    virtual ~xob_base_member();
     //@}
 
-    //! @name Operations
+protected:
+    //! @name Member data
     //@{
-    std::auto_ptr< input_base > branch();
-
-    virtual void finished();
+    std::auto_ptr< buffer_output > pBuffer_;
     //@}
 };
 
 }
 
-#endif // _xeumeuleu_buffer_output_h_
+#endif // _xeumeuleu_xob_base_member_h_

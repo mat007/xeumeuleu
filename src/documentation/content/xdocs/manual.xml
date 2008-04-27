@@ -101,10 +101,8 @@ xml::xistreamstream xis( stream );]]></source>
           </p>
           <source><![CDATA[xml::xobufferstream xobs;]]></source>
           <p>
-            The purpose of this type of stream is to bufferize XML in order to serialize it later in another output stream, for example :
+            The purpose of this type of stream is to also be an input stream, therefore the buffer content can be read later back on.
           </p>
-          <source><![CDATA[xml::xofstream xos( "file.xml" );
-xos << xobs;]]></source>
           <p>
             The following code branches a given existing stream <em>xos</em> :
           </p>
