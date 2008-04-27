@@ -125,19 +125,6 @@ void output::attribute( const std::string& name, const std::string& value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: output::attach
-// Created: MAT 2006-03-07
-// -----------------------------------------------------------------------------
-void output::attach( const output& rhs )
-{
-    if( rhs.document_.hasChildNodes() )
-    {
-        pCurrent_->appendChild( document_.importNode( rhs.document_.getDocumentElement(), true ) );
-        flush();
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: output::isEmpty
 // Created: MAT 2007-09-06
 // -----------------------------------------------------------------------------

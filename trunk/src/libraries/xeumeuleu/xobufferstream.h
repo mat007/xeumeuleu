@@ -33,8 +33,9 @@
 #ifndef _xeumeuleu_xobufferstream_h_
 #define _xeumeuleu_xobufferstream_h_
 
-#include "xo_base_member.h"
+#include "xob_base_member.h"
 #include "xostream.h"
+#include "xistream.h"
 
 namespace xml
 {
@@ -44,25 +45,18 @@ namespace xml
     @par    Using example
     xml::xobufferstream xobs;
     xobs << ...;
-
-    xml::xostream& xos = ...;
-    xos << ... << xobs << ...;
+    xobs >> ...;
     @endcode
 */
 // Created: MAT 2006-03-07
 // =============================================================================
-class xobufferstream : private xo_base_member, public xostream
+class xobufferstream : private xob_base_member, public xostream, public xistream
 {
 public:
     //! @name Constructors/Destructor
     //@{
              xobufferstream();
     virtual ~xobufferstream();
-    //@}
-
-    //! @name Operations
-    //@{
-    void attach( output& o ) const;
     //@}
 };
 
