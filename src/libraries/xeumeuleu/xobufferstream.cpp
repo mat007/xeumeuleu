@@ -32,6 +32,7 @@
 
 #include "xobufferstream.h"
 #include "buffer_output.h"
+#include "input.h"
 
 using namespace xml;
 
@@ -40,8 +41,8 @@ using namespace xml;
 // Created: MAT 2006-03-07
 // -----------------------------------------------------------------------------
 xobufferstream::xobufferstream()
-    : xo_base_member( std::auto_ptr< output >( new buffer_output() ) )
-    , xostream( *pOutput_ )
+    : xostream( *pBuffer_ )
+    , xistream( std::auto_ptr< input >( new input( pBuffer_->branch() ) ) )
 {
     // NOTHING
 }
@@ -53,13 +54,4 @@ xobufferstream::xobufferstream()
 xobufferstream::~xobufferstream()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: xobufferstream::attach
-// Created: MAT 2006-03-08
-// -----------------------------------------------------------------------------
-void xobufferstream::attach( output& o ) const
-{
-    o.attach( *pOutput_ );
 }

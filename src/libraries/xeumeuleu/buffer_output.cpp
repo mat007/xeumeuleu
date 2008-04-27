@@ -31,6 +31,7 @@
  */
 
 #include "buffer_output.h"
+#include "input_imp.h"
 
 using namespace xml;
 
@@ -51,6 +52,15 @@ buffer_output::buffer_output()
 buffer_output::~buffer_output()
 {
     //  NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: buffer_output::branch
+// Created: MAT 2008-05-27
+// -----------------------------------------------------------------------------
+std::auto_ptr< input_base > buffer_output::branch()
+{
+    return std::auto_ptr< input_base >( new input_imp( *pDocument_ ) );
 }
 
 // -----------------------------------------------------------------------------

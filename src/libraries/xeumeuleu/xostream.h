@@ -39,7 +39,6 @@
 namespace xml
 {
     class output;
-    class xobufferstream;
     class xistream;
 
 // =============================================================================
@@ -78,7 +77,6 @@ public:
     void write( unsigned long value );
     void write( unsigned long long value );
 
-    void write( const xobufferstream& xobs );
     void write( const xistream& xis );
 
     void attribute( const std::string& name, const char* value );
