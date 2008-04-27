@@ -50,7 +50,7 @@ null_input::null_input( std::auto_ptr< input_base > pInput, input_context& conte
 
 // -----------------------------------------------------------------------------
 // Name: null_input constructor
-// Created: MAT 2008-05-25
+// Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
 null_input::null_input()
     : pContext_( 0 )
