@@ -41,7 +41,7 @@ namespace xml
 
 // =============================================================================
 /** @class  null_input
-    @brief  Null input state implementation
+    @brief  Null input implementation
 */
 // Created: MAT 2006-01-08
 // =============================================================================
