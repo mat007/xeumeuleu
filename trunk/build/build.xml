@@ -39,6 +39,10 @@
         <build-app name="xeumeuleu_bench" depends="boost" libs="xeumeuleu,xerces-c_2" subsystem="console"/>
     </target>
 
+    <target name="xeumeuleu_clean" depends="xeumeuleu" description="build cleaning application">
+        <build-app name="xeumeuleu_clean" depends="boost" libs="xeumeuleu,xerces-c_2" subsystem="console"/>
+    </target>
+
     <!--
     ============================================================================
       clean
@@ -179,7 +183,7 @@
     -->
     <target name="test" depends="xeumeuleu_test,xeuseuleu_test" description="run all tests"/>
 
-    <target name="build" depends="xeumeuleu,xeuseuleu" description="build all"/>
+    <target name="build" depends="xeumeuleu,xeuseuleu,xeumeuleu_bench,xeumeuleu_clean" description="build all"/>
 
     <target name="configure" description="initialize local project structure with dependencies">
         <update name="boost"/>
