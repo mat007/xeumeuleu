@@ -39,6 +39,7 @@ using namespace XERCES_CPP_NAMESPACE;
 namespace
 {
     const XMLCh defaultNewLine[] = { chLF, chNull };
+    static const XMLCh space[] = { chSpace, chNull };
 }
 
 // -----------------------------------------------------------------------------
@@ -48,7 +49,10 @@ namespace
 beautifier::beautifier( XMLFormatTarget& target, const XMLCh* newLine )
     : target_        ( target )
     , newLine_       ( translate( newLine == chNull ? defaultNewLine : newLine ) )
+    , space_         ( translate( space ) )
     , discardNewLine_( false )
+    , discardSpaces_ ( false )
+    , shift_         ( 0 )
 {
     // NOTHING
 }
@@ -66,27 +70,52 @@ beautifier::~beautifier()
 // Name: beautifier::isNewLine
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-inline
-bool beautifier::isNewLine( const XMLByte* const toWrite, const unsigned int count ) const
+bool beautifier::isNewLine( const XMLByte* const data, const unsigned int count ) const
 {
-    return count == newLine_.size() && 0 == strncmp( reinterpret_cast< const char* const >( toWrite ), newLine_.c_str(), count );
+    return count == newLine_.size() && 0 == strncmp( reinterpret_cast< const char* const >( data ), newLine_.c_str(), count );
+}
+
+// -----------------------------------------------------------------------------
+// Name: beautifier::isSpace
+// Created: MCO 2007-03-16
+// -----------------------------------------------------------------------------
+bool beautifier::isSpace( const XMLByte* const data, const unsigned int count ) const
+{
+    return count == space_.size() && 0 == strncmp( reinterpret_cast< const char* const >( data ), space_.c_str(), count );
+}
+
+// -----------------------------------------------------------------------------
+// Name: beautifier::shift
+// Created: MCO 2007-03-16
+// -----------------------------------------------------------------------------
+void beautifier::shift( XMLFormatter* const formatter )
+{
+    while( shift_-- > 0 )
+        target_.writeChars( reinterpret_cast< const XMLByte* const >( space_.c_str() ), 1, formatter ); // $$$$ MCO 2007-03-16: 
+    shift_ = 0;
+    discardSpaces_ = false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: beautifier::writeChars
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-void beautifier::writeChars( const XMLByte* const toWrite, const unsigned int count, XMLFormatter* const formatter )
+void beautifier::writeChars( const XMLByte* const data, const unsigned int count, XMLFormatter* const formatter )
 {
-    if( isNewLine( toWrite, count ) )
+    if( isNewLine( data, count ) )
     {
-        if( ! discardNewLine_ )
-            target_.writeChars( toWrite, count, formatter );
+        if( ! discardNewLine_ && ! discardSpaces_ )
+            target_.writeChars( data, count, formatter );
         discardNewLine_ = ! discardNewLine_;
+        discardSpaces_ = true;
+        shift_ = 0;
     }
+    else if( discardSpaces_ && isSpace( data, count ) )
+        ++shift_;
     else
     {
-        target_.writeChars( toWrite, count, formatter );
+        shift( formatter );
+        target_.writeChars( data, count, formatter );
         discardNewLine_ = false;
     }
 }
