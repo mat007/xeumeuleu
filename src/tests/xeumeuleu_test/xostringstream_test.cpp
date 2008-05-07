@@ -75,7 +75,10 @@ BOOST_AUTO_TEST_CASE( streaming_root_element_twice_throws_an_exception )
 BOOST_AUTO_TEST_CASE( streaming_child_element_makes_a_valid_document )
 {
     xml::xostringstream xos;
-    xos << xml::start( "element" ) << xml::start( "child" ) << xml::end() << xml::end();
+    xos << xml::start( "element" )
+            << xml::start( "child" )
+            << xml::end()
+        << xml::end();
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element>\n"
                        "  <child/>\n"
