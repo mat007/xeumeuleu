@@ -44,22 +44,23 @@ int main( int argc, char* argv[] )
 {
     if( argc <= 1 )
     {
-        std::cout << "Usage : " << argv[0] << " <files>" << std::endl;
+        std::cout << "Usage : " << argv[0] << " file1.xml file2.xml ..." << std::endl;
         return EXIT_SUCCESS;
     }
-    try
+    for( int i = 1; i < argc; ++i )
     {
-        const std::string input = argv[1];
-        const std::string output = input + "_";
-        xml::xifstream xis( input );
-        xml::xofstream xos( output );
-        xos << xis;
-        std::cout << input << " -> " << output << std::endl;
-    }
-    catch( std::exception& e )
-    {
-        std::cerr << e.what() << std::endl;
-        return EXIT_FAILURE;
+        try
+        {
+            const std::string file = argv[i];
+            xml::xifstream xis( file );
+            xml::xofstream xos( file );
+            xos << xis;
+            std::cout << file << std::endl;
+        }
+        catch( std::exception& e )
+        {
+            std::cerr << e.what() << std::endl;
+        }
     }
     return EXIT_SUCCESS;
 }
