@@ -47,7 +47,6 @@ BOOST_AUTO_TEST_CASE( streaming_cdata_creates_output_with_cdata_section )
         << xml::end();
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element>\n"
-                       "  \n" // $$$$ MCO 2007-03-14: to be beautified
                        "  <![CDATA[<<<]]>\n"
                        "</element>\n", xos.str() );
 }
@@ -62,7 +61,6 @@ BOOST_AUTO_TEST_CASE( streaming_cdata_content_creates_output_with_cdata_section 
     xos << xml::content( "element", xml::cdata( "<<<" ) );
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element>\n"
-                       "  \n" // $$$$ MCO 2007-03-14: to be beautified
                        "  <![CDATA[<<<]]>\n"
                        "</element>\n", xos.str() );
 }
@@ -80,7 +78,6 @@ BOOST_AUTO_TEST_CASE( streaming_cdata_creates_output_with_cdata_content_on_level
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<root>\n"
                        "  <element>\n"
-                       "    \n" // $$$$ MCO 2007-03-14: to be beautified
                        "    <![CDATA[<<<]]>\n"
                        "  </element>\n"
                        "</root>\n", xos.str() );

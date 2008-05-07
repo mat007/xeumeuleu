@@ -57,7 +57,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void writeChars( const XMLByte* const toWrite, const unsigned int count, XERCES_CPP_NAMESPACE::XMLFormatter* const formatter );
+    virtual void writeChars( const XMLByte* const data, const unsigned int count, XERCES_CPP_NAMESPACE::XMLFormatter* const formatter );
 
     virtual void flush();
     //@}
@@ -71,7 +71,10 @@ private:
 
     //! @name Helpers
     //@{
-    bool isNewLine( const XMLByte* const toWrite, const unsigned int count ) const;
+    bool isNewLine( const XMLByte* const data, const unsigned int count ) const;
+    bool isSpace  ( const XMLByte* const data, const unsigned int count ) const;
+    
+    void shift( XERCES_CPP_NAMESPACE::XMLFormatter* const formatter );
     //@}
 
 private:
@@ -79,7 +82,10 @@ private:
     //@{
     XERCES_CPP_NAMESPACE::XMLFormatTarget& target_;
     const std::string newLine_;
+    const std::string space_;
     bool discardNewLine_;
+    bool discardSpaces_;
+    unsigned short shift_;
     //@}
 };
 
