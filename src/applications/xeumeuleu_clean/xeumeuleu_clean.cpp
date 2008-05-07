@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2007, Mathieu Champlon
+ *   Copyright (c) 2008, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -34,37 +34,32 @@
 #ifdef _MSC_VER
 #   pragma warning( push, 0 )
 #endif
-#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/filesystem.hpp>
 #ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
 #include <iostream>
 
-using namespace boost::posix_time;
-
-namespace
+int main( int argc, char* argv[] )
 {
-//    const int FILES = 100000;
-//    const int NODES = 1;
-    const int FILES = 1;
-    const int NODES = 1000000;
-}
-
-int main()
-{
-    const ptime start = microsec_clock::local_time();
-    for( int file = 0; file < FILES; ++file )
+    if( argc <= 1 )
     {
-        xml::xofstream xos( "bench.xml" );
-        xos << xml::start( "root" );
-        for( int node = 0; node < NODES; ++node )
-            xos << xml::start( "element" )
-                    << 12.f
-                    << xml::attribute( "id", 27.f )
-                << xml::end();
-        xos << xml::end();
+        std::cout << "Usage : " << argv[0] << " <files>" << std::endl;
+        return EXIT_SUCCESS;
     }
-    const time_duration duration = microsec_clock::local_time() - start;
-    std::cout << "duration : " << duration << std::endl;
+    try
+    {
+        const std::string input = argv[1];
+        const std::string output = input + "_";
+        xml::xifstream xis( input );
+        xml::xofstream xos( output );
+        xos << xis;
+        std::cout << input << " -> " << output << std::endl;
+    }
+    catch( std::exception& e )
+    {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
     return EXIT_SUCCESS;
 }
