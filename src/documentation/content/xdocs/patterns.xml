@@ -372,6 +372,18 @@ xims >> xml::start( "element" )
           This way whatever contains <em>xis</em> is ignored if <em>xiss</em> provides the data first.
         </p>
       </section>
+      <section id="xml-reformat">
+        <title>Reformating an existing XML file</title>
+        <p>
+          An XML file can very easily be cleaned up by simply loading and writing it back :
+        </p>
+        <source><![CDATA[xml::xifstream xis( "input.xml" );
+xml::xofstream xos( "output.xml" );
+xos << xis;]]></source>
+        <p>
+          However there is no means to query and copy the encoding.
+        </p>
+      </section>
     </section>
     <section id="xsl">
       <title>XSL</title>
