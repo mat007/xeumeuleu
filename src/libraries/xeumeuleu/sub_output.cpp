@@ -42,6 +42,7 @@ using namespace XERCES_CPP_NAMESPACE;
 sub_output::sub_output( DOMDocument& document, DOMNode& root, output& o )
     : output( document, root )
     , output_( o )
+    , flushed_( false )
 {
     // NOTHING
 }
@@ -52,7 +53,15 @@ sub_output::sub_output( DOMDocument& document, DOMNode& root, output& o )
 // -----------------------------------------------------------------------------
 sub_output::~sub_output()
 {
-    // NOTHING
+    try
+    {
+        if( ! flushed_ )
+            output_.flush();
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -61,5 +70,6 @@ sub_output::~sub_output()
 // -----------------------------------------------------------------------------
 void sub_output::finished()
 {
+    flushed_ = true;
     output_.flush();
 }
