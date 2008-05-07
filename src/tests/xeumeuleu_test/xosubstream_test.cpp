@@ -96,14 +96,30 @@ BOOST_AUTO_TEST_CASE( creating_a_sub_stream_does_not_modify_original_output_stre
 }
 
 // -----------------------------------------------------------------------------
-// Name: creating_root_element_in_sub_stream_completes_the_stream
+// Name: creating_root_element_in_sub_stream_completes_the_stream_upon_end
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( creating_root_element_in_sub_stream_completes_the_stream )
+BOOST_AUTO_TEST_CASE( creating_root_element_in_sub_stream_completes_the_stream_upon_end )
 {
     xml::xostringstream xos;
     xml::xosubstream xoss( xos );
     xoss << xml::start( "element" ) << xml::end();
+    const std::string xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                            "<element/>\n";
+    BOOST_CHECK_EQUAL( xml, xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: creating_root_element_in_sub_stream_without_completes_the_stream_upon_sub_stream_destruction
+// Created: MCO 2008-05-07
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( creating_root_element_in_sub_stream_completes_the_stream2 )
+{
+    xml::xostringstream xos;
+    {
+        xml::xosubstream xoss( xos );
+        xoss << xml::start( "element" );
+    }
     const std::string xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                             "<element/>\n";
     BOOST_CHECK_EQUAL( xml, xos.str() );
