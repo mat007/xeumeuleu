@@ -61,6 +61,7 @@ private:
     //! @name Member data
     //@{
     output& output_;
+    bool flushed_;
     //@}
 };
 
