@@ -113,7 +113,7 @@ BOOST_AUTO_TEST_CASE( creating_root_element_in_sub_stream_completes_the_stream_u
 // Name: creating_root_element_in_sub_stream_without_completes_the_stream_upon_sub_stream_destruction
 // Created: MCO 2008-05-07
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( creating_root_element_in_sub_stream_completes_the_stream2 )
+BOOST_AUTO_TEST_CASE( creating_root_element_in_sub_stream_without_completes_the_stream_upon_sub_stream_destruction )
 {
     xml::xostringstream xos;
     {
