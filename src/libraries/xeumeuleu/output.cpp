@@ -178,7 +178,7 @@ std::auto_ptr< output > output::branch()
 // -----------------------------------------------------------------------------
 void output::flush()
 {
-    if( isRoot() )
+    if( isRoot() && root_.getFirstChild() )
         finished();
 }
 
