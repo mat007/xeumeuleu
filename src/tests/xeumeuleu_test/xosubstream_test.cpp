@@ -110,19 +110,33 @@ BOOST_AUTO_TEST_CASE( creating_root_element_in_sub_stream_completes_the_stream_u
 }
 
 // -----------------------------------------------------------------------------
-// Name: creating_root_element_in_sub_stream_without_completes_the_stream_upon_sub_stream_destruction
+// Name: creating_root_element_in_sub_stream_without_end_completes_the_stream_upon_sub_stream_destruction
 // Created: MCO 2008-05-07
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( creating_root_element_in_sub_stream_without_completes_the_stream_upon_sub_stream_destruction )
+BOOST_AUTO_TEST_CASE( creating_root_element_in_sub_stream_without_end_completes_the_stream_upon_sub_stream_destruction )
 {
     xml::xostringstream xos;
     {
         xml::xosubstream xoss( xos );
         xoss << xml::start( "element" );
+        BOOST_CHECK_EQUAL( "", xos.str() );
     }
     const std::string xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                             "<element/>\n";
     BOOST_CHECK_EQUAL( xml, xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: creating_a_sub_stream_remaining_empty_does_not_add_a_prolog_to_the_output
+// Created: MCO 2008-05-08
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( tmp )
+{
+    xml::xostringstream xos;
+    {
+        xml::xosubstream xoss( xos );
+    }
+    BOOST_CHECK_EQUAL( "", xos.str() );
 }
 
 // -----------------------------------------------------------------------------
