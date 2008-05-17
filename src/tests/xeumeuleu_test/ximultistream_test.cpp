@@ -211,3 +211,23 @@ BOOST_AUTO_TEST_CASE( an_ximultistring_can_be_wrapped_by_another_ximultistring )
     BOOST_CHECK_EQUAL( "stream-2", actual2 );
     BOOST_CHECK_EQUAL( "stream-3", actual3 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: an_ximultistring_can_be_buffered_by_an_xibufferstream
+// Created: MAT 2008-05-17
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( an_ximultistring_can_be_buffered_by_an_xibufferstream )
+{
+    xml::xistringstream xis1( "<root-1 attribute='stream-1'/>" );
+    xml::xistringstream xis2( "<root-2 attribute='stream-2'/>" );
+    xml::ximultistream xis( xis1, xis2 );
+    xml::xibufferstream xibs( xis );
+    std::string actual1, actual2;
+    xibs >> xml::start( "root-1" )
+             >> xml::attribute( "attribute", actual1 )
+         >> xml::end()
+         >> xml::start( "root-2" )
+             >> xml::attribute( "attribute", actual2 );
+    BOOST_CHECK_EQUAL( "stream-1", actual1 );
+    BOOST_CHECK_EQUAL( "stream-2", actual2 );
+}
