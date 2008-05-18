@@ -130,7 +130,7 @@ BOOST_AUTO_TEST_CASE( creating_root_element_in_sub_stream_without_end_completes_
 // Name: creating_a_sub_stream_remaining_empty_does_not_add_a_prolog_to_the_output
 // Created: MCO 2008-05-08
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( tmp )
+BOOST_AUTO_TEST_CASE( creating_a_sub_stream_remaining_empty_does_not_add_a_prolog_to_the_output )
 {
     xml::xostringstream xos;
     {
