@@ -32,6 +32,7 @@
 
 #include "transform.h"
 #include "xalan.h"
+#include "xeumeuleu/chained_exception.h"
 
 using namespace xsl;
 using namespace XALAN_CPP_NAMESPACE;
@@ -39,7 +40,19 @@ using namespace XERCES_CPP_NAMESPACE;
 
 namespace
 {
-    unsigned int counter = 0;
+    struct Initializer
+    {
+        Initializer()
+        {
+            XMLPlatformUtils::Initialize();
+            XalanTransformer::initialize();
+        }
+        ~Initializer()
+        {
+            XalanTransformer::terminate();
+            XMLPlatformUtils::Terminate();
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -48,9 +61,14 @@ namespace
 // -----------------------------------------------------------------------------
 transform::transform()
 {
-    XMLPlatformUtils::Initialize();
-    if( counter++ == 0 )
-        XalanTransformer::initialize();
+    try
+    {
+        static Initializer initializer;
+    }
+    catch( const XMLException& e )
+    {
+        throw xml::chained_exception( e );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +77,5 @@ transform::transform()
 // -----------------------------------------------------------------------------
 transform::~transform()
 {
-    if( --counter == 0 )
-        XalanTransformer::terminate();
-    XMLPlatformUtils::Terminate();
+    // NOTHING
 }
