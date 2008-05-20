@@ -555,11 +555,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\xeumeuleu\src\libraries\xeumeuleu\ximultistream.cpp"
+					RelativePath="..\..\src\libraries\xeumeuleu\ximultistream.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\xeumeuleu\src\libraries\xeumeuleu\ximultistream.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\ximultistream.h"
 					>
 				</File>
 				<File
