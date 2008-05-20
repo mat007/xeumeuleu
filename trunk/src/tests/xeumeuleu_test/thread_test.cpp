@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "xeumeuleu_test_pch.h"
-#include <boost/thread/thread.hpp>
 #include "xeumeuleu/xml.h"
 
 namespace
@@ -20,8 +19,7 @@ namespace
                                     "<another-sub-node/>"
                                  "</element>" );
         xis >> xml::start( "element" )
-                >> xml::start( "another-sub-node" ) >> xml::end()
-            >> xml::end();
+                >> xml::start( "another-sub-node" ) >> xml::end();
     }
     void Write()
     {
@@ -30,12 +28,12 @@ namespace
                 << xml::start( "another-sub-node" ) << xml::end()
             << xml::end();
     }
-    void UseXeumeuleu()
+    void Run()
     {
-        unsigned count = 1000;
+        int count = 1000;
         while( count-- )
         {
-            if( ( rand() % 2 ) != 0 )
+            if( std::rand() % 2 != 0 )
                 Read();
             else
                 Write();
@@ -49,11 +47,9 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_a_document_is_thread_safe )
 {
-    const unsigned nThreads = 4;
-
+    static const int THREADS = 4;
     boost::thread_group group;
-    for( unsigned i = 0; i < nThreads; ++i )
-        group.create_thread( &UseXeumeuleu );
-
+    for( int i = 0; i < THREADS; ++i )
+        group.create_thread( &Run );
     group.join_all();
 }
