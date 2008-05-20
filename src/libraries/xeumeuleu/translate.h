@@ -35,7 +35,7 @@
 
 #include "xerces.h"
 #include <string>
-#include <iostream>
+#include <iosfwd>
 
 namespace xml
 {
