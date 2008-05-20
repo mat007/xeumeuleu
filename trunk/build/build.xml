@@ -23,7 +23,7 @@
     ============================================================================
     -->
     <target name="xeumeuleu_test" depends="xeumeuleu" description="build and run tests">
-        <build-test name="xeumeuleu" libs="xeumeuleu,xerces-c_2"/>
+        <build-test name="xeumeuleu" depends="boost" libs="xeumeuleu,xerces-c_2"/>
     </target>
 
     <target name="xeuseuleu_test" depends="xeuseuleu,xeumeuleu" description="build and run tests">
