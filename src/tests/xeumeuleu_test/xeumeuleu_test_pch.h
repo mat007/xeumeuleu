@@ -56,6 +56,10 @@
 #include <mockpp/chaining/CountedChainableMethod.h>
 #include <mockpp/chaining/ChainingMockObjectSupport.h>
 
+#include <boost/thread/thread.hpp>
+#undef min
+#undef max
+
 #ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
