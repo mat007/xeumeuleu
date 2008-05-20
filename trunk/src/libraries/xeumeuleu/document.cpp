@@ -36,6 +36,21 @@
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
 
+namespace
+{
+    struct Initializer
+    {
+        Initializer()
+        {
+            XMLPlatformUtils::Initialize();
+        }
+        ~Initializer()
+        {
+            XMLPlatformUtils::Terminate();
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: document constructor
 // Created: MAT 2008-02-25
@@ -44,7 +59,7 @@ document::document()
 {
     try
     {
-        XMLPlatformUtils::Initialize();
+        static Initializer initializer;
     }
     catch( const XMLException& e )
     {
@@ -58,5 +73,5 @@ document::document()
 // -----------------------------------------------------------------------------
 document::~document()
 {
-    XMLPlatformUtils::Terminate();
+    // NOTHING
 }
