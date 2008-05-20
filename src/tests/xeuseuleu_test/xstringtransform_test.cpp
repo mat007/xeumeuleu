@@ -35,6 +35,12 @@
 
 using namespace mockpp;
 
+namespace
+{
+    std::istringstream stylesheet( "<?xml version='1.0' encoding='ISO-8859-1'?>" );
+    const xsl::xstringtransform static_transform_is_valid( stylesheet );
+}
+
 // -----------------------------------------------------------------------------
 // Name: non_existing_style_sheet_file_throws
 // Created: MAT 2007-09-10

@@ -38,23 +38,6 @@ using namespace xsl;
 using namespace XALAN_CPP_NAMESPACE;
 using namespace XERCES_CPP_NAMESPACE;
 
-namespace
-{
-    struct Initializer
-    {
-        Initializer()
-        {
-            XMLPlatformUtils::Initialize();
-            XalanTransformer::initialize();
-        }
-        ~Initializer()
-        {
-            XalanTransformer::terminate();
-            XMLPlatformUtils::Terminate();
-        }
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: transform constructor
 // Created: SLI 2007-07-06
@@ -63,7 +46,21 @@ transform::transform()
 {
     try
     {
-        static Initializer initializer;
+        static const struct Initializer
+        {
+            Initializer()
+            {
+                XMLPlatformUtils::Initialize();
+                XalanTransformer::initialize();
+            }
+            ~Initializer()
+            {
+#ifdef _MSC_VER // $$$$ MAT : xalan seems to have a problem with cygwin/gcc, not sure why it crashes exactly...
+                XalanTransformer::terminate();
+#endif
+                XMLPlatformUtils::Terminate();
+            }
+        } initializer;
     }
     catch( const XMLException& e )
     {
