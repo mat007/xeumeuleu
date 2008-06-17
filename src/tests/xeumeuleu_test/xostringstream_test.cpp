@@ -170,3 +170,17 @@ BOOST_AUTO_TEST_CASE( streaming_extended_character_into_UTF_8_makes_a_valid_docu
     xis >> xml::content( "element", value );
     BOOST_CHECK_EQUAL( content, value );
 }
+
+// -----------------------------------------------------------------------------
+// Name: streaming_processing_instruction_makes_a_valid_document
+// Created: MCO 2008-06-17
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( streaming_processing_instruction_makes_a_valid_document )
+{
+    xml::xostringstream xos;
+    xos << xml::instruction( "xml-stylesheet", "type=\"text/xsl\" href=\"my_stylesheet.xsl\"" )
+        << xml::start( "root" ) << xml::end();
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<?xml-stylesheet type=\"text/xsl\" href=\"my_stylesheet.xsl\"?>\n"
+                       "<root/>\n", xos.str() );
+}

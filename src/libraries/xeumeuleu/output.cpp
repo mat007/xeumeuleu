@@ -102,6 +102,15 @@ void output::cdata( const std::string& value )
 }
 
 // -----------------------------------------------------------------------------
+// Name: output::instruction
+// Created: MCO 2008-08-17
+// -----------------------------------------------------------------------------
+void output::instruction( const std::string& target, const std::string& data )
+{
+    pCurrent_->appendChild( document_.createProcessingInstruction( translate( target ), translate( data ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: output::write
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------

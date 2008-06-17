@@ -70,6 +70,7 @@
                 <include name="end.h"/>
                 <include name="content.h"/>
                 <include name="cdata.h"/>
+                <include name="instruction.h"/>
                 <include name="attribute.h"/>
                 <include name="filter.h"/>
                 <include name="adapter.h"/>
