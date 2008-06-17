@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2008, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,31 +30,54 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xml_h_
-#define _xeumeuleu_xml_h_
+#ifndef _xeumeuleu_instruction_h_
+#define _xeumeuleu_instruction_h_
 
-#include "xistringstream.h"
-#include "xostringstream.h"
-#include "xifstream.h"
-#include "xofstream.h"
-#include "xobufferstream.h"
-#include "xibufferstream.h"
-#include "xosubstream.h"
-#include "xisubstream.h"
-#include "xistreamstream.h"
-#include "ximultistream.h"
-#include "exception.h"
-#include "start.h"
-#include "end.h"
-#include "content.h"
-#include "cdata.h"
-#include "instruction.h"
-#include "attribute.h"
-#include "list.h"
-#include "name_list.h"
-#include "attributes.h"
-#include "optional.h"
-#include "grammar.h"
-#include "helpers.h"
+#include <string>
 
-#endif // _xeumeuleu_xml_h_
+namespace xml
+{
+    class xostream;
+
+// =============================================================================
+/** @class  instruction
+    @brief  Processing instruction manipulator
+    @par Using example
+    @code
+    xml::xostream& xos = ...;
+    T value;
+    xos << xml::instruction( "xml-stylesheet", "my_style.xsl" );
+    @endcode
+*/
+// Created: MCO 2008-06-17
+// =============================================================================
+class instruction
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    instruction( const std::string& target, const std::string& data );
+    //@}
+
+    //! @name Operators
+    //@{
+    xostream& operator()( xostream& xos ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string target_;
+    std::string data_;
+    //@}
+};
+
+// -----------------------------------------------------------------------------
+// Name: operator<<
+// Created: MAT 2006-01-03
+// -----------------------------------------------------------------------------
+xostream& operator<<( xostream& xos, const instruction& manipulator );
+
+}
+
+#endif // _xeumeuleu_instruction_h_

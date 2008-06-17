@@ -228,6 +228,17 @@ void xostream::cdata( const std::string& content )
 }
 
 // -----------------------------------------------------------------------------
+// Name: xostream::instruction
+// Created: MCO 2008-08-17
+// -----------------------------------------------------------------------------
+void xostream::instruction( const std::string& target, const std::string& data )
+{
+    TRY
+        output_.instruction( target, data );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
 // Name: xostream::attribute
 // Created: MAT 2006-01-06
 // -----------------------------------------------------------------------------

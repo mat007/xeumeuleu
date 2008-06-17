@@ -239,6 +239,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\instruction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\instruction.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\list.h"
 					>
 				</File>

@@ -30,31 +30,37 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xml_h_
-#define _xeumeuleu_xml_h_
-
-#include "xistringstream.h"
-#include "xostringstream.h"
-#include "xifstream.h"
-#include "xofstream.h"
-#include "xobufferstream.h"
-#include "xibufferstream.h"
-#include "xosubstream.h"
-#include "xisubstream.h"
-#include "xistreamstream.h"
-#include "ximultistream.h"
-#include "exception.h"
-#include "start.h"
-#include "end.h"
-#include "content.h"
-#include "cdata.h"
 #include "instruction.h"
-#include "attribute.h"
-#include "list.h"
-#include "name_list.h"
-#include "attributes.h"
-#include "optional.h"
-#include "grammar.h"
-#include "helpers.h"
+#include "xostream.h"
 
-#endif // _xeumeuleu_xml_h_
+using namespace xml;
+
+// -----------------------------------------------------------------------------
+// Name: instruction constructor
+// Created: MCO 2008-06-17
+// -----------------------------------------------------------------------------
+instruction::instruction( const std::string& target, const std::string& data )
+    : target_( target )
+    , data_  ( data )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: instruction::operator()
+// Created: MCO 2008-06-17
+// -----------------------------------------------------------------------------
+xostream& instruction::operator()( xostream& xos ) const
+{
+    xos.instruction( target_, data_ );
+    return xos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: xml::operator<<
+// Created: MCO 2008-06-17
+// -----------------------------------------------------------------------------
+xostream& xml::operator<<( xostream& xos, const instruction& manipulator )
+{
+    return manipulator( xos );
+}

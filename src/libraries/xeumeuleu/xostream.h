@@ -92,6 +92,7 @@ public:
     void attribute( const std::string& name, unsigned long long value );
 
     void cdata( const std::string& content );
+    void instruction( const std::string& target, const std::string& data );
     //@}
 
 protected:
