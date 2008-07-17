@@ -37,10 +37,10 @@
 using namespace mockpp;
 
 // -----------------------------------------------------------------------------
-// Name: creating_with_non_existing_file_throws_a_verbose_exception
+// Name: creating_with_non_existing_file_throws_a_meaningful_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( creating_with_non_existing_file_throws_a_verbose_exception )
+BOOST_AUTO_TEST_CASE( creating_with_non_existing_file_throws_a_meaningful_exception )
 {
     const std::string filename = "directory/non_existing_file.xml";
     try
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE( creating_with_non_existing_file_throws_a_verbose_exception
         BOOST_CHECK_EQUAL( "Unable to open file '" + filename + "'", e.what() );
         return;
     }
-    BOOST_FAIL( "verbose exception not received" );
+    BOOST_FAIL( "meaningful exception expected" );
 }
 
 // -----------------------------------------------------------------------------
