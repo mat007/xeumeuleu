@@ -34,6 +34,7 @@
 #include "translate.h"
 #include "parser.h"
 #include "xerces.h"
+#include "exception.h"
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
@@ -66,7 +67,8 @@ void external_grammar::configure( parser& parser ) const
     parser->setFeature( XMLUni::fgDOMValidation, true );
     parser->setFeature( XMLUni::fgXercesUseCachedGrammarInParse, true );
     // $$$$ MAT 2006-03-27: use parser->setProperty( XMLUni::fgXercesSchemaExternalNoNameSpaceSchemaLocation, ... ) ?
-    parser->loadGrammar( translate( uri_ ), Grammar::SchemaGrammarType, true );
+    if( ! parser->loadGrammar( translate( uri_ ), Grammar::SchemaGrammarType, true ) )
+        throw xml::exception( "Failed to load grammar '" + uri_ + "'" );
 }
 
 // -----------------------------------------------------------------------------
