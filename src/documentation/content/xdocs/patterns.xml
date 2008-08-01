@@ -23,6 +23,18 @@
   <body>
     <section id="xml">
       <title>XML</title>
+      <section id="xml-beautify">
+        <title>Beautifying an existing file</title>
+        <p>
+          An XML file can very easily be cleaned up by simply loading and writing it back :
+        </p>
+        <source><![CDATA[xml::xifstream xis( "input.xml" );
+xml::xofstream xos( "output.xml" );
+xos << xis;]]></source>
+        <p>
+          However there is no means to query and copy the encoding.
+        </p>
+      </section>
       <section id="xml-switch">
         <title>Handling different documents</title>
         <p>
@@ -260,7 +272,7 @@ private:
       <section id="xml-const-stream">
         <title>Turning a non-constant input stream into constant</title>
         <p>
-          The <strong>xml::xisubstream</strong> implementation has proven to be useful because its constructor takes a <strong>constant</strong> reference to an <em>xml::xistream</em>.<br />
+          The <strong>xml::xisubstream</strong> implementation has proven to be useful because its constructor takes a constant reference to an <strong>xml::xistream</strong>.<br />
           Therefore instead of the following code :
         </p>
         <source><![CDATA[class my_class
@@ -321,10 +333,10 @@ public:
         </p>
         <source><![CDATA[my_class my_instance;
 xis >> xml::start( "root" )
-      >> xml::list( "element", boost::bind( &my_class::my_method, my_instance, _1 ) )
+      >> xml::list( "element", boost::bind( &my_class::my_method, &my_instance, _1 ) )
     >> xml::end();]]></source>
         <p>
-          In case of using the alternate version of <strong>xml::list</strong> requiring an argument for the name of the node :
+          In case of using the alternate version of <strong>xml::list</strong> without filtering based on the name of the node :
         </p>
         <source><![CDATA[class my_class
 {
@@ -339,7 +351,7 @@ public:
         </p>
         <source><![CDATA[my_class my_instance;
 xis >> xml::start( "root" )
-      >> xml::list( boost::bind( &my_class::my_method, my_instance, _1, _2 ) )
+      >> xml::list( boost::bind( &my_class::my_method, &my_instance, _1, _2 ) )
     >> xml::end();]]></source>
       </section>
       <section id="xml-proxy">
@@ -372,17 +384,112 @@ xims >> xml::start( "element" )
           This way whatever contains <em>xis</em> is ignored if <em>xiss</em> provides the data first.
         </p>
       </section>
-      <section id="xml-reformat">
-        <title>Reformating an existing XML file</title>
+      <section id="xml-prototype">
+        <title>Bufferizing creation data</title>
         <p>
-          An XML file can very easily be cleaned up by simply loading and writing it back :
+          This use case demonstrates how to implement a prototype pattern variation based on XML definitions, for instance using the following data :
         </p>
-        <source><![CDATA[xml::xifstream xis( "input.xml" );
-xml::xofstream xos( "output.xml" );
-xos << xis;]]></source>
+        <source><![CDATA[<types>
+  <type name="first">
+    <some-data/>
+  </type>
+  <type name="second">
+    <some-other-data/>
+  </type>
+</types>]]></source>
         <p>
-          However there is no means to query and copy the encoding.
+	  Each <em>type</em> can be buffered in an <strong>xml::xibufferstream</strong> stored in an <strong>std::map</strong> :
         </p>
+        <source><![CDATA[typedef std::map< std::string, xml::xistream* > my_types;]]></source>
+        <p>
+	  The prototype class loading the types into the map could look like :
+        </p>
+        <source><![CDATA[class my_prototype
+{
+public:
+    explicit my_prototype( xml::xistream& xis )
+    {
+        xis >> xml::list( "type", *this, &my_prototype::load );
+    }
+    ~my_prototype()
+    {
+        for( my_types::const_iterator it = types_.begin(); it != types_.end(); ++it )
+            delete it->second;
+    }
+private:
+    void load( xml::xistream& xis )
+    {
+        const std::string name = xml::attribute< std::string >( xis, "name" );
+        xml::xistream*& buffer = types_[name];
+	if( buffer )
+            xis.error( "type '" + name + "' already registered" );
+        buffer = new xml::xibufferstream( xis );
+    }
+
+    my_types types_;
+};]]></source>
+        <p>
+	  Note that the destructor takes care of deallocating the buffer streams.<br/>
+	  Also for completeness duplicates are tested to prevent memory leaks when overwriting entries in the map.
+	</p>
+	<p>
+	  Next all that is left is to implement the creation method itself, which is straight-forward coupled to a factory like the following :
+	</p>
+        <source><![CDATA[class my_factory
+{
+public:
+    my_interface* create( const std::string& type, xml::xistream& xis )
+    {
+        if( type == "first" )
+	    return new First( xis );
+        if( type == "second" )
+	    return new Second( xis );
+	xis.error( "unknown type '" + type + "'" );
+    }
+};]]></source>
+        <p>
+	  Adding a creation method to the prototype will provide the missing link :
+	</p>
+        <source><![CDATA[class my_prototype
+{
+public:
+    explicit my_prototype( xml::xistream& xis )
+    {
+        xis >> xml::list( "type", *this, &my_prototype::load );
+    }
+    ~my_prototype()
+    {
+        for( my_types::const_iterator it = types_.begin(); it != types_.end(); ++it )
+            delete it->second;
+    }
+    my_interface* create( const std::string& type )
+    {
+        my_types::const_iterator it = types_.find( type );
+	if( it == types_.end() )
+	    throw std::runtime_error( "unknown type '" + type + "'" );
+        return factory_.create( it->second );
+    }
+private:
+    void load( xml::xistream& xis )
+    {
+        const std::string name = xml::attribute< std::string >( xis, "name" );
+        xml::xistream*& buffer = types_[name];
+	if( buffer )
+            xis.error( "type '" + name + "' already registered" );
+        buffer = new xml::xibufferstream( xis );
+    }
+
+    my_types types_;
+};]]></source>
+        <p>
+          Then the prototype would be used like this :
+        </p>
+        <source><![CDATA[xml::xifstream xis( "types.xml" );
+my_prototype prototype( xis );
+std::auto_ptr< my_interface > first1( prototype.create( "first" );
+std::auto_ptr< my_interface > first2( prototype.create( "first" );
+std::auto_ptr< my_interface > second( prototype.create( "second" );
+        ]]></source>
       </section>
     </section>
     <section id="xsl">
