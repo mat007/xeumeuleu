@@ -219,7 +219,7 @@ public:
 };]]></source>
         <p>
           Moving the instantiation code to a factory provides better extensibility.<br />
-          Adding support for new types is thus possible without changing the existing code, only by using a different factory, for example :
+          Adding support for new types is thus possible without changing the existing code, only by extending the factory, for example :
         </p>
         <source><![CDATA[class my_extended_factory_imp : public my_factory_imp
 {
