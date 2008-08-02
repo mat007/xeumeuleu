@@ -23,9 +23,11 @@
   <body>
     <section id="question">
       <title>Question</title>
+      <!--
       <p>
         Please first check that your question is not answered in the <a href="site:faq">FAQ</a>.
       </p>
+      -->
       <p>
         You have a question to ask : post in the appropriate <a href="http://sourceforge.net/forum/?group_id=165394">forum</a>.
       </p>
