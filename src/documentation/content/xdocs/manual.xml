@@ -535,20 +535,20 @@ public:
             The variable <em>name</em> will not be read if the attribute <em>name</em> does not exist in the XML document and no exception will be raised.
           </p>
         </section>
-        <section id="xml-processing-instructions">
-          <title>Processing instructions</title>
-          <p>
-            A processing instruction can be added by the <strong>xml::instruction</strong> feature, for instance :
-          </p>
-          <source><![CDATA[xos << xml::instruction( "xml-stylesheet", "type=\"text/xsl\" href=\"my_stylesheet.xsl\"" );]]></source>
-          <p>
-            Will produce the following line in the resulting document's prolog :
-          </p>
-          <source><![CDATA[<?xml-stylesheet type="text/xsl" href="my_stylesheet.xsl"?>]]></source>
-          <p>
-            Which effectively associates the document with the given style sheet.
-          </p>
-        </section>
+      </section>
+      <section id="xml-processing-instructions">
+        <title>Processing instructions</title>
+        <p>
+          A processing instruction can be added by the <strong>xml::instruction</strong> feature, for instance :
+        </p>
+        <source><![CDATA[xos << xml::instruction( "xml-stylesheet", "type=\"text/xsl\" href=\"my_stylesheet.xsl\"" );]]></source>
+        <p>
+          Will produce the following line in the resulting document's prolog :
+        </p>
+        <source><![CDATA[<?xml-stylesheet type="text/xsl" href="my_stylesheet.xsl"?>]]></source>
+        <p>
+          Which effectively associates the document with the given style sheet.
+        </p>
       </section>
     </section>
     <section id="xsl">
