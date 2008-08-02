@@ -46,7 +46,9 @@ See http://forrest.apache.org/docs/linking.html for more info
     <overview     label="Overview"     href="overview.html"/>
     <manual       label="Manual"       href="manual.html"/>
     <patterns     label="Patterns"     href="patterns.html"/>
+    <!--
     <faq          label="FAQ"          href="faq.html"/>
+    -->
     <license      label="License"      href="license.html"/>
     <installation label="Installation" href="installation.html"/>
     <download     label="Download"     href="http://sourceforge.net/project/showfiles.php?group_id=165394"/>
