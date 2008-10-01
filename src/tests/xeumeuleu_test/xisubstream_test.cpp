@@ -135,10 +135,10 @@ BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_throws_when_moving_up_fr
 }
 
 // -----------------------------------------------------------------------------
-// Name: sub_stream_created_after_optional_pouet
+// Name: sub_stream_created_after_optional_throws
 // Created: MCO 2008-05-25
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_pouet )
+BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_throws )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional() >> xml::start( "non-existing" );
