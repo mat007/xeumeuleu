@@ -24,6 +24,7 @@ xcopy /Y "%SRC_DIR%\start.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\end.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\content.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\cdata.h" %INCLUDE_DIR%
+xcopy /Y "%SRC_DIR%\instruction.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\attribute.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\filter.h" %INCLUDE_DIR%
 xcopy /Y "%SRC_DIR%\adapter.h" %INCLUDE_DIR%
