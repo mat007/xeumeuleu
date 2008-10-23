@@ -398,11 +398,11 @@ xims >> xml::start( "element" )
   </type>
 </types>]]></source>
         <p>
-	  Each <em>type</em> can be buffered in an <strong>xml::xibufferstream</strong> stored in an <strong>std::map</strong> :
+          Each <em>type</em> can be buffered in an <strong>xml::xibufferstream</strong> stored in an <strong>std::map</strong> :
         </p>
         <source><![CDATA[typedef std::map< std::string, xml::xistream* > my_types;]]></source>
         <p>
-	  The prototype class loading the types into the map could look like :
+          The prototype class loading the types into the map could look like :
         </p>
         <source><![CDATA[class my_prototype
 {
@@ -421,7 +421,7 @@ private:
     {
         const std::string name = xml::attribute< std::string >( xis, "name" );
         xml::xistream*& buffer = types_[name];
-	if( buffer )
+        if( buffer )
             xis.error( "type '" + name + "' already registered" );
         buffer = new xml::xibufferstream( xis );
     }
@@ -429,27 +429,27 @@ private:
     my_types types_;
 };]]></source>
         <p>
-	  Note that the destructor takes care of deallocating the buffer streams.<br/>
-	  Also for completeness duplicates are tested to prevent memory leaks when overwriting entries in the map.
-	</p>
-	<p>
-	  Next all that is left is to implement the creation method itself, which is straight-forward coupled to a factory like the following :
-	</p>
+          Note that the destructor takes care of deallocating the buffer streams.<br/>
+          Also for completeness duplicates are tested to prevent memory leaks when overwriting entries in the map.
+        </p>
+        <p>
+          Next all that is left is to implement the creation method itself, which is straight-forward coupled to a factory like the following :
+        </p>
         <source><![CDATA[class my_factory
 {
 public:
     my_interface* create( const std::string& type, xml::xistream& xis )
     {
         if( type == "first" )
-	    return new First( xis );
+            return new First( xis );
         if( type == "second" )
-	    return new Second( xis );
-	xis.error( "unknown type '" + type + "'" );
+            return new Second( xis );
+        xis.error( "unknown type '" + type + "'" );
     }
 };]]></source>
         <p>
-	  Adding a creation method to the prototype will provide the missing link :
-	</p>
+          Adding a creation method to the prototype will provide the missing link :
+        </p>
         <source><![CDATA[class my_prototype
 {
 public:
@@ -465,8 +465,8 @@ public:
     my_interface* create( const std::string& type )
     {
         my_types::const_iterator it = types_.find( type );
-	if( it == types_.end() )
-	    throw std::runtime_error( "unknown type '" + type + "'" );
+        if( it == types_.end() )
+            throw std::runtime_error( "unknown type '" + type + "'" );
         return factory_.create( it->second );
     }
 private:
@@ -474,7 +474,7 @@ private:
     {
         const std::string name = xml::attribute< std::string >( xis, "name" );
         xml::xistream*& buffer = types_[name];
-	if( buffer )
+        if( buffer )
             xis.error( "type '" + name + "' already registered" );
         buffer = new xml::xibufferstream( xis );
     }
