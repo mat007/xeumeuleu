@@ -113,7 +113,7 @@
         <delete file="${dist.dir}/xeumeuleu-bin-${platform}.zip"/>
         <zip destfile="${dist.dir}/xeumeuleu-bin-${platform}.zip">
             <zipfileset prefix="include" dir="${dist.dir}/include" includes="xeumeuleu/**,xeuseuleu/**"/>
-            <zipfileset prefix="lib/${platform}" dir="${lib.dir}" includes="*xeumeuleu*.*,*xeuseuleu*.*,*xerces*.*,*xalan-*.*,*Xalan-*.*" excludes="*.pdb"/>
+            <zipfileset prefix="lib/${platform}" dir="${lib.dir}" includes="*xeumeuleu*.*,*xeuseuleu*.*,*xerces*.*,*xalan-*.*,*Xalan-*.*"/>
             <zipfileset prefix="run/${platform}" dir="${run.dir}" includes="*xerces*.*,*xalan*.*,*Xalan*.*"/>
         </zip>
     </target>
