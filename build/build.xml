@@ -149,7 +149,7 @@
       documentation
     ============================================================================
     -->
-    <target name="documentation" description="create documentation">
+    <target name="documentation" depends="test" description="create documentation">
         <cpd-report/>
         <cppncss-report>
             <define name="TRY"/>
@@ -165,16 +165,13 @@
     </target>
 
     <target name="site" depends="documentation" description="deploy web site">
-        <zip destfile="${doc.dir}/site.zip">
-            <fileset dir="${doc.dir}/site"/>
-        </zip>
         <input addproperty="deploy.scp.username" message="Enter username to enable scp to deploy:"/>
-        <property name="deploy.scp.dest" value="${deploy.scp.username}@shell.sourceforge.net:/home/groups/x/xe/xeumeuleu"/>
+        <property name="deploy.scp.dest" value="${deploy.scp.username}@web.sourceforge.net:/home/groups/x/xe/xeumeuleu/htdocs"/>
         <input addproperty="deploy.scp.password" message="Enter remote password to enable scp to ${deploy.scp.dest}:"/>
         <!-- requires scp : http://ant.apache.org/manual/OptionalTasks/scp.html -->
-        <scp todir="${deploy.scp.dest}" password="${deploy.scp.password}" trust="yes" verbose="true" file="${doc.dir}/site.zip"/>
-        <sshexec host="shell.sourceforge.net" username="${deploy.scp.username}" password="${deploy.scp.password}"
-                 command="cd /home/groups/x/xe/xeumeuleu/htdocs;rm -r *;unzip ../site.zip" trust="yes"/>
+        <scp todir="${deploy.scp.dest}" password="${deploy.scp.password}" trust="yes" verbose="true">
+            <fileset dir="${doc.dir}/site"/>
+        </scp>
     </target>
 
     <!--
