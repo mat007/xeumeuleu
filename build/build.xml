@@ -106,7 +106,7 @@
     -->
     <target name="package" depends="-package,-apache-license" description="package the distribution"/>
 
-    <target name="-package" depends="export,generate-vc71">
+    <target name="-package" depends="export,generate-vc71,generate-vc90">
         <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/xeumeuleu-src.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user"/>
         <tar destfile="${dist.dir}/xeumeuleu-src.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user" compression="bzip2"/>
@@ -139,6 +139,21 @@
                     <replacestring from="9.00" to="8.00"/>
                     <replacestring from="9,00" to="8,00"/>
                     <replacestring from="UsePrecompiledHeader=&quot;2&quot;" to="UsePrecompiledHeader=&quot;3&quot;"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
+    </target>
+
+    <target name="generate-vc90" description="create vc90 build files from vc80 files">
+        <copy todir="vc90" overwrite="true">
+            <fileset dir="vc80" includes="*.sln,*.vcproj"/>
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="vc80" to="vc90"/>
+                    <replacestring from="9.00" to="10.00"/>
+                    <replacestring from="9,00" to="10,00"/>
+                    <replacestring from="8.00" to="9.00"/>
+                    <replacestring from="8,00" to="9,00"/>
                 </tokenfilter>
             </filterchain>
         </copy>
