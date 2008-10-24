@@ -57,12 +57,15 @@
       <title>Dependencies</title>
       <p>
         Strictly speaking the only dependencies required are <a href="ext:xerces">Apache Xerces</a> and <a href="ext:xalan">Apache Xalan</a>.<br />
-        However additional libraries are needed in order to run the unit tests : the <a href="ext:boost.test">Boost Test library</a> and <a href="ext:mockpp">Mockpp</a>.
+        Those two libraries are provided in the XeuMeuLeu binary releases and recompiling them is not necessary.
+      </p>
+      <p>
+        Additional libraries are also needed in order to build and run the unit tests : the <a href="ext:boost.test">Boost Test library</a> and <a href="ext:mockpp">Mockpp</a>.
       </p>
       <section id="xerces">
         <title>Apache Xerces</title>
         <p>
-          Refer to the <a href="ext:xerces/installation">Apache Xerces installation documentation</a>.
+          Refer to the <a href="ext:xerces/installation">Apache Xerces installation documentation</a> in order to compile the library.
         </p>
         <p>
           XeuMeuLeu has been reported to work successfully with Apache Xerces 2.7.0 and 2.8.0.
@@ -71,7 +74,7 @@
       <section id="xalan">
         <title>Apache Xalan</title>
         <p>
-          Refer to the <a href="ext:xalan/installation">Apache Xalan installation documentation</a>.
+          Refer to the <a href="ext:xalan/installation">Apache Xalan installation documentation</a> in order to compile the library.
         </p>
         <p>
           XeuMeuLeu has been reported to work successfully with Apache Xalan 1.10.
@@ -97,7 +100,7 @@
     <section id="compilation">
       <title>Compilation</title>
       <p>
-        If a precompiled binary release is not available for a given platform in the <a href="site:download">Download</a> area, or for manually recompiling the project, refer to the following instructions.
+        If a precompiled binary release for XeuMeuLeu is not available for a given platform in the <a href="site:download">Download</a> area, or for manually recompiling the project, refer to the following instructions.
       </p>
       <section id="msvc">
         <title>Microsoft Visual Studio (MSVC)</title>
@@ -162,7 +165,7 @@
           The following specific targets can be used with <em>make</em> :
         </p>
         <ul>
-          <li><em>test</em> : build and run unit tests</li>
+          <li><em>test</em> : build and run the unit tests</li>
           <li><em>xeumeuleu</em> : build only the <em>xeumeuleu</em> library</li>
           <li><em>xeuseuleu</em> : build only the <em>xeuseuleu</em> library</li>
         </ul>
