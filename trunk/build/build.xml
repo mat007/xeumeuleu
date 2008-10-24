@@ -114,6 +114,8 @@
         <zip destfile="${dist.dir}/xeumeuleu-bin-${platform}.zip">
             <zipfileset prefix="include" dir="${dist.dir}/include" includes="xeumeuleu/**,xeuseuleu/**"/>
             <zipfileset prefix="lib/${platform}" dir="${lib.dir}" includes="*xeumeuleu*.*,*xeuseuleu*.*,*xerces*.*,*xalan-*.*,*Xalan-*.*"/>
+            <zipfileset prefix="lib/${platform}" dir="${out.dir}/release/libraries/**" includes="*.pdb"/>
+            <zipfileset prefix="lib/${platform}" dir="${out.dir}/debug/libraries/**" includes="*.pdb"/>
             <zipfileset prefix="run/${platform}" dir="${run.dir}" includes="*xerces*.*,*xalan*.*,*Xalan*.*"/>
         </zip>
     </target>
