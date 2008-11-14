@@ -108,8 +108,8 @@
 
     <target name="-package" depends="export,generate-vc71,generate-vc90">
         <mkdir dir="${dist.dir}"/>
-        <zip destfile="${dist.dir}/xeumeuleu-src.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user"/>
-        <tar destfile="${dist.dir}/xeumeuleu-src.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user" compression="bzip2"/>
+        <zip destfile="${dist.dir}/xeumeuleu-src.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user,src/documentation/**"/>
+        <tar destfile="${dist.dir}/xeumeuleu-src.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user,src/documentation/**" compression="bzip2"/>
         <delete file="${dist.dir}/xeumeuleu-bin-${platform}.zip"/>
         <zip destfile="${dist.dir}/xeumeuleu-bin-${platform}.zip">
             <zipfileset prefix="include" dir="${dist.dir}/include" includes="xeumeuleu/**,xeuseuleu/**"/>
