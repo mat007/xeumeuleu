@@ -50,7 +50,7 @@ class attributes_visitor : public adapter< T >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit attributes_visitor( const T& functor )
+    explicit attributes_visitor( T functor )
         : adapter< T >( functor )
     {}
     //@}

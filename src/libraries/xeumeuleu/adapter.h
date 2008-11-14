@@ -50,7 +50,7 @@ class adapter : public visitor
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit adapter( const T& functor )
+    explicit adapter( T functor )
         : functor_( functor )
     {}
     //@}
@@ -72,7 +72,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const T functor_;
+    mutable T functor_;
     //@}
 };
 

@@ -121,16 +121,48 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: attributes_accepts_functor_as_functor_and_makes_an_internal_copy
+// Name: attributes_accepts_functor_and_makes_an_internal_copy
 // Created: MAT 2008-02-29
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( attributes_accepts_functor_as_functor_and_makes_an_internal_copy )
+BOOST_AUTO_TEST_CASE( attributes_accepts_functor_and_makes_an_internal_copy )
 {
     xml::xistringstream xis( "<element attribute='my_attribute'/>" );
     xis >> xml::start( "element" );
     my_function_mock.reset();
     my_function_mocker.expects( mockpp::once() );
     xis >> xml::attributes( my_functor_class() );
+    my_function_mock.verify();
+}
+
+namespace
+{
+    class my_non_copyable_functor_class
+    {
+    public:
+        my_non_copyable_functor_class() {}
+
+        void operator()( const std::string&, xml::xistream& ) const
+        {
+            my_function_mocker.forward();
+        }
+    private:
+        my_non_copyable_functor_class( const my_non_copyable_functor_class& );
+        my_non_copyable_functor_class& operator=( const my_non_copyable_functor_class& );
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: attributes_accepts_functor_as_reference
+// Created: MAT 2008-11-14
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( attributes_accepts_functor_as_reference )
+{
+    xml::xistringstream xis( "<element attribute='my_attribute'/>" );
+    xis >> xml::start( "element" );
+    my_function_mock.reset();
+    my_function_mocker.expects( mockpp::once() );
+    my_non_copyable_functor_class functor;
+    xis >> xml::attributes< my_non_copyable_functor_class& >( functor );
     my_function_mock.verify();
 }
 
