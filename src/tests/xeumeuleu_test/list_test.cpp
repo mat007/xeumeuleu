@@ -84,6 +84,18 @@ namespace
         void my_const_method_const( xml::xistream& , const my_type&, const my_type& ) const {}
     };
 
+    class my_functor
+    {
+    public:
+        void operator()( xml::xistream& ) {}
+    };
+
+    class my_functor_ext
+    {
+    public:
+        void operator()( const std::string&, xml::xistream& ) {}
+    };
+
     void warning_check()
     {
         xml::xistream& xis = *(xml::xistream*)0;
@@ -154,7 +166,23 @@ namespace
        {
             const my_class_ext_const_const_2 my_instance = my_class_ext_const_const_2();
             xis >> xml::list( "node", my_instance, &my_class_ext_const_const_2::my_const_method_const, param_const_ref, param_const_ref );
-        }
+       }
+       {
+           my_functor f;
+           xis >> xml::list( "node", f );
+       }
+       {
+           my_functor f;
+           xis >> xml::list< my_functor& >( "node", f );
+       }
+       {
+           my_functor_ext f;
+           xis >> xml::list( f );
+       }
+       {
+           my_functor_ext f;
+           xis >> xml::list< my_functor_ext& >( f );
+       }
     }
 }
 

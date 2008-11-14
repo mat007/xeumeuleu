@@ -50,7 +50,7 @@ class filter : public visitor
 public:
     //! @name Constructors/Destructor
     //@{
-    filter( const std::string& name, const T& functor )
+    filter( const std::string& name, T functor )
         : name_   ( name )
         , functor_( functor )
     {}
@@ -75,7 +75,7 @@ private:
     //! @name Member data
     //@{
     const std::string name_;
-    const T functor_;
+    mutable T functor_;
     //@}
 };
 
