@@ -50,7 +50,7 @@ class list_name_visitor : public adapter< T >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit list_name_visitor( const T& functor )
+    explicit list_name_visitor( T functor )
         : adapter< T >( functor )
     {}
     //@}

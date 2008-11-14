@@ -50,7 +50,7 @@ class list_visitor : public filter< T >
 public:
     //! @name Constructors/Destructor
     //@{
-    list_visitor( const std::string& name, const T& functor )
+    list_visitor( const std::string& name, T functor )
         : filter< T >( name, functor )
     {}
     //@}
