@@ -48,7 +48,7 @@ class sub_output : public output
 public:
     //! @name Constructors/Destructor
     //@{
-             sub_output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root, output& output );
+             sub_output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root, output& o );
     virtual ~sub_output();
     //@}
 
