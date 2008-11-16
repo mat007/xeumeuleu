@@ -92,5 +92,6 @@ void output::parameter( const std::string& key, const std::string& expression )
 // -----------------------------------------------------------------------------
 void output::apply( const output& output )
 {
-    xos_ << xml::xistringstream( output.buffer_.str() );
+    xml::xistringstream xis( output.buffer_.str() );
+    xos_ << xis;
 }
