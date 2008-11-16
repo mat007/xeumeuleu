@@ -39,9 +39,9 @@ using namespace XERCES_CPP_NAMESPACE;
 // Name: sub_output constructor
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-sub_output::sub_output( DOMDocument& document, DOMNode& root, output& output )
+sub_output::sub_output( DOMDocument& document, DOMNode& root, output& o )
     : output( document, root )
-    , output_ ( output )
+    , output_ ( o )
     , flushed_( false )
 {
     // NOTHING
