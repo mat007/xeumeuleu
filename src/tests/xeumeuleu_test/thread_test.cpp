@@ -12,7 +12,7 @@
 
 namespace
 {
-    void Read()
+    void read()
     {
         xml::xistringstream xis( "<element>"
                                     "<sub-node/>"
@@ -21,22 +21,22 @@ namespace
         xis >> xml::start( "element" )
                 >> xml::start( "another-sub-node" ) >> xml::end();
     }
-    void Write()
+    void write()
     {
         xml::xostringstream xos;
         xos << xml::start( "element" )
                 << xml::start( "another-sub-node" ) << xml::end()
             << xml::end();
     }
-    void Run()
+    void run()
     {
         int count = 1000;
         while( count-- )
         {
             if( std::rand() % 2 != 0 )
-                Read();
+                read();
             else
-                Write();
+                write();
         }
     }
 }
@@ -50,6 +50,6 @@ BOOST_AUTO_TEST_CASE( creating_a_document_is_thread_safe )
     static const int THREADS = 4;
     boost::thread_group group;
     for( int i = 0; i < THREADS; ++i )
-        group.create_thread( &Run );
+        group.create_thread( &run );
     group.join_all();
 }
