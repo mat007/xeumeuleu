@@ -41,7 +41,7 @@ namespace xsl
 {
 // =============================================================================
 /** @class  output_imp
-    @brief  Transformation helper
+    @brief  Output implementation declaration
 */
 // Created: SLI 2007-07-06
 // =============================================================================
@@ -50,7 +50,7 @@ class output_imp
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit output_imp() {}
+             output_imp() {}
     virtual ~output_imp() {}
     //@}
 
