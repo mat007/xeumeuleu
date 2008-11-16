@@ -69,8 +69,8 @@ DOMDocument& parser::parse( InputSource& source )
     error_handler errorHandler;
     builder_.setErrorHandler( &errorHandler );
     Wrapper4InputSource input( &source, false );
-    DOMDocument* pDocument = builder_.parse( input );
-    if( ! pDocument )
+    DOMDocument* document = builder_.parse( input );
+    if( ! document )
         throw xml::exception( "Could not generate document" );
-    return *pDocument;
+    return *document;
 }

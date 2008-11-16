@@ -46,7 +46,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
 output_base_member::output_base_member()
-    : pDocument_( build() )
+    : document_( build() )
 {
     // NOTHING
 }
@@ -68,10 +68,10 @@ DOMDocument& output_base_member::build()
 {
     try
     {
-        DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
-        if( ! pImpl )
+        DOMImplementation* impl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
+        if( ! impl )
             throw xml::exception( "Internal error in 'output_base_member::build' : DOMImplementation 'LS' not found" );
-        return *pImpl->createDocument();
+        return *impl->createDocument();
     }
     catch( const OutOfMemoryException& )
     {
@@ -93,15 +93,15 @@ DOMDocument& output_base_member::build()
 // -----------------------------------------------------------------------------
 void output_base_member::fill( XMLFormatTarget& destination, const std::string& encoding ) const
 {
-    DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
-    if( ! pImpl )
+    DOMImplementation* impl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
+    if( ! impl )
         throw xml::exception( "Internal error in 'output_base_member::fill' : DOMImplementation 'LS' not found" );
-    xerces_ptr< DOMWriter > pWriter( *dynamic_cast< DOMImplementationLS* >( pImpl )->createDOMWriter() );
+    xerces_ptr< DOMWriter > writer( *dynamic_cast< DOMImplementationLS* >( impl )->createDOMWriter() );
     error_handler handler;
-    pWriter->setErrorHandler( &handler );
-    pWriter->setEncoding( translate( encoding ) );
-    pWriter->setFeature( XMLUni::fgDOMWRTFormatPrettyPrint, true );
-    pWriter->setFeature( XMLUni:: fgDOMWRTBOM, true );
-    beautifier target( destination, pWriter->getNewLine() );
-    pWriter->writeNode( &target, *pDocument_ );
+    writer->setErrorHandler( &handler );
+    writer->setEncoding( translate( encoding ) );
+    writer->setFeature( XMLUni::fgDOMWRTFormatPrettyPrint, true );
+    writer->setFeature( XMLUni:: fgDOMWRTBOM, true );
+    beautifier target( destination, writer->getNewLine() );
+    writer->writeNode( &target, *document_ );
 }

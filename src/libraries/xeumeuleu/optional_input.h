@@ -50,7 +50,7 @@ class optional_input : public input_base
 public:
     //! @name Constructors/Destructor
     //@{
-             optional_input( std::auto_ptr< input_base > pInput, input_context& context );
+             optional_input( std::auto_ptr< input_base > input, input_context& context );
     virtual ~optional_input();
     //@}
 
@@ -81,9 +81,9 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool hasElement( const std::string& tag ) const;
-    virtual bool hasAttribute( const std::string& name ) const;
-    virtual bool hasContent() const;
+    virtual bool has_element( const std::string& tag ) const;
+    virtual bool has_attribute( const std::string& name ) const;
+    virtual bool has_content() const;
 
     virtual void attribute( const std::string& name, std::string& value ) const;
     virtual void attribute( const std::string& name, float& value ) const;
@@ -111,14 +111,14 @@ private:
 
     //! @name Helpers
     //@{
-    template< typename T > void readContent( T& value ) const;
-    template< typename T > void readAttribute( const std::string& name, T& value ) const;
+    template< typename T > void read_content( T& value ) const;
+    template< typename T > void read_attribute( const std::string& name, T& value ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    mutable std::auto_ptr< input_base > pInput_;
+    mutable std::auto_ptr< input_base > input_;
     input_context& context_;
     //@}
 };

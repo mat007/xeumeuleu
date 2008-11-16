@@ -41,8 +41,8 @@ using namespace xml;
 // Name: optional_input constructor
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-optional_input::optional_input( std::auto_ptr< input_base > pInput, input_context& context )
-    : pInput_ ( pInput )
+optional_input::optional_input( std::auto_ptr< input_base > input, input_context& context )
+    : input_  ( input )
     , context_( context )
 {
     // NOTHING
@@ -63,10 +63,10 @@ optional_input::~optional_input()
 // -----------------------------------------------------------------------------
 void optional_input::start( const std::string& tag )
 {
-    if( pInput_->hasElement( tag ) )
-        context_.reset( pInput_ ).start( tag );
+    if( input_->has_element( tag ) )
+        context_.reset( input_ ).start( tag );
     else
-        context_.reset( std::auto_ptr< input_base >( new null_input( pInput_, context_ ) ) ).start( tag );
+        context_.reset( std::auto_ptr< input_base >( new null_input( input_, context_ ) ) ).start( tag );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,20 +75,20 @@ void optional_input::start( const std::string& tag )
 // -----------------------------------------------------------------------------
 void optional_input::end()
 {
-    context_.reset( pInput_ );
+    context_.reset( input_ );
     throw xml::exception( "Invalid 'end' after an 'optional'" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: optional_input::readContent
+// Name: optional_input::read_content
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-template< typename T > void optional_input::readContent( T& value ) const
+template< typename T > void optional_input::read_content( T& value ) const
 {
-    if( pInput_->hasContent() )
-        context_.reset( pInput_ ).read( value );
+    if( input_->has_content() )
+        context_.reset( input_ ).read( value );
     else
-        context_.reset( pInput_ );
+        context_.reset( input_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ template< typename T > void optional_input::readContent( T& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::read( std::string& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ void optional_input::read( std::string& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::read( float& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +115,7 @@ void optional_input::read( float& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::read( double& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +124,7 @@ void optional_input::read( double& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::read( short& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ void optional_input::read( short& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::read( int& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +142,7 @@ void optional_input::read( int& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::read( long& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ void optional_input::read( long& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::read( long long& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +160,7 @@ void optional_input::read( long long& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::read( bool& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +169,7 @@ void optional_input::read( bool& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::read( unsigned short& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +178,7 @@ void optional_input::read( unsigned short& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::read( unsigned int& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +187,7 @@ void optional_input::read( unsigned int& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::read( unsigned long& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,46 +196,46 @@ void optional_input::read( unsigned long& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::read( unsigned long long& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: optional_input::hasElement
+// Name: optional_input::has_element
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-bool optional_input::hasElement( const std::string& tag ) const
+bool optional_input::has_element( const std::string& tag ) const
 {
-    return pInput_->hasElement( tag );
+    return input_->has_element( tag );
 }
 
 // -----------------------------------------------------------------------------
-// Name: optional_input::hasAttribute
+// Name: optional_input::has_attribute
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-bool optional_input::hasAttribute( const std::string& name ) const
+bool optional_input::has_attribute( const std::string& name ) const
 {
-    return pInput_->hasAttribute( name );
+    return input_->has_attribute( name );
 }
 
 // -----------------------------------------------------------------------------
-// Name: optional_input::hasContent
+// Name: optional_input::has_content
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-bool optional_input::hasContent() const
+bool optional_input::has_content() const
 {
-    return pInput_->hasContent();
+    return input_->has_content();
 }
 
 // -----------------------------------------------------------------------------
-// Name: optional_input::readAttribute
+// Name: optional_input::read_attribute
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-template< typename T > void optional_input::readAttribute( const std::string& name, T& value ) const
+template< typename T > void optional_input::read_attribute( const std::string& name, T& value ) const
 {
-    if( pInput_->hasAttribute( name ) )
-        context_.reset( pInput_ ).attribute( name, value );
+    if( input_->has_attribute( name ) )
+        context_.reset( input_ ).attribute( name, value );
     else
-        context_.reset( pInput_ );
+        context_.reset( input_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -244,7 +244,7 @@ template< typename T > void optional_input::readAttribute( const std::string& na
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, std::string& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,7 +253,7 @@ void optional_input::attribute( const std::string& name, std::string& value ) co
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, float& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -262,7 +262,7 @@ void optional_input::attribute( const std::string& name, float& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, double& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -271,7 +271,7 @@ void optional_input::attribute( const std::string& name, double& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, short& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -280,7 +280,7 @@ void optional_input::attribute( const std::string& name, short& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, int& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -289,7 +289,7 @@ void optional_input::attribute( const std::string& name, int& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, long& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -298,7 +298,7 @@ void optional_input::attribute( const std::string& name, long& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, long long& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -307,7 +307,7 @@ void optional_input::attribute( const std::string& name, long long& value ) cons
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, bool& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +316,7 @@ void optional_input::attribute( const std::string& name, bool& value ) const
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, unsigned short& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -325,7 +325,7 @@ void optional_input::attribute( const std::string& name, unsigned short& value )
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, unsigned int& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -334,7 +334,7 @@ void optional_input::attribute( const std::string& name, unsigned int& value ) c
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, unsigned long& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -343,7 +343,7 @@ void optional_input::attribute( const std::string& name, unsigned long& value ) 
 // -----------------------------------------------------------------------------
 void optional_input::attribute( const std::string& name, unsigned long long& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -352,7 +352,7 @@ void optional_input::attribute( const std::string& name, unsigned long long& val
 // -----------------------------------------------------------------------------
 void optional_input::nodes( const visitor& v ) const
 {
-    context_.reset( pInput_ ).nodes( v );
+    context_.reset( input_ ).nodes( v );
 }
 
 // -----------------------------------------------------------------------------
@@ -361,7 +361,7 @@ void optional_input::nodes( const visitor& v ) const
 // -----------------------------------------------------------------------------
 void optional_input::attributes( const visitor& v ) const
 {
-    context_.reset( pInput_ ).attributes( v );
+    context_.reset( input_ ).attributes( v );
 }
 
 // -----------------------------------------------------------------------------
@@ -370,7 +370,7 @@ void optional_input::attributes( const visitor& v ) const
 // -----------------------------------------------------------------------------
 std::auto_ptr< input_base > optional_input::branch( bool clone ) const
 {
-    return pInput_->branch( clone );
+    return input_->branch( clone );
 }
 
 // -----------------------------------------------------------------------------
@@ -379,7 +379,7 @@ std::auto_ptr< input_base > optional_input::branch( bool clone ) const
 // -----------------------------------------------------------------------------
 void optional_input::copy( output& destination ) const
 {
-    pInput_->copy( destination );
+    input_->copy( destination );
 }
 
 // -----------------------------------------------------------------------------
@@ -388,5 +388,5 @@ void optional_input::copy( output& destination ) const
 // -----------------------------------------------------------------------------
 void optional_input::error( const std::string& message ) const
 {
-    pInput_->error( message );
+    input_->error( message );
 }

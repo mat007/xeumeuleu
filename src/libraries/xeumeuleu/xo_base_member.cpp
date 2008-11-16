@@ -39,8 +39,8 @@ using namespace xml;
 // Name: xo_base_member constructor
 // Created: MAT 2006-03-08
 // -----------------------------------------------------------------------------
-xo_base_member::xo_base_member( std::auto_ptr< output > pOutput )
-    : pOutput_( pOutput )
+xo_base_member::xo_base_member( std::auto_ptr< output > output )
+    : output_( output )
 {
     // NOTHING
 }

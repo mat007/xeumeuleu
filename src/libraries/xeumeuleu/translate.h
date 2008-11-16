@@ -51,7 +51,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit translate( const std::string& str );
-    explicit translate( const XMLCh* const pCh );
+    explicit translate( const XMLCh* const ch );
     ~translate();
     //@}
 
@@ -60,7 +60,7 @@ public:
     operator const XMLCh* const() const;
     operator std::string() const;
 
-    bool operator==( const XMLCh* const pCh ) const;
+    bool operator==( const XMLCh* const ch ) const;
     bool operator==( const std::string& str ) const;
     //@}
 
@@ -74,12 +74,12 @@ private:
 private:
     //! @name Data members
     //@{
-    const XMLCh* const pCh_;
-    bool isOwner_;
+    const XMLCh* const ch_;
+    bool is_owner_;
     //@}
 };
 
-bool operator==( const XMLCh* const pCh, const translate& tr );
+bool operator==( const XMLCh* const ch, const translate& tr );
 bool operator==( const std::string& str, const translate& tr );
 
 std::ostream& operator<<( std::ostream& stream, const translate& tr );

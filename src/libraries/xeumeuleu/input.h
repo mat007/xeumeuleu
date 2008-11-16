@@ -51,7 +51,7 @@ class input : private input_context
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit input( std::auto_ptr< input_base > pInput );
+    explicit input( std::auto_ptr< input_base > input );
     virtual ~input();
     //@}
 
@@ -62,7 +62,7 @@ public:
 
     template< typename T > void read( T& value ) const
     {
-        pInput_->read( value );
+        input_->read( value );
     }
 
     std::auto_ptr< input > branch( bool clone ) const;
@@ -74,13 +74,13 @@ public:
 
     //! @name Accessors
     //@{
-    bool hasElement( const std::string& tag ) const;
-    bool hasAttribute( const std::string& name ) const;
-    bool hasContent() const;
+    bool has_element( const std::string& tag ) const;
+    bool has_attribute( const std::string& name ) const;
+    bool has_content() const;
 
     template< typename T > void attribute( const std::string& name, T& value ) const
     {
-        pInput_->attribute( name, value );
+        input_->attribute( name, value );
     }
 
     void nodes( const visitor& v ) const;
@@ -91,7 +91,7 @@ public:
     //@{
     void optional();
 
-    void attach( std::auto_ptr< input > pInput );
+    void attach( std::auto_ptr< input > input );
     //@}
 
 private:
@@ -103,13 +103,13 @@ private:
 
     //! @name Operations
     //@{
-    virtual input_base& reset( std::auto_ptr< input_base > pInput );
+    virtual input_base& reset( std::auto_ptr< input_base > input );
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< input_base > pInput_;
+    std::auto_ptr< input_base > input_;
     //@}
 };
 

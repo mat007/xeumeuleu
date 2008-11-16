@@ -77,14 +77,14 @@ public:
 
     virtual void error( const std::string& message ) const;
 
-    virtual input_base& reset( std::auto_ptr< input_base > pInput );
+    virtual input_base& reset( std::auto_ptr< input_base > input );
     //@}
 
     //! @name Accessors
     //@{
-    virtual bool hasElement( const std::string& tag ) const;
-    virtual bool hasAttribute( const std::string& name ) const;
-    virtual bool hasContent() const;
+    virtual bool has_element( const std::string& tag ) const;
+    virtual bool has_attribute( const std::string& name ) const;
+    virtual bool has_content() const;
 
     virtual void attribute( const std::string& name, std::string& value ) const;
     virtual void attribute( const std::string& name, float& value ) const;
@@ -106,7 +106,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< input_base > pInput_;
+    std::auto_ptr< input_base > input_;
     //@}
 };
 

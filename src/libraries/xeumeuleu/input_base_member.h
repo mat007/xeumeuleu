@@ -66,13 +66,13 @@ private:
 protected:
     //! @name Helpers
     //@{
-    static XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source, const encoding* pEncoding, const grammar& grammar );
+    static XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source, const encoding* encoding, const grammar& grammar );
     //@}
 
 protected:
     //! @name Member data
     //@{
-    xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > pDocument_;
+    xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > document_;
     //@}
 };
 

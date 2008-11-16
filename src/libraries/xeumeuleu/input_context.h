@@ -56,7 +56,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual input_base& reset( std::auto_ptr< input_base > pInput ) = 0;
+    virtual input_base& reset( std::auto_ptr< input_base > input ) = 0;
     //@}
 };
 

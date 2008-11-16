@@ -40,7 +40,7 @@ using namespace xml;
 // Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
 input_base_context::input_base_context()
-    : pInput_( new null_input() )
+    : input_( new null_input() )
 {
     // NOTHING
 }
@@ -58,10 +58,10 @@ input_base_context::~input_base_context()
 // Name: input_base_context::reset
 // Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-input_base& input_base_context::reset( std::auto_ptr< input_base > pInput )
+input_base& input_base_context::reset( std::auto_ptr< input_base > input )
 {
-    pInput_ = pInput;
-    return *pInput_;
+    input_ = input;
+    return *input_;
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +70,7 @@ input_base& input_base_context::reset( std::auto_ptr< input_base > pInput )
 // -----------------------------------------------------------------------------
 void input_base_context::start( const std::string& tag )
 {
-    pInput_->start( tag );
+    input_->start( tag );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ void input_base_context::start( const std::string& tag )
 // -----------------------------------------------------------------------------
 void input_base_context::end()
 {
-    pInput_->end();
+    input_->end();
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ void input_base_context::end()
 // -----------------------------------------------------------------------------
 void input_base_context::read( std::string& value ) const
 {
-    pInput_->read( value );
+    input_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +97,7 @@ void input_base_context::read( std::string& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::read( float& value ) const
 {
-    pInput_->read( value );
+    input_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ void input_base_context::read( float& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::read( double& value ) const
 {
-    pInput_->read( value );
+    input_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +115,7 @@ void input_base_context::read( double& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::read( short& value ) const
 {
-    pInput_->read( value );
+    input_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +124,7 @@ void input_base_context::read( short& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::read( int& value ) const
 {
-    pInput_->read( value );
+    input_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ void input_base_context::read( int& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::read( long& value ) const
 {
-    pInput_->read( value );
+    input_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +142,7 @@ void input_base_context::read( long& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::read( long long& value ) const
 {
-    pInput_->read( value );
+    input_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ void input_base_context::read( long long& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::read( bool& value ) const
 {
-    pInput_->read( value );
+    input_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +160,7 @@ void input_base_context::read( bool& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::read( unsigned short& value ) const
 {
-    pInput_->read( value );
+    input_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +169,7 @@ void input_base_context::read( unsigned short& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::read( unsigned int& value ) const
 {
-    pInput_->read( value );
+    input_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +178,7 @@ void input_base_context::read( unsigned int& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::read( unsigned long& value ) const
 {
-    pInput_->read( value );
+    input_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,34 +187,34 @@ void input_base_context::read( unsigned long& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::read( unsigned long long& value ) const
 {
-    pInput_->read( value );
+    input_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_base_context::hasElement
+// Name: input_base_context::has_element
 // Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-bool input_base_context::hasElement( const std::string& tag ) const
+bool input_base_context::has_element( const std::string& tag ) const
 {
-    return pInput_->hasElement( tag );
+    return input_->has_element( tag );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_base_context::hasAttribute
+// Name: input_base_context::has_attribute
 // Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-bool input_base_context::hasAttribute( const std::string& name ) const
+bool input_base_context::has_attribute( const std::string& name ) const
 {
-    return pInput_->hasAttribute( name );
+    return input_->has_attribute( name );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_base_context::hasContent
+// Name: input_base_context::has_content
 // Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-bool input_base_context::hasContent() const
+bool input_base_context::has_content() const
 {
-    return pInput_->hasContent();
+    return input_->has_content();
 }
 
 // -----------------------------------------------------------------------------
@@ -223,7 +223,7 @@ bool input_base_context::hasContent() const
 // -----------------------------------------------------------------------------
 void input_base_context::attribute( const std::string& name, std::string& value ) const
 {
-    pInput_->attribute( name, value );
+    input_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ void input_base_context::attribute( const std::string& name, std::string& value 
 // -----------------------------------------------------------------------------
 void input_base_context::attribute( const std::string& name, float& value ) const
 {
-    pInput_->attribute( name, value );
+    input_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,7 +241,7 @@ void input_base_context::attribute( const std::string& name, float& value ) cons
 // -----------------------------------------------------------------------------
 void input_base_context::attribute( const std::string& name, double& value ) const
 {
-    pInput_->attribute( name, value );
+    input_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,7 +250,7 @@ void input_base_context::attribute( const std::string& name, double& value ) con
 // -----------------------------------------------------------------------------
 void input_base_context::attribute( const std::string& name, short& value ) const
 {
-    pInput_->attribute( name, value );
+    input_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -259,7 +259,7 @@ void input_base_context::attribute( const std::string& name, short& value ) cons
 // -----------------------------------------------------------------------------
 void input_base_context::attribute( const std::string& name, int& value ) const
 {
-    pInput_->attribute( name, value );
+    input_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +268,7 @@ void input_base_context::attribute( const std::string& name, int& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::attribute( const std::string& name, long& value ) const
 {
-    pInput_->attribute( name, value );
+    input_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,7 +277,7 @@ void input_base_context::attribute( const std::string& name, long& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::attribute( const std::string& name, long long& value ) const
 {
-    pInput_->attribute( name, value );
+    input_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -286,7 +286,7 @@ void input_base_context::attribute( const std::string& name, long long& value ) 
 // -----------------------------------------------------------------------------
 void input_base_context::attribute( const std::string& name, bool& value ) const
 {
-    pInput_->attribute( name, value );
+    input_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -295,7 +295,7 @@ void input_base_context::attribute( const std::string& name, bool& value ) const
 // -----------------------------------------------------------------------------
 void input_base_context::attribute( const std::string& name, unsigned short& value ) const
 {
-    pInput_->attribute( name, value );
+    input_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -304,7 +304,7 @@ void input_base_context::attribute( const std::string& name, unsigned short& val
 // -----------------------------------------------------------------------------
 void input_base_context::attribute( const std::string& name, unsigned int& value ) const
 {
-    pInput_->attribute( name, value );
+    input_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -313,7 +313,7 @@ void input_base_context::attribute( const std::string& name, unsigned int& value
 // -----------------------------------------------------------------------------
 void input_base_context::attribute( const std::string& name, unsigned long& value ) const
 {
-    pInput_->attribute( name, value );
+    input_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -322,7 +322,7 @@ void input_base_context::attribute( const std::string& name, unsigned long& valu
 // -----------------------------------------------------------------------------
 void input_base_context::attribute( const std::string& name, unsigned long long& value ) const
 {
-    pInput_->attribute( name, value );
+    input_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -331,7 +331,7 @@ void input_base_context::attribute( const std::string& name, unsigned long long&
 // -----------------------------------------------------------------------------
 void input_base_context::nodes( const visitor& v ) const
 {
-    pInput_->nodes( v );
+    input_->nodes( v );
 }
 
 // -----------------------------------------------------------------------------
@@ -340,7 +340,7 @@ void input_base_context::nodes( const visitor& v ) const
 // -----------------------------------------------------------------------------
 void input_base_context::attributes( const visitor& v ) const
 {
-    pInput_->attributes( v );
+    input_->attributes( v );
 }
 
 // -----------------------------------------------------------------------------
@@ -349,7 +349,7 @@ void input_base_context::attributes( const visitor& v ) const
 // -----------------------------------------------------------------------------
 std::auto_ptr< input_base > input_base_context::branch( bool clone ) const
 {
-    return pInput_->branch( clone );
+    return input_->branch( clone );
 }
 
 // -----------------------------------------------------------------------------
@@ -358,7 +358,7 @@ std::auto_ptr< input_base > input_base_context::branch( bool clone ) const
 // -----------------------------------------------------------------------------
 void input_base_context::copy( output& destination ) const
 {
-    pInput_->copy( destination );
+    input_->copy( destination );
 }
 
 // -----------------------------------------------------------------------------
@@ -367,5 +367,5 @@ void input_base_context::copy( output& destination ) const
 // -----------------------------------------------------------------------------
 void input_base_context::error( const std::string& message ) const
 {
-    pInput_->error( message );
+    input_->error( message );
 }

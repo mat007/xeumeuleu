@@ -41,7 +41,7 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 xosubstream::xosubstream( xostream& xos )
     : xo_base_member( xos.branch() )
-    , xostream( *pOutput_ )
+    , xostream( *xo_base_member::output_ )
 {
     // NOTHING
 }
@@ -52,7 +52,7 @@ xosubstream::xosubstream( xostream& xos )
 // -----------------------------------------------------------------------------
 xosubstream::xosubstream( xosubstream& xoss )
     : xo_base_member( xoss.branch() )
-    , xostream( *pOutput_ )
+    , xostream( *xo_base_member::output_ )
 {
     // NOTHING
 }
