@@ -82,9 +82,9 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool hasElement( const std::string& tag ) const;
-    virtual bool hasAttribute( const std::string& name ) const;
-    virtual bool hasContent() const;
+    virtual bool has_element( const std::string& tag ) const;
+    virtual bool has_attribute( const std::string& name ) const;
+    virtual bool has_content() const;
 
     virtual void attribute( const std::string& name, std::string& value ) const;
     virtual void attribute( const std::string& name, float& value ) const;
@@ -115,14 +115,14 @@ private:
     const std::string location() const;
     const std::string context() const;
 
-    const XERCES_CPP_NAMESPACE::DOMNode* findChild    ( const std::string& name ) const;
-    const XERCES_CPP_NAMESPACE::DOMNode* findAttribute( const std::string& name ) const;
-    const XERCES_CPP_NAMESPACE::DOMNode* findContent  () const;
+    const XERCES_CPP_NAMESPACE::DOMNode* find_child( const std::string& name ) const;
+    const XERCES_CPP_NAMESPACE::DOMNode* find_attribute( const std::string& name ) const;
+    const XERCES_CPP_NAMESPACE::DOMNode* find_content() const;
 
-    bool hasContent( const XERCES_CPP_NAMESPACE::DOMNode& node ) const;
+    bool has_content( const XERCES_CPP_NAMESPACE::DOMNode& node ) const;
 
-    const XMLCh* readValue() const;
-    const XMLCh* readAttribute( const std::string& name ) const;
+    const XMLCh* read_value() const;
+    const XMLCh* read_attribute( const std::string& name ) const;
 
     template< typename T > T convert( const XMLCh* from ) const;
     //@}
@@ -131,7 +131,7 @@ private:
     //! @name Member data
     //@{
     const XERCES_CPP_NAMESPACE::DOMNode& root_;
-    const XERCES_CPP_NAMESPACE::DOMNode* pCurrent_;
+    const XERCES_CPP_NAMESPACE::DOMNode* current_;
     //@}
 };
 

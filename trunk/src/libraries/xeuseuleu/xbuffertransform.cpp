@@ -41,7 +41,7 @@ using namespace xsl;
 // -----------------------------------------------------------------------------
 xbuffertransform::xbuffertransform( const std::string& stylesheet )
     : stylesheet_( stylesheet )
-    , pStream_   ( 0 )
+    , stream_    ( 0 )
 {
     // NOTHING
 }
@@ -51,7 +51,7 @@ xbuffertransform::xbuffertransform( const std::string& stylesheet )
 // Created: SLI 2008-04-04
 // -----------------------------------------------------------------------------
 xbuffertransform::xbuffertransform( std::istream& stylesheet )
-    : pStream_( &stylesheet )
+    : stream_( &stylesheet )
 {
     // NOTHING
 }
@@ -71,8 +71,8 @@ xbuffertransform::~xbuffertransform()
 // -----------------------------------------------------------------------------
 void xbuffertransform::apply( xtransform& xst ) const
 {
-    if( pStream_ == 0 )
-        xst.add( stylesheet_ );
+    if( stream_ ) // $$$$ MCO : make two separate implementations
+        xst.add( *stream_ );
     else
-        xst.add( *pStream_ );
+        xst.add( stylesheet_ );
 }

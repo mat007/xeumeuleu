@@ -41,9 +41,9 @@ using namespace xml;
 // Name: multi_input constructor
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-multi_input::multi_input( std::auto_ptr< input_base > pInput1, std::auto_ptr< input_base > pInput2, input_context& context )
-    : pInput1_( pInput1 )
-    , pInput2_( pInput2 )
+multi_input::multi_input( std::auto_ptr< input_base > input1, std::auto_ptr< input_base > input2, input_context& context )
+    : input1_ ( input1 )
+    , input2_ ( input2 )
     , context_( context )
 {
     // NOTHING
@@ -59,30 +59,30 @@ multi_input::~multi_input()
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::hasElement
+// Name: multi_input::has_element
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-bool multi_input::hasElement( const std::string& tag ) const
+bool multi_input::has_element( const std::string& tag ) const
 {
-    return pInput1_->hasElement( tag ) || pInput2_->hasElement( tag );
+    return input1_->has_element( tag ) || input2_->has_element( tag );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::hasAttribute
+// Name: multi_input::has_attribute
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-bool multi_input::hasAttribute( const std::string& name ) const
+bool multi_input::has_attribute( const std::string& name ) const
 {
-    return pInput1_->hasAttribute( name ) || pInput2_->hasAttribute( name );
+    return input1_->has_attribute( name ) || input2_->has_attribute( name );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::hasContent
+// Name: multi_input::has_content
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-bool multi_input::hasContent() const
+bool multi_input::has_content() const
 {
-    return pInput1_->hasContent() || pInput2_->hasContent();
+    return input1_->has_content() || input2_->has_content();
 }
 
 // -----------------------------------------------------------------------------
@@ -91,14 +91,14 @@ bool multi_input::hasContent() const
 // -----------------------------------------------------------------------------
 void multi_input::start( const std::string& tag )
 {
-    if( pInput1_->hasElement( tag ) && ! pInput2_->hasElement( tag ) )
-        context_.reset( std::auto_ptr< input_base >( new branch_input( pInput1_, pInput2_, context_, false ) ) ).start( tag );
-    else if( pInput2_->hasElement( tag ) && ! pInput1_->hasElement( tag ) )
-        context_.reset( std::auto_ptr< input_base >( new branch_input( pInput2_, pInput1_, context_, true ) ) ).start( tag );
+    if( input1_->has_element( tag ) && ! input2_->has_element( tag ) )
+        context_.reset( std::auto_ptr< input_base >( new branch_input( input1_, input2_, context_, false ) ) ).start( tag );
+    else if( input2_->has_element( tag ) && ! input1_->has_element( tag ) )
+        context_.reset( std::auto_ptr< input_base >( new branch_input( input2_, input1_, context_, true ) ) ).start( tag );
     else
     {
-        pInput1_->start( tag );
-        pInput2_->start( tag );
+        input1_->start( tag );
+        input2_->start( tag );
     }
 }
 
@@ -108,32 +108,32 @@ void multi_input::start( const std::string& tag )
 // -----------------------------------------------------------------------------
 void multi_input::end()
 {
-    pInput1_->end();
-    pInput2_->end();
+    input1_->end();
+    input2_->end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::readContent
+// Name: multi_input::read_content
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-template< typename T > void multi_input::readContent( T& value ) const
+template< typename T > void multi_input::read_content( T& value ) const
 {
-    if( pInput1_->hasContent() )
-        pInput1_->read( value );
+    if( input1_->has_content() )
+        input1_->read( value );
     else
-        pInput2_->read( value );
+        input2_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::readAttribute
+// Name: multi_input::read_attribute
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-template< typename T > void multi_input::readAttribute( const std::string& name, T& value ) const
+template< typename T > void multi_input::read_attribute( const std::string& name, T& value ) const
 {
-    if( pInput1_->hasAttribute( name ) )
-        pInput1_->attribute( name, value );
+    if( input1_->has_attribute( name ) )
+        input1_->attribute( name, value );
     else
-        pInput2_->attribute( name, value );
+        input2_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +142,7 @@ template< typename T > void multi_input::readAttribute( const std::string& name,
 // -----------------------------------------------------------------------------
 void multi_input::read( std::string& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ void multi_input::read( std::string& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::read( float& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +160,7 @@ void multi_input::read( float& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::read( double& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +169,7 @@ void multi_input::read( double& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::read( short& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +178,7 @@ void multi_input::read( short& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::read( int& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,7 +187,7 @@ void multi_input::read( int& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::read( long& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,7 +196,7 @@ void multi_input::read( long& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::read( long long& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +205,7 @@ void multi_input::read( long long& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::read( bool& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +214,7 @@ void multi_input::read( bool& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::read( unsigned short& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -223,7 +223,7 @@ void multi_input::read( unsigned short& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::read( unsigned int& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ void multi_input::read( unsigned int& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::read( unsigned long& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,7 +241,7 @@ void multi_input::read( unsigned long& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::read( unsigned long long& value ) const
 {
-    readContent( value );
+    read_content( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,7 +250,7 @@ void multi_input::read( unsigned long long& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::attribute( const std::string& name, std::string& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -259,7 +259,7 @@ void multi_input::attribute( const std::string& name, std::string& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::attribute( const std::string& name, float& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +268,7 @@ void multi_input::attribute( const std::string& name, float& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::attribute( const std::string& name, double& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -277,7 +277,7 @@ void multi_input::attribute( const std::string& name, double& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::attribute( const std::string& name, short& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -286,7 +286,7 @@ void multi_input::attribute( const std::string& name, short& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::attribute( const std::string& name, int& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -295,7 +295,7 @@ void multi_input::attribute( const std::string& name, int& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::attribute( const std::string& name, long& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -304,7 +304,7 @@ void multi_input::attribute( const std::string& name, long& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::attribute( const std::string& name, long long& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -313,7 +313,7 @@ void multi_input::attribute( const std::string& name, long long& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::attribute( const std::string& name, bool& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -322,7 +322,7 @@ void multi_input::attribute( const std::string& name, bool& value ) const
 // -----------------------------------------------------------------------------
 void multi_input::attribute( const std::string& name, unsigned short& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -331,7 +331,7 @@ void multi_input::attribute( const std::string& name, unsigned short& value ) co
 // -----------------------------------------------------------------------------
 void multi_input::attribute( const std::string& name, unsigned int& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -340,7 +340,7 @@ void multi_input::attribute( const std::string& name, unsigned int& value ) cons
 // -----------------------------------------------------------------------------
 void multi_input::attribute( const std::string& name, unsigned long& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -349,7 +349,7 @@ void multi_input::attribute( const std::string& name, unsigned long& value ) con
 // -----------------------------------------------------------------------------
 void multi_input::attribute( const std::string& name, unsigned long long& value ) const
 {
-    readAttribute( name, value );
+    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -358,8 +358,8 @@ void multi_input::attribute( const std::string& name, unsigned long long& value 
 // -----------------------------------------------------------------------------
 void multi_input::nodes( const visitor& v ) const
 {
-    pInput1_->nodes( v );
-    pInput2_->nodes( v );
+    input1_->nodes( v );
+    input2_->nodes( v );
 }
 
 // -----------------------------------------------------------------------------
@@ -368,8 +368,8 @@ void multi_input::nodes( const visitor& v ) const
 // -----------------------------------------------------------------------------
 void multi_input::attributes( const visitor& v ) const
 {
-    pInput1_->attributes( v );
-    pInput2_->attributes( v );
+    input1_->attributes( v );
+    input2_->attributes( v );
 }
 
 // -----------------------------------------------------------------------------
@@ -378,10 +378,10 @@ void multi_input::attributes( const visitor& v ) const
 // -----------------------------------------------------------------------------
 std::auto_ptr< input_base > multi_input::branch( bool clone ) const
 {
-    std::auto_ptr< input_base_context > pContext( new input_base_context() );
-    std::auto_ptr< input_base > pInput( new multi_input( pInput1_->branch( clone ), pInput2_->branch( clone ), *pContext ) );
-    pContext->reset( pInput );
-    return std::auto_ptr< input_base >( pContext );
+    std::auto_ptr< input_base_context > context( new input_base_context() );
+    std::auto_ptr< input_base > input( new multi_input( input1_->branch( clone ), input2_->branch( clone ), *context ) );
+    context->reset( input );
+    return std::auto_ptr< input_base >( context );
 }
 
 // -----------------------------------------------------------------------------
@@ -390,8 +390,8 @@ std::auto_ptr< input_base > multi_input::branch( bool clone ) const
 // -----------------------------------------------------------------------------
 void multi_input::copy( output& destination ) const
 {
-    pInput1_->copy( destination );
-    pInput2_->copy( destination );
+    input1_->copy( destination );
+    input2_->copy( destination );
 }
 
 // -----------------------------------------------------------------------------
@@ -400,5 +400,5 @@ void multi_input::copy( output& destination ) const
 // -----------------------------------------------------------------------------
 void multi_input::error( const std::string& message ) const
 {
-    pInput2_->error( message );
+    input2_->error( message );
 }

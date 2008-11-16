@@ -107,10 +107,10 @@ private:
         return stream.str();
     }
 
-    bool isRoot() const;
-    bool isEmpty( const XERCES_CPP_NAMESPACE::DOMNode& node ) const;
+    bool is_root() const;
+    bool is_empty( const XERCES_CPP_NAMESPACE::DOMNode& node ) const;
 
-    void copy( XERCES_CPP_NAMESPACE::DOMNode* pNode, XERCES_CPP_NAMESPACE::DOMNode& to );
+    void copy( XERCES_CPP_NAMESPACE::DOMNode* node, XERCES_CPP_NAMESPACE::DOMNode& to );
     //@}
 
 private:
@@ -118,7 +118,7 @@ private:
     //@{
     XERCES_CPP_NAMESPACE::DOMDocument& document_;
     XERCES_CPP_NAMESPACE::DOMNode& root_;
-    XERCES_CPP_NAMESPACE::DOMNode* pCurrent_;
+    XERCES_CPP_NAMESPACE::DOMNode* current_;
     //@}
 };
 

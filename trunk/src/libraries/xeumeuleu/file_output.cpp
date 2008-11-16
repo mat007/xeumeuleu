@@ -41,7 +41,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
 file_output::file_output( const std::string& filename, const std::string& encoding )
-    : output( *pDocument_, *pDocument_ )
+    : output( *output_base_member::document_, *output_base_member::document_ )
     , filename_( filename )
     , encoding_( encoding )
 {

@@ -40,8 +40,8 @@ using namespace xml;
 // Name: input constructor
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
-input::input( std::auto_ptr< input_base > pInput )
-    : pInput_( pInput )
+input::input( std::auto_ptr< input_base > input )
+    : input_( input )
 {
     // NOTHING
 }
@@ -61,7 +61,7 @@ input::~input()
 // -----------------------------------------------------------------------------
 void input::start( const std::string& tag )
 {
-    pInput_->start( tag );
+    input_->start( tag );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +70,7 @@ void input::start( const std::string& tag )
 // -----------------------------------------------------------------------------
 void input::end()
 {
-    pInput_->end();
+    input_->end();
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ void input::end()
 // -----------------------------------------------------------------------------
 std::auto_ptr< input > input::branch( bool clone ) const
 {
-    return std::auto_ptr< input >( new input( pInput_->branch( clone ) ) );
+    return std::auto_ptr< input >( new input( input_->branch( clone ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ std::auto_ptr< input > input::branch( bool clone ) const
 // -----------------------------------------------------------------------------
 void input::copy( output& destination ) const
 {
-    pInput_->copy( destination );
+    input_->copy( destination );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,34 +97,34 @@ void input::copy( output& destination ) const
 // -----------------------------------------------------------------------------
 void input::error( const std::string& message ) const
 {
-    pInput_->error( message );
+    input_->error( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input::hasElement
+// Name: input::has_element
 // Created: MAT 2007-11-04
 // -----------------------------------------------------------------------------
-bool input::hasElement( const std::string& tag ) const
+bool input::has_element( const std::string& tag ) const
 {
-    return pInput_->hasElement( tag );
+    return input_->has_element( tag );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input::hasAttribute
+// Name: input::has_attribute
 // Created: MAT 2007-11-04
 // -----------------------------------------------------------------------------
-bool input::hasAttribute( const std::string& name ) const
+bool input::has_attribute( const std::string& name ) const
 {
-    return pInput_->hasAttribute( name );
+    return input_->has_attribute( name );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input::hasContent
+// Name: input::has_content
 // Created: MAT 2007-11-04
 // -----------------------------------------------------------------------------
-bool input::hasContent() const
+bool input::has_content() const
 {
-    return pInput_->hasContent();
+    return input_->has_content();
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +133,7 @@ bool input::hasContent() const
 // -----------------------------------------------------------------------------
 void input::nodes( const visitor& v ) const
 {
-    pInput_->nodes( v );
+    input_->nodes( v );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +142,7 @@ void input::nodes( const visitor& v ) const
 // -----------------------------------------------------------------------------
 void input::attributes( const visitor& v ) const
 {
-    pInput_->attributes( v );
+    input_->attributes( v );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,24 +151,24 @@ void input::attributes( const visitor& v ) const
 // -----------------------------------------------------------------------------
 void input::optional()
 {
-    pInput_.reset( new optional_input( pInput_, *this ) );
+    input_.reset( new optional_input( input_, *this ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: input::attach
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-void input::attach( std::auto_ptr< input > pInput )
+void input::attach( std::auto_ptr< input > input )
 {
-    pInput_.reset( new multi_input( pInput_, pInput->pInput_, *this ) );
+    input_.reset( new multi_input( input_, input->input_, *this ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: input::reset
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-input_base& input::reset( std::auto_ptr< input_base > pInput )
+input_base& input::reset( std::auto_ptr< input_base > input )
 {
-    pInput_ = pInput;
-    return *pInput_;
+    input_ = input;
+    return *input_;
 }

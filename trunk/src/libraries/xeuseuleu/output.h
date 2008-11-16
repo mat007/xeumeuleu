@@ -90,7 +90,7 @@ private:
     std::ostream& target_;
     xml::xostringstream xos_;
     std::ostringstream buffer_;
-    std::auto_ptr< output_imp > pTransformer_;
+    std::auto_ptr< output_imp > output_;
     //@}
 };
 

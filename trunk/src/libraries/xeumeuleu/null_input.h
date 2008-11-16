@@ -51,7 +51,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              null_input();
-             null_input( std::auto_ptr< input_base > pInput, input_context& context );
+             null_input( std::auto_ptr< input_base > input, input_context& context );
     virtual ~null_input();
     //@}
 
@@ -82,9 +82,9 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool hasElement( const std::string& tag ) const;
-    virtual bool hasAttribute( const std::string& name ) const;
-    virtual bool hasContent() const;
+    virtual bool has_element( const std::string& tag ) const;
+    virtual bool has_attribute( const std::string& name ) const;
+    virtual bool has_content() const;
 
     virtual void attribute( const std::string& name, std::string& value ) const;
     virtual void attribute( const std::string& name, float& value ) const;
@@ -113,8 +113,8 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< input_base > pInput_;
-    input_context* pContext_;
+    std::auto_ptr< input_base > input_;
+    input_context* context_;
     int level_;
     //@}
 };

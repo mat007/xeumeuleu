@@ -42,21 +42,21 @@ namespace
 {
     DOMDocument& build()
     {
-        DOMImplementation* pImpl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
-        if( ! pImpl )
+        DOMImplementation* impl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
+        if( ! impl )
             throw xml::exception( "Internal error in 'buffer_input::build' : DOMImplementation 'LS' not found" );
-        return *pImpl->createDocument();
+        return *impl->createDocument();
     }
-    void copy( DOMNode* pFrom, DOMNode* pTo )
+    void copy( DOMNode* from, DOMNode* to )
     {
-        while( pFrom && pTo )
+        while( from && to )
         {
-            const locator* pLocator = reinterpret_cast< locator* >( pFrom->getUserData( translate( "locator" ) ) );
-            if( pLocator )
-                pTo->setUserData( translate( "locator" ), new locator( *pLocator, *pTo ), 0 );
-            copy( pFrom->getFirstChild(), pTo->getFirstChild() );
-            pFrom = pFrom->getNextSibling();
-            pTo = pTo->getNextSibling();
+            const locator* loc = reinterpret_cast< locator* >( from->getUserData( translate( "locator" ) ) );
+            if( loc )
+                to->setUserData( translate( "locator" ), new locator( *loc, *to ), 0 );
+            copy( from->getFirstChild(), to->getFirstChild() );
+            from = from->getNextSibling();
+            to = to->getNextSibling();
         }
     }
     DOMNode& import( DOMDocument& document, DOMNode& node )
@@ -78,7 +78,7 @@ namespace
 // -----------------------------------------------------------------------------
 buffer_input::buffer_input( const DOMNode& root )
     : input_base_member( build() )
-    , input_imp( import( *pDocument_, const_cast< DOMNode& >( root ) ) )
+    , input_imp( import( *document_, const_cast< DOMNode& >( root ) ) )
 {
     // NOTHING
 }

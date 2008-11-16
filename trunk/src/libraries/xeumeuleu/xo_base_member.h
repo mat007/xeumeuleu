@@ -50,7 +50,7 @@ class xo_base_member
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xo_base_member( std::auto_ptr< output > pOutput );
+    explicit xo_base_member( std::auto_ptr< output > output );
     virtual ~xo_base_member();
     //@}
 
@@ -64,7 +64,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const std::auto_ptr< output > pOutput_;
+    const std::auto_ptr< output > output_;
     //@}
 };
 

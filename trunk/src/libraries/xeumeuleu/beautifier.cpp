@@ -38,21 +38,21 @@ using namespace XERCES_CPP_NAMESPACE;
 
 namespace
 {
-    const XMLCh defaultNewLine[] = { chLF, chNull };
-    static const XMLCh space[] = { chSpace, chNull };
+    const XMLCh default_new_line[] = { chLF, chNull };
+    const XMLCh space[] = { chSpace, chNull };
 }
 
 // -----------------------------------------------------------------------------
 // Name: beautifier constructor
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-beautifier::beautifier( XMLFormatTarget& target, const XMLCh* newLine )
-    : target_        ( target )
-    , newLine_       ( translate( newLine == chNull ? defaultNewLine : newLine ) )
-    , space_         ( translate( space ) )
-    , discardNewLine_( false )
-    , discardSpaces_ ( false )
-    , shift_         ( 0 )
+beautifier::beautifier( XMLFormatTarget& target, const XMLCh* new_line )
+    : target_          ( target )
+    , new_line_        ( translate( new_line == chNull ? default_new_line : new_line ) )
+    , space_           ( translate( space ) )
+    , discard_new_line_( false )
+    , discard_spaces_  ( false )
+    , shift_           ( 0 )
 {
     // NOTHING
 }
@@ -67,21 +67,23 @@ beautifier::~beautifier()
 }
 
 // -----------------------------------------------------------------------------
-// Name: beautifier::isNewLine
+// Name: beautifier::is_new_line
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-bool beautifier::isNewLine( const XMLByte* const data, const unsigned int count ) const
+bool beautifier::is_new_line( const XMLByte* const data, const unsigned int count ) const
 {
-    return count == newLine_.size() && 0 == strncmp( reinterpret_cast< const char* const >( data ), newLine_.c_str(), count );
+    return count == new_line_.size() &&
+           0 == strncmp( reinterpret_cast< const char* const >( data ), new_line_.c_str(), count );
 }
 
 // -----------------------------------------------------------------------------
-// Name: beautifier::isSpace
+// Name: beautifier::is_space
 // Created: MCO 2007-03-16
 // -----------------------------------------------------------------------------
-bool beautifier::isSpace( const XMLByte* const data, const unsigned int count ) const
+bool beautifier::is_space( const XMLByte* const data, const unsigned int count ) const
 {
-    return count == space_.size() && 0 == strncmp( reinterpret_cast< const char* const >( data ), space_.c_str(), count );
+    return count == space_.size() &&
+           0 == strncmp( reinterpret_cast< const char* const >( data ), space_.c_str(), count );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +95,7 @@ void beautifier::shift( XMLFormatter* const formatter )
     while( shift_-- > 0 )
         target_.writeChars( reinterpret_cast< const XMLByte* const >( space_.c_str() ), 1, formatter ); // $$$$ MCO 2007-03-16: 
     shift_ = 0;
-    discardSpaces_ = false;
+    discard_spaces_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -102,21 +104,21 @@ void beautifier::shift( XMLFormatter* const formatter )
 // -----------------------------------------------------------------------------
 void beautifier::writeChars( const XMLByte* const data, const unsigned int count, XMLFormatter* const formatter )
 {
-    if( isNewLine( data, count ) )
+    if( is_new_line( data, count ) )
     {
-        if( ! discardNewLine_ && ! discardSpaces_ )
+        if( ! discard_new_line_ && ! discard_spaces_ )
             target_.writeChars( data, count, formatter );
-        discardNewLine_ = ! discardNewLine_;
-        discardSpaces_ = true;
+        discard_new_line_ = ! discard_new_line_;
+        discard_spaces_ = true;
         shift_ = 0;
     }
-    else if( discardSpaces_ && isSpace( data, count ) )
+    else if( discard_spaces_ && is_space( data, count ) )
         ++shift_;
     else
     {
         shift( formatter );
         target_.writeChars( data, count, formatter );
-        discardNewLine_ = false;
+        discard_new_line_ = false;
     }
 }
 

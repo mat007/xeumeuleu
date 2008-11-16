@@ -40,8 +40,8 @@ using namespace XERCES_CPP_NAMESPACE;
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
 translate::translate( const std::string& str )
-    : pCh_    ( XMLString::transcode( str.c_str() ) )
-    , isOwner_( true )
+    : ch_      ( XMLString::transcode( str.c_str() ) )
+    , is_owner_( true )
 {
     // NOTHING
 }
@@ -50,9 +50,9 @@ translate::translate( const std::string& str )
 // Name: translate constructor
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-translate::translate( const XMLCh* const pCh )
-    : pCh_    ( pCh )
-    , isOwner_( false )
+translate::translate( const XMLCh* const ch )
+    : ch_      ( ch )
+    , is_owner_( false )
 {
     // NOTHING
 }
@@ -63,8 +63,8 @@ translate::translate( const XMLCh* const pCh )
 // -----------------------------------------------------------------------------
 translate::~translate()
 {
-    if( isOwner_ )
-        XMLString::release( const_cast< XMLCh** >( &pCh_ ) ); // $$$$ MAT 2006-01-04: not the cleanest class on earth...
+    if( is_owner_ )
+        XMLString::release( const_cast< XMLCh** >( &ch_ ) ); // $$$$ MAT 2006-01-04: not the cleanest class on earth...
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ translate::~translate()
 // -----------------------------------------------------------------------------
 translate::operator const XMLCh* const() const
 {
-    return pCh_;
+    return ch_;
 }
 
 // -----------------------------------------------------------------------------
@@ -82,13 +82,13 @@ translate::operator const XMLCh* const() const
 // -----------------------------------------------------------------------------
 translate::operator std::string() const
 {
-    if( ! pCh_ )
+    if( ! ch_ )
         return std::string();
-    char* pStr = XMLString::transcode( pCh_ );
-    if( ! pStr )
+    char* c = XMLString::transcode( ch_ );
+    if( ! c )
         return std::string();
-    const std::string str( pStr );
-    XMLString::release( &pStr );
+    const std::string str( c );
+    XMLString::release( &c );
     return str;
 }
 
@@ -96,9 +96,9 @@ translate::operator std::string() const
 // Name: translate::operator==
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-bool translate::operator==( const XMLCh* const pCh ) const
+bool translate::operator==( const XMLCh* const ch ) const
 {
-    return XMLString::equals( pCh, pCh_ );
+    return XMLString::equals( ch, ch_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,16 +107,16 @@ bool translate::operator==( const XMLCh* const pCh ) const
 // -----------------------------------------------------------------------------
 bool translate::operator==( const std::string& str ) const
 {
-    return translate( str ) == pCh_;
+    return translate( str ) == ch_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: xml::operator==
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-bool xml::operator==( const XMLCh* const pCh, const translate& tr )
+bool xml::operator==( const XMLCh* const ch, const translate& tr )
 {
-    return tr.operator ==( pCh );
+    return tr.operator ==( ch );
 }
 
 // -----------------------------------------------------------------------------

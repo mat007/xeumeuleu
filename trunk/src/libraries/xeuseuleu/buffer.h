@@ -48,7 +48,7 @@ class buffer
 public:
     //! @name Constructors/Destructor
     //@{
-             buffer( output& output, std::auto_ptr< buffer > pNext );
+             buffer( output& output, std::auto_ptr< buffer > next );
     explicit buffer( output& output );
             ~buffer();
     //@}
@@ -86,7 +86,7 @@ private:
     //@{
     output& output_;
     bool owned_; // $$$$ MAT : not so great...
-    std::auto_ptr< buffer > pNext_;
+    std::auto_ptr< buffer > next_;
     unsigned int level_;
     //@}
 };

@@ -49,8 +49,8 @@ using namespace XERCES_CPP_NAMESPACE;
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
 input_imp::input_imp( const DOMNode& root )
-    : root_    ( root )
-    , pCurrent_( &root_ )
+    : root_   ( root )
+    , current_( &root_ )
 {
     // NOTHING
 }
@@ -70,85 +70,85 @@ input_imp::~input_imp()
 // -----------------------------------------------------------------------------
 const std::string input_imp::context() const
 {
-    return "node '" + trim( translate( pCurrent_->getNodeName() ) ) + "'";
+    return "node '" + trim( translate( current_->getNodeName() ) ) + "'";
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_imp::hasElement
+// Name: input_imp::has_element
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-bool input_imp::hasElement( const std::string& tag ) const
+bool input_imp::has_element( const std::string& tag ) const
 {
-    return findChild( tag ) != 0;
+    return find_child( tag ) != 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_imp::hasAttribute
+// Name: input_imp::has_attribute
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
-bool input_imp::hasAttribute( const std::string& name ) const
+bool input_imp::has_attribute( const std::string& name ) const
 {
-    return findAttribute( name ) != 0;
+    return find_attribute( name ) != 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_imp::hasContent
+// Name: input_imp::has_content
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
-bool input_imp::hasContent() const
+bool input_imp::has_content() const
 {
-    return findContent() != 0;
+    return find_content() != 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_imp::findChild
+// Name: input_imp::find_child
 // Created: MAT 2006-01-07
 // -----------------------------------------------------------------------------
-const DOMNode* input_imp::findChild( const std::string& name ) const
+const DOMNode* input_imp::find_child( const std::string& name ) const
 {
-    const DOMNode* pChild = pCurrent_->getFirstChild();
-    while( pChild )
+    const DOMNode* child = current_->getFirstChild();
+    while( child )
     {
-        if( trim( name ) == trim( translate( pChild->getNodeName() ) ) )
-            return pChild;
-        pChild = pChild->getNextSibling();
+        if( trim( name ) == trim( translate( child->getNodeName() ) ) )
+            return child;
+        child = child->getNextSibling();
     }
     return 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_imp::findAttribute
+// Name: input_imp::find_attribute
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
-const DOMNode* input_imp::findAttribute( const std::string& name ) const
+const DOMNode* input_imp::find_attribute( const std::string& name ) const
 {
-    const DOMNamedNodeMap* pAttributes = pCurrent_->getAttributes();
-    if( ! pAttributes )
+    const DOMNamedNodeMap* attributes = current_->getAttributes();
+    if( ! attributes )
         return 0;
-    return pAttributes->getNamedItem( translate( trim( name ) ) );
+    return attributes->getNamedItem( translate( trim( name ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_imp::findContent
+// Name: input_imp::find_content
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
-const DOMNode* input_imp::findContent() const
+const DOMNode* input_imp::find_content() const
 {
-    const DOMNode* pChild = pCurrent_->getFirstChild();
-    while( pChild )
+    const DOMNode* child = current_->getFirstChild();
+    while( child )
     {
-        if( hasContent( *pChild ) )
-            return pChild;
-        pChild = pChild->getNextSibling();
+        if( has_content( *child ) )
+            return child;
+        child = child->getNextSibling();
     }
     return 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_imp::hasContent
+// Name: input_imp::has_content
 // Created: MAT 2007-07-16
 // -----------------------------------------------------------------------------
-bool input_imp::hasContent( const DOMNode& node ) const
+bool input_imp::has_content( const DOMNode& node ) const
 {
     if( node.getNodeType() != DOMNode::TEXT_NODE
      && node.getNodeType() != DOMNode::CDATA_SECTION_NODE )
@@ -163,10 +163,10 @@ bool input_imp::hasContent( const DOMNode& node ) const
 // -----------------------------------------------------------------------------
 void input_imp::start( const std::string& tag )
 {
-    const DOMNode* pChild = findChild( tag );
-    if( ! pChild )
+    const DOMNode* child = find_child( tag );
+    if( ! child )
         throw xml::exception( location() + context() + " does not have a child named '" + tag + "'" );
-    pCurrent_ = pChild;
+    current_ = child;
 }
 
 // -----------------------------------------------------------------------------
@@ -175,24 +175,24 @@ void input_imp::start( const std::string& tag )
 // -----------------------------------------------------------------------------
 void input_imp::end()
 {
-    if( pCurrent_ == &root_ )
+    if( current_ == &root_ )
         throw xml::exception( location() + "Cannot move up from " + context() );
-    const DOMNode* pParent = pCurrent_->getParentNode();
-    if( ! pParent )
+    const DOMNode* parent = current_->getParentNode();
+    if( ! parent )
         throw xml::exception( location() + context() + " has no parent" );
-    pCurrent_ = pParent;
+    current_ = parent;
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_imp::readValue
+// Name: input_imp::read_value
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-const XMLCh* input_imp::readValue() const
+const XMLCh* input_imp::read_value() const
 {
-    const DOMNode* pChild = findContent();
-    if( ! pChild )
+    const DOMNode* child = find_content();
+    if( ! child )
         throw xml::exception( location() + context() + " does not have a content" );
-    return pChild->getNodeValue();
+    return child->getNodeValue();
 }
 
 // -----------------------------------------------------------------------------
@@ -290,7 +290,7 @@ bool input_imp::convert< bool >( const XMLCh* from ) const
 // -----------------------------------------------------------------------------
 void input_imp::read( std::string& value ) const
 {
-    value = translate( readValue() );
+    value = translate( read_value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -299,7 +299,7 @@ void input_imp::read( std::string& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::read( float& value ) const
 {
-    value = convert< float >( readValue() );
+    value = convert< float >( read_value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -308,7 +308,7 @@ void input_imp::read( float& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::read( double& value ) const
 {
-    value = convert< double >( readValue() );
+    value = convert< double >( read_value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -317,7 +317,7 @@ void input_imp::read( double& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::read( short& value ) const
 {
-    value = convert< short >( readValue() );
+    value = convert< short >( read_value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -326,7 +326,7 @@ void input_imp::read( short& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::read( int& value ) const
 {
-    value = convert< int >( readValue() );
+    value = convert< int >( read_value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -335,7 +335,7 @@ void input_imp::read( int& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::read( long& value ) const
 {
-    value = convert< long >( readValue() );
+    value = convert< long >( read_value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -344,7 +344,7 @@ void input_imp::read( long& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::read( long long& value ) const
 {
-    value = convert< long long >( readValue() );
+    value = convert< long long >( read_value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -353,7 +353,7 @@ void input_imp::read( long long& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::read( bool& value ) const
 {
-    value = convert< bool >( readValue() );
+    value = convert< bool >( read_value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -362,7 +362,7 @@ void input_imp::read( bool& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::read( unsigned short& value ) const
 {
-    value = convert< unsigned short >( readValue() );
+    value = convert< unsigned short >( read_value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -371,7 +371,7 @@ void input_imp::read( unsigned short& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::read( unsigned int& value ) const
 {
-    value = convert< unsigned int >( readValue() );
+    value = convert< unsigned int >( read_value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -380,7 +380,7 @@ void input_imp::read( unsigned int& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::read( unsigned long& value ) const
 {
-    value = convert< unsigned long >( readValue() );
+    value = convert< unsigned long >( read_value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -389,19 +389,19 @@ void input_imp::read( unsigned long& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::read( unsigned long long& value ) const
 {
-    value = convert< unsigned long >( readValue() );
+    value = convert< unsigned long >( read_value() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_imp::readAttribute
+// Name: input_imp::read_attribute
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-const XMLCh* input_imp::readAttribute( const std::string& name ) const
+const XMLCh* input_imp::read_attribute( const std::string& name ) const
 {
-    const DOMNode* pAttribute = findAttribute( name );
-    if( ! pAttribute )
+    const DOMNode* attribute = find_attribute( name );
+    if( ! attribute )
         throw xml::exception( location() + context() + " does not have an attribute '" + trim( name ) + "'" );
-    return pAttribute->getNodeValue();
+    return attribute->getNodeValue();
 }
 
 // -----------------------------------------------------------------------------
@@ -410,7 +410,7 @@ const XMLCh* input_imp::readAttribute( const std::string& name ) const
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, std::string& value ) const
 {
-    value = translate( readAttribute( name ) );
+    value = translate( read_attribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -419,7 +419,7 @@ void input_imp::attribute( const std::string& name, std::string& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, float& value ) const
 {
-    value = convert< float >( readAttribute( name ) );
+    value = convert< float >( read_attribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -428,7 +428,7 @@ void input_imp::attribute( const std::string& name, float& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, double& value ) const
 {
-    value = convert< double >( readAttribute( name ) );
+    value = convert< double >( read_attribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -437,7 +437,7 @@ void input_imp::attribute( const std::string& name, double& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, short& value ) const
 {
-    value = convert< short >( readAttribute( name ) );
+    value = convert< short >( read_attribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -446,7 +446,7 @@ void input_imp::attribute( const std::string& name, short& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, int& value ) const
 {
-    value = convert< int >( readAttribute( name ) );
+    value = convert< int >( read_attribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -455,7 +455,7 @@ void input_imp::attribute( const std::string& name, int& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, long& value ) const
 {
-    value = convert< long >( readAttribute( name ) );
+    value = convert< long >( read_attribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -464,7 +464,7 @@ void input_imp::attribute( const std::string& name, long& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, long long& value ) const
 {
-    value = convert< long long >( readAttribute( name ) );
+    value = convert< long long >( read_attribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -473,7 +473,7 @@ void input_imp::attribute( const std::string& name, long long& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, bool& value ) const
 {
-    value = convert< bool >( readAttribute( name ) );
+    value = convert< bool >( read_attribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -482,7 +482,7 @@ void input_imp::attribute( const std::string& name, bool& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, unsigned short& value ) const
 {
-    value = convert< unsigned short >( readAttribute( name ) );
+    value = convert< unsigned short >( read_attribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -491,7 +491,7 @@ void input_imp::attribute( const std::string& name, unsigned short& value ) cons
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, unsigned int& value ) const
 {
-    value = convert< unsigned int >( readAttribute( name ) );
+    value = convert< unsigned int >( read_attribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -500,7 +500,7 @@ void input_imp::attribute( const std::string& name, unsigned int& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, unsigned long& value ) const
 {
-    value = convert< unsigned long >( readAttribute( name ) );
+    value = convert< unsigned long >( read_attribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -509,7 +509,7 @@ void input_imp::attribute( const std::string& name, unsigned long& value ) const
 // -----------------------------------------------------------------------------
 void input_imp::attribute( const std::string& name, unsigned long long& value ) const
 {
-    value = convert< unsigned long long >( readAttribute( name ) );
+    value = convert< unsigned long long >( read_attribute( name ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -518,15 +518,15 @@ void input_imp::attribute( const std::string& name, unsigned long long& value ) 
 // -----------------------------------------------------------------------------
 void input_imp::nodes( const visitor& v ) const
 {
-    DOMNode* pChild = pCurrent_->getFirstChild();
-    while( pChild )
+    DOMNode* child = current_->getFirstChild();
+    while( child )
     {
-        if( pChild->getNodeType() == DOMNode::ELEMENT_NODE )
+        if( child->getNodeType() == DOMNode::ELEMENT_NODE )
         {
-            sub_xistream xis( *pChild );
-            v.process( trim( translate( pChild->getNodeName() ) ), xis );
+            sub_xistream xis( *child );
+            v.process( trim( translate( child->getNodeName() ) ), xis );
         }
-        pChild = pChild->getNextSibling();
+        child = child->getNextSibling();
     }
 }
 
@@ -536,14 +536,14 @@ void input_imp::nodes( const visitor& v ) const
 // -----------------------------------------------------------------------------
 void input_imp::attributes( const visitor& v ) const
 {
-    const DOMNamedNodeMap* pAttributes = pCurrent_->getAttributes();
-    if( pAttributes )
+    const DOMNamedNodeMap* attributes = current_->getAttributes();
+    if( attributes )
     {
-        for( XMLSize_t index = 0; index < pAttributes->getLength(); ++index )
+        for( XMLSize_t index = 0; index < attributes->getLength(); ++index )
         {
-            DOMNode* pAttribute = pAttributes->item( index );
-            sub_xistream xis( *pCurrent_ );
-            v.process( trim( translate( pAttribute->getNodeName() ) ), xis );
+            DOMNode* attribute = attributes->item( index );
+            sub_xistream xis( *current_ );
+            v.process( trim( translate( attribute->getNodeName() ) ), xis );
         }
     }
 }
@@ -555,8 +555,8 @@ void input_imp::attributes( const visitor& v ) const
 std::auto_ptr< input_base > input_imp::branch( bool clone ) const
 {
     if( clone )
-        return std::auto_ptr< input_base >( new buffer_input( *pCurrent_ ) );
-    return std::auto_ptr< input_base >( new input_imp( *pCurrent_ ) );
+        return std::auto_ptr< input_base >( new buffer_input( *current_ ) );
+    return std::auto_ptr< input_base >( new input_imp( *current_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -565,7 +565,7 @@ std::auto_ptr< input_base > input_imp::branch( bool clone ) const
 // -----------------------------------------------------------------------------
 void input_imp::copy( output& destination ) const
 {
-    destination.copy( *pCurrent_ );
+    destination.copy( *current_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -574,12 +574,12 @@ void input_imp::copy( output& destination ) const
 // -----------------------------------------------------------------------------
 const std::string input_imp::location() const
 {
-    const DOMLocator* pLocator = reinterpret_cast< DOMLocator* >( pCurrent_->getUserData( translate( "locator" ) ) );
-    if( pLocator )
+    const DOMLocator* locator = reinterpret_cast< DOMLocator* >( current_->getUserData( translate( "locator" ) ) );
+    if( locator )
     {
         std::stringstream stream;
-        stream << translate( pLocator->getURI() ).operator std::string()
-               << " (line " << pLocator->getLineNumber() << ", column " << pLocator->getColumnNumber() << ") : ";
+        stream << translate( locator->getURI() ).operator std::string()
+               << " (line " << locator->getLineNumber() << ", column " << locator->getColumnNumber() << ") : ";
         return stream.str();
     }
     return "";

@@ -45,7 +45,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // -----------------------------------------------------------------------------
 file_input::file_input( const std::string& filename, const encoding& encoding, const grammar& grammar )
     : input_base_member( build( filename, &encoding, grammar ) )
-    , input( std::auto_ptr< input_base >( new input_imp( *pDocument_ ) ) )
+    , input( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
 {
     // NOTHING
 }
@@ -56,7 +56,7 @@ file_input::file_input( const std::string& filename, const encoding& encoding, c
 // -----------------------------------------------------------------------------
 file_input::file_input( const std::string& filename, const grammar& grammar )
     : input_base_member( build( filename, 0, grammar ) )
-    , input( std::auto_ptr< input_base >( new input_imp( *pDocument_ ) ) )
+    , input( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
 {
     // NOTHING
 }
@@ -74,10 +74,10 @@ file_input::~file_input()
 // Name: file_input::build
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-DOMDocument& file_input::build( const std::string& filename, const encoding* pEncoding, const grammar& grammar )
+DOMDocument& file_input::build( const std::string& filename, const encoding* encoding, const grammar& grammar )
 {
     if( ! std::ifstream( filename.c_str() ) )
         throw xml::exception( "Unable to open file '" + filename + "'" );
     LocalFileInputSource buffer( static_cast< const XMLCh* const >( translate( filename ) ) );
-    return parse( buffer, pEncoding, grammar );
+    return parse( buffer, encoding, grammar );
 }

@@ -49,8 +49,8 @@ using namespace XERCES_CPP_NAMESPACE;
 // Name: xostream constructor
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-xostream::xostream( output& o )
-    : output_( o )
+xostream::xostream( output& output )
+    : output_( output )
 {
     // NOTHING
 }

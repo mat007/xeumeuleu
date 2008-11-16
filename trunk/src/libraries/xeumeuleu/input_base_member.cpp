@@ -47,20 +47,20 @@ using namespace XERCES_CPP_NAMESPACE;
 // Created: MAT 2006-03-19
 // -----------------------------------------------------------------------------
 input_base_member::input_base_member( DOMDocument& document )
-    : pDocument_( document )
+    : document_( document )
 {
     // NOTHING
 }
 
 namespace
 {
-    void clean( const DOMNode* pNode )
+    void clean( const DOMNode* node )
     {
-        while( pNode )
+        while( node )
         {
-            delete reinterpret_cast< locator* >( pNode->getUserData( translate( "locator" ) ) );
-            clean( pNode->getFirstChild() );
-            pNode = pNode->getNextSibling();
+            delete reinterpret_cast< locator* >( node->getUserData( translate( "locator" ) ) );
+            clean( node->getFirstChild() );
+            node = node->getNextSibling();
         }
     }
 }
@@ -71,7 +71,7 @@ namespace
 // -----------------------------------------------------------------------------
 input_base_member::~input_base_member()
 {
-    clean( pDocument_.get() );
+    clean( document_.get() );
 }
 
 namespace
@@ -84,11 +84,11 @@ namespace
         {}
     private:
         void startElement( const XMLElementDecl& elemDecl, const unsigned int urlId, const XMLCh* const elemPrefix, const RefVectorOf< XMLAttr >& attrList,
-                           const unsigned int attrCount, const bool isEmpty, const bool isRoot )
+                           const unsigned int attrCount, const bool is_empty, const bool is_root )
         {
-            DOMBuilderImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, isEmpty, isRoot );
-            DOMNode* pNode = getCurrentNode();
-            pNode->setUserData( translate( "locator" ), new locator( uri_, *getScanner(), *pNode ), 0 );
+            DOMBuilderImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, is_empty, is_root );
+            DOMNode* node = getCurrentNode();
+            node->setUserData( translate( "locator" ), new locator( uri_, *getScanner(), *node ), 0 );
         }
         const std::string uri_;
     };
@@ -98,15 +98,15 @@ namespace
 // Name: input_base_member::parse
 // Created: MAT 2006-01-10
 // -----------------------------------------------------------------------------
-DOMDocument& input_base_member::parse( InputSource& source, const encoding* pEncoding, const grammar& grammar )
+DOMDocument& input_base_member::parse( InputSource& source, const encoding* encoding, const grammar& grammar )
 {
     try
     {
         builder builder( translate( source.getSystemId() ) );
         parser parser( builder );
         grammar.configure( parser );
-        if( pEncoding )
-            source.setEncoding( translate( *pEncoding ) );
+        if( encoding )
+            source.setEncoding( translate( *encoding ) );
         return parser.parse( source );
     }
     catch( const OutOfMemoryException& )

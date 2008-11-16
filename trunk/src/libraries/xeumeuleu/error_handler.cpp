@@ -73,10 +73,10 @@ bool error_handler::handleError( const DOMError& error )
 const std::string error_handler::interpret( const DOMError& error ) const
 {
     std::stringstream message;
-    const DOMLocator* const pLocation = error.getLocation();
-    if( pLocation )
-        message << translate( pLocation->getURI() ).operator std::string()
-                << " (line " << pLocation->getLineNumber() << ", column " << pLocation->getColumnNumber() << ") : ";
+    const DOMLocator* const location = error.getLocation();
+    if( location )
+        message << translate( location->getURI() ).operator std::string()
+                << " (line " << location->getLineNumber() << ", column " << location->getColumnNumber() << ") : ";
     message << translate( error.getMessage() ).operator std::string();
     return message.str();
 }

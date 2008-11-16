@@ -146,7 +146,7 @@ void locator::setOffset( const XMLSSize_t /*offset*/ )
 // Name: locator::setErrorNode
 // Created: MAT 2007-09-20
 // -----------------------------------------------------------------------------
-void locator::setErrorNode( XERCES_CPP_NAMESPACE::DOMNode* const /*pNode*/ )
+void locator::setErrorNode( XERCES_CPP_NAMESPACE::DOMNode* const /*node*/ )
 {
     // NOTHING
 }
