@@ -69,7 +69,7 @@ public:
     virtual void setLineNumber( const XMLSSize_t line );
     virtual void setColumnNumber( const XMLSSize_t column );
     virtual void setOffset( const XMLSSize_t offset );
-    virtual void setErrorNode( XERCES_CPP_NAMESPACE::DOMNode* const pNode );
+    virtual void setErrorNode( XERCES_CPP_NAMESPACE::DOMNode* const node );
     virtual void setURI( const XMLCh* const uri );
     //@}
 

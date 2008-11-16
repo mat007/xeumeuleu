@@ -66,7 +66,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const std::auto_ptr< string_output > pOutput_;
+    const std::auto_ptr< string_output > output_;
     //@}
 };
 

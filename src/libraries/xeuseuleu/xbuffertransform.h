@@ -75,7 +75,7 @@ private:
     //! @name Member data
     //@{
     const std::string stylesheet_;
-    std::istream* pStream_;
+    std::istream* stream_;
     //@}
 };
 

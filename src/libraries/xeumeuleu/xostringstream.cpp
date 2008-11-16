@@ -41,7 +41,7 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 xostringstream::xostringstream( const encoding& encoding )
     : xos_base_member( std::auto_ptr< string_output >( new string_output( encoding ) ) )
-    , xostream( *pOutput_ )
+    , xostream( *xos_base_member::output_ )
 {
     // NOTHING
 }
@@ -61,5 +61,5 @@ xostringstream::~xostringstream()
 // -----------------------------------------------------------------------------
 const std::string xostringstream::str() const
 {
-    return pOutput_->str();
+    return xos_base_member::output_->str();
 }

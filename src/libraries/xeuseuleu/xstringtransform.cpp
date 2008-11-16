@@ -41,7 +41,7 @@ using namespace xsl;
 // -----------------------------------------------------------------------------
 xstringtransform::xstringtransform( const std::string& stylesheet )
     : xs_base_member( stylesheet )
-    , xtransform( *pOutput_ )
+    , xtransform( *output_ )
 {
     // NOTHING
 }
@@ -52,7 +52,7 @@ xstringtransform::xstringtransform( const std::string& stylesheet )
 // -----------------------------------------------------------------------------
 xstringtransform::xstringtransform( std::istream& stylesheet )
     : xs_base_member( stylesheet )
-    , xtransform( *pOutput_ )
+    , xtransform( *output_ )
 {
     // NOTHING
 }
@@ -73,5 +73,5 @@ xstringtransform::~xstringtransform()
 // -----------------------------------------------------------------------------
 const std::string xstringtransform::str() const
 {
-    return pOutput_->str();
+    return output_->str();
 }

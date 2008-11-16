@@ -64,7 +64,7 @@ public:
 
     template< typename T > void write( const T& value )
     {
-        pBuffer_.reset( pBuffer_->apply( value ) );
+        buffer_.reset( buffer_->apply( value ) );
     }
     //@}
 
@@ -84,7 +84,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< buffer > pBuffer_;
+    std::auto_ptr< buffer > buffer_;
     //@}
 };
 

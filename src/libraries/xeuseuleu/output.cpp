@@ -41,8 +41,8 @@ using namespace xsl;
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
 output::output( std::ostream& target, const std::string& stylesheet )
-    : target_      ( target )
-    , pTransformer_( new file_output_imp( stylesheet ) )
+    : target_( target )
+    , output_( new file_output_imp( stylesheet ) )
 {
     // NOTHING
 }
@@ -52,8 +52,8 @@ output::output( std::ostream& target, const std::string& stylesheet )
 // Created: SLI 2008-04-04
 // -----------------------------------------------------------------------------
 output::output( std::ostream& target, std::istream& stylesheet )
-    : target_      ( target )
-    , pTransformer_( new buffer_output_imp( stylesheet ) )
+    : target_( target )
+    , output_( new buffer_output_imp( stylesheet ) )
 {
     // NOTHING
 }
@@ -73,7 +73,7 @@ output::~output()
 // -----------------------------------------------------------------------------
 void output::transform()
 {
-    buffer_ << pTransformer_->transform( xos_.str() );
+    buffer_ << output_->transform( xos_.str() );
     target_ << buffer_.str();
 }
 
@@ -83,7 +83,7 @@ void output::transform()
 // -----------------------------------------------------------------------------
 void output::parameter( const std::string& key, const std::string& expression )
 {
-    pTransformer_->parameter( key, expression );
+    output_->parameter( key, expression );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,6 +92,5 @@ void output::parameter( const std::string& key, const std::string& expression )
 // -----------------------------------------------------------------------------
 void output::apply( const output& output )
 {
-    xml::xistringstream xis( output.buffer_.str() );
-    xos_ << xis;
+    xos_ << xml::xistringstream( output.buffer_.str() );
 }

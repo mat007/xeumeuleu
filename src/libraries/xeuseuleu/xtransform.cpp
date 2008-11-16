@@ -42,7 +42,7 @@ using namespace xsl;
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
 xtransform::xtransform( output& output )
-    : pBuffer_( new buffer( output ) )
+    : buffer_( new buffer( output ) )
 {
     // NOTHING
 }
@@ -71,7 +71,7 @@ void xtransform::write( const xsl::xbuffertransform& buffer )
 // -----------------------------------------------------------------------------
 void xtransform::add( const std::string& stylesheet )
 {
-    pBuffer_.reset( new buffer( *new string_output( stylesheet ), pBuffer_ ) );
+    buffer_.reset( new buffer( *new string_output( stylesheet ), buffer_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ void xtransform::add( const std::string& stylesheet )
 // -----------------------------------------------------------------------------
 void xtransform::add( std::istream& stylesheet )
 {
-    pBuffer_.reset( new buffer( *new string_output( stylesheet ), pBuffer_ ) );
+    buffer_.reset( new buffer( *new string_output( stylesheet ), buffer_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,5 +89,5 @@ void xtransform::add( std::istream& stylesheet )
 // -----------------------------------------------------------------------------
 void xtransform::parameter( const std::string& key, const std::string& expression )
 {
-    pBuffer_->parameter( key, expression );
+    buffer_->parameter( key, expression );
 }

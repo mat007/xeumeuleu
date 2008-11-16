@@ -71,8 +71,8 @@ private:
 
     //! @name Helpers
     //@{
-    bool isNewLine( const XMLByte* const data, const unsigned int count ) const;
-    bool isSpace  ( const XMLByte* const data, const unsigned int count ) const;
+    bool is_new_line( const XMLByte* const data, const unsigned int count ) const;
+    bool is_space( const XMLByte* const data, const unsigned int count ) const;
     
     void shift( XERCES_CPP_NAMESPACE::XMLFormatter* const formatter );
     //@}
@@ -81,10 +81,10 @@ private:
     //! @name Member data
     //@{
     XERCES_CPP_NAMESPACE::XMLFormatTarget& target_;
-    const std::string newLine_;
+    const std::string new_line_;
     const std::string space_;
-    bool discardNewLine_;
-    bool discardSpaces_;
+    bool discard_new_line_;
+    bool discard_spaces_;
     unsigned short shift_;
     //@}
 };

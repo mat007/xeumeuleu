@@ -98,7 +98,7 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    xostream( output& o );
+    xostream( output& output );
     //@}
 
 private:

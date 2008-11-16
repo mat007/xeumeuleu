@@ -40,7 +40,7 @@ using namespace xsl;
 // Created: SLI 2007-09-19
 // -----------------------------------------------------------------------------
 xf_base_member::xf_base_member( const std::string& stylesheet, const std::string& filename )
-    : pOutput_( new file_output( stylesheet, filename ) )
+    : output_( new file_output( stylesheet, filename ) )
 {
     // NOTHING
 }
@@ -50,7 +50,7 @@ xf_base_member::xf_base_member( const std::string& stylesheet, const std::string
 // Created: SLI 2008-04-04
 // -----------------------------------------------------------------------------
 xf_base_member::xf_base_member( std::istream& stylesheet, const std::string& filename )
-    : pOutput_( new file_output( stylesheet, filename ) )
+    : output_( new file_output( stylesheet, filename ) )
 {
     // NOTHING
 }

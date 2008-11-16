@@ -49,8 +49,8 @@ using namespace XERCES_CPP_NAMESPACE;
 // Name: xistream constructor
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-xistream::xistream( std::auto_ptr< input > pInput )
-    : pInput_( pInput )
+xistream::xistream( std::auto_ptr< input > input )
+    : input_( input )
 {
     // NOTHING
 }
@@ -71,7 +71,7 @@ xistream::~xistream()
 void xistream::start( const std::string& tag )
 {
     TRY
-        pInput_->start( tag );
+        input_->start( tag );
     CATCH
 }
 
@@ -82,7 +82,7 @@ void xistream::start( const std::string& tag )
 void xistream::end()
 {
     TRY
-        pInput_->end();
+        input_->end();
     CATCH
 }
 
@@ -93,7 +93,7 @@ void xistream::end()
 void xistream::read( std::string& value ) const
 {
     TRY
-        pInput_->read( value );
+        input_->read( value );
     CATCH
 }
 
@@ -104,7 +104,7 @@ void xistream::read( std::string& value ) const
 void xistream::read( float& value ) const
 {
     TRY
-        pInput_->read( value );
+        input_->read( value );
     CATCH
 }
 
@@ -115,7 +115,7 @@ void xistream::read( float& value ) const
 void xistream::read( double& value ) const
 {
     TRY
-        pInput_->read( value );
+        input_->read( value );
     CATCH
 }
 
@@ -126,7 +126,7 @@ void xistream::read( double& value ) const
 void xistream::read( int& value ) const
 {
     TRY
-        pInput_->read( value );
+        input_->read( value );
     CATCH
 }
 
@@ -137,7 +137,7 @@ void xistream::read( int& value ) const
 void xistream::read( long& value ) const
 {
     TRY
-        pInput_->read( value );
+        input_->read( value );
     CATCH
 }
 
@@ -148,7 +148,7 @@ void xistream::read( long& value ) const
 void xistream::read( long long& value ) const
 {
     TRY
-        pInput_->read( value );
+        input_->read( value );
     CATCH
 }
 
@@ -159,7 +159,7 @@ void xistream::read( long long& value ) const
 void xistream::read( short& value ) const
 {
     TRY
-        pInput_->read( value );
+        input_->read( value );
     CATCH
 }
 
@@ -170,7 +170,7 @@ void xistream::read( short& value ) const
 void xistream::read( bool& value ) const
 {
     TRY
-        pInput_->read( value );
+        input_->read( value );
     CATCH
 }
 
@@ -181,7 +181,7 @@ void xistream::read( bool& value ) const
 void xistream::read( unsigned int& value ) const
 {
     TRY
-        pInput_->read( value );
+        input_->read( value );
     CATCH
 }
 
@@ -192,7 +192,7 @@ void xistream::read( unsigned int& value ) const
 void xistream::read( unsigned short& value ) const
 {
     TRY
-        pInput_->read( value );
+        input_->read( value );
     CATCH
 }
 
@@ -203,7 +203,7 @@ void xistream::read( unsigned short& value ) const
 void xistream::read( unsigned long& value ) const
 {
     TRY
-        pInput_->read( value );
+        input_->read( value );
     CATCH
 }
 
@@ -214,7 +214,7 @@ void xistream::read( unsigned long& value ) const
 void xistream::read( unsigned long long& value ) const
 {
     TRY
-        pInput_->read( value );
+        input_->read( value );
     CATCH
 }
 
@@ -234,7 +234,7 @@ void xistream::read( xostream& xos ) const
 void xistream::attribute( const std::string& name, std::string& value ) const
 {
     TRY
-        pInput_->attribute( name, value );
+        input_->attribute( name, value );
     CATCH
 }
 
@@ -245,7 +245,7 @@ void xistream::attribute( const std::string& name, std::string& value ) const
 void xistream::attribute( const std::string& name, float& value ) const
 {
     TRY
-        pInput_->attribute( name, value );
+        input_->attribute( name, value );
     CATCH
 }
 
@@ -256,7 +256,7 @@ void xistream::attribute( const std::string& name, float& value ) const
 void xistream::attribute( const std::string& name, double& value ) const
 {
     TRY
-        pInput_->attribute( name, value );
+        input_->attribute( name, value );
     CATCH
 }
 
@@ -267,7 +267,7 @@ void xistream::attribute( const std::string& name, double& value ) const
 void xistream::attribute( const std::string& name, short& value ) const
 {
     TRY
-        pInput_->attribute( name, value );
+        input_->attribute( name, value );
     CATCH
 }
 
@@ -278,7 +278,7 @@ void xistream::attribute( const std::string& name, short& value ) const
 void xistream::attribute( const std::string& name, int& value ) const
 {
     TRY
-        pInput_->attribute( name, value );
+        input_->attribute( name, value );
     CATCH
 }
 
@@ -289,7 +289,7 @@ void xistream::attribute( const std::string& name, int& value ) const
 void xistream::attribute( const std::string& name, long& value ) const
 {
     TRY
-        pInput_->attribute( name, value );
+        input_->attribute( name, value );
     CATCH
 }
 
@@ -300,7 +300,7 @@ void xistream::attribute( const std::string& name, long& value ) const
 void xistream::attribute( const std::string& name, long long& value ) const
 {
     TRY
-        pInput_->attribute( name, value );
+        input_->attribute( name, value );
     CATCH
 }
 
@@ -311,7 +311,7 @@ void xistream::attribute( const std::string& name, long long& value ) const
 void xistream::attribute( const std::string& name, bool& value ) const
 {
     TRY
-        pInput_->attribute( name, value );
+        input_->attribute( name, value );
     CATCH
 }
 
@@ -322,7 +322,7 @@ void xistream::attribute( const std::string& name, bool& value ) const
 void xistream::attribute( const std::string& name, unsigned short& value ) const
 {
     TRY
-        pInput_->attribute( name, value );
+        input_->attribute( name, value );
     CATCH
 }
 
@@ -333,7 +333,7 @@ void xistream::attribute( const std::string& name, unsigned short& value ) const
 void xistream::attribute( const std::string& name, unsigned int& value ) const
 {
     TRY
-        pInput_->attribute( name, value );
+        input_->attribute( name, value );
     CATCH
 }
 
@@ -344,7 +344,7 @@ void xistream::attribute( const std::string& name, unsigned int& value ) const
 void xistream::attribute( const std::string& name, unsigned long& value ) const
 {
     TRY
-        pInput_->attribute( name, value );
+        input_->attribute( name, value );
     CATCH
 }
 
@@ -355,7 +355,7 @@ void xistream::attribute( const std::string& name, unsigned long& value ) const
 void xistream::attribute( const std::string& name, unsigned long long& value ) const
 {
     TRY
-        pInput_->attribute( name, value );
+        input_->attribute( name, value );
     CATCH
 }
 
@@ -366,7 +366,7 @@ void xistream::attribute( const std::string& name, unsigned long long& value ) c
 void xistream::nodes( const visitor& v ) const
 {
     TRY
-        pInput_->nodes( v );
+        input_->nodes( v );
     CATCH
 }
 
@@ -377,7 +377,7 @@ void xistream::nodes( const visitor& v ) const
 void xistream::attributes( const visitor& v ) const
 {
     TRY
-        pInput_->attributes( v );
+        input_->attributes( v );
     CATCH
 }
 
@@ -388,7 +388,7 @@ void xistream::attributes( const visitor& v ) const
 void xistream::optional()
 {
     TRY
-        pInput_->optional();
+        input_->optional();
     CATCH
 }
 
@@ -399,7 +399,7 @@ void xistream::optional()
 std::auto_ptr< input > xistream::branch( bool clone ) const
 {
     TRY
-        return pInput_->branch( clone );
+        return input_->branch( clone );
     CATCH
 }
 
@@ -410,7 +410,7 @@ std::auto_ptr< input > xistream::branch( bool clone ) const
 void xistream::copy( output& destination ) const
 {
     TRY
-        pInput_->copy( destination );
+        input_->copy( destination );
     CATCH
 }
 
@@ -420,5 +420,5 @@ void xistream::copy( output& destination ) const
 // -----------------------------------------------------------------------------
 void xistream::error( const std::string& message ) const
 {
-    pInput_->error( message );
+    input_->error( message );
 }

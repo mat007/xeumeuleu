@@ -48,7 +48,7 @@ using namespace XERCES_CPP_NAMESPACE;
 output::output( DOMDocument& document, DOMNode& root )
     : document_( document )
     , root_    ( root )
-    , pCurrent_( &root )
+    , current_ ( &root )
 {
     // NOTHING
 }
@@ -68,7 +68,7 @@ output::~output()
 // -----------------------------------------------------------------------------
 std::string output::context() const
 {
-    return "node '" + std::string( translate( pCurrent_->getNodeName() ) ) + "'";
+    return "node '" + std::string( translate( current_->getNodeName() ) ) + "'";
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ std::string output::context() const
 // -----------------------------------------------------------------------------
 void output::start( const std::string& tag )
 {
-    pCurrent_ = pCurrent_->appendChild( document_.createElement( translate( trim( tag ) ) ) );
+    current_ = current_->appendChild( document_.createElement( translate( trim( tag ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,9 +86,9 @@ void output::start( const std::string& tag )
 // -----------------------------------------------------------------------------
 void output::end()
 {
-    if( isRoot() )
+    if( is_root() )
         throw xml::exception( "Illegal 'end' from root level" );
-    pCurrent_ = pCurrent_->getParentNode();
+    current_ = current_->getParentNode();
     flush();
 }
 
@@ -98,7 +98,7 @@ void output::end()
 // -----------------------------------------------------------------------------
 void output::cdata( const std::string& value )
 {
-    pCurrent_->appendChild( document_.createCDATASection( translate( value ) ) );
+    current_->appendChild( document_.createCDATASection( translate( value ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +107,7 @@ void output::cdata( const std::string& value )
 // -----------------------------------------------------------------------------
 void output::instruction( const std::string& target, const std::string& data )
 {
-    pCurrent_->appendChild( document_.createProcessingInstruction( translate( target ), translate( data ) ) );
+    current_->appendChild( document_.createProcessingInstruction( translate( target ), translate( data ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +116,7 @@ void output::instruction( const std::string& target, const std::string& data )
 // -----------------------------------------------------------------------------
 void output::write( const std::string& value )
 {
-    pCurrent_->appendChild( document_.createTextNode( translate( value ) ) );
+    current_->appendChild( document_.createTextNode( translate( value ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,19 +125,19 @@ void output::write( const std::string& value )
 // -----------------------------------------------------------------------------
 void output::attribute( const std::string& name, const std::string& value )
 {
-    DOMNamedNodeMap* pAttributes = pCurrent_->getAttributes();
-    if( ! pAttributes )
+    DOMNamedNodeMap* attributes = current_->getAttributes();
+    if( ! attributes )
         throw xml::exception( context() + " cannot have attributes" );
     DOMAttr* pAttribute = document_.createAttribute( translate( trim( name ) ) );
     pAttribute->setValue( translate( value ) );
-    pAttributes->setNamedItem( pAttribute );
+    attributes->setNamedItem( pAttribute );
 }
 
 // -----------------------------------------------------------------------------
-// Name: output::isEmpty
+// Name: output::is_empty
 // Created: MAT 2007-09-06
 // -----------------------------------------------------------------------------
-bool output::isEmpty( const DOMNode& node ) const
+bool output::is_empty( const DOMNode& node ) const
 {
     if( node.getNodeType() != DOMNode::TEXT_NODE
      && node.getNodeType() != DOMNode::CDATA_SECTION_NODE )
@@ -150,16 +150,16 @@ bool output::isEmpty( const DOMNode& node ) const
 // Name: output::copy
 // Created: MAT 2007-09-06
 // -----------------------------------------------------------------------------
-void output::copy( DOMNode* pNode, DOMNode& to )
+void output::copy( DOMNode* node, DOMNode& to )
 {
-    if( ! pNode )
+    if( ! node )
         return;
-    if( ! isEmpty( *pNode ) )
+    if( ! is_empty( *node ) )
     {
-        DOMNode* pNew = to.appendChild( document_.importNode( pNode, false ) );
-        copy( pNode->getFirstChild(), *pNew );
+        DOMNode* pNew = to.appendChild( document_.importNode( node, false ) );
+        copy( node->getFirstChild(), *pNew );
     }
-    copy( pNode->getNextSibling(), to );
+    copy( node->getNextSibling(), to );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +168,7 @@ void output::copy( DOMNode* pNode, DOMNode& to )
 // -----------------------------------------------------------------------------
 void output::copy( const DOMNode& node )
 {
-    copy( node.getFirstChild(), *pCurrent_ );
+    copy( node.getFirstChild(), *current_ );
     flush();
 }
 
@@ -178,7 +178,7 @@ void output::copy( const DOMNode& node )
 // -----------------------------------------------------------------------------
 std::auto_ptr< output > output::branch()
 {
-    return std::auto_ptr< output >( new sub_output( document_, *pCurrent_, *this ) );
+    return std::auto_ptr< output >( new sub_output( document_, *current_, *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,17 +187,17 @@ std::auto_ptr< output > output::branch()
 // -----------------------------------------------------------------------------
 void output::flush()
 {
-    if( isRoot() && root_.getFirstChild() )
+    if( is_root() && root_.getFirstChild() )
         finished();
 }
 
 // -----------------------------------------------------------------------------
-// Name: output::isRoot
+// Name: output::is_root
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-bool output::isRoot() const
+bool output::is_root() const
 {
-    return pCurrent_ == &root_;
+    return current_ == &root_;
 }
 
 namespace

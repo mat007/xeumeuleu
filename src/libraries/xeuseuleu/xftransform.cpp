@@ -41,7 +41,7 @@ using namespace xsl;
 // -----------------------------------------------------------------------------
 xftransform::xftransform( const std::string& stylesheet, const std::string& filename )
     : xf_base_member( stylesheet, filename )
-    , xtransform( *pOutput_ )
+    , xtransform( *output_ )
 {
     // NOTHING
 }
@@ -52,7 +52,7 @@ xftransform::xftransform( const std::string& stylesheet, const std::string& file
 // -----------------------------------------------------------------------------
 xftransform::xftransform( std::istream& stylesheet, const std::string& filename )
     : xf_base_member( stylesheet, filename )
-    , xtransform( *pOutput_ )
+    , xtransform( *output_ )
 {
     // NOTHING
 }

@@ -40,9 +40,9 @@ using namespace xml;
 // Name: branch_input constructor
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-branch_input::branch_input( std::auto_ptr< input_base > pInput1, std::auto_ptr< input_base > pInput2, input_context& context, bool invert )
-    : pInput1_( pInput1 )
-    , pInput2_( pInput2 )
+branch_input::branch_input( std::auto_ptr< input_base > input1, std::auto_ptr< input_base > input2, input_context& context, bool invert )
+    : input1_ ( input1 )
+    , input2_ ( input2 )
     , context_( context )
     , invert_ ( invert )
     , level_  ( 0 )
@@ -65,7 +65,7 @@ branch_input::~branch_input()
 // -----------------------------------------------------------------------------
 void branch_input::start( const std::string& tag )
 {
-    pInput1_->start( tag );
+    input1_->start( tag );
     ++level_;
 }
 
@@ -75,13 +75,13 @@ void branch_input::start( const std::string& tag )
 // -----------------------------------------------------------------------------
 void branch_input::end()
 {
-    pInput1_->end();
+    input1_->end();
     if( --level_ == 0 )
     {
         if( invert_ ) // $$$$ MAT : crappy bool
-            context_.reset( std::auto_ptr< input_base >( new multi_input( pInput2_, pInput1_, context_ ) ) );
+            context_.reset( std::auto_ptr< input_base >( new multi_input( input2_, input1_, context_ ) ) );
         else
-            context_.reset( std::auto_ptr< input_base >( new multi_input( pInput1_, pInput2_, context_ ) ) );
+            context_.reset( std::auto_ptr< input_base >( new multi_input( input1_, input2_, context_ ) ) );
     }
 }
 
@@ -91,7 +91,7 @@ void branch_input::end()
 // -----------------------------------------------------------------------------
 void branch_input::read( std::string& value ) const
 {
-    pInput1_->read( value );
+    input1_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ void branch_input::read( std::string& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::read( float& value ) const
 {
-    pInput1_->read( value );
+    input1_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +109,7 @@ void branch_input::read( float& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::read( double& value ) const
 {
-    pInput1_->read( value );
+    input1_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +118,7 @@ void branch_input::read( double& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::read( short& value ) const
 {
-    pInput1_->read( value );
+    input1_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +127,7 @@ void branch_input::read( short& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::read( int& value ) const
 {
-    pInput1_->read( value );
+    input1_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +136,7 @@ void branch_input::read( int& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::read( long& value ) const
 {
-    pInput1_->read( value );
+    input1_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ void branch_input::read( long& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::read( long long& value ) const
 {
-    pInput1_->read( value );
+    input1_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +154,7 @@ void branch_input::read( long long& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::read( bool& value ) const
 {
-    pInput1_->read( value );
+    input1_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,7 +163,7 @@ void branch_input::read( bool& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::read( unsigned short& value ) const
 {
-    pInput1_->read( value );
+    input1_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +172,7 @@ void branch_input::read( unsigned short& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::read( unsigned int& value ) const
 {
-    pInput1_->read( value );
+    input1_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +181,7 @@ void branch_input::read( unsigned int& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::read( unsigned long& value ) const
 {
-    pInput1_->read( value );
+    input1_->read( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -190,34 +190,34 @@ void branch_input::read( unsigned long& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::read( unsigned long long& value ) const
 {
-    pInput1_->read( value );
+    input1_->read( value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: branch_input::hasElement
+// Name: branch_input::has_element
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-bool branch_input::hasElement( const std::string& tag ) const
+bool branch_input::has_element( const std::string& tag ) const
 {
-    return pInput1_->hasElement( tag );
+    return input1_->has_element( tag );
 }
 
 // -----------------------------------------------------------------------------
-// Name: branch_input::hasAttribute
+// Name: branch_input::has_attribute
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-bool branch_input::hasAttribute( const std::string& name ) const
+bool branch_input::has_attribute( const std::string& name ) const
 {
-    return pInput1_->hasAttribute( name );
+    return input1_->has_attribute( name );
 }
 
 // -----------------------------------------------------------------------------
-// Name: branch_input::hasContent
+// Name: branch_input::has_content
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-bool branch_input::hasContent() const
+bool branch_input::has_content() const
 {
-    return pInput1_->hasContent();
+    return input1_->has_content();
 }
 
 // -----------------------------------------------------------------------------
@@ -226,7 +226,7 @@ bool branch_input::hasContent() const
 // -----------------------------------------------------------------------------
 void branch_input::attribute( const std::string& name, std::string& value ) const
 {
-    pInput1_->attribute( name, value );
+    input1_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +235,7 @@ void branch_input::attribute( const std::string& name, std::string& value ) cons
 // -----------------------------------------------------------------------------
 void branch_input::attribute( const std::string& name, float& value ) const
 {
-    pInput1_->attribute( name, value );
+    input1_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -244,7 +244,7 @@ void branch_input::attribute( const std::string& name, float& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::attribute( const std::string& name, double& value ) const
 {
-    pInput1_->attribute( name, value );
+    input1_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,7 +253,7 @@ void branch_input::attribute( const std::string& name, double& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::attribute( const std::string& name, short& value ) const
 {
-    pInput1_->attribute( name, value );
+    input1_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -262,7 +262,7 @@ void branch_input::attribute( const std::string& name, short& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::attribute( const std::string& name, int& value ) const
 {
-    pInput1_->attribute( name, value );
+    input1_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -271,7 +271,7 @@ void branch_input::attribute( const std::string& name, int& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::attribute( const std::string& name, long& value ) const
 {
-    pInput1_->attribute( name, value );
+    input1_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -280,7 +280,7 @@ void branch_input::attribute( const std::string& name, long& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::attribute( const std::string& name, long long& value ) const
 {
-    pInput1_->attribute( name, value );
+    input1_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -289,7 +289,7 @@ void branch_input::attribute( const std::string& name, long long& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::attribute( const std::string& name, bool& value ) const
 {
-    pInput1_->attribute( name, value );
+    input1_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -298,7 +298,7 @@ void branch_input::attribute( const std::string& name, bool& value ) const
 // -----------------------------------------------------------------------------
 void branch_input::attribute( const std::string& name, unsigned short& value ) const
 {
-    pInput1_->attribute( name, value );
+    input1_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -307,7 +307,7 @@ void branch_input::attribute( const std::string& name, unsigned short& value ) c
 // -----------------------------------------------------------------------------
 void branch_input::attribute( const std::string& name, unsigned int& value ) const
 {
-    pInput1_->attribute( name, value );
+    input1_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -316,7 +316,7 @@ void branch_input::attribute( const std::string& name, unsigned int& value ) con
 // -----------------------------------------------------------------------------
 void branch_input::attribute( const std::string& name, unsigned long& value ) const
 {
-    pInput1_->attribute( name, value );
+    input1_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -325,7 +325,7 @@ void branch_input::attribute( const std::string& name, unsigned long& value ) co
 // -----------------------------------------------------------------------------
 void branch_input::attribute( const std::string& name, unsigned long long& value ) const
 {
-    pInput1_->attribute( name, value );
+    input1_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -334,7 +334,7 @@ void branch_input::attribute( const std::string& name, unsigned long long& value
 // -----------------------------------------------------------------------------
 void branch_input::nodes( const visitor& v ) const
 {
-    pInput1_->nodes( v );
+    input1_->nodes( v );
 }
 
 // -----------------------------------------------------------------------------
@@ -343,7 +343,7 @@ void branch_input::nodes( const visitor& v ) const
 // -----------------------------------------------------------------------------
 void branch_input::attributes( const visitor& v ) const
 {
-    pInput1_->attributes( v );
+    input1_->attributes( v );
 }
 
 // -----------------------------------------------------------------------------
@@ -352,7 +352,7 @@ void branch_input::attributes( const visitor& v ) const
 // -----------------------------------------------------------------------------
 std::auto_ptr< input_base > branch_input::branch( bool clone ) const
 {
-    return pInput1_->branch( clone );
+    return input1_->branch( clone );
 }
 
 // -----------------------------------------------------------------------------
@@ -361,7 +361,7 @@ std::auto_ptr< input_base > branch_input::branch( bool clone ) const
 // -----------------------------------------------------------------------------
 void branch_input::copy( output& destination ) const
 {
-    pInput1_->copy( destination );
+    input1_->copy( destination );
 }
 
 // -----------------------------------------------------------------------------
@@ -370,5 +370,5 @@ void branch_input::copy( output& destination ) const
 // -----------------------------------------------------------------------------
 void branch_input::error( const std::string& message ) const
 {
-    pInput1_->error( message );
+    input1_->error( message );
 }

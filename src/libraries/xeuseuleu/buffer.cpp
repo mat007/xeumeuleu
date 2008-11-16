@@ -38,10 +38,10 @@ using namespace xsl;
 // Name: buffer constructor
 // Created: MCO 2007-10-02
 // -----------------------------------------------------------------------------
-buffer::buffer( output& output, std::auto_ptr< buffer > pNext )
+buffer::buffer( output& output, std::auto_ptr< buffer > next )
     : output_( output )
     , owned_ ( true )
-    , pNext_ ( pNext )
+    , next_  ( next )
     , level_ ( 0 )
 {
     // NOTHING
@@ -109,7 +109,7 @@ buffer* buffer::transform()
     if( level_ == 0 )
     {
         output_.transform();
-        if( pNext_.get() )
+        if( next_.get() )
             return chain();
     }
     return this;
@@ -121,8 +121,8 @@ buffer* buffer::transform()
 // -----------------------------------------------------------------------------
 buffer* buffer::chain()
 {
-    buffer* pNext = pNext_->apply( output_ );
-    if( pNext != pNext_.get() )
-        return pNext;
-    return pNext_.release();
+    buffer* next = next_->apply( output_ );
+    if( next != next_.get() )
+        return next;
+    return next_.release();
 }

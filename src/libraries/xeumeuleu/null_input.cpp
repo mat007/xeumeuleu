@@ -40,10 +40,10 @@ using namespace xml;
 // Name: null_input constructor
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
-null_input::null_input( std::auto_ptr< input_base > pInput, input_context& context )
-    : pInput_  ( pInput )
-    , pContext_( &context )
-    , level_   ( 0 )
+null_input::null_input( std::auto_ptr< input_base > input, input_context& context )
+    : input_  ( input )
+    , context_( &context )
+    , level_  ( 0 )
 {
     // NOTHING
 }
@@ -53,8 +53,8 @@ null_input::null_input( std::auto_ptr< input_base > pInput, input_context& conte
 // Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
 null_input::null_input()
-    : pContext_( 0 )
-    , level_   ( 0 )
+    : context_( 0 )
+    , level_  ( 0 )
 {
     // NOTHING
 }
@@ -83,8 +83,8 @@ void null_input::start( const std::string& /*tag*/ )
 // -----------------------------------------------------------------------------
 void null_input::end()
 {
-    if( --level_ == 0 && pContext_ )
-        pContext_->reset( pInput_ );
+    if( --level_ == 0 && context_ )
+        context_->reset( input_ );
     else if( level_ < 0 )
         throw xml::exception( "Cannot move up from root" );
 }
@@ -198,28 +198,28 @@ void null_input::read( unsigned long long& /*value*/ ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: null_input::hasElement
+// Name: null_input::has_element
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
-bool null_input::hasElement( const std::string& /*tag*/ ) const
+bool null_input::has_element( const std::string& /*tag*/ ) const
 {
     return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: null_input::hasAttribute
+// Name: null_input::has_attribute
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
-bool null_input::hasAttribute( const std::string& /*name*/ ) const
+bool null_input::has_attribute( const std::string& /*name*/ ) const
 {
     return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: null_input::hasContent
+// Name: null_input::has_content
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
-bool null_input::hasContent() const
+bool null_input::has_content() const
 {
     return false;
 }
@@ -374,7 +374,7 @@ void null_input::copy( output& /*destination*/ ) const
 // -----------------------------------------------------------------------------
 void null_input::error( const std::string& message ) const
 {
-    if( ! pInput_.get() )
+    if( ! input_.get() )
         throw xml::exception( message );
-    pInput_->error( message );
+    input_->error( message );
 }

@@ -110,7 +110,7 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    xistream( std::auto_ptr< input > pInput );
+    xistream( std::auto_ptr< input > input );
     //@}
 
 private:
@@ -123,7 +123,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< input > pInput_;
+    std::auto_ptr< input > input_;
     //@}
 };
 

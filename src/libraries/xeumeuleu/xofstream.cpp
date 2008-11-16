@@ -41,7 +41,7 @@ using namespace xml;
 // -----------------------------------------------------------------------------
 xofstream::xofstream( const std::string& filename, const encoding& encoding )
     : xo_base_member( std::auto_ptr< output >( new file_output( filename, encoding ) ) )
-    , xostream( *pOutput_ )
+    , xostream( *xo_base_member::output_ )
 {
     // NOTHING
 }

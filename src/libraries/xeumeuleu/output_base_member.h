@@ -76,7 +76,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > pDocument_;
+    xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > document_;
     //@}
 };
 

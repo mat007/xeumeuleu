@@ -50,7 +50,7 @@ class branch_input : public input_base
 public:
     //! @name Constructors/Destructor
     //@{
-             branch_input( std::auto_ptr< input_base > pInput1, std::auto_ptr< input_base > pInput2, input_context& context, bool invert );
+             branch_input( std::auto_ptr< input_base > input1, std::auto_ptr< input_base > input2, input_context& context, bool invert );
     virtual ~branch_input();
     //@}
 
@@ -81,9 +81,9 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool hasElement( const std::string& tag ) const;
-    virtual bool hasAttribute( const std::string& name ) const;
-    virtual bool hasContent() const;
+    virtual bool has_element( const std::string& tag ) const;
+    virtual bool has_attribute( const std::string& name ) const;
+    virtual bool has_content() const;
 
     virtual void attribute( const std::string& name, std::string& value ) const;
     virtual void attribute( const std::string& name, float& value ) const;
@@ -112,8 +112,8 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< input_base > pInput1_;
-    std::auto_ptr< input_base > pInput2_;
+    std::auto_ptr< input_base > input1_;
+    std::auto_ptr< input_base > input2_;
     input_context& context_;
     bool invert_;
     unsigned int level_;
