@@ -58,7 +58,7 @@ public:
     void parameter( const std::string& key, const std::string& expression );
 
     buffer* apply( const xml::start& start );
-    buffer* apply( const xml::end& end );
+    buffer* apply( const xml::end_manipulator& end );
 
     template< typename T > buffer* apply( const T& value )
     {

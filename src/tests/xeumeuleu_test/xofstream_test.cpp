@@ -69,8 +69,8 @@ BOOST_AUTO_TEST_CASE( streaming_elements_creates_a_valid_file )
     const std::string filename = "valid_file.xml";
     xml::xofstream xos( filename );
     xos << xml::start( "element" )
-            << xml::start( "child" ) << xml::end()
-        << xml::end();
+            << xml::start( "child" ) << xml::end
+        << xml::end;
     BOOST_REQUIRE_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                          "<element>\n"
                          "  <child/>\n"

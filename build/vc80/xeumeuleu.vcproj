@@ -215,10 +215,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\cdata.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\cdata.h"
 					>
 				</File>
@@ -227,19 +223,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\end.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\end.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\helpers.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\instruction.cpp"
 					>
 				</File>
 				<File
@@ -255,15 +243,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\optional.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\optional.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\start.cpp"
 					>
 				</File>
 				<File

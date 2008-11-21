@@ -61,8 +61,8 @@ int main()
             xos << xml::start( "element" )
                     << 12.f
                     << xml::attribute( "id", 27.f )
-                << xml::end();
-        xos << xml::end();
+                << xml::end;
+        xos << xml::end;
     }
     const time_duration duration = microsec_clock::local_time() - start;
     std::cout << "duration : " << duration << std::endl;

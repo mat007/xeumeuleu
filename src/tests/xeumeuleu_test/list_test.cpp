@@ -224,7 +224,7 @@ BOOST_AUTO_TEST_CASE( read_list_from_element_calls_a_custom_method )
                              "</element>" );
     xis >> xml::start( "element" )
             >> xml::list( "sub-node", mock_custom, &mock_custom_class::process )
-        >> xml::end();
+        >> xml::end;
     mock_custom.verify();
 }
 
@@ -266,7 +266,7 @@ BOOST_AUTO_TEST_CASE( read_list_from_element_calls_a_custom_method_with_paramete
                              "</element>" );
     xis >> xml::start( "element" )
             >> xml::list( "sub-node", mock_custom, &mock_custom_class_with_parameters::process, p1, p2 )
-        >> xml::end();
+        >> xml::end;
     mock_custom.verify();
 }
 
@@ -315,7 +315,7 @@ BOOST_AUTO_TEST_CASE( read_list_from_element_calls_a_custom_method_with_polymorp
                              "</element>" );
     xis >> xml::start( "element" )
             >> xml::list( "sub-node", mock_custom, &mock_custom_class_with_polymorphic_parameter::process, my_instance )
-        >> xml::end();
+        >> xml::end;
     mock_custom.verify();
 }
 
@@ -326,7 +326,7 @@ namespace
     public:
         void process( xml::xistream& xis )
         {
-            xis >> xml::end();
+            xis >> xml::end;
         }
     };
 }
@@ -383,7 +383,7 @@ BOOST_AUTO_TEST_CASE( read_name_list_with_parameters )
     mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "sub-node2" ), eq< std::string >( "content number two" ), eq( p1 ) );
     xis >> xml::start( "element" )
             >> xml::list( mock_custom, &mock_custom_class_name_list_with_parameters::process, p1 )
-        >> xml::end();
+        >> xml::end;
     mock_custom.verify();
 }
 
@@ -424,7 +424,7 @@ BOOST_AUTO_TEST_CASE( read_name_list_is_not_called_with_content )
     mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "sub-node" ), eq< std::string >( "content" ) );
     xis >> xml::start( "element" )
             >> xml::list( mock_custom, &mock_custom_class_name_list::process )
-        >> xml::end();
+        >> xml::end;
     mock_custom.verify();
 }
 

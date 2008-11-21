@@ -19,14 +19,14 @@ namespace
                                     "<another-sub-node/>"
                                  "</element>" );
         xis >> xml::start( "element" )
-                >> xml::start( "another-sub-node" ) >> xml::end();
+                >> xml::start( "another-sub-node" ) >> xml::end;
     }
     void write()
     {
         xml::xostringstream xos;
         xos << xml::start( "element" )
-                << xml::start( "another-sub-node" ) << xml::end()
-            << xml::end();
+                << xml::start( "another-sub-node" ) << xml::end
+            << xml::end;
     }
     void run()
     {

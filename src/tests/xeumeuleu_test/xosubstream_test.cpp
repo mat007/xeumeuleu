@@ -44,8 +44,8 @@ BOOST_AUTO_TEST_CASE( created_output_sub_stream_starts_from_current_stream_level
     xml::xostringstream xos;
     xos << xml::start( "element" );
     xml::xosubstream xoss( xos );
-    xoss << xml::start( "sub-node" ) << xml::end();
-    xos << xml::end();
+    xoss << xml::start( "sub-node" ) << xml::end;
+    xos << xml::end;
     const std::string xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                             "<element>\n"
                             "  <sub-node/>\n"
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE( streaming_end_to_an_output_sub_stream_at_root_level_throws
     xml::xostringstream xos;
     xos << xml::start( "element" );
     xml::xosubstream xoss( xos );
-    BOOST_CHECK_THROW( xoss << xml::end(), xml::exception );
+    BOOST_CHECK_THROW( xoss << xml::end, xml::exception );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ BOOST_AUTO_TEST_CASE( creating_a_sub_stream_does_not_modify_original_output_stre
     xos << xml::start( "element" );
     xml::xosubstream xoss( xos );
     xoss << xml::start( "sub-node" );
-    BOOST_CHECK_NO_THROW( xos << xml::end() );
+    BOOST_CHECK_NO_THROW( xos << xml::end );
     const std::string xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                             "<element>\n"
                             "  <sub-node/>\n"
@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE( creating_root_element_in_sub_stream_completes_the_stream_u
 {
     xml::xostringstream xos;
     xml::xosubstream xoss( xos );
-    xoss << xml::start( "element" ) << xml::end();
+    xoss << xml::start( "element" ) << xml::end;
     const std::string xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                             "<element/>\n";
     BOOST_CHECK_EQUAL( xml, xos.str() );
