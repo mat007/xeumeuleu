@@ -47,7 +47,6 @@ namespace xml
 
     xml::xostream& xos = ...;
     xos << xml::end();
-    end;
     @endcode
 */
 // Created: MAT 2006-01-03
