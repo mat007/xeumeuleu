@@ -52,6 +52,10 @@ namespace
             process_mocker.forward( name, content );
         }
         mockpp::ChainableMockMethod< void, std::string, std::string > process_mocker;
+
+    private:
+        mock_custom_class( const mock_custom_class& );
+        mock_custom_class& operator=( const mock_custom_class& );
     };
 }
 
