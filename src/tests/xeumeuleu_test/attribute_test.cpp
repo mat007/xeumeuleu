@@ -93,6 +93,9 @@ BOOST_AUTO_TEST_CASE( add_attribute_on_element_makes_a_valid_document )
     BOOST_CHECK_EQUAL( format( "12" ), write< int >( 12 ) );
     BOOST_CHECK_EQUAL( format( "12" ), write< long >( 12 ) );
     BOOST_CHECK_EQUAL( format( "12" ), write< long long >( 12 ) );
+    BOOST_CHECK_EQUAL( format( "12" ), write< float >( 12 ) );
+    BOOST_CHECK_EQUAL( format( "12" ), write< double >( 12 ) );
+    BOOST_CHECK_EQUAL( format( "12" ), write< long double >( 12 ) );
     BOOST_CHECK_EQUAL( format( "12" ), write< unsigned short >( 12 ) );
     BOOST_CHECK_EQUAL( format( "12" ), write< unsigned int >( 12 ) );
     BOOST_CHECK_EQUAL( format( "12" ), write< unsigned long >( 12 ) );
@@ -121,8 +124,12 @@ BOOST_AUTO_TEST_CASE( read_attribute_from_element_retrieves_value )
     BOOST_CHECK_EQUAL( 12, read< int >( "12" ) );
     BOOST_CHECK_EQUAL( 12, read< long >( "12" ) );
     BOOST_CHECK_EQUAL( 12, read< long long >( "12" ) );
+    BOOST_CHECK_EQUAL( 12.f, read< float >( "12" ) );
+    BOOST_CHECK_EQUAL( 12, read< double >( "12" ) );
+    BOOST_CHECK_EQUAL( 12, read< long double >( "12" ) );
     BOOST_CHECK_EQUAL( 12u, read< unsigned short >( "12" ) );
     BOOST_CHECK_EQUAL( 12u, read< unsigned int >( "12" ) );
+    BOOST_CHECK_EQUAL( 12u, read< unsigned long >( "12" ) );
     BOOST_CHECK_EQUAL( 12u, read< unsigned long long >( "12" ) );
     BOOST_CHECK_EQUAL( "  the attribute value   ", read< std::string >( "  the attribute value   " ) );
 }

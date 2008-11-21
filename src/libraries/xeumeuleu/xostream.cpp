@@ -86,6 +86,24 @@ void xostream::end()
     CATCH
 }
 
+#define WRITE( type ) void xostream::write( type value ) \
+                      { \
+                          TRY \
+                              output_.write( value ); \
+                          CATCH \
+                      }
+WRITE( const std::string& )
+WRITE( bool )
+WRITE( int )
+WRITE( long )
+WRITE( long long )
+WRITE( float )
+WRITE( double )
+WRITE( long double )
+WRITE( unsigned int )
+WRITE( unsigned long )
+WRITE( unsigned long long )
+
 // -----------------------------------------------------------------------------
 // Name: xostream::write
 // Created: MAT 2006-01-04
@@ -97,116 +115,6 @@ void xostream::write( const char* value )
 
 // -----------------------------------------------------------------------------
 // Name: xostream::write
-// Created: MAT 2006-01-04
-// -----------------------------------------------------------------------------
-void xostream::write( const std::string& value )
-{
-    TRY
-        output_.write( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::write
-// Created: MAT 2006-01-04
-// -----------------------------------------------------------------------------
-void xostream::write( float value )
-{
-    TRY
-        output_.write( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::write
-// Created: MAT 2006-01-04
-// -----------------------------------------------------------------------------
-void xostream::write( double value )
-{
-    TRY
-        output_.write( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::write
-// Created: MAT 2006-01-04
-// -----------------------------------------------------------------------------
-void xostream::write( int value )
-{
-    TRY
-        output_.write( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::write
-// Created: MAT 2007-01-25
-// -----------------------------------------------------------------------------
-void xostream::write( long value )
-{
-    TRY
-        output_.write( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::write
-// Created: MAT 2007-09-18
-// -----------------------------------------------------------------------------
-void xostream::write( long long value )
-{
-    TRY
-        output_.write( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::write
-// Created: MAT 2006-01-04
-// -----------------------------------------------------------------------------
-void xostream::write( bool value )
-{
-    TRY
-        output_.write( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::write
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xostream::write( unsigned int value )
-{
-    TRY
-        output_.write( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::write
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xostream::write( unsigned long value )
-{
-    TRY
-        output_.write( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::write
-// Created: MAT 2007-09-18
-// -----------------------------------------------------------------------------
-void xostream::write( unsigned long long value )
-{
-    TRY
-        output_.write( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::write
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
 void xostream::write( const xistream& xis )
@@ -214,6 +122,33 @@ void xostream::write( const xistream& xis )
     TRY
         xis.copy( output_ );
     CATCH
+}
+
+#define ATTRIBUTE( type ) void xostream::attribute( const std::string& name, type value ) \
+                          { \
+                              TRY \
+                                  output_.attribute( name, value ); \
+                              CATCH \
+                          }
+ATTRIBUTE( const std::string& )
+ATTRIBUTE( bool )
+ATTRIBUTE( int )
+ATTRIBUTE( long )
+ATTRIBUTE( long long )
+ATTRIBUTE( float )
+ATTRIBUTE( double )
+ATTRIBUTE( long double )
+ATTRIBUTE( unsigned int )
+ATTRIBUTE( unsigned long )
+ATTRIBUTE( unsigned long long )
+
+// -----------------------------------------------------------------------------
+// Name: xostream::attribute
+// Created: MAT 2006-01-06
+// -----------------------------------------------------------------------------
+void xostream::attribute( const std::string& name, const char* value )
+{
+    attribute( name, std::string( value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,125 +170,6 @@ void xostream::instruction( const std::string& target, const std::string& data )
 {
     TRY
         output_.instruction( target, data );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::attribute
-// Created: MAT 2006-01-06
-// -----------------------------------------------------------------------------
-void xostream::attribute( const std::string& name, const char* value )
-{
-    attribute( name, std::string( value ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void xostream::attribute( const std::string& name, const std::string& value )
-{
-    TRY
-        output_.attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void xostream::attribute( const std::string& name, float value )
-{
-    TRY
-        output_.attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void xostream::attribute( const std::string& name, double value )
-{
-    TRY
-        output_.attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void xostream::attribute( const std::string& name, int value )
-{
-    TRY
-        output_.attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::attribute
-// Created: MAT 2007-01-25
-// -----------------------------------------------------------------------------
-void xostream::attribute( const std::string& name, long value )
-{
-    TRY
-        output_.attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::attribute
-// Created: MAT 2007-09-18
-// -----------------------------------------------------------------------------
-void xostream::attribute( const std::string& name, long long value )
-{
-    TRY
-        output_.attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void xostream::attribute( const std::string& name, bool value )
-{
-    TRY
-        output_.attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xostream::attribute( const std::string& name, unsigned int value )
-{
-    TRY
-        output_.attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xostream::attribute( const std::string& name, unsigned long value )
-{
-    TRY
-        output_.attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xostream::attribute
-// Created: MAT 2007-09-18
-// -----------------------------------------------------------------------------
-void xostream::attribute( const std::string& name, unsigned long long value )
-{
-    TRY
-        output_.attribute( name, value );
     CATCH
 }
 

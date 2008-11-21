@@ -89,113 +89,39 @@ void null_input::end()
         throw xml::exception( "Cannot move up from root" );
 }
 
-// -----------------------------------------------------------------------------
-// Name: null_input::read
-// Created: MAT 2006-01-08
-// -----------------------------------------------------------------------------
-void null_input::read( std::string& /*value*/ ) const
-{
-    // NOTHING
-}
+#define READ( type ) void null_input::read( type& /*value*/ ) const \
+                     { \
+                     }
+READ( std::string )
+READ( bool )
+READ( short )
+READ( int )
+READ( long )
+READ( long long )
+READ( float )
+READ( double )
+READ( long double )
+READ( unsigned short )
+READ( unsigned int )
+READ( unsigned long )
+READ( unsigned long long )
 
-// -----------------------------------------------------------------------------
-// Name: null_input::read
-// Created: MAT 2006-01-08
-// -----------------------------------------------------------------------------
-void null_input::read( float& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::read
-// Created: MAT 2006-01-08
-// -----------------------------------------------------------------------------
-void null_input::read( double& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void null_input::read( short& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::read
-// Created: MAT 2006-01-08
-// -----------------------------------------------------------------------------
-void null_input::read( int& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void null_input::read( long& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::read
-// Created: MCO 2007-09-18
-// -----------------------------------------------------------------------------
-void null_input::read( long long& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::read
-// Created: MAT 2006-01-08
-// -----------------------------------------------------------------------------
-void null_input::read( bool& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void null_input::read( unsigned short& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void null_input::read( unsigned int& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void null_input::read( unsigned long& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::read
-// Created: MCO 2007-09-18
-// -----------------------------------------------------------------------------
-void null_input::read( unsigned long long& /*value*/ ) const
-{
-    // NOTHING
-}
+#define ATTRIBUTE( type ) void null_input::attribute( const std::string& /*name*/, type& /*value*/ ) const \
+                          { \
+                          }
+ATTRIBUTE( std::string )
+ATTRIBUTE( bool )
+ATTRIBUTE( short )
+ATTRIBUTE( int )
+ATTRIBUTE( long )
+ATTRIBUTE( long long )
+ATTRIBUTE( float )
+ATTRIBUTE( double )
+ATTRIBUTE( long double )
+ATTRIBUTE( unsigned short )
+ATTRIBUTE( unsigned int )
+ATTRIBUTE( unsigned long )
+ATTRIBUTE( unsigned long long )
 
 // -----------------------------------------------------------------------------
 // Name: null_input::has_element
@@ -222,114 +148,6 @@ bool null_input::has_attribute( const std::string& /*name*/ ) const
 bool null_input::has_content() const
 {
     return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::attribute
-// Created: MAT 2006-01-08
-// -----------------------------------------------------------------------------
-void null_input::attribute( const std::string& /*name*/, std::string& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::attribute
-// Created: MAT 2006-01-08
-// -----------------------------------------------------------------------------
-void null_input::attribute( const std::string& /*name*/, float& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::attribute
-// Created: MAT 2006-01-08
-// -----------------------------------------------------------------------------
-void null_input::attribute( const std::string& /*name*/, double& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void null_input::attribute( const std::string& /*name*/, short& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::attribute
-// Created: MAT 2006-01-08
-// -----------------------------------------------------------------------------
-void null_input::attribute( const std::string& /*name*/, int& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void null_input::attribute( const std::string& /*name*/, long& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::attribute
-// Created: MAT 2007-09-18
-// -----------------------------------------------------------------------------
-void null_input::attribute( const std::string& /*name*/, long long& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::attribute
-// Created: MAT 2006-01-08
-// -----------------------------------------------------------------------------
-void null_input::attribute( const std::string& /*name*/, bool& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void null_input::attribute( const std::string& /*name*/, unsigned short& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void null_input::attribute( const std::string& /*name*/, unsigned int& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void null_input::attribute( const std::string& /*name*/, unsigned long& /*value*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: null_input::attribute
-// Created: MAT 2007-09-18
-// -----------------------------------------------------------------------------
-void null_input::attribute( const std::string& /*name*/, unsigned long long& /*value*/ ) const
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -82,113 +82,41 @@ void input_base_context::end()
     input_->end();
 }
 
-// -----------------------------------------------------------------------------
-// Name: input_base_context::read
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::read( std::string& value ) const
-{
-    input_->read( value );
-}
+#define READ( type ) void input_base_context::read( type& value ) const \
+                     { \
+                         input_->read( value ); \
+                     }
+READ( std::string )
+READ( bool )
+READ( short )
+READ( int )
+READ( long )
+READ( long long )
+READ( float )
+READ( double )
+READ( long double )
+READ( unsigned int )
+READ( unsigned short )
+READ( unsigned long )
+READ( unsigned long long )
 
-// -----------------------------------------------------------------------------
-// Name: input_base_context::read
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::read( float& value ) const
-{
-    input_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::read
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::read( double& value ) const
-{
-    input_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::read
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::read( short& value ) const
-{
-    input_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::read
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::read( int& value ) const
-{
-    input_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::read
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::read( long& value ) const
-{
-    input_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::read
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::read( long long& value ) const
-{
-    input_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::read
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::read( bool& value ) const
-{
-    input_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::read
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::read( unsigned short& value ) const
-{
-    input_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::read
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::read( unsigned int& value ) const
-{
-    input_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::read
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::read( unsigned long& value ) const
-{
-    input_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::read
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::read( unsigned long long& value ) const
-{
-    input_->read( value );
-}
+#define ATTRIBUTE( type ) void input_base_context::attribute( const std::string& name, type& value ) const \
+                      { \
+                         input_->attribute( name, value ); \
+                      }
+ATTRIBUTE( std::string )
+ATTRIBUTE( bool )
+ATTRIBUTE( short )
+ATTRIBUTE( int )
+ATTRIBUTE( long )
+ATTRIBUTE( long long )
+ATTRIBUTE( float )
+ATTRIBUTE( double )
+ATTRIBUTE( long double )
+ATTRIBUTE( unsigned short )
+ATTRIBUTE( unsigned int )
+ATTRIBUTE( unsigned long )
+ATTRIBUTE( unsigned long long )
 
 // -----------------------------------------------------------------------------
 // Name: input_base_context::has_element
@@ -215,114 +143,6 @@ bool input_base_context::has_attribute( const std::string& name ) const
 bool input_base_context::has_content() const
 {
     return input_->has_content();
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::attribute
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::attribute( const std::string& name, std::string& value ) const
-{
-    input_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::attribute
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::attribute( const std::string& name, float& value ) const
-{
-    input_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::attribute
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::attribute( const std::string& name, double& value ) const
-{
-    input_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::attribute
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::attribute( const std::string& name, short& value ) const
-{
-    input_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::attribute
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::attribute( const std::string& name, int& value ) const
-{
-    input_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::attribute
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::attribute( const std::string& name, long& value ) const
-{
-    input_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::attribute
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::attribute( const std::string& name, long long& value ) const
-{
-    input_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::attribute
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::attribute( const std::string& name, bool& value ) const
-{
-    input_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::attribute
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::attribute( const std::string& name, unsigned short& value ) const
-{
-    input_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::attribute
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::attribute( const std::string& name, unsigned int& value ) const
-{
-    input_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::attribute
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::attribute( const std::string& name, unsigned long& value ) const
-{
-    input_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_base_context::attribute
-// Created: MAT 2008-04-25
-// -----------------------------------------------------------------------------
-void input_base_context::attribute( const std::string& name, unsigned long long& value ) const
-{
-    input_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------

@@ -240,3 +240,12 @@ std::string output::serialize( double value ) const
 {
     return convert( value );
 }
+
+// -----------------------------------------------------------------------------
+// Name: output::serialize
+// Created: MAT 2007-01-29
+// -----------------------------------------------------------------------------
+std::string output::serialize( long double value ) const
+{
+    return convert( value );
+}

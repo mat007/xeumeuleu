@@ -169,6 +169,9 @@
         <cppncss-report>
             <define name="TRY"/>
             <define name="CATCH"/>
+            <macro name="READ"/>
+            <macro name="WRITE"/>
+            <macro name="ATTRIBUTE"/>
             <macro name="BOOST_CHECK_THROW"/>
             <macro name="BOOST_CHECK_NO_THROW"/>
             <macro name="BOOST_REQUIRE_THROW"/>

@@ -91,113 +91,53 @@ template< typename T > void optional_input::read_content( T& value ) const
         context_.reset( input_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: optional_input::read
-// Created: MAT 2006-03-20
-// -----------------------------------------------------------------------------
-void optional_input::read( std::string& value ) const
-{
-    read_content( value );
-}
+#define READ( type ) void optional_input::read( type& value ) const \
+                     { \
+                         read_content( value ); \
+                     }
+READ( std::string )
+READ( bool )
+READ( short )
+READ( int )
+READ( long )
+READ( long long )
+READ( float )
+READ( double )
+READ( long double )
+READ( unsigned short )
+READ( unsigned int )
+READ( unsigned long )
+READ( unsigned long long )
 
 // -----------------------------------------------------------------------------
-// Name: optional_input::read
-// Created: MAT 2006-03-20
-// -----------------------------------------------------------------------------
-void optional_input::read( float& value ) const
-{
-    read_content( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::read
-// Created: MAT 2006-03-20
-// -----------------------------------------------------------------------------
-void optional_input::read( double& value ) const
-{
-    read_content( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::read
+// Name: optional_input::read_attribute
 // Created: MCO 2006-12-13
 // -----------------------------------------------------------------------------
-void optional_input::read( short& value ) const
+template< typename T > void optional_input::read_attribute( const std::string& name, T& value ) const
 {
-    read_content( value );
+    if( input_->has_attribute( name ) )
+        context_.reset( input_ ).attribute( name, value );
+    else
+        context_.reset( input_ );
 }
 
-// -----------------------------------------------------------------------------
-// Name: optional_input::read
-// Created: MAT 2006-03-20
-// -----------------------------------------------------------------------------
-void optional_input::read( int& value ) const
-{
-    read_content( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void optional_input::read( long& value ) const
-{
-    read_content( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::read
-// Created: MAT 2007-09-18
-// -----------------------------------------------------------------------------
-void optional_input::read( long long& value ) const
-{
-    read_content( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::read
-// Created: MAT 2006-03-20
-// -----------------------------------------------------------------------------
-void optional_input::read( bool& value ) const
-{
-    read_content( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void optional_input::read( unsigned short& value ) const
-{
-    read_content( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void optional_input::read( unsigned int& value ) const
-{
-    read_content( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void optional_input::read( unsigned long& value ) const
-{
-    read_content( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::read
-// Created: MAT 2007-09-18
-// -----------------------------------------------------------------------------
-void optional_input::read( unsigned long long& value ) const
-{
-    read_content( value );
-}
+#define ATTRIBUTE( type ) void optional_input::attribute( const std::string& name, type& value ) const \
+                      { \
+                         read_attribute( name, value ); \
+                      }
+ATTRIBUTE( std::string )
+ATTRIBUTE( bool )
+ATTRIBUTE( short )
+ATTRIBUTE( int )
+ATTRIBUTE( long )
+ATTRIBUTE( long long )
+ATTRIBUTE( float )
+ATTRIBUTE( double )
+ATTRIBUTE( long double )
+ATTRIBUTE( unsigned short )
+ATTRIBUTE( unsigned int )
+ATTRIBUTE( unsigned long )
+ATTRIBUTE( unsigned long long )
 
 // -----------------------------------------------------------------------------
 // Name: optional_input::has_element
@@ -224,126 +164,6 @@ bool optional_input::has_attribute( const std::string& name ) const
 bool optional_input::has_content() const
 {
     return input_->has_content();
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::read_attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-template< typename T > void optional_input::read_attribute( const std::string& name, T& value ) const
-{
-    if( input_->has_attribute( name ) )
-        context_.reset( input_ ).attribute( name, value );
-    else
-        context_.reset( input_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::attribute
-// Created: MAT 2006-03-20
-// -----------------------------------------------------------------------------
-void optional_input::attribute( const std::string& name, std::string& value ) const
-{
-    read_attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::attribute
-// Created: MAT 2006-03-20
-// -----------------------------------------------------------------------------
-void optional_input::attribute( const std::string& name, float& value ) const
-{
-    read_attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::attribute
-// Created: MAT 2006-03-20
-// -----------------------------------------------------------------------------
-void optional_input::attribute( const std::string& name, double& value ) const
-{
-    read_attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void optional_input::attribute( const std::string& name, short& value ) const
-{
-    read_attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::attribute
-// Created: MAT 2006-03-20
-// -----------------------------------------------------------------------------
-void optional_input::attribute( const std::string& name, int& value ) const
-{
-    read_attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void optional_input::attribute( const std::string& name, long& value ) const
-{
-    read_attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::attribute
-// Created: MCO 2007-09-18
-// -----------------------------------------------------------------------------
-void optional_input::attribute( const std::string& name, long long& value ) const
-{
-    read_attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::attribute
-// Created: MAT 2006-03-20
-// -----------------------------------------------------------------------------
-void optional_input::attribute( const std::string& name, bool& value ) const
-{
-    read_attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void optional_input::attribute( const std::string& name, unsigned short& value ) const
-{
-    read_attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void optional_input::attribute( const std::string& name, unsigned int& value ) const
-{
-    read_attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void optional_input::attribute( const std::string& name, unsigned long& value ) const
-{
-    read_attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: optional_input::attribute
-// Created: MCO 2007-09-18
-// -----------------------------------------------------------------------------
-void optional_input::attribute( const std::string& name, unsigned long long& value ) const
-{
-    read_attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------

@@ -72,13 +72,14 @@ public:
     //! @name Accessors
     //@{
     void read( std::string& value ) const;
-    void read( float& value ) const;
-    void read( double& value ) const;
+    void read( bool& value ) const;
     void read( short& value ) const;
     void read( int& value ) const;
     void read( long& value ) const;
     void read( long long& value ) const;
-    void read( bool& value ) const;
+    void read( float& value ) const;
+    void read( double& value ) const;
+    void read( long double& value ) const;
     void read( unsigned short& value ) const;
     void read( unsigned int& value ) const;
     void read( unsigned long& value ) const;
@@ -86,13 +87,14 @@ public:
     void read( xostream& xos ) const;
 
     void attribute( const std::string& name, std::string& value ) const;
-    void attribute( const std::string& name, float& value ) const;
-    void attribute( const std::string& name, double& value ) const;
+    void attribute( const std::string& name, bool& value ) const;
     void attribute( const std::string& name, short& value ) const;
     void attribute( const std::string& name, int& value ) const;
     void attribute( const std::string& name, long& value ) const;
     void attribute( const std::string& name, long long& value ) const;
-    void attribute( const std::string& name, bool& value ) const;
+    void attribute( const std::string& name, float& value ) const;
+    void attribute( const std::string& name, double& value ) const;
+    void attribute( const std::string& name, long double& value ) const;
     void attribute( const std::string& name, unsigned short& value ) const;
     void attribute( const std::string& name, unsigned int& value ) const;
     void attribute( const std::string& name, unsigned long& value ) const;
