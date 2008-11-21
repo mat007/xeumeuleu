@@ -174,7 +174,7 @@ xml::xistreamstream xis( stream );]]></source>
           <p>
             Elements are (un)serialized using <strong>xml::start</strong> and <strong>xml::end</strong>, for example :
           </p>
-          <source><![CDATA[xos << xml::start( "element" ) << xml::end();]]></source>
+          <source><![CDATA[xos << xml::start( "element" ) << xml::end;]]></source>
           <p>
             An important feature concerning input streams is that when unserializing an element the first available child matching the given name will be pulled.
           </p>
@@ -189,17 +189,17 @@ xml::xistreamstream xis( stream );]]></source>
             The following unserialization code is valid :
           </p>
           <source><![CDATA[xis >> xml::start( "root" )
-      >> xml::start( "second-element" ) >> xml::end()
-      >> xml::start( "first-element" ) >> xml::end()
-    >> xml::end()]]></source>
+      >> xml::start( "second-element" ) >> xml::end
+      >> xml::start( "first-element" ) >> xml::end
+    >> xml::end]]></source>
           <p>
             Of course as a side effect the following code appears to be also valid :
           </p>
           <source><![CDATA[xis >> xml::start( "root" )
-      >> xml::start( "first-element" ) >> xml::end()
-      >> xml::start( "first-element" ) >> xml::end()
-      >> xml::start( "first-element" ) >> xml::end()
-    >> xml::end();]]></source>
+      >> xml::start( "first-element" ) >> xml::end
+      >> xml::start( "first-element" ) >> xml::end
+      >> xml::start( "first-element" ) >> xml::end
+    >> xml::end;]]></source>
           <p>
             It is also considered valid for some nodes to be left unserialized and therefore no exception will be raised.
           </p>
@@ -240,7 +240,7 @@ xos << xis;]]></source>
           </p>
           <source><![CDATA[xis >> xml::start( "root" )
       >> xml::list( "element", my_instance, &my_class::my_method )
-    >> xml::end();]]></source>
+    >> xml::end;]]></source>
           <p>
             Where <em>my_instance</em> is an instance of a functor class <em>my_class</em> which method <em>my_method</em> signature will be :
           </p>
@@ -263,7 +263,7 @@ public:
 std::string my_string = "something";
 xis >> xml::start( "root" )
       >> xml::list( "element", my_instance, &my_class::my_method, my_integer, my_string )
-    >> xml::end();]]></source>
+    >> xml::end;]]></source>
           <p>
             The functor method signature will be expected to be called with the given parameters :
           </p>
@@ -289,7 +289,7 @@ public:
           </p>
           <source><![CDATA[xis >> xml::start( "root" )
       >> xml::list( my_instance, &my_class::my_method )
-    >> xml::end();]]></source>
+    >> xml::end;]]></source>
           <p>
             With the functor method signature being :
           </p>
@@ -313,7 +313,7 @@ public:
         </p>
         <source><![CDATA[xis >> xml::start( "root" )
     >> xml::list( my_instance, &my_function )
-  >> xml::end();]]></source>
+  >> xml::end;]]></source>
         <p>
           In the same way, the following functor :
         </p>
@@ -330,7 +330,7 @@ public:
         </p>
         <source><![CDATA[xis >> xml::start( "root" )
     >> xml::list( my_instance, my_functor() )
-  >> xml::end();]]></source>
+  >> xml::end;]]></source>
         <p>
           In this case a copy of the functor is made internally.
         </p>
@@ -340,7 +340,7 @@ public:
         <source><![CDATA[my_functor functor;
 xis >> xml::start( "root" )
       >> xml::list< my_functor& >( my_instance, functor )
-    >> xml::end();]]></source>
+    >> xml::end;]]></source>
         </section>
         <section id="xml-optional-element">
           <title>Optional elements</title>
@@ -353,12 +353,12 @@ xis >> xml::start( "root" )
             Can be unserialized with :
           </p>
           <source><![CDATA[xis >> xml::start( "element" )
-      >> xml::optional() >> xml::start( "non-existing-child" )
+      >> xml::optional >> xml::start( "non-existing-child" )
         >> xml::start( "non-existing-grand-child" )
         >> xml::attribute( "name", name )
-        >> xml::end()
-      >> xml::end()
-    >> xml::end();]]></source>
+        >> xml::end
+      >> xml::end
+    >> xml::end;]]></source>
           <p>
             No exception will be raised as the whole <em>non-existing-child</em> branch will be skipped.<br />
             Obviously <em>name</em> will not be read, which points out the fact that when using <strong>xml::optional</strong> data should probably be initialized with default values prior to unserialization.
@@ -393,7 +393,7 @@ xis >> xml::start( "root" )
           </p>
           <source><![CDATA[xos << xml::start( "element" )
       << "the text content of the node"
-    << xml::end();]]></source>
+    << xml::end;]]></source>
           <p>
             Will produce the following XML document :
           </p>
@@ -413,7 +413,7 @@ xis >> xml::start( "root" )
           </p>
           <source><![CDATA[xos << xml::start( "element" )
         << xml::cdata( "the CDATA section of the node" )
-      << xml::end();]]></source>
+      << xml::end;]]></source>
           <p>
             It is worth noting that <strong>xml::cdata</strong> can be used inside an <strong>xml::content</strong> :
           </p>
@@ -445,7 +445,7 @@ xis >> xml::start( "root" )
           </p>
           <source><![CDATA[xos << xml::start( "element" )
     << xml::attribute( "name", "the-name" )
-    << xml::end();]]></source>
+    << xml::end;]]></source>
           <p>
             Will produce the following XML document :
           </p>
@@ -485,7 +485,7 @@ public:
           </p>
           <source><![CDATA[xis >> xml::start( "root" )
       >> xml::attributes( my_instance, &my_class::my_method )
-    >> xml::end();]]></source>
+    >> xml::end;]]></source>
         <p>
           The functor will be called a first time with <em>name</em> equal to <em>first</em> and a second time with <em>name</em> equal to <em>second</em>.
           The <em>xis</em> parameter will be an input stream already placed on the <em>root</em> node.
@@ -502,7 +502,7 @@ public:
         </p>
         <source><![CDATA[xis >> xml::start( "root" )
     >> xml::attributes( my_instance, my_function )
-  >> xml::end();]]></source>
+  >> xml::end;]]></source>
         <p>
           In the same way, the following functor :
         </p>
@@ -519,7 +519,7 @@ public:
         </p>
         <source><![CDATA[xis >> xml::start( "root" )
     >> xml::attributes( my_instance, my_functor() )
-  >> xml::end();]]></source>
+  >> xml::end;]]></source>
         <p>
           In this case a copy of the functor is made internally (similarly to most of the STL algorithms).
         </p>
@@ -529,7 +529,7 @@ public:
           <p>
             An optional content can be handled by the <strong>xml::optional</strong> feature :
           </p>
-          <source><![CDATA[xis >> xml::optional() >> content;]]></source>
+          <source><![CDATA[xis >> xml::optional >> content;]]></source>
           <p>
             The variable <em>content</em> will not be read if the current node does not have any content and no exception will be raised.
           </p>
@@ -537,8 +537,8 @@ public:
             Just the same way an optional attribute can be skipped silently :
           </p>
           <source><![CDATA[xis >> xml::start( "element" )
-      >> xml::optional() >> xml::attribute( "name", name )
-    >> xml::end();]]></source>
+      >> xml::optional >> xml::attribute( "name", name )
+    >> xml::end;]]></source>
           <p>
             The variable <em>name</em> will not be read if the attribute <em>name</em> does not exist in the XML document and no exception will be raised.
           </p>
@@ -605,7 +605,7 @@ public:
        <source><![CDATA[xsl::xstringtransform xst( "stylesheet.xsl" );
 xst << xml::start( "root" )
       << xml::content( "element", 42 )
-    << xml::end();]]></source>
+    << xml::end;]]></source>
        <p>
          The transformation is actually performed when the input document is valid and has been completely received, therefore after the <strong>xml::end</strong> in this example.
        </p>
@@ -648,7 +648,7 @@ xml::xistringstream xis( "<root/>" );
 xst << xml::start( "root" )
       << xbt << xis
       << xbt << xis
-    << xml::end();]]></source>
+    << xml::end;]]></source>
      </section>
      <section id="xsl-parameter">
        <title>Stylesheet parameters</title>

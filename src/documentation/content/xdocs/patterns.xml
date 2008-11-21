@@ -73,7 +73,7 @@ private:
     void read_document_2( xml::xistream& xis )
     {
         xis >> xml::start( "element-2" )
-            >> xml::end();
+            >> xml::end;
     }
 
     void read_document_3( xml::xistream& xis )
@@ -139,7 +139,7 @@ private:
         xis >> xml::start( element )
             >> xml::attribute( "name", name );
         (this->*functor)( xis, name );
-        xis >> xml::end();
+        xis >> xml::end;
     }
 
     void read_element_1( xml::xistream& xis, const std::string& name )
@@ -250,7 +250,7 @@ public:
         xis >> xml::start( "root" )
               >> xml::attributes( *this, &my_class::copy, xos )
               >> xml::list( *this, &my_class::filter, xos, element, content );
-        xos << xml::end();
+        xos << xml::end;
     }
 private:
     void filter( const std::string& type, xml::xistream& xis, xml::xostream& xos, const std::string& element, const std::string& content ) const
@@ -261,7 +261,7 @@ private:
             xos << content;
          else
             xos << xis;
-        xos << xml::end();
+        xos << xml::end;
     }
     void copy( const std::string& attribute, xml::xistream& xis, xml::xostream& xos ) const
     {
@@ -334,7 +334,7 @@ public:
         <source><![CDATA[my_class my_instance;
 xis >> xml::start( "root" )
       >> xml::list( "element", boost::bind( &my_class::my_method, &my_instance, _1 ) )
-    >> xml::end();]]></source>
+    >> xml::end;]]></source>
         <p>
           In case of using the alternate version of <strong>xml::list</strong> without filtering based on the name of the node :
         </p>
@@ -352,7 +352,7 @@ public:
         <source><![CDATA[my_class my_instance;
 xis >> xml::start( "root" )
       >> xml::list( boost::bind( &my_class::my_method, &my_instance, _1, _2 ) )
-    >> xml::end();]]></source>
+    >> xml::end;]]></source>
       </section>
       <section id="xml-proxy">
         <title>Manipulating proxy input streams</title>
@@ -556,7 +556,7 @@ xst << xml::xifstream( "input.xml" );]]></source>
 xst << xml::start( "root" )
       << xml::xifstream( "input.xml" )
       << xml::xifstream( "parameters.xml" )
-    << xml::end();]]></source>
+    << xml::end;]]></source>
         <p>
           Yields the following <em>output.xml</em> :
         </p>
