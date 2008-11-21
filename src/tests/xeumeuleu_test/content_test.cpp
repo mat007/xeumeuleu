@@ -104,16 +104,17 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( streaming_content_writes_node_content )
 {
-    check_numeric_limits< unsigned short >();
     check_numeric_limits< short >();
-    check_numeric_limits< unsigned int >();
     check_numeric_limits< int >();
-    check_numeric_limits< unsigned long >();
     check_numeric_limits< long >();
-    check_numeric_limits< unsigned long long >();
     check_numeric_limits< long long >();
     check_numeric_limits< float >();
     check_numeric_limits< double >();
+    check_numeric_limits< long double >();
+    check_numeric_limits< unsigned short >();
+    check_numeric_limits< unsigned int >();
+    check_numeric_limits< unsigned long >();
+    check_numeric_limits< unsigned long long >();
 }
 
 // -----------------------------------------------------------------------------

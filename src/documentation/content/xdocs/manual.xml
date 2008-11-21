@@ -160,7 +160,7 @@ xml::xistreamstream xis( stream );]]></source>
             The default behaviour is not to validate against internal schema definitions because it may require an internet connection.
           </p>
           <p>
-            Combining internal and external schema validations is not supported at the moment.
+            Combining internal and external schema validations is not supported.
           </p>
         </section>
       </section>
@@ -288,8 +288,8 @@ public:
             The following code will call a functor for each element :
           </p>
           <source><![CDATA[xis >> xml::start( "root" )
-    >> xml::list( my_instance, &my_class::my_method )
-  >> xml::end();]]></source>
+      >> xml::list( my_instance, &my_class::my_method )
+    >> xml::end();]]></source>
           <p>
             With the functor method signature being :
           </p>
@@ -312,7 +312,7 @@ public:
           Can be used to read data with :
         </p>
         <source><![CDATA[xis >> xml::start( "root" )
-    >> xml::list( my_instance, my_function )
+    >> xml::list( my_instance, &my_function )
   >> xml::end();]]></source>
         <p>
           In the same way, the following functor :
@@ -332,8 +332,15 @@ public:
     >> xml::list( my_instance, my_functor() )
   >> xml::end();]]></source>
         <p>
-          In this case a copy of the functor is made internally (similarly to most of the STL algorithms).
+          In this case a copy of the functor is made internally.
         </p>
+        <p>
+          In order to pass the functor by reference the template parameter of <strong>xml::list</strong> has to be explicitly specified :
+        </p>
+        <source><![CDATA[my_functor functor;
+xis >> xml::start( "root" )
+      >> xml::list< my_functor& >( my_instance, functor )
+    >> xml::end();]]></source>
         </section>
         <section id="xml-optional-element">
           <title>Optional elements</title>
@@ -373,6 +380,7 @@ public:
           <li>long long</li>
           <li>float</li>
           <li>double</li>
+          <li>long double</li>
           <li>unsigned short</li>
           <li>unsigned int</li>
           <li>unsigned long</li>

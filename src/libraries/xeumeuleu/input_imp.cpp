@@ -293,104 +293,22 @@ void input_imp::read( std::string& value ) const
     value = translate( read_value() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: input_imp::read
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-void input_imp::read( float& value ) const
-{
-    value = convert< float >( read_value() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::read
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-void input_imp::read( double& value ) const
-{
-    value = convert< double >( read_value() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void input_imp::read( short& value ) const
-{
-    value = convert< short >( read_value() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::read
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-void input_imp::read( int& value ) const
-{
-    value = convert< int >( read_value() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void input_imp::read( long& value ) const
-{
-    value = convert< long >( read_value() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::read
-// Created: MCO 2007-09-18
-// -----------------------------------------------------------------------------
-void input_imp::read( long long& value ) const
-{
-    value = convert< long long >( read_value() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::read
-// Created: MAT 2006-01-04
-// -----------------------------------------------------------------------------
-void input_imp::read( bool& value ) const
-{
-    value = convert< bool >( read_value() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void input_imp::read( unsigned short& value ) const
-{
-    value = convert< unsigned short >( read_value() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void input_imp::read( unsigned int& value ) const
-{
-    value = convert< unsigned int >( read_value() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void input_imp::read( unsigned long& value ) const
-{
-    value = convert< unsigned long >( read_value() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::read
-// Created: MAT 2007-09-18
-// -----------------------------------------------------------------------------
-void input_imp::read( unsigned long long& value ) const
-{
-    value = convert< unsigned long >( read_value() );
-}
+#define READ( type ) void input_imp::read( type& value ) const \
+                     { \
+                         value = convert< type >( read_value() ); \
+                     }
+READ( bool )
+READ( short )
+READ( int )
+READ( long )
+READ( long long )
+READ( float )
+READ( double )
+READ( long double )
+READ( unsigned short )
+READ( unsigned int )
+READ( unsigned long )
+READ( unsigned long long )
 
 // -----------------------------------------------------------------------------
 // Name: input_imp::read_attribute
@@ -413,104 +331,22 @@ void input_imp::attribute( const std::string& name, std::string& value ) const
     value = translate( read_attribute( name ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: input_imp::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void input_imp::attribute( const std::string& name, float& value ) const
-{
-    value = convert< float >( read_attribute( name ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void input_imp::attribute( const std::string& name, double& value ) const
-{
-    value = convert< double >( read_attribute( name ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void input_imp::attribute( const std::string& name, short& value ) const
-{
-    value = convert< short >( read_attribute( name ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void input_imp::attribute( const std::string& name, int& value ) const
-{
-    value = convert< int >( read_attribute( name ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void input_imp::attribute( const std::string& name, long& value ) const
-{
-    value = convert< long >( read_attribute( name ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::attribute
-// Created: MCO 2007-09-18
-// -----------------------------------------------------------------------------
-void input_imp::attribute( const std::string& name, long long& value ) const
-{
-    value = convert< long long >( read_attribute( name ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void input_imp::attribute( const std::string& name, bool& value ) const
-{
-    value = convert< bool >( read_attribute( name ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void input_imp::attribute( const std::string& name, unsigned short& value ) const
-{
-    value = convert< unsigned short >( read_attribute( name ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void input_imp::attribute( const std::string& name, unsigned int& value ) const
-{
-    value = convert< unsigned int >( read_attribute( name ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void input_imp::attribute( const std::string& name, unsigned long& value ) const
-{
-    value = convert< unsigned long >( read_attribute( name ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: input_imp::attribute
-// Created: MAT 2007-09-18
-// -----------------------------------------------------------------------------
-void input_imp::attribute( const std::string& name, unsigned long long& value ) const
-{
-    value = convert< unsigned long long >( read_attribute( name ) );
-}
+#define ATTRIBUTE( type ) void input_imp::attribute( const std::string& name, type& value ) const \
+                      { \
+                         value = convert< type >( read_attribute( name ) ); \
+                      }
+ATTRIBUTE( bool )
+ATTRIBUTE( short )
+ATTRIBUTE( int )
+ATTRIBUTE( long )
+ATTRIBUTE( long long )
+ATTRIBUTE( float )
+ATTRIBUTE( double )
+ATTRIBUTE( long double )
+ATTRIBUTE( unsigned short )
+ATTRIBUTE( unsigned int )
+ATTRIBUTE( unsigned long )
+ATTRIBUTE( unsigned long long )
 
 // -----------------------------------------------------------------------------
 // Name: input_imp::nodes
