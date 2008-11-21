@@ -42,7 +42,7 @@ namespace xsl
 {
 // =============================================================================
 /** @class  file_output_imp
-    @brief  Transformation helper
+    @brief  File output implementation
 */
 // Created: SLI 2007-07-06
 // =============================================================================

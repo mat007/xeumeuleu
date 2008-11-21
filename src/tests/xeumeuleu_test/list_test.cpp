@@ -455,12 +455,12 @@ BOOST_AUTO_TEST_CASE( list_accepts_function_as_functor )
     my_function_mock.reset();
     {
         my_function_mocker.expects( mockpp::once() );
-        xis >> xml::list( "element", my_function );
+        xis >> xml::list( "element", &my_function );
         my_function_mock.verify();
     }
     {
         my_function_mocker.expects( mockpp::once() );
-        xis >> xml::list( my_name_function );
+        xis >> xml::list( &my_name_function );
         my_function_mock.verify();
     }
 }
@@ -482,10 +482,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: list_accepts_functor_as_functor_and_makes_an_internal_copy
+// Name: list_accepts_functor_by_copy
 // Created: MAT 2008-02-29
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( list_accepts_functor_as_functor_and_makes_an_internal_copy )
+BOOST_AUTO_TEST_CASE( list_accepts_functor_by_copy )
 {
     xml::xistringstream xis( "<element/>" );
     my_function_mock.reset();
@@ -497,6 +497,28 @@ BOOST_AUTO_TEST_CASE( list_accepts_functor_as_functor_and_makes_an_internal_copy
     {
         my_function_mocker.expects( mockpp::once() );
         xis >> xml::list( my_functor_class() );
+        my_function_mock.verify();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: list_accepts_functor_by_reference
+// Created: MAT 2008-11-21
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( list_accepts_functor_by_reference )
+{
+    xml::xistringstream xis( "<element/>" );
+    my_function_mock.reset();
+    {
+        my_function_mocker.expects( mockpp::once() );
+        my_functor_class functor;
+        xis >> xml::list< my_functor_class& >( "element", functor );
+        my_function_mock.verify();
+    }
+    {
+        my_function_mocker.expects( mockpp::once() );
+        my_functor_class functor;
+        xis >> xml::list< my_functor_class& >( functor );
         my_function_mock.verify();
     }
 }
