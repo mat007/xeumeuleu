@@ -90,7 +90,7 @@ xml::xifstream xis( "my_document.xml" );
 xis >> xml::start( "document" )
       >> xml::start( "element" )
         >> xml::attribute( "name", name )
-      >> xml::end()
+      >> xml::end
       >> xml::content( "another-element", content );]]></source>
       <p>
         Writing the same file would be symmetrical :
@@ -101,9 +101,9 @@ xml::xofstream xos( "my_document.xml" );
 xos << xml::start( "document" )
       << xml::start( "element" )
         << xml::attribute( "name", "my element" )
-      << xml::end()
+      << xml::end
       << xml::content( "another-element", "my content" )
-    << xml::end();]]></source>
+    << xml::end;]]></source>
       <p>
         Applying a transformation based for instance on the stylesheet :
       </p>
@@ -130,9 +130,9 @@ xsl::xftransform xft( "stylesheet.xsl", "output.html" );
 xft << xml::start( "document" )
       << xml::start( "element" )
         << xml::attribute( "name", "my element" )
-      << xml::end()
+      << xml::end
       << xml::content( "another-element", "my content" )
-    << xml::end();]]></source>
+    << xml::end;]]></source>
       <p>
         Would output the HTML file :
       </p>
