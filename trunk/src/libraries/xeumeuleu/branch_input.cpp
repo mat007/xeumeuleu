@@ -85,113 +85,41 @@ void branch_input::end()
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: branch_input::read
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::read( std::string& value ) const
-{
-    input1_->read( value );
-}
+#define READ( type ) void branch_input::read( type& value ) const \
+                     { \
+                         input1_->read( value ); \
+                     }
+READ( std::string )
+READ( bool )
+READ( short )
+READ( int )
+READ( long )
+READ( long long )
+READ( float )
+READ( double )
+READ( long double )
+READ( unsigned short )
+READ( unsigned int )
+READ( unsigned long )
+READ( unsigned long long )
 
-// -----------------------------------------------------------------------------
-// Name: branch_input::read
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::read( float& value ) const
-{
-    input1_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::read
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::read( double& value ) const
-{
-    input1_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::read
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::read( short& value ) const
-{
-    input1_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::read
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::read( int& value ) const
-{
-    input1_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::read
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::read( long& value ) const
-{
-    input1_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::read
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::read( long long& value ) const
-{
-    input1_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::read
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::read( bool& value ) const
-{
-    input1_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::read
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::read( unsigned short& value ) const
-{
-    input1_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::read
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::read( unsigned int& value ) const
-{
-    input1_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::read
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::read( unsigned long& value ) const
-{
-    input1_->read( value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::read
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::read( unsigned long long& value ) const
-{
-    input1_->read( value );
-}
+#define ATTRIBUTE( type ) void branch_input::attribute( const std::string& name, type& value ) const \
+                      { \
+                         input1_->attribute( name, value ); \
+                      }
+ATTRIBUTE( std::string )
+ATTRIBUTE( bool )
+ATTRIBUTE( short )
+ATTRIBUTE( int )
+ATTRIBUTE( long )
+ATTRIBUTE( long long )
+ATTRIBUTE( float )
+ATTRIBUTE( double )
+ATTRIBUTE( long double )
+ATTRIBUTE( unsigned short )
+ATTRIBUTE( unsigned int )
+ATTRIBUTE( unsigned long )
+ATTRIBUTE( unsigned long long )
 
 // -----------------------------------------------------------------------------
 // Name: branch_input::has_element
@@ -218,114 +146,6 @@ bool branch_input::has_attribute( const std::string& name ) const
 bool branch_input::has_content() const
 {
     return input1_->has_content();
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::attribute
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::attribute( const std::string& name, std::string& value ) const
-{
-    input1_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::attribute
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::attribute( const std::string& name, float& value ) const
-{
-    input1_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::attribute
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::attribute( const std::string& name, double& value ) const
-{
-    input1_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::attribute
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::attribute( const std::string& name, short& value ) const
-{
-    input1_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::attribute
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::attribute( const std::string& name, int& value ) const
-{
-    input1_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::attribute
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::attribute( const std::string& name, long& value ) const
-{
-    input1_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::attribute
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::attribute( const std::string& name, long long& value ) const
-{
-    input1_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::attribute
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::attribute( const std::string& name, bool& value ) const
-{
-    input1_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::attribute
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::attribute( const std::string& name, unsigned short& value ) const
-{
-    input1_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::attribute
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::attribute( const std::string& name, unsigned int& value ) const
-{
-    input1_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::attribute
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::attribute( const std::string& name, unsigned long& value ) const
-{
-    input1_->attribute( name, value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: branch_input::attribute
-// Created: MAT 2008-01-07
-// -----------------------------------------------------------------------------
-void branch_input::attribute( const std::string& name, unsigned long long& value ) const
-{
-    input1_->attribute( name, value );
 }
 
 // -----------------------------------------------------------------------------

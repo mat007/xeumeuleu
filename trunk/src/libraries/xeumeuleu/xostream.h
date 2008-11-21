@@ -67,26 +67,27 @@ public:
     //@{
     void write( const char* value );
     void write( const std::string& value );
-    void write( float value );
-    void write( double value );
+    void write( bool value );
     void write( int value );
     void write( long value );
     void write( long long value );
-    void write( bool value );
+    void write( float value );
+    void write( double value );
+    void write( long double value );
     void write( unsigned int value );
     void write( unsigned long value );
     void write( unsigned long long value );
-
     void write( const xistream& xis );
 
     void attribute( const std::string& name, const char* value );
     void attribute( const std::string& name, const std::string& value );
-    void attribute( const std::string& name, float value );
-    void attribute( const std::string& name, double value );
+    void attribute( const std::string& name, bool value );
     void attribute( const std::string& name, int value );
     void attribute( const std::string& name, long value );
     void attribute( const std::string& name, long long value );
-    void attribute( const std::string& name, bool value );
+    void attribute( const std::string& name, float value );
+    void attribute( const std::string& name, double value );
+    void attribute( const std::string& name, long double value );
     void attribute( const std::string& name, unsigned int value );
     void attribute( const std::string& name, unsigned long value );
     void attribute( const std::string& name, unsigned long long value );

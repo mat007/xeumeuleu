@@ -86,137 +86,25 @@ void xistream::end()
     CATCH
 }
 
-// -----------------------------------------------------------------------------
-// Name: xistream::read
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-void xistream::read( std::string& value ) const
-{
-    TRY
-        input_->read( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::read
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-void xistream::read( float& value ) const
-{
-    TRY
-        input_->read( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::read
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-void xistream::read( double& value ) const
-{
-    TRY
-        input_->read( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::read
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-void xistream::read( int& value ) const
-{
-    TRY
-        input_->read( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xistream::read( long& value ) const
-{
-    TRY
-        input_->read( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::read
-// Created: MAT 2007-09-18
-// -----------------------------------------------------------------------------
-void xistream::read( long long& value ) const
-{
-    TRY
-        input_->read( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xistream::read( short& value ) const
-{
-    TRY
-        input_->read( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::read
-// Created: MAT 2006-01-04
-// -----------------------------------------------------------------------------
-void xistream::read( bool& value ) const
-{
-    TRY
-        input_->read( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xistream::read( unsigned int& value ) const
-{
-    TRY
-        input_->read( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xistream::read( unsigned short& value ) const
-{
-    TRY
-        input_->read( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::read
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xistream::read( unsigned long& value ) const
-{
-    TRY
-        input_->read( value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::read
-// Created: MAT 2007-09-18
-// -----------------------------------------------------------------------------
-void xistream::read( unsigned long long& value ) const
-{
-    TRY
-        input_->read( value );
-    CATCH
-}
+#define READ( type ) void xistream::read( type& value ) const \
+                     { \
+                         TRY \
+                             input_->read( value ); \
+                         CATCH \
+                     }
+READ( std::string )
+READ( bool )
+READ( short )
+READ( int )
+READ( long )
+READ( long long )
+READ( float )
+READ( double )
+READ( long double )
+READ( unsigned short )
+READ( unsigned int )
+READ( unsigned long )
+READ( unsigned long long )
 
 // -----------------------------------------------------------------------------
 // Name: xistream::read
@@ -227,137 +115,25 @@ void xistream::read( xostream& xos ) const
     xos << *this;
 }
 
-// -----------------------------------------------------------------------------
-// Name: xistream::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void xistream::attribute( const std::string& name, std::string& value ) const
-{
-    TRY
-        input_->attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void xistream::attribute( const std::string& name, float& value ) const
-{
-    TRY
-        input_->attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void xistream::attribute( const std::string& name, double& value ) const
-{
-    TRY
-        input_->attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xistream::attribute( const std::string& name, short& value ) const
-{
-    TRY
-        input_->attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void xistream::attribute( const std::string& name, int& value ) const
-{
-    TRY
-        input_->attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xistream::attribute( const std::string& name, long& value ) const
-{
-    TRY
-        input_->attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::attribute
-// Created: MCO 2007-09-18
-// -----------------------------------------------------------------------------
-void xistream::attribute( const std::string& name, long long& value ) const
-{
-    TRY
-        input_->attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::attribute
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-void xistream::attribute( const std::string& name, bool& value ) const
-{
-    TRY
-        input_->attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xistream::attribute( const std::string& name, unsigned short& value ) const
-{
-    TRY
-        input_->attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xistream::attribute( const std::string& name, unsigned int& value ) const
-{
-    TRY
-        input_->attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::attribute
-// Created: MCO 2006-12-13
-// -----------------------------------------------------------------------------
-void xistream::attribute( const std::string& name, unsigned long& value ) const
-{
-    TRY
-        input_->attribute( name, value );
-    CATCH
-}
-
-// -----------------------------------------------------------------------------
-// Name: xistream::attribute
-// Created: MCO 2007-09-18
-// -----------------------------------------------------------------------------
-void xistream::attribute( const std::string& name, unsigned long long& value ) const
-{
-    TRY
-        input_->attribute( name, value );
-    CATCH
-}
+#define ATTRIBUTE( type ) void xistream::attribute( const std::string& name, type& value ) const \
+                      { \
+                          TRY \
+                              input_->attribute( name, value ); \
+                          CATCH \
+                      }
+ATTRIBUTE( std::string )
+ATTRIBUTE( bool )
+ATTRIBUTE( short )
+ATTRIBUTE( int )
+ATTRIBUTE( long )
+ATTRIBUTE( long long )
+ATTRIBUTE( float )
+ATTRIBUTE( double )
+ATTRIBUTE( long double )
+ATTRIBUTE( unsigned short )
+ATTRIBUTE( unsigned int )
+ATTRIBUTE( unsigned long )
+ATTRIBUTE( unsigned long long )
 
 // -----------------------------------------------------------------------------
 // Name: xistream::nodes

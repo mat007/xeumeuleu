@@ -100,6 +100,7 @@ private:
 
     std::string serialize( float value ) const;
     std::string serialize( double value ) const;
+    std::string serialize( long double value ) const;
     template< typename T > std::string serialize( T value ) const
     {
         std::stringstream stream;

@@ -62,13 +62,14 @@ public:
     virtual void end() = 0;
 
     virtual void read( std::string& value ) const = 0;
-    virtual void read( float& value ) const = 0;
-    virtual void read( double& value ) const = 0;
+    virtual void read( bool& value ) const = 0;
     virtual void read( int& value ) const = 0;
     virtual void read( short& value ) const = 0;
     virtual void read( long& value ) const = 0;
     virtual void read( long long& value ) const = 0;
-    virtual void read( bool& value ) const = 0;
+    virtual void read( float& value ) const = 0;
+    virtual void read( double& value ) const = 0;
+    virtual void read( long double& value ) const = 0;
     virtual void read( unsigned short& value ) const = 0;
     virtual void read( unsigned int& value ) const = 0;
     virtual void read( unsigned long& value ) const = 0;
@@ -88,13 +89,14 @@ public:
     virtual bool has_content() const = 0;
 
     virtual void attribute( const std::string& name, std::string& value ) const = 0;
-    virtual void attribute( const std::string& name, float& value ) const = 0;
-    virtual void attribute( const std::string& name, double& value ) const = 0;
+    virtual void attribute( const std::string& name, bool& value ) const = 0;
     virtual void attribute( const std::string& name, short& value ) const = 0;
     virtual void attribute( const std::string& name, int& value ) const = 0;
     virtual void attribute( const std::string& name, long& value ) const = 0;
     virtual void attribute( const std::string& name, long long& value ) const = 0;
-    virtual void attribute( const std::string& name, bool& value ) const = 0;
+    virtual void attribute( const std::string& name, float& value ) const = 0;
+    virtual void attribute( const std::string& name, double& value ) const = 0;
+    virtual void attribute( const std::string& name, long double& value ) const = 0;
     virtual void attribute( const std::string& name, unsigned short& value ) const = 0;
     virtual void attribute( const std::string& name, unsigned int& value ) const = 0;
     virtual void attribute( const std::string& name, unsigned long& value ) const = 0;
