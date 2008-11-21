@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef __xeumeuleu_test_pch_h_
-#define __xeumeuleu_test_pch_h_
+#ifndef _xeumeuleu_test_pch_h_
+#define _xeumeuleu_test_pch_h_
 
 #ifdef _MSC_VER
 #   pragma warning( disable : 4355 )
@@ -66,4 +66,4 @@
 
 const std::string BOOST_RESOLVE( const std::string& filename );
 
-#endif // __xeumeuleu_test_pch_h_
+#endif // _xeumeuleu_test_pch_h_
