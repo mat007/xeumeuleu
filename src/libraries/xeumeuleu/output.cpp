@@ -215,7 +215,7 @@ namespace
 #   pragma warning( push )
 #   pragma warning( disable : 4996 )
 #endif
-        sprintf( buffer, "%Lg", value );
+        sprintf( buffer, "%g", value );
 #ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
@@ -247,5 +247,20 @@ std::string output::serialize( double value ) const
 // -----------------------------------------------------------------------------
 std::string output::serialize( long double value ) const
 {
-    return convert( value );
+    if( value == std::numeric_limits< long double >::infinity() )
+        return "INF";
+    if( value == - std::numeric_limits< long double >::infinity() )
+        return "-INF";
+    if( value != value )
+        return "NaN";
+    char buffer[255];
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4996 )
+#endif
+    sprintf( buffer, "%Lg", value );
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
+    return buffer;
 }
