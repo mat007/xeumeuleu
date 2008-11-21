@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE( streaming_cdata_creates_output_with_cdata_section )
     xml::xostringstream xos;
     xos << xml::start( "element" )
             << xml::cdata( "<<<" )
-        << xml::end();
+        << xml::end;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element>\n"
                        "  <![CDATA[<<<]]>\n"
@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE( streaming_cdata_creates_output_with_cdata_content_on_level
     xml::xostringstream xos;
     xos << xml::start( "root" )
             << xml::content( "element", xml::cdata( "<<<" ) )
-        << xml::end();
+        << xml::end;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<root>\n"
                        "  <element>\n"

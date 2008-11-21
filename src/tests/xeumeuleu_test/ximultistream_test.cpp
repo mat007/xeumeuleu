@@ -148,7 +148,7 @@ BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_from_first_branch_then_secon
     std::string actual1, actual2;
     xis >> xml::start( "root-1" )
             >> xml::attribute( "attribute-1", actual1 )
-        >> xml::end()
+        >> xml::end
         >> xml::start( "root-2" )
             >> xml::attribute( "attribute-2", actual2 );
     BOOST_CHECK_EQUAL( "stream-1", actual1 );
@@ -166,7 +166,7 @@ BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_from_second_branch_does_not_
     xml::ximultistream xis( xis1, xis2 );
     xis >> xml::start( "root" )
             >> xml::start( "element" )
-            >> xml::end();
+            >> xml::end;
     BOOST_CHECK_EQUAL( "stream-1", xml::attribute< std::string >( xis, "attribute" ) );
 }
 
@@ -201,10 +201,10 @@ BOOST_AUTO_TEST_CASE( an_ximultistring_can_be_wrapped_by_another_ximultistring )
     std::string actual1, actual2, actual3;
     xis >> xml::start( "root-1" )
             >> xml::attribute( "attribute", actual1 )
-        >> xml::end()
+        >> xml::end
         >> xml::start( "root-2" )
             >> xml::attribute( "attribute", actual2 )
-        >> xml::end()
+        >> xml::end
         >> xml::start( "root-3" )
             >> xml::attribute( "attribute", actual3 );
     BOOST_CHECK_EQUAL( "stream-1", actual1 );
@@ -225,7 +225,7 @@ BOOST_AUTO_TEST_CASE( an_ximultistring_can_be_buffered_by_an_xibufferstream )
     std::string actual1, actual2;
     xibs >> xml::start( "root-1" )
              >> xml::attribute( "attribute", actual1 )
-         >> xml::end()
+         >> xml::end
          >> xml::start( "root-2" )
              >> xml::attribute( "attribute", actual2 );
     BOOST_CHECK_EQUAL( "stream-1", actual1 );

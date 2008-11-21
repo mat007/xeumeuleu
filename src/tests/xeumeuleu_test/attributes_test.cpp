@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_CASE( read_attributes_from_element_calls_a_custom_method )
     xml::xistringstream xis( "<element first='attribute content 1' second='attribute content 2'/>" );
     xis >> xml::start( "element" )
             >> xml::attributes( mock_custom, &mock_custom_class::process )
-        >> xml::end();
+        >> xml::end;
     mock_custom.verify();
 }
 
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE( read_attributes_from_element_without_attribute_does_not_ca
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
             >> xml::attributes( mock_custom, &mock_custom_class::process )
-        >> xml::end();
+        >> xml::end;
 }
 
 namespace

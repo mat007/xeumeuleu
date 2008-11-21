@@ -33,6 +33,7 @@
 #ifndef _xeumeuleu_cdata_h_
 #define _xeumeuleu_cdata_h_
 
+#include "xostream.h"
 #include <string>
 
 namespace xml
@@ -57,12 +58,20 @@ class cdata
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit cdata( const std::string& content );
+    explicit cdata( const std::string& content )
+        : content_( content )
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operators
     //@{
-    xostream& operator()( xostream& xos ) const;
+    xostream& operator()( xostream& xos ) const
+    {
+        xos.cdata( content_ );
+        return xos;
+    }
     //@}
 
 private:
@@ -76,7 +85,10 @@ private:
 // Name: operator<<
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-xostream& operator<<( xostream& xos, const cdata& manipulator );
+inline xostream& operator<<( xostream& xos, const cdata& manipulator )
+{
+    return manipulator( xos );
+}
 
 }
 

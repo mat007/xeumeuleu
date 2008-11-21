@@ -33,12 +33,11 @@
 #ifndef _xeumeuleu_instruction_h_
 #define _xeumeuleu_instruction_h_
 
+#include "xostream.h"
 #include <string>
 
 namespace xml
 {
-    class xostream;
-
 // =============================================================================
 /** @class  instruction
     @brief  Processing instruction manipulator
@@ -56,12 +55,21 @@ class instruction
 public:
     //! @name Constructors/Destructor
     //@{
-    instruction( const std::string& target, const std::string& data );
+    instruction( const std::string& target, const std::string& data )
+        : target_( target )
+        , data_  ( data )
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operators
     //@{
-    xostream& operator()( xostream& xos ) const;
+    xostream& operator()( xostream& xos ) const
+    {
+        xos.instruction( target_, data_ );
+        return xos;
+    }
     //@}
 
 private:
@@ -76,7 +84,10 @@ private:
 // Name: operator<<
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-xostream& operator<<( xostream& xos, const instruction& manipulator );
+inline xostream& operator<<( xostream& xos, const instruction& manipulator )
+{
+    return manipulator( xos );
+}
 
 }
 

@@ -93,7 +93,7 @@ buffer* buffer::apply( const xml::start& start )
 // Name: buffer::apply
 // Created: MCO 2007-10-02
 // -----------------------------------------------------------------------------
-buffer* buffer::apply( const xml::end& end )
+buffer* buffer::apply( const xml::end_manipulator& end )
 {
     output_.apply( end );
     --level_;

@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE( reading_optional_non_existing_element_does_not_throw_excep
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
-            >> xml::optional();
+            >> xml::optional;
     BOOST_CHECK_NO_THROW( xis >> xml::start( "non-existing-child" ) );
 }
 
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE( reading_optional_non_existing_element_sub_node_does_not_th
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
-            >> xml::optional()
+            >> xml::optional
             >> xml::start( "non-existing-child" );
     BOOST_CHECK_NO_THROW( xis >> xml::start( "non-existing-sub-child" ) );
 }
@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE( reading_optional_non_existing_element_content_does_not_thr
     xml::xistringstream xis( "<element/>" );
     int value = 0;
     xis >> xml::start( "element" )
-            >> xml::optional()
+            >> xml::optional
             >> xml::start( "non-existing-child" );
     BOOST_CHECK_NO_THROW( xis >> value );
     BOOST_CHECK_EQUAL( 0, value );
@@ -84,7 +84,7 @@ BOOST_AUTO_TEST_CASE( reading_optional_non_existing_element_attribute_does_not_t
     xml::xistringstream xis( "<element/>" );
     int value = 0;
     xis >> xml::start( "element" )
-            >> xml::optional()
+            >> xml::optional
             >> xml::start( "non-existing-child" );
     BOOST_CHECK_NO_THROW( xis >> xml::attribute( "attribute", value ) );
     BOOST_CHECK_EQUAL( 0, value );
@@ -98,9 +98,9 @@ BOOST_AUTO_TEST_CASE( moving_out_of_optional_non_existing_element_terminates_the
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
-            >> xml::optional()
+            >> xml::optional
             >> xml::start( "non-existing-child" )
-            >> xml::end();
+            >> xml::end;
     BOOST_CHECK_THROW( xis >> xml::start( "non-existing-child" ), xml::exception );
 }
 
@@ -114,10 +114,10 @@ BOOST_AUTO_TEST_CASE( reading_existing_element_inside_optional_non_existing_elem
                                "<existing-child/>"
                              "</element>" );
     xis >> xml::start( "element" )
-            >> xml::optional()
+            >> xml::optional
             >> xml::start( "non-existing-child" )
                 >> xml::start( "existing-child" )
-                >> xml::end();
+                >> xml::end;
     BOOST_CHECK_NO_THROW( xis >> xml::start( "non-existing-sub-child" ) );
 }
 
@@ -129,12 +129,12 @@ BOOST_AUTO_TEST_CASE( reading_optional_element_inside_optional_non_existing_elem
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
-            >> xml::optional()
+            >> xml::optional
             >> xml::start( "non-existing-child" )
-                >> xml::optional()
+                >> xml::optional
                 >> xml::start( "non-existing-sub-child" )
-                >> xml::end()
-            >> xml::end();
+                >> xml::end
+            >> xml::end;
     BOOST_CHECK_THROW( xis >> xml::start( "non-existing-child" ), xml::exception );
 }
 
@@ -146,8 +146,8 @@ BOOST_AUTO_TEST_CASE( setting_optional_before_moving_up_throws_an_exception )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
-            >> xml::optional();
-    BOOST_CHECK_THROW( xis >> xml::end(), xml::exception );
+            >> xml::optional;
+    BOOST_CHECK_THROW( xis >> xml::end, xml::exception );
 }
 
 namespace
@@ -169,7 +169,7 @@ BOOST_AUTO_TEST_CASE( reading_a_list_resets_the_optional_flag )
     custom_class custom;
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
-            >> xml::optional()
+            >> xml::optional
             >> xml::list( "non-existing-child", custom, &custom_class::process );
     BOOST_CHECK_THROW( xis >> xml::start( "non-existing-child" ), xml::exception );
 }
@@ -183,7 +183,7 @@ BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_attribute_does_not_throw_
     xml::xistringstream xis( "<element/>" );
     int value = 0;
     xis >> xml::start( "element" )
-            >> xml::optional();
+            >> xml::optional;
     BOOST_CHECK_NO_THROW( xis >> xml::attribute( "non-existinig-attribute", value ) );
     BOOST_CHECK_EQUAL( 0, value );
 }
@@ -197,7 +197,7 @@ BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_text_content_does_not_thr
     xml::xistringstream xis( "<element/>" );
     int value = 0;
     xis >> xml::start( "element" )
-            >> xml::optional();
+            >> xml::optional;
     BOOST_CHECK_NO_THROW( xis >> value );
     BOOST_CHECK_EQUAL( 0, value );
 }
@@ -210,7 +210,7 @@ BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_content_in_existing_tag_t
 {
     xml::xistringstream xis( "<element/>" );
     std::string value;
-    xis >> xml::optional();
+    xis >> xml::optional;
     BOOST_CHECK_THROW( xis >> xml::content( "element", value ), std::exception ); // because content = start + read + end
     BOOST_CHECK_EQUAL( "", value );
 }

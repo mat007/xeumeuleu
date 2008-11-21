@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_inserted_in_the_serialization_flow
     xst << xml::start( "root" )
             << xbt << xis
             << xbt << xis
-        << xml::end();
+        << xml::end;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><flow-root><element/><element/></flow-root>", xst.str() );
 }
 

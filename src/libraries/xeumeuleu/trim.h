@@ -37,7 +37,13 @@
 
 namespace xml
 {
-    std::string trim( const std::string& str );
+    inline std::string trim( const std::string& str )
+    {
+        if( str.empty() )
+            return str;
+        const size_t start = str.find_first_not_of( " \t\r\n" );
+        return str.substr( start, str.find_last_not_of( " \t\r\n" ) - start + 1 );
+    }
 }
 
 #endif // _xeumeuleu_trim_h_

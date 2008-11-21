@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE( creating_empty_document_throws_an_exception )
 BOOST_AUTO_TEST_CASE( streaming_document_with_one_element )
 {
     xml::xistringstream xis( "<element/>" );
-    xis >> xml::start( "element" ) >> xml::end();
+    xis >> xml::start( "element" ) >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE( streaming_document_with_prolog_and_one_element )
 {
     xml::xistringstream xis( "<?xml version='1.0' encoding='UTF-8' standalone='no'?>"
                              "<element/>" );
-    xis >> xml::start( "element" ) >> xml::end();
+    xis >> xml::start( "element" ) >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ BOOST_AUTO_TEST_CASE( streaming_document_with_wrong_element_throws_an_exception 
 BOOST_AUTO_TEST_CASE( leaving_root_throws_an_exception )
 {
     xml::xistringstream xis( "<element/>" );
-    BOOST_CHECK_THROW( xis >> xml::end(), xml::exception );
+    BOOST_CHECK_THROW( xis >> xml::end, xml::exception );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ BOOST_AUTO_TEST_CASE( not_reading_child_node_is_allowed )
     xml::xistringstream xis( "<element>"
                                "<sub-node/>"
                              "</element>" );
-    xis >> xml::start( "element" ) >> xml::end();
+    xis >> xml::start( "element" ) >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -113,8 +113,8 @@ BOOST_AUTO_TEST_CASE( not_reading_all_child_nodes_is_allowed )
                                "<another-sub-node/>"
                              "</element>" );
     xis >> xml::start( "element" )
-            >> xml::start( "another-sub-node" ) >> xml::end()
-        >> xml::end();
+            >> xml::start( "another-sub-node" ) >> xml::end
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -128,10 +128,10 @@ BOOST_AUTO_TEST_CASE( reading_several_times_in_any_order_is_allowed )
                                "<sub-node2/>"
                              "</element>" );
     xis >> xml::start( "element" )
-            >> xml::start( "sub-node2" ) >> xml::end()
-            >> xml::start( "sub-node1" ) >> xml::end()
-            >> xml::start( "sub-node2" ) >> xml::end()
-    >> xml::end();
+            >> xml::start( "sub-node2" ) >> xml::end
+            >> xml::start( "sub-node1" ) >> xml::end
+            >> xml::start( "sub-node2" ) >> xml::end
+    >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_CASE( streaming_node_string_value )
                                "\n this is the value \n"
                              "</element>" );
     std::string value;
-    xis >> xml::start( "element" ) >> value >> xml::end();
+    xis >> xml::start( "element" ) >> value >> xml::end;
     BOOST_CHECK_EQUAL( "\n this is the value \n", value );
 }
 
@@ -185,7 +185,7 @@ BOOST_AUTO_TEST_CASE( streaming_node_value_mixed_with_sub_node )
                                "<sub-node/>"
                              "</element>" );
     std::string value;
-    xis >> xml::start( "element" ) >> value >> xml::start( "sub-node" ) >> xml::end() >> xml::end();
+    xis >> xml::start( "element" ) >> value >> xml::start( "sub-node" ) >> xml::end >> xml::end;
     BOOST_CHECK_EQUAL( " \n text node content ", value );
 }
 
@@ -348,6 +348,6 @@ BOOST_AUTO_TEST_CASE( reading_huge_xml_is_valid )
         xml::xistringstream xis( create() );
         xis >> xml::start( "root" )
                 >> xml::list( "element", reader, &my_class::read )
-            >> xml::end();
+            >> xml::end;
     }
 }

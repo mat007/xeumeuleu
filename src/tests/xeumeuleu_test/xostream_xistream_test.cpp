@@ -100,7 +100,7 @@ BOOST_AUTO_TEST_CASE( copy_xistream_from_optional_non_existing_element_to_xostre
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
-        >> xml::optional() >> xml::start( "non existing element" );
+        >> xml::optional >> xml::start( "non existing element" );
     xml::xostringstream xos;
     xos << xml::content( "root", xis );
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE( copy_xistream_from_optional_to_xostream )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
-        >> xml::optional();
+        >> xml::optional;
     xml::xostringstream xos;
     xos << xml::content( "root", xis );
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
@@ -131,7 +131,7 @@ BOOST_AUTO_TEST_CASE( copy_xistream_from_sub_element_to_xostream_removes_meaning
     xml::xistringstream xis( "<root>  <sub-element/></root>" );
     xis >> xml::start( "root" );
     xml::xostringstream xos;
-    xos << xml::start( "root" ) << xis << xml::end();
+    xos << xml::start( "root" ) << xis << xml::end;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<root>\n"
                        "  <sub-element/>\n"
