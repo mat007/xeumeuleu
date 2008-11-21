@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE( creating_empty_document )
 BOOST_AUTO_TEST_CASE( streaming_root_element_makes_a_valid_document )
 {
     xml::xostringstream xos;
-    xos << xml::start( "element" ) << xml::end();
+    xos << xml::start( "element" ) << xml::end;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element/>\n", xos.str() );
 }
@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE( streaming_root_element_makes_a_valid_document )
 BOOST_AUTO_TEST_CASE( streaming_root_element_twice_throws_an_exception )
 {
     xml::xostringstream xos;
-    xos << xml::start( "element" ) << xml::end();
+    xos << xml::start( "element" ) << xml::end;
     BOOST_CHECK_THROW( xos << xml::start( "another_element" ), xml::exception );
 }
 
@@ -77,8 +77,8 @@ BOOST_AUTO_TEST_CASE( streaming_child_element_makes_a_valid_document )
     xml::xostringstream xos;
     xos << xml::start( "element" )
             << xml::start( "child" )
-            << xml::end()
-        << xml::end();
+            << xml::end
+        << xml::end;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element>\n"
                        "  <child/>\n"
@@ -92,7 +92,7 @@ BOOST_AUTO_TEST_CASE( streaming_child_element_makes_a_valid_document )
 BOOST_AUTO_TEST_CASE( streaming_end_to_an_output_stream_at_root_level_throws_an_exception )
 {
     xml::xostringstream xos;
-    BOOST_CHECK_THROW( xos << xml::end(), xml::exception );
+    BOOST_CHECK_THROW( xos << xml::end, xml::exception );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +113,7 @@ BOOST_AUTO_TEST_CASE( streaming_text_node_value_mixed_with_sub_node )
 {
     BOOST_TODO; // $$$$ MAT 2006-10-16: of course this test fails as we format the output : should it be considered a bug or a feature ?
 //    xml::xostringstream xos;
-//    xos << xml::start( "element" ) << " \n text node content " << xml::start( "child" ) << xml::end() << xml::end();
+//    xos << xml::start( "element" ) << " \n text node content " << xml::start( "child" ) << xml::end << xml::end;
 //    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
 //                       "<element> \n text node content "
 //                       "<child/>\n"
@@ -179,7 +179,7 @@ BOOST_AUTO_TEST_CASE( streaming_processing_instruction_makes_a_valid_document )
 {
     xml::xostringstream xos;
     xos << xml::instruction( "xml-stylesheet", "type=\"text/xsl\" href=\"my_stylesheet.xsl\"" )
-        << xml::start( "root" ) << xml::end();
+        << xml::start( "root" ) << xml::end;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<?xml-stylesheet type=\"text/xsl\" href=\"my_stylesheet.xsl\"?>\n"
                        "<root/>\n", xos.str() );

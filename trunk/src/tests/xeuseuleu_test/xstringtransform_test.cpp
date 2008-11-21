@@ -90,11 +90,11 @@ BOOST_AUTO_TEST_CASE( tranformation_is_applied_at_end_root_level )
     xsl::xstringtransform xst( BOOST_RESOLVE( "stylesheet.xsl" ) );
     xst << xml::start( "root" )
             << xml::start( "element" )
-            << xml::end()
+            << xml::end
             << xml::start( "element" )
-            << xml::end();
+            << xml::end;
     BOOST_CHECK( xst.str().empty() );
-    xst << xml::end();
+    xst << xml::end;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><new-root><transformed/><transformed/></new-root>", xst.str() );
 }
 

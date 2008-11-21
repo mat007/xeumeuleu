@@ -73,7 +73,7 @@ namespace
     template< typename T > std::string write( const T& value )
     {
         xml::xostringstream xos;
-        xos << xml::start( "element" ) << xml::attribute( "attribute", value ) << xml::end();
+        xos << xml::start( "element" ) << xml::attribute( "attribute", value ) << xml::end;
         return xos.str();
     }
     std::string format( const std::string& value )

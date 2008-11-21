@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE( empty_buffer_stream_does_not_modify_stream )
 {
     xml::xobufferstream xobs;
     xml::xostringstream xos;
-    xos << xml::start( "element" ) << xobs << xml::end();
+    xos << xml::start( "element" ) << xobs << xml::end;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element/>\n", xos.str() );
 }
@@ -66,9 +66,9 @@ BOOST_AUTO_TEST_CASE( empty_buffer_stream_does_not_modify_stream )
 BOOST_AUTO_TEST_CASE( element_in_buffer_stream_is_inserted_in_stream )
 {
     xml::xobufferstream xobs;
-    xobs << xml::start( "sub-node" ) << xml::end();
+    xobs << xml::start( "sub-node" ) << xml::end;
     xml::xostringstream xos;
-    xos << xml::start( "element" ) << xobs << xml::end();
+    xos << xml::start( "element" ) << xobs << xml::end;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element>\n"
                        "  <sub-node/>\n"
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE( element_in_buffer_stream_is_inserted_in_stream )
 BOOST_AUTO_TEST_CASE( element_in_buffer_stream_is_copied_to_an_empty_stream )
 {
     xml::xobufferstream xobs;
-    xobs << xml::start( "element" ) << xml::end();
+    xobs << xml::start( "element" ) << xml::end;
     xml::xostringstream xos;
     xos << xobs;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
@@ -96,7 +96,7 @@ BOOST_AUTO_TEST_CASE( element_in_buffer_stream_is_copied_to_an_empty_stream )
 BOOST_AUTO_TEST_CASE( adding_two_buffer_streams_in_an_empty_stream_throws_an_exception )
 {
     xml::xobufferstream xobs;
-    xobs << xml::start( "element" ) << xml::end();
+    xobs << xml::start( "element" ) << xml::end;
     xml::xostringstream xos;
     xos << xobs;
     BOOST_CHECK_THROW( xos << xobs, xml::exception );
@@ -109,13 +109,13 @@ BOOST_AUTO_TEST_CASE( adding_two_buffer_streams_in_an_empty_stream_throws_an_exc
 BOOST_AUTO_TEST_CASE( adding_several_times_a_buffer_stream_duplicates_the_branch )
 {
     xml::xobufferstream xobs;
-    xobs << xml::start( "sub-node" ) << xml::end();
+    xobs << xml::start( "sub-node" ) << xml::end;
     xml::xostringstream xos;
     xos << xml::start( "element" )
           << xobs
           << xobs
           << xobs
-        << xml::end();
+        << xml::end;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element>\n"
                        "  <sub-node/>\n"

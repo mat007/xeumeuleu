@@ -33,50 +33,65 @@
 #ifndef _xeumeuleu_end_h_
 #define _xeumeuleu_end_h_
 
+#include "xistream.h"
+#include "xostream.h"
+
 namespace xml
 {
-    class xistream;
-    class xostream;
-
 // =============================================================================
 /** @class  end
     @brief  End tag manipulator
     @code
     xml::xistream& xis = ...;
-    xis >> xml::end();
+    xis >> xml::end;
 
     xml::xostream& xos = ...;
-    xos << xml::end();
+    xos << xml::end;
     @endcode
 */
 // Created: MAT 2006-01-03
 // =============================================================================
-class end
+class end_manipulator
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-    end();
-    //@}
-
     //! @name Operators
     //@{
-    xistream& operator()( xistream& xis ) const;
-    xostream& operator()( xostream& xos ) const;
+    const end_manipulator& operator()() const
+    {
+        return *this;
+    }
+    xistream& operator()( xistream& xis ) const
+    {
+        xis.end();
+        return xis;
+    }
+    xostream& operator()( xostream& xos ) const
+    {
+        xos.end();
+        return xos;
+    }
     //@}
 };
+
+const end_manipulator end;
 
 // -----------------------------------------------------------------------------
 // Name: operator>>
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-xistream& operator>>( xistream& xis, const end& manipulator );
+inline xistream& operator>>( xistream& xis, const end_manipulator& manipulator )
+{
+    return manipulator( xis );
+}
 
 // -----------------------------------------------------------------------------
 // Name: operator<<
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-xostream& operator<<( xostream& xos, const end& manipulator );
+inline xostream& operator<<( xostream& xos, const end_manipulator& manipulator )
+{
+    return manipulator( xos );
+}
 
 }
 

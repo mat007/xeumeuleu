@@ -79,6 +79,6 @@ BOOST_AUTO_TEST_CASE( creating_with_valid_file )
         file << "<element/>";
     }
     xml::xifstream xis( filename );
-    xis >> xml::start( "element" ) >> xml::end();
+    xis >> xml::start( "element" ) >> xml::end;
     std::remove( filename.c_str() );
 }

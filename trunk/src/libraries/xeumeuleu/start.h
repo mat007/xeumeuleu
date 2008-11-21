@@ -33,13 +33,12 @@
 #ifndef _xeumeuleu_start_h_
 #define _xeumeuleu_start_h_
 
+#include "xistream.h"
+#include "xostream.h"
 #include <string>
 
 namespace xml
 {
-    class xistream;
-    class xostream;
-
 // =============================================================================
 /** @class  start
     @brief  Start tag manipulator
@@ -59,13 +58,25 @@ class start
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit start( const std::string& tag );
+    explicit start( const std::string& tag )
+        : tag_( tag )
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operators
     //@{
-    xistream& operator()( xistream& xis ) const;
-    xostream& operator()( xostream& xos ) const;
+    xistream& operator()( xistream& xis ) const
+    {
+        xis.start( tag_ );
+        return xis;
+    }
+    xostream& operator()( xostream& xos ) const
+    {
+        xos.start( tag_ );
+        return xos;
+    }
     //@}
 
 private:
@@ -79,13 +90,19 @@ private:
 // Name: operator>>
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-xistream& operator>>( xistream& xis, const start& manipulator );
+inline xistream& operator>>( xistream& xis, const start& manipulator )
+{
+    return manipulator( xis );
+}
 
 // -----------------------------------------------------------------------------
 // Name: operator<<
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-xostream& operator<<( xostream& xos, const start& manipulator );
+inline xostream& operator<<( xostream& xos, const start& manipulator )
+{
+    return manipulator( xos );
+}
 
 }
 

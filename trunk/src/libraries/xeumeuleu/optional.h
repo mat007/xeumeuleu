@@ -33,12 +33,14 @@
 #ifndef _xeumeuleu_optional_h_
 #define _xeumeuleu_optional_h_
 
+#include "xistream.h"
+
 namespace xml
 {
     class xistream;
 
 // =============================================================================
-/** @class  optional
+/** @class  optional_manipulator
     @brief  Optional manipulator
     @par Using example
     @code
@@ -48,25 +50,33 @@ namespace xml
 */
 // Created: MAT 2006-01-07
 // =============================================================================
-class optional
+class optional_manipulator
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-    optional();
-    //@}
-
     //! @name Operators
     //@{
-    xistream& operator()( xistream& xis ) const;
+    const optional_manipulator& operator()() const
+    {
+        return *this;
+    }
+    xistream& operator()( xistream& xis ) const
+    {
+        xis.optional();
+        return xis;
+    }
     //@}
 };
+
+const optional_manipulator optional;
 
 // -----------------------------------------------------------------------------
 // Name: operator>>
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-xistream& operator>>( xistream& xis, const optional& manipulator );
+inline xistream& operator>>( xistream& xis, const optional_manipulator& manipulator )
+{
+    return manipulator( xis );
+}
 
 }
 
