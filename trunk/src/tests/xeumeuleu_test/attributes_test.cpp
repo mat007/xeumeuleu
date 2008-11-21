@@ -198,6 +198,10 @@ namespace
         }
 
         mockpp::ChainableMockMethod< void > my_method_mocker;
+
+    private:
+        my_bindable_class( const my_bindable_class& );
+        my_bindable_class& operator=( const my_bindable_class& );
     };
 }
 

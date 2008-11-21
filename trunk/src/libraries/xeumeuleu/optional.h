@@ -53,6 +53,14 @@ namespace xml
 class optional_manipulator
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
+    optional_manipulator()
+    {
+        // NOTHING
+    }
+    //@}
+
     //! @name Operators
     //@{
     const optional_manipulator& operator()() const
