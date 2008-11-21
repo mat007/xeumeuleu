@@ -54,6 +54,14 @@ namespace xml
 class end_manipulator
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
+    end_manipulator()
+    {
+        // NOTHING
+    }
+    //@}
+
     //! @name Operators
     //@{
     const end_manipulator& operator()() const
