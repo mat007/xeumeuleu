@@ -202,6 +202,10 @@ namespace
             process_mocker.forward( content );
         }
         mockpp::ChainableMockMethod< void, std::string > process_mocker;
+
+    private:
+        mock_custom_class( const mock_custom_class& );
+        mock_custom_class& operator=( const mock_custom_class& );
     };
 }
 
@@ -240,6 +244,10 @@ namespace
             process_mocker.forward( content, p1, p2 );
         }
         mockpp::ChainableMockMethod< void, std::string, int, float > process_mocker;
+
+    private:
+        mock_custom_class_with_parameters( const mock_custom_class_with_parameters& );
+        mock_custom_class_with_parameters& operator=( const mock_custom_class_with_parameters& );
     };
 }
 
@@ -282,6 +290,10 @@ namespace
             process_mocker.forward( content, &p1 );
         }
         mockpp::ChainableMockMethod< void, std::string, an_interface* > process_mocker;
+
+    private:
+        mock_custom_class_with_polymorphic_parameter( const mock_custom_class_with_polymorphic_parameter& );
+        mock_custom_class_with_polymorphic_parameter& operator=( const mock_custom_class_with_polymorphic_parameter& );
     };
 
     class a_class : public an_interface
@@ -348,6 +360,10 @@ namespace
             process_mocker.forward( name, content, p1 );
         }
         mockpp::ChainableMockMethod< void, std::string, std::string, int > process_mocker;
+
+    private:
+        mock_custom_class_name_list_with_parameters( const mock_custom_class_name_list_with_parameters& );
+        mock_custom_class_name_list_with_parameters& operator=( const mock_custom_class_name_list_with_parameters& );
     };
 }
 
@@ -387,6 +403,10 @@ namespace
             process_mocker.forward( name, content );
         }
         mockpp::ChainableMockMethod< void, std::string, std::string > process_mocker;
+
+    private:
+        mock_custom_class_name_list( const mock_custom_class_name_list& );
+        mock_custom_class_name_list& operator=( const mock_custom_class_name_list& );
     };
 }
 
@@ -551,6 +571,10 @@ namespace
         }
 
         mockpp::ChainableMockMethod< void > my_method_mocker;
+
+    private:
+        my_bindable_class( const my_bindable_class& );
+        my_bindable_class& operator=( const my_bindable_class& );
     };
 }
 
