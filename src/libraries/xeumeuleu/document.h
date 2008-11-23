@@ -33,8 +33,15 @@
 #ifndef _xeumeuleu_document_h_
 #define _xeumeuleu_document_h_
 
+#include "xerces.h"
+#include "xerces_ptr.h"
+#include <string>
+
 namespace xml
 {
+    class encoding;
+    class grammar;
+
 // =============================================================================
 /** @class  document
     @brief  Document base class
@@ -47,7 +54,30 @@ protected:
     //! @name Constructors/Destructor
     //@{
              document();
+             document( const std::string& filename, const encoding* encoding, const grammar& grammar );
+             document( const char* data, std::size_t size, const encoding* encoding, const grammar& grammar );
     virtual ~document();
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    void fill( const std::string& filename, const std::string& encoding );
+    void fill( std::string& data, const std::string& encoding );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    static void initialize();
+
+    void write( XERCES_CPP_NAMESPACE::XMLFormatTarget& destination, const std::string& encoding );
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > document_;
     //@}
 };
 

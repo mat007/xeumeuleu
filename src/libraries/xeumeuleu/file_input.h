@@ -34,7 +34,6 @@
 #define _xeumeuleu_file_input_h_
 
 #include "document.h"
-#include "input_base_member.h"
 #include "input.h"
 
 namespace xml
@@ -45,20 +44,13 @@ namespace xml
 */
 // Created: MAT 2006-01-04
 // =============================================================================
-class file_input : private document, private input_base_member, public input
+class file_input : private document, public input
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             file_input( const std::string& filename, const grammar& grammar );
-             file_input( const std::string& filename, const encoding& encoding, const grammar& grammar );
+             file_input( const std::string& filename, const encoding* encoding, const grammar& grammar );
     virtual ~file_input();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    static XERCES_CPP_NAMESPACE::DOMDocument& build( const std::string& filename, const encoding* encoding, const grammar& grammar );
     //@}
 };
 

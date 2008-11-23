@@ -40,7 +40,7 @@ using namespace xml;
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
 buffer_output::buffer_output()
-    : output( *output_base_member::document_, *output_base_member::document_ )
+    : output( *document::document_, *document::document_ )
 {
     // NOTHING
 }
@@ -60,7 +60,7 @@ buffer_output::~buffer_output()
 // -----------------------------------------------------------------------------
 std::auto_ptr< input_base > buffer_output::branch()
 {
-    return std::auto_ptr< input_base >( new input_imp( *output_base_member::document_ ) );
+    return std::auto_ptr< input_base >( new input_imp( *document::document_ ) );
 }
 
 // -----------------------------------------------------------------------------

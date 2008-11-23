@@ -40,7 +40,7 @@ using namespace xml;
 // Created: MAT 2006-04-10
 // -----------------------------------------------------------------------------
 xifstream::xifstream( const std::string& filename, const grammar& grammar )
-    : xistream( std::auto_ptr< input >( new file_input( filename, grammar ) ) )
+    : xistream( std::auto_ptr< input >( new file_input( filename, 0, grammar ) ) )
 {
     // NOTHING
 }
@@ -50,7 +50,7 @@ xifstream::xifstream( const std::string& filename, const grammar& grammar )
 // Created: MAT 2006-04-10
 // -----------------------------------------------------------------------------
 xifstream::xifstream( const std::string& filename, const encoding& encoding, const grammar& grammar )
-    : xistream( std::auto_ptr< input >( new file_input( filename, encoding, grammar ) ) )
+    : xistream( std::auto_ptr< input >( new file_input( filename, &encoding, grammar ) ) )
 {
     // NOTHING
 }

@@ -32,9 +32,7 @@
 
 #include "file_input.h"
 #include "translate.h"
-#include "exception.h"
 #include "input_imp.h"
-#include <fstream>
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
@@ -43,19 +41,8 @@ using namespace XERCES_CPP_NAMESPACE;
 // Name: file_input constructor
 // Created: MAT 2006-03-26
 // -----------------------------------------------------------------------------
-file_input::file_input( const std::string& filename, const encoding& encoding, const grammar& grammar )
-    : input_base_member( build( filename, &encoding, grammar ) )
-    , input( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: file_input constructor
-// Created: MAT 2006-03-26
-// -----------------------------------------------------------------------------
-file_input::file_input( const std::string& filename, const grammar& grammar )
-    : input_base_member( build( filename, 0, grammar ) )
+file_input::file_input( const std::string& filename, const encoding* encoding, const grammar& grammar )
+    : document( filename, encoding, grammar )
     , input( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
 {
     // NOTHING
@@ -68,16 +55,4 @@ file_input::file_input( const std::string& filename, const grammar& grammar )
 file_input::~file_input()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: file_input::build
-// Created: MAT 2006-01-04
-// -----------------------------------------------------------------------------
-DOMDocument& file_input::build( const std::string& filename, const encoding* encoding, const grammar& grammar )
-{
-    if( ! std::ifstream( filename.c_str() ) )
-        throw xml::exception( "Unable to open file '" + filename + "'" );
-    LocalFileInputSource buffer( static_cast< const XMLCh* const >( translate( filename ) ) );
-    return parse( buffer, encoding, grammar );
 }

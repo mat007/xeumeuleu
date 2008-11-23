@@ -41,7 +41,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
 string_output::string_output( const std::string& encoding )
-    : output( *output_base_member::document_, *output_base_member::document_ )
+    : output( *document::document_, *document::document_ )
     , encoding_( encoding )
 {
     // NOTHING
@@ -71,7 +71,5 @@ const std::string string_output::str() const
 // -----------------------------------------------------------------------------
 void string_output::finished()
 {
-    MemBufFormatTarget target;
-    fill( target, encoding_ );
-    data_ = reinterpret_cast< const char* >( target.getRawBuffer() );
+    fill( data_, encoding_ );
 }
