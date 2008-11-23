@@ -102,6 +102,10 @@ public:
 
     void nodes( const visitor& v ) const;
     void attributes( const visitor& v ) const;
+
+    bool has_child( const std::string& name ) const;
+    bool has_attribute( const std::string& name ) const;
+    bool has_content() const;
     //@}
 
     //! @name Modifiers

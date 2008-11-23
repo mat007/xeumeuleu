@@ -176,9 +176,7 @@ xml::xistreamstream xis( stream );]]></source>
           </p>
           <source><![CDATA[xos << xml::start( "element" ) << xml::end;]]></source>
           <p>
-            An important feature concerning input streams is that when unserializing an element the first available child matching the given name will be pulled.
-          </p>
-          <p>
+            An important feature concerning input streams is that when unserializing an element the first available child matching the given name will be pulled.<br />
             This allows to ignore elements ordering as for the following XML document :
           </p>
           <source><![CDATA[<root>
@@ -224,6 +222,10 @@ xos << xis;]]></source>
           <source><![CDATA[<element/>
   <sub-element/>
 </element>]]></source>
+          <p>
+            Testing the presence of a child element on an input stream can be achieved by :
+          </p>
+          <source><![CDATA[bool has_child = xis.has_child( "element" );]]></source>
         </section>
         <section id="xml-lists">
           <title>Lists of elements</title>
@@ -312,7 +314,7 @@ public:
           Can be used to read data with :
         </p>
         <source><![CDATA[xis >> xml::start( "root" )
-    >> xml::list( my_instance, &my_function )
+    >> xml::list( &my_function )
   >> xml::end;]]></source>
         <p>
           In the same way, the following functor :
@@ -329,7 +331,7 @@ public:
           Can be used like this :
         </p>
         <source><![CDATA[xis >> xml::start( "root" )
-    >> xml::list( my_instance, my_functor() )
+    >> xml::list( my_functor() )
   >> xml::end;]]></source>
         <p>
           In this case a copy of the functor is made internally.
@@ -339,7 +341,7 @@ public:
         </p>
         <source><![CDATA[my_functor functor;
 xis >> xml::start( "root" )
-      >> xml::list< my_functor& >( my_instance, functor )
+      >> xml::list< my_functor& >( functor )
     >> xml::end;]]></source>
         </section>
         <section id="xml-optional-element">
@@ -437,11 +439,15 @@ xis >> xml::start( "root" )
           <p>
             Note that the first forms require the template to be explicited whereas the second forms deduce it from the default value parameter type.
           </p>
+          <p>
+            Testing whether a content is available or not on an input stream can be achieved by :
+          </p>
+          <source><![CDATA[bool has_content = xis.has_content();]]></source>
         </section>
         <section id="xml-attributes">
           <title>Attributes</title>
           <p>
-            Coping with attributes involves using <strong>xml::attribute</strong>, for example :
+            Handling attributes involves using <strong>xml::attribute</strong>, for example :
           </p>
           <source><![CDATA[xos << xml::start( "element" )
     << xml::attribute( "name", "the-name" )
@@ -462,6 +468,10 @@ xis >> xml::start( "root" )
           <p>
             Note that the first version requires the template to be explicited whereas the second version deduces it from the default value parameter type.
           </p>
+          <p>
+            Testing the presence of an attribute on an input stream can be achieved by :
+          </p>
+          <source><![CDATA[bool has_attribute = xis.has_attribute( "an attribute" );]]></source>
         </section>
         <section id="xml-attribute-lists">
           <title>Lists of attributes</title>
@@ -501,7 +511,7 @@ public:
           Can be used to read data with :
         </p>
         <source><![CDATA[xis >> xml::start( "root" )
-    >> xml::attributes( my_instance, my_function )
+    >> xml::attributes( &my_function )
   >> xml::end;]]></source>
         <p>
           In the same way, the following functor :
@@ -514,15 +524,22 @@ public:
     xis >> ...
   }
 };]]></source>
-        <p>
-          Can be used like this :
-        </p>
-        <source><![CDATA[xis >> xml::start( "root" )
-    >> xml::attributes( my_instance, my_functor() )
+          <p>
+            Can be used like this :
+          </p>
+          <source><![CDATA[xis >> xml::start( "root" )
+    >> xml::attributes( my_functor() )
   >> xml::end;]]></source>
-        <p>
-          In this case a copy of the functor is made internally (similarly to most of the STL algorithms).
-        </p>
+          <p>
+            In this case a copy of the functor is made internally (similarly to most of the STL algorithms).
+          </p>
+          <p>
+            In order to pass the functor by reference the template parameter of <strong>xml::attributes</strong> has to be explicitly specified :
+          </p>
+          <source><![CDATA[my_functor functor;
+xis >> xml::start( "root" )
+      >> xml::attributes< my_functor& >( functor )
+    >> xml::end;]]></source>
         </section>
         <section id="xml-optional-data">
           <title>Optional data</title>
