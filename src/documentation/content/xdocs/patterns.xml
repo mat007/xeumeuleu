@@ -83,27 +83,6 @@ private:
     }
 };]]></source>
       </section>
-      <section id="xml-exists">
-        <title>Testing for the existence of an element</title>
-        <p>
-          If the requirement is only to test whether a given element exists or not during unserialization, the following code sample can be used :
-        </p>
-        <source><![CDATA[class my_class
-{
-public:
-    my_class( xml::xistream& xis )
-    {
-        bool exists = false;
-        xis >> xml::list( "element", *this, &my_class::check, exists );
-    }
-
-private:
-    void check( xml::xistream& xis, bool& exists ) const
-    {
-        exists = true;
-    }
-};]]></source>
-      </section>
       <section id="xml-factorization">
         <title>Factorizing the unserialization of similar nodes</title>
         <p>
