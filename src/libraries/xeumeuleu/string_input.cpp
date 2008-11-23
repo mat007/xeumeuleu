@@ -32,8 +32,6 @@
 
 #include "string_input.h"
 #include "input_imp.h"
-#include "grammar.h"
-#include "xerces.h"
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
@@ -42,19 +40,8 @@ using namespace XERCES_CPP_NAMESPACE;
 // Name: string_input constructor
 // Created: MAT 2006-03-24
 // -----------------------------------------------------------------------------
-string_input::string_input( const std::string& data, const grammar& grammar )
-    : input_base_member( build( data, 0, grammar ) )
-    , input( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: string_input constructor
-// Created: MAT 2006-03-24
-// -----------------------------------------------------------------------------
-string_input::string_input( const std::string& data, const encoding& encoding, const grammar& grammar )
-    : input_base_member( build( data, &encoding, grammar ) )
+string_input::string_input( const std::string& data, const encoding* encoding, const grammar& grammar )
+    : document( data.c_str(), data.size(), encoding, grammar )
     , input( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
 {
     // NOTHING
@@ -67,14 +54,4 @@ string_input::string_input( const std::string& data, const encoding& encoding, c
 string_input::~string_input()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: string_input::build
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-DOMDocument& string_input::build( const std::string& data, const encoding* encoding, const grammar& grammar )
-{
-    MemBufInputSource buffer( reinterpret_cast< const XMLByte* >( data.c_str() ), data.size(), "string_input", false );
-    return parse( buffer, encoding, grammar );
 }

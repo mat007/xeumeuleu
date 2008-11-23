@@ -40,7 +40,7 @@ using namespace xml;
 // Created: MAT 2006-03-24
 // -----------------------------------------------------------------------------
 xistringstream::xistringstream( const std::string& data, const grammar& grammar )
-    : xistream( std::auto_ptr< input >( new string_input( data, grammar ) ) )
+    : xistream( std::auto_ptr< input >( new string_input( data, 0, grammar ) ) )
 {
     // NOTHING
 }
@@ -50,7 +50,7 @@ xistringstream::xistringstream( const std::string& data, const grammar& grammar 
 // Created: MAT 2006-03-24
 // -----------------------------------------------------------------------------
 xistringstream::xistringstream( const std::string& data, const encoding& encoding, const grammar& grammar )
-    : xistream( std::auto_ptr< input >( new string_input( data, encoding, grammar ) ) )
+    : xistream( std::auto_ptr< input >( new string_input( data, &encoding, grammar ) ) )
 {
     // NOTHING
 }

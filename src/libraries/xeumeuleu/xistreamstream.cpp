@@ -48,7 +48,7 @@ namespace
 // Created: MCO 2006-12-15
 // -----------------------------------------------------------------------------
 xistreamstream::xistreamstream( std::basic_istream< char >& stream, const grammar& grammar )
-    : xistream( std::auto_ptr< input >( new string_input( load( stream ), grammar ) ) )
+    : xistream( std::auto_ptr< input >( new string_input( load( stream ), 0, grammar ) ) )
 {
     // NOTHING
 }
@@ -58,7 +58,7 @@ xistreamstream::xistreamstream( std::basic_istream< char >& stream, const gramma
 // Created: MCO 2008-11-23
 // -----------------------------------------------------------------------------
 xistreamstream::xistreamstream( std::basic_istream< char >& stream, const encoding& encoding, const grammar& grammar )
-    : xistream( std::auto_ptr< input >( new string_input( load( stream ), encoding, grammar ) ) )
+    : xistream( std::auto_ptr< input >( new string_input( load( stream ), &encoding, grammar ) ) )
 {
     // NOTHING
 }

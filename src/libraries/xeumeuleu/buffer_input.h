@@ -34,7 +34,6 @@
 #define _xeumeuleu_buffer_input_h_
 
 #include "document.h"
-#include "input_base_member.h"
 #include "input_imp.h"
 
 namespace xml
@@ -45,7 +44,7 @@ namespace xml
 */
 // Created: MCO 2007-04-27
 // =============================================================================
-class buffer_input : private document, private input_base_member, public input_imp
+class buffer_input : private document, public input_imp
 {
 public:
     //! @name Constructors/Destructor

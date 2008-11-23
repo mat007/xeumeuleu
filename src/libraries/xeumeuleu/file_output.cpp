@@ -41,7 +41,7 @@ using namespace XERCES_CPP_NAMESPACE;
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
 file_output::file_output( const std::string& filename, const std::string& encoding )
-    : output( *output_base_member::document_, *output_base_member::document_ )
+    : output( *document::document_, *document::document_ )
     , filename_( filename )
     , encoding_( encoding )
 {
@@ -63,6 +63,5 @@ file_output::~file_output()
 // -----------------------------------------------------------------------------
 void file_output::finished()
 {
-    LocalFileFormatTarget target( filename_.c_str() );
-    fill( target, encoding_ );
+    fill( filename_, encoding_ );
 }

@@ -33,7 +33,7 @@
 #ifndef _xeumeuleu_file_output_h_
 #define _xeumeuleu_file_output_h_
 
-#include "output_base_member.h"
+#include "document.h"
 #include "output.h"
 
 namespace xml
@@ -44,7 +44,7 @@ namespace xml
 */
 // Created: MAT 2006-01-04
 // =============================================================================
-class file_output : private output_base_member, public output
+class file_output : private document, public output
 {
 public:
     //! @name Constructors/Destructor
