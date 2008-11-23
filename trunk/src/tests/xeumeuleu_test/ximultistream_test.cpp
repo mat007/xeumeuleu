@@ -171,10 +171,10 @@ BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_from_second_branch_does_not_
 }
 
 // -----------------------------------------------------------------------------
-// Name: an_ximultistring_can_be_wrapped_by_an_xisubstream
+// Name: an_ximultistream_can_be_wrapped_by_an_xisubstream
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( an_ximultistring_can_be_wrapped_by_an_xisubstream )
+BOOST_AUTO_TEST_CASE( an_ximultistream_can_be_wrapped_by_an_xisubstream )
 {
     xml::xistringstream xis1( "<root-1 attribute='stream-1'/>" );
     xml::xistringstream xis2( "<root-2 attribute='stream-2'/>" );
@@ -188,10 +188,10 @@ BOOST_AUTO_TEST_CASE( an_ximultistring_can_be_wrapped_by_an_xisubstream )
 }
 
 // -----------------------------------------------------------------------------
-// Name: an_ximultistring_can_be_wrapped_by_another_ximultistring
+// Name: an_ximultistream_can_be_wrapped_by_another_ximultistream
 // Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( an_ximultistring_can_be_wrapped_by_another_ximultistring )
+BOOST_AUTO_TEST_CASE( an_ximultistream_can_be_wrapped_by_another_ximultistream )
 {
     xml::xistringstream xis1( "<root-1 attribute='stream-1'/>" );
     xml::xistringstream xis2( "<root-2 attribute='stream-2'/>" );
@@ -213,10 +213,43 @@ BOOST_AUTO_TEST_CASE( an_ximultistring_can_be_wrapped_by_another_ximultistring )
 }
 
 // -----------------------------------------------------------------------------
-// Name: an_ximultistring_can_be_buffered_by_an_xibufferstream
+// Name: serializing_an_ximultistream_into_an_xostream_at_root_level_throws
+// Created: MAT 2008-11-22
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( serializing_an_ximultistream_into_an_xostream_at_root_level_merges_attributes )
+{
+    xml::xistringstream xis1( "<root/>" );
+    xml::xistringstream xis2( "<root/>" );
+    xml::ximultistream xims( xis1, xis2 );
+    xml::xostringstream xos;
+    BOOST_CHECK_THROW( xos << xims, xml::exception );
+}
+
+// -----------------------------------------------------------------------------
+// Name: serializing_an_ximultistream_into_an_xostream_adds_both_stream_contents
+// Created: MAT 2008-11-22
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( serializing_an_ximultistream_into_an_xostream_adds_both_stream_contents )
+{
+    xml::xistringstream xis1( "<root-1/>" );
+    xml::xistringstream xis2( "<root-2/>" );
+    xml::ximultistream xims( xis1, xis2 );
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xims
+        << xml::end;
+    xml::xistringstream xis( xos.str() );
+    xis >> xml::start( "root" )
+            >> xml::start( "root-1" )
+            >> xml::end
+            >> xml::start( "root-2" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: an_ximultistream_can_be_buffered_by_an_xibufferstream
 // Created: MAT 2008-05-17
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( an_ximultistring_can_be_buffered_by_an_xibufferstream )
+BOOST_AUTO_TEST_CASE( an_ximultistream_can_be_buffered_by_an_xibufferstream )
 {
     xml::xistringstream xis1( "<root-1 attribute='stream-1'/>" );
     xml::xistringstream xis2( "<root-2 attribute='stream-2'/>" );

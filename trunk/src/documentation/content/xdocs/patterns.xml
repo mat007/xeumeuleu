@@ -216,37 +216,19 @@ public:
       <section id="xml-filtering">
         <title>Reading, filtering and writing back</title>
         <p>
-          Assuming the goal is to load a document from a file, change the content of one given element under the root element, then write it back to the same file copying all other elements and attributes, one way to deal with it could be :
+          Assuming the goal is to load a document from a file, add an element under the root element, then write it back to the same file keeping all other elements and attributes untouched. <br />
+          The most simple way to implement would be :
         </p>
-        <source><![CDATA[class my_class
-{
-public:
-    void process( const std::string& filename, const std::string& element, const std::string& content ) const
-    {
-        xml::xifstream xis( filename );
-        xml::xofstream xos( filename );
-        xos << xml::start( "root" );
-        xis >> xml::start( "root" )
-              >> xml::attributes( *this, &my_class::copy, xos )
-              >> xml::list( *this, &my_class::filter, xos, element, content );
-        xos << xml::end;
-    }
-private:
-    void filter( const std::string& type, xml::xistream& xis, xml::xostream& xos, const std::string& element, const std::string& content ) const
-    {
-        xos << xml::start( type );
-        xis >> xml::attributes( *this, &my_class::copy, xos );
-        if( type == element )
-            xos << content;
-         else
-            xos << xis;
-        xos << xml::end;
-    }
-    void copy( const std::string& attribute, xml::xistream& xis, xml::xostream& xos ) const
-    {
-        xos << xml::attribute( attribute, xml::attribute< std::string >( xis, attribute ) );
-    }
-};]]></source>
+        <source><![CDATA[xml::xifstream xis( filename );
+xis >> xml::start( "root" );
+xml::xistringstream xiss( "<element/>" );
+xml::ximultistream xims( xiss, xis );
+xml::xofstream xos( filename );
+xos << xml::content( "root", xims );]]></source>
+        <p>
+          Note that if the root element has attributes, they will be lost in the operation.<br />
+          However if needed they can be read using <strong>xml::attributes</strong> and written back.
+        </p>
       </section>
       <section id="xml-const-stream">
         <title>Turning a non-constant input stream into constant</title>
