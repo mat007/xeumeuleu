@@ -35,7 +35,7 @@
 #include "error_handler.h"
 #include "beautifier.h"
 #include "translate.h"
-#include "locator.h"
+#include "builder.h"
 #include "grammar.h"
 #include "encoding.h"
 #include "parser.h"
@@ -92,22 +92,6 @@ namespace
             throw chained_exception( e );
         }
     }
-    class builder : public DOMBuilderImpl
-    {
-    public:
-        explicit builder( const std::string& uri )
-            : uri_( uri )
-        {}
-    private:
-        void startElement( const XMLElementDecl& elemDecl, const unsigned int urlId, const XMLCh* const elemPrefix, const RefVectorOf< XMLAttr >& attrList,
-                           const unsigned int attrCount, const bool is_empty, const bool is_root )
-        {
-            DOMBuilderImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, is_empty, is_root );
-            DOMNode* node = getCurrentNode();
-            node->setUserData( translate( "locator" ), new locator( uri_, *getScanner(), *node ), 0 );
-        }
-        const std::string uri_;
-    };
     DOMDocument& parse( InputSource& source, const encoding* encoding, const grammar& grammar )
     {
         try
