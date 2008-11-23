@@ -39,6 +39,8 @@
 
 namespace xml
 {
+    class encoding;
+
 // =============================================================================
 /** @class  xistreamstream
     @brief  Xml stream to adapt a standard input stream
@@ -51,6 +53,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit xistreamstream( std::basic_istream< char >& stream, const grammar& grammar = null_grammar() );
+             xistreamstream( std::basic_istream< char >& stream, const encoding& encoding, const grammar& grammar = null_grammar() );
     virtual ~xistreamstream();
     //@}
 };

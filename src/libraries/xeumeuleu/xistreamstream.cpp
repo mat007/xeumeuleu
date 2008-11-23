@@ -54,6 +54,16 @@ xistreamstream::xistreamstream( std::basic_istream< char >& stream, const gramma
 }
 
 // -----------------------------------------------------------------------------
+// Name: xistreamstream constructor
+// Created: MCO 2008-11-23
+// -----------------------------------------------------------------------------
+xistreamstream::xistreamstream( std::basic_istream< char >& stream, const encoding& encoding, const grammar& grammar )
+    : xistream( std::auto_ptr< input >( new string_input( load( stream ), encoding, grammar ) ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: xistreamstream destructor
 // Created: MCO 2006-12-15
 // -----------------------------------------------------------------------------
