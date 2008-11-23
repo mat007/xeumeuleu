@@ -35,12 +35,12 @@
 #include "error_handler.h"
 #include "beautifier.h"
 #include "translate.h"
+#include "locator.h"
 #include "builder.h"
 #include "grammar.h"
 #include "encoding.h"
 #include "parser.h"
 #include "xerces.h"
-#include "import.h"
 #include <fstream>
 
 using namespace xml;
@@ -160,6 +160,19 @@ document::document( const char* data, std::size_t size, const encoding* encoding
     : document_( build( data, size, encoding, grammar ) )
 {
     // NOTHING
+}
+
+namespace
+{
+    void clean( DOMNode* node )
+    {
+        while( node )
+        {
+            delete reinterpret_cast< locator* >( node->getUserData( translate( "locator" ) ) );
+            clean( node->getFirstChild() );
+            node = node->getNextSibling();
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

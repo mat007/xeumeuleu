@@ -76,13 +76,4 @@ namespace xml
         import( document, from.getFirstChild(), added );
         return added;
     }
-    void clean( DOMNode* node )
-    {
-        while( node )
-        {
-            delete reinterpret_cast< locator* >( node->getUserData( translate( "locator" ) ) );
-            clean( node->getFirstChild() );
-            node = node->getNextSibling();
-        }
-    }
 }
