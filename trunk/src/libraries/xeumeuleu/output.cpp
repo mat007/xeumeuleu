@@ -35,6 +35,7 @@
 #include "translate.h"
 #include "trim.h"
 #include "sub_output.h"
+#include "import.h"
 #include "xerces.h"
 #include <limits>
 
@@ -134,41 +135,12 @@ void output::attribute( const std::string& name, const std::string& value )
 }
 
 // -----------------------------------------------------------------------------
-// Name: output::is_empty
-// Created: MAT 2007-09-06
-// -----------------------------------------------------------------------------
-bool output::is_empty( const DOMNode& node ) const
-{
-    if( node.getNodeType() != DOMNode::TEXT_NODE
-     && node.getNodeType() != DOMNode::CDATA_SECTION_NODE )
-        return false;
-    const XMLCh* const value = node.getNodeValue();
-    return XMLChar1_1::isAllSpaces( value, XMLString::stringLen( value ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: output::copy
-// Created: MAT 2007-09-06
-// -----------------------------------------------------------------------------
-void output::copy( DOMNode* node, DOMNode& to )
-{
-    if( ! node )
-        return;
-    if( ! is_empty( *node ) )
-    {
-        DOMNode* pNew = to.appendChild( document_.importNode( node, false ) );
-        copy( node->getFirstChild(), *pNew );
-    }
-    copy( node->getNextSibling(), to );
-}
-
-// -----------------------------------------------------------------------------
 // Name: output::copy
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
 void output::copy( const DOMNode& node )
 {
-    copy( node.getFirstChild(), *current_ );
+    import( document_, node.getFirstChild(), *current_ );
     flush();
 }
 

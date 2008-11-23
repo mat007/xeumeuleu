@@ -35,11 +35,38 @@
 #include "error_handler.h"
 #include "chained_exception.h"
 #include "beautifier.h"
+#include "import.h"
 #include "xerces_ptr.h"
 #include "xerces.h"
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
+
+namespace
+{
+    DOMDocument& build()
+    {
+        try
+        {
+            DOMImplementation* impl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
+            if( ! impl )
+                throw xml::exception( "Internal error in 'output_base_member::build' : DOMImplementation 'LS' not found" );
+            return *impl->createDocument();
+        }
+        catch( const OutOfMemoryException& )
+        {
+            throw xml::exception( "Out of memory" );
+        }
+        catch( const XMLException& e )
+        {
+            throw chained_exception( e );
+        }
+        catch( const DOMException& e )
+        {
+            throw chained_exception( e );
+        }
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: output_base_member constructor
@@ -57,34 +84,7 @@ output_base_member::output_base_member()
 // -----------------------------------------------------------------------------
 output_base_member::~output_base_member()
 {
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: output_base_member::build
-// Created: MAT 2006-03-20
-// -----------------------------------------------------------------------------
-DOMDocument& output_base_member::build()
-{
-    try
-    {
-        DOMImplementation* impl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
-        if( ! impl )
-            throw xml::exception( "Internal error in 'output_base_member::build' : DOMImplementation 'LS' not found" );
-        return *impl->createDocument();
-    }
-    catch( const OutOfMemoryException& )
-    {
-        throw xml::exception( "Out of memory" );
-    }
-    catch( const XMLException& e )
-    {
-        throw chained_exception( e );
-    }
-    catch( const DOMException& e )
-    {
-        throw chained_exception( e );
-    }
+    clean( document_.get() );
 }
 
 // -----------------------------------------------------------------------------
