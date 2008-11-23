@@ -42,7 +42,7 @@ namespace xml
 /** @class  builder
     @brief  Builder
 */
-// Created: MAT 2006-01-03
+// Created: MAT 2008-11-23
 // =============================================================================
 class builder : public XERCES_CPP_NAMESPACE::DOMBuilderImpl
 {
