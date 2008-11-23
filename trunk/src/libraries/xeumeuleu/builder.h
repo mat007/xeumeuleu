@@ -61,6 +61,13 @@ public:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    builder( const builder& );            //!< Copy constructor
+    builder& operator=( const builder& ); //!< Assignment operator
+    //@}
+
+private:
     //! @name Member data
     //@{
     const std::string uri_;
