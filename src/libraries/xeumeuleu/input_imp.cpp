@@ -74,12 +74,12 @@ const std::string input_imp::context() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: input_imp::has_element
+// Name: input_imp::has_child
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
-bool input_imp::has_element( const std::string& tag ) const
+bool input_imp::has_child( const std::string& name ) const
 {
-    return find_child( tag ) != 0;
+    return find_child( name ) != 0;
 }
 
 // -----------------------------------------------------------------------------

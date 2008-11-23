@@ -63,7 +63,7 @@ optional_input::~optional_input()
 // -----------------------------------------------------------------------------
 void optional_input::start( const std::string& tag )
 {
-    if( input_->has_element( tag ) )
+    if( input_->has_child( tag ) )
         context_.reset( input_ ).start( tag );
     else
         context_.reset( std::auto_ptr< input_base >( new null_input( input_, context_ ) ) ).start( tag );
@@ -140,12 +140,12 @@ ATTRIBUTE( unsigned long )
 ATTRIBUTE( unsigned long long )
 
 // -----------------------------------------------------------------------------
-// Name: optional_input::has_element
+// Name: optional_input::has_child
 // Created: MAT 2006-03-20
 // -----------------------------------------------------------------------------
-bool optional_input::has_element( const std::string& tag ) const
+bool optional_input::has_child( const std::string& name ) const
 {
-    return input_->has_element( tag );
+    return input_->has_child( name );
 }
 
 // -----------------------------------------------------------------------------

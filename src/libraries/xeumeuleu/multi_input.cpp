@@ -64,9 +64,9 @@ multi_input::~multi_input()
 // -----------------------------------------------------------------------------
 void multi_input::start( const std::string& tag )
 {
-    if( input1_->has_element( tag ) && ! input2_->has_element( tag ) )
+    if( input1_->has_child( tag ) && ! input2_->has_child( tag ) )
         context_.reset( std::auto_ptr< input_base >( new branch_input( input1_, input2_, context_, false ) ) ).start( tag );
-    else if( input2_->has_element( tag ) && ! input1_->has_element( tag ) )
+    else if( input2_->has_child( tag ) && ! input1_->has_child( tag ) )
         context_.reset( std::auto_ptr< input_base >( new branch_input( input2_, input1_, context_, true ) ) ).start( tag );
     else
     {
@@ -146,12 +146,12 @@ ATTRIBUTE( unsigned long )
 ATTRIBUTE( unsigned long long )
 
 // -----------------------------------------------------------------------------
-// Name: multi_input::has_element
+// Name: multi_input::has_child
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-bool multi_input::has_element( const std::string& tag ) const
+bool multi_input::has_child( const std::string& name ) const
 {
-    return input1_->has_element( tag ) || input2_->has_element( tag );
+    return input1_->has_child( name ) || input2_->has_child( name );
 }
 
 // -----------------------------------------------------------------------------

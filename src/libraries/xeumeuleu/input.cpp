@@ -101,12 +101,12 @@ void input::error( const std::string& message ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: input::has_element
+// Name: input::has_child
 // Created: MAT 2007-11-04
 // -----------------------------------------------------------------------------
-bool input::has_element( const std::string& tag ) const
+bool input::has_child( const std::string& name ) const
 {
-    return input_->has_element( tag );
+    return input_->has_child( name );
 }
 
 // -----------------------------------------------------------------------------
