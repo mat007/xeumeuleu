@@ -80,9 +80,11 @@ BOOST_AUTO_TEST_CASE( copy_xistream_from_root_to_xostream )
 // Name: copy_xistream_from_sub_element_to_xostream
 // Created: MCO 2007-05-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( element_to_xostream )
+BOOST_AUTO_TEST_CASE( copy_xistream_from_sub_element_to_xostream )
 {
-    xml::xistringstream xis( "<element><sub-element/></element>" );
+    xml::xistringstream xis( "<element>"
+                               "<sub-element/>"
+                             "</element>" );
     xis >> xml::start( "element" );
     xml::xostringstream xos;
     xos << xml::content( "root", xis );
@@ -90,6 +92,21 @@ BOOST_AUTO_TEST_CASE( element_to_xostream )
                        "<root>\n"
                        "  <sub-element/>\n"
                        "</root>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: copy_xistream_from_sub_elements_to_xostream_root_throws
+// Created: MCO 2008-11-22
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( copy_xistream_from_sub_elements_to_xostream_root_throws )
+{
+    xml::xistringstream xis( "<element>"
+                               "<sub-element/>"
+                               "<sub-element/>"
+                             "</element>" );
+    xis >> xml::start( "element" );
+    xml::xostringstream xos;
+    BOOST_CHECK_THROW( xos << xis, xml::exception );
 }
 
 // -----------------------------------------------------------------------------
