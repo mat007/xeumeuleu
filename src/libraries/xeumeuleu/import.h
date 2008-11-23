@@ -40,8 +40,6 @@ namespace xml
     void import( XERCES_CPP_NAMESPACE::DOMDocument& document, const XERCES_CPP_NAMESPACE::DOMNode* from, XERCES_CPP_NAMESPACE::DOMNode& to );
 
     XERCES_CPP_NAMESPACE::DOMNode& import( XERCES_CPP_NAMESPACE::DOMDocument& document, const XERCES_CPP_NAMESPACE::DOMNode& from, XERCES_CPP_NAMESPACE::DOMNode& to );
-
-    void clean( XERCES_CPP_NAMESPACE::DOMNode* node );
 }
 
 #endif // _xeumeuleu_import_h_
