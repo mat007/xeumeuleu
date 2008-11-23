@@ -136,6 +136,37 @@ ATTRIBUTE( unsigned long )
 ATTRIBUTE( unsigned long long )
 
 // -----------------------------------------------------------------------------
+// Name: xistream::branch
+// Created: MAT 2006-03-19
+// -----------------------------------------------------------------------------
+std::auto_ptr< input > xistream::branch( bool clone ) const
+{
+    TRY
+        return input_->branch( clone );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xistream::copy
+// Created: MCO 2007-05-28
+// -----------------------------------------------------------------------------
+void xistream::copy( output& destination ) const
+{
+    TRY
+        input_->copy( destination );
+    CATCH
+}
+
+// -----------------------------------------------------------------------------
+// Name: xistream::error
+// Created: MAT 2007-09-20
+// -----------------------------------------------------------------------------
+void xistream::error( const std::string& message ) const
+{
+    input_->error( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: xistream::nodes
 // Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
@@ -169,32 +200,34 @@ void xistream::optional()
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::branch
-// Created: MAT 2006-03-19
+// Name: xistream::has_child
+// Created: MAT 2008-11-23
 // -----------------------------------------------------------------------------
-std::auto_ptr< input > xistream::branch( bool clone ) const
+bool xistream::has_child( const std::string& name ) const
 {
     TRY
-        return input_->branch( clone );
+        return input_->has_child( name );
     CATCH
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::copy
-// Created: MCO 2007-05-28
+// Name: xistream::has_attribute
+// Created: MAT 2008-11-23
 // -----------------------------------------------------------------------------
-void xistream::copy( output& destination ) const
+bool xistream::has_attribute( const std::string& name ) const
 {
     TRY
-        input_->copy( destination );
+        return input_->has_attribute( name );
     CATCH
 }
 
 // -----------------------------------------------------------------------------
-// Name: xistream::error
-// Created: MAT 2007-09-20
+// Name: xistream::has_content
+// Created: MAT 2008-11-23
 // -----------------------------------------------------------------------------
-void xistream::error( const std::string& message ) const
+bool xistream::has_content() const
 {
-    input_->error( message );
+    TRY
+        return input_->has_content();
+    CATCH
 }
