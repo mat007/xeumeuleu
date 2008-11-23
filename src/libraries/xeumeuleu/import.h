@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2008, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,51 +30,18 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_output_base_member_h_
-#define _xeumeuleu_output_base_member_h_
+#ifndef _xeumeuleu_import_h_
+#define _xeumeuleu_import_h_
 
-#include "document.h"
 #include "xerces.h"
-#include "xerces_ptr.h"
-#include <string>
 
 namespace xml
 {
-// =============================================================================
-/** @class  output_base_member
-    @brief  Base from member idiom base class
-*/
-// Created: MAT 2006-03-19
-// =============================================================================
-class output_base_member : private document
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             output_base_member();
-    virtual ~output_base_member();
-    //@}
+    void import( XERCES_CPP_NAMESPACE::DOMDocument& document, const XERCES_CPP_NAMESPACE::DOMNode* from, XERCES_CPP_NAMESPACE::DOMNode& to );
 
-protected:
-    //! @name Helpers
-    //@{
-    void fill( XERCES_CPP_NAMESPACE::XMLFormatTarget& destination, const std::string& encoding ) const;
-    //@}
+    XERCES_CPP_NAMESPACE::DOMNode& import( XERCES_CPP_NAMESPACE::DOMDocument& document, const XERCES_CPP_NAMESPACE::DOMNode& from, XERCES_CPP_NAMESPACE::DOMNode& to );
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    output_base_member( const output_base_member& );            //!< Copy constructor
-    output_base_member& operator=( const output_base_member& ); //!< Assignment operator
-    //@}
-
-protected:
-    //! @name Member data
-    //@{
-    xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > document_;
-    //@}
-};
-
+    void clean( XERCES_CPP_NAMESPACE::DOMNode* node );
 }
 
-#endif // _xeumeuleu_output_base_member_h_
+#endif // _xeumeuleu_import_h_

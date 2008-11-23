@@ -37,6 +37,7 @@
 #include "encoding.h"
 #include "grammar.h"
 #include "parser.h"
+#include "import.h"
 #include "locator.h"
 
 using namespace xml;
@@ -50,19 +51,6 @@ input_base_member::input_base_member( DOMDocument& document )
     : document_( document )
 {
     // NOTHING
-}
-
-namespace
-{
-    void clean( const DOMNode* node )
-    {
-        while( node )
-        {
-            delete reinterpret_cast< locator* >( node->getUserData( translate( "locator" ) ) );
-            clean( node->getFirstChild() );
-            node = node->getNextSibling();
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------

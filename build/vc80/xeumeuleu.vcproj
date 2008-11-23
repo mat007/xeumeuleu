@@ -331,6 +331,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\import.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\import.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\trim.h"
 					>
 				</File>

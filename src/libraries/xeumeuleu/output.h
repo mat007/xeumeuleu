@@ -109,9 +109,6 @@ private:
     }
 
     bool is_root() const;
-    bool is_empty( const XERCES_CPP_NAMESPACE::DOMNode& node ) const;
-
-    void copy( XERCES_CPP_NAMESPACE::DOMNode* node, XERCES_CPP_NAMESPACE::DOMNode& to );
     //@}
 
 private:
