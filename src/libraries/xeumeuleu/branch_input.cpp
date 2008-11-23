@@ -122,12 +122,12 @@ ATTRIBUTE( unsigned long )
 ATTRIBUTE( unsigned long long )
 
 // -----------------------------------------------------------------------------
-// Name: branch_input::has_element
+// Name: branch_input::has_child
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
-bool branch_input::has_element( const std::string& tag ) const
+bool branch_input::has_child( const std::string& name ) const
 {
-    return input1_->has_element( tag );
+    return input1_->has_child( name );
 }
 
 // -----------------------------------------------------------------------------

@@ -124,10 +124,10 @@ ATTRIBUTE( unsigned long )
 ATTRIBUTE( unsigned long long )
 
 // -----------------------------------------------------------------------------
-// Name: null_input::has_element
+// Name: null_input::has_child
 // Created: MAT 2006-01-08
 // -----------------------------------------------------------------------------
-bool null_input::has_element( const std::string& /*tag*/ ) const
+bool null_input::has_child( const std::string& /*tag*/ ) const
 {
     return false;
 }
