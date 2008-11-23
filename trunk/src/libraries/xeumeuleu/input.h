@@ -74,7 +74,7 @@ public:
 
     //! @name Accessors
     //@{
-    bool has_element( const std::string& tag ) const;
+    bool has_child( const std::string& name ) const;
     bool has_attribute( const std::string& name ) const;
     bool has_content() const;
 

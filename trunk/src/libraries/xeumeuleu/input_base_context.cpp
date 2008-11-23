@@ -119,12 +119,12 @@ ATTRIBUTE( unsigned long )
 ATTRIBUTE( unsigned long long )
 
 // -----------------------------------------------------------------------------
-// Name: input_base_context::has_element
+// Name: input_base_context::has_child
 // Created: MAT 2008-04-25
 // -----------------------------------------------------------------------------
-bool input_base_context::has_element( const std::string& tag ) const
+bool input_base_context::has_child( const std::string& name ) const
 {
-    return input_->has_element( tag );
+    return input_->has_child( name );
 }
 
 // -----------------------------------------------------------------------------

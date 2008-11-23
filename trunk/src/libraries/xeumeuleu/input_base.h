@@ -84,7 +84,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool has_element( const std::string& tag ) const = 0;
+    virtual bool has_child( const std::string& name ) const = 0;
     virtual bool has_attribute( const std::string& name ) const = 0;
     virtual bool has_content() const = 0;
 
