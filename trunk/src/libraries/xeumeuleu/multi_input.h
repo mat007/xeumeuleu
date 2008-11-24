@@ -105,12 +105,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    multi_input( const multi_input& );            //!< Copy constructor
-    multi_input& operator=( const multi_input& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     template< typename T > void read_content( T& value ) const;

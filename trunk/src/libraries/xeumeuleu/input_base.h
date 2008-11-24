@@ -105,6 +105,13 @@ public:
     virtual void nodes( const visitor& v ) const = 0;
     virtual void attributes( const visitor& v ) const = 0;
     //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    input_base( const input_base& );            //!< Copy constructor
+    input_base& operator=( const input_base& ); //!< Assignment operator
+    //@}
 };
 
 }

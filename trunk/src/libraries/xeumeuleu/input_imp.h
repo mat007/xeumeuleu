@@ -106,12 +106,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    input_imp( const input_imp& );            //!< Copy constructor
-    input_imp& operator=( const input_imp& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     const std::string location() const;

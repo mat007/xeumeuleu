@@ -63,12 +63,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    beautifier( const beautifier& );            //!< Copy constructor
-    beautifier& operator=( const beautifier& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     bool is_new_line( const XMLByte* const data, const unsigned int count ) const;

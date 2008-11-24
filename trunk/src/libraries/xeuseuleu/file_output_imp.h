@@ -63,13 +63,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    file_output_imp( const file_output_imp& );            //!< Copy constructor
-    file_output_imp& operator=( const file_output_imp& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Types
     //@{
     typedef std::vector< std::pair< std::string, std::string > > T_Parameters;

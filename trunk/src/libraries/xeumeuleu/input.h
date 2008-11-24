@@ -95,12 +95,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    input( const input& );            //!< Copy constructor
-    input& operator=( const input& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual input_base& reset( std::auto_ptr< input_base > input );
