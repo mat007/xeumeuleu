@@ -37,6 +37,7 @@
 #include "visitor.h"
 #include "sub_xistream.h"
 #include "buffer_input.h"
+#include "locator.h"
 #include "output.h"
 #include "xerces.h"
 #include <limits>
@@ -410,14 +411,9 @@ void input_imp::copy( output& destination ) const
 // -----------------------------------------------------------------------------
 const std::string input_imp::location() const
 {
-    const DOMLocator* locator = reinterpret_cast< DOMLocator* >( current_->getUserData( translate( "locator" ) ) );
-    if( locator )
-    {
-        std::stringstream stream;
-        stream << translate( locator->getURI() ).operator std::string()
-               << " (line " << locator->getLineNumber() << ", column " << locator->getColumnNumber() << ") : ";
-        return stream.str();
-    }
+    const locator* loc = reinterpret_cast< locator* >( current_->getUserData( translate( "locator" ) ) );
+    if( loc )
+        return *loc;
     return "";
 }
 
