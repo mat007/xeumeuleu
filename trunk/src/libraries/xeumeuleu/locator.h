@@ -50,8 +50,8 @@ class locator : public XERCES_CPP_NAMESPACE::DOMLocator
 public:
     //! @name Constructors/Destructor
     //@{
-             locator( const std::string& uri, const XERCES_CPP_NAMESPACE::XMLScanner& scanner, XERCES_CPP_NAMESPACE::DOMNode& node );
-             locator( const locator& rhs, XERCES_CPP_NAMESPACE::DOMNode& node );
+             locator( const std::string& uri, const XERCES_CPP_NAMESPACE::XMLScanner& scanner );
+             locator( const locator& rhs );
     virtual ~locator();
     //@}
 
@@ -78,7 +78,6 @@ private:
     //@{
     const translate uri_;
     const XMLSSize_t line_, column_;
-    XERCES_CPP_NAMESPACE::DOMNode& node_;
     //@}
 };
 

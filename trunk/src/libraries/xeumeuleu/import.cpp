@@ -50,7 +50,7 @@ namespace xml
         DOMNode& added = *to.appendChild( document.importNode( const_cast< DOMNode* >( &from ), false ) );
         const locator* loc = reinterpret_cast< locator* >( from.getUserData( translate( "locator" ) ) );
         if( loc )
-            added.setUserData( translate( "locator" ), new locator( *loc, added ), 0 );
+            added.setUserData( translate( "locator" ), new locator( *loc ), 0 );
         return added;
     }
     void import( DOMDocument& document, const DOMNode* from, DOMNode& to )
