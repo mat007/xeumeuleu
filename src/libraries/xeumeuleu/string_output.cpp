@@ -31,10 +31,8 @@
  */
 
 #include "string_output.h"
-#include "xerces.h"
 
 using namespace xml;
-using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: string_output constructor
