@@ -33,6 +33,7 @@
 #include "error_handler.h"
 #include "exception.h"
 #include "translate.h"
+#include "locator.h"
 #include "xerces.h"
 #include <sstream>
 
@@ -72,11 +73,10 @@ bool error_handler::handleError( const DOMError& error )
 // -----------------------------------------------------------------------------
 const std::string error_handler::interpret( const DOMError& error ) const
 {
-    std::stringstream message;
+    std::string message;
     const DOMLocator* const location = error.getLocation();
     if( location )
-        message << translate( location->getURI() ).operator std::string()
-                << " (line " << location->getLineNumber() << ", column " << location->getColumnNumber() << ") : ";
-    message << translate( error.getMessage() ).operator std::string();
-    return message.str();
+        message += locator( *location );
+    message += translate( error.getMessage() );
+    return message;
 }

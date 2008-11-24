@@ -40,8 +40,8 @@ using namespace XERCES_CPP_NAMESPACE;
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
 translate::translate( const std::string& str )
-    : ch_      ( XMLString::transcode( str.c_str() ) )
-    , is_owner_( true )
+    : ch_   ( XMLString::transcode( str.c_str() ) )
+    , owner_( true )
 {
     // NOTHING
 }
@@ -51,8 +51,8 @@ translate::translate( const std::string& str )
 // Created: MAT 2006-01-04
 // -----------------------------------------------------------------------------
 translate::translate( const XMLCh* const ch )
-    : ch_      ( ch )
-    , is_owner_( false )
+    : ch_   ( ch )
+    , owner_( false )
 {
     // NOTHING
 }
@@ -63,7 +63,7 @@ translate::translate( const XMLCh* const ch )
 // -----------------------------------------------------------------------------
 translate::~translate()
 {
-    if( is_owner_ )
+    if( owner_ )
         XMLString::release( const_cast< XMLCh** >( &ch_ ) ); // $$$$ MAT 2006-01-04: not the cleanest class on earth...
 }
 
@@ -129,10 +129,10 @@ bool xml::operator==( const std::string& str, const translate& tr )
 }
 
 // -----------------------------------------------------------------------------
-// Name: xml::operator<<
+// Name: xml::operator+
 // Created: MAT 2006-03-26
 // -----------------------------------------------------------------------------
-std::ostream& xml::operator<<( std::ostream& stream, const translate& tr )
+std::string xml::operator+( const translate& tr, const std::string& str )
 {
-    return stream << tr.operator std::string();
+    return tr.operator std::string() + str;
 }
