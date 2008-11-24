@@ -52,6 +52,7 @@ public:
     //@{
              locator( const std::string& uri, const XERCES_CPP_NAMESPACE::XMLScanner& scanner );
              locator( const locator& rhs );
+             locator( const XERCES_CPP_NAMESPACE::DOMLocator& rhs );
     virtual ~locator();
     //@}
 
@@ -71,6 +72,11 @@ public:
     virtual void setOffset( const XMLSSize_t offset );
     virtual void setErrorNode( XERCES_CPP_NAMESPACE::DOMNode* const node );
     virtual void setURI( const XMLCh* const uri );
+    //@}
+
+    //! @name Operators
+    //@{
+    operator std::string() const;
     //@}
 
 private:

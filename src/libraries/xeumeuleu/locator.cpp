@@ -31,6 +31,7 @@
  */
 
 #include "locator.h"
+#include <sstream>
 
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
@@ -43,6 +44,18 @@ locator::locator( const std::string& uri, const XMLScanner& scanner )
     : uri_   ( uri )
     , line_  ( scanner.getLocator()->getLineNumber() )
     , column_( scanner.getLocator()->getColumnNumber() )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: locator constructor
+// Created: MAT 2008-01-20
+// -----------------------------------------------------------------------------
+locator::locator( const DOMLocator& rhs )
+    : uri_   ( rhs.getURI() )
+    , line_  ( rhs.getLineNumber() )
+    , column_( rhs.getColumnNumber() )
 {
     // NOTHING
 }
@@ -156,4 +169,15 @@ void locator::setErrorNode( XERCES_CPP_NAMESPACE::DOMNode* const /*node*/ )
 void locator::setURI( const XMLCh* const /*uri*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: locator::operator const std::string
+// Created: MAT 2008-11-24
+// -----------------------------------------------------------------------------
+locator::operator std::string() const
+{
+    std::stringstream stream;
+    stream << " (line " << line_ << ", column " << column_ << ") : ";
+    return uri_ + stream.str();
 }

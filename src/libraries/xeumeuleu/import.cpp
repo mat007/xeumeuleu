@@ -58,10 +58,7 @@ namespace xml
         while( from )
         {
             if( ! is_empty( *from ) )
-            {
-                DOMNode& added = copy( document, *from, to );
-                import( document, from->getFirstChild(), added );
-            }
+                import( document, from->getFirstChild(), copy( document, *from, to ) );
             from = from->getNextSibling();
         }
     }

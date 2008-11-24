@@ -75,14 +75,14 @@ private:
     //! @name Data members
     //@{
     const XMLCh* const ch_;
-    bool is_owner_;
+    bool owner_;
     //@}
 };
 
 bool operator==( const XMLCh* const ch, const translate& tr );
 bool operator==( const std::string& str, const translate& tr );
 
-std::ostream& operator<<( std::ostream& stream, const translate& tr );
+std::string operator+( const translate& tr, const std::string& str );
 
 }
 
