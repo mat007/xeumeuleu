@@ -45,7 +45,7 @@ namespace xml
         const XMLCh* const value = node.getNodeValue();
         return XMLChar1_1::isAllSpaces( value, XMLString::stringLen( value ) );
     }
-    DOMNode& copy( DOMDocument& document, const DOMNode& from, DOMNode& to )
+    DOMNode& clone( DOMDocument& document, const DOMNode& from, DOMNode& to )
     {
         DOMNode& added = *to.appendChild( document.importNode( const_cast< DOMNode* >( &from ), false ) );
         const locator* loc = reinterpret_cast< locator* >( from.getUserData( translate( "locator" ) ) );
@@ -58,7 +58,7 @@ namespace xml
         while( from )
         {
             if( ! is_empty( *from ) )
-                import( document, from->getFirstChild(), copy( document, *from, to ) );
+                import( document, from->getFirstChild(), clone( document, *from, to ) );
             from = from->getNextSibling();
         }
     }
@@ -69,7 +69,7 @@ namespace xml
             import( document, *from.getFirstChild(), to );
             return document;
         }
-        DOMNode& added = copy( document, from, to );
+        DOMNode& added = clone( document, from, to );
         import( document, from.getFirstChild(), added );
         return added;
     }
