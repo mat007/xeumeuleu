@@ -58,6 +58,13 @@ public:
     //@{
     virtual void configure( parser& parser ) const = 0;
     //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    grammar( const grammar& );            //!< Copy constructor
+    grammar& operator=( const grammar& ); //!< Assignment operator
+    //@}
 };
 
 // =============================================================================

@@ -106,13 +106,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    null_input( const null_input& );            //!< Copy constructor
-    null_input& operator=( const null_input& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     std::auto_ptr< input_base > input_;

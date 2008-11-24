@@ -60,6 +60,13 @@ public:
 
     virtual const std::string transform( const std::string& input ) const = 0;
     //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    output_imp( const output_imp& );            //!< Copy constructor
+    output_imp& operator=( const output_imp& ); //!< Assignment operator
+    //@}
 };
 
 }

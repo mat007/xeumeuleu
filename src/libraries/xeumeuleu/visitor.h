@@ -58,6 +58,13 @@ public:
     //@{
     virtual void process( const std::string& name, xistream& xis ) const = 0;
     //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    visitor( const visitor& );            //!< Copy constructor
+    visitor& operator=( const visitor& ); //!< Assignment operator
+    //@}
 };
 
 }
