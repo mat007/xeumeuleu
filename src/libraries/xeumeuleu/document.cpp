@@ -46,89 +46,64 @@
 using namespace xml;
 using namespace XERCES_CPP_NAMESPACE;
 
+#define TRY try {
+#define CATCH } \
+            catch( const OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
+            catch( const XMLException& e ) { throw chained_exception( e ); } \
+            catch( const DOMException& e ) { throw chained_exception( e ); }
+
 namespace
 {
     void initialize()
     {
-        try
+        static const struct Initializer
         {
-            static const struct Initializer
+            Initializer()
             {
-                Initializer()
-                {
-                    XMLPlatformUtils::Initialize();
-                }
-                ~Initializer()
-                {
-                    XMLPlatformUtils::Terminate();
-                }
-            } initializer;
-        }
-        catch( const XMLException& e )
-        {
-            throw chained_exception( e );
-        }
+                XMLPlatformUtils::Initialize();
+            }
+            ~Initializer()
+            {
+                XMLPlatformUtils::Terminate();
+            }
+        } initializer;
     }
     DOMDocument& build()
     {
-        initialize();
-        try
-        {
+        TRY
+            initialize();
             DOMImplementation* impl = DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
             if( ! impl )
                 throw xml::exception( "Internal error in 'document::build' : DOMImplementation 'LS' not found" );
             return *impl->createDocument();
-        }
-        catch( const OutOfMemoryException& )
-        {
-            throw xml::exception( "Out of memory" );
-        }
-        catch( const XMLException& e )
-        {
-            throw chained_exception( e );
-        }
-        catch( const DOMException& e )
-        {
-            throw chained_exception( e );
-        }
+        CATCH
     }
     DOMDocument& parse( InputSource& source, const encoding* encoding, const grammar& grammar )
     {
-        try
-        {
-            builder builder( translate( source.getSystemId() ) );
-            parser parser( builder );
-            grammar.configure( parser );
-            if( encoding )
-                source.setEncoding( translate( *encoding ) );
-            return parser.parse( source );
-        }
-        catch( const OutOfMemoryException& )
-        {
-            throw xml::exception( "Out of memory" );
-        }
-        catch( const XMLException& e )
-        {
-            throw chained_exception( e );
-        }
-        catch( const DOMException& e )
-        {
-            throw chained_exception( e );
-        }
+        builder builder( translate( source.getSystemId() ) );
+        parser parser( builder );
+        grammar.configure( parser );
+        if( encoding )
+            source.setEncoding( translate( *encoding ) );
+        return parser.parse( source );
     }
     DOMDocument& build( const std::string& filename, const encoding* encoding, const grammar& grammar )
     {
-        initialize();
-        if( ! std::ifstream( filename.c_str() ) )
-            throw xml::exception( "Unable to open file '" + filename + "'" );
-        LocalFileInputSource source( static_cast< const XMLCh* const >( translate( filename ) ) );
-        return parse( source, encoding, grammar );
+        TRY
+            initialize();
+            if( ! std::ifstream( filename.c_str() ) )
+                throw xml::exception( "Unable to open file '" + filename + "'" );
+            LocalFileInputSource source( static_cast< const XMLCh* const >( translate( filename ) ) );
+            return parse( source, encoding, grammar );
+        CATCH
     }
     DOMDocument& build( const char* data, std::size_t size, const encoding* encoding, const grammar& grammar )
     {
-        initialize();
-        MemBufInputSource source( reinterpret_cast< const XMLByte* >( data ), size, "string_input", false );
-        return parse( source, encoding, grammar );
+        TRY
+            initialize();
+            MemBufInputSource source( reinterpret_cast< const XMLByte* >( data ), size, "string_input", false );
+            return parse( source, encoding, grammar );
+        CATCH
     }
 }
 
