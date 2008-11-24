@@ -33,7 +33,7 @@
 #include "input_imp.h"
 #include "translate.h"
 #include "trim.h"
-#include "chained_exception.h"
+#include "exception.h"
 #include "visitor.h"
 #include "sub_xistream.h"
 #include "buffer_input.h"
