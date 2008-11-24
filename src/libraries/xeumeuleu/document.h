@@ -74,6 +74,13 @@ private:
     void write( XERCES_CPP_NAMESPACE::XMLFormatTarget& destination, const std::string& encoding );
     //@}
 
+private:
+    //! @name Copy/Assignment
+    //@{
+    document( const document& );            //!< Copy constructor
+    document& operator=( const document& ); //!< Assignment operator
+    //@}
+
 protected:
     //! @name Member data
     //@{
