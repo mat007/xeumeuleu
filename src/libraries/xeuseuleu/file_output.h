@@ -55,13 +55,6 @@ public:
              file_output( std::istream& stylesheet, const std::string& filename );
     virtual ~file_output();
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    file_output( const file_output& );            //!< Copy constructor
-    file_output& operator=( const file_output& ); //!< Assignment operator
-    //@}
 };
 
 }

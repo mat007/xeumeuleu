@@ -58,6 +58,13 @@ public:
     //@{
     virtual input_base& reset( std::auto_ptr< input_base > input ) = 0;
     //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    input_context( const input_context& );            //!< Copy constructor
+    input_context& operator=( const input_context& ); //!< Assignment operator
+    //@}
 };
 
 }

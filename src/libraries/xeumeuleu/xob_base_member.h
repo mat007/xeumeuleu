@@ -54,6 +54,13 @@ public:
     virtual ~xob_base_member();
     //@}
 
+private:
+    //! @name Copy/Assignment
+    //@{
+    xob_base_member( const xob_base_member& );            //!< Copy constructor
+    xob_base_member& operator=( const xob_base_member& ); //!< Assignment operator
+    //@}
+
 protected:
     //! @name Member data
     //@{

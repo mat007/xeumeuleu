@@ -74,13 +74,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    locator( const locator& );            //!< Copy constructor
-    locator& operator=( const locator& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const translate uri_;

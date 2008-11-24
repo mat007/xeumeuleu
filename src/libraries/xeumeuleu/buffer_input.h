@@ -52,13 +52,6 @@ public:
     explicit buffer_input( const XERCES_CPP_NAMESPACE::DOMNode& root );
     virtual ~buffer_input();
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    buffer_input( const buffer_input& );            //!< Copy constructor
-    buffer_input& operator=( const buffer_input& ); //!< Assignment operator
-    //@}
 };
 
 }
