@@ -34,7 +34,6 @@
 #include "input_imp.h"
 
 using namespace xml;
-using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: string_input constructor

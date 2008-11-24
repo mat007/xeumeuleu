@@ -31,11 +31,9 @@
  */
 
 #include "file_input.h"
-#include "translate.h"
 #include "input_imp.h"
 
 using namespace xml;
-using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: file_input constructor
