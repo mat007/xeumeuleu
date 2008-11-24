@@ -34,7 +34,6 @@
 #include "xerces.h"
 
 using namespace xml;
-using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: file_output constructor
