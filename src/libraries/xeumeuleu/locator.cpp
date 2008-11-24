@@ -39,11 +39,10 @@ using namespace XERCES_CPP_NAMESPACE;
 // Name: locator constructor
 // Created: MAT 2007-09-20
 // -----------------------------------------------------------------------------
-locator::locator( const std::string& uri, const XMLScanner& scanner, DOMNode& node )
+locator::locator( const std::string& uri, const XMLScanner& scanner )
     : uri_   ( uri )
     , line_  ( scanner.getLocator()->getLineNumber() )
     , column_( scanner.getLocator()->getColumnNumber() )
-    , node_  ( node )
 {
     // NOTHING
 }
@@ -52,11 +51,10 @@ locator::locator( const std::string& uri, const XMLScanner& scanner, DOMNode& no
 // Name: locator constructor
 // Created: MAT 2008-01-20
 // -----------------------------------------------------------------------------
-locator::locator( const locator& rhs, DOMNode& node )
+locator::locator( const locator& rhs )
     : uri_   ( std::string( rhs.uri_ ) )
     , line_  ( rhs.line_ )
     , column_( rhs.column_ )
-    , node_  ( node )
 {
     // NOTHING
 }
@@ -103,7 +101,7 @@ XMLSSize_t locator::getOffset() const
 // -----------------------------------------------------------------------------
 XERCES_CPP_NAMESPACE::DOMNode* locator::getErrorNode() const
 {
-    return &node_;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

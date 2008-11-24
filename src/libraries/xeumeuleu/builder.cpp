@@ -69,5 +69,5 @@ void builder::startElement( const XMLElementDecl& elemDecl, const unsigned int u
 {
     DOMBuilderImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, is_empty, is_root );
     DOMNode* node = getCurrentNode();
-    node->setUserData( translate( "locator" ), new locator( uri_, *getScanner(), *node ), 0 );
+    node->setUserData( translate( "locator" ), new locator( uri_, *getScanner() ), 0 );
 }
