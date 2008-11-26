@@ -65,7 +65,8 @@ locator::locator( const DOMLocator& rhs )
 // Created: MAT 2008-01-20
 // -----------------------------------------------------------------------------
 locator::locator( const locator& rhs )
-    : uri_   ( std::string( rhs.uri_ ) )
+    : DOMLocator()
+    , uri_   ( std::string( rhs.uri_ ) )
     , line_  ( rhs.line_ )
     , column_( rhs.column_ )
 {

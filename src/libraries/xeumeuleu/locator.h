@@ -35,7 +35,6 @@
 
 #include "xerces.h"
 #include "translate.h"
-#include <string>
 
 namespace xml
 {
@@ -77,6 +76,12 @@ public:
     //! @name Operators
     //@{
     operator std::string() const;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    locator& operator=( const locator& ); //!< Assignment operator
     //@}
 
 private:
