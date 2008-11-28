@@ -264,3 +264,35 @@ BOOST_AUTO_TEST_CASE( an_ximultistream_can_be_buffered_by_an_xibufferstream )
     BOOST_CHECK_EQUAL( "stream-1", actual1 );
     BOOST_CHECK_EQUAL( "stream-2", actual2 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: an_optional_attribute_not_found_in_first_stream_falls_back_to_the_second_stream
+// Created: MAT 2008-05-17
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( an_optional_attribute_not_found_in_first_stream_falls_back_to_the_second_stream )
+{
+    xml::xistringstream xis1( "<root/>" );
+    xml::xistringstream xis2( "<root attribute='stream-2'/>" );
+    xml::ximultistream xis( xis1, xis2 );
+    xml::xibufferstream xibs( xis );
+    std::string actual = "stream-1";
+    xibs >> xml::start( "root" )
+            >> xml::optional >>xml::attribute( "attribute", actual );
+    BOOST_CHECK_EQUAL( "stream-2", actual );
+}
+
+// -----------------------------------------------------------------------------
+// Name: an_optional_attribute_not_found_in_either_stream_is_valid
+// Created: MAT 2008-05-17
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( an_optional_attribute_not_found_in_either_stream_is_valid )
+{
+    xml::xistringstream xis1( "<root/>" );
+    xml::xistringstream xis2( "<root/>" );
+    xml::ximultistream xis( xis1, xis2 );
+    xml::xibufferstream xibs( xis );
+    std::string actual = "no attribute";
+    xibs >> xml::start( "root" )
+            >> xml::optional >>xml::attribute( "attribute", actual );
+    BOOST_CHECK_EQUAL( "no attribute", actual );
+}
