@@ -193,3 +193,19 @@ BOOST_AUTO_TEST_CASE( read_attribute_in_namespace_is_valid )
             >> xml::attribute( "ns:attribute", actual );
     BOOST_CHECK_EQUAL( expected, actual );
 }
+
+// -----------------------------------------------------------------------------
+// Name: writing_the_same_attribute_twice_yields_the_second_value_overwriting_the_first
+// Created: MCO 2008-14-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_the_same_attribute_twice_yields_the_second_value_overwriting_the_first )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xml::attribute( "attribute", "the first value" )
+            << xml::attribute( "attribute", "the second value" )
+        << xml::end;
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root attribute=\"the second value\"/>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
