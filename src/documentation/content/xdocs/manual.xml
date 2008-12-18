@@ -314,7 +314,7 @@ public:
           Can be used to read data with :
         </p>
         <source><![CDATA[xis >> xml::start( "root" )
-    >> xml::list( &my_function )
+    >> xml::list( "element", &my_function )
   >> xml::end;]]></source>
         <p>
           In the same way, the following functor :
@@ -331,7 +331,7 @@ public:
           Can be used like this :
         </p>
         <source><![CDATA[xis >> xml::start( "root" )
-    >> xml::list( my_functor() )
+    >> xml::list( "element", my_functor() )
   >> xml::end;]]></source>
         <p>
           In this case a copy of the functor is made internally.
@@ -341,7 +341,7 @@ public:
         </p>
         <source><![CDATA[my_functor functor;
 xis >> xml::start( "root" )
-      >> xml::list< my_functor& >( functor )
+      >> xml::list< my_functor& >( "element", functor )
     >> xml::end;]]></source>
         </section>
         <section id="xml-optional-element">
