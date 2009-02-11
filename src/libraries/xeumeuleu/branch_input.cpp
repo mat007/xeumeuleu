@@ -167,7 +167,7 @@ void branch_input::attributes( const visitor& v ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::auto_ptr< input_base > branch_input::branch
+// Name: branch_input::branch
 // Created: MAT 2008-01-07
 // -----------------------------------------------------------------------------
 std::auto_ptr< input_base > branch_input::branch( bool clone ) const
