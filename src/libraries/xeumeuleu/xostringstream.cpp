@@ -59,7 +59,7 @@ xostringstream::~xostringstream()
 // Name: xostringstream::str
 // Created: MAT 2006-03-08
 // -----------------------------------------------------------------------------
-const std::string xostringstream::str() const
+std::string xostringstream::str() const
 {
     return xos_base_member::output_->str();
 }
