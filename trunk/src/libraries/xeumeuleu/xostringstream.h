@@ -66,7 +66,7 @@ public:
 
     //! @name Operations
     //@{
-    const std::string str() const;
+    std::string str() const;
     //@}
 };
 

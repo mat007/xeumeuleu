@@ -55,7 +55,7 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string str() const;
+    std::string str() const;
     //@}
 
 protected:
