@@ -104,7 +104,7 @@ private:
     {
         XERCES_CPP_NAMESPACE::DOMImplementation* impl = XERCES_CPP_NAMESPACE::DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
         if( ! impl )
-            throw xml::exception( "Internal error in 'document::fill' : DOMImplementation 'LS' not found" );
+            throw xml::exception( "Internal error in 'document::write' : DOMImplementation 'LS' not found" );
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMWriter > writer( *dynamic_cast< XERCES_CPP_NAMESPACE::DOMImplementationLS* >( impl )->createDOMWriter() );
         error_handler handler;
         writer->setErrorHandler( &handler );
