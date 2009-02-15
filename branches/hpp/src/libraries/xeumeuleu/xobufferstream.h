@@ -56,17 +56,11 @@ public:
     //! @name Constructors/Destructor
     //@{
     xobufferstream()
-        : xostream( *output_ )
+        : xostream( *buffer_ )
         , xistream( std::auto_ptr< input >( new input( buffer_->branch() ) ) )
     {}
     virtual ~xobufferstream()
     {}
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    buffer_output output_;
     //@}
 };
 
