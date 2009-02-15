@@ -68,7 +68,7 @@ public:
         input_->end();
     }
 
-#define READ( type ) void read( type& value ) const { input_->read( value ); }
+#define READ( type ) virtual void read( type& value ) const { input_->read( value ); }
     READ( std::string )
     READ( bool )
     READ( short )

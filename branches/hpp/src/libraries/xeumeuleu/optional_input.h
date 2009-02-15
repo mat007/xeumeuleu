@@ -74,7 +74,7 @@ public:
         throw xml::exception( "Invalid 'end' after an 'optional'" );
     }
 
-#define READ( type ) void read( type& value ) const { read_content( value ); }
+#define READ( type ) virtual void read( type& value ) const { read_content( value ); }
     READ( std::string )
     READ( bool )
     READ( short )

@@ -77,7 +77,7 @@ public:
             throw xml::exception( "Cannot move up from root" );
     }
 
-#define READ( type ) void null_input::read( type& /*value*/ ) const {}
+#define READ( type ) virtual void read( type& /*value*/ ) const {}
     READ( std::string )
     READ( bool )
     READ( short )
