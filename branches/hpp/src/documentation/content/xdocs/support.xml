@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2005 The Apache Software Foundation or its licensors,
+  as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Support</title>
+  </header>
+  <body>
+    <section id="question">
+      <title>Question</title>
+      <!--
+      <p>
+        Please first check that your question is not answered in the <a href="site:faq">FAQ</a>.
+      </p>
+      -->
+      <p>
+        You have a question to ask : post in the appropriate <a href="http://sourceforge.net/forum/?group_id=165394">forum</a>.
+      </p>
+    </section>
+    <section id="bug">
+      <title>Bug report</title>
+      <p>
+        You found a bug : use the <a href="http://sourceforge.net/tracker/?group_id=165394&amp;atid=835205">bug tracker</a>.
+      </p>
+      <p>
+        Please check that the bug has not already been submitted.
+      </p>
+    </section>
+    <section id="feature">
+      <title>Feature request</title>
+      <p>
+        You would like to request a feature : use the <a href="http://sourceforge.net/tracker/?group_id=165394&amp;atid=835206">feature request tracker</a>.
+      </p>
+      <p>
+        Please check that the feature has not already been submitted.
+      </p>
+    </section>
+  </body>
+</document>
