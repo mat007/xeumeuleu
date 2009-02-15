@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_sub_output_h_
-#define _xeumeuleu_sub_output_h_
+#ifndef xeumeuleu_sub_output_h
+#define xeumeuleu_sub_output_h
 
 namespace xml
 {
@@ -85,4 +85,4 @@ private:
 
 }
 
-#endif // _xeumeuleu_sub_output_h_
+#endif // xeumeuleu_sub_output_h

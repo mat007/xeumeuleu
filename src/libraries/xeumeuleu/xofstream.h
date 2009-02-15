@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xofstream_h_
-#define _xeumeuleu_xofstream_h_
+#ifndef xeumeuleu_xofstream_h
+#define xeumeuleu_xofstream_h
 
 #include "xo_base_member.h"
 #include "xostream.h"
@@ -67,4 +67,4 @@ public:
 
 }
 
-#endif // _xeumeuleu_xofstream_h_
+#endif // xeumeuleu_xofstream_h

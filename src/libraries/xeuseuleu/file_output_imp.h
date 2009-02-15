@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xsl_file_output_imp_h_
-#define _xsl_file_output_imp_h_
+#ifndef xsl_file_output_imp_h
+#define xsl_file_output_imp_h
 
 #include "output_imp.h"
 #include "xeumeuleu/xml.h"
@@ -79,4 +79,4 @@ private:
 
 }
 
-#endif // _xsl_file_output_imp_h_
+#endif // xsl_file_output_imp_h

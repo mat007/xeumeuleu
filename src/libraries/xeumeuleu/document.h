@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_document_h_
-#define _xeumeuleu_document_h_
+#ifndef xeumeuleu_document_h
+#define xeumeuleu_document_h
 
 #include "xerces.h"
 #include "xerces_ptr.h"
@@ -197,4 +197,4 @@ protected:
 #undef TRY
 #undef CATCH
 
-#endif // _xeumeuleu_document_h_
+#endif // xeumeuleu_document_h

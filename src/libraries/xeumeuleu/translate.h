@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_translate_h_
-#define _xeumeuleu_translate_h_
+#ifndef xeumeuleu_translate_h
+#define xeumeuleu_translate_h
 
 #include "xerces.h"
 #include <string>
@@ -124,4 +124,4 @@ inline std::string operator+( const translate& tr, const std::string& str )
 
 }
 
-#endif // _xeumeuleu_translate_h_
+#endif // xeumeuleu_translate_h

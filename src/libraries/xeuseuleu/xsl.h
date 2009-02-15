@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeuseuleu_xsl_h_
-#define _xeuseuleu_xsl_h_
+#ifndef xeuseuleu_xsl_h
+#define xeuseuleu_xsl_h
 
 #include "xftransform.h"
 #include "xstringtransform.h"
@@ -39,4 +39,4 @@
 #include "parameter.h"
 #include "exception.h"
 
-#endif // _xeuseuleu_xsl_h_
+#endif // xeuseuleu_xsl_h

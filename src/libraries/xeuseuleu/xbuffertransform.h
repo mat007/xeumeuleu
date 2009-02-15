@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeuseuleu_xbuffertransform_h_
-#define _xeuseuleu_xbuffertransform_h_
+#ifndef xeuseuleu_xbuffertransform_h
+#define xeuseuleu_xbuffertransform_h
 
 #include <string>
 
@@ -81,4 +81,4 @@ private:
 
 }
 
-#endif // _xeuseuleu_xbuffertransform_h_
+#endif // xeuseuleu_xbuffertransform_h

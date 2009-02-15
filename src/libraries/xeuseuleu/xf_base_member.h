@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeuseuleu_xf_base_member_h_
-#define _xeuseuleu_xf_base_member_h_
+#ifndef xeuseuleu_xf_base_member_h
+#define xeuseuleu_xf_base_member_h
 
 #include <string>
 #include <memory>
@@ -72,4 +72,4 @@ protected:
 
 }
 
-#endif // _xeuseuleu_xf_base_member_h_
+#endif // xeuseuleu_xf_base_member_h

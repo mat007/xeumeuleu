@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_input_imp_h_
-#define _xeumeuleu_input_imp_h_
+#ifndef xeumeuleu_input_imp_h
+#define xeumeuleu_input_imp_h
 
 #include "input_base.h"
 #include "chained_exception.h"
@@ -365,4 +365,4 @@ namespace xml
 #undef TRY
 #undef CATCH
 
-#endif // _xeumeuleu_input_imp_h_
+#endif // xeumeuleu_input_imp_h

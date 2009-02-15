@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_output_h_
-#define _xeumeuleu_output_h_
+#ifndef xeumeuleu_output_h
+#define xeumeuleu_output_h
 
 #include "xerces.h"
 #include "chained_exception.h"
@@ -258,4 +258,4 @@ namespace xml
 #undef TRY
 #undef CATCH
 
-#endif // _xeumeuleu_output_h_
+#endif // xeumeuleu_output_h

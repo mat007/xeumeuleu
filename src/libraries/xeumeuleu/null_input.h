@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_null_input_h_
-#define _xeumeuleu_null_input_h_
+#ifndef xeumeuleu_null_input_h
+#define xeumeuleu_null_input_h
 
 #include "input_base.h"
 #include "input_context.h"
@@ -157,4 +157,4 @@ private:
 
 }
 
-#endif // _xeumeuleu_optional_input_h_
+#endif // xeumeuleu_optional_input_h
