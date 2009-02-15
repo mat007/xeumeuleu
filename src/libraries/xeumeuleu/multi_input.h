@@ -39,8 +39,6 @@
 
 namespace xml
 {
-    class input_context;
-
 // =============================================================================
 /** @class  multi_input
     @brief  Multi input implementation

@@ -40,8 +40,6 @@
 
 namespace xml
 {
-    class input_context;
-
 // =============================================================================
 /** @class  optional_input
     @brief  Input state to handle optional manipulation

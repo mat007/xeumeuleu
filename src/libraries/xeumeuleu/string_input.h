@@ -39,8 +39,6 @@
 
 namespace xml
 {
-    class grammar;
-
 // =============================================================================
 /** @class  string_input
     @brief  String input implementation
