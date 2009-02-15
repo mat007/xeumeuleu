@@ -35,7 +35,6 @@
 
 #include "document.h"
 #include "output.h"
-#include "xerces.h"
 
 namespace xml
 {

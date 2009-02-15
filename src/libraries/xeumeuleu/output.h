@@ -34,14 +34,20 @@
 #define _xeumeuleu_output_h_
 
 #include "xerces.h"
+#include "chained_exception.h"
 #include "exception.h"
 #include "translate.h"
 #include "trim.h"
 #include "import.h"
-#include "xerces.h"
 #include <limits>
 #include <sstream>
 #include <memory>
+
+#define TRY try {
+#define CATCH } \
+            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
+            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e ); } \
+            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e ); }
 
 namespace xml
 {
@@ -69,60 +75,80 @@ public:
     //@{
     void start( const std::string& tag )
     {
-        current_ = current_->appendChild( document_.createElement( translate( trim( tag ) ) ) );
+        TRY
+            current_ = current_->appendChild( document_.createElement( translate( trim( tag ) ) ) );
+        CATCH
     }
     void end()
     {
-        if( is_root() )
-            throw xml::exception( "Illegal 'end' from root level" );
-        current_ = current_->getParentNode();
-        flush();
+        TRY
+            if( is_root() )
+                throw xml::exception( "Illegal 'end' from root level" );
+            current_ = current_->getParentNode();
+            flush();
+        CATCH
     }
 
     void write( const std::string& value )
     {
-        current_->appendChild( document_.createTextNode( translate( value ) ) );
+        TRY
+            current_->appendChild( document_.createTextNode( translate( value ) ) );
+        CATCH
     }
     template< typename T > void write( T value )
     {
-        write( serialize( value ) );
+        TRY
+            write( serialize( value ) );
+        CATCH
     }
 
     void cdata( const std::string& value )
     {
-        current_->appendChild( document_.createCDATASection( translate( value ) ) );
+        TRY
+            current_->appendChild( document_.createCDATASection( translate( value ) ) );
+        CATCH
     }
     void instruction( const std::string& target, const std::string& data )
     {
-        current_->appendChild( document_.createProcessingInstruction( translate( target ), translate( data ) ) );
+        TRY
+            current_->appendChild( document_.createProcessingInstruction( translate( target ), translate( data ) ) );
+        CATCH
     }
 
     void attribute( const std::string& name, const std::string& value )
     {
-        XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
-        if( ! attributes )
-            throw xml::exception( context() + " cannot have attributes" );
-        XERCES_CPP_NAMESPACE::DOMAttr* pAttribute = document_.createAttribute( translate( trim( name ) ) );
-        pAttribute->setValue( translate( value ) );
-        attributes->setNamedItem( pAttribute );
+        TRY
+            XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
+            if( ! attributes )
+                throw xml::exception( context() + " cannot have attributes" );
+            XERCES_CPP_NAMESPACE::DOMAttr* pAttribute = document_.createAttribute( translate( trim( name ) ) );
+            pAttribute->setValue( translate( value ) );
+            attributes->setNamedItem( pAttribute );
+        CATCH
     }
     template< typename T > void attribute( const std::string& name, T value )
     {
-        attribute( name, serialize( value ) );
+        TRY
+            attribute( name, serialize( value ) );
+        CATCH
     }
 
     void copy( const XERCES_CPP_NAMESPACE::DOMNode& node )
     {
-        import( document_, node.getFirstChild(), *current_ );
-        flush();
+        TRY
+            import( document_, node.getFirstChild(), *current_ );
+            flush();
+        CATCH
     }
 
     std::auto_ptr< output > branch();
 
     void flush()
     {
-        if( is_root() && root_.getFirstChild() )
-            finished();
+        TRY
+            if( is_root() && root_.getFirstChild() )
+                finished();
+        CATCH
     }
     //@}
 
@@ -223,8 +249,13 @@ namespace xml
 {
     inline std::auto_ptr< output > output::branch()
     {
-        return std::auto_ptr< output >( new sub_output( document_, *current_, *this ) );
+        TRY
+            return std::auto_ptr< output >( new sub_output( document_, *current_, *this ) );
+        CATCH
     }
 }
+
+#undef TRY
+#undef CATCH
 
 #endif // _xeumeuleu_output_h_

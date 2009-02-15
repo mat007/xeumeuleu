@@ -160,23 +160,7 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\chained_exception.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\encoding.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeumeuleu\exception.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\grammar.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\translate.h"
 				>
 			</File>
 			<File
@@ -287,129 +271,69 @@
 				Name="io"
 				>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\beautifier.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\branch_input.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\builder.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\buffer_output.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\document.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\encoding.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\error_handler.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\file_input.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\import.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\file_output.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\input.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\input_base.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\input_base_context.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\input_context.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\multi_input.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\null_input.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\optional_input.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\string_input.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\string_output.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\trim.h"
 					>
 				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xerces.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xerces_ptr.h"
-					>
-				</File>
-				<Filter
-					Name="input"
-					>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\branch_input.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\buffer_input.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\file_input.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\input.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\input_base.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\input_base_context.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\input_context.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\input_imp.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\locator.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\multi_input.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\null_input.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\optional_input.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\parser.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\string_input.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="output"
-					>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\buffer_output.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\file_output.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\output.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\string_output.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\sub_output.h"
-						>
-					</File>
-				</Filter>
 			</Filter>
 			<Filter
 				Name="stream"
 				>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\sub_xistream.h"
-					>
-				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xibufferstream.h"
 					>
@@ -466,6 +390,82 @@
 					RelativePath="..\..\src\libraries\xeumeuleu\xosubstream.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="xerces"
+				>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\document.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\grammar.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\input_imp.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\output.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\xerces.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\xerces_ptr.h"
+					>
+				</File>
+				<Filter
+					Name="detail"
+					>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\beautifier.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\buffer_input.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\builder.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\chained_exception.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\error_handler.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\import.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\locator.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\parser.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\sub_output.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\sub_xistream.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\translate.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

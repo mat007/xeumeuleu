@@ -37,7 +37,6 @@
 #include "exception.h"
 #include "translate.h"
 #include "locator.h"
-#include "xerces.h"
 #include <sstream>
 #include <string>
 
