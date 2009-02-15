@@ -89,7 +89,7 @@ public:
     {
         value = translate( read_value() );
     }
-#define READ( type ) void read( type& value ) const { value = convert< type >( read_value() ); }
+#define READ( type ) virtual void read( type& value ) const { value = convert< type >( read_value() ); }
     READ( bool )
     READ( short )
     READ( int )
