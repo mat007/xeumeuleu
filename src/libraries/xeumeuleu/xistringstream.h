@@ -35,6 +35,7 @@
 
 #include "xistream.h"
 #include "grammar.h"
+#include "string_input.h"
 
 namespace xml
 {
@@ -57,9 +58,21 @@ class xistringstream : public xistream
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xistringstream( const std::string& data, const grammar& grammar = null_grammar() );
-             xistringstream( const std::string& data, const encoding& encoding, const grammar& grammar = null_grammar() );
-    virtual ~xistringstream();
+    explicit xistringstream( const std::string& data, const grammar& grammar = null_grammar() )
+        : xistream( std::auto_ptr< input >( new string_input( data, 0, grammar ) ) )
+    {}
+    xistringstream( const std::string& data, const encoding& encoding, const grammar& grammar = null_grammar() )
+        : xistream( std::auto_ptr< input >( new string_input( data, &encoding, grammar ) ) )
+    {}
+    virtual ~xistringstream()
+    {}
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    xistringstream( const xistringstream& );            //!< Copy constructor
+    xistringstream& operator=( const xistringstream& ); //!< Assignment operator
     //@}
 };
 

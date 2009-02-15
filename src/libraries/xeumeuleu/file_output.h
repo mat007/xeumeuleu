@@ -35,6 +35,7 @@
 
 #include "document.h"
 #include "output.h"
+#include "xerces.h"
 
 namespace xml
 {
@@ -49,14 +50,22 @@ class file_output : private document, public output
 public:
     //! @name Constructors/Destructor
     //@{
-             file_output( const std::string& filename, const std::string& encoding );
-    virtual ~file_output();
+    file_output( const std::string& filename, const std::string& encoding )
+        : output( *document::document_, *document::document_ )
+        , filename_( filename )
+        , encoding_( encoding )
+    {}
+    virtual ~file_output()
+    {}
     //@}
 
 protected:
     //! @name Operations
     //@{
-    virtual void finished();
+    virtual void finished()
+    {
+        fill( filename_, encoding_ );
+    }
     //@}
 
 private:

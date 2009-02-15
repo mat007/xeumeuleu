@@ -35,6 +35,7 @@
 
 #include "xo_base_member.h"
 #include "xostream.h"
+#include "output.h"
 
 namespace xml
 {
@@ -59,9 +60,16 @@ class xosubstream : private xo_base_member, public xostream
 public:
     //! @name Constructors/Destructor
     //@{
-             xosubstream( xostream& xos );
-             xosubstream( xosubstream& xoss );
-    virtual ~xosubstream();
+    xosubstream( xostream& xos )
+        : xo_base_member( xos.branch() )
+        , xostream( *xo_base_member::output_ )
+    {}
+    xosubstream( xosubstream& xoss )
+        : xo_base_member( xoss.branch() )
+        , xostream( *xo_base_member::output_ )
+    {}
+    virtual ~xosubstream()
+    {}
     //@}
 };
 

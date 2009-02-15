@@ -33,12 +33,20 @@
 #ifndef _xeumeuleu_xistream_h_
 #define _xeumeuleu_xistream_h_
 
+#include "input.h"
+#include "chained_exception.h"
+#include "xerces.h"
 #include <string>
 #include <memory>
 
+#define TRY try {
+#define CATCH } \
+            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
+            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { error( xml::chained_exception( e ).what() ); throw; } \
+            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { error( xml::chained_exception( e ).what() ); throw; }
+
 namespace xml
 {
-    class input;
     class visitor;
     class output;
     class xostream;
@@ -54,69 +62,120 @@ class xistream
 public:
     //! @name Constructors/Destructor
     //@{
-    virtual ~xistream();
+    virtual ~xistream()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    void start( const std::string& tag );
-    void end();
+    void start( const std::string& tag )
+    {
+        TRY
+            input_->start( tag );
+        CATCH
+    }
+    void end()
+    {
+        TRY
+            input_->end();
+        CATCH
+    }
 
-    std::auto_ptr< input > branch( bool clone ) const;
+    std::auto_ptr< input > branch( bool clone ) const
+    {
+        TRY
+            return input_->branch( clone );
+        CATCH
+    }
+    void copy( output& destination ) const
+    {
+        TRY
+            input_->copy( destination );
+        CATCH
+    }
 
-    void copy( output& destination ) const;
-
-    void error( const std::string& message ) const;
+    void error( const std::string& message ) const
+    {
+        input_->error( message );
+    }
     //@}
 
     //! @name Accessors
     //@{
-    void read( std::string& value ) const;
-    void read( bool& value ) const;
-    void read( short& value ) const;
-    void read( int& value ) const;
-    void read( long& value ) const;
-    void read( long long& value ) const;
-    void read( float& value ) const;
-    void read( double& value ) const;
-    void read( long double& value ) const;
-    void read( unsigned short& value ) const;
-    void read( unsigned int& value ) const;
-    void read( unsigned long& value ) const;
-    void read( unsigned long long& value ) const;
+#define READ( type ) void read( type& value ) const { TRY input_->read( value ); CATCH }
+    READ( std::string )
+    READ( bool )
+    READ( short )
+    READ( int )
+    READ( long )
+    READ( long long )
+    READ( float )
+    READ( double )
+    READ( long double )
+    READ( unsigned short )
+    READ( unsigned int )
+    READ( unsigned long )
+    READ( unsigned long long )
+#undef READ
     void read( xostream& xos ) const;
 
-    void attribute( const std::string& name, std::string& value ) const;
-    void attribute( const std::string& name, bool& value ) const;
-    void attribute( const std::string& name, short& value ) const;
-    void attribute( const std::string& name, int& value ) const;
-    void attribute( const std::string& name, long& value ) const;
-    void attribute( const std::string& name, long long& value ) const;
-    void attribute( const std::string& name, float& value ) const;
-    void attribute( const std::string& name, double& value ) const;
-    void attribute( const std::string& name, long double& value ) const;
-    void attribute( const std::string& name, unsigned short& value ) const;
-    void attribute( const std::string& name, unsigned int& value ) const;
-    void attribute( const std::string& name, unsigned long& value ) const;
-    void attribute( const std::string& name, unsigned long long& value ) const;
+    template< typename T >
+    void attribute( const std::string& name, T& value ) const
+    {
+        TRY
+            input_->attribute( name, value );
+        CATCH
+    }
 
-    void nodes( const visitor& v ) const;
-    void attributes( const visitor& v ) const;
+    void nodes( const visitor& v ) const
+    {
+        TRY
+            input_->nodes( v );
+        CATCH
+    }
+    void attributes( const visitor& v ) const
+    {
+        TRY
+            input_->attributes( v );
+        CATCH
+    }
 
-    bool has_child( const std::string& name ) const;
-    bool has_attribute( const std::string& name ) const;
-    bool has_content() const;
+    bool has_child( const std::string& name ) const
+    {
+        TRY
+            return input_->has_child( name );
+        CATCH
+    }
+    bool has_attribute( const std::string& name ) const
+    {
+        TRY
+            return input_->has_attribute( name );
+        CATCH
+    }
+    bool has_content() const
+    {
+        TRY
+            return input_->has_content();
+        CATCH
+    }
     //@}
 
     //! @name Modifiers
     //@{
-    void optional();
+    void optional()
+    {
+        TRY
+            input_->optional();
+        CATCH
+    }
     //@}
 
 protected:
     //! @name Constructors/Destructor
     //@{
-    xistream( std::auto_ptr< input > input );
+    xistream( std::auto_ptr< input > input )
+        : input_( input )
+    {}
     //@}
 
 private:
@@ -144,6 +203,19 @@ xistream& operator>>( xistream& xis, T& value )
     return xis;
 }
 
+}
+
+#undef TRY
+#undef CATCH
+
+#include "xostream.h"
+
+namespace xml
+{
+    inline void xistream::read( xostream& xos ) const
+    {
+        xos.write( *this );
+    }
 }
 
 #endif // _xeumeuleu_xistream_h_

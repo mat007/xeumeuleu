@@ -33,8 +33,17 @@
 #ifndef _xeumeuleu_xostream_h_
 #define _xeumeuleu_xostream_h_
 
+#include "output.h"
+#include "chained_exception.h"
+#include "xerces.h"
 #include <string>
 #include <memory>
+
+#define TRY try {
+#define CATCH } \
+            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
+            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e ); } \
+            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e ); }
 
 namespace xml
 {
@@ -52,54 +61,86 @@ class xostream
 public:
     //! @name Constructors/Destructor
     //@{
-    virtual ~xostream();
+    virtual ~xostream()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    void start( const std::string& tag );
-    void end();
+    void start( const std::string& tag )
+    {
+        TRY
+            output_.start( tag );
+        CATCH
+    }
+    void end()
+    {
+        TRY
+            output_.end();
+        CATCH
+    }
 
-    std::auto_ptr< output > branch();
+    std::auto_ptr< output > branch()
+    {
+        TRY
+            return output_.branch();
+        CATCH
+    }
     //@}
 
     //! @name Modifiers
     //@{
-    void write( const char* value );
-    void write( const std::string& value );
-    void write( bool value );
-    void write( int value );
-    void write( long value );
-    void write( long long value );
-    void write( float value );
-    void write( double value );
-    void write( long double value );
-    void write( unsigned int value );
-    void write( unsigned long value );
-    void write( unsigned long long value );
+    void write( const char* value )
+    {
+        write( std::string( value ) );
+    }
+#define WRITE( type ) void write( type value ) { TRY output_.write( value ); CATCH }
+    WRITE( const std::string& )
+    WRITE( bool )
+    WRITE( int )
+    WRITE( long )
+    WRITE( long long )
+    WRITE( float )
+    WRITE( double )
+    WRITE( long double )
+    WRITE( unsigned int )
+    WRITE( unsigned long )
+    WRITE( unsigned long long )
+#undef WRITE
     void write( const xistream& xis );
 
-    void attribute( const std::string& name, const char* value );
-    void attribute( const std::string& name, const std::string& value );
-    void attribute( const std::string& name, bool value );
-    void attribute( const std::string& name, int value );
-    void attribute( const std::string& name, long value );
-    void attribute( const std::string& name, long long value );
-    void attribute( const std::string& name, float value );
-    void attribute( const std::string& name, double value );
-    void attribute( const std::string& name, long double value );
-    void attribute( const std::string& name, unsigned int value );
-    void attribute( const std::string& name, unsigned long value );
-    void attribute( const std::string& name, unsigned long long value );
+    void attribute( const std::string& name, const char* value )
+    {
+        attribute( name, std::string( value ) );
+    }
+    template< typename T >
+    void attribute( const std::string& name, const T& value )
+    {
+        TRY
+            output_.attribute( name, value );
+        CATCH
+    }
 
-    void cdata( const std::string& content );
-    void instruction( const std::string& target, const std::string& data );
+    void cdata( const std::string& content )
+    {
+        TRY
+            output_.cdata( content );
+        CATCH
+    }
+    void instruction( const std::string& target, const std::string& data )
+    {
+        TRY
+            output_.instruction( target, data );
+        CATCH
+    }
     //@}
 
 protected:
     //! @name Constructors/Destructor
     //@{
-    xostream( output& output );
+    xostream( output& output )
+        : output_( output )
+    {}
     //@}
 
 private:
@@ -127,6 +168,21 @@ xostream& operator<<( xostream& xos, const T& value )
     return xos;
 }
 
+}
+
+#undef TRY
+#undef CATCH
+
+#include "xistream.h"
+
+namespace xml
+{
+    inline void xostream::write( const xistream& xis )
+    {
+//        TRY
+            xis.copy( output_ );
+//        CATCH
+    }
 }
 
 #endif // _xeumeuleu_xostream_h_

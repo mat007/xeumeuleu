@@ -33,8 +33,6 @@
 #ifndef _xeumeuleu_sub_output_h_
 #define _xeumeuleu_sub_output_h_
 
-#include "output.h"
-
 namespace xml
 {
 // =============================================================================
@@ -48,13 +46,33 @@ class sub_output : public output
 public:
     //! @name Constructors/Destructor
     //@{
-             sub_output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root, output& o );
-    virtual ~sub_output();
+    sub_output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root, output& o )
+        : output( document, root )
+        , output_ ( o )
+        , flushed_( false )
+    {}
+    virtual ~sub_output()
+    {
+        try
+        {
+            if( ! flushed_ )
+                output_.flush();
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+    }
     //@}
 
+protected:
     //! @name Operations
     //@{
-    virtual void finished();
+    virtual void finished()
+    {
+        flushed_ = true;
+        output_.flush();
+    }
     //@}
 
 private:

@@ -33,6 +33,7 @@
 #ifndef _xeumeuleu_xo_base_member_h_
 #define _xeumeuleu_xo_base_member_h_
 
+#include "output.h"
 #include <memory>
 
 namespace xml
@@ -50,8 +51,11 @@ class xo_base_member
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xo_base_member( std::auto_ptr< output > output );
-    virtual ~xo_base_member();
+    explicit xo_base_member( std::auto_ptr< output > output )
+        : output_( output )
+    {}
+    virtual ~xo_base_member()
+    {}
     //@}
 
 private:

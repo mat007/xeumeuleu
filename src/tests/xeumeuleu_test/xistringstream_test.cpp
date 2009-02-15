@@ -351,3 +351,16 @@ BOOST_AUTO_TEST_CASE( reading_huge_xml_is_valid )
             >> xml::end;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: sending_an_xistream_into_an_xostream_outputs_it
+// Created: MAT 2009-02-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( sending_an_xistream_into_an_xostream_outputs_it )
+{
+    xml::xistringstream xis( "<element/>" );
+    xml::xostringstream xos;
+    xis >> xos;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element/>\n", xos.str() );
+}

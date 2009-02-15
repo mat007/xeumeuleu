@@ -36,6 +36,7 @@
 #include "xo_base_member.h"
 #include "xostream.h"
 #include "encoding.h"
+#include "file_output.h"
 
 namespace xml
 {
@@ -55,8 +56,12 @@ class xofstream : private xo_base_member, public xostream
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xofstream( const std::string& filename, const encoding& encoding = encoding() );
-    virtual ~xofstream();
+    explicit xofstream( const std::string& filename, const encoding& encoding = encoding() )
+        : xo_base_member( std::auto_ptr< output >( new file_output( filename, encoding ) ) )
+        , xostream( *xo_base_member::output_ )
+    {}
+    virtual ~xofstream()
+    {}
     //@}
 };
 

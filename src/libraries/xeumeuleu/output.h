@@ -34,6 +34,12 @@
 #define _xeumeuleu_output_h_
 
 #include "xerces.h"
+#include "exception.h"
+#include "translate.h"
+#include "trim.h"
+#include "import.h"
+#include "xerces.h"
+#include <limits>
 #include <sstream>
 #include <memory>
 
@@ -50,35 +56,74 @@ class output
 public:
     //! @name Constructors/Destructor
     //@{
-             output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root );
-    virtual ~output();
+    output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root )
+        : document_( document )
+        , root_    ( root )
+        , current_ ( &root )
+    {}
+    virtual ~output()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    void start( const std::string& tag );
-    void end();
+    void start( const std::string& tag )
+    {
+        current_ = current_->appendChild( document_.createElement( translate( trim( tag ) ) ) );
+    }
+    void end()
+    {
+        if( is_root() )
+            throw xml::exception( "Illegal 'end' from root level" );
+        current_ = current_->getParentNode();
+        flush();
+    }
 
-    void write( const std::string& value );
+    void write( const std::string& value )
+    {
+        current_->appendChild( document_.createTextNode( translate( value ) ) );
+    }
     template< typename T > void write( T value )
     {
         write( serialize( value ) );
     }
 
-    void cdata( const std::string& value );
-    void instruction( const std::string& target, const std::string& data );
+    void cdata( const std::string& value )
+    {
+        current_->appendChild( document_.createCDATASection( translate( value ) ) );
+    }
+    void instruction( const std::string& target, const std::string& data )
+    {
+        current_->appendChild( document_.createProcessingInstruction( translate( target ), translate( data ) ) );
+    }
 
-    void attribute( const std::string& name, const std::string& value );
+    void attribute( const std::string& name, const std::string& value )
+    {
+        XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
+        if( ! attributes )
+            throw xml::exception( context() + " cannot have attributes" );
+        XERCES_CPP_NAMESPACE::DOMAttr* pAttribute = document_.createAttribute( translate( trim( name ) ) );
+        pAttribute->setValue( translate( value ) );
+        attributes->setNamedItem( pAttribute );
+    }
     template< typename T > void attribute( const std::string& name, T value )
     {
         attribute( name, serialize( value ) );
     }
 
-    void copy( const XERCES_CPP_NAMESPACE::DOMNode& node );
+    void copy( const XERCES_CPP_NAMESPACE::DOMNode& node )
+    {
+        import( document_, node.getFirstChild(), *current_ );
+        flush();
+    }
 
     std::auto_ptr< output > branch();
 
-    void flush();
+    void flush()
+    {
+        if( is_root() && root_.getFirstChild() )
+            finished();
+    }
     //@}
 
 protected:
@@ -96,11 +141,38 @@ private:
 
     //! @name Helpers
     //@{
-    std::string context() const;
+    std::string context() const
+    {
+        return "node '" + std::string( translate( current_->getNodeName() ) ) + "'";
+    }
 
-    std::string serialize( float value ) const;
-    std::string serialize( double value ) const;
-    std::string serialize( long double value ) const;
+    std::string serialize( float value ) const
+    {
+        return convert( value );
+    }
+    std::string serialize( double value ) const
+    {
+        return convert( value );
+    }
+    std::string serialize( long double value ) const
+    {
+        if( value == std::numeric_limits< long double >::infinity() )
+            return "INF";
+        if( value == - std::numeric_limits< long double >::infinity() )
+            return "-INF";
+        if( value != value )
+            return "NaN";
+        char buffer[255];
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4996 )
+#endif
+        sprintf( buffer, "%Lg", value );
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
+        return buffer;
+    }
     template< typename T > std::string serialize( T value ) const
     {
         std::stringstream stream;
@@ -108,7 +180,30 @@ private:
         return stream.str();
     }
 
-    bool is_root() const;
+    bool is_root() const
+    {
+        return current_ == &root_;
+    }
+
+    template< typename T > inline std::string convert( T value ) const
+    {
+        if( value == std::numeric_limits< T >::infinity() )
+            return "INF";
+        if( value == - std::numeric_limits< T >::infinity() )
+            return "-INF";
+        if( value != value )
+            return "NaN";
+        char buffer[255];
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4996 )
+#endif
+        sprintf( buffer, "%g", value );
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
+        return buffer;
+    }
     //@}
 
 private:
@@ -120,6 +215,16 @@ private:
     //@}
 };
 
+}
+
+#include "sub_output.h"
+
+namespace xml
+{
+    inline std::auto_ptr< output > output::branch()
+    {
+        return std::auto_ptr< output >( new sub_output( document_, *current_, *this ) );
+    }
 }
 
 #endif // _xeumeuleu_output_h_

@@ -35,6 +35,7 @@
 
 #include "xistream.h"
 #include "grammar.h"
+#include "string_input.h"
 #include <istream>
 
 namespace xml
@@ -52,9 +53,23 @@ class xistreamstream : public xistream
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xistreamstream( std::basic_istream< char >& stream, const grammar& grammar = null_grammar() );
-             xistreamstream( std::basic_istream< char >& stream, const encoding& encoding, const grammar& grammar = null_grammar() );
-    virtual ~xistreamstream();
+    explicit xistreamstream( std::basic_istream< char >& stream, const grammar& grammar = null_grammar() )
+        : xistream( std::auto_ptr< input >( new string_input( load( stream ), 0, grammar ) ) )
+    {}
+    xistreamstream( std::basic_istream< char >& stream, const encoding& encoding, const grammar& grammar = null_grammar() )
+        : xistream( std::auto_ptr< input >( new string_input( load( stream ), &encoding, grammar ) ) )
+    {}
+    virtual ~xistreamstream()
+    {}
+    //@}
+
+private:
+    //! @name Constructors/Destructor
+    //@{
+    const std::string load( std::basic_istream< char >& stream )
+    {
+        return std::string( std::istreambuf_iterator< char >( stream ), std::istreambuf_iterator< char >() );
+    }
     //@}
 };
 

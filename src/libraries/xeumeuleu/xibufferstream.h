@@ -58,9 +58,14 @@ class xibufferstream : public xistream
 public:
     //! @name Constructors/Destructor
     //@{
-             xibufferstream( const xistream& xis );
-             xibufferstream( const xibufferstream& xiss );
-    virtual ~xibufferstream();
+    xibufferstream( const xistream& xis )
+        : xistream( xis.branch( true ) )
+    {}
+    xibufferstream( const xibufferstream& xiss )
+        : xistream( xiss.branch( true ) )
+    {}
+    virtual ~xibufferstream()
+    {}
     //@}
 };
 

@@ -33,15 +33,13 @@
 #ifndef _xeumeuleu_xostringstream_h_
 #define _xeumeuleu_xostringstream_h_
 
-#include "xos_base_member.h"
 #include "xostream.h"
 #include "encoding.h"
+#include "string_output.h"
 #include <string>
 
 namespace xml
 {
-    class string_output;
-
 // =============================================================================
 /** @class  xostringstream
     @brief  Xml string output stream
@@ -55,18 +53,31 @@ namespace xml
 */
 // Created: MAT 2006-01-04
 // =============================================================================
-class xostringstream : private xos_base_member, public xostream
+class xostringstream : public xostream
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xostringstream( const encoding& encoding = encoding() );
-    virtual ~xostringstream();
+    explicit xostringstream( const encoding& encoding = encoding() )
+        : xostream( output_ )
+        , output_ ( encoding )
+    {}
+    virtual ~xostringstream()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    std::string str() const;
+    std::string str() const
+    {
+        return output_.str();
+    }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    string_output output_;
     //@}
 };
 

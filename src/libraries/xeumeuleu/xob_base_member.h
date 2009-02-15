@@ -33,12 +33,11 @@
 #ifndef _xeumeuleu_xob_base_member_h_
 #define _xeumeuleu_xob_base_member_h_
 
+#include "buffer_output.h"
 #include <memory>
 
 namespace xml
 {
-    class buffer_output;
-
 // =============================================================================
 /** @class  xob_base_member
     @brief  Base from member idiom base class
@@ -50,8 +49,11 @@ class xob_base_member
 public:
     //! @name Constructors/Destructor
     //@{
-             xob_base_member();
-    virtual ~xob_base_member();
+    xob_base_member()
+        : buffer_( new buffer_output() )
+    {}
+    virtual ~xob_base_member()
+    {}
     //@}
 
 private:
@@ -64,7 +66,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    std::auto_ptr< buffer_output > pBuffer_;
+    std::auto_ptr< buffer_output > buffer_;
     //@}
 };
 

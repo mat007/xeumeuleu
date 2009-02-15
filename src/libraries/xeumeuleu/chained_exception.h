@@ -35,6 +35,7 @@
 
 #include "exception.h"
 #include "xerces.h"
+#include "translate.h"
 
 namespace xml
 {
@@ -49,9 +50,14 @@ class chained_exception : public xml::exception
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit chained_exception( const XERCES_CPP_NAMESPACE::XMLException& chained );
-    explicit chained_exception( const XERCES_CPP_NAMESPACE::DOMException& chained );
-    virtual ~chained_exception() throw ();
+    explicit chained_exception( const XERCES_CPP_NAMESPACE::XMLException& chained )
+        : xml::exception( translate( chained.getMessage() ) )
+    {}
+    explicit chained_exception( const XERCES_CPP_NAMESPACE::DOMException& chained )
+        : xml::exception( translate( chained.getMessage() ) )
+    {}
+    virtual ~chained_exception() throw ()
+    {}
     //@}
 };
 

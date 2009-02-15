@@ -35,6 +35,13 @@
 
 #include "input_base.h"
 #include "xerces.h"
+#include "translate.h"
+#include "trim.h"
+#include "exception.h"
+#include "visitor.h"
+#include "locator.h"
+#include "output.h"
+#include <limits>
 #include <string>
 #include <vector>
 
@@ -51,55 +58,98 @@ class input_imp : public input_base
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit input_imp( const XERCES_CPP_NAMESPACE::DOMNode& root );
-    virtual ~input_imp();
+    explicit input_imp( const XERCES_CPP_NAMESPACE::DOMNode& root )
+        : root_   ( root )
+        , current_( &root_ )
+    {}
+    virtual ~input_imp()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& tag );
-    virtual void end();
+    virtual void start( const std::string& tag )
+    {
+        const XERCES_CPP_NAMESPACE::DOMNode* child = find_child( tag );
+        if( ! child )
+            throw xml::exception( location() + context() + " does not have a child named '" + tag + "'" );
+        current_ = child;
+    }
+    virtual void end()
+    {
+        if( current_ == &root_ )
+            throw xml::exception( location() + "Cannot move up from " + context() );
+        const XERCES_CPP_NAMESPACE::DOMNode* parent = current_->getParentNode();
+        if( ! parent )
+            throw xml::exception( location() + context() + " has no parent" );
+        current_ = parent;
+    }
 
-    virtual void read( std::string& value ) const;
-    virtual void read( bool& value ) const;
-    virtual void read( short& value ) const;
-    virtual void read( int& value ) const;
-    virtual void read( long& value ) const;
-    virtual void read( long long& value ) const;
-    virtual void read( float& value ) const;
-    virtual void read( double& value ) const;
-    virtual void read( long double& value ) const;
-    virtual void read( unsigned short& value ) const;
-    virtual void read( unsigned int& value ) const;
-    virtual void read( unsigned long& value ) const;
-    virtual void read( unsigned long long& value ) const;
+    virtual void read( std::string& value ) const
+    {
+        value = translate( read_value() );
+    }
+#define READ( type ) void read( type& value ) const { value = convert< type >( read_value() ); }
+    READ( bool )
+    READ( short )
+    READ( int )
+    READ( long )
+    READ( long long )
+    READ( float )
+    READ( double )
+    READ( long double )
+    READ( unsigned short )
+    READ( unsigned int )
+    READ( unsigned long )
+    READ( unsigned long long )
+#undef READ
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const;
 
-    virtual void copy( output& destination ) const;
+    virtual void copy( output& destination ) const
+    {
+        destination.copy( *current_ );
+    }
 
-    virtual void error( const std::string& message ) const;
+    virtual void error( const std::string& message ) const
+    {
+        throw xml::exception( location() + message );
+    }
     //@}
 
     //! @name Accessors
     //@{
-    virtual bool has_child( const std::string& name ) const;
-    virtual bool has_attribute( const std::string& name ) const;
-    virtual bool has_content() const;
+    virtual bool has_child( const std::string& name ) const
+    {
+        return find_child( name ) != 0;
+    }
+    virtual bool has_attribute( const std::string& name ) const
+    {
+        return find_attribute( name ) != 0;
+    }
+    virtual bool has_content() const
+    {
+        return find_content() != 0;
+    }
 
-    virtual void attribute( const std::string& name, std::string& value ) const;
-    virtual void attribute( const std::string& name, bool& value ) const;
-    virtual void attribute( const std::string& name, short& value ) const;
-    virtual void attribute( const std::string& name, int& value ) const;
-    virtual void attribute( const std::string& name, long& value ) const;
-    virtual void attribute( const std::string& name, long long& value ) const;
-    virtual void attribute( const std::string& name, float& value ) const;
-    virtual void attribute( const std::string& name, double& value ) const;
-    virtual void attribute( const std::string& name, long double& value ) const;
-    virtual void attribute( const std::string& name, unsigned short& value ) const;
-    virtual void attribute( const std::string& name, unsigned int& value ) const;
-    virtual void attribute( const std::string& name, unsigned long& value ) const;
-    virtual void attribute( const std::string& name, unsigned long long& value ) const;
+    virtual void attribute( const std::string& name, std::string& value ) const
+    {
+        value = translate( read_attribute( name ) );
+    }
+#define ATTRIBUTE( type ) void attribute( const std::string& name, type& value ) const { value = convert< type >( read_attribute( name ) ); }
+    ATTRIBUTE( bool )
+    ATTRIBUTE( short )
+    ATTRIBUTE( int )
+    ATTRIBUTE( long )
+    ATTRIBUTE( long long )
+    ATTRIBUTE( float )
+    ATTRIBUTE( double )
+    ATTRIBUTE( long double )
+    ATTRIBUTE( unsigned short )
+    ATTRIBUTE( unsigned int )
+    ATTRIBUTE( unsigned long )
+    ATTRIBUTE( unsigned long long )
+#undef ATTRIBUTE
 
     virtual void nodes( const visitor& v ) const;
     virtual void attributes( const visitor& v ) const;
@@ -108,19 +158,131 @@ public:
 private:
     //! @name Helpers
     //@{
-    const std::string location() const;
-    const std::string context() const;
+    const std::string location() const
+    {
+        const locator* loc = reinterpret_cast< locator* >( current_->getUserData( translate( "locator" ) ) );
+        if( loc )
+            return *loc;
+        return "";
+    }
+    const std::string context() const
+    {
+        return "node '" + trim( translate( current_->getNodeName() ) ) + "'";
+    }
 
-    const XERCES_CPP_NAMESPACE::DOMNode* find_child( const std::string& name ) const;
-    const XERCES_CPP_NAMESPACE::DOMNode* find_attribute( const std::string& name ) const;
-    const XERCES_CPP_NAMESPACE::DOMNode* find_content() const;
+    const XERCES_CPP_NAMESPACE::DOMNode* find_child( const std::string& name ) const
+    {
+        const XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
+        while( child )
+        {
+            if( trim( name ) == trim( translate( child->getNodeName() ) ) )
+                return child;
+            child = child->getNextSibling();
+        }
+        return 0;
+    }
+    const XERCES_CPP_NAMESPACE::DOMNode* find_attribute( const std::string& name ) const
+    {
+        const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
+        if( ! attributes )
+            return 0;
+        return attributes->getNamedItem( translate( trim( name ) ) );
+    }
+    const XERCES_CPP_NAMESPACE::DOMNode* find_content() const
+    {
+        const XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
+        while( child )
+        {
+            if( has_content( *child ) )
+                return child;
+            child = child->getNextSibling();
+        }
+        return 0;
+    }
 
-    bool has_content( const XERCES_CPP_NAMESPACE::DOMNode& node ) const;
+    bool has_content( const XERCES_CPP_NAMESPACE::DOMNode& node ) const
+    {
+        if( node.getNodeType() != XERCES_CPP_NAMESPACE::DOMNode::TEXT_NODE
+         && node.getNodeType() != XERCES_CPP_NAMESPACE::DOMNode::CDATA_SECTION_NODE )
+            return false;
+        const XMLCh* const value = node.getNodeValue();
+        return ! XERCES_CPP_NAMESPACE::XMLChar1_1::isAllSpaces( value, XERCES_CPP_NAMESPACE::XMLString::stringLen( value ) );
+    }
 
-    const XMLCh* read_value() const;
-    const XMLCh* read_attribute( const std::string& name ) const;
+    const XMLCh* read_value() const
+    {
+        const XERCES_CPP_NAMESPACE::DOMNode* child = find_content();
+        if( ! child )
+            throw xml::exception( location() + context() + " does not have a content" );
+        return child->getNodeValue();
+    }
+    const XMLCh* read_attribute( const std::string& name ) const
+    {
+        const XERCES_CPP_NAMESPACE::DOMNode* attribute = find_attribute( name );
+        if( ! attribute )
+            throw xml::exception( location() + context() + " does not have an attribute '" + trim( name ) + "'" );
+        return attribute->getNodeValue();
+    }
 
-    template< typename T > T convert( const XMLCh* from ) const;
+    template< typename T > T convert( const XMLCh* from ) const
+    {
+        const double value = XERCES_CPP_NAMESPACE::XMLDouble( from ).getValue();
+        const T result = static_cast< T >( value );
+        if( static_cast< double >( result ) != value )
+            throw xml::exception( location() + "Value of " + context() + " is not a " + typeid( T ).name() );
+        return result;
+    }
+    template<>
+    float convert< float >( const XMLCh* from ) const
+    {
+        const XERCES_CPP_NAMESPACE::XMLFloat value( from );
+        if( value.isDataOverflowed() )
+            throw xml::exception( location() + "Value of " + context() + " overflowed (probably a double instead of a float)" );
+        switch( value.getType() )
+        {
+            case XERCES_CPP_NAMESPACE::XMLDouble::NegINF :
+                return - std::numeric_limits< float >::infinity();
+            case XERCES_CPP_NAMESPACE::XMLDouble::PosINF :
+                return std::numeric_limits< float >::infinity();
+            case XERCES_CPP_NAMESPACE::XMLDouble::NaN :
+                return std::numeric_limits< float >::quiet_NaN();
+            default:
+                return static_cast< float >( value.getValue() );
+        }
+    }
+    template<>
+    double convert< double >( const XMLCh* from ) const
+    {
+        const XERCES_CPP_NAMESPACE::XMLDouble value( from );
+        if( value.isDataOverflowed() )
+            throw xml::exception( location() + "Value of " + context() + " overflowed (probably more than a double)" );
+        switch( value.getType() )
+        {
+            case XERCES_CPP_NAMESPACE::XMLDouble::NegINF :
+                return - std::numeric_limits< double >::infinity();
+            case XERCES_CPP_NAMESPACE::XMLDouble::PosINF :
+                return std::numeric_limits< double >::infinity();
+            case XERCES_CPP_NAMESPACE::XMLDouble::NaN :
+                return std::numeric_limits< double >::quiet_NaN();
+            default:
+                return value.getValue();
+        }
+    }
+    template<>
+    int convert< int >( const XMLCh* from ) const
+    {
+        return XERCES_CPP_NAMESPACE::XMLString::parseInt( from );
+    }
+    template<>
+    bool convert< bool >( const XMLCh* from ) const
+    {
+        const std::string value = trim( translate( from ) );
+        if( value == "true" || value == "1" )
+            return true;
+        if( value == "false" || value == "0" )
+            return false;
+        throw xml::exception( location() + "Value of " + context() + " is not a boolean" );
+    }
     //@}
 
 private:
@@ -131,6 +293,45 @@ private:
     //@}
 };
 
+}
+
+#include "sub_xistream.h"
+#include "buffer_input.h"
+
+namespace xml
+{
+    inline std::auto_ptr< input_base > input_imp::branch( bool clone ) const
+    {
+        if( clone )
+            return std::auto_ptr< input_base >( new buffer_input( *current_ ) );
+        return std::auto_ptr< input_base >( new input_imp( *current_ ) );
+    }
+    inline void input_imp::nodes( const visitor& v ) const
+    {
+        XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
+        while( child )
+        {
+            if( child->getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::ELEMENT_NODE )
+            {
+                sub_xistream xis( *child );
+                v.process( trim( translate( child->getNodeName() ) ), xis );
+            }
+            child = child->getNextSibling();
+        }
+    }
+    inline void input_imp::attributes( const visitor& v ) const
+    {
+        const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
+        if( attributes )
+        {
+            for( XMLSize_t index = 0; index < attributes->getLength(); ++index )
+            {
+                XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( index );
+                sub_xistream xis( *current_ );
+                v.process( trim( translate( attribute->getNodeName() ) ), xis );
+            }
+        }
+    }
 }
 
 #endif // _xeumeuleu_input_imp_h_

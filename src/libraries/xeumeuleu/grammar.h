@@ -33,6 +33,10 @@
 #ifndef _xeumeuleu_grammar_h_
 #define _xeumeuleu_grammar_h_
 
+#include "translate.h"
+#include "parser.h"
+#include "xerces.h"
+#include "exception.h"
 #include <string>
 
 namespace xml
@@ -71,13 +75,23 @@ class external_grammar : public grammar
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit external_grammar( const std::string& uri );
-    virtual ~external_grammar();
+    explicit external_grammar( const std::string& uri )
+        : uri_( uri )
+    {}
+    virtual ~external_grammar()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void configure( parser& parser ) const;
+    virtual void configure( parser& parser ) const
+    {
+        parser->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, true );
+        parser->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesUseCachedGrammarInParse, true );
+        // $$$$ MAT 2006-03-27: use parser->setProperty( XERCES_CPP_NAMESPACE::XMLUni::fgXercesSchemaExternalNoNameSpaceSchemaLocation, ... ) ?
+        if( ! parser->loadGrammar( translate( uri_ ), XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true ) )
+            throw xml::exception( "Failed to load grammar '" + uri_ + "'" );
+    }
     //@}
 
 private:
@@ -98,13 +112,18 @@ class internal_grammar : public grammar
 public:
     //! @name Constructors/Destructor
     //@{
-             internal_grammar();
-    virtual ~internal_grammar();
+    internal_grammar()
+    {}
+    virtual ~internal_grammar()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void configure( parser& parser ) const;
+    virtual void configure( parser& parser ) const
+    {
+        parser->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidateIfSchema, true );
+    }
     //@}
 };
 
@@ -119,13 +138,19 @@ class null_grammar : public grammar
 public:
     //! @name Constructors/Destructor
     //@{
-             null_grammar();
-    virtual ~null_grammar();
+    null_grammar()
+    {}
+    virtual ~null_grammar()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void configure( parser& parser ) const;
+    virtual void configure( parser& parser ) const
+    {
+        parser->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, false );
+        parser->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesLoadExternalDTD, false ) ;
+    }
     //@}
 };
 

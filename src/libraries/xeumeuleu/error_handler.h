@@ -34,6 +34,11 @@
 #define _xeumeuleu_error_handler_h_
 
 #include "xerces.h"
+#include "exception.h"
+#include "translate.h"
+#include "locator.h"
+#include "xerces.h"
+#include <sstream>
 #include <string>
 
 namespace xml
@@ -49,19 +54,32 @@ class error_handler : public XERCES_CPP_NAMESPACE::DOMErrorHandler
 public:
     //! @name Constructors/Destructor
     //@{
-             error_handler();
-    virtual ~error_handler();
+    error_handler()
+    {}
+    virtual ~error_handler()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    virtual bool handleError( const XERCES_CPP_NAMESPACE::DOMError& error );
+    virtual bool handleError( const XERCES_CPP_NAMESPACE::DOMError& error )
+    {
+        throw xml::exception( interpret( error ) );
+    }
     //@}
 
 private:
     //! @name Helpers
     //@{
-    const std::string interpret( const XERCES_CPP_NAMESPACE::DOMError& error ) const;
+    const std::string interpret( const XERCES_CPP_NAMESPACE::DOMError& error ) const
+    {
+        std::string message;
+        const XERCES_CPP_NAMESPACE::DOMLocator* const location = error.getLocation();
+        if( location )
+            message += locator( *location );
+        message += translate( error.getMessage() );
+        return message;
+    }
     //@}
 };
 

@@ -34,12 +34,58 @@
 #define _xeumeuleu_import_h_
 
 #include "xerces.h"
+#include "locator.h"
 
 namespace xml
 {
-    void import( XERCES_CPP_NAMESPACE::DOMDocument& document, const XERCES_CPP_NAMESPACE::DOMNode* from, XERCES_CPP_NAMESPACE::DOMNode& to );
+namespace detail
+{
+    inline bool is_empty( const XERCES_CPP_NAMESPACE::DOMNode& node )
+    {
+        if( node.getNodeType() != XERCES_CPP_NAMESPACE::DOMNode::TEXT_NODE
+         && node.getNodeType() != XERCES_CPP_NAMESPACE::DOMNode::CDATA_SECTION_NODE )
+            return false;
+        const XMLCh* const value = node.getNodeValue();
+        return XERCES_CPP_NAMESPACE::XMLChar1_1::isAllSpaces( value, XERCES_CPP_NAMESPACE::XMLString::stringLen( value ) );
+    }
 
-    XERCES_CPP_NAMESPACE::DOMNode& import( XERCES_CPP_NAMESPACE::DOMDocument& document, const XERCES_CPP_NAMESPACE::DOMNode& from, XERCES_CPP_NAMESPACE::DOMNode& to );
+    inline XERCES_CPP_NAMESPACE::DOMNode& clone( XERCES_CPP_NAMESPACE::DOMDocument& document,
+                                          const XERCES_CPP_NAMESPACE::DOMNode& from,
+                                          XERCES_CPP_NAMESPACE::DOMNode& to )
+    {
+        XERCES_CPP_NAMESPACE::DOMNode& added = *to.appendChild( document.importNode( const_cast< XERCES_CPP_NAMESPACE::DOMNode* >( &from ), false ) );
+        const locator* loc = reinterpret_cast< locator* >( from.getUserData( translate( "locator" ) ) );
+        if( loc )
+            added.setUserData( translate( "locator" ), new locator( *loc ), 0 );
+        return added;
+    }
+}
+
+    inline void import( XERCES_CPP_NAMESPACE::DOMDocument& document,
+                 const XERCES_CPP_NAMESPACE::DOMNode* from,
+                 XERCES_CPP_NAMESPACE::DOMNode& to )
+    {
+        while( from )
+        {
+            if( ! detail::is_empty( *from ) )
+                import( document, from->getFirstChild(), detail::clone( document, *from, to ) );
+            from = from->getNextSibling();
+        }
+    }
+
+    inline XERCES_CPP_NAMESPACE::DOMNode& import( XERCES_CPP_NAMESPACE::DOMDocument& document,
+                                           const XERCES_CPP_NAMESPACE::DOMNode& from,
+                                           XERCES_CPP_NAMESPACE::DOMNode& to )
+    {
+        if( from.getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::DOCUMENT_NODE )
+        {
+            import( document, *from.getFirstChild(), to );
+            return document;
+        }
+        XERCES_CPP_NAMESPACE::DOMNode& added = detail::clone( document, from, to );
+        import( document, from.getFirstChild(), added );
+        return added;
+    }
 }
 
 #endif // _xeumeuleu_import_h_

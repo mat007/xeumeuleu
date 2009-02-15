@@ -34,6 +34,7 @@
 #define _xeumeuleu_xisubstream_h_
 
 #include "xistream.h"
+#include "input.h"
 
 namespace xml
 {
@@ -58,9 +59,14 @@ class xisubstream : public xistream
 public:
     //! @name Constructors/Destructor
     //@{
-             xisubstream( const xistream& xis );
-             xisubstream( const xisubstream& xiss );
-    virtual ~xisubstream();
+    xisubstream( const xistream& xis )
+        : xistream( xis.branch( false ) )
+    {}
+    xisubstream( const xisubstream& xiss )
+        : xistream( xiss.branch( false ) )
+    {}
+    virtual ~xisubstream()
+    {}
     //@}
 };
 

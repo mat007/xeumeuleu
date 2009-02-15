@@ -35,6 +35,7 @@
 
 #include "xistream.h"
 #include "grammar.h"
+#include "file_input.h"
 
 namespace xml
 {
@@ -56,9 +57,14 @@ class xifstream : public xistream
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xifstream( const std::string& filename, const grammar& grammar = null_grammar() );
-             xifstream( const std::string& filename, const encoding& encoding, const grammar& grammar = null_grammar() );
-    virtual ~xifstream();
+    explicit xifstream( const std::string& filename, const grammar& grammar = null_grammar() )
+        : xistream( std::auto_ptr< input >( new file_input( filename, 0, grammar ) ) )
+    {}
+    xifstream( const std::string& filename, const encoding& encoding, const grammar& grammar = null_grammar() )
+        : xistream( std::auto_ptr< input >( new file_input( filename, &encoding, grammar ) ) )
+    {}
+    virtual ~xifstream()
+    {}
     //@}
 };
 

@@ -35,6 +35,7 @@
 
 #include "document.h"
 #include "input_imp.h"
+#include "import.h"
 
 namespace xml
 {
@@ -49,8 +50,11 @@ class buffer_input : private document, public input_imp
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit buffer_input( const XERCES_CPP_NAMESPACE::DOMNode& root );
-    virtual ~buffer_input();
+    explicit buffer_input( const XERCES_CPP_NAMESPACE::DOMNode& root )
+        : input_imp( import( *document_, root, *document_ ) )
+    {}
+    virtual ~buffer_input()
+    {}
     //@}
 };
 

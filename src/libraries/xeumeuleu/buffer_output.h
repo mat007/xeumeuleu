@@ -35,6 +35,7 @@
 
 #include "document.h"
 #include "output.h"
+#include "input_imp.h"
 
 namespace xml
 {
@@ -51,15 +52,26 @@ class buffer_output : private document, public output
 public:
     //! @name Constructors/Destructor
     //@{
-             buffer_output();
-    virtual ~buffer_output();
+    buffer_output()
+        : output( *document::document_, *document::document_ )
+    {}
+    virtual ~buffer_output()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    std::auto_ptr< input_base > branch();
+    std::auto_ptr< input_base > branch()
+    {
+        return std::auto_ptr< input_base >( new input_imp( *document::document_ ) );
+    }
+    //@}
 
-    virtual void finished();
+protected:
+    //! @name Operations
+    //@{
+    virtual void finished()
+    {}
     //@}
 };
 

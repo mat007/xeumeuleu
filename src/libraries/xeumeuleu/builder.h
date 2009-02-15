@@ -34,6 +34,11 @@
 #define _xeumeuleu_builder_h_
 
 #include "xerces.h"
+#include "exception.h"
+#include "translate.h"
+#include "locator.h"
+#include "xerces.h"
+#include <sstream>
 #include <string>
 
 namespace xml
@@ -49,15 +54,23 @@ class builder : public XERCES_CPP_NAMESPACE::DOMBuilderImpl
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit builder( const std::string& uri );
-    virtual ~builder();
+    explicit builder( const std::string& uri )
+        : uri_( uri )
+    {}
+    virtual ~builder()
+    {}
     //@}
 
     //! @name Operations
     //@{
     virtual void startElement( const XERCES_CPP_NAMESPACE::XMLElementDecl& elemDecl, const unsigned int urlId,
                                const XMLCh* const elemPrefix, const XERCES_CPP_NAMESPACE::RefVectorOf< XERCES_CPP_NAMESPACE::XMLAttr >& attrList,
-                               const unsigned int attrCount, const bool is_empty, const bool is_root );
+                               const unsigned int attrCount, const bool is_empty, const bool is_root )
+    {
+        XERCES_CPP_NAMESPACE::DOMBuilderImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, is_empty, is_root );
+        XERCES_CPP_NAMESPACE::DOMNode* node = getCurrentNode();
+        node->setUserData( translate( "locator" ), new locator( uri_, *getScanner() ), 0 );
+    }
     //@}
 
 private:

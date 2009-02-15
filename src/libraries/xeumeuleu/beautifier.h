@@ -34,10 +34,16 @@
 #define _xeumeuleu_beautifier_h_
 
 #include "xerces.h"
+#include "translate.h"
 #include <string>
 
 namespace xml
 {
+namespace detail
+{
+    const XMLCh NEW_LINE[] = { XERCES_CPP_NAMESPACE::chLF, XERCES_CPP_NAMESPACE::chNull };
+    const XMLCh SPACE[] = { XERCES_CPP_NAMESPACE::chSpace, XERCES_CPP_NAMESPACE::chNull };
+}
 // =============================================================================
 /** @class  beautifier
     @brief  Xerces target wrapper
@@ -51,24 +57,67 @@ class beautifier : public XERCES_CPP_NAMESPACE::XMLFormatTarget
 public:
     //! @name Constructors/Destructor
     //@{
-             beautifier( XERCES_CPP_NAMESPACE::XMLFormatTarget& target, const XMLCh* newLine );
-    virtual ~beautifier();
+    beautifier( XERCES_CPP_NAMESPACE::XMLFormatTarget& target, const XMLCh* new_line )
+        : target_          ( target )
+        , new_line_        ( translate( new_line == XERCES_CPP_NAMESPACE::chNull ? detail::NEW_LINE : new_line ) )
+        , space_           ( translate( detail::SPACE ) )
+        , discard_new_line_( false )
+        , discard_spaces_  ( false )
+        , shift_           ( 0 )
+    {}
+    virtual ~beautifier()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void writeChars( const XMLByte* const data, const unsigned int count, XERCES_CPP_NAMESPACE::XMLFormatter* const formatter );
+    virtual void writeChars( const XMLByte* const data, const unsigned int count, XERCES_CPP_NAMESPACE::XMLFormatter* const formatter )
+    {
+        if( is_new_line( data, count ) )
+        {
+            if( ! discard_new_line_ && ! discard_spaces_ )
+                target_.writeChars( data, count, formatter );
+            discard_new_line_ = ! discard_new_line_;
+            discard_spaces_ = true;
+            shift_ = 0;
+        }
+        else if( discard_spaces_ && is_space( data, count ) )
+            ++shift_;
+        else
+        {
+            shift( formatter );
+            target_.writeChars( data, count, formatter );
+            discard_new_line_ = false;
+        }
+    }
 
-    virtual void flush();
+    virtual void flush()
+    {
+        target_.flush();
+    }
     //@}
 
 private:
     //! @name Helpers
     //@{
-    bool is_new_line( const XMLByte* const data, const unsigned int count ) const;
-    bool is_space( const XMLByte* const data, const unsigned int count ) const;
-    
-    void shift( XERCES_CPP_NAMESPACE::XMLFormatter* const formatter );
+    bool is_new_line( const XMLByte* const data, const unsigned int count ) const
+    {
+        return count == new_line_.size() &&
+               0 == strncmp( reinterpret_cast< const char* const >( data ), new_line_.c_str(), count );
+    }
+    bool is_space( const XMLByte* const data, const unsigned int count ) const
+    {
+        return count == space_.size() &&
+               0 == strncmp( reinterpret_cast< const char* const >( data ), space_.c_str(), count );
+    }
+
+    void shift( XERCES_CPP_NAMESPACE::XMLFormatter* const formatter )
+    {
+        while( shift_-- > 0 )
+            target_.writeChars( reinterpret_cast< const XMLByte* const >( space_.c_str() ), 1, formatter ); // $$$$ MCO 2007-03-16: 
+        shift_ = 0;
+        discard_spaces_ = false;
+    }
     //@}
 
 private:

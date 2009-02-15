@@ -34,6 +34,8 @@
 #define _xeumeuleu_multi_input_h_
 
 #include "input_base.h"
+#include "input_context.h"
+#include "input_base_context.h"
 
 namespace xml
 {
@@ -50,65 +52,120 @@ class multi_input : public input_base
 public:
     //! @name Constructors/Destructor
     //@{
-             multi_input( std::auto_ptr< input_base > input1, std::auto_ptr< input_base > input2, input_context& context );
-    virtual ~multi_input();
+    multi_input( std::auto_ptr< input_base > input1, std::auto_ptr< input_base > input2, input_context& context )
+        : input1_ ( input1 )
+        , input2_ ( input2 )
+        , context_( context )
+    {}
+    virtual ~multi_input()
+    {}
     //@}
 
     //! @name Operations
     //@{
     virtual void start( const std::string& tag );
-    virtual void end();
+    virtual void end()
+    {
+        input1_->end();
+        input2_->end();
+    }
 
-    virtual void read( std::string& value ) const;
-    virtual void read( bool& value ) const;
-    virtual void read( short& value ) const;
-    virtual void read( int& value ) const;
-    virtual void read( long& value ) const;
-    virtual void read( long long& value ) const;
-    virtual void read( float& value ) const;
-    virtual void read( double& value ) const;
-    virtual void read( long double& value ) const;
-    virtual void read( unsigned short& value ) const;
-    virtual void read( unsigned int& value ) const;
-    virtual void read( unsigned long& value ) const;
-    virtual void read( unsigned long long& value ) const;
+#define READ( type ) void read( type& value ) const { read_content( value ); }
+    READ( std::string )
+    READ( bool )
+    READ( short )
+    READ( int )
+    READ( long )
+    READ( long long )
+    READ( float )
+    READ( double )
+    READ( long double )
+    READ( unsigned short )
+    READ( unsigned int )
+    READ( unsigned long )
+    READ( unsigned long long )
+#undef READ
 
-    virtual std::auto_ptr< input_base > branch( bool clone ) const;
+    virtual std::auto_ptr< input_base > branch( bool clone ) const
+    {
+        std::auto_ptr< input_base_context > context( new input_base_context() );
+        std::auto_ptr< input_base > input( new multi_input( input1_->branch( clone ), input2_->branch( clone ), *context ) );
+        context->reset( input );
+        return std::auto_ptr< input_base >( context );
+    }
 
-    virtual void copy( output& destination ) const;
+    virtual void copy( output& destination ) const
+    {
+        input1_->copy( destination );
+        input2_->copy( destination );
+    }
 
-    virtual void error( const std::string& message ) const;
+    virtual void error( const std::string& message ) const
+    {
+        input2_->error( message );
+    }
     //@}
 
     //! @name Accessors
     //@{
-    virtual bool has_child( const std::string& name ) const;
-    virtual bool has_attribute( const std::string& name ) const;
-    virtual bool has_content() const;
+    virtual bool has_child( const std::string& name ) const
+    {
+        return input1_->has_child( name ) || input2_->has_child( name );
+    }
+    virtual bool has_attribute( const std::string& name ) const
+    {
+        return input1_->has_attribute( name ) || input2_->has_attribute( name );
+    }
+    virtual bool has_content() const
+    {
+        return input1_->has_content() || input2_->has_content();
+    }
 
-    virtual void attribute( const std::string& name, std::string& value ) const;
-    virtual void attribute( const std::string& name, bool& value ) const;
-    virtual void attribute( const std::string& name, short& value ) const;
-    virtual void attribute( const std::string& name, int& value ) const;
-    virtual void attribute( const std::string& name, long& value ) const;
-    virtual void attribute( const std::string& name, long long& value ) const;
-    virtual void attribute( const std::string& name, float& value ) const;
-    virtual void attribute( const std::string& name, double& value ) const;
-    virtual void attribute( const std::string& name, long double& value ) const;
-    virtual void attribute( const std::string& name, unsigned short& value ) const;
-    virtual void attribute( const std::string& name, unsigned int& value ) const;
-    virtual void attribute( const std::string& name, unsigned long& value ) const;
-    virtual void attribute( const std::string& name, unsigned long long& value ) const;
+#define ATTRIBUTE( type ) void attribute( const std::string& name, type& value ) const { read_attribute( name, value ); }
+    ATTRIBUTE( std::string )
+    ATTRIBUTE( bool )
+    ATTRIBUTE( short )
+    ATTRIBUTE( int )
+    ATTRIBUTE( long )
+    ATTRIBUTE( long long )
+    ATTRIBUTE( float )
+    ATTRIBUTE( double )
+    ATTRIBUTE( long double )
+    ATTRIBUTE( unsigned short )
+    ATTRIBUTE( unsigned int )
+    ATTRIBUTE( unsigned long )
+    ATTRIBUTE( unsigned long long )
+#undef ATTRIBUTE
 
-    virtual void nodes( const visitor& v ) const;
-    virtual void attributes( const visitor& v ) const;
+    virtual void nodes( const visitor& v ) const
+    {
+        input1_->nodes( v );
+        input2_->nodes( v );
+    }
+    virtual void attributes( const visitor& v ) const
+    {
+        input1_->attributes( v );
+        input2_->attributes( v );
+    }
     //@}
 
 private:
     //! @name Helpers
     //@{
-    template< typename T > void read_content( T& value ) const;
-    template< typename T > void read_attribute( const std::string& name, T& value ) const;
+    template< typename T > void read_content( T& value ) const
+    {
+        if( input1_->has_content() )
+            input1_->read( value );
+        else
+            input2_->read( value );
+    }
+    template< typename T > void read_attribute( const std::string& name, T& value ) const
+    {
+        if( input1_->has_attribute( name ) )
+            input1_->attribute( name, value );
+        else
+            input2_->attribute( name, value );
+    }
     //@}
 
 private:
@@ -120,6 +177,24 @@ private:
     //@}
 };
 
+}
+
+#include "branch_input.h"
+
+namespace xml
+{
+    inline void multi_input::start( const std::string& tag )
+    {
+        if( input1_->has_child( tag ) && ! input2_->has_child( tag ) )
+            context_.reset( std::auto_ptr< input_base >( new branch_input( input1_, input2_, context_, false ) ) ).start( tag );
+        else if( input2_->has_child( tag ) && ! input1_->has_child( tag ) )
+            context_.reset( std::auto_ptr< input_base >( new branch_input( input2_, input1_, context_, true ) ) ).start( tag );
+        else
+        {
+            input1_->start( tag );
+            input2_->start( tag );
+        }
+    }
 }
 
 #endif // _xeumeuleu_multi_input_h_

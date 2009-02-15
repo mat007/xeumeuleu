@@ -50,13 +50,19 @@ class encoding
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit encoding( const std::string& name = "UTF-8" );
-    virtual ~encoding();
+    explicit encoding( const std::string& name = "UTF-8" )
+        : name_( name )
+    {}
+    virtual ~encoding()
+    {}
     //@}
 
     //! @name Operators
     //@{
-    operator const std::string&() const;
+    operator const std::string&() const
+    {
+        return name_;
+    }
     //@}
 
 private:

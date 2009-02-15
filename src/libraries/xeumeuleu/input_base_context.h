@@ -35,6 +35,7 @@
 
 #include "input_base.h"
 #include "input_context.h"
+#include "null_input.h"
 
 namespace xml
 {
@@ -49,60 +50,101 @@ class input_base_context : public input_base, public input_context
 public:
     //! @name Constructors/Destructor
     //@{
-             input_base_context();
-    virtual ~input_base_context();
+    input_base_context()
+        : input_( new null_input() )
+    {}
+    virtual ~input_base_context()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& tag );
-    virtual void end();
+    virtual void start( const std::string& tag )
+    {
+        input_->start( tag );
+    }
+    virtual void end()
+    {
+        input_->end();
+    }
 
-    virtual void read( std::string& value ) const;
-    virtual void read( bool& value ) const;
-    virtual void read( short& value ) const;
-    virtual void read( int& value ) const;
-    virtual void read( long& value ) const;
-    virtual void read( long long& value ) const;
-    virtual void read( float& value ) const;
-    virtual void read( double& value ) const;
-    virtual void read( long double& value ) const;
-    virtual void read( unsigned short& value ) const;
-    virtual void read( unsigned int& value ) const;
-    virtual void read( unsigned long& value ) const;
-    virtual void read( unsigned long long& value ) const;
+#define READ( type ) void read( type& value ) const { input_->read( value ); }
+    READ( std::string )
+    READ( bool )
+    READ( short )
+    READ( int )
+    READ( long )
+    READ( long long )
+    READ( float )
+    READ( double )
+    READ( long double )
+    READ( unsigned int )
+    READ( unsigned short )
+    READ( unsigned long )
+    READ( unsigned long long )
+#undef READ
 
-    virtual std::auto_ptr< input_base > branch( bool clone ) const;
+    virtual std::auto_ptr< input_base > branch( bool clone ) const
+    {
+        return input_->branch( clone );
+    }
 
-    virtual void copy( output& destination ) const;
+    virtual void copy( output& destination ) const
+    {
+        input_->copy( destination );
+    }
 
-    virtual void error( const std::string& message ) const;
+    virtual void error( const std::string& message ) const
+    {
+        input_->error( message );
+    }
 
-    virtual input_base& reset( std::auto_ptr< input_base > input );
+    virtual input_base& reset( std::auto_ptr< input_base > input )
+    {
+        input_ = input;
+        return *input_;
+    }
     //@}
 
     //! @name Accessors
     //@{
-    virtual bool has_child( const std::string& name ) const;
-    virtual bool has_attribute( const std::string& name ) const;
-    virtual bool has_content() const;
+    virtual bool has_child( const std::string& name ) const
+    {
+        return input_->has_child( name );
+    }
+    virtual bool has_attribute( const std::string& name ) const
+    {
+        return input_->has_attribute( name );
+    }
+    virtual bool has_content() const
+    {
+        return input_->has_content();
+    }
 
-    virtual void attribute( const std::string& name, std::string& value ) const;
-    virtual void attribute( const std::string& name, bool& value ) const;
-    virtual void attribute( const std::string& name, short& value ) const;
-    virtual void attribute( const std::string& name, int& value ) const;
-    virtual void attribute( const std::string& name, long& value ) const;
-    virtual void attribute( const std::string& name, long long& value ) const;
-    virtual void attribute( const std::string& name, float& value ) const;
-    virtual void attribute( const std::string& name, double& value ) const;
-    virtual void attribute( const std::string& name, long double& value ) const;
-    virtual void attribute( const std::string& name, unsigned short& value ) const;
-    virtual void attribute( const std::string& name, unsigned int& value ) const;
-    virtual void attribute( const std::string& name, unsigned long& value ) const;
-    virtual void attribute( const std::string& name, unsigned long long& value ) const;
+#define ATTRIBUTE( type ) void attribute( const std::string& name, type& value ) const { input_->attribute( name, value ); }
+    ATTRIBUTE( std::string )
+    ATTRIBUTE( bool )
+    ATTRIBUTE( short )
+    ATTRIBUTE( int )
+    ATTRIBUTE( long )
+    ATTRIBUTE( long long )
+    ATTRIBUTE( float )
+    ATTRIBUTE( double )
+    ATTRIBUTE( long double )
+    ATTRIBUTE( unsigned short )
+    ATTRIBUTE( unsigned int )
+    ATTRIBUTE( unsigned long )
+    ATTRIBUTE( unsigned long long )
+#undef ATTRIBUTE
 
-    virtual void nodes( const visitor& v ) const;
-    virtual void attributes( const visitor& v ) const;
+    virtual void nodes( const visitor& v ) const
+    {
+        input_->nodes( v );
+    }
+    virtual void attributes( const visitor& v ) const
+    {
+        input_->attributes( v );
+    }
     //@}
 
 private:

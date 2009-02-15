@@ -35,6 +35,7 @@
 
 #include "xerces.h"
 #include "translate.h"
+#include <sstream>
 
 namespace xml
 {
@@ -49,33 +50,72 @@ class locator : public XERCES_CPP_NAMESPACE::DOMLocator
 public:
     //! @name Constructors/Destructor
     //@{
-             locator( const std::string& uri, const XERCES_CPP_NAMESPACE::XMLScanner& scanner );
-             locator( const locator& rhs );
-             locator( const XERCES_CPP_NAMESPACE::DOMLocator& rhs );
-    virtual ~locator();
+    locator( const std::string& uri, const XERCES_CPP_NAMESPACE::XMLScanner& scanner )
+        : uri_   ( uri )
+        , line_  ( scanner.getLocator()->getLineNumber() )
+        , column_( scanner.getLocator()->getColumnNumber() )
+    {}
+    locator( const locator& rhs )
+        : XERCES_CPP_NAMESPACE::DOMLocator()
+        , uri_   ( std::string( rhs.uri_ ) )
+        , line_  ( rhs.line_ )
+        , column_( rhs.column_ )
+    {}
+    locator( const XERCES_CPP_NAMESPACE::DOMLocator& rhs )
+        : uri_   ( rhs.getURI() )
+        , line_  ( rhs.getLineNumber() )
+        , column_( rhs.getColumnNumber() )
+    {}
+    virtual ~locator()
+    {}
     //@}
 
     //! @name Accessors
     //@{
-    virtual XMLSSize_t getLineNumber() const;
-    virtual XMLSSize_t getColumnNumber() const;
-    virtual XMLSSize_t getOffset() const;
-    virtual XERCES_CPP_NAMESPACE::DOMNode* getErrorNode() const;
-    virtual const XMLCh* getURI() const;
+    virtual XMLSSize_t getLineNumber() const
+    {
+        return line_;
+    }
+    virtual XMLSSize_t getColumnNumber() const
+    {
+        return column_;
+    }
+    virtual XMLSSize_t getOffset() const
+    {
+        return -1;
+    }
+    virtual XERCES_CPP_NAMESPACE::DOMNode* getErrorNode() const
+    {
+        return 0;
+    }
+    virtual const XMLCh* getURI() const
+    {
+        return uri_;
+    }
     //@}
 
     //! @name Modifiers
     //@{
-    virtual void setLineNumber( const XMLSSize_t line );
-    virtual void setColumnNumber( const XMLSSize_t column );
-    virtual void setOffset( const XMLSSize_t offset );
-    virtual void setErrorNode( XERCES_CPP_NAMESPACE::DOMNode* const node );
-    virtual void setURI( const XMLCh* const uri );
+    virtual void setLineNumber( const XMLSSize_t /*line*/ )
+    {}
+    virtual void setColumnNumber( const XMLSSize_t /*column*/ )
+    {}
+    virtual void setOffset( const XMLSSize_t /*offset*/ )
+    {}
+    virtual void setErrorNode( XERCES_CPP_NAMESPACE::DOMNode* const /*node*/ )
+    {}
+    virtual void setURI( const XMLCh* const /*uri*/ )
+    {}
     //@}
 
     //! @name Operators
     //@{
-    operator std::string() const;
+    operator std::string() const
+    {
+        std::stringstream stream;
+        stream << " (line " << line_ << ", column " << column_ << ") : ";
+        return uri_ + stream.str();
+    }
     //@}
 
 private:

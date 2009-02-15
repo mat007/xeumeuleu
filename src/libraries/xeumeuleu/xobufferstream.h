@@ -55,8 +55,18 @@ class xobufferstream : private xob_base_member, public xostream, public xistream
 public:
     //! @name Constructors/Destructor
     //@{
-             xobufferstream();
-    virtual ~xobufferstream();
+    xobufferstream()
+        : xostream( *output_ )
+        , xistream( std::auto_ptr< input >( new input( buffer_->branch() ) ) )
+    {}
+    virtual ~xobufferstream()
+    {}
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    buffer_output output_;
     //@}
 };
 

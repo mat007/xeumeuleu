@@ -35,13 +35,27 @@
 
 #include "xerces.h"
 #include "xerces_ptr.h"
+#include "chained_exception.h"
+#include "error_handler.h"
+#include "beautifier.h"
+#include "translate.h"
+#include "locator.h"
+#include "builder.h"
+#include "grammar.h"
+#include "encoding.h"
+#include "parser.h"
+#include "xerces.h"
+#include <fstream>
 #include <string>
+
+#define TRY try {
+#define CATCH } \
+    catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
+    catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e ); } \
+    catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e ); }
 
 namespace xml
 {
-    class encoding;
-    class grammar;
-
 // =============================================================================
 /** @class  document
     @brief  Document base class
@@ -53,25 +67,116 @@ class document
 protected:
     //! @name Constructors/Destructor
     //@{
-             document();
-             document( const std::string& filename, const encoding* encoding, const grammar& grammar );
-             document( const char* data, std::size_t size, const encoding* encoding, const grammar& grammar );
-    virtual ~document();
+    document()
+        : document_( build() )
+    {}
+    document( const std::string& filename, const encoding* encoding, const grammar& grammar )
+        : document_( build( filename, encoding, grammar ) )
+    {}
+    document( const char* data, std::size_t size, const encoding* encoding, const grammar& grammar )
+        : document_( build( data, size, encoding, grammar ) )
+    {}
+    virtual ~document()
+    {
+        clean( document_.get() );
+    }
     //@}
 
 protected:
     //! @name Helpers
     //@{
-    void fill( const std::string& filename, const std::string& encoding );
-    void fill( std::string& data, const std::string& encoding );
+    void fill( const std::string& filename, const std::string& encoding )
+    {
+        XERCES_CPP_NAMESPACE::LocalFileFormatTarget target( filename.c_str() );
+        write( target, encoding );
+    }
+    void fill( std::string& data, const std::string& encoding )
+    {
+        XERCES_CPP_NAMESPACE::MemBufFormatTarget target;
+        write( target, encoding );
+        data = reinterpret_cast< const char* >( target.getRawBuffer() );
+    }
     //@}
 
 private:
     //! @name Helpers
     //@{
-    static void initialize();
+    void write( XERCES_CPP_NAMESPACE::XMLFormatTarget& destination, const std::string& encoding )
+    {
+        XERCES_CPP_NAMESPACE::DOMImplementation* impl = XERCES_CPP_NAMESPACE::DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
+        if( ! impl )
+            throw xml::exception( "Internal error in 'document::fill' : DOMImplementation 'LS' not found" );
+        xerces_ptr< XERCES_CPP_NAMESPACE::DOMWriter > writer( *dynamic_cast< XERCES_CPP_NAMESPACE::DOMImplementationLS* >( impl )->createDOMWriter() );
+        error_handler handler;
+        writer->setErrorHandler( &handler );
+        writer->setEncoding( translate( encoding ) );
+        writer->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMWRTFormatPrettyPrint, true );
+        writer->setFeature( XERCES_CPP_NAMESPACE::XMLUni:: fgDOMWRTBOM, true );
+        beautifier target( destination, writer->getNewLine() );
+        writer->writeNode( &target, *document_ );
+    }
 
-    void write( XERCES_CPP_NAMESPACE::XMLFormatTarget& destination, const std::string& encoding );
+    struct Initializer
+    {
+        Initializer()
+        {
+            XERCES_CPP_NAMESPACE::XMLPlatformUtils::Initialize();
+        }
+        ~Initializer()
+        {
+            XERCES_CPP_NAMESPACE::XMLPlatformUtils::Terminate();
+        }
+    };
+    void initialize() const
+    {
+        static const Initializer initializer;
+    }
+    XERCES_CPP_NAMESPACE::DOMDocument& build() const
+    {
+        TRY
+            initialize();
+            XERCES_CPP_NAMESPACE::DOMImplementation* impl = XERCES_CPP_NAMESPACE::DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
+            if( ! impl )
+                throw xml::exception( "Internal error in 'document::build' : DOMImplementation 'LS' not found" );
+            return *impl->createDocument();
+        CATCH
+    }
+    XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source, const encoding* encoding, const grammar& grammar ) const
+    {
+        builder builder( translate( source.getSystemId() ) );
+        parser parser( builder );
+        grammar.configure( parser );
+        if( encoding )
+            source.setEncoding( translate( *encoding ) );
+        return parser.parse( source );
+    }
+    XERCES_CPP_NAMESPACE::DOMDocument& build( const std::string& filename, const encoding* encoding, const grammar& grammar ) const
+    {
+        TRY
+            initialize();
+            if( ! std::ifstream( filename.c_str() ) )
+                throw xml::exception( "Unable to open file '" + filename + "'" );
+            XERCES_CPP_NAMESPACE::LocalFileInputSource source( static_cast< const XMLCh* const >( translate( filename ) ) );
+            return parse( source, encoding, grammar );
+        CATCH
+    }
+    XERCES_CPP_NAMESPACE::DOMDocument& build( const char* data, std::size_t size, const encoding* encoding, const grammar& grammar ) const
+    {
+        TRY
+            initialize();
+            XERCES_CPP_NAMESPACE::MemBufInputSource source( reinterpret_cast< const XMLByte* >( data ), size, "string_input", false );
+            return parse( source, encoding, grammar );
+        CATCH
+    }
+    void clean( XERCES_CPP_NAMESPACE::DOMNode* node ) const
+    {
+        while( node )
+        {
+            delete reinterpret_cast< locator* >( node->getUserData( translate( "locator" ) ) );
+            clean( node->getFirstChild() );
+            node = node->getNextSibling();
+        }
+    }
     //@}
 
 private:
@@ -89,5 +194,8 @@ protected:
 };
 
 }
+
+#undef TRY
+#undef CATCH
 
 #endif // _xeumeuleu_document_h_

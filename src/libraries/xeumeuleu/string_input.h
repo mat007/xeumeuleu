@@ -35,6 +35,7 @@
 
 #include "document.h"
 #include "input.h"
+#include "input_imp.h"
 
 namespace xml
 {
@@ -51,8 +52,12 @@ class string_input : private document, public input
 public:
     //! @name Constructors/Destructor
     //@{
-             string_input( const std::string& data, const encoding* encoding, const grammar& grammar );
-    virtual ~string_input();
+    string_input( const std::string& data, const encoding* encoding, const grammar& grammar )
+        : document( data.c_str(), data.size(), encoding, grammar )
+        , input( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
+    {}
+    virtual ~string_input()
+    {}
     //@}
 };
 

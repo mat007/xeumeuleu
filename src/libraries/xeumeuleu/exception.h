@@ -48,9 +48,14 @@ class exception : public std::runtime_error
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit exception( const std::string& message );
-    explicit exception( const std::runtime_error& chained );
-    virtual ~exception() throw ();
+    explicit exception( const std::string& message )
+        : std::runtime_error( message )
+    {}
+    explicit exception( const std::runtime_error& chained )
+        : std::runtime_error( chained.what() )
+    {}
+    virtual ~exception() throw ()
+    {}
     //@}
 };
 

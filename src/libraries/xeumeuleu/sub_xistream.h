@@ -35,6 +35,7 @@
 
 #include "xistream.h"
 #include "xerces.h"
+#include "input.h"
 
 namespace xml
 {
@@ -50,10 +51,20 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit sub_xistream( const XERCES_CPP_NAMESPACE::DOMNode& root );
-    virtual ~sub_xistream();
+    virtual ~sub_xistream()
+    {}
     //@}
 };
 
+}
+
+#include "input_imp.h"
+
+namespace xml
+{
+    inline sub_xistream::sub_xistream( const XERCES_CPP_NAMESPACE::DOMNode& root )
+        : xistream( std::auto_ptr< input >( new input( std::auto_ptr< input_base >( new input_imp( root ) ) ) ) )
+    {}
 }
 
 #endif // _xeumeuleu_sub_xistream_h_

@@ -35,6 +35,8 @@
 
 #include "input_context.h"
 #include "input_base.h"
+#include "optional_input.h"
+#include "multi_input.h"
 #include <string>
 #include <memory>
 
@@ -51,53 +53,103 @@ class input : private input_context
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit input( std::auto_ptr< input_base > input );
-    virtual ~input();
+    explicit input( std::auto_ptr< input_base > input )
+        : input_( input )
+    {}
+    virtual ~input()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    void start( const std::string& tag );
-    void end();
+    void start( const std::string& tag )
+    {
+        input_->start( tag );
+    }
+    void end()
+    {
+        input_->end();
+    }
 
     template< typename T > void read( T& value ) const
     {
         input_->read( value );
     }
 
-    std::auto_ptr< input > branch( bool clone ) const;
+    std::auto_ptr< input > branch( bool clone ) const
+    {
+        return std::auto_ptr< input >( new input( input_->branch( clone ) ) );
+    }
 
-    void copy( output& destination ) const;
+    void copy( output& destination ) const
+    {
+        input_->copy( destination );
+    }
 
-    void error( const std::string& message ) const;
+    void error( const std::string& message ) const
+    {
+        input_->error( message );
+    }
     //@}
 
     //! @name Accessors
     //@{
-    bool has_child( const std::string& name ) const;
-    bool has_attribute( const std::string& name ) const;
-    bool has_content() const;
+    bool has_child( const std::string& name ) const
+    {
+        return input_->has_child( name );
+    }
+    bool has_attribute( const std::string& name ) const
+    {
+        return input_->has_attribute( name );
+    }
+    bool has_content() const
+    {
+        return input_->has_content();
+    }
 
     template< typename T > void attribute( const std::string& name, T& value ) const
     {
         input_->attribute( name, value );
     }
 
-    void nodes( const visitor& v ) const;
-    void attributes( const visitor& v ) const;
+    void nodes( const visitor& v ) const
+    {
+        input_->nodes( v );
+    }
+    void attributes( const visitor& v ) const
+    {
+        input_->attributes( v );
+    }
     //@}
 
     //! @name Modifiers
     //@{
-    void optional();
+    void optional()
+    {
+        input_.reset( new optional_input( input_, *this ) );
+    }
 
-    void attach( std::auto_ptr< input > input );
+    void attach( std::auto_ptr< input > input )
+    {
+        input_.reset( new multi_input( input_, input->input_, *this ) );
+    }
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual input_base& reset( std::auto_ptr< input_base > input );
+    virtual input_base& reset( std::auto_ptr< input_base > input )
+    {
+        input_ = input;
+        return *input_;
+    }
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    input( const input& );            //!< Copy constructor
+    input& operator=( const input& ); //!< Assignment operator
     //@}
 
 private:

@@ -50,18 +50,47 @@ class translate
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit translate( const std::string& str );
-    explicit translate( const XMLCh* const ch );
-    ~translate();
+    explicit translate( const std::string& str )
+        : ch_   ( XERCES_CPP_NAMESPACE::XMLString::transcode( str.c_str() ) )
+        , owner_( true )
+    {}
+    explicit translate( const XMLCh* const ch )
+        : ch_   ( ch )
+        , owner_( false )
+    {}
+    ~translate()
+    {
+        if( owner_ )
+            XERCES_CPP_NAMESPACE::XMLString::release( const_cast< XMLCh** >( &ch_ ) );
+    }
     //@}
 
     //! @name Operators
     //@{
-    operator const XMLCh* const() const;
-    operator std::string() const;
+    operator const XMLCh* const() const
+    {
+        return ch_;
+    }
+    operator std::string() const
+    {
+        if( ! ch_ )
+            return std::string();
+        char* c = XERCES_CPP_NAMESPACE::XMLString::transcode( ch_ );
+        if( ! c )
+            return std::string();
+        const std::string str( c );
+        XERCES_CPP_NAMESPACE::XMLString::release( &c );
+        return str;
+    }
 
-    bool operator==( const XMLCh* const ch ) const;
-    bool operator==( const std::string& str ) const;
+    bool operator==( const XMLCh* const ch ) const
+    {
+        return XERCES_CPP_NAMESPACE::XMLString::equals( ch, ch_ );
+    }
+    bool operator==( const std::string& str ) const
+    {
+        return translate( str ) == ch_;
+    }
     //@}
 
 private:
@@ -79,10 +108,19 @@ private:
     //@}
 };
 
-bool operator==( const XMLCh* const ch, const translate& tr );
-bool operator==( const std::string& str, const translate& tr );
+inline bool operator==( const XMLCh* const ch, const translate& tr )
+{
+    return tr.operator ==( ch );
+}
+inline bool operator==( const std::string& str, const translate& tr )
+{
+    return tr.operator ==( str );
+}
 
-std::string operator+( const translate& tr, const std::string& str );
+inline std::string operator+( const translate& tr, const std::string& str )
+{
+    return tr.operator std::string() + str;
+}
 
 }
 

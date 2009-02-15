@@ -160,15 +160,7 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\chained_exception.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeumeuleu\chained_exception.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\encoding.cpp"
 				>
 			</File>
 			<File
@@ -176,23 +168,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\exception.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeumeuleu\exception.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\grammar.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeumeuleu\grammar.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\translate.cpp"
 				>
 			</File>
 			<File
@@ -307,15 +287,7 @@
 				Name="io"
 				>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\beautifier.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\beautifier.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\builder.cpp"
 					>
 				</File>
 				<File
@@ -323,23 +295,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\document.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\document.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\error_handler.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\error_handler.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\import.cpp"
 					>
 				</File>
 				<File
@@ -362,15 +322,7 @@
 					Name="input"
 					>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\branch_input.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\branch_input.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\buffer_input.cpp"
 						>
 					</File>
 					<File
@@ -378,15 +330,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\file_input.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\file_input.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\input.cpp"
 						>
 					</File>
 					<File
@@ -398,10 +342,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\input_base_context.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\input_base_context.h"
 						>
 					</File>
@@ -410,15 +350,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\input_imp.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\input_imp.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\locator.cpp"
 						>
 					</File>
 					<File
@@ -426,15 +358,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\multi_input.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\multi_input.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\null_input.cpp"
 						>
 					</File>
 					<File
@@ -442,23 +366,11 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\optional_input.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\optional_input.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\parser.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\parser.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\string_input.cpp"
 						>
 					</File>
 					<File
@@ -470,15 +382,7 @@
 					Name="output"
 					>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\buffer_output.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\buffer_output.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\file_output.cpp"
 						>
 					</File>
 					<File
@@ -486,23 +390,11 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\output.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\output.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\string_output.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\string_output.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\sub_output.cpp"
 						>
 					</File>
 					<File
@@ -515,15 +407,7 @@
 				Name="stream"
 				>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\sub_xistream.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\sub_xistream.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xibufferstream.cpp"
 					>
 				</File>
 				<File
@@ -531,15 +415,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xifstream.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xifstream.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\ximultistream.cpp"
 					>
 				</File>
 				<File
@@ -547,15 +423,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xistream.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xistream.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xistreamstream.cpp"
 					>
 				</File>
 				<File
@@ -563,15 +431,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xistringstream.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xistringstream.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xisubstream.cpp"
 					>
 				</File>
 				<File
@@ -579,15 +439,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xo_base_member.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xo_base_member.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xob_base_member.cpp"
 					>
 				</File>
 				<File
@@ -595,15 +447,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xobufferstream.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xobufferstream.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xofstream.cpp"
 					>
 				</File>
 				<File
@@ -611,31 +455,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xos_base_member.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xos_base_member.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xostream.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xostream.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xostringstream.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xostringstream.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xosubstream.cpp"
 					>
 				</File>
 				<File

@@ -35,6 +35,7 @@
 
 #include "document.h"
 #include "output.h"
+#include <string>
 
 namespace xml
 {
@@ -49,19 +50,29 @@ class string_output : private document, public output
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit string_output( const std::string& encoding );
-    virtual ~string_output();
+    explicit string_output( const std::string& encoding )
+        : output( *document::document_, *document::document_ )
+        , encoding_( encoding )
+    {}
+    virtual ~string_output()
+    {}
     //@}
 
     //! @name Accessors
     //@{
-    std::string str() const;
+    std::string str() const
+    {
+        return data_;
+    }
     //@}
 
 protected:
     //! @name Operations
     //@{
-    virtual void finished();
+    virtual void finished()
+    {
+        fill( data_, encoding_ );
+    }
     //@}
 
 private:

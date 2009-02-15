@@ -35,6 +35,9 @@
 
 #include "xerces.h"
 #include "xerces_ptr.h"
+#include "error_handler.h"
+#include "exception.h"
+#include "xerces.h"
 
 namespace xml
 {
@@ -49,13 +52,30 @@ class parser
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit parser( XERCES_CPP_NAMESPACE::DOMBuilder& builder );
-    virtual ~parser();
+    explicit parser( XERCES_CPP_NAMESPACE::DOMBuilder& builder )
+        : builder_( builder )
+    {
+        builder_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesUserAdoptsDOMDocument, true );
+        builder_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMNamespaces, true );
+        builder_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMDatatypeNormalization, true );
+        builder_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesSchema, true );
+    }
+    virtual ~parser()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source );
+    XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source )
+    {
+        error_handler errorHandler;
+        builder_.setErrorHandler( &errorHandler );
+        XERCES_CPP_NAMESPACE::Wrapper4InputSource input( &source, false );
+        XERCES_CPP_NAMESPACE::DOMDocument* document = builder_.parse( input );
+        if( ! document )
+            throw xml::exception( "Could not generate document" );
+        return *document;
+    }
     //@}
 
     //! @name Operators
