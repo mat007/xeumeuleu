@@ -34,6 +34,7 @@
 #define _xeumeuleu_input_imp_h_
 
 #include "input_base.h"
+#include "chained_exception.h"
 #include "xerces.h"
 #include "translate.h"
 #include "trim.h"
@@ -44,6 +45,12 @@
 #include <limits>
 #include <string>
 #include <vector>
+
+#define TRY try {
+#define CATCH } \
+            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
+            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { error( xml::chained_exception( e ).what() ); throw; } \
+            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { error( xml::chained_exception( e ).what() ); throw; }
 
 namespace xml
 {
@@ -70,26 +77,32 @@ public:
     //@{
     virtual void start( const std::string& tag )
     {
-        const XERCES_CPP_NAMESPACE::DOMNode* child = find_child( tag );
-        if( ! child )
-            throw xml::exception( location() + context() + " does not have a child named '" + tag + "'" );
-        current_ = child;
+        TRY
+            const XERCES_CPP_NAMESPACE::DOMNode* child = find_child( tag );
+            if( ! child )
+                throw xml::exception( location() + context() + " does not have a child named '" + tag + "'" );
+            current_ = child;
+        CATCH
     }
     virtual void end()
     {
-        if( current_ == &root_ )
-            throw xml::exception( location() + "Cannot move up from " + context() );
-        const XERCES_CPP_NAMESPACE::DOMNode* parent = current_->getParentNode();
-        if( ! parent )
-            throw xml::exception( location() + context() + " has no parent" );
-        current_ = parent;
+        TRY
+            if( current_ == &root_ )
+                throw xml::exception( location() + "Cannot move up from " + context() );
+            const XERCES_CPP_NAMESPACE::DOMNode* parent = current_->getParentNode();
+            if( ! parent )
+                throw xml::exception( location() + context() + " has no parent" );
+            current_ = parent;
+        CATCH
     }
 
     virtual void read( std::string& value ) const
     {
-        value = translate( read_value() );
+        TRY
+            value = translate( read_value() );
+        CATCH
     }
-#define READ( type ) virtual void read( type& value ) const { value = convert< type >( read_value() ); }
+#define READ( type ) virtual void read( type& value ) const { TRY value = convert< type >( read_value() ); CATCH }
     READ( bool )
     READ( short )
     READ( int )
@@ -108,7 +121,9 @@ public:
 
     virtual void copy( output& destination ) const
     {
-        destination.copy( *current_ );
+        TRY
+            destination.copy( *current_ );
+        CATCH
     }
 
     virtual void error( const std::string& message ) const
@@ -121,22 +136,30 @@ public:
     //@{
     virtual bool has_child( const std::string& name ) const
     {
-        return find_child( name ) != 0;
+        TRY
+            return find_child( name ) != 0;
+        CATCH
     }
     virtual bool has_attribute( const std::string& name ) const
     {
-        return find_attribute( name ) != 0;
+        TRY
+            return find_attribute( name ) != 0;
+        CATCH
     }
     virtual bool has_content() const
     {
-        return find_content() != 0;
+        TRY
+            return find_content() != 0;
+        CATCH
     }
 
     virtual void attribute( const std::string& name, std::string& value ) const
     {
-        value = translate( read_attribute( name ) );
+        TRY
+            value = translate( read_attribute( name ) );
+        CATCH
     }
-#define ATTRIBUTE( type ) void attribute( const std::string& name, type& value ) const { value = convert< type >( read_attribute( name ) ); }
+#define ATTRIBUTE( type ) void attribute( const std::string& name, type& value ) const { TRY value = convert< type >( read_attribute( name ) ); CATCH }
     ATTRIBUTE( bool )
     ATTRIBUTE( short )
     ATTRIBUTE( int )
@@ -302,36 +325,45 @@ namespace xml
 {
     inline std::auto_ptr< input_base > input_imp::branch( bool clone ) const
     {
-        if( clone )
-            return std::auto_ptr< input_base >( new buffer_input( *current_ ) );
-        return std::auto_ptr< input_base >( new input_imp( *current_ ) );
+        TRY
+            if( clone )
+                return std::auto_ptr< input_base >( new buffer_input( *current_ ) );
+            return std::auto_ptr< input_base >( new input_imp( *current_ ) );
+        CATCH
     }
     inline void input_imp::nodes( const visitor& v ) const
     {
-        XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
-        while( child )
-        {
-            if( child->getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::ELEMENT_NODE )
+        TRY
+            XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
+            while( child )
             {
-                sub_xistream xis( *child );
-                v.process( trim( translate( child->getNodeName() ) ), xis );
+                if( child->getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::ELEMENT_NODE )
+                {
+                    sub_xistream xis( *child );
+                    v.process( trim( translate( child->getNodeName() ) ), xis );
+                }
+                child = child->getNextSibling();
             }
-            child = child->getNextSibling();
-        }
+        CATCH
     }
     inline void input_imp::attributes( const visitor& v ) const
     {
-        const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
-        if( attributes )
-        {
-            for( XMLSize_t index = 0; index < attributes->getLength(); ++index )
+        TRY
+            const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
+            if( attributes )
             {
-                XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( index );
-                sub_xistream xis( *current_ );
-                v.process( trim( translate( attribute->getNodeName() ) ), xis );
+                for( XMLSize_t index = 0; index < attributes->getLength(); ++index )
+                {
+                    XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( index );
+                    sub_xistream xis( *current_ );
+                    v.process( trim( translate( attribute->getNodeName() ) ), xis );
+                }
             }
-        }
+        CATCH
     }
 }
+
+#undef TRY
+#undef CATCH
 
 #endif // _xeumeuleu_input_imp_h_

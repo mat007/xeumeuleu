@@ -34,16 +34,8 @@
 #define _xeumeuleu_xistream_h_
 
 #include "input.h"
-#include "chained_exception.h"
-#include "xerces.h"
 #include <string>
 #include <memory>
-
-#define TRY try {
-#define CATCH } \
-            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
-            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { error( xml::chained_exception( e ).what() ); throw; } \
-            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { error( xml::chained_exception( e ).what() ); throw; }
 
 namespace xml
 {
@@ -70,28 +62,20 @@ public:
     //@{
     void start( const std::string& tag )
     {
-        TRY
-            input_->start( tag );
-        CATCH
+        input_->start( tag );
     }
     void end()
     {
-        TRY
-            input_->end();
-        CATCH
+        input_->end();
     }
 
     std::auto_ptr< input > branch( bool clone ) const
     {
-        TRY
-            return input_->branch( clone );
-        CATCH
+        return input_->branch( clone );
     }
     void copy( output& destination ) const
     {
-        TRY
-            input_->copy( destination );
-        CATCH
+        input_->copy( destination );
     }
 
     void error( const std::string& message ) const
@@ -102,7 +86,7 @@ public:
 
     //! @name Accessors
     //@{
-#define READ( type ) void read( type& value ) const { TRY input_->read( value ); CATCH }
+#define READ( type ) void read( type& value ) const { input_->read( value ); }
     READ( std::string )
     READ( bool )
     READ( short )
@@ -122,41 +106,29 @@ public:
     template< typename T >
     void attribute( const std::string& name, T& value ) const
     {
-        TRY
-            input_->attribute( name, value );
-        CATCH
+        input_->attribute( name, value );
     }
 
     void nodes( const visitor& v ) const
     {
-        TRY
-            input_->nodes( v );
-        CATCH
+        input_->nodes( v );
     }
     void attributes( const visitor& v ) const
     {
-        TRY
-            input_->attributes( v );
-        CATCH
+        input_->attributes( v );
     }
 
     bool has_child( const std::string& name ) const
     {
-        TRY
-            return input_->has_child( name );
-        CATCH
+        return input_->has_child( name );
     }
     bool has_attribute( const std::string& name ) const
     {
-        TRY
-            return input_->has_attribute( name );
-        CATCH
+        return input_->has_attribute( name );
     }
     bool has_content() const
     {
-        TRY
-            return input_->has_content();
-        CATCH
+        return input_->has_content();
     }
     //@}
 
@@ -164,9 +136,7 @@ public:
     //@{
     void optional()
     {
-        TRY
-            input_->optional();
-        CATCH
+        input_->optional();
     }
     //@}
 
@@ -204,9 +174,6 @@ xistream& operator>>( xistream& xis, T& value )
 }
 
 }
-
-#undef TRY
-#undef CATCH
 
 #include "xostream.h"
 

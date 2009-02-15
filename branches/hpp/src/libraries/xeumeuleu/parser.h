@@ -37,7 +37,6 @@
 #include "xerces_ptr.h"
 #include "error_handler.h"
 #include "exception.h"
-#include "xerces.h"
 
 namespace xml
 {

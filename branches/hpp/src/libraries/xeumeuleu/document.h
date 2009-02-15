@@ -44,7 +44,6 @@
 #include "grammar.h"
 #include "encoding.h"
 #include "parser.h"
-#include "xerces.h"
 #include <fstream>
 #include <string>
 

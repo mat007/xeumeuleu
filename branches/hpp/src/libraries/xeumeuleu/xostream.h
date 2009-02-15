@@ -34,16 +34,8 @@
 #define _xeumeuleu_xostream_h_
 
 #include "output.h"
-#include "chained_exception.h"
-#include "xerces.h"
 #include <string>
 #include <memory>
-
-#define TRY try {
-#define CATCH } \
-            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
-            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e ); } \
-            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e ); }
 
 namespace xml
 {
@@ -69,22 +61,16 @@ public:
     //@{
     void start( const std::string& tag )
     {
-        TRY
-            output_.start( tag );
-        CATCH
+        output_.start( tag );
     }
     void end()
     {
-        TRY
-            output_.end();
-        CATCH
+        output_.end();
     }
 
     std::auto_ptr< output > branch()
     {
-        TRY
-            return output_.branch();
-        CATCH
+        return output_.branch();
     }
     //@}
 
@@ -94,7 +80,7 @@ public:
     {
         write( std::string( value ) );
     }
-#define WRITE( type ) void write( type value ) { TRY output_.write( value ); CATCH }
+#define WRITE( type ) void write( type value ) { output_.write( value ); }
     WRITE( const std::string& )
     WRITE( bool )
     WRITE( int )
@@ -116,22 +102,16 @@ public:
     template< typename T >
     void attribute( const std::string& name, const T& value )
     {
-        TRY
-            output_.attribute( name, value );
-        CATCH
+        output_.attribute( name, value );
     }
 
     void cdata( const std::string& content )
     {
-        TRY
-            output_.cdata( content );
-        CATCH
+        output_.cdata( content );
     }
     void instruction( const std::string& target, const std::string& data )
     {
-        TRY
-            output_.instruction( target, data );
-        CATCH
+        output_.instruction( target, data );
     }
     //@}
 
@@ -170,18 +150,13 @@ xostream& operator<<( xostream& xos, const T& value )
 
 }
 
-#undef TRY
-#undef CATCH
-
 #include "xistream.h"
 
 namespace xml
 {
     inline void xostream::write( const xistream& xis )
     {
-//        TRY
-            xis.copy( output_ );
-//        CATCH
+        xis.copy( output_ );
     }
 }
 
