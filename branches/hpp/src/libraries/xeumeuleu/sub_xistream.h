@@ -35,7 +35,6 @@
 
 #include "xistream.h"
 #include "xerces.h"
-#include "input.h"
 
 namespace xml
 {
@@ -63,7 +62,7 @@ public:
 namespace xml
 {
     inline sub_xistream::sub_xistream( const XERCES_CPP_NAMESPACE::DOMNode& root )
-        : xistream( std::auto_ptr< input >( new input( std::auto_ptr< input_base >( new input_imp( root ) ) ) ) )
+        : xistream( std::auto_ptr< input_base >( new input_imp( root ) ) )
     {}
 }
 

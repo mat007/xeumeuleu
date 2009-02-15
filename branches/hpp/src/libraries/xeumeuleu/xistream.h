@@ -33,7 +33,10 @@
 #ifndef xeumeuleu_xistream_h
 #define xeumeuleu_xistream_h
 
-#include "input.h"
+#include "input_context.h"
+#include "input_base.h"
+#include "optional_input.h"
+#include "multi_input.h"
 #include <string>
 #include <memory>
 
@@ -47,11 +50,14 @@ namespace xml
 */
 // Created: MAT 2006-01-04
 // =============================================================================
-class xistream
+class xistream : private input_context
 {
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit xistream( std::auto_ptr< input_base > input )
+        : input_( input )
+    {}
     virtual ~xistream()
     {}
     //@}
@@ -67,23 +73,6 @@ public:
         input_->end();
     }
 
-    std::auto_ptr< input > branch( bool clone ) const
-    {
-        return input_->branch( clone );
-    }
-    void copy( output& destination ) const
-    {
-        input_->copy( destination );
-    }
-
-    void error( const std::string& message ) const
-    {
-        input_->error( message );
-    }
-    //@}
-
-    //! @name Accessors
-    //@{
 #define READ( type ) void read( type& value ) const { input_->read( value ); }
     READ( std::string )
     READ( bool )
@@ -101,21 +90,24 @@ public:
 #undef READ
     void read( xostream& xos ) const;
 
-    template< typename T >
-    void attribute( const std::string& name, T& value ) const
+    std::auto_ptr< input_base > branch( bool clone ) const
     {
-        input_->attribute( name, value );
+        return input_->branch( clone );
     }
 
-    void nodes( const visitor& v ) const
+    void copy( output& destination ) const
     {
-        input_->nodes( v );
-    }
-    void attributes( const visitor& v ) const
-    {
-        input_->attributes( v );
+        input_->copy( destination );
     }
 
+    void error( const std::string& message ) const
+    {
+        input_->error( message );
+    }
+    //@}
+
+    //! @name Accessors
+    //@{
     bool has_child( const std::string& name ) const
     {
         return input_->has_child( name );
@@ -128,22 +120,43 @@ public:
     {
         return input_->has_content();
     }
+
+    template< typename T > void attribute( const std::string& name, T& value ) const
+    {
+        input_->attribute( name, value );
+    }
+
+    void nodes( const visitor& v ) const
+    {
+        input_->nodes( v );
+    }
+    void attributes( const visitor& v ) const
+    {
+        input_->attributes( v );
+    }
     //@}
 
     //! @name Modifiers
     //@{
     void optional()
     {
-        input_->optional();
+        input_.reset( new optional_input( input_, *this ) );
+    }
+
+    void attach( std::auto_ptr< input_base > input )
+    {
+        input_.reset( new multi_input( input_, input, *this ) );
     }
     //@}
 
-protected:
-    //! @name Constructors/Destructor
+private:
+    //! @name Operations
     //@{
-    xistream( std::auto_ptr< input > input )
-        : input_( input )
-    {}
+    virtual input_base& reset( std::auto_ptr< input_base > input )
+    {
+        input_ = input;
+        return *input_;
+    }
     //@}
 
 private:
@@ -156,7 +169,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< input > input_;
+    std::auto_ptr< input_base > input_;
     //@}
 };
 
@@ -172,7 +185,6 @@ xistream& operator>>( xistream& xis, T& value )
 }
 
 }
-
 #include "xostream.h"
 
 namespace xml

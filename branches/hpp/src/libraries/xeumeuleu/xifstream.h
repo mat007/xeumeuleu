@@ -33,9 +33,9 @@
 #ifndef xeumeuleu_xifstream_h
 #define xeumeuleu_xifstream_h
 
-#include "xistream.h"
+#include "document.h"
+#include "input_imp.h"
 #include "grammar.h"
-#include "file_input.h"
 
 namespace xml
 {
@@ -50,16 +50,18 @@ namespace xml
 */
 // Created: MAT 2006-01-04
 // =============================================================================
-class xifstream : public xistream
+class xifstream : private document, public xistream
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit xifstream( const std::string& filename, const grammar& grammar = null_grammar() )
-        : xistream( std::auto_ptr< input >( new file_input( filename, 0, grammar ) ) )
+        : document( filename, 0, grammar )
+        , xistream( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
     {}
     xifstream( const std::string& filename, const encoding& encoding, const grammar& grammar = null_grammar() )
-        : xistream( std::auto_ptr< input >( new file_input( filename, &encoding, grammar ) ) )
+        : document( filename, &encoding, grammar )
+        , xistream( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
     {}
     virtual ~xifstream()
     {}

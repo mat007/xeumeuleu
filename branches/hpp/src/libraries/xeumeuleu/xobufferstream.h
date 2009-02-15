@@ -57,7 +57,7 @@ public:
     //@{
     xobufferstream()
         : xostream( *buffer_ )
-        , xistream( std::auto_ptr< input >( new input( buffer_->branch() ) ) )
+        , xistream( buffer_->branch() )
     {}
     virtual ~xobufferstream()
     {}

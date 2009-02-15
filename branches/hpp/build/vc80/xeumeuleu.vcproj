@@ -283,15 +283,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\file_input.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\file_output.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\input.h"
 					>
 				</File>
 				<File
@@ -316,10 +308,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\optional_input.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\string_input.h"
 					>
 				</File>
 				<File
