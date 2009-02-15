@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_branch_input_h_
-#define _xeumeuleu_branch_input_h_
+#ifndef xeumeuleu_branch_input_h
+#define xeumeuleu_branch_input_h
 
 #include "input_base.h"
 #include "input_context.h"
@@ -166,4 +166,4 @@ private:
 
 }
 
-#endif // _xeumeuleu_branch_input_h_
+#endif // xeumeuleu_branch_input_h

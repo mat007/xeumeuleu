@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xerces_wrapper_h_
-#define _xeumeuleu_xerces_wrapper_h_
+#ifndef xeumeuleu_xerces_wrapper_h
+#define xeumeuleu_xerces_wrapper_h
 
 namespace xml
 {
@@ -104,4 +104,4 @@ private:
 
 }
 
-#endif // _xeumeuleu_xerces_wrapper_h_
+#endif // xeumeuleu_xerces_wrapper_h

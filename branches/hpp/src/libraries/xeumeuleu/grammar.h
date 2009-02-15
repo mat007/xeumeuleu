@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_grammar_h_
-#define _xeumeuleu_grammar_h_
+#ifndef xeumeuleu_grammar_h
+#define xeumeuleu_grammar_h
 
 #include "translate.h"
 #include "parser.h"
@@ -156,4 +156,4 @@ public:
 
 }
 
-#endif // _xeumeuleu_grammar_h_
+#endif // xeumeuleu_grammar_h

@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_parser_h_
-#define _xeumeuleu_parser_h_
+#ifndef xeumeuleu_parser_h
+#define xeumeuleu_parser_h
 
 #include "xerces.h"
 #include "error_handler.h"
@@ -100,4 +100,4 @@ private:
 
 }
 
-#endif // _xeumeuleu_parser_h_
+#endif // xeumeuleu_parser_h

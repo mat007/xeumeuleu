@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_builder_h_
-#define _xeumeuleu_builder_h_
+#ifndef xeumeuleu_builder_h
+#define xeumeuleu_builder_h
 
 #include "xerces.h"
 #include "exception.h"
@@ -81,4 +81,4 @@ private:
 
 }
 
-#endif // _xeumeuleu_builder_h_
+#endif // xeumeuleu_builder_h

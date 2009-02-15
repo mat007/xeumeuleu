@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeuseuleu_buffer_h_
-#define _xeuseuleu_buffer_h_
+#ifndef xeuseuleu_buffer_h
+#define xeuseuleu_buffer_h
 
 #include "output.h"
 
@@ -93,4 +93,4 @@ private:
 
 }
 
-#endif // _xeuseuleu_buffer_h_
+#endif // xeuseuleu_buffer_h

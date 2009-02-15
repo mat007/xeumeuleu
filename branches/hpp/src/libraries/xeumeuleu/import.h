@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_import_h_
-#define _xeumeuleu_import_h_
+#ifndef xeumeuleu_import_h
+#define xeumeuleu_import_h
 
 #include "xerces.h"
 #include "locator.h"
@@ -88,4 +88,4 @@ namespace detail
     }
 }
 
-#endif // _xeumeuleu_import_h_
+#endif // xeumeuleu_import_h

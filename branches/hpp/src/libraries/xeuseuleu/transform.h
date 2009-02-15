@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xsl_transform_h_
-#define _xsl_transform_h_
+#ifndef xsl_transform_h
+#define xsl_transform_h
 
 namespace xsl
 {
@@ -53,4 +53,4 @@ protected:
 
 }
 
-#endif // _xsl_transform_h_
+#endif // xsl_transform_h

@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_error_handler_h_
-#define _xeumeuleu_error_handler_h_
+#ifndef xeumeuleu_error_handler_h
+#define xeumeuleu_error_handler_h
 
 #include "xerces.h"
 #include "exception.h"
@@ -84,4 +84,4 @@ private:
 
 }
 
-#endif // _xeumeuleu_error_handler_h_
+#endif // xeumeuleu_error_handler_h

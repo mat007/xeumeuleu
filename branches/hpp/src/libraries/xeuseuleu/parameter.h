@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeuseuleu_parameter_h_
-#define _xeuseuleu_parameter_h_
+#ifndef xeuseuleu_parameter_h
+#define xeuseuleu_parameter_h
 
 #include <string>
 
@@ -81,4 +81,4 @@ xtransform& operator<<( xtransform& transform, const parameter& manipulator );
 
 }
 
-#endif // _xeuseuleu_parameter_h_
+#endif // xeuseuleu_parameter_h

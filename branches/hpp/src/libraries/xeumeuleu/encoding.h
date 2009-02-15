@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_encoding_h_
-#define _xeumeuleu_encoding_h_
+#ifndef xeumeuleu_encoding_h
+#define xeumeuleu_encoding_h
 
 #include <string>
 
@@ -74,4 +74,4 @@ private:
 
 }
 
-#endif // _xeumeuleu_encoding_h_
+#endif // xeumeuleu_encoding_h

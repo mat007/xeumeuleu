@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeuseuleu_xstringtransform_h_
-#define _xeuseuleu_xstringtransform_h_
+#ifndef xeuseuleu_xstringtransform_h
+#define xeuseuleu_xstringtransform_h
 
 #include "xs_base_member.h"
 #include "xtransform.h"
@@ -66,4 +66,4 @@ public:
 
 }
 
-#endif // _xeuseuleu_xstringtransform_h_
+#endif // xeuseuleu_xstringtransform_h

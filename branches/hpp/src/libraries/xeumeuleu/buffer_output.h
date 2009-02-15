@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_buffer_output_h_
-#define _xeumeuleu_buffer_output_h_
+#ifndef xeumeuleu_buffer_output_h
+#define xeumeuleu_buffer_output_h
 
 #include "document.h"
 #include "output.h"
@@ -77,4 +77,4 @@ protected:
 
 }
 
-#endif // _xeumeuleu_buffer_output_h_
+#endif // xeumeuleu_buffer_output_h

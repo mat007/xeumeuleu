@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_buffer_input_h_
-#define _xeumeuleu_buffer_input_h_
+#ifndef xeumeuleu_buffer_input_h
+#define xeumeuleu_buffer_input_h
 
 #include "document.h"
 #include "input_imp.h"
@@ -60,4 +60,4 @@ public:
 
 }
 
-#endif // _xeumeuleu_buffer_input_h_
+#endif // xeumeuleu_buffer_input_h

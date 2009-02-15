@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_file_input_h_
-#define _xeumeuleu_file_input_h_
+#ifndef xeumeuleu_file_input_h
+#define xeumeuleu_file_input_h
 
 #include "document.h"
 #include "input.h"
@@ -61,4 +61,4 @@ public:
 
 }
 
-#endif // _xeumeuleu_file_input_h_
+#endif // xeumeuleu_file_input_h

@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeuseuleu_xtransform_h_
-#define _xeuseuleu_xtransform_h_
+#ifndef xeuseuleu_xtransform_h
+#define xeuseuleu_xtransform_h
 
 #include "buffer.h"
 
@@ -101,4 +101,4 @@ xtransform& operator<<( xtransform& xt, const T& value )
 
 }
 
-#endif // _xeuseuleu_xtransform_h_
+#endif // xeuseuleu_xtransform_h

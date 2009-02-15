@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_locator_h_
-#define _xeumeuleu_locator_h_
+#ifndef xeumeuleu_locator_h
+#define xeumeuleu_locator_h
 
 #include "xerces.h"
 #include "translate.h"
@@ -134,4 +134,4 @@ private:
 
 }
 
-#endif // _xeumeuleu_locator_h_
+#endif // xeumeuleu_locator_h

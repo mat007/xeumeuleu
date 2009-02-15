@@ -30,17 +30,17 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeuseuleu_xalan_h_
-#define _xeuseuleu_xalan_h_
+#ifndef xeuseuleu_xalan_h
+#define xeuseuleu_xalan_h
 
 #ifdef _MSC_VER
 #   pragma warning( push, 0 )
 #elif defined __GNUC__
 #   pragma GCC system_header
-#endif // _MSC_VER
+#endif // MSC_VER
 #include <xalanc/XalanTransformer/XalanTransformer.hpp>
 #ifdef _MSC_VER
 #   pragma warning( pop )
-#endif // _MSC_VER
+#endif // MSC_VER
 
-#endif // _xeuseuleu_xalan_h_
+#endif // xeuseuleu_xalan_h
