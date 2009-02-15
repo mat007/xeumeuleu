@@ -149,7 +149,7 @@ public:
     virtual void configure( parser& parser ) const
     {
         parser->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, false );
-        parser->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesLoadExternalDTD, false ) ;
+        parser->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesLoadExternalDTD, false );
     }
     //@}
 };

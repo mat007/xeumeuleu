@@ -326,10 +326,6 @@
 					RelativePath="..\..\src\libraries\xeumeuleu\string_output.h"
 					>
 				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\trim.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="stream"
@@ -463,6 +459,10 @@
 					</File>
 					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\translate.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\trim.h"
 						>
 					</File>
 				</Filter>
