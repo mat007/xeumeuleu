@@ -44,7 +44,6 @@
 #include "output.h"
 #include <limits>
 #include <string>
-#include <vector>
 
 #define TRY try {
 #define CATCH } \

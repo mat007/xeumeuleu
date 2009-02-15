@@ -34,7 +34,6 @@
 #define _xeumeuleu_parser_h_
 
 #include "xerces.h"
-#include "xerces_ptr.h"
 #include "error_handler.h"
 #include "exception.h"
 
