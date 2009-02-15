@@ -50,7 +50,7 @@ namespace xml
     xis >> ...
     @endcode
     @note the constructor is implicit on purpose.
-    @warning the life of the sub-stream must not exceed the life of the underlying wrapped stream.
+    @warning the lifetime of the sub-stream must not exceed the lifetime of the underlying wrapped stream.
 */
 // Created: MAT 2006-03-18
 // =============================================================================
