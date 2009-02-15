@@ -39,8 +39,6 @@
 
 namespace xml
 {
-    class input_context;
-
 // =============================================================================
 /** @class  null_input
     @brief  Null input implementation
