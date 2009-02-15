@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_functor_h_
-#define _xeumeuleu_functor_h_
+#ifndef xeumeuleu_functor_h
+#define xeumeuleu_functor_h
 
 #include <string>
 
@@ -62,4 +62,4 @@ public:
 
 }
 
-#endif // _xeumeuleu_functor_h_
+#endif // xeumeuleu_functor_h

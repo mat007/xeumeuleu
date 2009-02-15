@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xistreamstream_h_
-#define _xeumeuleu_xistreamstream_h_
+#ifndef xeumeuleu_xistreamstream_h
+#define xeumeuleu_xistreamstream_h
 
 #include "xistream.h"
 #include "grammar.h"
@@ -75,4 +75,4 @@ private:
 
 }
 
-#endif // _xeumeuleu_xistreamstream_h_
+#endif // xeumeuleu_xistreamstream_h

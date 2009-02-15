@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_instruction_h_
-#define _xeumeuleu_instruction_h_
+#ifndef xeumeuleu_instruction_h
+#define xeumeuleu_instruction_h
 
 #include "xostream.h"
 #include <string>
@@ -91,4 +91,4 @@ inline xostream& operator<<( xostream& xos, const instruction& manipulator )
 
 }
 
-#endif // _xeumeuleu_instruction_h_
+#endif // xeumeuleu_instruction_h

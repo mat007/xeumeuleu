@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xostream_h_
-#define _xeumeuleu_xostream_h_
+#ifndef xeumeuleu_xostream_h
+#define xeumeuleu_xostream_h
 
 #include "output.h"
 #include <string>
@@ -160,4 +160,4 @@ namespace xml
     }
 }
 
-#endif // _xeumeuleu_xostream_h_
+#endif // xeumeuleu_xostream_h

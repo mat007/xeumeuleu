@@ -41,7 +41,7 @@ namespace xml
 /** @class  encoding
     @brief  Encoding wrapper
 
-    This class provides typing for encoding strings.
+    Wraps encoding strings.
 */
 // Created: MAT 2006-03-23
 // =============================================================================

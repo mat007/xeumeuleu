@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_start_h_
-#define _xeumeuleu_start_h_
+#ifndef xeumeuleu_start_h
+#define xeumeuleu_start_h
 
 #include "xistream.h"
 #include "xostream.h"
@@ -106,4 +106,4 @@ inline xostream& operator<<( xostream& xos, const start& manipulator )
 
 }
 
-#endif // _xeumeuleu_start_h_
+#endif // xeumeuleu_start_h

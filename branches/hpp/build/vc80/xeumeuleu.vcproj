@@ -406,14 +406,6 @@
 					RelativePath="..\..\src\libraries\xeumeuleu\output.h"
 					>
 				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xerces.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xerces_ptr.h"
-					>
-				</File>
 				<Filter
 					Name="detail"
 					>
@@ -463,6 +455,14 @@
 					</File>
 					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\trim.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\xerces.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\xerces_ptr.h"
 						>
 					</File>
 				</Filter>

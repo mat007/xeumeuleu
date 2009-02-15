@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xml_h_
-#define _xeumeuleu_xml_h_
+#ifndef xeumeuleu_xml_h
+#define xeumeuleu_xml_h
 
 #include "xistringstream.h"
 #include "xostringstream.h"
@@ -57,4 +57,4 @@
 #include "grammar.h"
 #include "helpers.h"
 
-#endif // _xeumeuleu_xml_h_
+#endif // xeumeuleu_xml_h

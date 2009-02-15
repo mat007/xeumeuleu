@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xisubstream_h_
-#define _xeumeuleu_xisubstream_h_
+#ifndef xeumeuleu_xisubstream_h
+#define xeumeuleu_xisubstream_h
 
 #include "xistream.h"
 #include "input.h"
@@ -72,4 +72,4 @@ public:
 
 }
 
-#endif // _xeumeuleu_xisubstream_h_
+#endif // xeumeuleu_xisubstream_h

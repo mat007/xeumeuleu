@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xob_base_member_h_
-#define _xeumeuleu_xob_base_member_h_
+#ifndef xeumeuleu_xob_base_member_h
+#define xeumeuleu_xob_base_member_h
 
 #include "buffer_output.h"
 #include <memory>
@@ -72,4 +72,4 @@ protected:
 
 }
 
-#endif // _xeumeuleu_xob_base_member_h_
+#endif // xeumeuleu_xob_base_member_h
