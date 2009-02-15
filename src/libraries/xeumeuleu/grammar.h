@@ -41,8 +41,6 @@
 
 namespace xml
 {
-    class parser;
-
 // =============================================================================
 /** @class  grammar
     @brief  Grammar definition

@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_caller_h_
-#define _xeumeuleu_caller_h_
+#ifndef xeumeuleu_caller_h
+#define xeumeuleu_caller_h
 
 #include "caller0.h"
 #include "caller1.h"
@@ -40,4 +40,4 @@
 #include "caller4.h"
 #include "caller5.h"
 
-#endif // _xeumeuleu_caller_h_
+#endif // xeumeuleu_caller_h

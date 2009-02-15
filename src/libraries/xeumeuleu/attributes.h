@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_attributes_h_
-#define _xeumeuleu_attributes_h_
+#ifndef xeumeuleu_attributes_h
+#define xeumeuleu_attributes_h
 
 #include "adapter.h"
 #include "name_caller.h"
@@ -139,4 +139,4 @@ attributes_manipulator< const_name_caller2< T, Arg1&, T1, Arg2&, T2 > > attribut
 
 }
 
-#endif // _xeumeuleu_attributes_h_
+#endif // xeumeuleu_attributes_h

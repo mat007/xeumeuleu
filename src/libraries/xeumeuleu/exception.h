@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_exception_h_
-#define _xeumeuleu_exception_h_
+#ifndef xeumeuleu_exception_h
+#define xeumeuleu_exception_h
 
 #include <stdexcept>
 
@@ -61,4 +61,4 @@ public:
 
 }
 
-#endif // _xeumeuleu_exception_h_
+#endif // xeumeuleu_exception_h

@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xifstream_h_
-#define _xeumeuleu_xifstream_h_
+#ifndef xeumeuleu_xifstream_h
+#define xeumeuleu_xifstream_h
 
 #include "xistream.h"
 #include "grammar.h"
@@ -39,8 +39,6 @@
 
 namespace xml
 {
-    class encoding;
-
 // =============================================================================
 /** @class  xifstream
     @brief  Xml input file stream
@@ -70,4 +68,4 @@ public:
 
 }
 
-#endif // _xeumeuleu_xifstream_h_
+#endif // xeumeuleu_xifstream_h

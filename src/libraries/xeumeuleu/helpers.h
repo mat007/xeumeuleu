@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_helpers_h_
-#define _xeumeuleu_helpers_h_
+#ifndef xeumeuleu_helpers_h
+#define xeumeuleu_helpers_h
 
 #include "xisubstream.h"
 #include "attribute.h"
@@ -114,4 +114,4 @@ T content( xisubstream xis, const std::string& tag, const T& defaultValue )
 
 }
 
-#endif // _xeumeuleu_helpers_h_
+#endif // xeumeuleu_helpers_h

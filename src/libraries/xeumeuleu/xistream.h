@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xistream_h_
-#define _xeumeuleu_xistream_h_
+#ifndef xeumeuleu_xistream_h
+#define xeumeuleu_xistream_h
 
 #include "input.h"
 #include <string>
@@ -39,8 +39,6 @@
 
 namespace xml
 {
-    class visitor;
-    class output;
     class xostream;
 
 // =============================================================================
@@ -185,4 +183,4 @@ namespace xml
     }
 }
 
-#endif // _xeumeuleu_xistream_h_
+#endif // xeumeuleu_xistream_h

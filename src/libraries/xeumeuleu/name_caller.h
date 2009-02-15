@@ -30,12 +30,12 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_name_caller_h_
-#define _xeumeuleu_name_caller_h_
+#ifndef xeumeuleu_name_caller_h
+#define xeumeuleu_name_caller_h
 
 #include "name_caller0.h"
 #include "name_caller1.h"
 #include "name_caller2.h"
 #include "name_caller3.h"
 
-#endif // _xeumeuleu_name_caller_h_
+#endif // xeumeuleu_name_caller_h
