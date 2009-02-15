@@ -57,20 +57,12 @@ public:
     //! @name Constructors/Destructor
     //@{
     ximultistream( const xistream& xis1, const xistream& xis2 )
-        : xistream( tie( xis1, xis2 ) )
-    {}
+        : xistream( xis1.branch( false ) )
+    {
+        attach( xis2.branch( false ) );
+    }
     virtual ~ximultistream()
     {}
-    //@}
-private:
-    //! @name Helpers
-    //@{
-    std::auto_ptr< input > tie( const xistream& xis1, const xistream& xis2 )
-    {
-        std::auto_ptr< input > input( xis1.branch( false ) );
-        input->attach( xis2.branch( false ) );
-        return input;
-    }
     //@}
 };
 

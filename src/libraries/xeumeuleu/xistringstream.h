@@ -33,14 +33,13 @@
 #ifndef xeumeuleu_xistringstream_h
 #define xeumeuleu_xistringstream_h
 
+#include "document.h"
 #include "xistream.h"
+#include "input_imp.h"
 #include "grammar.h"
-#include "string_input.h"
 
 namespace xml
 {
-    class encoding;
-
 // =============================================================================
 /** @class  xistringstream
     @brief  Xml input string stream
@@ -53,16 +52,18 @@ namespace xml
 */
 // Created: MAT 2006-01-03
 // =============================================================================
-class xistringstream : public xistream
+class xistringstream : private document, public xistream
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xistringstream( const std::string& data, const grammar& grammar = null_grammar() )
-        : xistream( std::auto_ptr< input >( new string_input( data, 0, grammar ) ) )
+    xistringstream( const std::string& data, const grammar& grammar = null_grammar() )
+        : document( data.c_str(), data.size(), 0, grammar )
+        , xistream( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
     {}
     xistringstream( const std::string& data, const encoding& encoding, const grammar& grammar = null_grammar() )
-        : xistream( std::auto_ptr< input >( new string_input( data, &encoding, grammar ) ) )
+        : document( data.c_str(), data.size(), &encoding, grammar )
+        , xistream( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
     {}
     virtual ~xistringstream()
     {}

@@ -33,9 +33,7 @@
 #ifndef xeumeuleu_xistreamstream_h
 #define xeumeuleu_xistreamstream_h
 
-#include "xistream.h"
-#include "grammar.h"
-#include "string_input.h"
+#include "xistringstream.h"
 #include <istream>
 
 namespace xml
@@ -48,16 +46,16 @@ namespace xml
 */
 // Created: MCO 2006-12-15
 // =============================================================================
-class xistreamstream : public xistream
+class xistreamstream : public xistringstream
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit xistreamstream( std::basic_istream< char >& stream, const grammar& grammar = null_grammar() )
-        : xistream( std::auto_ptr< input >( new string_input( load( stream ), 0, grammar ) ) )
+        : xistringstream( load( stream ), grammar )
     {}
     xistreamstream( std::basic_istream< char >& stream, const encoding& encoding, const grammar& grammar = null_grammar() )
-        : xistream( std::auto_ptr< input >( new string_input( load( stream ), &encoding, grammar ) ) )
+        : xistringstream( load( stream ), encoding, grammar )
     {}
     virtual ~xistreamstream()
     {}

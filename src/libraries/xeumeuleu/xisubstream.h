@@ -34,7 +34,6 @@
 #define xeumeuleu_xisubstream_h
 
 #include "xistream.h"
-#include "input.h"
 
 namespace xml
 {
