@@ -33,10 +33,16 @@
 #ifndef xeumeuleu_xofstream_h
 #define xeumeuleu_xofstream_h
 
-#include "xo_base_member.h"
+#include "document.h"
 #include "xostream.h"
+#include "output_handler.h"
 #include "encoding.h"
-#include "file_output.h"
+#include "output.h"
+
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable: 4355 )
+#endif
 
 namespace xml
 {
@@ -51,20 +57,43 @@ namespace xml
 */
 // Created: MAT 2006-01-04
 // =============================================================================
-class xofstream : private xo_base_member, public xostream
+class xofstream : private document, private output_handler, public xostream
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit xofstream( const std::string& filename, const encoding& encoding = encoding() )
-        : xo_base_member( std::auto_ptr< output >( new file_output( filename, encoding ) ) )
-        , xostream( *xo_base_member::output_ )
+        : xostream( output_ )
+        , output_  ( *document::document_, *document::document_, *this )
+        , filename_( filename )
+        , encoding_( encoding )
     {}
     virtual ~xofstream()
     {}
     //@}
+
+protected:
+    //! @name Operations
+    //@{
+    virtual void finished()
+    {
+        fill( filename_, encoding_ );
+    }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    output output_;
+    const std::string filename_;
+    const std::string encoding_;
+    //@}
 };
 
 }
+
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 #endif // xeumeuleu_xofstream_h

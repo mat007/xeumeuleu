@@ -33,6 +33,7 @@
 #ifndef xeumeuleu_output_h
 #define xeumeuleu_output_h
 
+#include "output_handler.h"
 #include "xerces.h"
 #include "chained_exception.h"
 #include "exception.h"
@@ -62,10 +63,11 @@ class output
 public:
     //! @name Constructors/Destructor
     //@{
-    output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root )
+    output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root, output_handler& handler )
         : document_( document )
         , root_    ( root )
         , current_ ( &root )
+        , handler_ ( handler )
     {}
     virtual ~output()
     {}
@@ -147,15 +149,9 @@ public:
     {
         TRY
             if( is_root() && root_.getFirstChild() )
-                finished();
+                handler_.finished();
         CATCH
     }
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual void finished() = 0;
     //@}
 
 private:
@@ -238,6 +234,7 @@ private:
     XERCES_CPP_NAMESPACE::DOMDocument& document_;
     XERCES_CPP_NAMESPACE::DOMNode& root_;
     XERCES_CPP_NAMESPACE::DOMNode* current_;
+    output_handler& handler_;
     //@}
 };
 

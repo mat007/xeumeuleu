@@ -33,9 +33,15 @@
 #ifndef xeumeuleu_xobufferstream_h
 #define xeumeuleu_xobufferstream_h
 
-#include "xob_base_member.h"
+#include "document.h"
+#include "output_handler.h"
 #include "xostream.h"
 #include "xistream.h"
+
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable: 4355 )
+#endif
 
 namespace xml
 {
@@ -50,20 +56,38 @@ namespace xml
 */
 // Created: MAT 2006-03-07
 // =============================================================================
-class xobufferstream : private xob_base_member, public xostream, public xistream
+class xobufferstream : private document, private output_handler, public xostream, public xistream
 {
 public:
     //! @name Constructors/Destructor
     //@{
     xobufferstream()
-        : xostream( *buffer_ )
-        , xistream( buffer_->branch() )
+        : xostream( output_ )
+        , xistream( std::auto_ptr< input_base >( new input( *document::document_ ) ) )
+        , output_( *document::document_, *document::document_, *this )
     {}
     virtual ~xobufferstream()
     {}
     //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void finished()
+    {}
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    output output_;
+    //@}
 };
 
 }
+
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 #endif // xeumeuleu_xobufferstream_h

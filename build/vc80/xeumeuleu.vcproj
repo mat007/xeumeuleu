@@ -268,54 +268,6 @@
 				</Filter>
 			</Filter>
 			<Filter
-				Name="io"
-				>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\branch_input.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\buffer_output.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\encoding.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\file_output.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\input_base.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\input_base_context.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\input_context.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\multi_input.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\null_input.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\optional_input.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\string_output.h"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="stream"
 				>
 				<File
@@ -351,10 +303,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xob_base_member.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xobufferstream.h"
 					>
 				</File>
@@ -374,6 +322,42 @@
 					RelativePath="..\..\src\libraries\xeumeuleu\xosubstream.h"
 					>
 				</File>
+				<Filter
+					Name="detail"
+					>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\branch_input.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\encoding.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\input_base.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\input_base_context.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\input_context.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\multi_input.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\null_input.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\optional_input.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="xerces"
@@ -392,6 +376,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\output.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\output_handler.h"
 					>
 				</File>
 				<Filter
