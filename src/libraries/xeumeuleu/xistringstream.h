@@ -35,7 +35,7 @@
 
 #include "document.h"
 #include "xistream.h"
-#include "input_imp.h"
+#include "input.h"
 #include "grammar.h"
 
 namespace xml
@@ -59,11 +59,11 @@ public:
     //@{
     xistringstream( const std::string& data, const grammar& grammar = null_grammar() )
         : document( data.c_str(), data.size(), 0, grammar )
-        , xistream( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
+        , xistream( std::auto_ptr< input_base >( new input( *document_ ) ) )
     {}
     xistringstream( const std::string& data, const encoding& encoding, const grammar& grammar = null_grammar() )
         : document( data.c_str(), data.size(), &encoding, grammar )
-        , xistream( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
+        , xistream( std::auto_ptr< input_base >( new input( *document_ ) ) )
     {}
     virtual ~xistringstream()
     {}

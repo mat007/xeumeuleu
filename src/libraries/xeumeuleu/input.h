@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_input_imp_h
-#define xeumeuleu_input_imp_h
+#ifndef xeumeuleu_input_h
+#define xeumeuleu_input_h
 
 #include "input_base.h"
 #include "chained_exception.h"
@@ -54,21 +54,21 @@
 namespace xml
 {
 // =============================================================================
-/** @class  input_imp
+/** @class  input
     @brief  Input implementation
 */
 // Created: MAT 2006-01-08
 // =============================================================================
-class input_imp : public input_base
+class input : public input_base
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit input_imp( const XERCES_CPP_NAMESPACE::DOMNode& root )
+    explicit input( const XERCES_CPP_NAMESPACE::DOMNode& root )
         : root_   ( root )
         , current_( &root_ )
     {}
-    virtual ~input_imp()
+    virtual ~input()
     {}
     //@}
 
@@ -322,15 +322,15 @@ private:
 
 namespace xml
 {
-    inline std::auto_ptr< input_base > input_imp::branch( bool clone ) const
+    inline std::auto_ptr< input_base > input::branch( bool clone ) const
     {
         TRY
             if( clone )
                 return std::auto_ptr< input_base >( new buffer_input( *current_ ) );
-            return std::auto_ptr< input_base >( new input_imp( *current_ ) );
+            return std::auto_ptr< input_base >( new input( *current_ ) );
         CATCH
     }
-    inline void input_imp::nodes( const visitor& v ) const
+    inline void input::nodes( const visitor& v ) const
     {
         TRY
             XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
@@ -345,7 +345,7 @@ namespace xml
             }
         CATCH
     }
-    inline void input_imp::attributes( const visitor& v ) const
+    inline void input::attributes( const visitor& v ) const
     {
         TRY
             const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
@@ -365,4 +365,4 @@ namespace xml
 #undef TRY
 #undef CATCH
 
-#endif // xeumeuleu_input_imp_h
+#endif // xeumeuleu_input_h

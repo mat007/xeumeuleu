@@ -35,7 +35,7 @@
 
 #include "document.h"
 #include "output.h"
-#include "input_imp.h"
+#include "input.h"
 
 namespace xml
 {
@@ -63,7 +63,7 @@ public:
     //@{
     std::auto_ptr< input_base > branch()
     {
-        return std::auto_ptr< input_base >( new input_imp( *document::document_ ) );
+        return std::auto_ptr< input_base >( new input( *document::document_ ) );
     }
     //@}
 
