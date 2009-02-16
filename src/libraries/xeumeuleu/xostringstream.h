@@ -37,7 +37,6 @@
 #include "xostream.h"
 #include "output_handler.h"
 #include "encoding.h"
-#include "output.h"
 #include <string>
 
 #ifdef _MSC_VER

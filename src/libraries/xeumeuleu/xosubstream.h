@@ -35,7 +35,6 @@
 
 #include "xo_base_member.h"
 #include "xostream.h"
-#include "output.h"
 
 namespace xml
 {

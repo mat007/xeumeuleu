@@ -271,6 +271,10 @@
 				Name="stream"
 				>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\encoding.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xibufferstream.h"
 					>
 				</File>
@@ -330,10 +334,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\encoding.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\input_base.h"
 						>
 					</File>
@@ -357,6 +357,10 @@
 						RelativePath="..\..\src\libraries\xeumeuleu\optional_input.h"
 						>
 					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\output_handler.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter
@@ -376,10 +380,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\output.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\output_handler.h"
 					>
 				</File>
 				<Filter
