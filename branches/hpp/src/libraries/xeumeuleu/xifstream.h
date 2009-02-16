@@ -34,7 +34,7 @@
 #define xeumeuleu_xifstream_h
 
 #include "document.h"
-#include "input_imp.h"
+#include "input.h"
 #include "grammar.h"
 
 namespace xml
@@ -57,11 +57,11 @@ public:
     //@{
     explicit xifstream( const std::string& filename, const grammar& grammar = null_grammar() )
         : document( filename, 0, grammar )
-        , xistream( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
+        , xistream( std::auto_ptr< input_base >( new input( *document_ ) ) )
     {}
     xifstream( const std::string& filename, const encoding& encoding, const grammar& grammar = null_grammar() )
         : document( filename, &encoding, grammar )
-        , xistream( std::auto_ptr< input_base >( new input_imp( *document_ ) ) )
+        , xistream( std::auto_ptr< input_base >( new input( *document_ ) ) )
     {}
     virtual ~xifstream()
     {}

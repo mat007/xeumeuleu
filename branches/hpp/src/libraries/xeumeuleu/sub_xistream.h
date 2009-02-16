@@ -57,12 +57,12 @@ public:
 
 }
 
-#include "input_imp.h"
+#include "input.h"
 
 namespace xml
 {
     inline sub_xistream::sub_xistream( const XERCES_CPP_NAMESPACE::DOMNode& root )
-        : xistream( std::auto_ptr< input_base >( new input_imp( root ) ) )
+        : xistream( std::auto_ptr< input_base >( new input( root ) ) )
     {}
 }
 

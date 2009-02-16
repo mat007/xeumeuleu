@@ -34,7 +34,7 @@
 #define xeumeuleu_buffer_input_h
 
 #include "document.h"
-#include "input_imp.h"
+#include "input.h"
 #include "import.h"
 
 namespace xml
@@ -45,13 +45,13 @@ namespace xml
 */
 // Created: MCO 2007-04-27
 // =============================================================================
-class buffer_input : private document, public input_imp
+class buffer_input : private document, public input
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit buffer_input( const XERCES_CPP_NAMESPACE::DOMNode& root )
-        : input_imp( import( *document_, root, *document_ ) )
+        : input( import( *document_, root, *document_ ) )
     {}
     virtual ~buffer_input()
     {}
