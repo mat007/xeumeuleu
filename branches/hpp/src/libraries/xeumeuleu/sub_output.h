@@ -33,6 +33,14 @@
 #ifndef xeumeuleu_sub_output_h
 #define xeumeuleu_sub_output_h
 
+#include "output_handler.h"
+#include "output.h"
+
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable: 4355 )
+#endif
+
 namespace xml
 {
 // =============================================================================
@@ -41,13 +49,13 @@ namespace xml
 */
 // Created: MAT 2006-03-20
 // =============================================================================
-class sub_output : public output
+class sub_output : private output_handler, public output
 {
 public:
     //! @name Constructors/Destructor
     //@{
     sub_output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root, output& o )
-        : output( document, root )
+        : output( document, root, *this )
         , output_ ( o )
         , flushed_( false )
     {}
@@ -84,5 +92,9 @@ private:
 };
 
 }
+
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 #endif // xeumeuleu_sub_output_h
