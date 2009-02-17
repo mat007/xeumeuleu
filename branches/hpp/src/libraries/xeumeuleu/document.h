@@ -81,8 +81,7 @@ protected:
     }
     //@}
 
-protected:
-    //! @name Helpers
+    //! @name Operations
     //@{
     void fill( const std::string& filename, const std::string& encoding ) const
     {
