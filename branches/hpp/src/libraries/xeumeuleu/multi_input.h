@@ -68,19 +68,19 @@ public:
         input2_->end();
     }
 
-     virtual void read( std::string& value ) const { read_content( value ); }
-     virtual void read( bool& value ) const { read_content( value ); }
-     virtual void read( short& value ) const { read_content( value ); }
-     virtual void read( int& value ) const { read_content( value ); }
-     virtual void read( long& value ) const { read_content( value ); }
-     virtual void read( long long& value ) const { read_content( value ); }
-     virtual void read( float& value ) const { read_content( value ); }
-     virtual void read( double& value ) const { read_content( value ); }
-     virtual void read( long double& value ) const { read_content( value ); }
-     virtual void read( unsigned short& value ) const { read_content( value ); }
-     virtual void read( unsigned int& value ) const { read_content( value ); }
-     virtual void read( unsigned long& value ) const { read_content( value ); }
-     virtual void read( unsigned long long& value ) const { read_content( value ); }
+    virtual void read( std::string& value ) const { read_content( value ); }
+    virtual void read( bool& value ) const { read_content( value ); }
+    virtual void read( short& value ) const { read_content( value ); }
+    virtual void read( int& value ) const { read_content( value ); }
+    virtual void read( long& value ) const { read_content( value ); }
+    virtual void read( long long& value ) const { read_content( value ); }
+    virtual void read( float& value ) const { read_content( value ); }
+    virtual void read( double& value ) const { read_content( value ); }
+    virtual void read( long double& value ) const { read_content( value ); }
+    virtual void read( unsigned short& value ) const { read_content( value ); }
+    virtual void read( unsigned int& value ) const { read_content( value ); }
+    virtual void read( unsigned long& value ) const { read_content( value ); }
+    virtual void read( unsigned long long& value ) const { read_content( value ); }
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const
     {
