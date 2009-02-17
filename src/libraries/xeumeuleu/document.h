@@ -84,12 +84,12 @@ protected:
 protected:
     //! @name Helpers
     //@{
-    void fill( const std::string& filename, const std::string& encoding )
+    void fill( const std::string& filename, const std::string& encoding ) const
     {
         XERCES_CPP_NAMESPACE::LocalFileFormatTarget target( filename.c_str() );
         write( target, encoding );
     }
-    void fill( std::string& data, const std::string& encoding )
+    void fill( std::string& data, const std::string& encoding ) const
     {
         XERCES_CPP_NAMESPACE::MemBufFormatTarget target;
         write( target, encoding );
@@ -100,7 +100,7 @@ protected:
 private:
     //! @name Helpers
     //@{
-    void write( XERCES_CPP_NAMESPACE::XMLFormatTarget& destination, const std::string& encoding )
+    void write( XERCES_CPP_NAMESPACE::XMLFormatTarget& destination, const std::string& encoding ) const
     {
         XERCES_CPP_NAMESPACE::DOMImplementation* impl = XERCES_CPP_NAMESPACE::DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
         if( ! impl )

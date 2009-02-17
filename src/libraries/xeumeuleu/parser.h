@@ -35,10 +35,16 @@
 
 #include "xerces.h"
 #include "error_handler.h"
+#include "translate.h"
 #include "exception.h"
+#include <string>
 
 namespace xml
 {
+    class external_grammar;
+    class internal_grammar;
+    class null_grammar;
+
 // =============================================================================
 /** @class  parser
     @brief  Parser wrapper
@@ -74,13 +80,23 @@ public:
             throw xml::exception( "Could not generate document" );
         return *document;
     }
-    //@}
 
-    //! @name Operators
-    //@{
-    XERCES_CPP_NAMESPACE::DOMBuilder* operator->()
+    void configure( const external_grammar& /*grammar*/, const std::string& uri )
     {
-        return &builder_;
+        builder_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, true );
+        builder_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesUseCachedGrammarInParse, true );
+        // $$$$ MAT 2006-03-27: use builder_.setProperty( XERCES_CPP_NAMESPACE::XMLUni::fgXercesSchemaExternalNoNameSpaceSchemaLocation, ... ) ?
+        if( ! builder_.loadGrammar( translate( uri ), XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true ) )
+            throw xml::exception( "Failed to load grammar '" + uri + "'" );
+    }
+    void configure( const internal_grammar& /*grammar*/ )
+    {
+        builder_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidateIfSchema, true );
+    }
+    void configure( const null_grammar& /*grammar*/ )
+    {
+        builder_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, false );
+        builder_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesLoadExternalDTD, false );
     }
     //@}
 

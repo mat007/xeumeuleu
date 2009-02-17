@@ -56,7 +56,7 @@
 #include <mockpp/chaining/CountedChainableMethod.h>
 #include <mockpp/chaining/ChainingMockObjectSupport.h>
 
-#include <boost/thread/thread.hpp>
+#include <boost/thread/thread.hpp> // $$$$ MAT : this pushes a pragma without poping it
 #undef min
 #undef max
 
