@@ -36,7 +36,6 @@
 #include "input_context.h"
 #include "input_base.h"
 #include "optional_input.h"
-#include "multi_input.h"
 #include <string>
 #include <memory>
 
@@ -50,7 +49,7 @@ namespace xml
 */
 // Created: MAT 2006-01-04
 // =============================================================================
-class xistream : private input_context
+class xistream : protected input_context
 {
 public:
     //! @name Constructors/Destructor
@@ -141,11 +140,6 @@ public:
     void optional()
     {
         input_.reset( new optional_input( input_, *this ) );
-    }
-
-    void attach( std::auto_ptr< input_base > input )
-    {
-        input_.reset( new multi_input( input_, input, *this ) );
     }
     //@}
 
