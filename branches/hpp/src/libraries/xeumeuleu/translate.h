@@ -35,7 +35,6 @@
 
 #include "xerces.h"
 #include <string>
-#include <iosfwd>
 
 namespace xml
 {
@@ -110,16 +109,16 @@ private:
 
 inline bool operator==( const XMLCh* const ch, const translate& tr )
 {
-    return tr.operator ==( ch );
+    return tr == ch;
 }
 inline bool operator==( const std::string& str, const translate& tr )
 {
-    return tr.operator ==( str );
+    return tr == str;
 }
 
 inline std::string operator+( const translate& tr, const std::string& str )
 {
-    return tr.operator std::string() + str;
+    return std::string( tr ) + str;
 }
 
 }
