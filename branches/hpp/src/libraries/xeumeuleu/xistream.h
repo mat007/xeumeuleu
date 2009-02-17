@@ -72,21 +72,19 @@ public:
         input_->end();
     }
 
-#define READ( type ) void read( type& value ) const { input_->read( value ); }
-    READ( std::string )
-    READ( bool )
-    READ( short )
-    READ( int )
-    READ( long )
-    READ( long long )
-    READ( float )
-    READ( double )
-    READ( long double )
-    READ( unsigned short )
-    READ( unsigned int )
-    READ( unsigned long )
-    READ( unsigned long long )
-#undef READ
+    void read( std::string& value ) const { input_->read( value ); }
+    void read( bool& value ) const { input_->read( value ); }
+    void read( short& value ) const { input_->read( value ); }
+    void read( int& value ) const { input_->read( value ); }
+    void read( long& value ) const { input_->read( value ); }
+    void read( long long& value ) const { input_->read( value ); }
+    void read( float& value ) const { input_->read( value ); }
+    void read( double& value ) const { input_->read( value ); }
+    void read( long double& value ) const { input_->read( value ); }
+    void read( unsigned short& value ) const { input_->read( value ); }
+    void read( unsigned int& value ) const { input_->read( value ); }
+    void read( unsigned long& value ) const { input_->read( value ); }
+    void read( unsigned long long& value ) const { input_->read( value ); }
     void read( xostream& xos ) const;
 
     std::auto_ptr< input_base > branch( bool clone ) const

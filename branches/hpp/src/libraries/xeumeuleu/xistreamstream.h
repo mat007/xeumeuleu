@@ -38,8 +38,6 @@
 
 namespace xml
 {
-    class encoding;
-
 // =============================================================================
 /** @class  xistreamstream
     @brief  Xml stream to adapt a standard input stream
@@ -64,7 +62,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    const std::string load( std::basic_istream< char >& stream )
+    const std::string load( std::basic_istream< char >& stream ) const
     {
         return std::string( std::istreambuf_iterator< char >( stream ), std::istreambuf_iterator< char >() );
     }

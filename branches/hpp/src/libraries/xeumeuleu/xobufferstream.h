@@ -33,10 +33,10 @@
 #ifndef xeumeuleu_xobufferstream_h
 #define xeumeuleu_xobufferstream_h
 
-#include "document.h"
-#include "output_handler.h"
 #include "xostream.h"
 #include "xistream.h"
+#include "document.h"
+#include "output_handler.h"
 
 #ifdef _MSC_VER
 #   pragma warning( push )
