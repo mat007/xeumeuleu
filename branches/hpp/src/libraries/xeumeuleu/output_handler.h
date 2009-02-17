@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2009, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,79 +30,41 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xostringstream_h
-#define xeumeuleu_xostringstream_h
-
-#include "document.h"
-#include "xostream.h"
-#include "output_handler.h"
-#include "encoding.h"
-#include <string>
-
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable: 4355 )
-#endif
+#ifndef xeumeuleu_output_handler_h
+#define xeumeuleu_output_handler_h
 
 namespace xml
 {
 // =============================================================================
-/** @class  xostringstream
-    @brief  Xml string output stream
-    @par    Using example
-    @code
-    xml::xostringstream xos;
-    xml::xostringstream xos( xml::encoding( "UTF-8" );
-    xos << ...;
-    std::string data = xos.str();
-    @endcode
+/** @class  output_handler
+    @brief  Output handler
 */
-// Created: MAT 2006-01-04
+// Created: MAT 2009-02-16
 // =============================================================================
-class xostringstream : private document, private output_handler, public xostream
+class output_handler
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xostringstream( const encoding& encoding = encoding() )
-        : xostream( output_ )
-        , output_  ( *document::document_, *document::document_, *this )
-        , encoding_( encoding )
+    output_handler()
     {}
-    virtual ~xostringstream()
+    virtual ~output_handler()
     {}
     //@}
 
-    //! @name Accessors
-    //@{
-    const std::string& str() const
-    {
-        return data_;
-    }
-    //@}
-
-protected:
     //! @name Operations
     //@{
-    virtual void finished()
-    {
-        fill( data_, encoding_ );
-    }
+    virtual void finished() = 0;
     //@}
 
 private:
-    //! @name Member data
+    //! @name Copy/Assignment
     //@{
-    output output_;
-    const std::string encoding_;
-    std::string data_;
+    output_handler( const output_handler& );            //!< Copy constructor
+    output_handler& operator=( const output_handler& ); //!< Assignment operator
     //@}
 };
 
 }
 
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
-
-#endif // xeumeuleu_xostringstream_h
+#endif // xeumeuleu_output_handler_h

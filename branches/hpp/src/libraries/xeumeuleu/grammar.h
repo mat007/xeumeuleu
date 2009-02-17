@@ -33,10 +33,7 @@
 #ifndef xeumeuleu_grammar_h
 #define xeumeuleu_grammar_h
 
-#include "translate.h"
 #include "parser.h"
-#include "xerces.h"
-#include "exception.h"
 #include <string>
 
 namespace xml
@@ -84,11 +81,7 @@ public:
     //@{
     virtual void configure( parser& parser ) const
     {
-        parser->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, true );
-        parser->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesUseCachedGrammarInParse, true );
-        // $$$$ MAT 2006-03-27: use parser->setProperty( XERCES_CPP_NAMESPACE::XMLUni::fgXercesSchemaExternalNoNameSpaceSchemaLocation, ... ) ?
-        if( ! parser->loadGrammar( translate( uri_ ), XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true ) )
-            throw xml::exception( "Failed to load grammar '" + uri_ + "'" );
+        parser.configure( *this, uri_ );
     }
     //@}
 
@@ -120,7 +113,7 @@ public:
     //@{
     virtual void configure( parser& parser ) const
     {
-        parser->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidateIfSchema, true );
+        parser.configure( *this );
     }
     //@}
 };
@@ -146,8 +139,7 @@ public:
     //@{
     virtual void configure( parser& parser ) const
     {
-        parser->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, false );
-        parser->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesLoadExternalDTD, false );
+        parser.configure( *this );
     }
     //@}
 };

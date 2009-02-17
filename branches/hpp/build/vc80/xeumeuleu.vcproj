@@ -160,10 +160,6 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
-				RelativePath="..\..\src\libraries\xeumeuleu\exception.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeumeuleu\xml.h"
 				>
 			</File>
@@ -275,6 +271,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\exception.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\grammar.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xibufferstream.h"
 					>
 				</File>
@@ -368,10 +372,6 @@
 				>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\document.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\grammar.h"
 					>
 				</File>
 				<File
