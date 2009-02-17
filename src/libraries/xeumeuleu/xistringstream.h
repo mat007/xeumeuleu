@@ -40,6 +40,8 @@
 
 namespace xml
 {
+    class encoding;
+
 // =============================================================================
 /** @class  xistringstream
     @brief  Xml input string stream

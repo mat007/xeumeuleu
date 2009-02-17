@@ -95,26 +95,19 @@ public:
         CATCH
     }
 
-    virtual void read( std::string& value ) const
-    {
-        TRY
-            value = translate( read_value() );
-        CATCH
-    }
-#define READ( type ) virtual void read( type& value ) const { TRY value = convert< type >( read_value() ); CATCH }
-    READ( bool )
-    READ( short )
-    READ( int )
-    READ( long )
-    READ( long long )
-    READ( float )
-    READ( double )
-    READ( long double )
-    READ( unsigned short )
-    READ( unsigned int )
-    READ( unsigned long )
-    READ( unsigned long long )
-#undef READ
+    virtual void read( std::string& value ) const { TRY value = translate( read_value() ); CATCH }
+    virtual void read( bool& value ) const { TRY value = convert< bool >( read_value() ); CATCH }
+    virtual void read( short& value ) const { TRY value = convert< short >( read_value() ); CATCH }
+    virtual void read( int& value ) const { TRY value = convert< int >( read_value() ); CATCH }
+    virtual void read( long& value ) const { TRY value = convert< long >( read_value() ); CATCH }
+    virtual void read( long long& value ) const { TRY value = convert< long long >( read_value() ); CATCH }
+    virtual void read( float& value ) const { TRY value = convert< float >( read_value() ); CATCH }
+    virtual void read( double& value ) const { TRY value = convert< double >( read_value() ); CATCH }
+    virtual void read( long double& value ) const { TRY value = convert< long double >( read_value() ); CATCH }
+    virtual void read( unsigned short& value ) const { TRY value = convert< unsigned short >( read_value() ); CATCH }
+    virtual void read( unsigned int& value ) const { TRY value = convert< unsigned int >( read_value() ); CATCH }
+    virtual void read( unsigned long& value ) const { TRY value = convert< unsigned long >( read_value() ); CATCH }
+    virtual void read( unsigned long long& value ) const { TRY value = convert< unsigned long long >( read_value() ); CATCH }
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const;
 
@@ -152,26 +145,19 @@ public:
         CATCH
     }
 
-    virtual void attribute( const std::string& name, std::string& value ) const
-    {
-        TRY
-            value = translate( read_attribute( name ) );
-        CATCH
-    }
-#define ATTRIBUTE( type ) void attribute( const std::string& name, type& value ) const { TRY value = convert< type >( read_attribute( name ) ); CATCH }
-    ATTRIBUTE( bool )
-    ATTRIBUTE( short )
-    ATTRIBUTE( int )
-    ATTRIBUTE( long )
-    ATTRIBUTE( long long )
-    ATTRIBUTE( float )
-    ATTRIBUTE( double )
-    ATTRIBUTE( long double )
-    ATTRIBUTE( unsigned short )
-    ATTRIBUTE( unsigned int )
-    ATTRIBUTE( unsigned long )
-    ATTRIBUTE( unsigned long long )
-#undef ATTRIBUTE
+    virtual void attribute( const std::string& name, std::string& value ) const { TRY value = translate( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, bool& value ) const { TRY value = convert< bool >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, short& value ) const { TRY value = convert< short >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, int& value ) const { TRY value = convert< int >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, long& value ) const { TRY value = convert< long >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, long long& value ) const { TRY value = convert< long long >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, float& value ) const { TRY value = convert< float >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, double& value ) const { TRY value = convert< double >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, long double& value ) const { TRY value = convert< long double >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, unsigned short& value ) const { TRY value = convert< unsigned short >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, unsigned int& value ) const { TRY value = convert< unsigned int >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, unsigned long& value ) const { TRY value = convert< unsigned long >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, unsigned long long& value ) const { TRY value = convert< unsigned long long >( read_attribute( name ) ); CATCH }
 
     virtual void nodes( const visitor& v ) const;
     virtual void attributes( const visitor& v ) const;

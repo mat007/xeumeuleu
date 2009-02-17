@@ -75,23 +75,18 @@ public:
 
     //! @name Modifiers
     //@{
-    void write( const char* value )
-    {
-        write( std::string( value ) );
-    }
-#define WRITE( type ) void write( type value ) { output_.write( value ); }
-    WRITE( const std::string& )
-    WRITE( bool )
-    WRITE( int )
-    WRITE( long )
-    WRITE( long long )
-    WRITE( float )
-    WRITE( double )
-    WRITE( long double )
-    WRITE( unsigned int )
-    WRITE( unsigned long )
-    WRITE( unsigned long long )
-#undef WRITE
+    void write( const char* value )        { write( std::string( value ) ); }
+    void write( const std::string& value ) { output_.write( value ); }
+    void write( bool value )               { output_.write( value ); }
+    void write( int value )                { output_.write( value ); }
+    void write( long value )               { output_.write( value ); }
+    void write( long long value )          { output_.write( value ); }
+    void write( float value )              { output_.write( value ); }
+    void write( double value )             { output_.write( value ); }
+    void write( long double value )        { output_.write( value ); }
+    void write( unsigned int value )       { output_.write( value ); }
+    void write( unsigned long value )      { output_.write( value ); }
+    void write( unsigned long long value ) { output_.write( value ); }
     void write( const xistream& xis );
 
     void attribute( const std::string& name, const char* value )

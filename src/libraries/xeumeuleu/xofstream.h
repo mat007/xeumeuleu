@@ -33,8 +33,8 @@
 #ifndef xeumeuleu_xofstream_h
 #define xeumeuleu_xofstream_h
 
-#include "document.h"
 #include "xostream.h"
+#include "document.h"
 #include "output_handler.h"
 #include "encoding.h"
 
