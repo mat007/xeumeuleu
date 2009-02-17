@@ -50,8 +50,8 @@ namespace detail
     }
 
     inline XERCES_CPP_NAMESPACE::DOMNode& clone( XERCES_CPP_NAMESPACE::DOMDocument& document,
-                                          const XERCES_CPP_NAMESPACE::DOMNode& from,
-                                          XERCES_CPP_NAMESPACE::DOMNode& to )
+                                                 const XERCES_CPP_NAMESPACE::DOMNode& from,
+                                                 XERCES_CPP_NAMESPACE::DOMNode& to )
     {
         XERCES_CPP_NAMESPACE::DOMNode& added = *to.appendChild( document.importNode( const_cast< XERCES_CPP_NAMESPACE::DOMNode* >( &from ), false ) );
         const locator* loc = reinterpret_cast< locator* >( from.getUserData( translate( "locator" ) ) );
@@ -62,8 +62,8 @@ namespace detail
 }
 
     inline void import( XERCES_CPP_NAMESPACE::DOMDocument& document,
-                 const XERCES_CPP_NAMESPACE::DOMNode* from,
-                 XERCES_CPP_NAMESPACE::DOMNode& to )
+                        const XERCES_CPP_NAMESPACE::DOMNode* from,
+                        XERCES_CPP_NAMESPACE::DOMNode& to )
     {
         while( from )
         {
@@ -74,8 +74,8 @@ namespace detail
     }
 
     inline XERCES_CPP_NAMESPACE::DOMNode& import( XERCES_CPP_NAMESPACE::DOMDocument& document,
-                                           const XERCES_CPP_NAMESPACE::DOMNode& from,
-                                           XERCES_CPP_NAMESPACE::DOMNode& to )
+                                                  const XERCES_CPP_NAMESPACE::DOMNode& from,
+                                                  XERCES_CPP_NAMESPACE::DOMNode& to )
     {
         if( from.getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::DOCUMENT_NODE )
         {
