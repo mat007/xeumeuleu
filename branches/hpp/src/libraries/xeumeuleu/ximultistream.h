@@ -34,6 +34,12 @@
 #define xeumeuleu_ximultistream_h
 
 #include "xistream.h"
+#include "multi_input.h"
+
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable: 4355 )
+#endif
 
 namespace xml
 {
@@ -57,15 +63,17 @@ public:
     //! @name Constructors/Destructor
     //@{
     ximultistream( const xistream& xis1, const xistream& xis2 )
-        : xistream( xis1.branch( false ) )
-    {
-        attach( xis2.branch( false ) );
-    }
+        : xistream( std::auto_ptr< input_base >( new multi_input( xis1.branch( false ), xis2.branch( false ), *this ) ) )
+    {}
     virtual ~ximultistream()
     {}
     //@}
 };
 
 }
+
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 #endif // xeumeuleu_ximultistream_h
