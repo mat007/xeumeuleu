@@ -33,8 +33,8 @@
 #ifndef xeumeuleu_xistringstream_h
 #define xeumeuleu_xistringstream_h
 
-#include "document.h"
 #include "xistream.h"
+#include "document.h"
 #include "input.h"
 #include "grammar.h"
 
