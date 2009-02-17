@@ -44,8 +44,7 @@ namespace xml
     @par Using example
     @code
     xml::xostream& xos = ...;
-    T value;
-    xos << xml::instruction( "xml-stylesheet", "my_style.xsl" );
+    xos << xml::instruction( "xml-stylesheet", "type=\"text/xsl\" href=\"my_stylesheet.xsl\"" );
     @endcode
 */
 // Created: MCO 2008-06-17
