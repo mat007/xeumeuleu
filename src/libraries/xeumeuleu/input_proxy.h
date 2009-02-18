@@ -40,7 +40,7 @@ namespace xml
 {
 // =============================================================================
 /** @class  input_proxy
-    @brief  Input proxy to factorize default proxy behaviour
+    @brief  Input proxy to factorize default behaviour
 */
 // Created: MAT 2009-02-18
 // =============================================================================
