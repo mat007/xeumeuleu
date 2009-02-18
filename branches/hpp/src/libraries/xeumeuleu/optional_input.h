@@ -51,9 +51,10 @@ class optional_input : public input_base
 public:
     //! @name Constructors/Destructor
     //@{
-    optional_input( std::auto_ptr< input_base > input, input_context& context )
+    optional_input( input_base& input, input_context& context )
         : input_  ( input )
         , context_( context )
+        , null_   ( input_, context_ )
     {}
     virtual ~optional_input()
     {}
@@ -63,10 +64,10 @@ public:
     //@{
     virtual void start( const std::string& tag )
     {
-        if( input_->has_child( tag ) )
+        if( input_.has_child( tag ) )
             context_.reset( input_ ).start( tag );
         else
-            context_.reset( std::auto_ptr< input_base >( new null_input( input_, context_ ) ) ).start( tag );
+            context_.reset( null_ ).start( tag );
     }
     virtual void end()
     {
@@ -90,17 +91,17 @@ public:
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const
     {
-        return input_->branch( clone );
+        return input_.branch( clone );
     }
 
     virtual void copy( output& destination ) const
     {
-        input_->copy( destination );
+        input_.copy( destination );
     }
 
     virtual void error( const std::string& message ) const
     {
-        input_->error( message );
+        input_.error( message );
     }
     //@}
 
@@ -108,15 +109,15 @@ public:
     //@{
     virtual bool has_child( const std::string& name ) const
     {
-        return input_->has_child( name );
+        return input_.has_child( name );
     }
     virtual bool has_attribute( const std::string& name ) const
     {
-        return input_->has_attribute( name );
+        return input_.has_attribute( name );
     }
     virtual bool has_content() const
     {
-        return input_->has_content();
+        return input_.has_content();
     }
 
     virtual void attribute( const std::string& name, std::string& value ) const { read_attribute( name, value ); }
@@ -148,14 +149,14 @@ private:
     //@{
     template< typename T > void read_content( T& value ) const
     {
-        if( input_->has_content() )
+        if( input_.has_content() )
             context_.reset( input_ ).read( value );
         else
             context_.reset( input_ );
     }
     template< typename T > void read_attribute( const std::string& name, T& value ) const
     {
-        if( input_->has_attribute( name ) )
+        if( input_.has_attribute( name ) )
             context_.reset( input_ ).attribute( name, value );
         else
             context_.reset( input_ );
@@ -165,8 +166,9 @@ private:
 private:
     //! @name Member data
     //@{
-    mutable std::auto_ptr< input_base > input_;
+    input_base& input_;
     input_context& context_;
+    null_input null_;
     //@}
 };
 

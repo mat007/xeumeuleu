@@ -39,6 +39,11 @@
 #include <string>
 #include <memory>
 
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable: 4355 )
+#endif
+
 namespace xml
 {
     class xostream;
@@ -54,8 +59,9 @@ class xistream : protected input_context
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xistream( std::auto_ptr< input_base > input )
-        : input_( input )
+    explicit xistream( input_base& input )
+        : input_   ( &input )
+        , optional_( input, *this )
     {}
     virtual ~xistream()
     {}
@@ -137,16 +143,16 @@ public:
     //@{
     void optional()
     {
-        input_.reset( new optional_input( input_, *this ) );
+        input_ = &optional_;
     }
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual input_base& reset( std::auto_ptr< input_base > input )
+    virtual input_base& reset( input_base& input )
     {
-        input_ = input;
+        input_ = &input;
         return *input_;
     }
     //@}
@@ -161,9 +167,14 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< input_base > input_;
+    input_base* input_;
+    optional_input optional_;
     //@}
 };
+
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 // -----------------------------------------------------------------------------
 // Name: operator>>

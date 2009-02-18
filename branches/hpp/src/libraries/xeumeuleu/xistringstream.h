@@ -61,11 +61,13 @@ public:
     //@{
     xistringstream( const std::string& data, const grammar& grammar = null_grammar() )
         : document( data.c_str(), data.size(), 0, grammar )
-        , xistream( std::auto_ptr< input_base >( new input( *document_ ) ) )
+        , xistream( input_ )
+        , input_( *document_ )
     {}
     xistringstream( const std::string& data, const encoding& encoding, const grammar& grammar = null_grammar() )
         : document( data.c_str(), data.size(), &encoding, grammar )
-        , xistream( std::auto_ptr< input_base >( new input( *document_ ) ) )
+        , xistream( input_ )
+        , input_( *document_ )
     {}
     virtual ~xistringstream()
     {}
@@ -76,6 +78,12 @@ private:
     //@{
     xistringstream( const xistringstream& );            //!< Copy constructor
     xistringstream& operator=( const xistringstream& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    input input_;
     //@}
 };
 

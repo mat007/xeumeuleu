@@ -58,14 +58,22 @@ public:
     //@{
     explicit xifstream( const std::string& filename, const grammar& grammar = null_grammar() )
         : document( filename, 0, grammar )
-        , xistream( std::auto_ptr< input_base >( new input( *document_ ) ) )
+        , xistream( input_ )
+        , input_( *document_ )
     {}
     xifstream( const std::string& filename, const encoding& encoding, const grammar& grammar = null_grammar() )
         : document( filename, &encoding, grammar )
-        , xistream( std::auto_ptr< input_base >( new input( *document_ ) ) )
+        , xistream( input_ )
+        , input_( *document_ )
     {}
     virtual ~xifstream()
     {}
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    input input_;
     //@}
 };
 

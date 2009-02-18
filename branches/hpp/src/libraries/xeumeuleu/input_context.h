@@ -33,8 +33,6 @@
 #ifndef xeumeuleu_input_context_h
 #define xeumeuleu_input_context_h
 
-#include <memory>
-
 namespace xml
 {
     class input_base;
@@ -56,7 +54,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual input_base& reset( std::auto_ptr< input_base > input ) = 0;
+    virtual input_base& reset( input_base& input ) = 0;
     //@}
 
 private:

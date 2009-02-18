@@ -33,6 +33,7 @@
 #ifndef xeumeuleu_xisubstream_h
 #define xeumeuleu_xisubstream_h
 
+#include "xi_base_member.h"
 #include "xistream.h"
 
 namespace xml
@@ -53,16 +54,18 @@ namespace xml
 */
 // Created: MAT 2006-03-18
 // =============================================================================
-class xisubstream : public xistream
+class xisubstream : private xi_base_member, public xistream
 {
 public:
     //! @name Constructors/Destructor
     //@{
     xisubstream( const xistream& xis )
-        : xistream( xis.branch( false ) )
+        : xi_base_member( xis.branch( false ) )
+        , xistream( *xi_base_member::input_ )
     {}
     xisubstream( const xisubstream& xiss )
-        : xistream( xiss.branch( false ) )
+        : xi_base_member( xiss.branch( false ) )
+        , xistream( *xi_base_member::input_ )
     {}
     virtual ~xisubstream()
     {}

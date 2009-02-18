@@ -279,6 +279,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\xi_base_member.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xibufferstream.h"
 					>
 				</File>
