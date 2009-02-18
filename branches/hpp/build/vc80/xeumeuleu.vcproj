@@ -342,6 +342,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\input_proxy.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\multi_input.h"
 						>
 					</File>

@@ -33,7 +33,7 @@
 #ifndef xeumeuleu_branch_input_h
 #define xeumeuleu_branch_input_h
 
-#include "input_base.h"
+#include "input_proxy.h"
 #include "input_context.h"
 
 namespace xml
@@ -44,13 +44,14 @@ namespace xml
 */
 // Created: MAT 2008-01-07
 // =============================================================================
-class branch_input : public input_base
+class branch_input : public input_proxy
 {
 public:
     //! @name Constructors/Destructor
     //@{
     branch_input( input_base& input1, input_base& input2, input_context& context )
-        : input1_ ( input1 )
+        : input_proxy( input1 )
+        , input1_ ( input1 )
         , input2_ ( input2 )
         , context_( context )
         , level_  ( 0 )
@@ -71,74 +72,6 @@ public:
         input1_.end();
         if( --level_ == 0 )
             context_.reset( input2_ );
-    }
-
-    virtual void read( std::string& value ) const { input1_.read( value ); }
-    virtual void read( bool& value ) const { input1_.read( value ); }
-    virtual void read( short& value ) const { input1_.read( value ); }
-    virtual void read( int& value ) const { input1_.read( value ); }
-    virtual void read( long& value ) const { input1_.read( value ); }
-    virtual void read( long long& value ) const { input1_.read( value ); }
-    virtual void read( float& value ) const { input1_.read( value ); }
-    virtual void read( double& value ) const { input1_.read( value ); }
-    virtual void read( long double& value ) const { input1_.read( value ); }
-    virtual void read( unsigned short& value ) const { input1_.read( value ); }
-    virtual void read( unsigned int& value ) const { input1_.read( value ); }
-    virtual void read( unsigned long& value ) const { input1_.read( value ); }
-    virtual void read( unsigned long long& value ) const { input1_.read( value ); }
-
-    virtual std::auto_ptr< input_base > branch( bool clone ) const
-    {
-        return input1_.branch( clone );
-    }
-
-    virtual void copy( output& destination ) const
-    {
-        input1_.copy( destination );
-    }
-
-    virtual void error( const std::string& message ) const
-    {
-        input1_.error( message );
-    }
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual bool has_child( const std::string& name ) const
-    {
-        return input1_.has_child( name );
-    }
-    virtual bool has_attribute( const std::string& name ) const
-    {
-        return input1_.has_attribute( name );
-    }
-    virtual bool has_content() const
-    {
-        return input1_.has_content();
-    }
-
-    virtual void attribute( const std::string& name, std::string& value ) const { input1_.attribute( name, value ); }
-    virtual void attribute( const std::string& name, bool& value ) const { input1_.attribute( name, value ); }
-    virtual void attribute( const std::string& name, short& value ) const { input1_.attribute( name, value ); }
-    virtual void attribute( const std::string& name, int& value ) const { input1_.attribute( name, value ); }
-    virtual void attribute( const std::string& name, long& value ) const { input1_.attribute( name, value ); }
-    virtual void attribute( const std::string& name, long long& value ) const { input1_.attribute( name, value ); }
-    virtual void attribute( const std::string& name, float& value ) const { input1_.attribute( name, value ); }
-    virtual void attribute( const std::string& name, double& value ) const { input1_.attribute( name, value ); }
-    virtual void attribute( const std::string& name, long double& value ) const { input1_.attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned short& value ) const { input1_.attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned int& value ) const { input1_.attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned long& value ) const { input1_.attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned long long& value ) const { input1_.attribute( name, value ); }
-
-    virtual void nodes( const visitor& v ) const
-    {
-        input1_.nodes( v );
-    }
-    virtual void attributes( const visitor& v ) const
-    {
-        input1_.attributes( v );
     }
     //@}
 
