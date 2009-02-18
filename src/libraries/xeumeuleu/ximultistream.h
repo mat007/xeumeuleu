@@ -63,10 +63,17 @@ public:
     //! @name Constructors/Destructor
     //@{
     ximultistream( const xistream& xis1, const xistream& xis2 )
-        : xistream( std::auto_ptr< input_base >( new multi_input( xis1.branch( false ), xis2.branch( false ), *this ) ) )
+        : xistream( input_ )
+        , input_( xis1.branch( false ), xis2.branch( false ), *this )
     {}
     virtual ~ximultistream()
     {}
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    multi_input input_;
     //@}
 };
 

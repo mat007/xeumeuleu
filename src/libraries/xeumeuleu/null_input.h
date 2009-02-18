@@ -51,11 +51,12 @@ public:
     //! @name Constructors/Destructor
     //@{
     null_input()
-        : context_( 0 )
+        : input_  ( 0 )
+        , context_( 0 )
         , level_  ( 0 )
     {}
-    null_input( std::auto_ptr< input_base > input, input_context& context )
-        : input_  ( input )
+    null_input( input_base& input, input_context& context )
+        : input_  ( &input )
         , context_( &context )
         , level_  ( 0 )
     {}
@@ -72,7 +73,7 @@ public:
     virtual void end()
     {
         if( --level_ == 0 && context_ )
-            context_->reset( input_ );
+            context_->reset( *input_ );
         else if( level_ < 0 )
             throw xml::exception( "Cannot move up from root" );
     }
@@ -101,9 +102,9 @@ public:
 
     virtual void error( const std::string& message ) const
     {
-        if( ! input_.get() )
-            throw xml::exception( message );
-        input_->error( message );
+        if( input_ )
+            input_->error( message );
+        throw xml::exception( message );
     }
     //@}
 
@@ -145,7 +146,7 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< input_base > input_;
+    input_base* input_;
     input_context* context_;
     int level_;
     //@}

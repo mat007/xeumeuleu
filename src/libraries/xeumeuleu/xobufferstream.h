@@ -63,8 +63,9 @@ public:
     //@{
     xobufferstream()
         : xostream( output_ )
-        , xistream( std::auto_ptr< input_base >( new input( *document::document_ ) ) )
+        , xistream( input_ )
         , output_( *document::document_, *document::document_, *this )
+        , input_ ( *document_ )
     {}
     virtual ~xobufferstream()
     {}
@@ -81,6 +82,7 @@ private:
     //! @name Member data
     //@{
     output output_;
+    input input_;
     //@}
 };
 

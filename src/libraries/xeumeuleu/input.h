@@ -168,7 +168,8 @@ public:
             {
                 if( child->getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::ELEMENT_NODE )
                 {
-                    xistream xis( std::auto_ptr< input_base >( new input( *child ) ) );
+                    input i( *child );
+                    xistream xis( i );
                     v.process( trim( translate( child->getNodeName() ) ), xis );
                 }
                 child = child->getNextSibling();
@@ -184,7 +185,8 @@ public:
                 for( XMLSize_t index = 0; index < attributes->getLength(); ++index )
                 {
                     XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( index );
-                    xistream xis( std::auto_ptr< input_base >( new input( *current_ ) ) );
+                    input i( *current_ );
+                    xistream xis( i );
                     v.process( trim( translate( attribute->getNodeName() ) ), xis );
                 }
             }
@@ -329,7 +331,16 @@ private:
 
 }
 
+#undef TRY
+#undef CATCH
+
 #include "buffer_input.h"
+
+#define TRY try {
+#define CATCH } \
+            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
+            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { error( xml::chained_exception( e ).what() ); throw; } \
+            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { error( xml::chained_exception( e ).what() ); throw; }
 
 namespace xml
 {

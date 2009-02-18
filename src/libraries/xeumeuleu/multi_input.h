@@ -35,7 +35,13 @@
 
 #include "input_base.h"
 #include "input_context.h"
-#include "input_base_context.h"
+#include "branch_input.h"
+#include <memory>
+
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable: 4355 )
+#endif
 
 namespace xml
 {
@@ -53,6 +59,8 @@ public:
     multi_input( std::auto_ptr< input_base > input1, std::auto_ptr< input_base > input2, input_context& context )
         : input1_ ( input1 )
         , input2_ ( input2 )
+        , branch1_( *input1_, *this, context )
+        , branch2_( *input2_, *this, context )
         , context_( context )
     {}
     virtual ~multi_input()
@@ -61,7 +69,18 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& tag );
+    virtual void start( const std::string& tag )
+    {
+        if( input1_->has_child( tag ) && ! input2_->has_child( tag ) )
+            context_.reset( branch1_ ).start( tag );
+        else if( input2_->has_child( tag ) && ! input1_->has_child( tag ) )
+            context_.reset( branch2_ ).start( tag );
+        else
+        {
+            input1_->start( tag );
+            input2_->start( tag );
+        }
+    }
     virtual void end()
     {
         input1_->end();
@@ -82,13 +101,7 @@ public:
     virtual void read( unsigned long& value ) const { read_content( value ); }
     virtual void read( unsigned long long& value ) const { read_content( value ); }
 
-    virtual std::auto_ptr< input_base > branch( bool clone ) const
-    {
-        std::auto_ptr< input_base_context > context( new input_base_context() );
-        std::auto_ptr< input_base > input( new multi_input( input1_->branch( clone ), input2_->branch( clone ), *context ) );
-        context->reset( input );
-        return std::auto_ptr< input_base >( context );
-    }
+    virtual std::auto_ptr< input_base > branch( bool clone ) const;
 
     virtual void copy( output& destination ) const
     {
@@ -167,27 +180,25 @@ private:
     //@{
     std::auto_ptr< input_base > input1_;
     std::auto_ptr< input_base > input2_;
+    branch_input branch1_;
+    branch_input branch2_;
     input_context& context_;
     //@}
 };
 
 }
 
-#include "branch_input.h"
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
+
+#include "input_base_context.h"
 
 namespace xml
 {
-    inline void multi_input::start( const std::string& tag )
+    inline std::auto_ptr< input_base > multi_input::branch( bool clone ) const
     {
-        if( input1_->has_child( tag ) && ! input2_->has_child( tag ) )
-            context_.reset( std::auto_ptr< input_base >( new branch_input( input1_, input2_, context_, false ) ) ).start( tag );
-        else if( input2_->has_child( tag ) && ! input1_->has_child( tag ) )
-            context_.reset( std::auto_ptr< input_base >( new branch_input( input2_, input1_, context_, true ) ) ).start( tag );
-        else
-        {
-            input1_->start( tag );
-            input2_->start( tag );
-        }
+        return std::auto_ptr< input_base >( new input_base_context( input1_->branch( clone ), input2_->branch( clone ) ) );
     }
 }
 
