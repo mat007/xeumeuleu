@@ -34,7 +34,6 @@
 #define xeumeuleu_branch_input_h
 
 #include "input_proxy.h"
-#include "input_context.h"
 
 namespace xml
 {
