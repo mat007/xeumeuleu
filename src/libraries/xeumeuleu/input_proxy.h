@@ -44,7 +44,7 @@ namespace xml
 */
 // Created: MAT 2009-02-18
 // =============================================================================
-class input_proxy : public input_base, public input_context
+class input_proxy : public input_base, protected input_context
 {
 public:
     //! @name Constructors/Destructor

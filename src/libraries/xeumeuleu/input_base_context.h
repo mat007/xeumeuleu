@@ -34,7 +34,6 @@
 #define xeumeuleu_input_base_context_h
 
 #include "input_proxy.h"
-#include "input_context.h"
 #include "multi_input.h"
 
 #ifdef _MSC_VER
