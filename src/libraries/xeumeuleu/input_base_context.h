@@ -33,7 +33,7 @@
 #ifndef xeumeuleu_input_base_context_h
 #define xeumeuleu_input_base_context_h
 
-#include "input_base.h"
+#include "input_proxy.h"
 #include "input_context.h"
 #include "multi_input.h"
 
@@ -50,110 +50,23 @@ namespace xml
 */
 // Created: MAT 2008-04-25
 // =============================================================================
-class input_base_context : public input_base, public input_context
+class input_base_context : public input_proxy
 {
 public:
     //! @name Constructors/Destructor
     //@{
     input_base_context( std::auto_ptr< input_base > input1, std::auto_ptr< input_base > input2 )
-        : multi_( input1, input2, *this )
-        , input_( &multi_ )
+        : input_proxy( multi_ )
+        , multi_( input1, input2, *this )
     {}
     virtual ~input_base_context()
     {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void start( const std::string& tag )
-    {
-        input_->start( tag );
-    }
-    virtual void end()
-    {
-        input_->end();
-    }
-
-    virtual void read( std::string& value ) const { input_->read( value ); }
-    virtual void read( bool& value ) const { input_->read( value ); }
-    virtual void read( short& value ) const { input_->read( value ); }
-    virtual void read( int& value ) const { input_->read( value ); }
-    virtual void read( long& value ) const { input_->read( value ); }
-    virtual void read( long long& value ) const { input_->read( value ); }
-    virtual void read( float& value ) const { input_->read( value ); }
-    virtual void read( double& value ) const { input_->read( value ); }
-    virtual void read( long double& value ) const { input_->read( value ); }
-    virtual void read( unsigned int& value ) const { input_->read( value ); }
-    virtual void read( unsigned short& value ) const { input_->read( value ); }
-    virtual void read( unsigned long& value ) const { input_->read( value ); }
-    virtual void read( unsigned long long& value ) const { input_->read( value ); }
-
-    virtual std::auto_ptr< input_base > branch( bool clone ) const
-    {
-        return input_->branch( clone );
-    }
-
-    virtual void copy( output& destination ) const
-    {
-        input_->copy( destination );
-    }
-
-    virtual void error( const std::string& message ) const
-    {
-        input_->error( message );
-    }
-
-    virtual input_base& reset( input_base& input )
-    {
-        input_ = &input;
-        return *input_;
-    }
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual bool has_child( const std::string& name ) const
-    {
-        return input_->has_child( name );
-    }
-    virtual bool has_attribute( const std::string& name ) const
-    {
-        return input_->has_attribute( name );
-    }
-    virtual bool has_content() const
-    {
-        return input_->has_content();
-    }
-
-    virtual void attribute( const std::string& name, std::string& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, bool& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, short& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, int& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, long& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, long long& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, float& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, double& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, long double& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned short& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned int& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned long& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned long long& value ) const { input_->attribute( name, value ); }
-
-    virtual void nodes( const visitor& v ) const
-    {
-        input_->nodes( v );
-    }
-    virtual void attributes( const visitor& v ) const
-    {
-        input_->attributes( v );
-    }
     //@}
 
 private:
     //! @name Member data
     //@{
     multi_input multi_;
-    input_base* input_;
     //@}
 };
 

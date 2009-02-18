@@ -33,7 +33,7 @@
 #ifndef xeumeuleu_optional_input_h
 #define xeumeuleu_optional_input_h
 
-#include "input_base.h"
+#include "input_proxy.h"
 #include "input_context.h"
 #include "exception.h"
 #include "null_input.h"
@@ -46,13 +46,14 @@ namespace xml
 */
 // Created: MAT 2006-03-20
 // =============================================================================
-class optional_input : public input_base
+class optional_input : public input_proxy
 {
 public:
     //! @name Constructors/Destructor
     //@{
     optional_input( input_base& input, input_context& context )
-        : input_  ( input )
+        : input_proxy( input )
+        , input_  ( input )
         , context_( context )
         , null_   ( input_, context_ )
     {}
@@ -88,38 +89,10 @@ public:
     virtual void read( unsigned int& value ) const { read_content( value ); }
     virtual void read( unsigned long& value ) const { read_content( value ); }
     virtual void read( unsigned long long& value ) const { read_content( value ); }
-
-    virtual std::auto_ptr< input_base > branch( bool clone ) const
-    {
-        return input_.branch( clone );
-    }
-
-    virtual void copy( output& destination ) const
-    {
-        input_.copy( destination );
-    }
-
-    virtual void error( const std::string& message ) const
-    {
-        input_.error( message );
-    }
     //@}
 
     //! @name Accessors
     //@{
-    virtual bool has_child( const std::string& name ) const
-    {
-        return input_.has_child( name );
-    }
-    virtual bool has_attribute( const std::string& name ) const
-    {
-        return input_.has_attribute( name );
-    }
-    virtual bool has_content() const
-    {
-        return input_.has_content();
-    }
-
     virtual void attribute( const std::string& name, std::string& value ) const { read_attribute( name, value ); }
     virtual void attribute( const std::string& name, bool& value ) const { read_attribute( name, value ); }
     virtual void attribute( const std::string& name, short& value ) const { read_attribute( name, value ); }
