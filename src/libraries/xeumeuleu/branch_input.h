@@ -39,7 +39,7 @@ namespace xml
 {
 // =============================================================================
 /** @class  branch_input
-    @brief  Input state to handle branch manipulation
+    @brief  Input to handle branch manipulation
 */
 // Created: MAT 2008-01-07
 // =============================================================================
