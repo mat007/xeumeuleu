@@ -42,6 +42,7 @@
 #include "visitor.h"
 #include "locator.h"
 #include "output.h"
+#include "xistream.h"
 #include <limits>
 #include <string>
 
@@ -96,13 +97,13 @@ public:
     }
 
     virtual void read( std::string& value ) const { TRY value = translate( read_value() ); CATCH }
-    virtual void read( bool& value ) const { TRY value = convert< bool >( read_value() ); CATCH }
+    virtual void read( bool& value ) const { TRY value = to_bool( read_value() ); CATCH }
     virtual void read( short& value ) const { TRY value = convert< short >( read_value() ); CATCH }
-    virtual void read( int& value ) const { TRY value = convert< int >( read_value() ); CATCH }
+    virtual void read( int& value ) const { TRY value = to_int( read_value() ); CATCH }
     virtual void read( long& value ) const { TRY value = convert< long >( read_value() ); CATCH }
     virtual void read( long long& value ) const { TRY value = convert< long long >( read_value() ); CATCH }
-    virtual void read( float& value ) const { TRY value = convert< float >( read_value() ); CATCH }
-    virtual void read( double& value ) const { TRY value = convert< double >( read_value() ); CATCH }
+    virtual void read( float& value ) const { TRY value = to_float( read_value() ); CATCH }
+    virtual void read( double& value ) const { TRY value = to_double( read_value() ); CATCH }
     virtual void read( long double& value ) const { TRY value = convert< long double >( read_value() ); CATCH }
     virtual void read( unsigned short& value ) const { TRY value = convert< unsigned short >( read_value() ); CATCH }
     virtual void read( unsigned int& value ) const { TRY value = convert< unsigned int >( read_value() ); CATCH }
@@ -146,21 +147,49 @@ public:
     }
 
     virtual void attribute( const std::string& name, std::string& value ) const { TRY value = translate( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, bool& value ) const { TRY value = convert< bool >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, bool& value ) const { TRY value = to_bool( read_attribute( name ) ); CATCH }
     virtual void attribute( const std::string& name, short& value ) const { TRY value = convert< short >( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, int& value ) const { TRY value = convert< int >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, int& value ) const { TRY value = to_int( read_attribute( name ) ); CATCH }
     virtual void attribute( const std::string& name, long& value ) const { TRY value = convert< long >( read_attribute( name ) ); CATCH }
     virtual void attribute( const std::string& name, long long& value ) const { TRY value = convert< long long >( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, float& value ) const { TRY value = convert< float >( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, double& value ) const { TRY value = convert< double >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, float& value ) const { TRY value = to_float( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, double& value ) const { TRY value = to_double( read_attribute( name ) ); CATCH }
     virtual void attribute( const std::string& name, long double& value ) const { TRY value = convert< long double >( read_attribute( name ) ); CATCH }
     virtual void attribute( const std::string& name, unsigned short& value ) const { TRY value = convert< unsigned short >( read_attribute( name ) ); CATCH }
     virtual void attribute( const std::string& name, unsigned int& value ) const { TRY value = convert< unsigned int >( read_attribute( name ) ); CATCH }
     virtual void attribute( const std::string& name, unsigned long& value ) const { TRY value = convert< unsigned long >( read_attribute( name ) ); CATCH }
     virtual void attribute( const std::string& name, unsigned long long& value ) const { TRY value = convert< unsigned long long >( read_attribute( name ) ); CATCH }
 
-    virtual void nodes( const visitor& v ) const;
-    virtual void attributes( const visitor& v ) const;
+    virtual void nodes( const visitor& v ) const
+    {
+        TRY
+            XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
+            while( child )
+            {
+                if( child->getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::ELEMENT_NODE )
+                {
+                    xistream xis( std::auto_ptr< input_base >( new input( *child ) ) );
+                    v.process( trim( translate( child->getNodeName() ) ), xis );
+                }
+                child = child->getNextSibling();
+            }
+        CATCH
+    }
+    virtual void attributes( const visitor& v ) const
+    {
+        TRY
+            const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
+            if( attributes )
+            {
+                for( XMLSize_t index = 0; index < attributes->getLength(); ++index )
+                {
+                    XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( index );
+                    xistream xis( std::auto_ptr< input_base >( new input( *current_ ) ) );
+                    v.process( trim( translate( attribute->getNodeName() ) ), xis );
+                }
+            }
+        CATCH
+    }
     //@}
 
 private:
@@ -232,7 +261,8 @@ private:
         return attribute->getNodeValue();
     }
 
-    template< typename T > T convert( const XMLCh* from ) const
+    template< typename T >
+    T convert( const XMLCh* from ) const
     {
         const double value = XERCES_CPP_NAMESPACE::XMLDouble( from ).getValue();
         const T result = static_cast< T >( value );
@@ -240,8 +270,7 @@ private:
             throw xml::exception( location() + "Value of " + context() + " is not a " + typeid( T ).name() );
         return result;
     }
-    template<>
-    float convert< float >( const XMLCh* from ) const
+    float to_float( const XMLCh* from ) const
     {
         const XERCES_CPP_NAMESPACE::XMLFloat value( from );
         if( value.isDataOverflowed() )
@@ -258,8 +287,7 @@ private:
                 return static_cast< float >( value.getValue() );
         }
     }
-    template<>
-    double convert< double >( const XMLCh* from ) const
+    double to_double( const XMLCh* from ) const
     {
         const XERCES_CPP_NAMESPACE::XMLDouble value( from );
         if( value.isDataOverflowed() )
@@ -276,13 +304,11 @@ private:
                 return value.getValue();
         }
     }
-    template<>
-    int convert< int >( const XMLCh* from ) const
+    int to_int( const XMLCh* from ) const
     {
         return XERCES_CPP_NAMESPACE::XMLString::parseInt( from );
     }
-    template<>
-    bool convert< bool >( const XMLCh* from ) const
+    bool to_bool( const XMLCh* from ) const
     {
         const std::string value = trim( translate( from ) );
         if( value == "true" || value == "1" )
@@ -303,7 +329,6 @@ private:
 
 }
 
-#include "sub_xistream.h"
 #include "buffer_input.h"
 
 namespace xml
@@ -314,36 +339,6 @@ namespace xml
             if( clone )
                 return std::auto_ptr< input_base >( new buffer_input( *current_ ) );
             return std::auto_ptr< input_base >( new input( *current_ ) );
-        CATCH
-    }
-    inline void input::nodes( const visitor& v ) const
-    {
-        TRY
-            XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
-            while( child )
-            {
-                if( child->getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::ELEMENT_NODE )
-                {
-                    sub_xistream xis( *child );
-                    v.process( trim( translate( child->getNodeName() ) ), xis );
-                }
-                child = child->getNextSibling();
-            }
-        CATCH
-    }
-    inline void input::attributes( const visitor& v ) const
-    {
-        TRY
-            const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
-            if( attributes )
-            {
-                for( XMLSize_t index = 0; index < attributes->getLength(); ++index )
-                {
-                    XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( index );
-                    sub_xistream xis( *current_ );
-                    v.process( trim( translate( attribute->getNodeName() ) ), xis );
-                }
-            }
         CATCH
     }
 }
