@@ -49,7 +49,7 @@ class input_proxy : public input_base, protected input_context
 public:
     //! @name Constructors/Destructor
     //@{
-    input_proxy( input_base& input )
+    explicit input_proxy( input_base& input )
         : input_( &input )
     {}
     virtual ~input_proxy()
