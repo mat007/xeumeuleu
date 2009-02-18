@@ -210,12 +210,8 @@
 					RelativePath="..\..\src\libraries\xeumeuleu\start.h"
 					>
 				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\visitor.h"
-					>
-				</File>
 				<Filter
-					Name="caller"
+					Name="detail"
 					>
 					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\caller.h"
@@ -279,10 +275,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xi_base_member.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xibufferstream.h"
 					>
 				</File>
@@ -308,10 +300,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\xisubstream.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\xo_base_member.h"
 					>
 				</File>
 				<File
@@ -367,6 +355,18 @@
 					</File>
 					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\output_handler.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\visitor.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\xi_base_member.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\xo_base_member.h"
 						>
 					</File>
 				</Filter>
