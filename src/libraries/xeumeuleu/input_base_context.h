@@ -35,7 +35,12 @@
 
 #include "input_base.h"
 #include "input_context.h"
-#include "null_input.h"
+#include "multi_input.h"
+
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable: 4355 )
+#endif
 
 namespace xml
 {
@@ -50,8 +55,9 @@ class input_base_context : public input_base, public input_context
 public:
     //! @name Constructors/Destructor
     //@{
-    input_base_context()
-        : input_( new null_input() )
+    input_base_context( std::auto_ptr< input_base > input1, std::auto_ptr< input_base > input2 )
+        : multi_( input1, input2, *this )
+        , input_( &multi_ )
     {}
     virtual ~input_base_context()
     {}
@@ -97,9 +103,9 @@ public:
         input_->error( message );
     }
 
-    virtual input_base& reset( std::auto_ptr< input_base > input )
+    virtual input_base& reset( input_base& input )
     {
-        input_ = input;
+        input_ = &input;
         return *input_;
     }
     //@}
@@ -146,10 +152,15 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< input_base > input_;
+    multi_input multi_;
+    input_base* input_;
     //@}
 };
 
 }
+
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 #endif // xeumeuleu_input_base_context_h
