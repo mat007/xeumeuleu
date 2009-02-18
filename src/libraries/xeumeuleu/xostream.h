@@ -52,6 +52,9 @@ class xostream
 public:
     //! @name Constructors/Destructor
     //@{
+    explicit xostream( output& output )
+        : output_( output )
+    {}
     virtual ~xostream()
     {}
     //@}
@@ -75,17 +78,17 @@ public:
 
     //! @name Modifiers
     //@{
-    void write( const char* value )        { write( std::string( value ) ); }
+    void write( const char* value ) { write( std::string( value ) ); }
     void write( const std::string& value ) { output_.write( value ); }
-    void write( bool value )               { output_.write( value ); }
-    void write( int value )                { output_.write( value ); }
-    void write( long value )               { output_.write( value ); }
-    void write( long long value )          { output_.write( value ); }
-    void write( float value )              { output_.write( value ); }
-    void write( double value )             { output_.write( value ); }
-    void write( long double value )        { output_.write( value ); }
-    void write( unsigned int value )       { output_.write( value ); }
-    void write( unsigned long value )      { output_.write( value ); }
+    void write( bool value ) { output_.write( value ); }
+    void write( int value ) { output_.write( value ); }
+    void write( long value ) { output_.write( value ); }
+    void write( long long value ) { output_.write( value ); }
+    void write( float value ) { output_.write( value ); }
+    void write( double value ) { output_.write( value ); }
+    void write( long double value ) { output_.write( value ); }
+    void write( unsigned int value ) { output_.write( value ); }
+    void write( unsigned long value ) { output_.write( value ); }
     void write( unsigned long long value ) { output_.write( value ); }
     void write( const xistream& xis );
 
@@ -107,14 +110,6 @@ public:
     {
         output_.instruction( target, data );
     }
-    //@}
-
-protected:
-    //! @name Constructors/Destructor
-    //@{
-    xostream( output& output )
-        : output_( output )
-    {}
     //@}
 
 private:
