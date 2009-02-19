@@ -60,7 +60,7 @@ public:
     //@{
     explicit xostringstream( const encoding& encoding = encoding() )
         : xostream( output_ )
-        , output_  ( *document::document_, *document::document_ )
+        , output_  ( *document_, *document_ )
         , encoding_( encoding )
     {}
     virtual ~xostringstream()

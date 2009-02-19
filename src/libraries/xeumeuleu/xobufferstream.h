@@ -58,7 +58,7 @@ public:
     xobufferstream()
         : xostream( output_ )
         , xistream( input_ )
-        , output_( *document::document_, *document::document_ )
+        , output_( *document_, *document_ )
         , input_ ( *document_ )
     {}
     virtual ~xobufferstream()
