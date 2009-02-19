@@ -36,12 +36,6 @@
 #include "xostream.h"
 #include "xistream.h"
 #include "document.h"
-#include "output_handler.h"
-
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable: 4355 )
-#endif
 
 namespace xml
 {
@@ -56,7 +50,7 @@ namespace xml
 */
 // Created: MAT 2006-03-07
 // =============================================================================
-class xobufferstream : private document, private output_handler, public xostream, public xistream
+class xobufferstream : private document, public xostream, public xistream
 {
 public:
     //! @name Constructors/Destructor
@@ -64,17 +58,10 @@ public:
     xobufferstream()
         : xostream( output_ )
         , xistream( input_ )
-        , output_( *document::document_, *document::document_, *this )
+        , output_( *document::document_, *document::document_ )
         , input_ ( *document_ )
     {}
     virtual ~xobufferstream()
-    {}
-    //@}
-
-private:
-    //! @name Operations
-    //@{
-    virtual void finished()
     {}
     //@}
 
@@ -87,9 +74,5 @@ private:
 };
 
 }
-
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
 
 #endif // xeumeuleu_xobufferstream_h

@@ -33,7 +33,6 @@
 #ifndef xeumeuleu_output_h
 #define xeumeuleu_output_h
 
-#include "output_handler.h"
 #include "xerces.h"
 #include "chained_exception.h"
 #include "exception.h"
@@ -63,11 +62,10 @@ class output
 public:
     //! @name Constructors/Destructor
     //@{
-    output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root, output_handler& handler )
+    output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root )
         : document_( document )
         , root_    ( root )
         , current_ ( &root )
-        , handler_ ( handler )
     {}
     virtual ~output()
     {}
@@ -87,7 +85,6 @@ public:
             if( is_root() )
                 throw xml::exception( "Illegal 'end' from root level" );
             current_ = current_->getParentNode();
-            flush();
         CATCH
     }
 
@@ -139,19 +136,10 @@ public:
     {
         TRY
             import( document_, node.getFirstChild(), *current_ );
-            flush();
         CATCH
     }
 
     std::auto_ptr< output > branch();
-
-    void flush()
-    {
-        TRY
-            if( is_root() && root_.getFirstChild() )
-                handler_.finished();
-        CATCH
-    }
     //@}
 
 private:
@@ -234,7 +222,6 @@ private:
     XERCES_CPP_NAMESPACE::DOMDocument& document_;
     XERCES_CPP_NAMESPACE::DOMNode& root_;
     XERCES_CPP_NAMESPACE::DOMNode* current_;
-    output_handler& handler_;
     //@}
 };
 
@@ -247,7 +234,7 @@ namespace xml
     inline std::auto_ptr< output > output::branch()
     {
         TRY
-            return std::auto_ptr< output >( new sub_output( document_, *current_, *this ) );
+            return std::auto_ptr< output >( new sub_output( document_, *current_ ) );
         CATCH
     }
 }

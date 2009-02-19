@@ -58,6 +58,18 @@ BOOST_AUTO_TEST_CASE( streaming_root_element_makes_a_valid_document )
 }
 
 // -----------------------------------------------------------------------------
+// Name: calling_str_on_uncomplete_stream_serializes_it
+// Created: MCO 2006-03-20
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( calling_str_on_uncomplete_stream_serializes_it )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "element" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: streaming_root_element_twice_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------

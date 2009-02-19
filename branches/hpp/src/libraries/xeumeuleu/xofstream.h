@@ -35,13 +35,7 @@
 
 #include "xostream.h"
 #include "document.h"
-#include "output_handler.h"
 #include "encoding.h"
-
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable: 4355 )
-#endif
 
 namespace xml
 {
@@ -56,25 +50,33 @@ namespace xml
 */
 // Created: MAT 2006-01-04
 // =============================================================================
-class xofstream : private document, private output_handler, public xostream
+class xofstream : private document, public xostream
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit xofstream( const std::string& filename, const encoding& encoding = encoding() )
         : xostream( output_ )
-        , output_  ( *document::document_, *document::document_, *this )
+        , output_  ( *document::document_, *document::document_ )
         , filename_( filename )
         , encoding_( encoding )
     {}
     virtual ~xofstream()
-    {}
+    {
+        try
+        {
+            flush();
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+    }
     //@}
 
-protected:
     //! @name Operations
     //@{
-    virtual void finished()
+    void flush()
     {
         fill( filename_, encoding_ );
     }
@@ -90,9 +92,5 @@ private:
 };
 
 }
-
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
 
 #endif // xeumeuleu_xofstream_h

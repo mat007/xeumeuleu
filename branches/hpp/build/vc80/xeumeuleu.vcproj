@@ -358,10 +358,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\output_handler.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\visitor.h"
 						>
 					</File>
