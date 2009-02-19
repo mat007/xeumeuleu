@@ -139,7 +139,12 @@ public:
         CATCH
     }
 
-    std::auto_ptr< output > branch();
+    std::auto_ptr< output > branch()
+    {
+        TRY
+            return std::auto_ptr< output >( new output( document_, *current_ ) );
+        CATCH
+    }
     //@}
 
 private:
@@ -225,18 +230,6 @@ private:
     //@}
 };
 
-}
-
-#include "sub_output.h"
-
-namespace xml
-{
-    inline std::auto_ptr< output > output::branch()
-    {
-        TRY
-            return std::auto_ptr< output >( new sub_output( document_, *current_ ) );
-        CATCH
-    }
 }
 
 #undef TRY
