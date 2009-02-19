@@ -33,7 +33,6 @@
 #ifndef xeuseuleu_file_output_h
 #define xeuseuleu_file_output_h
 
-#include "of_base_member.h"
 #include "transform.h"
 #include "output.h"
 #include <string>
@@ -46,21 +45,27 @@ namespace xsl
 */
 // Created: SLI 2007-09-10
 // =============================================================================
-class file_output : private of_base_member, private transform, public output
+class file_output : private transform, public output
 {
 public:
     //! @name Constructors/Destructor
     //@{
     file_output( const std::string& stylesheet, const std::string& filename )
-        : of_base_member( filename )
-        , output( os_, stylesheet )
+        : output( os_, stylesheet )
+        , os_( filename.c_str() )
     {}
     file_output( std::istream& stylesheet, const std::string& filename )
-        : of_base_member( filename )
-        , output( os_, stylesheet )
+        : output( os_, stylesheet )
+        , os_( filename.c_str() )
     {}
     virtual ~file_output()
     {}
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::ofstream os_;
     //@}
 };
 

@@ -35,7 +35,6 @@
 
 #include "buffer.h"
 #include "string_output.h"
-#include "buffer.h"
 
 namespace xsl
 {

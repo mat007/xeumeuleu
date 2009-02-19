@@ -35,7 +35,6 @@
 
 #include "xeumeuleu/xml.h"
 #include <string>
-#include <vector>
 
 namespace xsl
 {

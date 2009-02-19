@@ -33,7 +33,6 @@
 #ifndef xeuseuleu_xftransform_h
 #define xeuseuleu_xftransform_h
 
-#include "xf_base_member.h"
 #include "xtransform.h"
 #include "file_output.h"
 
@@ -49,21 +48,27 @@ namespace xsl
 */
 // Created: SLI 2007-09-07
 // =============================================================================
-class xftransform : private xf_base_member, public xtransform
+class xftransform : public xtransform
 {
 public:
     //! @name Constructors/Destructor
     //@{
     xftransform( const std::string& stylesheet, const std::string& filename )
-        : xf_base_member( stylesheet, filename )
-        , xtransform( *output_ )
+        : xtransform( output_ )
+        , output_( stylesheet, filename )
     {}
     xftransform( std::istream& stylesheet, const std::string& filename )
-        : xf_base_member( stylesheet, filename )
-        , xtransform( *output_ )
+        : xtransform( output_ )
+        , output_( stylesheet, filename )
     {}
     virtual ~xftransform()
     {}
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    file_output output_;
     //@}
 };
 

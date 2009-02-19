@@ -33,7 +33,6 @@
 #ifndef xeuseuleu_xstringtransform_h
 #define xeuseuleu_xstringtransform_h
 
-#include "xs_base_member.h"
 #include "xtransform.h"
 #include "string_output.h"
 
@@ -49,18 +48,18 @@ namespace xsl
 */
 // Created: SLI 2007-09-10
 // =============================================================================
-class xstringtransform : private xs_base_member, public xtransform
+class xstringtransform : public xtransform
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit xstringtransform( const std::string& stylesheet )
-        : xs_base_member( stylesheet )
-        , xtransform( *output_ )
+        : xtransform( output_ )
+        , output_( stylesheet )
     {}
     explicit xstringtransform( std::istream& stylesheet )
-        : xs_base_member( stylesheet )
-        , xtransform( *output_ )
+        : xtransform( output_ )
+        , output_( stylesheet )
     {}
     virtual ~xstringtransform()
     {}
@@ -70,8 +69,14 @@ public:
     //@{
     const std::string str() const
     {
-        return output_->str();
+        return output_.str();
     }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    string_output output_;
     //@}
 };
 
