@@ -57,7 +57,7 @@ public:
     //@{
     explicit xofstream( const std::string& filename, const encoding& encoding = encoding() )
         : xostream( output_ )
-        , output_  ( *document::document_, *document::document_ )
+        , output_  ( *document_, *document_ )
         , filename_( filename )
         , encoding_( encoding )
     {}
