@@ -33,7 +33,6 @@
 #ifndef xsl_output_imp_h
 #define xsl_output_imp_h
 
-#include "xeumeuleu/xml.h"
 #include <string>
 
 namespace xsl

@@ -34,6 +34,7 @@
 #define xeuseuleu_buffer_h
 
 #include "output.h"
+#include <memory>
 
 namespace xsl
 {
@@ -48,8 +49,8 @@ class buffer
 public:
     //! @name Constructors/Destructor
     //@{
-    buffer( output& output, std::auto_ptr< buffer > next )
-        : output_( output )
+    buffer( std::auto_ptr< output > output, std::auto_ptr< buffer > next )
+        : output_( *output.release() )
         , owned_ ( true )
         , next_  ( next )
         , level_ ( 0 )

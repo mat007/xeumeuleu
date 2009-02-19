@@ -59,11 +59,11 @@ public:
     //@{
     void add( const std::string& stylesheet )
     {
-        buffer_.reset( new buffer( *new string_output( stylesheet ), buffer_ ) );
+        buffer_.reset( new buffer( std::auto_ptr< output >( new string_output( stylesheet ) ), buffer_ ) );
     }
     void add( std::istream& stylesheet )
     {
-        buffer_.reset( new buffer( *new string_output( stylesheet ), buffer_ ) );
+        buffer_.reset( new buffer( std::auto_ptr< output >( new string_output( stylesheet ) ), buffer_ ) );
     }
 
     void write( const xbuffertransform& buffer );

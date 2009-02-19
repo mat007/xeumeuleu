@@ -55,6 +55,14 @@ class output
 public:
     //! @name Constructors/Destructor
     //@{
+    output( std::ostream& target, const std::string& stylesheet )
+        : target_( target )
+        , output_( new file_output_imp( stylesheet ) )
+    {}
+    output( std::ostream& target, std::istream& stylesheet )
+        : target_( target )
+        , output_( new buffer_output_imp( stylesheet ) )
+    {}
     virtual ~output()
     {}
     //@}
@@ -82,19 +90,6 @@ public:
     {
         xos_ << value;
     }
-    //@}
-
-protected:
-    //! @name Constructors/Destructor
-    //@{
-    output( std::ostream& target, const std::string& stylesheet )
-        : target_( target )
-        , output_( new file_output_imp( stylesheet ) )
-    {}
-    output( std::ostream& target, std::istream& stylesheet )
-        : target_( target )
-        , output_( new buffer_output_imp( stylesheet ) )
-    {}
     //@}
 
 private:
