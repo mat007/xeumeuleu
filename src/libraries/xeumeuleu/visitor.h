@@ -56,7 +56,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void process( const std::string& name, xistream& xis ) const = 0;
+    virtual void operator()( const std::string& name, xistream& xis ) const = 0;
     //@}
 };
 
