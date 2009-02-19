@@ -164,7 +164,7 @@
 				>
 			</File>
 			<Filter
-				Name="xml"
+				Name="manipulators"
 				>
 				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\attribute.h"
