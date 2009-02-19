@@ -35,14 +35,8 @@
 
 #include "document.h"
 #include "xostream.h"
-#include "output_handler.h"
 #include "encoding.h"
 #include <string>
-
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable: 4355 )
-#endif
 
 namespace xml
 {
@@ -59,14 +53,14 @@ namespace xml
 */
 // Created: MAT 2006-01-04
 // =============================================================================
-class xostringstream : private document, private output_handler, public xostream
+class xostringstream : private document, public xostream
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit xostringstream( const encoding& encoding = encoding() )
         : xostream( output_ )
-        , output_  ( *document::document_, *document::document_, *this )
+        , output_  ( *document::document_, *document::document_ )
         , encoding_( encoding )
     {}
     virtual ~xostringstream()
@@ -75,18 +69,11 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string& str() const
+    std::string str() const
     {
-        return data_;
-    }
-    //@}
-
-protected:
-    //! @name Operations
-    //@{
-    virtual void finished()
-    {
-        fill( data_, encoding_ );
+        std::string data;
+        fill( data, encoding_ );
+        return data;
     }
     //@}
 
@@ -95,14 +82,9 @@ private:
     //@{
     output output_;
     const std::string encoding_;
-    std::string data_;
     //@}
 };
 
 }
-
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
 
 #endif // xeumeuleu_xostringstream_h

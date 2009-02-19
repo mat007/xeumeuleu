@@ -85,11 +85,15 @@ protected:
     //@{
     void fill( const std::string& filename, const std::string& encoding ) const
     {
+        if( ! document_->hasChildNodes() )
+            return;
         XERCES_CPP_NAMESPACE::LocalFileFormatTarget target( filename.c_str() );
         write( target, encoding );
     }
     void fill( std::string& data, const std::string& encoding ) const
     {
+        if( ! document_->hasChildNodes() )
+            return;
         XERCES_CPP_NAMESPACE::MemBufFormatTarget target;
         write( target, encoding );
         data = reinterpret_cast< const char* >( target.getRawBuffer() );

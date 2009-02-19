@@ -1,3 +1,8 @@
+1.4.0
+. headers only
+. xml::xostringstream is serialized when calling str()
+. xml::xofstream is written to file when calling flush() or upon destruction
+
 1.3.2
 . xml::list and xml::attributes functors can be passed as references to be able to handle an internal state
 . added support for long double
