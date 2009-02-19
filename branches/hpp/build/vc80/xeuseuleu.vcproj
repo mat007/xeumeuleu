@@ -225,10 +225,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeuseuleu\file_output.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeuseuleu\output.h"
 						>
 					</File>

@@ -34,7 +34,6 @@
 #define xeuseuleu_xftransform_h
 
 #include "xtransform.h"
-#include "file_output.h"
 
 namespace xsl
 {
@@ -48,18 +47,20 @@ namespace xsl
 */
 // Created: SLI 2007-09-07
 // =============================================================================
-class xftransform : public xtransform
+class xftransform : private transform, public xtransform
 {
 public:
     //! @name Constructors/Destructor
     //@{
     xftransform( const std::string& stylesheet, const std::string& filename )
         : xtransform( output_ )
-        , output_( stylesheet, filename )
+        , os_    ( filename.c_str() )
+        , output_( os_, stylesheet )
     {}
     xftransform( std::istream& stylesheet, const std::string& filename )
         : xtransform( output_ )
-        , output_( stylesheet, filename )
+        , os_    ( filename.c_str() )
+        , output_( os_, stylesheet )
     {}
     virtual ~xftransform()
     {}
@@ -68,7 +69,8 @@ public:
 private:
     //! @name Member data
     //@{
-    file_output output_;
+    std::ofstream os_;
+    output output_;
     //@}
 };
 
