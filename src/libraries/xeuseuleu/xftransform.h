@@ -35,6 +35,7 @@
 
 #include "xf_base_member.h"
 #include "xtransform.h"
+#include "file_output.h"
 
 namespace xsl
 {
@@ -53,9 +54,16 @@ class xftransform : private xf_base_member, public xtransform
 public:
     //! @name Constructors/Destructor
     //@{
-             xftransform( const std::string& stylesheet, const std::string& filename );
-             xftransform( std::istream& stylesheet, const std::string& filename );
-    virtual ~xftransform();
+    xftransform( const std::string& stylesheet, const std::string& filename )
+        : xf_base_member( stylesheet, filename )
+        , xtransform( *output_ )
+    {}
+    xftransform( std::istream& stylesheet, const std::string& filename )
+        : xf_base_member( stylesheet, filename )
+        , xtransform( *output_ )
+    {}
+    virtual ~xftransform()
+    {}
     //@}
 };
 

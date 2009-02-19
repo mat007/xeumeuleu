@@ -54,9 +54,15 @@ class xbuffertransform
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xbuffertransform( const std::string& stylesheet );
-    explicit xbuffertransform( std::istream& stylesheet );
-    virtual ~xbuffertransform();
+    explicit xbuffertransform( const std::string& stylesheet )
+        : stylesheet_( stylesheet )
+        , stream_    ( 0 )
+    {}
+    explicit xbuffertransform( std::istream& stylesheet )
+        : stream_( &stylesheet )
+    {}
+    virtual ~xbuffertransform()
+    {}
     //@}
 
     //! @name Constructors/Destructor
@@ -79,6 +85,19 @@ private:
     //@}
 };
 
+}
+
+#include "xtransform.h"
+
+namespace xsl
+{
+    inline void xbuffertransform::apply( xtransform& xst ) const
+    {
+        if( stream_ ) // $$$$ MCO : make two separate implementations
+            xst.add( *stream_ );
+        else
+            xst.add( stylesheet_ );
+    }
 }
 
 #endif // xeuseuleu_xbuffertransform_h

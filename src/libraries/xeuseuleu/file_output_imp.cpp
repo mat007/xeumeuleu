@@ -37,7 +37,6 @@
 #include <sstream>
 
 using namespace xsl;
-using namespace XALAN_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: file_output_imp constructor
@@ -75,9 +74,9 @@ void file_output_imp::parameter( const std::string& key, const std::string& expr
 const std::string file_output_imp::transform( const std::string& input ) const
 {
     std::istringstream is( input );
-    XSLTInputSource in( &is );
-    XSLTInputSource xsl( stylesheet_.c_str() );
-    XalanTransformer transformer;
+    XALAN_CPP_NAMESPACE::XSLTInputSource in( &is );
+    XALAN_CPP_NAMESPACE::XSLTInputSource xsl( stylesheet_.c_str() );
+    XALAN_CPP_NAMESPACE::XalanTransformer transformer;
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
     std::ostringstream os;

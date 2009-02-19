@@ -6,28 +6,15 @@
 
     <!--
     ============================================================================
-      libraries
-    ============================================================================
-    -->
-    <target name="xeumeuleu" description="build library">
-        <build-lib name="xeumeuleu"/>
-    </target>
-
-    <target name="xeuseuleu" depends="xeumeuleu" description="build library">
-        <build-lib name="xeuseuleu"/>
-    </target>
-
-    <!--
-    ============================================================================
       tests
     ============================================================================
     -->
-    <target name="xeumeuleu_test" depends="xeumeuleu" description="build and run tests">
-        <build-test name="xeumeuleu" depends="boost" libs="xeumeuleu,xerces-c_2"/>
+    <target name="xeumeuleu_test" description="build and run tests">
+        <build-test name="xeumeuleu" depends="boost" libs="xerces-c_2"/>
     </target>
 
-    <target name="xeuseuleu_test" depends="xeuseuleu,xeumeuleu" description="build and run tests">
-        <build-test name="xeuseuleu" libs="xeuseuleu,xeumeuleu,xerces-c_2,Xalan-C_1"/>
+    <target name="xeuseuleu_test" description="build and run tests">
+        <build-test name="xeuseuleu" libs="xerces-c_2,Xalan-C_1"/>
     </target>
 
     <!--
@@ -35,12 +22,12 @@
       applications
     ============================================================================
     -->
-    <target name="xeumeuleu_bench" depends="xeumeuleu" description="build benchmark application">
-        <build-app name="xeumeuleu_bench" depends="boost" libs="xeumeuleu,xerces-c_2" subsystem="console"/>
+    <target name="xeumeuleu_bench" description="build benchmark application">
+        <build-app name="xeumeuleu_bench" depends="boost" libs="xerces-c_2" subsystem="console"/>
     </target>
 
-    <target name="xeumeuleu_clean" depends="xeumeuleu" description="build cleaning application">
-        <build-app name="xeumeuleu_clean" depends="boost" libs="xeumeuleu,xerces-c_2" subsystem="console"/>
+    <target name="xeumeuleu_clean" description="build cleaning application">
+        <build-app name="xeumeuleu_clean" depends="boost" libs="xerces-c_2" subsystem="console"/>
     </target>
 
     <!--
@@ -60,41 +47,10 @@
     <target name="export" depends="build" description="export the distribution">
         <deploy>
             <module name="xeumeuleu">
-                <include name="xml.h"/>
-                <include name="exception.h"/>
-                <include name="xi*.h"/>
-                <include name="xo*.h"/>
-                <include name="encoding.h"/>
-                <include name="grammar.h"/>
-                <include name="start.h"/>
-                <include name="end.h"/>
-                <include name="content.h"/>
-                <include name="cdata.h"/>
-                <include name="instruction.h"/>
-                <include name="attribute.h"/>
-                <include name="filter.h"/>
-                <include name="adapter.h"/>
-                <include name="list.h"/>
-                <include name="name_list.h"/>
-                <include name="attributes.h"/>
-                <include name="visitor.h"/>
-                <include name="caller*.h"/>
-                <include name="name_caller*.h"/>
-                <include name="optional.h"/>
-                <include name="helpers.h"/>
+                <include name="*.h"/>
             </module>
             <module name="xeuseuleu">
-                <include name="xsl.h"/>
-                <include name="exception.h"/>
-                <include name="parameter.h"/>
-                <include name="xftransform.h"/>
-                <include name="xf_base_member.h"/>
-                <include name="xstringtransform.h"/>
-                <include name="xs_base_member.h"/>
-                <include name="xtransform.h"/>
-                <include name="xbuffertransform.h"/>
-                <include name="buffer.h"/>
-                <include name="output.h"/>
+                <include name="*.h"/>
             </module>
         </deploy>
     </target>
@@ -104,28 +60,10 @@
       package
     ============================================================================
     -->
-    <target name="package" depends="-package,-apache-license" description="package the distribution"/>
-
-    <target name="-package" depends="export,generate-vc71,generate-vc90">
+    <target name="package" depends="generate-vc71,generate-vc90" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
-        <zip destfile="${dist.dir}/xeumeuleu-src.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user,src/documentation/**"/>
-        <tar destfile="${dist.dir}/xeumeuleu-src.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user,src/documentation/**" compression="bzip2"/>
-        <delete file="${dist.dir}/xeumeuleu-bin-${platform}.zip"/>
-        <zip destfile="${dist.dir}/xeumeuleu-bin-${platform}.zip">
-            <zipfileset prefix="include" dir="${dist.dir}/include" includes="xeumeuleu/**,xeuseuleu/**"/>
-            <zipfileset prefix="lib/${platform}" dir="${lib.dir}" includes="*xeumeuleu*.*,*xeuseuleu*.*,*xerces*.*,*xalan-*.*,*Xalan-*.*"/>
-            <zipfileset prefix="run/${platform}" dir="${run.dir}" includes="*xerces*.*,*xalan*.*,*Xalan*.*"/>
-        </zip>
-    </target>
-
-    <target name="-apache-license">
-        <copy todir="${out.dir}">
-            <url url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
-        </copy>
-        <fixcrlf srcdir="${out.dir}" includes="licenses/LICENSE-2.0.txt"/>
-        <zip destfile="${dist.dir}/xeumeuleu-bin-${platform}.zip" update="true">
-            <zipfileset dir="${out.dir}" fullpath="lib/${platform}/APACHE-LICENSE-2.0.txt" includes="licenses/LICENSE-2.0.txt"/>
-        </zip>
+        <zip destfile="${dist.dir}/xeumeuleu.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user,src/documentation/**"/>
+        <tar destfile="${dist.dir}/xeumeuleu.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user,src/documentation/**" compression="bzip2"/>
     </target>
 
     <target name="generate-vc71" description="create vc71 build files from vc80 files">
@@ -164,7 +102,7 @@
       documentation
     ============================================================================
     -->
-    <target name="documentation" depends="test" description="create documentation">
+    <target name="documentation" description="create documentation">
         <cpd-report/>
         <cppncss-report>
             <define name="TRY"/>
@@ -199,7 +137,7 @@
     -->
     <target name="test" depends="xeumeuleu_test,xeuseuleu_test" description="run all tests"/>
 
-    <target name="build" depends="xeumeuleu,xeuseuleu,xeumeuleu_bench,xeumeuleu_clean" description="build all"/>
+    <target name="build" depends="xeumeuleu_bench,xeumeuleu_clean" description="build all"/>
 
     <target name="configure" description="initialize local project structure with dependencies">
         <update name="boost"/>
@@ -208,6 +146,6 @@
         <update name="xalan-c"/>
     </target>
 
-    <target name="all" depends="configure,build,test,package,documentation" description="build, run tests, package distribution and create web site"/>
+    <target name="all" depends="configure,build,test,export,package,documentation" description="build, run tests, package distribution and create web site"/>
 
 </project>

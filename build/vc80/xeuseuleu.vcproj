@@ -162,15 +162,7 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\buffer.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\buffer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\buffer_output_imp.cpp"
 				>
 			</File>
 			<File
@@ -178,15 +170,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\exception.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\exception.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\file_output.cpp"
 				>
 			</File>
 			<File
@@ -194,15 +178,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\file_output_imp.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\file_output_imp.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\of_base_member.cpp"
 				>
 			</File>
 			<File
@@ -210,15 +186,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\os_base_member.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\os_base_member.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\output.cpp"
 				>
 			</File>
 			<File
@@ -230,23 +198,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\parameter.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\parameter.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\string_output.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\string_output.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\transform.cpp"
 				>
 			</File>
 			<File
@@ -258,15 +214,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xbuffertransform.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\xbuffertransform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xf_base_member.cpp"
 				>
 			</File>
 			<File
@@ -274,15 +222,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xftransform.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\xftransform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xs_base_member.cpp"
 				>
 			</File>
 			<File
@@ -294,15 +234,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xstringtransform.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\xstringtransform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xtransform.cpp"
 				>
 			</File>
 			<File
