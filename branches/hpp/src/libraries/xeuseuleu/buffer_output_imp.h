@@ -46,7 +46,7 @@ namespace xsl
 {
 // =============================================================================
 /** @class  buffer_output_imp
-    @brief  Transformation helper
+    @brief  Buffer output implementation
 */
 // Created: SLI 2007-07-06
 // =============================================================================

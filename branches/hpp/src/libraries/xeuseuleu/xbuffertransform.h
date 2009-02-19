@@ -65,7 +65,7 @@ public:
     {}
     //@}
 
-    //! @name Constructors/Destructor
+    //! @name Operations
     //@{
     void apply( xtransform& xst ) const;
     //@}
