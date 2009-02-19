@@ -33,6 +33,7 @@
 #ifndef xeuseuleu_xf_base_member_h
 #define xeuseuleu_xf_base_member_h
 
+#include "file_output.h"
 #include <string>
 #include <memory>
 
@@ -51,9 +52,14 @@ class xf_base_member
 public:
     //! @name Constructors/Destructor
     //@{
-             xf_base_member( const std::string& stylesheet, const std::string& filename );
-             xf_base_member( std::istream& stylesheet, const std::string& filename );
-    virtual ~xf_base_member();
+    xf_base_member( const std::string& stylesheet, const std::string& filename )
+        : output_( new file_output( stylesheet, filename ) )
+    {}
+    xf_base_member( std::istream& stylesheet, const std::string& filename )
+        : output_( new file_output( stylesheet, filename ) )
+    {}
+    virtual ~xf_base_member()
+    {}
     //@}
 
 private:

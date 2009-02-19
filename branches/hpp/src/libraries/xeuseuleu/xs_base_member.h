@@ -33,13 +33,12 @@
 #ifndef xeuseuleu_xs_base_member_h
 #define xeuseuleu_xs_base_member_h
 
+#include "string_output.h"
 #include <memory>
 #include <string>
 
 namespace xsl
 {
-    class string_output;
-
 // =============================================================================
 /** @class  xs_base_member
     @brief  Base from member idiom class
@@ -51,9 +50,14 @@ class xs_base_member
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xs_base_member( const std::string& stylesheet );
-    explicit xs_base_member( std::istream& stylesheet );
-    virtual ~xs_base_member();
+    explicit xs_base_member( const std::string& stylesheet )
+        : output_( new string_output( stylesheet ) )
+    {}
+    explicit xs_base_member( std::istream& stylesheet )
+        : output_( new string_output( stylesheet ) )
+    {}
+    virtual ~xs_base_member()
+    {}
     //@}
 
 private:

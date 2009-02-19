@@ -51,9 +51,16 @@ class file_output : private of_base_member, private transform, public output
 public:
     //! @name Constructors/Destructor
     //@{
-             file_output( const std::string& stylesheet, const std::string& filename );
-             file_output( std::istream& stylesheet, const std::string& filename );
-    virtual ~file_output();
+    file_output( const std::string& stylesheet, const std::string& filename )
+        : of_base_member( filename )
+        , output( os_, stylesheet )
+    {}
+    file_output( std::istream& stylesheet, const std::string& filename )
+        : of_base_member( filename )
+        , output( os_, stylesheet )
+    {}
+    virtual ~file_output()
+    {}
     //@}
 };
 

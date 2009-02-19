@@ -35,8 +35,6 @@
 #include "xeumeuleu/chained_exception.h"
 
 using namespace xsl;
-using namespace XALAN_CPP_NAMESPACE;
-using namespace XERCES_CPP_NAMESPACE;
 
 // -----------------------------------------------------------------------------
 // Name: transform constructor
@@ -50,19 +48,19 @@ transform::transform()
         {
             Initializer()
             {
-                XMLPlatformUtils::Initialize();
-                XalanTransformer::initialize();
+                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Initialize();
+                XALAN_CPP_NAMESPACE::XalanTransformer::initialize();
             }
             ~Initializer()
             {
 #ifdef _MSC_VER // $$$$ MAT : xalan seems to have a problem with cygwin/gcc, not sure why it crashes exactly...
-                XalanTransformer::terminate();
+                XALAN_CPP_NAMESPACE::XalanTransformer::terminate();
 #endif
-                XMLPlatformUtils::Terminate();
+                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Terminate();
             }
         } initializer;
     }
-    catch( const XMLException& e )
+    catch( const XERCES_CPP_NAMESPACE::XMLException& e )
     {
         throw xml::chained_exception( e );
     }

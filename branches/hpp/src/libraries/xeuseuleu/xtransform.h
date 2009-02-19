@@ -34,6 +34,8 @@
 #define xeuseuleu_xtransform_h
 
 #include "buffer.h"
+#include "string_output.h"
+#include "buffer.h"
 
 namespace xsl
 {
@@ -50,28 +52,40 @@ class xtransform
 public:
     //! @name Constructors/Destructor
     //@{
-    virtual ~xtransform();
+    virtual ~xtransform()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    void parameter( const std::string& key, const std::string& expression );
+    void add( const std::string& stylesheet )
+    {
+        buffer_.reset( new buffer( *new string_output( stylesheet ), buffer_ ) );
+    }
+    void add( std::istream& stylesheet )
+    {
+        buffer_.reset( new buffer( *new string_output( stylesheet ), buffer_ ) );
+    }
 
-    void add( const std::string& stylesheet );
-    void add( std::istream& stylesheet );
-
-    void write( const xsl::xbuffertransform& buffer );
+    void write( const xbuffertransform& buffer );
 
     template< typename T > void write( const T& value )
     {
         buffer_.reset( buffer_->apply( value ) );
+    }
+
+    void parameter( const std::string& key, const std::string& expression )
+    {
+        buffer_->parameter( key, expression );
     }
     //@}
 
 protected:
     //! @name Constructors/Destructor
     //@{
-    explicit xtransform( output& output );
+    explicit xtransform( output& output )
+        : buffer_( new buffer( output ) )
+    {}
     //@}
 
 private:
@@ -99,6 +113,16 @@ xtransform& operator<<( xtransform& xt, const T& value )
     return xt;
 }
 
+}
+
+#include "xbuffertransform.h"
+
+namespace xsl
+{
+    inline void xtransform::write( const xbuffertransform& buffer )
+    {
+        buffer.apply( *this );
+    }
 }
 
 #endif // xeuseuleu_xtransform_h

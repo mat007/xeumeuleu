@@ -49,8 +49,11 @@ class of_base_member
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit of_base_member( const std::string& filename );
-    virtual ~of_base_member();
+    explicit of_base_member( const std::string& filename )
+        : os_( filename.c_str() )
+    {}
+    virtual ~of_base_member()
+    {}
     //@}
 
 private:

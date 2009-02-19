@@ -35,6 +35,7 @@
 
 #include "xs_base_member.h"
 #include "xtransform.h"
+#include "string_output.h"
 
 namespace xsl
 {
@@ -53,14 +54,24 @@ class xstringtransform : private xs_base_member, public xtransform
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xstringtransform( const std::string& stylesheet );
-    explicit xstringtransform( std::istream& stylesheet );
-    virtual ~xstringtransform();
+    explicit xstringtransform( const std::string& stylesheet )
+        : xs_base_member( stylesheet )
+        , xtransform( *output_ )
+    {}
+    explicit xstringtransform( std::istream& stylesheet )
+        : xs_base_member( stylesheet )
+        , xtransform( *output_ )
+    {}
+    virtual ~xstringtransform()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    const std::string str() const;
+    const std::string str() const
+    {
+        return output_->str();
+    }
     //@}
 };
 

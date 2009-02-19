@@ -33,6 +33,8 @@
 #ifndef xeuseuleu_output_h
 #define xeuseuleu_output_h
 
+#include "file_output_imp.h"
+#include "buffer_output_imp.h"
 #include "xeumeuleu/xml.h"
 #include <string>
 #include <sstream>
@@ -53,16 +55,28 @@ class output
 public:
     //! @name Constructors/Destructor
     //@{
-    virtual ~output();
+    virtual ~output()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    void parameter( const std::string& key, const std::string& expression );
+    void parameter( const std::string& key, const std::string& expression )
+    {
+        output_->parameter( key, expression );
+    }
 
-    void transform();
+    void transform()
+    {
+        buffer_ << output_->transform( xos_.str() );
+        target_ << buffer_.str();
+    }
 
-    void apply( const output& output );
+    void apply( const output& output )
+    {
+        xml::xistringstream xis( output.buffer_.str() );
+        xos_ << xis;
+    }
 
     template< typename T > void apply( const T& value )
     {
@@ -73,8 +87,14 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    output( std::ostream& target, const std::string& stylesheet );
-    output( std::ostream& target, std::istream& stylesheet );
+    output( std::ostream& target, const std::string& stylesheet )
+        : target_( target )
+        , output_( new file_output_imp( stylesheet ) )
+    {}
+    output( std::ostream& target, std::istream& stylesheet )
+        : target_( target )
+        , output_( new buffer_output_imp( stylesheet ) )
+    {}
     //@}
 
 private:

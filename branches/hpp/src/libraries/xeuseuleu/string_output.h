@@ -51,14 +51,22 @@ class string_output : private os_base_member, private transform, public output
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit string_output( const std::string& stylesheet );
-    explicit string_output( std::istream& stylesheet );
-    virtual ~string_output();
+    explicit string_output( const std::string& stylesheet )
+        : output( os_, stylesheet )
+    {}
+    explicit string_output( std::istream& stylesheet )
+        : output( os_, stylesheet )
+    {}
+    virtual ~string_output()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    const std::string str() const;
+    const std::string str() const
+    {
+        return os_.str();
+    }
     //@}
 };
 

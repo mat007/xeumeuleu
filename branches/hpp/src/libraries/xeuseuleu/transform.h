@@ -33,6 +33,9 @@
 #ifndef xsl_transform_h
 #define xsl_transform_h
 
+#include "xalan.h"
+#include "xeumeuleu/chained_exception.h"
+
 namespace xsl
 {
 // =============================================================================
@@ -43,11 +46,39 @@ namespace xsl
 // =============================================================================
 class transform
 {
+private:
+        struct Initializer
+        {
+            Initializer()
+            {
+                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Initialize();
+                XALAN_CPP_NAMESPACE::XalanTransformer::initialize();
+            }
+            ~Initializer()
+            {
+#ifndef __CYGWIN__ // $$$$ MAT : xalan seems to have a problem with cygwin/gcc, not sure why it crashes exactly...
+                XALAN_CPP_NAMESPACE::XalanTransformer::terminate();
+#endif
+                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Terminate();
+            }
+        };
+
 protected:
     //! @name Constructors/Destructor
     //@{
-             transform();
-    virtual ~transform();
+    transform()
+    {
+        try
+        {
+            static const struct Initializer initializer;
+        }
+        catch( const XERCES_CPP_NAMESPACE::XMLException& e )
+        {
+            throw xml::chained_exception( e );
+        }
+    }
+    virtual ~transform()
+    {}
     //@}
 };
 

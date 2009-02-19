@@ -48,8 +48,11 @@ class exception : public std::runtime_error
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit exception( const std::string& message );
-    virtual ~exception() throw ();
+    explicit exception( const std::string& message )
+        : std::runtime_error( message )
+    {}
+    virtual ~exception() throw ()
+    {}
     //@}
 };
 

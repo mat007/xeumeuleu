@@ -48,8 +48,10 @@ class os_base_member
 public:
     //! @name Constructors/Destructor
     //@{
-             os_base_member();
-    virtual ~os_base_member();
+    os_base_member()
+    {}
+    virtual ~os_base_member()
+    {}
     //@}
 
 private:

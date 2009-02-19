@@ -33,12 +33,11 @@
 #ifndef xeuseuleu_parameter_h
 #define xeuseuleu_parameter_h
 
+#include "xtransform.h"
 #include <string>
 
 namespace xsl
 {
-    class xtransform;
-
 // =============================================================================
 /** @class  parameter
     @brief  Parameter manipulator
@@ -50,13 +49,21 @@ class parameter
 public:
     //! @name Constructors/Destructor
     //@{
-             parameter( const std::string& key, const std::string& expression );
-    virtual ~parameter();
+    parameter( const std::string& key, const std::string& expression )
+        : key_       ( key )
+        , expression_( expression )
+    {}
+    virtual ~parameter()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    xtransform& operator()( xtransform& transform ) const;
+    xtransform& operator()( xtransform& transform ) const
+    {
+        transform.parameter( key_, expression_ );
+        return transform;
+    }
     //@}
 
 private:
@@ -77,7 +84,10 @@ private:
 // Name: operator<<
 // Created: SLI 2007-09-11
 // -----------------------------------------------------------------------------
-xtransform& operator<<( xtransform& transform, const parameter& manipulator );
+inline xtransform& operator<<( xtransform& transform, const parameter& manipulator )
+{
+    return manipulator( transform );
+}
 
 }
 

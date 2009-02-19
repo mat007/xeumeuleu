@@ -48,17 +48,43 @@ class buffer
 public:
     //! @name Constructors/Destructor
     //@{
-             buffer( output& output, std::auto_ptr< buffer > next );
-    explicit buffer( output& output );
-            ~buffer();
+    buffer( output& output, std::auto_ptr< buffer > next )
+        : output_( output )
+        , owned_ ( true )
+        , next_  ( next )
+        , level_ ( 0 )
+    {}
+    explicit buffer( output& output )
+        : output_( output )
+        , owned_ ( false )
+        , level_ ( 0 )
+    {}
+    ~buffer()
+    {
+        if( owned_ )
+            delete &output_;
+    }
     //@}
 
     //! @name Operations
     //@{
-    void parameter( const std::string& key, const std::string& expression );
+    void parameter( const std::string& key, const std::string& expression )
+    {
+        output_.parameter( key, expression );
+    }
 
-    buffer* apply( const xml::start& start );
-    buffer* apply( const xml::end_manipulator& end );
+    buffer* apply( const xml::start& start )
+    {
+        output_.apply( start );
+        ++level_;
+        return this;
+    }
+    buffer* apply( const xml::end_manipulator& end )
+    {
+        output_.apply( end );
+        --level_;
+        return transform();
+    }
 
     template< typename T > buffer* apply( const T& value )
     {
@@ -74,11 +100,25 @@ private:
     buffer& operator=( const buffer& ); //!< Assignment operator
     //@}
 
-private:
     //! @name Helpers
     //@{
-    buffer* transform();
-    buffer* chain();
+    buffer* transform()
+    {
+        if( level_ == 0 )
+        {
+            output_.transform();
+            if( next_.get() )
+                return chain();
+        }
+        return this;
+    }
+    buffer* chain()
+    {
+        buffer* next = next_->apply( output_ );
+        if( next != next_.get() )
+            return next;
+        return next_.release();
+    }
     //@}
 
 private:
