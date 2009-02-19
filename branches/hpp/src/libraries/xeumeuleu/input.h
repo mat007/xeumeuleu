@@ -170,7 +170,7 @@ public:
                 {
                     input i( *child );
                     xistream xis( i );
-                    v.process( trim( translate( child->getNodeName() ) ), xis );
+                    v( trim( translate( child->getNodeName() ) ), xis );
                 }
                 child = child->getNextSibling();
             }
@@ -187,7 +187,7 @@ public:
                     XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( index );
                     input i( *current_ );
                     xistream xis( i );
-                    v.process( trim( translate( attribute->getNodeName() ) ), xis );
+                    v( trim( translate( attribute->getNodeName() ) ), xis );
                 }
             }
         CATCH

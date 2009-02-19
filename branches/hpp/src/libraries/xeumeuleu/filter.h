@@ -58,7 +58,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void process( const std::string& name, xistream& xis ) const
+    virtual void operator()( const std::string& name, xistream& xis ) const
     {
         if( name == name_ )
             functor_( xis );
