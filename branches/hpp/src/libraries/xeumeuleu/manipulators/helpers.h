@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2008, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,43 +30,88 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#ifndef xeumeuleu_helpers_h
+#define xeumeuleu_helpers_h
 
-using namespace mockpp;
+#include <xeumeuleu/streams/xisubstream.h>
+#include <xeumeuleu/manipulators/attribute.h>
+#include <xeumeuleu/manipulators/content.h>
 
-// -----------------------------------------------------------------------------
-// Name: triming_empty_string_is_no_op
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_empty_string_is_no_op )
+namespace xml
 {
-    BOOST_CHECK_EQUAL( "", xml::trim( "" ) );
+
+// -----------------------------------------------------------------------------
+// Name: value
+// Created: MAT 2008-01-19
+// -----------------------------------------------------------------------------
+template< typename T >
+T value( const xistream& xis )
+{
+    T value;
+    xis.read( value );
+    return value;
 }
 
 // -----------------------------------------------------------------------------
-// Name: triming_removes_white_spaces_on_both_sides
-// Created: MCO 2006-01-03
+// Name: value
+// Created: MAT 2008-01-19
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_white_spaces_on_both_sides )
+template< typename T >
+T value( xisubstream xis, const T& defaultValue )
 {
-    BOOST_CHECK_EQUAL( "this is a string", xml::trim( "   this is a string   " ) );
+    T value = defaultValue;
+    xis >> optional() >> value;
+    return value;
 }
 
 // -----------------------------------------------------------------------------
-// Name: triming_removes_carriage_returns_and_line_feeds_on_both_sides
-// Created: MCO 2006-01-03
+// Name: attribute
+// Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_carriage_returns_and_line_feeds_on_both_sides )
+template< typename T >
+T attribute( const xistream& xis, const std::string& name )
 {
-    BOOST_CHECK_EQUAL( "this is\r a\n string", xml::trim( "\r\nthis is\r a\n string\r\n" ) );
+    T value;
+    xis.attribute( name, value );
+    return value;
 }
 
 // -----------------------------------------------------------------------------
-// Name: triming_removes_tabulations_on_both_sides
-// Created: MCO 2006-01-03
+// Name: attribute
+// Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_tabulations_on_both_sides )
+template< typename T >
+T attribute( xisubstream xis, const std::string& name, const T& defaultValue )
 {
-    BOOST_CHECK_EQUAL( "this is\t a string", xml::trim( "\t\tthis is\t a string\t" ) );
+    T value = defaultValue;
+    xis >> optional() >> attribute( name, value );
+    return value;
 }
+
+// -----------------------------------------------------------------------------
+// Name: content
+// Created: MAT 2007-07-11
+// -----------------------------------------------------------------------------
+template< typename T >
+T content( xisubstream xis, const std::string& tag )
+{
+    T value;
+    xis >> content( tag, value );
+    return value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: content
+// Created: MAT 2007-07-11
+// -----------------------------------------------------------------------------
+template< typename T >
+T content( xisubstream xis, const std::string& tag, const T& defaultValue )
+{
+    T value = defaultValue;
+    xis >> optional() >> start( tag ) >> optional() >> value >> end();
+    return value;
+}
+
+}
+
+#endif // xeumeuleu_helpers_h

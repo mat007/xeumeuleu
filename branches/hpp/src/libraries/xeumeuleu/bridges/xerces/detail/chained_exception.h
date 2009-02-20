@@ -30,43 +30,37 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#ifndef xeumeuleu_chained_exception_h
+#define xeumeuleu_chained_exception_h
 
-using namespace mockpp;
+#include <xeumeuleu/streams/exception.h>
+#include <xeumeuleu/bridges/xerces/detail/xerces.h>
+#include <xeumeuleu/bridges/xerces/detail/translate.h>
 
-// -----------------------------------------------------------------------------
-// Name: triming_empty_string_is_no_op
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_empty_string_is_no_op )
+namespace xml
 {
-    BOOST_CHECK_EQUAL( "", xml::trim( "" ) );
+// =============================================================================
+/** @class  chained_exception
+    @brief  Xml chained exception
+*/
+// Created: MAT 2006-01-03
+// =============================================================================
+class chained_exception : public xml::exception
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit chained_exception( const XERCES_CPP_NAMESPACE::XMLException& chained )
+        : xml::exception( translate( chained.getMessage() ) )
+    {}
+    explicit chained_exception( const XERCES_CPP_NAMESPACE::DOMException& chained )
+        : xml::exception( translate( chained.getMessage() ) )
+    {}
+    virtual ~chained_exception() throw ()
+    {}
+    //@}
+};
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: triming_removes_white_spaces_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_white_spaces_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is a string", xml::trim( "   this is a string   " ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_carriage_returns_and_line_feeds_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_carriage_returns_and_line_feeds_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\r a\n string", xml::trim( "\r\nthis is\r a\n string\r\n" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_tabulations_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_tabulations_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\t a string", xml::trim( "\t\tthis is\t a string\t" ) );
-}
+#endif // xeumeuleu_chained_exception_h

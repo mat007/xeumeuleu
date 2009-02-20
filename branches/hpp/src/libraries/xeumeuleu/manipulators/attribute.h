@@ -30,43 +30,101 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#ifndef xeumeuleu_attribute_h
+#define xeumeuleu_attribute_h
 
-using namespace mockpp;
+#include <xeumeuleu/streams/xistream.h>
+#include <xeumeuleu/streams/xostream.h>
+#include <string>
 
-// -----------------------------------------------------------------------------
-// Name: triming_empty_string_is_no_op
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_empty_string_is_no_op )
+namespace xml
 {
-    BOOST_CHECK_EQUAL( "", xml::trim( "" ) );
+// =============================================================================
+/** @class  attribute_manipulator
+    @brief  Attribute manipulator
+*/
+// Created: MAT 2006-01-05
+// =============================================================================
+template< typename T >
+class attribute_manipulator
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    attribute_manipulator( const std::string& name, T& value )
+        : name_ ( name )
+        , value_( value )
+    {}
+    //@}
+
+    //! @name Operators
+    //@{
+    xistream& operator()( xistream& xis ) const
+    {
+        xis.attribute( name_, value_ );
+        return xis;
+    }
+    xostream& operator()( xostream& xos ) const
+    {
+        xos.attribute( name_, value_ );
+        return xos;
+    }
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    attribute_manipulator& operator=( const attribute_manipulator& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string name_;
+    T& value_;
+    //@}
+};
+
+// -----------------------------------------------------------------------------
+// Name: operator>>
+// Created: MAT 2006-01-05
+// -----------------------------------------------------------------------------
+template< typename T >
+xistream& operator>>( xistream& xis, const attribute_manipulator< T >& manipulator )
+{
+    return manipulator( xis );
 }
 
 // -----------------------------------------------------------------------------
-// Name: triming_removes_white_spaces_on_both_sides
-// Created: MCO 2006-01-03
+// Name: operator<<
+// Created: MAT 2006-01-05
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_white_spaces_on_both_sides )
+template< typename T >
+xostream& operator<<( xostream& xos, const attribute_manipulator< T >& manipulator )
 {
-    BOOST_CHECK_EQUAL( "this is a string", xml::trim( "   this is a string   " ) );
+    return manipulator( xos );
 }
 
 // -----------------------------------------------------------------------------
-// Name: triming_removes_carriage_returns_and_line_feeds_on_both_sides
-// Created: MCO 2006-01-03
+// Name: attribute
+// Created: MAT 2006-01-06
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_carriage_returns_and_line_feeds_on_both_sides )
+template< typename T >
+attribute_manipulator< const T > attribute( const std::string& name, const T& value )
 {
-    BOOST_CHECK_EQUAL( "this is\r a\n string", xml::trim( "\r\nthis is\r a\n string\r\n" ) );
+    return attribute_manipulator< const T >( name, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: triming_removes_tabulations_on_both_sides
-// Created: MCO 2006-01-03
+// Name: attribute
+// Created: MAT 2006-01-06
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_tabulations_on_both_sides )
+template< typename T >
+attribute_manipulator< T > attribute( const std::string& name, T& value )
 {
-    BOOST_CHECK_EQUAL( "this is\t a string", xml::trim( "\t\tthis is\t a string\t" ) );
+    return attribute_manipulator< T >( name, value );
 }
+
+}
+
+#endif // xeumeuleu_attribute_h

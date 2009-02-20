@@ -30,43 +30,61 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#ifndef xeumeuleu_xostringstream_h
+#define xeumeuleu_xostringstream_h
 
-using namespace mockpp;
+#include <xeumeuleu/streams/xostream.h>
+#include <xeumeuleu/streams/encoding.h>
+#include <xeumeuleu/bridges/xerces/document.h>
+#include <string>
 
-// -----------------------------------------------------------------------------
-// Name: triming_empty_string_is_no_op
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_empty_string_is_no_op )
+namespace xml
 {
-    BOOST_CHECK_EQUAL( "", xml::trim( "" ) );
+// =============================================================================
+/** @class  xostringstream
+    @brief  Xml string output stream
+    @par    Using example
+    @code
+    xml::xostringstream xos;
+    xml::xostringstream xos( xml::encoding( "UTF-8" );
+    xos << ...;
+    std::string data = xos.str();
+    @endcode
+*/
+// Created: MAT 2006-01-04
+// =============================================================================
+class xostringstream : private document, public xostream
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit xostringstream( const encoding& encoding = encoding() )
+        : xostream( output_ )
+        , output_  ( *document_, *document_ )
+        , encoding_( encoding )
+    {}
+    virtual ~xostringstream()
+    {}
+    //@}
+
+    //! @name Accessors
+    //@{
+    std::string str() const
+    {
+        std::string data;
+        fill( data, encoding_ );
+        return data;
+    }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    output output_;
+    const std::string encoding_;
+    //@}
+};
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: triming_removes_white_spaces_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_white_spaces_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is a string", xml::trim( "   this is a string   " ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_carriage_returns_and_line_feeds_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_carriage_returns_and_line_feeds_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\r a\n string", xml::trim( "\r\nthis is\r a\n string\r\n" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_tabulations_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_tabulations_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\t a string", xml::trim( "\t\tthis is\t a string\t" ) );
-}
+#endif // xeumeuleu_xostringstream_h

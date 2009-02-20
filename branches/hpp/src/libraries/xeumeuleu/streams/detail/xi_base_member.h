@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2007, Mathieu Champlon
+ *   Copyright (c) 2009, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,58 +30,46 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xsl_transform_h
-#define xsl_transform_h
+#ifndef xeumeuleu_xi_base_member_h
+#define xeumeuleu_xi_base_member_h
 
-#include "xalan.h"
-#include <xeumeuleu/bridges/xerces/detail/chained_exception.h>
+#include <xeumeuleu/streams/detail/input_base.h>
+#include <memory>
 
-namespace xsl
+namespace xml
 {
 // =============================================================================
-/** @class  transform
-    @brief  Transform base class
+/** @class  xi_base_member
+    @brief  Base from member idiom base class
 */
-// Created: SLI 2007-07-06
+// Created: MAT 2009-02-18
 // =============================================================================
-class transform
+class xi_base_member
 {
-private:
-        struct Initializer
-        {
-            Initializer()
-            {
-                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Initialize();
-                XALAN_CPP_NAMESPACE::XalanTransformer::initialize();
-            }
-            ~Initializer()
-            {
-#ifndef __CYGWIN__ // $$$$ MAT : xalan seems to have a problem with cygwin/gcc, not sure why it crashes exactly...
-                XALAN_CPP_NAMESPACE::XalanTransformer::terminate();
-#endif
-                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Terminate();
-            }
-        };
-
-protected:
+public:
     //! @name Constructors/Destructor
     //@{
-    transform()
-    {
-        try
-        {
-            static const struct Initializer initializer;
-        }
-        catch( const XERCES_CPP_NAMESPACE::XMLException& e )
-        {
-            throw xml::chained_exception( e );
-        }
-    }
-    virtual ~transform()
+    explicit xi_base_member( std::auto_ptr< input_base > input )
+        : input_( input )
     {}
+    virtual ~xi_base_member()
+    {}
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    xi_base_member( const xi_base_member& );            //!< Copy constructor
+    xi_base_member& operator=( const xi_base_member& ); //!< Assignment operator
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    const std::auto_ptr< input_base > input_;
     //@}
 };
 
 }
 
-#endif // xsl_transform_h
+#endif // xeumeuleu_xi_base_member_h

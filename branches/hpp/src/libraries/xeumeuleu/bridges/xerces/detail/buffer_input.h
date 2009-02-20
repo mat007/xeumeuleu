@@ -30,58 +30,34 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xsl_transform_h
-#define xsl_transform_h
+#ifndef xeumeuleu_buffer_input_h
+#define xeumeuleu_buffer_input_h
 
-#include "xalan.h"
-#include <xeumeuleu/bridges/xerces/detail/chained_exception.h>
+#include <xeumeuleu/bridges/xerces/document.h>
+#include <xeumeuleu/bridges/xerces/input.h>
+#include <xeumeuleu/bridges/xerces/detail/import.h>
 
-namespace xsl
+namespace xml
 {
 // =============================================================================
-/** @class  transform
-    @brief  Transform base class
+/** @class  buffer_input
+    @brief  Buffer input
 */
-// Created: SLI 2007-07-06
+// Created: MCO 2007-04-27
 // =============================================================================
-class transform
+class buffer_input : private document, public input
 {
-private:
-        struct Initializer
-        {
-            Initializer()
-            {
-                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Initialize();
-                XALAN_CPP_NAMESPACE::XalanTransformer::initialize();
-            }
-            ~Initializer()
-            {
-#ifndef __CYGWIN__ // $$$$ MAT : xalan seems to have a problem with cygwin/gcc, not sure why it crashes exactly...
-                XALAN_CPP_NAMESPACE::XalanTransformer::terminate();
-#endif
-                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Terminate();
-            }
-        };
-
-protected:
+public:
     //! @name Constructors/Destructor
     //@{
-    transform()
-    {
-        try
-        {
-            static const struct Initializer initializer;
-        }
-        catch( const XERCES_CPP_NAMESPACE::XMLException& e )
-        {
-            throw xml::chained_exception( e );
-        }
-    }
-    virtual ~transform()
+    explicit buffer_input( const XERCES_CPP_NAMESPACE::DOMNode& root )
+        : input( import( *document_, root, *document_ ) )
+    {}
+    virtual ~buffer_input()
     {}
     //@}
 };
 
 }
 
-#endif // xsl_transform_h
+#endif // xeumeuleu_buffer_input_h
