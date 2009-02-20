@@ -30,31 +30,10 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xml_h
-#define xeumeuleu_xml_h
+#ifndef xeumeuleu_deprecated_xml_h
+#define xeumeuleu_deprecated_xml_h
 
-#include <xeumeuleu/streams/xistringstream.h>
-#include <xeumeuleu/streams/xostringstream.h>
-#include <xeumeuleu/streams/xifstream.h>
-#include <xeumeuleu/streams/xofstream.h>
-#include <xeumeuleu/streams/xobufferstream.h>
-#include <xeumeuleu/streams/xibufferstream.h>
-#include <xeumeuleu/streams/xosubstream.h>
-#include <xeumeuleu/streams/xisubstream.h>
-#include <xeumeuleu/streams/xistreamstream.h>
-#include <xeumeuleu/streams/ximultistream.h>
-#include <xeumeuleu/streams/exception.h>
-#include <xeumeuleu/streams/grammar.h>
-#include <xeumeuleu/manipulators/start.h>
-#include <xeumeuleu/manipulators/end.h>
-#include <xeumeuleu/manipulators/content.h>
-#include <xeumeuleu/manipulators/cdata.h>
-#include <xeumeuleu/manipulators/instruction.h>
-#include <xeumeuleu/manipulators/attribute.h>
-#include <xeumeuleu/manipulators/list.h>
-#include <xeumeuleu/manipulators/name_list.h>
-#include <xeumeuleu/manipulators/attributes.h>
-#include <xeumeuleu/manipulators/optional.h>
-#include <xeumeuleu/manipulators/helpers.h>
+#pragma message( "WARNING : <xeumeuleu/xml.h> is deprecated, use <xeumeuleu/xml.hpp> instead !" )
+#include <xeumeuleu/xml.hpp>
 
-#endif // xeumeuleu_xml_h
+#endif // xeumeuleu_deprecated_xml_h

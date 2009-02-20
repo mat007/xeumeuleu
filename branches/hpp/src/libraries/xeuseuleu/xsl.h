@@ -30,13 +30,10 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_xsl_h
-#define xeuseuleu_xsl_h
+#ifndef xeuseuleu_deprecated_xsl_h
+#define xeuseuleu_deprecated_xsl_h
 
-#include <xeuseuleu/streams/xftransform.h>
-#include <xeuseuleu/streams/xstringtransform.h>
-#include <xeuseuleu/streams/xbuffertransform.h>
-#include <xeuseuleu/streams/exception.h>
-#include <xeuseuleu/manipulators/parameter.h>
+#pragma message( "WARNING : <xeuseuleu/xsl.h> is deprecated, use <xeuseuleu/xsl.hpp> instead !" )
+#include <xeuseuleu/xsl.hpp>
 
-#endif // xeuseuleu_xsl_h
+#endif // xeuseuleu_deprecated_xsl_h
