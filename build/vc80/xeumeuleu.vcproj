@@ -163,110 +163,114 @@
 				RelativePath="..\..\src\libraries\xeumeuleu\xml.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\libraries\xeumeuleu\xml.hpp"
+				>
+			</File>
 			<Filter
 				Name="manipulators"
 				>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\attribute.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\attribute.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\attributes.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\attributes.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\cdata.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\cdata.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\content.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\content.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\end.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\end.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\helpers.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\helpers.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\instruction.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\instruction.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\list.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\list.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\name_list.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\name_list.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\optional.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\optional.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\start.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\start.hpp"
 					>
 				</File>
 				<Filter
 					Name="detail"
 					>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\adapter.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\adapter.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller0.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller0.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller1.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller1.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller2.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller2.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller3.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller3.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller4.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller4.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller5.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\caller5.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\filter.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\filter.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller0.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller0.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller1.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller1.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller2.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller2.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller3.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller3.hpp"
 						>
 					</File>
 				</Filter>
@@ -275,110 +279,110 @@
 				Name="streams"
 				>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\encoding.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\encoding.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\exception.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\exception.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\grammar.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\grammar.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\xibufferstream.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\xibufferstream.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\xifstream.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\xifstream.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\ximultistream.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\ximultistream.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\xistream.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\xistream.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\xistreamstream.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\xistreamstream.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\xistringstream.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\xistringstream.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\xisubstream.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\xisubstream.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\xobufferstream.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\xobufferstream.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\xofstream.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\xofstream.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\xostream.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\xostream.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\xostringstream.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\xostringstream.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\libraries\xeumeuleu\streams\xosubstream.h"
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\xosubstream.hpp"
 					>
 				</File>
 				<Filter
 					Name="detail"
 					>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\branch_input.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\branch_input.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\input_base.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\input_base.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\input_base_context.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\input_base_context.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\input_context.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\input_context.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\input_proxy.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\input_proxy.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\multi_input.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\multi_input.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\null_input.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\null_input.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\optional_input.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\optional_input.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\visitor.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\visitor.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\xi_base_member.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\xi_base_member.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\xo_base_member.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\xo_base_member.hpp"
 						>
 					</File>
 				</Filter>
@@ -390,66 +394,66 @@
 					Name="xerces"
 					>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\document.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\document.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\input.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\input.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\output.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\output.hpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\parser.h"
+						RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\parser.hpp"
 						>
 					</File>
 					<Filter
 						Name="detail"
 						>
 						<File
-							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\beautifier.h"
+							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\beautifier.hpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\buffer_input.h"
+							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\buffer_input.hpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\builder.h"
+							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\builder.hpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\chained_exception.h"
+							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\chained_exception.hpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\error_handler.h"
+							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\error_handler.hpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\import.h"
+							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\import.hpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\locator.h"
+							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\locator.hpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\translate.h"
+							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\translate.hpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\trim.h"
+							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\trim.hpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\xerces.h"
+							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\xerces.hpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\xerces_ptr.h"
+							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\xerces_ptr.hpp"
 							>
 						</File>
 					</Filter>

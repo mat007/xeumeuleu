@@ -2,6 +2,7 @@
 . headers only
 . xml::xostringstream is serialized when calling str()
 . xml::xofstream is written to file when calling flush() or upon destruction
+. xeuseuleu/xsl.h and xeumeuleu/xml.h are deprecated, use xeuseuleu/xsl.hpp and xeumeuleu/xml.hpp instead
 
 1.3.2
 . xml::list and xml::attributes functors can be passed as references to be able to handle an internal state

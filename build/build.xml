@@ -47,10 +47,10 @@
     <target name="export" depends="build" description="export the distribution">
         <deploy>
             <module name="xeumeuleu">
-                <include name="*.h"/>
+                <include name="*.hpp"/>
             </module>
             <module name="xeuseuleu">
-                <include name="*.h"/>
+                <include name="*.hpp"/>
             </module>
         </deploy>
     </target>

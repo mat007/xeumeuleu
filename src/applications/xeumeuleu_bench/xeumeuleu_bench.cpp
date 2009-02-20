@@ -30,7 +30,7 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.hpp>
 #ifdef _MSC_VER
 #   pragma warning( push, 0 )
 #endif

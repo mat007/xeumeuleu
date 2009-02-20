@@ -31,7 +31,7 @@
  */
 
 #include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#include <xeumeuleu/bridges/xerces/detail/trim.hpp>
 
 using namespace mockpp;
 
