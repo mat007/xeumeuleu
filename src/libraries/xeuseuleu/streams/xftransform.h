@@ -30,108 +30,50 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_buffer_h
-#define xeuseuleu_buffer_h
+#ifndef xeuseuleu_xftransform_h
+#define xeuseuleu_xftransform_h
 
-#include "output.h"
-#include <memory>
+#include <xeuseuleu/streams/xtransform.h>
 
 namespace xsl
 {
 // =============================================================================
-/** @class  buffer
-    @brief  Buffer implementation
+/** @class  xftransform
+    @brief  Xsl file transform
+    @par    Using example
+    @code
+    xsl::xftransform xft( "transform.xsl", "output.xml" );
+    @endcode
 */
-// Created: MCO 2007-10-02
+// Created: SLI 2007-09-07
 // =============================================================================
-class buffer
+class xftransform : private transform, public xtransform
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    buffer( std::auto_ptr< output > output, std::auto_ptr< buffer > next )
-        : output_( *output.release() )
-        , owned_ ( true )
-        , next_  ( next )
-        , level_ ( 0 )
+    xftransform( const std::string& stylesheet, const std::string& filename )
+        : xtransform( output_ )
+        , os_    ( filename.c_str() )
+        , output_( os_, stylesheet )
     {}
-    explicit buffer( output& output )
-        : output_( output )
-        , owned_ ( false )
-        , level_ ( 0 )
+    xftransform( std::istream& stylesheet, const std::string& filename )
+        : xtransform( output_ )
+        , os_    ( filename.c_str() )
+        , output_( os_, stylesheet )
     {}
-    ~buffer()
-    {
-        if( owned_ )
-            delete &output_;
-    }
-    //@}
-
-    //! @name Operations
-    //@{
-    void parameter( const std::string& key, const std::string& expression )
-    {
-        output_.parameter( key, expression );
-    }
-
-    buffer* apply( const xml::start& start )
-    {
-        output_.apply( start );
-        ++level_;
-        return this;
-    }
-    buffer* apply( const xml::end_manipulator& end )
-    {
-        output_.apply( end );
-        --level_;
-        return transform();
-    }
-
-    template< typename T > buffer* apply( const T& value )
-    {
-        output_.apply( value );
-        return transform();
-    }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    buffer( const buffer& );            //!< Copy constructor
-    buffer& operator=( const buffer& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    buffer* transform()
-    {
-        if( level_ == 0 )
-        {
-            output_.transform();
-            if( next_.get() )
-                return chain();
-        }
-        return this;
-    }
-    buffer* chain()
-    {
-        buffer* next = next_->apply( output_ );
-        if( next != next_.get() )
-            return next;
-        return next_.release();
-    }
+    virtual ~xftransform()
+    {}
     //@}
 
 private:
     //! @name Member data
     //@{
-    output& output_;
-    bool owned_; // $$$$ MAT : not so great...
-    std::auto_ptr< buffer > next_;
-    unsigned int level_;
+    std::ofstream os_;
+    output output_;
     //@}
 };
 
 }
 
-#endif // xeuseuleu_buffer_h
+#endif // xeuseuleu_xftransform_h

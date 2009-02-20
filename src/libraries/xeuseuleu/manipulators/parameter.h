@@ -30,85 +30,65 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_output_h
-#define xeuseuleu_output_h
+#ifndef xeuseuleu_parameter_h
+#define xeuseuleu_parameter_h
 
-#include "file_output_imp.h"
-#include "buffer_output_imp.h"
-#include "xeumeuleu/xml.h"
+#include <xeuseuleu/streams/xtransform.h>
 #include <string>
-#include <sstream>
-#include <memory>
 
 namespace xsl
 {
-    class output_imp;
-
 // =============================================================================
-/** @class  output
-    @brief  Output base class
+/** @class  parameter
+    @brief  Parameter manipulator
 */
-// Created: SLI 2007-09-10
+// Created: SLI 2007-09-11
 // =============================================================================
-class output
+class parameter
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    output( std::ostream& target, const std::string& stylesheet )
-        : target_( target )
-        , output_( new file_output_imp( stylesheet ) )
+    parameter( const std::string& key, const std::string& expression )
+        : key_       ( key )
+        , expression_( expression )
     {}
-    output( std::ostream& target, std::istream& stylesheet )
-        : target_( target )
-        , output_( new buffer_output_imp( stylesheet ) )
-    {}
-    virtual ~output()
+    virtual ~parameter()
     {}
     //@}
 
     //! @name Operations
     //@{
-    void parameter( const std::string& key, const std::string& expression )
+    xtransform& operator()( xtransform& transform ) const
     {
-        output_->parameter( key, expression );
-    }
-
-    void transform()
-    {
-        buffer_ << output_->transform( xos_.str() );
-        target_ << buffer_.str();
-    }
-
-    void apply( const output& output )
-    {
-        xml::xistringstream xis( output.buffer_.str() );
-        xos_ << xis;
-    }
-
-    template< typename T > void apply( const T& value )
-    {
-        xos_ << value;
+        transform.parameter( key_, expression_ );
+        return transform;
     }
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    output( const output& );            //!< Copy constructor
-    output& operator=( const output& ); //!< Assignment operator
+    parameter& operator=( const parameter& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::ostream& target_;
-    xml::xostringstream xos_;
-    std::ostringstream buffer_;
-    std::auto_ptr< output_imp > output_;
+    const std::string key_;
+    const std::string expression_;
     //@}
 };
 
+// -----------------------------------------------------------------------------
+// Name: operator<<
+// Created: SLI 2007-09-11
+// -----------------------------------------------------------------------------
+inline xtransform& operator<<( xtransform& transform, const parameter& manipulator )
+{
+    return manipulator( transform );
 }
 
-#endif // xeuseuleu_output_h
+}
+
+#endif // xeuseuleu_parameter_h

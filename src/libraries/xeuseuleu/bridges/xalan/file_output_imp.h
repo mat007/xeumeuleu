@@ -30,13 +30,13 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xsl_buffer_output_imp_h
-#define xsl_buffer_output_imp_h
+#ifndef xsl_file_output_imp_h
+#define xsl_file_output_imp_h
 
-#include "output_imp.h"
-#include "exception.h"
-#include "xalan.h"
-#include "xeumeuleu/xml.h"
+#include <xeuseuleu/streams/exception.h>
+#include <xeuseuleu/streams/detail/output_imp.h>
+#include <xeuseuleu/bridges/xalan/xalan.h>
+#include <xeumeuleu/xml.h>
 #include <string>
 #include <vector>
 #include <fstream>
@@ -45,20 +45,23 @@
 namespace xsl
 {
 // =============================================================================
-/** @class  buffer_output_imp
-    @brief  Buffer output implementation
+/** @class  file_output_imp
+    @brief  File output implementation
 */
 // Created: SLI 2007-07-06
 // =============================================================================
-class buffer_output_imp : public output_imp
+class file_output_imp : public output_imp
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit buffer_output_imp( std::istream& stylesheet )
+    explicit file_output_imp( const std::string& stylesheet )
         : stylesheet_( stylesheet )
-    {}
-    virtual ~buffer_output_imp()
+    {
+        if( ! std::ifstream( stylesheet.c_str() ) )
+            throw xsl::exception( "Unable to open style sheet '" + stylesheet + "'" );
+    }
+    virtual ~file_output_imp()
     {}
     //@}
 
@@ -73,13 +76,13 @@ public:
     {
         std::istringstream is( input );
         XALAN_CPP_NAMESPACE::XSLTInputSource in( &is );
-        XALAN_CPP_NAMESPACE::XSLTInputSource xsl( &stylesheet_ );
+        XALAN_CPP_NAMESPACE::XSLTInputSource xsl( stylesheet_.c_str() );
         XALAN_CPP_NAMESPACE::XalanTransformer transformer;
         for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
             transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
         std::ostringstream os;
         if( transformer.transform( in, xsl, os ) )
-            throw xsl::exception( "XSL buffer : " + std::string( transformer.getLastError() ) );
+            throw xsl::exception( stylesheet_ + " : " + transformer.getLastError() );
         return os.str();
     }
     //@}
@@ -94,11 +97,11 @@ private:
 private:
     //! @name Member data
     //@{
-    std::istream& stylesheet_;
+    const std::string stylesheet_;
     T_Parameters parameters_;
     //@}
 };
 
 }
 
-#endif // xsl_buffer_output_imp_h
+#endif // xsl_file_output_imp_h

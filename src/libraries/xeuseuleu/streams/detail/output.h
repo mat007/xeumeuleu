@@ -30,58 +30,85 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xsl_transform_h
-#define xsl_transform_h
+#ifndef xeuseuleu_output_h
+#define xeuseuleu_output_h
 
-#include "xalan.h"
-#include <xeumeuleu/bridges/xerces/detail/chained_exception.h>
+#include <xeuseuleu/bridges/xalan/file_output_imp.h>
+#include <xeuseuleu/bridges/xalan/buffer_output_imp.h>
+#include <xeumeuleu/xml.h>
+#include <string>
+#include <sstream>
+#include <memory>
 
 namespace xsl
 {
-// =============================================================================
-/** @class  transform
-    @brief  Transform base class
-*/
-// Created: SLI 2007-07-06
-// =============================================================================
-class transform
-{
-private:
-        struct Initializer
-        {
-            Initializer()
-            {
-                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Initialize();
-                XALAN_CPP_NAMESPACE::XalanTransformer::initialize();
-            }
-            ~Initializer()
-            {
-#ifndef __CYGWIN__ // $$$$ MAT : xalan seems to have a problem with cygwin/gcc, not sure why it crashes exactly...
-                XALAN_CPP_NAMESPACE::XalanTransformer::terminate();
-#endif
-                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Terminate();
-            }
-        };
+    class output_imp;
 
-protected:
+// =============================================================================
+/** @class  output
+    @brief  Output base class
+*/
+// Created: SLI 2007-09-10
+// =============================================================================
+class output
+{
+public:
     //! @name Constructors/Destructor
     //@{
-    transform()
-    {
-        try
-        {
-            static const struct Initializer initializer;
-        }
-        catch( const XERCES_CPP_NAMESPACE::XMLException& e )
-        {
-            throw xml::chained_exception( e );
-        }
-    }
-    virtual ~transform()
+    output( std::ostream& target, const std::string& stylesheet )
+        : target_( target )
+        , output_( new file_output_imp( stylesheet ) )
     {}
+    output( std::ostream& target, std::istream& stylesheet )
+        : target_( target )
+        , output_( new buffer_output_imp( stylesheet ) )
+    {}
+    virtual ~output()
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    void parameter( const std::string& key, const std::string& expression )
+    {
+        output_->parameter( key, expression );
+    }
+
+    void transform()
+    {
+        buffer_ << output_->transform( xos_.str() );
+        target_ << buffer_.str();
+    }
+
+    void apply( const output& output )
+    {
+        xml::xistringstream xis( output.buffer_.str() );
+        xos_ << xis;
+    }
+
+    template< typename T > void apply( const T& value )
+    {
+        xos_ << value;
+    }
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    output( const output& );            //!< Copy constructor
+    output& operator=( const output& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::ostream& target_;
+    xml::xostringstream xos_;
+    std::ostringstream buffer_;
+    std::auto_ptr< output_imp > output_;
     //@}
 };
 
 }
 
-#endif // xsl_transform_h
+#endif // xeuseuleu_output_h

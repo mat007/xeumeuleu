@@ -30,51 +30,98 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_string_output_h
-#define xeuseuleu_string_output_h
+#ifndef xeuseuleu_xtransform_h
+#define xeuseuleu_xtransform_h
 
-#include "transform.h"
-#include "output.h"
-#include <string>
+#include <xeuseuleu/streams/detail/buffer.h>
+#include <xeuseuleu/streams/detail/string_output.h>
 
 namespace xsl
 {
+    class xbuffertransform;
+
 // =============================================================================
-/** @class  string_output
-    @brief  String output implementation
+/** @class  xtransform
+    @brief  Xsl transform base class
 */
 // Created: SLI 2007-09-10
 // =============================================================================
-class string_output : private transform, public output
+class xtransform
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit string_output( const std::string& stylesheet )
-        : output( os_, stylesheet )
-    {}
-    explicit string_output( std::istream& stylesheet )
-        : output( os_, stylesheet )
-    {}
-    virtual ~string_output()
+    virtual ~xtransform()
     {}
     //@}
 
     //! @name Operations
     //@{
-    std::string str() const
+    void add( const std::string& stylesheet )
     {
-        return os_.str();
+        buffer_.reset( new buffer( std::auto_ptr< output >( new string_output( stylesheet ) ), buffer_ ) );
     }
+    void add( std::istream& stylesheet )
+    {
+        buffer_.reset( new buffer( std::auto_ptr< output >( new string_output( stylesheet ) ), buffer_ ) );
+    }
+
+    void write( const xbuffertransform& buffer );
+
+    template< typename T > void write( const T& value )
+    {
+        buffer_.reset( buffer_->apply( value ) );
+    }
+
+    void parameter( const std::string& key, const std::string& expression )
+    {
+        buffer_->parameter( key, expression );
+    }
+    //@}
+
+protected:
+    //! @name Constructors/Destructor
+    //@{
+    explicit xtransform( output& output )
+        : buffer_( new buffer( output ) )
+    {}
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    xtransform( const xtransform& );            //!< Copy constructor
+    xtransform& operator=( const xtransform& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::ostringstream os_;
+    std::auto_ptr< buffer > buffer_;
     //@}
 };
 
+// -----------------------------------------------------------------------------
+// Name: operator<<
+// Created: MAT 2008-04-04
+// -----------------------------------------------------------------------------
+template< typename T >
+xtransform& operator<<( xtransform& xt, const T& value )
+{
+    xt.write( value );
+    return xt;
 }
 
-#endif // xeuseuleu_string_output_h
+}
+
+#include "xbuffertransform.h"
+
+namespace xsl
+{
+    inline void xtransform::write( const xbuffertransform& buffer )
+    {
+        buffer.apply( *this );
+    }
+}
+
+#endif // xeuseuleu_xtransform_h
