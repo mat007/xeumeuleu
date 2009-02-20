@@ -30,56 +30,108 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_xstringtransform_h
-#define xeuseuleu_xstringtransform_h
+#ifndef xeuseuleu_buffer_h
+#define xeuseuleu_buffer_h
 
-#include "xtransform.h"
-#include "string_output.h"
+#include <xeuseuleu/streams/detail/output.h>
+#include <memory>
 
 namespace xsl
 {
 // =============================================================================
-/** @class  xstringtransform
-    @brief  Xsl string transform
-    @par    Using example
-    @code
-    xsl::xstringtransform xst( "transform.xsl" );
-    @endcode
+/** @class  buffer
+    @brief  Buffer implementation
 */
-// Created: SLI 2007-09-10
+// Created: MCO 2007-10-02
 // =============================================================================
-class xstringtransform : public xtransform
+class buffer
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xstringtransform( const std::string& stylesheet )
-        : xtransform( output_ )
-        , output_( stylesheet )
+    buffer( std::auto_ptr< output > output, std::auto_ptr< buffer > next )
+        : output_( *output.release() )
+        , owned_ ( true )
+        , next_  ( next )
+        , level_ ( 0 )
     {}
-    explicit xstringtransform( std::istream& stylesheet )
-        : xtransform( output_ )
-        , output_( stylesheet )
+    explicit buffer( output& output )
+        : output_( output )
+        , owned_ ( false )
+        , level_ ( 0 )
     {}
-    virtual ~xstringtransform()
-    {}
+    ~buffer()
+    {
+        if( owned_ )
+            delete &output_;
+    }
     //@}
 
     //! @name Operations
     //@{
-    std::string str() const
+    void parameter( const std::string& key, const std::string& expression )
     {
-        return output_.str();
+        output_.parameter( key, expression );
+    }
+
+    buffer* apply( const xml::start& start )
+    {
+        output_.apply( start );
+        ++level_;
+        return this;
+    }
+    buffer* apply( const xml::end_manipulator& end )
+    {
+        output_.apply( end );
+        --level_;
+        return transform();
+    }
+
+    template< typename T > buffer* apply( const T& value )
+    {
+        output_.apply( value );
+        return transform();
+    }
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    buffer( const buffer& );            //!< Copy constructor
+    buffer& operator=( const buffer& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    buffer* transform()
+    {
+        if( level_ == 0 )
+        {
+            output_.transform();
+            if( next_.get() )
+                return chain();
+        }
+        return this;
+    }
+    buffer* chain()
+    {
+        buffer* next = next_->apply( output_ );
+        if( next != next_.get() )
+            return next;
+        return next_.release();
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    string_output output_;
+    output& output_;
+    bool owned_; // $$$$ MAT : not so great...
+    std::auto_ptr< buffer > next_;
+    unsigned int level_;
     //@}
 };
 
 }
 
-#endif // xeuseuleu_xstringtransform_h
+#endif // xeuseuleu_buffer_h

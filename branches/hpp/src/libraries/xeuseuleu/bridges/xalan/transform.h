@@ -30,50 +30,58 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_xftransform_h
-#define xeuseuleu_xftransform_h
+#ifndef xsl_transform_h
+#define xsl_transform_h
 
-#include "xtransform.h"
+#include <xeuseuleu/bridges/xalan/xalan.h>
+#include <xeumeuleu/bridges/xerces/detail/chained_exception.h>
 
 namespace xsl
 {
 // =============================================================================
-/** @class  xftransform
-    @brief  Xsl file transform
-    @par    Using example
-    @code
-    xsl::xftransform xft( "transform.xsl", "output.xml" );
-    @endcode
+/** @class  transform
+    @brief  Transform base class
 */
-// Created: SLI 2007-09-07
+// Created: SLI 2007-07-06
 // =============================================================================
-class xftransform : private transform, public xtransform
+class transform
 {
-public:
+private:
+        struct Initializer
+        {
+            Initializer()
+            {
+                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Initialize();
+                XALAN_CPP_NAMESPACE::XalanTransformer::initialize();
+            }
+            ~Initializer()
+            {
+#ifndef __CYGWIN__ // $$$$ MAT : xalan seems to have a problem with cygwin/gcc, not sure why it crashes exactly...
+                XALAN_CPP_NAMESPACE::XalanTransformer::terminate();
+#endif
+                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Terminate();
+            }
+        };
+
+protected:
     //! @name Constructors/Destructor
     //@{
-    xftransform( const std::string& stylesheet, const std::string& filename )
-        : xtransform( output_ )
-        , os_    ( filename.c_str() )
-        , output_( os_, stylesheet )
+    transform()
+    {
+        try
+        {
+            static const struct Initializer initializer;
+        }
+        catch( const XERCES_CPP_NAMESPACE::XMLException& e )
+        {
+            throw xml::chained_exception( e );
+        }
+    }
+    virtual ~transform()
     {}
-    xftransform( std::istream& stylesheet, const std::string& filename )
-        : xtransform( output_ )
-        , os_    ( filename.c_str() )
-        , output_( os_, stylesheet )
-    {}
-    virtual ~xftransform()
-    {}
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::ofstream os_;
-    output output_;
     //@}
 };
 
 }
 
-#endif // xeuseuleu_xftransform_h
+#endif // xsl_transform_h

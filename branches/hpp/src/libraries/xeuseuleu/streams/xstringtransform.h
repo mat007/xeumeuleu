@@ -30,78 +30,56 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xsl_file_output_imp_h
-#define xsl_file_output_imp_h
+#ifndef xeuseuleu_xstringtransform_h
+#define xeuseuleu_xstringtransform_h
 
-#include "output_imp.h"
-#include "exception.h"
-#include "xalan.h"
-#include "xeumeuleu/xml.h"
-#include <string>
-#include <vector>
-#include <fstream>
-#include <sstream>
+#include <xeuseuleu/streams/xtransform.h>
+#include <xeuseuleu/streams/detail/string_output.h>
 
 namespace xsl
 {
 // =============================================================================
-/** @class  file_output_imp
-    @brief  File output implementation
+/** @class  xstringtransform
+    @brief  Xsl string transform
+    @par    Using example
+    @code
+    xsl::xstringtransform xst( "transform.xsl" );
+    @endcode
 */
-// Created: SLI 2007-07-06
+// Created: SLI 2007-09-10
 // =============================================================================
-class file_output_imp : public output_imp
+class xstringtransform : public xtransform
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit file_output_imp( const std::string& stylesheet )
-        : stylesheet_( stylesheet )
-    {
-        if( ! std::ifstream( stylesheet.c_str() ) )
-            throw xsl::exception( "Unable to open style sheet '" + stylesheet + "'" );
-    }
-    virtual ~file_output_imp()
+    explicit xstringtransform( const std::string& stylesheet )
+        : xtransform( output_ )
+        , output_( stylesheet )
+    {}
+    explicit xstringtransform( std::istream& stylesheet )
+        : xtransform( output_ )
+        , output_( stylesheet )
+    {}
+    virtual ~xstringtransform()
     {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void parameter( const std::string& key, const std::string& expression )
+    std::string str() const
     {
-        parameters_.push_back( std::make_pair( key, "'" + expression + "'" ) );
+        return output_.str();
     }
-
-    virtual const std::string transform( const std::string& input ) const
-    {
-        std::istringstream is( input );
-        XALAN_CPP_NAMESPACE::XSLTInputSource in( &is );
-        XALAN_CPP_NAMESPACE::XSLTInputSource xsl( stylesheet_.c_str() );
-        XALAN_CPP_NAMESPACE::XalanTransformer transformer;
-        for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
-            transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
-        std::ostringstream os;
-        if( transformer.transform( in, xsl, os ) )
-            throw xsl::exception( stylesheet_ + " : " + transformer.getLastError() );
-        return os.str();
-    }
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< std::pair< std::string, std::string > > T_Parameters;
-    typedef T_Parameters::const_iterator                       CIT_Parameters;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string stylesheet_;
-    T_Parameters parameters_;
+    string_output output_;
     //@}
 };
 
 }
 
-#endif // xsl_file_output_imp_h
+#endif // xeuseuleu_xstringtransform_h

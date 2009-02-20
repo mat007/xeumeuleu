@@ -30,98 +30,75 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_xtransform_h
-#define xeuseuleu_xtransform_h
+#ifndef xsl_buffer_output_imp_h
+#define xsl_buffer_output_imp_h
 
-#include "buffer.h"
-#include "string_output.h"
+#include <xeuseuleu/streams/exception.h>
+#include <xeuseuleu/streams/detail/output_imp.h>
+#include <xeuseuleu/bridges/xalan/xalan.h>
+#include <xeumeuleu/xml.h>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <sstream>
 
 namespace xsl
 {
-    class xbuffertransform;
-
 // =============================================================================
-/** @class  xtransform
-    @brief  Xsl transform base class
+/** @class  buffer_output_imp
+    @brief  Buffer output implementation
 */
-// Created: SLI 2007-09-10
+// Created: SLI 2007-07-06
 // =============================================================================
-class xtransform
+class buffer_output_imp : public output_imp
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    virtual ~xtransform()
+    explicit buffer_output_imp( std::istream& stylesheet )
+        : stylesheet_( stylesheet )
+    {}
+    virtual ~buffer_output_imp()
     {}
     //@}
 
     //! @name Operations
     //@{
-    void add( const std::string& stylesheet )
+    virtual void parameter( const std::string& key, const std::string& expression )
     {
-        buffer_.reset( new buffer( std::auto_ptr< output >( new string_output( stylesheet ) ), buffer_ ) );
-    }
-    void add( std::istream& stylesheet )
-    {
-        buffer_.reset( new buffer( std::auto_ptr< output >( new string_output( stylesheet ) ), buffer_ ) );
+        parameters_.push_back( std::make_pair( key, "'" + expression + "'" ) );
     }
 
-    void write( const xbuffertransform& buffer );
-
-    template< typename T > void write( const T& value )
+    virtual const std::string transform( const std::string& input ) const
     {
-        buffer_.reset( buffer_->apply( value ) );
+        std::istringstream is( input );
+        XALAN_CPP_NAMESPACE::XSLTInputSource in( &is );
+        XALAN_CPP_NAMESPACE::XSLTInputSource xsl( &stylesheet_ );
+        XALAN_CPP_NAMESPACE::XalanTransformer transformer;
+        for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+            transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
+        std::ostringstream os;
+        if( transformer.transform( in, xsl, os ) )
+            throw xsl::exception( "XSL buffer : " + std::string( transformer.getLastError() ) );
+        return os.str();
     }
-
-    void parameter( const std::string& key, const std::string& expression )
-    {
-        buffer_->parameter( key, expression );
-    }
-    //@}
-
-protected:
-    //! @name Constructors/Destructor
-    //@{
-    explicit xtransform( output& output )
-        : buffer_( new buffer( output ) )
-    {}
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Types
     //@{
-    xtransform( const xtransform& );            //!< Copy constructor
-    xtransform& operator=( const xtransform& ); //!< Assignment operator
+    typedef std::vector< std::pair< std::string, std::string > > T_Parameters;
+    typedef T_Parameters::const_iterator                       CIT_Parameters;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< buffer > buffer_;
+    std::istream& stylesheet_;
+    T_Parameters parameters_;
     //@}
 };
 
-// -----------------------------------------------------------------------------
-// Name: operator<<
-// Created: MAT 2008-04-04
-// -----------------------------------------------------------------------------
-template< typename T >
-xtransform& operator<<( xtransform& xt, const T& value )
-{
-    xt.write( value );
-    return xt;
 }
 
-}
-
-#include "xbuffertransform.h"
-
-namespace xsl
-{
-    inline void xtransform::write( const xbuffertransform& buffer )
-    {
-        buffer.apply( *this );
-    }
-}
-
-#endif // xeuseuleu_xtransform_h
+#endif // xsl_buffer_output_imp_h

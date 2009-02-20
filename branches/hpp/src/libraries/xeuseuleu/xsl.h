@@ -33,10 +33,10 @@
 #ifndef xeuseuleu_xsl_h
 #define xeuseuleu_xsl_h
 
-#include "xftransform.h"
-#include "xstringtransform.h"
-#include "xbuffertransform.h"
-#include "parameter.h"
-#include "exception.h"
+#include <xeuseuleu/streams/xftransform.h>
+#include <xeuseuleu/streams/xstringtransform.h>
+#include <xeuseuleu/streams/xbuffertransform.h>
+#include <xeuseuleu/streams/exception.h>
+#include <xeuseuleu/manipulators/parameter.h>
 
 #endif // xeuseuleu_xsl_h

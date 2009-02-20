@@ -30,65 +30,51 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_parameter_h
-#define xeuseuleu_parameter_h
+#ifndef xeuseuleu_string_output_h
+#define xeuseuleu_string_output_h
 
-#include "xtransform.h"
+#include <xeuseuleu/streams/detail/output.h>
+#include <xeuseuleu/bridges/xalan/transform.h>
 #include <string>
 
 namespace xsl
 {
 // =============================================================================
-/** @class  parameter
-    @brief  Parameter manipulator
+/** @class  string_output
+    @brief  String output implementation
 */
-// Created: SLI 2007-09-11
+// Created: SLI 2007-09-10
 // =============================================================================
-class parameter
+class string_output : private transform, public output
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    parameter( const std::string& key, const std::string& expression )
-        : key_       ( key )
-        , expression_( expression )
+    explicit string_output( const std::string& stylesheet )
+        : output( os_, stylesheet )
     {}
-    virtual ~parameter()
+    explicit string_output( std::istream& stylesheet )
+        : output( os_, stylesheet )
+    {}
+    virtual ~string_output()
     {}
     //@}
 
     //! @name Operations
     //@{
-    xtransform& operator()( xtransform& transform ) const
+    std::string str() const
     {
-        transform.parameter( key_, expression_ );
-        return transform;
+        return os_.str();
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    parameter& operator=( const parameter& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string key_;
-    const std::string expression_;
+    std::ostringstream os_;
     //@}
 };
 
-// -----------------------------------------------------------------------------
-// Name: operator<<
-// Created: SLI 2007-09-11
-// -----------------------------------------------------------------------------
-inline xtransform& operator<<( xtransform& transform, const parameter& manipulator )
-{
-    return manipulator( transform );
 }
 
-}
-
-#endif // xeuseuleu_parameter_h
+#endif // xeuseuleu_string_output_h
