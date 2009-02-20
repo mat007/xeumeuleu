@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2008, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,43 +30,64 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#ifndef xeumeuleu_instruction_h
+#define xeumeuleu_instruction_h
 
-using namespace mockpp;
+#include <xeumeuleu/streams/xostream.h>
+#include <string>
 
-// -----------------------------------------------------------------------------
-// Name: triming_empty_string_is_no_op
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_empty_string_is_no_op )
+namespace xml
 {
-    BOOST_CHECK_EQUAL( "", xml::trim( "" ) );
+// =============================================================================
+/** @class  instruction
+    @brief  Processing instruction manipulator
+    @par Using example
+    @code
+    xml::xostream& xos = ...;
+    xos << xml::instruction( "xml-stylesheet", "type=\"text/xsl\" href=\"my_stylesheet.xsl\"" );
+    @endcode
+*/
+// Created: MCO 2008-06-17
+// =============================================================================
+class instruction
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    instruction( const std::string& target, const std::string& data )
+        : target_( target )
+        , data_  ( data )
+    {
+        // NOTHING
+    }
+    //@}
+
+    //! @name Operators
+    //@{
+    xostream& operator()( xostream& xos ) const
+    {
+        xos.instruction( target_, data_ );
+        return xos;
+    }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string target_;
+    std::string data_;
+    //@}
+};
+
+// -----------------------------------------------------------------------------
+// Name: operator<<
+// Created: MAT 2006-01-03
+// -----------------------------------------------------------------------------
+inline xostream& operator<<( xostream& xos, const instruction& manipulator )
+{
+    return manipulator( xos );
 }
 
-// -----------------------------------------------------------------------------
-// Name: triming_removes_white_spaces_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_white_spaces_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is a string", xml::trim( "   this is a string   " ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: triming_removes_carriage_returns_and_line_feeds_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_carriage_returns_and_line_feeds_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\r a\n string", xml::trim( "\r\nthis is\r a\n string\r\n" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_tabulations_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_tabulations_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\t a string", xml::trim( "\t\tthis is\t a string\t" ) );
-}
+#endif // xeumeuleu_instruction_h

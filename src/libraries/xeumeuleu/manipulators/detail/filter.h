@@ -30,43 +30,66 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#ifndef xeumeuleu_filter_h
+#define xeumeuleu_filter_h
 
-using namespace mockpp;
+#include <xeumeuleu/streams/xistream.h>
+#include <xeumeuleu/streams/detail/visitor.h>
 
-// -----------------------------------------------------------------------------
-// Name: triming_empty_string_is_no_op
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_empty_string_is_no_op )
+namespace xml
 {
-    BOOST_CHECK_EQUAL( "", xml::trim( "" ) );
+// =============================================================================
+/** @class  filter
+    @brief  Filter
+*/
+// Created: MAT 2006-01-05
+// =============================================================================
+template< typename T >
+class filter : public visitor
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    filter( const std::string& name, T functor )
+        : name_   ( name )
+        , functor_( functor )
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void operator()( const std::string& name, xistream& xis ) const
+    {
+        if( name == name_ )
+            functor_( xis );
+    }
+    //@}
+
+private:
+    //! @name Constructors/Destructor
+    //@{
+    filter& operator=( const filter& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const std::string name_;
+    mutable T functor_;
+    //@}
+};
+
+// -----------------------------------------------------------------------------
+// Name: operator>>
+// Created: MAT 2006-01-03
+// -----------------------------------------------------------------------------
+template< typename T >
+xistream& operator>>( xistream& xis, const filter< T >& manipulator )
+{
+    xis.nodes( manipulator );
+    return xis;
 }
 
-// -----------------------------------------------------------------------------
-// Name: triming_removes_white_spaces_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_white_spaces_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is a string", xml::trim( "   this is a string   " ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: triming_removes_carriage_returns_and_line_feeds_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_carriage_returns_and_line_feeds_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\r a\n string", xml::trim( "\r\nthis is\r a\n string\r\n" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_tabulations_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_tabulations_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\t a string", xml::trim( "\t\tthis is\t a string\t" ) );
-}
+#endif // xeumeuleu_filter_h

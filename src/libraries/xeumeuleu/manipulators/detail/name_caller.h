@@ -30,43 +30,12 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#ifndef xeumeuleu_name_caller_h
+#define xeumeuleu_name_caller_h
 
-using namespace mockpp;
+#include <xeumeuleu/manipulators/detail/name_caller0.h>
+#include <xeumeuleu/manipulators/detail/name_caller1.h>
+#include <xeumeuleu/manipulators/detail/name_caller2.h>
+#include <xeumeuleu/manipulators/detail/name_caller3.h>
 
-// -----------------------------------------------------------------------------
-// Name: triming_empty_string_is_no_op
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_empty_string_is_no_op )
-{
-    BOOST_CHECK_EQUAL( "", xml::trim( "" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_white_spaces_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_white_spaces_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is a string", xml::trim( "   this is a string   " ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_carriage_returns_and_line_feeds_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_carriage_returns_and_line_feeds_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\r a\n string", xml::trim( "\r\nthis is\r a\n string\r\n" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_tabulations_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_tabulations_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\t a string", xml::trim( "\t\tthis is\t a string\t" ) );
-}
+#endif // xeumeuleu_name_caller_h

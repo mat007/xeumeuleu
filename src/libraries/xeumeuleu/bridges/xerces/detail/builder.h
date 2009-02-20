@@ -30,43 +30,53 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#ifndef xeumeuleu_builder_h
+#define xeumeuleu_builder_h
 
-using namespace mockpp;
+#include <xeumeuleu/streams/exception.h>
+#include <xeumeuleu/bridges/xerces/detail/xerces.h>
+#include <xeumeuleu/bridges/xerces/detail/translate.h>
+#include <xeumeuleu/bridges/xerces/detail/locator.h>
 
-// -----------------------------------------------------------------------------
-// Name: triming_empty_string_is_no_op
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_empty_string_is_no_op )
+namespace xml
 {
-    BOOST_CHECK_EQUAL( "", xml::trim( "" ) );
+// =============================================================================
+/** @class  builder
+    @brief  Builder
+*/
+// Created: MAT 2008-11-23
+// =============================================================================
+class builder : public XERCES_CPP_NAMESPACE::DOMBuilderImpl
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit builder( const std::string& uri )
+        : uri_( uri )
+    {}
+    virtual ~builder()
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void startElement( const XERCES_CPP_NAMESPACE::XMLElementDecl& elemDecl, const unsigned int urlId,
+                               const XMLCh* const elemPrefix, const XERCES_CPP_NAMESPACE::RefVectorOf< XERCES_CPP_NAMESPACE::XMLAttr >& attrList,
+                               const unsigned int attrCount, const bool is_empty, const bool is_root )
+    {
+        XERCES_CPP_NAMESPACE::DOMBuilderImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, is_empty, is_root );
+        XERCES_CPP_NAMESPACE::DOMNode* node = getCurrentNode();
+        node->setUserData( translate( "locator" ), new locator( uri_, *getScanner() ), 0 );
+    }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const std::string uri_;
+    //@}
+};
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: triming_removes_white_spaces_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_white_spaces_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is a string", xml::trim( "   this is a string   " ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_carriage_returns_and_line_feeds_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_carriage_returns_and_line_feeds_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\r a\n string", xml::trim( "\r\nthis is\r a\n string\r\n" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_tabulations_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_tabulations_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\t a string", xml::trim( "\t\tthis is\t a string\t" ) );
-}
+#endif // xeumeuleu_builder_h

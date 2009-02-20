@@ -30,43 +30,57 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#ifndef xeumeuleu_ximultistream_h
+#define xeumeuleu_ximultistream_h
 
-using namespace mockpp;
+#include <xeumeuleu/streams/xistream.h>
+#include <xeumeuleu/streams/detail/multi_input.h>
 
-// -----------------------------------------------------------------------------
-// Name: triming_empty_string_is_no_op
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_empty_string_is_no_op )
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable: 4355 )
+#endif
+
+namespace xml
 {
-    BOOST_CHECK_EQUAL( "", xml::trim( "" ) );
+// =============================================================================
+/** @class  ximultistream
+    @brief  Xml input multi-stream
+    @par    Using example
+    @code
+    xml::xistream& xis1 = ...
+    xml::xistream& xis2 = ...
+    xml::ximultistream xims( xis1, xis2 );
+    xims >> ...
+    @endcode
+    @warning the life of the multi-stream must not exceed the life of the underlying wrapped stream.
+*/
+// Created: MAT 2008-01-07
+// =============================================================================
+class ximultistream : public xistream
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    ximultistream( const xistream& xis1, const xistream& xis2 )
+        : xistream( input_ )
+        , input_( xis1.branch( false ), xis2.branch( false ), *this )
+    {}
+    virtual ~ximultistream()
+    {}
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    multi_input input_;
+    //@}
+};
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: triming_removes_white_spaces_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_white_spaces_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is a string", xml::trim( "   this is a string   " ) );
-}
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
-// -----------------------------------------------------------------------------
-// Name: triming_removes_carriage_returns_and_line_feeds_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_carriage_returns_and_line_feeds_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\r a\n string", xml::trim( "\r\nthis is\r a\n string\r\n" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_tabulations_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_tabulations_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\t a string", xml::trim( "\t\tthis is\t a string\t" ) );
-}
+#endif // xeumeuleu_ximultistream_h

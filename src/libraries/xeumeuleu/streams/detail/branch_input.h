@@ -30,58 +30,60 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xsl_transform_h
-#define xsl_transform_h
+#ifndef xeumeuleu_branch_input_h
+#define xeumeuleu_branch_input_h
 
-#include "xalan.h"
-#include <xeumeuleu/bridges/xerces/detail/chained_exception.h>
+#include <xeumeuleu/streams/detail/input_proxy.h>
 
-namespace xsl
+namespace xml
 {
 // =============================================================================
-/** @class  transform
-    @brief  Transform base class
+/** @class  branch_input
+    @brief  Input to handle branch manipulation
 */
-// Created: SLI 2007-07-06
+// Created: MAT 2008-01-07
 // =============================================================================
-class transform
+class branch_input : public input_proxy
 {
-private:
-        struct Initializer
-        {
-            Initializer()
-            {
-                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Initialize();
-                XALAN_CPP_NAMESPACE::XalanTransformer::initialize();
-            }
-            ~Initializer()
-            {
-#ifndef __CYGWIN__ // $$$$ MAT : xalan seems to have a problem with cygwin/gcc, not sure why it crashes exactly...
-                XALAN_CPP_NAMESPACE::XalanTransformer::terminate();
-#endif
-                XERCES_CPP_NAMESPACE::XMLPlatformUtils::Terminate();
-            }
-        };
-
-protected:
+public:
     //! @name Constructors/Destructor
     //@{
-    transform()
-    {
-        try
-        {
-            static const struct Initializer initializer;
-        }
-        catch( const XERCES_CPP_NAMESPACE::XMLException& e )
-        {
-            throw xml::chained_exception( e );
-        }
-    }
-    virtual ~transform()
+    branch_input( input_base& input1, input_base& input2, input_context& context )
+        : input_proxy( input1 )
+        , input1_ ( input1 )
+        , input2_ ( input2 )
+        , context_( context )
+        , level_  ( 0 )
     {}
+    virtual ~branch_input()
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void start( const std::string& tag )
+    {
+        input1_.start( tag );
+        ++level_;
+    }
+    virtual void end()
+    {
+        input1_.end();
+        if( --level_ == 0 )
+            context_.reset( input2_ );
+    }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    input_base& input1_;
+    input_base& input2_;
+    input_context& context_;
+    unsigned int level_;
     //@}
 };
 
 }
 
-#endif // xsl_transform_h
+#endif // xeumeuleu_branch_input_h

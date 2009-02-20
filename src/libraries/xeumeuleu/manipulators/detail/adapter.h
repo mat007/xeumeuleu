@@ -30,43 +30,52 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#ifndef _xeumeuleu_adapter_h_
+#define _xeumeuleu_adapter_h_
 
-using namespace mockpp;
+#include <xeumeuleu/streams/xistream.h>
+#include <xeumeuleu/streams/detail/visitor.h>
 
-// -----------------------------------------------------------------------------
-// Name: triming_empty_string_is_no_op
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_empty_string_is_no_op )
+namespace xml
 {
-    BOOST_CHECK_EQUAL( "", xml::trim( "" ) );
+// =============================================================================
+/** @class  adapter
+    @brief  Adapter
+*/
+// Created: MAT 2007-08-01
+// =============================================================================
+template< typename T >
+class adapter : public visitor
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit adapter( T functor )
+        : functor_( functor )
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void operator()( const std::string& name, xistream& xis ) const
+    {
+        functor_( name, xis );
+    }
+    //@}
+
+private:
+    //! @name Constructors/Destructor
+    //@{
+    adapter& operator=( const adapter& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    mutable T functor_;
+    //@}
+};
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: triming_removes_white_spaces_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_white_spaces_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is a string", xml::trim( "   this is a string   " ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_carriage_returns_and_line_feeds_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_carriage_returns_and_line_feeds_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\r a\n string", xml::trim( "\r\nthis is\r a\n string\r\n" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_tabulations_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_tabulations_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\t a string", xml::trim( "\t\tthis is\t a string\t" ) );
-}
+#endif // _xeumeuleu_adapter_h_

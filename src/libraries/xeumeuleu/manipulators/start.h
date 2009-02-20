@@ -30,43 +30,80 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#ifndef xeumeuleu_start_h
+#define xeumeuleu_start_h
 
-using namespace mockpp;
+#include <xeumeuleu/streams/xistream.h>
+#include <xeumeuleu/streams/xostream.h>
+#include <string>
 
-// -----------------------------------------------------------------------------
-// Name: triming_empty_string_is_no_op
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_empty_string_is_no_op )
+namespace xml
 {
-    BOOST_CHECK_EQUAL( "", xml::trim( "" ) );
+// =============================================================================
+/** @class  start
+    @brief  Start tag manipulator
+    @par    Using example
+    @code
+    xml::xistream& xis = ...;
+    xis >> xml::start( "tag_name" );
+
+    xml::xostream& xos = ...;
+    xos << xml::start( "tag_name" );
+    @endcode
+*/
+// Created: MAT 2006-01-03
+// =============================================================================
+class start
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit start( const std::string& tag )
+        : tag_( tag )
+    {
+        // NOTHING
+    }
+    //@}
+
+    //! @name Operators
+    //@{
+    xistream& operator()( xistream& xis ) const
+    {
+        xis.start( tag_ );
+        return xis;
+    }
+    xostream& operator()( xostream& xos ) const
+    {
+        xos.start( tag_ );
+        return xos;
+    }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string tag_;
+    //@}
+};
+
+// -----------------------------------------------------------------------------
+// Name: operator>>
+// Created: MAT 2006-01-03
+// -----------------------------------------------------------------------------
+inline xistream& operator>>( xistream& xis, const start& manipulator )
+{
+    return manipulator( xis );
 }
 
 // -----------------------------------------------------------------------------
-// Name: triming_removes_white_spaces_on_both_sides
-// Created: MCO 2006-01-03
+// Name: operator<<
+// Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_white_spaces_on_both_sides )
+inline xostream& operator<<( xostream& xos, const start& manipulator )
 {
-    BOOST_CHECK_EQUAL( "this is a string", xml::trim( "   this is a string   " ) );
+    return manipulator( xos );
 }
 
-// -----------------------------------------------------------------------------
-// Name: triming_removes_carriage_returns_and_line_feeds_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_carriage_returns_and_line_feeds_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\r a\n string", xml::trim( "\r\nthis is\r a\n string\r\n" ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: triming_removes_tabulations_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_tabulations_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\t a string", xml::trim( "\t\tthis is\t a string\t" ) );
-}
+#endif // xeumeuleu_start_h

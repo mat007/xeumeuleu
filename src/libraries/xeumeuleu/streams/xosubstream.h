@@ -30,43 +30,48 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#ifndef xeumeuleu_xosubstream_h
+#define xeumeuleu_xosubstream_h
 
-using namespace mockpp;
+#include <xeumeuleu/streams/xostream.h>
+#include <xeumeuleu/streams/detail/xo_base_member.h>
 
-// -----------------------------------------------------------------------------
-// Name: triming_empty_string_is_no_op
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_empty_string_is_no_op )
+namespace xml
 {
-    BOOST_CHECK_EQUAL( "", xml::trim( "" ) );
+// =============================================================================
+/** @class  xosubstream
+    @brief  Xml output sub-stream
+    @par    Using example
+    @code
+    xml::xostream& xos = ...
+    xos << ...
+    xml::xosubstream xoss( xos );
+    xoss << ...
+    xos << ...
+    @endcode
+    @note the constructor is implicit on purpose.
+    @warning the life of the sub-stream must not exceed the life of the underlying wrapped stream.
+*/
+// Created: MAT 2006-03-18
+// =============================================================================
+class xosubstream : private xo_base_member, public xostream
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    xosubstream( xostream& xos )
+        : xo_base_member( xos.branch() )
+        , xostream( *xo_base_member::output_ )
+    {}
+    xosubstream( xosubstream& xoss )
+        : xo_base_member( xoss.branch() )
+        , xostream( *xo_base_member::output_ )
+    {}
+    virtual ~xosubstream()
+    {}
+    //@}
+};
+
 }
 
-// -----------------------------------------------------------------------------
-// Name: triming_removes_white_spaces_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_white_spaces_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is a string", xml::trim( "   this is a string   " ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_carriage_returns_and_line_feeds_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_carriage_returns_and_line_feeds_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\r a\n string", xml::trim( "\r\nthis is\r a\n string\r\n" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: triming_removes_tabulations_on_both_sides
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_tabulations_on_both_sides )
-{
-    BOOST_CHECK_EQUAL( "this is\t a string", xml::trim( "\t\tthis is\t a string\t" ) );
-}
+#endif // xeumeuleu_xosubstream_h

@@ -30,43 +30,110 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/bridges/xerces/detail/trim.h"
+#ifndef xeumeuleu_content_h
+#define xeumeuleu_content_h
 
-using namespace mockpp;
+#include <xeumeuleu/manipulators/start.h>
+#include <xeumeuleu/manipulators/end.h>
+#include <xeumeuleu/manipulators/optional.h>
+#include <string>
 
-// -----------------------------------------------------------------------------
-// Name: triming_empty_string_is_no_op
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_empty_string_is_no_op )
+namespace xml
 {
-    BOOST_CHECK_EQUAL( "", xml::trim( "" ) );
+// =============================================================================
+/** @class  content_manipulator
+    @brief  Content manipulator
+    @par Using example
+    @code
+    xml::xistream& xis = ...;
+    T value;
+    xis >> xml::content( "node", value );
+
+    xml::xostream& xos = ...;
+    T value;
+    xos << xml::content( "node", value );
+    @endcode
+*/
+// Created: MAT 2006-01-03
+// =============================================================================
+template< typename T >
+class content_manipulator
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    content_manipulator( const std::string& tag, T& value )
+        : tag_  ( tag )
+        , value_( value )
+    {}
+    //@}
+
+    //! @name Operators
+    //@{
+    xistream& operator()( xistream& xis ) const
+    {
+        return xis >> start( tag_ ) >> value_ >> end();
+    }
+    xostream& operator()( xostream& xos ) const
+    {
+        return xos << start( tag_ ) << value_ << end();
+    }
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    content_manipulator& operator=( const content_manipulator& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string tag_;
+    T& value_;
+    //@}
+};
+
+// -----------------------------------------------------------------------------
+// Name: operator>>
+// Created: MAT 2006-01-03
+// -----------------------------------------------------------------------------
+template< typename T >
+xistream& operator>>( xistream& xis, const content_manipulator< T >& manipulator )
+{
+    return manipulator( xis );
 }
 
 // -----------------------------------------------------------------------------
-// Name: triming_removes_white_spaces_on_both_sides
-// Created: MCO 2006-01-03
+// Name: operator<<
+// Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_white_spaces_on_both_sides )
+template< typename T >
+xostream& operator<<( xostream& xos, const content_manipulator< T >& manipulator )
 {
-    BOOST_CHECK_EQUAL( "this is a string", xml::trim( "   this is a string   " ) );
+    return manipulator( xos );
 }
 
 // -----------------------------------------------------------------------------
-// Name: triming_removes_carriage_returns_and_line_feeds_on_both_sides
-// Created: MCO 2006-01-03
+// Name: content
+// Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_carriage_returns_and_line_feeds_on_both_sides )
+template< typename T >
+content_manipulator< const T > content( const std::string& tag, const T& value )
 {
-    BOOST_CHECK_EQUAL( "this is\r a\n string", xml::trim( "\r\nthis is\r a\n string\r\n" ) );
+    return content_manipulator< const T >( tag, value );
 }
 
 // -----------------------------------------------------------------------------
-// Name: triming_removes_tabulations_on_both_sides
-// Created: MCO 2006-01-03
+// Name: content
+// Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( triming_removes_tabulations_on_both_sides )
+template< typename T >
+content_manipulator< T > content( const std::string& tag, T& value )
 {
-    BOOST_CHECK_EQUAL( "this is\t a string", xml::trim( "\t\tthis is\t a string\t" ) );
+    return content_manipulator< T >( tag, value );
 }
+
+}
+
+#endif // xeumeuleu_content_h
