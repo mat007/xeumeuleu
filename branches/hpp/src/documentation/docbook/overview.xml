@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE webpage PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<webpage id="overview">
+  <head>
+    <title>Overview</title>
+  </head>
+
+  <section>
+    <title>What is XeuMeuLeu</title>
+    <para>
+      XeuMeuLeu is an open-source cross-platform C++ stream oriented library on
+    top of <ulink url="http://xerces.apache.org/xerces-c">Apache Xerces</ulink>
+    for manipulating <ulink url="http://www.w3.org/XML">XML</ulink> and
+    <ulink url="http://xml.apache.org/xalan-c">Apache Xalan</ulink> for applying
+    <ulink url="http://xmlfr.org/w3c/TR/xslt">XSL</ulink> transformations.
+
+      It aims at hiding complexity by providing an easy means to read, write and transform XML.
+    </para>
+    <para>
+      The following features are available :
+    </para>
+    <itemizedlist>
+      <listitem>source can be a string, a file, a url, any std::istream or an internal buffer</listitem>
+      <listitem>destination can be a string, a file or an internal buffer</listitem>
+      <listitem>encoding can be any of the <ulink url="http://xml.apache.org/xerces-c/faq-parse.html#faq-21">encodings supported by Apache Xerces</ulink></listitem>
+      <listitem>output is formated for human readability</listitem>
+      <listitem>input can be validated against an XML schema definition (XSD)</listitem>
+      <listitem>transformations can be applied using the extensible stylesheet language (XSL)</listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>What XeuMeuLeu is not</title>
+    <para>
+      XeuMeuLeu is not an XML parser as it relies on <ulink url="http://xerces.apache.org/xerces-c">Apache Xerces</ulink> for this.
+    </para>
+    <para>
+      XeuMeuLeu is not an XSLT processor as it relies on <ulink url="http://xml.apache.org/xalan-c">Apache Xalan</ulink> for this.
+    </para>
+    <para>
+      XeuMeuLeu does not turn <ulink url="http://xerces.apache.org/xerces-c">Apache Xerces</ulink> into a pull-parser, XML documents are parsed in memory when a stream is created or flushed to the stream when the document is complete.
+    </para>
+    <para>
+      XeuMeuLeu is not a data-binding framework, it does not automatically (un)serialize objects.
+    </para>
+  </section>
+
+  <section>
+    <title>Why use XeuMeuLeu</title>
+    <para>
+      Because of the following benefits :
+    </para>
+    <itemizedlist>
+      <listitem>the high-level stream oriented design allows to quickly write easy and simple code</listitem>
+      <listitem>the underlying use of <ulink url="http://xerces.apache.org/xerces-c">Apache Xerces</ulink> as well as <ulink url="http://xml.apache.org/xalan-c">Apache Xalan</ulink> ensures a wide range of features</listitem>
+      <listitem>the open-source license guarantees code availability and usability even for commercial applications</listitem>
+      <listitem>the unit tests coverage greatly helps reducing the risk of bugs within the library</listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>What XeuMeuLeu looks like</title>
+    <para>
+      Given the following XML document :
+    </para>
+    <programlisting language="xml"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<document>
+  <element name="my element" />
+  <another-element>my content</another-element>
+</document>]]></programlisting>
+    <para>
+      The code to read it would simply be :
+    </para>
+    <programlisting language="cpp"><![CDATA[#include <xeumeuleu/xml.h>
+
+std::string name, content;
+xml::xifstream xis( "my_document.xml" );
+xis >> xml::start( "document" )
+      >> xml::start( "element" )
+        >> xml::attribute( "name", name )
+      >> xml::end
+      >> xml::content( "another-element", content );]]></programlisting>
+    <para>
+      Writing the same file would be symmetrical :
+    </para>
+    <programlisting language="cpp"><![CDATA[#include <xeumeuleu/xml.h>
+
+xml::xofstream xos( "my_document.xml" );
+xos << xml::start( "document" )
+      << xml::start( "element" )
+        << xml::attribute( "name", "my element" )
+      << xml::end
+      << xml::content( "another-element", "my content" )
+    << xml::end;]]></programlisting>
+    <para>
+      Applying a transformation based for instance on the stylesheet :
+    </para>
+    <programlisting language="xml"><![CDATA[<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:template match="/">
+    <html>
+    <body>
+      <h2>Document</h2>
+      <itemizedlist>
+        <listitem>Element : <xsl:value-of select="document/element/@name"/></listitem>
+        <listitem>Another element : <xsl:value-of select="document/another-element"/></listitem>
+      </itemizedlist>
+    </body>
+    </html>
+  </xsl:template>
+</xsl:stylesheet>
+]]></programlisting>
+    <para>
+      Using the code :
+    </para>
+    <programlisting language="cpp"><![CDATA[#include <xeumeuleu/xsl.h>
+
+xsl::xftransform xft( "stylesheet.xsl", "output.html" );
+xft << xml::start( "document" )
+      << xml::start( "element" )
+        << xml::attribute( "name", "my element" )
+      << xml::end
+      << xml::content( "another-element", "my content" )
+    << xml::end;]]></programlisting>
+    <para>
+      Would output the HTML file :
+    </para>
+    <programlisting language="xml"><![CDATA[<html>
+  <body>
+    <h2>Document</h2>
+    <itemizedlist>
+      <listitem>Element : my element</listitem>
+      <listitem>Another element : my content</listitem>
+    </itemizedlist>
+  </body>
+</html>]]></programlisting>
+    <para>
+      Of course those are a few examples only intended to demonstrate the feel of the library.
+
+      The user manual provides an extensive description of all features.
+    </para>
+  </section>
+
+</webpage>

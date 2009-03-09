@@ -48,9 +48,11 @@
         <deploy>
             <module name="xeumeuleu">
                 <include name="*.hpp"/>
+                <include name="*.h"/>
             </module>
             <module name="xeuseuleu">
                 <include name="*.hpp"/>
+                <include name="*.h"/>
             </module>
         </deploy>
     </target>
@@ -104,20 +106,25 @@
     -->
     <target name="documentation" description="create documentation">
         <cpd-report/>
+        <xslt taskname="cpd" in="${reports.dir}/all_test.xml" out="${doc.dir}/tmp/docbook/tests.xml" extension=".xml" style="${src.dir}/documentation/docbook/boosttest2docbook.xsl"/>
+        <tests-report/>
+        <xslt taskname="tests-report" in="${reports.dir}/${ant.project.name}-cpd.xml" out="${doc.dir}/tmp/docbook/cpd.xml" extension=".xml" style="${src.dir}/documentation/docbook/cpd2docbook.xsl"/>
         <cppncss-report>
             <define name="TRY"/>
             <define name="CATCH"/>
-            <macro name="READ"/>
-            <macro name="WRITE"/>
-            <macro name="ATTRIBUTE"/>
             <macro name="BOOST_CHECK_THROW"/>
             <macro name="BOOST_CHECK_NO_THROW"/>
             <macro name="BOOST_REQUIRE_THROW"/>
             <macro name="BOOST_REQUIRE_NO_THROW"/>
         </cppncss-report>
-        <doxygen-report/>
-        <tests-report/>
-        <forrest/>
+        <xslt taskname="cppncss" in="${reports.dir}/${ant.project.name}-cppncss.xml" out="${doc.dir}/tmp/docbook/cppncss.xml" extension=".xml" style="${src.dir}/documentation/docbook/cppncss2docbook.xsl"/>
+        <delete file="${doc.dir}/reference/xeumeuleu/html/index.html"/>
+        <docbook-website input="${src.dir}/documentation/docbook" script="file:////${src.dir}/documentation/docbook/website.xsl"/>
+        <docbook-extract page="${doc.dir}/reference/xeumeuleu/html/index.html" title="&lt;h1&gt;Reference&lt;/h1&gt;"/>
+        <doxygen-report>
+            <property name="HTML_HEADER" value="${doc.dir}/tmp/docbook/header.html"/>
+            <property name="HTML_FOOTER" value="${doc.dir}/tmp/docbook/footer.html"/>
+        </doxygen-report>
     </target>
 
     <target name="site" depends="documentation" description="deploy web site">

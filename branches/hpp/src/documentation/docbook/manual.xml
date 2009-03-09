@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE webpage PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<webpage id="manual">
+  <head>
+    <title>Manual</title>
+  </head>
+
+    <section id="xml">
+      <title>XML</title>
+      <section id="using-xml">
+        <title>Using the library</title>
+        <para>
+          Only one include statement is necessary :
+        </para>
+        <programlisting language="cpp"><![CDATA[#include <xeumeuleu/xml.h>]]></programlisting>
+        <para>
+          Should an error happen manipulating a stream an exception of type <emphasis>xml::exception</emphasis> which derives from <emphasis>std::exception</emphasis> will be raised.
+        </para>
+        <para>
+          Such an exception can also be raised manually by calling the <emphasis>error</emphasis> method on an <emphasis>xml::xistream</emphasis>.
+          This can be used to decorate a custom error message with the context of the error (file name and/or line and column numbers) if available.
+        </para>
+      </section>
+      <section id="creating-xml">
+        <title>Creating a stream</title>
+        <para>
+          The first step is to create the proper stream depending on the needs.
+        </para>
+        <section id="input-streams-xml">
+          <title>Input streams</title>
+          <para>
+            The following code creates a stream from an XML document contained in an <emphasis>std::string</emphasis> :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::xistringstream xis( string );]]></programlisting>
+          <para>
+            The following code creates a stream from an XML document contained in a file <emphasis>file.xml</emphasis> :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::xifstream xis( "file.xml" );]]></programlisting>
+          <para>
+            The following code creates a stream from an XML document contained in a <emphasis>std::istream</emphasis> :
+          </para>
+          <programlisting language="cpp"><![CDATA[std::istringstream stream( string );
+xml::xistreamstream xis( stream );]]></programlisting>
+          <para>
+            The following code clones a given existing stream <emphasis>xis</emphasis> :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::xibufferstream xibs( xis );]]></programlisting>
+          <para>
+            The purpose of this stream implementation is to bufferize XML in order to read it later.
+          </para>
+          <para>
+            The following code branches a given existing stream <emphasis>xis</emphasis> :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::xisubstream xiss( xis );]]></programlisting>
+          <para>
+            The purpose of this stream implementation is to perform operations on <emphasis>xiss</emphasis> without impacting <emphasis>xis</emphasis>.
+            Obviously the life-time of the sub-stream must not exceed the life-time of the underlying stream.
+          </para>
+          <para>
+            The following code combines two streams <emphasis>xis1</emphasis> and <emphasis>xis2</emphasis> into a single stream :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::ximultistream xis( xis1, xis2 );]]></programlisting>
+          <para>
+            The purpose of this stream implementation is to read from two streams transparently as if there was one stream.
+            If one piece of data is available in both streams, the first one takes precedence, otherwise it is pulled from any of the streams as needed.
+            The life-time of the composite stream must not exceed the life-time of the underlying streams.
+          </para>
+        </section>
+        <section id="output-streams-xml">
+          <title>Output streams</title>
+          <para>
+            The following code creates a stream to write an XML document to an <emphasis>std::string</emphasis> :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::xostringstream xos;]]></programlisting>
+          <para>
+            After the serialization is finished the resulting document can be retrieved :
+          </para>
+          <programlisting language="cpp"><![CDATA[const std::string xml = xos.str();]]></programlisting>
+          <para>
+            The following code creates a stream to write an XML document to a file <emphasis>file.xml</emphasis> :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::xofstream xos( "file.xml" );]]></programlisting>
+          <para>
+            The following code creates a stream to write an XML document to a buffer :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::xobufferstream xobs;]]></programlisting>
+          <para>
+            The purpose of this type of stream is to also be an input stream, therefore the buffer content can be read later back on.
+          </para>
+          <para>
+            The following code branches a given existing stream <emphasis>xos</emphasis> :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::xosubstream xoss( xos );]]></programlisting>
+          <para>
+            The purpose of this stream implementation is to perform operations on <emphasis>xoss</emphasis> without impacting <emphasis>xos</emphasis>.
+            Obviously the life-time of the sub-stream must not exceed the life-time of the underlying stream.
+          </para>
+        </section>
+        <section id="encoding-xml">
+          <title>Encoding</title>
+          <para>
+            By default the encoding type of an input stream will be detected in the document prolog if available, example :
+          </para>
+          <programlisting language="xml"><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
+<element/>]]></programlisting>
+          <para>
+            If no encoding is specified or no prolog is available, the encoding will be assumed to be UTF-8.
+          </para>
+          <para>
+            An output stream will be encoded in UTF-8 by default.
+          </para>
+          <para>
+            The encoding type can be forced at creation time, for example :
+          </para>
+            <programlisting language="cpp"><![CDATA[xml::xostringstream xos( xml::encoding( "UTF-16" ) );]]></programlisting>
+          <para>
+            Or :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::xifstream xis( "file.xml", xml::encoding( "ISO-8859-1" ) );]]></programlisting>
+          <para>
+            For the list of possible encoding values see "<ulink url="http://xml.apache.org/xerces-c/faq-parse.html#faq-21">What encodings are supported by Xerces-C / XML4C?</ulink>".
+          </para>
+        </section>
+        <section id="validation-xml">
+          <title>Validation</title>
+          <para>
+            By default validation will only occur if an XML schema definition (XSD) is specified when creating an input stream :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::xostringstream xos( xml::external_grammar( "example.xsd" ) );]]></programlisting>
+          <para>
+            Multiple schema definitions can also be specified :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::xostringstream xos( xml::external_grammar( "example.xsd test.xsd" ) );]]></programlisting>
+          <para>
+            Sometimes an embedded schema definition has been specified in the document :
+          </para>
+          <programlisting language="xml"><![CDATA[<?xml version="1.0" encoding="UTF-8" ?>
+<element xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="example.xsd" >]]></programlisting>
+          <para>
+            A special <emphasis>internal_grammar</emphasis> has to be used :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::xostringstream xos( xml::internal_grammar() );]]></programlisting>
+          <para>
+            The default behaviour is not to validate against internal schema definitions because it may require an internet connection.
+          </para>
+          <para>
+            Combining internal and external schema validations is not supported.
+          </para>
+        </section>
+      </section>
+      <section id="walking-tree-xml">
+        <title>Walking the tree</title>
+        <para>
+          Elements are (un)serialized in order to process an XML document.
+        </para>
+        <section id="elements-xml">
+          <title>Elements</title>
+          <para>
+            Elements are (un)serialized using <emphasis role="bold">xml::start</emphasis> and <emphasis role="bold">xml::end</emphasis>, for example :
+          </para>
+          <programlisting language="cpp"><![CDATA[xos << xml::start( "element" ) << xml::end;]]></programlisting>
+          <para>
+            An important feature concerning input streams is that when unserializing an element the first available child matching the given name will be pulled.
+            This allows to ignore elements ordering as for the following XML document :
+          </para>
+          <programlisting language="xml"><![CDATA[<root>
+  <first-element/>
+  <second-element/>
+</root>]]></programlisting>
+          <para>
+            The following unserialization code is valid :
+          </para>
+          <programlisting language="cpp"><![CDATA[xis >> xml::start( "root" )
+      >> xml::start( "second-element" ) >> xml::end
+      >> xml::start( "first-element" ) >> xml::end
+    >> xml::end]]></programlisting>
+          <para>
+            Of course as a side effect the following code appears to be also valid :
+          </para>
+          <programlisting language="cpp"><![CDATA[xis >> xml::start( "root" )
+      >> xml::start( "first-element" ) >> xml::end
+      >> xml::start( "first-element" ) >> xml::end
+      >> xml::start( "first-element" ) >> xml::end
+    >> xml::end;]]></programlisting>
+          <para>
+            It is also considered valid for some nodes to be left unserialized and therefore no exception will be raised.
+          </para>
+          <para>
+            An <emphasis role="bold">xml::xistream</emphasis> can also be used as an element in order to be directly copied into an <emphasis role="bold">xml::xostream</emphasis>, for example given the following input :
+          </para>
+          <programlisting language="xml"><![CDATA[<root>
+  <element>
+    <sub-element/>
+  </element>
+</root>]]></programlisting>
+          <para>
+            The following code :
+          </para>
+          <programlisting language="cpp"><![CDATA[xml::xifstream xis( "file.xml" );
+xis >> xml::start( "root" );
+xml::xostringstream xos;
+xos << xis;]]></programlisting>
+          <para>
+            Will result in the following output document :
+          </para>
+          <programlisting language="xml"><![CDATA[<element/>
+  <sub-element/>
+</element>]]></programlisting>
+          <para>
+            Testing the presence of a child element on an input stream can be achieved by :
+          </para>
+          <programlisting language="cpp"><![CDATA[bool has_child = xis.has_child( "element" );]]></programlisting>
+        </section>
+        <section id="list-elements-xml">
+          <title>Lists of elements</title>
+          <para>
+            In order to cope with lists of elements of the same name in input streams <emphasis role="bold">xml::list</emphasis> can be used, for example for the following document :
+          </para>
+          <programlisting language="xml"><![CDATA[<root>
+  <element/>
+  <element/>
+  <element/>
+</root>]]></programlisting>
+          <para>
+            The following code will be used :
+          </para>
+          <programlisting language="cpp"><![CDATA[xis >> xml::start( "root" )
+      >> xml::list( "element", my_instance, &my_class::my_method )
+    >> xml::end;]]></programlisting>
+          <para>
+            Where <emphasis>my_instance</emphasis> is an instance of a functor class <emphasis>my_class</emphasis> which method <emphasis>my_method</emphasis> signature will be :
+          </para>
+          <programlisting language="cpp"><![CDATA[class my_class
+{
+public:
+    void my_method( xistream& xis );
+};]]></programlisting>
+          <para>
+            Note that the functor method can be declared <emphasis>const</emphasis> if needed.
+          </para>
+          <para>
+            For each <emphasis>element</emphasis> the functor method will be called and the stream passed as parameter will be ready to handle the branch as if the corresponding child element had been unserialized.
+            If no child of the given name can be found the functor method will not be called but no exception will be raised.
+          </para>
+          <para>
+            Additionally if custom parameters are needed within the functor method they can be passed to <emphasis role="bold">xml::list</emphasis>, for example :
+          </para>
+          <programlisting language="cpp"><![CDATA[int my_integer = 3;
+std::string my_string = "something";
+xis >> xml::start( "root" )
+      >> xml::list( "element", my_instance, &my_class::my_method, my_integer, my_string )
+    >> xml::end;]]></programlisting>
+          <para>
+            The functor method signature will be expected to be called with the given parameters :
+          </para>
+          <programlisting language="cpp"><![CDATA[class my_class
+{
+public:
+    void my_method( xistream& xis, int my_integer, const std::string& my_string ) const;
+};]]></programlisting>
+          <para>
+            Note that each parameter can be declared <emphasis>const</emphasis> or not depending on the needs.
+          </para>
+          <para>
+            Another version of <emphasis role="bold">xml::list</emphasis> exists which does not take an element name as first parameter, but instead discovers every element and for each one calls a functor with its name.
+            This allows to read an heterogeneous list of elements when the ordering matters, for example with the document :
+          </para>
+          <programlisting language="xml"><![CDATA[<root>
+  <first-element/>
+  <second-element/>
+  <third-element/>
+</root>]]></programlisting>
+          <para>
+            The following code will call a functor for each element :
+          </para>
+          <programlisting language="cpp"><![CDATA[xis >> xml::start( "root" )
+      >> xml::list( my_instance, &my_class::my_method )
+    >> xml::end;]]></programlisting>
+          <para>
+            With the functor method signature being :
+          </para>
+          <programlisting language="cpp"><![CDATA[class my_class
+{
+public:
+    void my_method( const std::string& name, xistream& xis ) const;
+};]]></programlisting>
+        <para>
+          The <emphasis>name</emphasis> argument will be <emphasis>first-element</emphasis>, <emphasis>second-element</emphasis> and then <emphasis>third-element</emphasis> : the order of the calls matches the order of the elements in the document.
+        </para>
+        <para>
+          Additionally STL-style functors are compatible with <emphasis role="bold">xml::list</emphasis>, for instance the function :
+        </para>
+        <programlisting language="cpp"><![CDATA[void my_function( xml::xistream& xis )
+{
+  xis >> ...
+}]]></programlisting>
+        <para>
+          Can be used to read data with :
+        </para>
+        <programlisting language="cpp"><![CDATA[xis >> xml::start( "root" )
+    >> xml::list( "element", &my_function )
+  >> xml::end;]]></programlisting>
+        <para>
+          In the same way, the following functor :
+        </para>
+        <programlisting language="cpp"><![CDATA[class my_functor
+{
+public:
+  void operator()( xml::xistream& xis )
+  {
+    xis >> ...
+  }
+};]]></programlisting>
+        <para>
+          Can be used like this :
+        </para>
+        <programlisting language="cpp"><![CDATA[xis >> xml::start( "root" )
+    >> xml::list( "element", my_functor() )
+  >> xml::end;]]></programlisting>
+        <para>
+          In this case a copy of the functor is made internally.
+        </para>
+        <para>
+          In order to pass the functor by reference the template parameter of <emphasis role="bold">xml::list</emphasis> has to be explicitly specified :
+        </para>
+        <programlisting language="cpp"><![CDATA[my_functor functor;
+xis >> xml::start( "root" )
+      >> xml::list< my_functor& >( "element", functor )
+    >> xml::end;]]></programlisting>
+        </section>
+        <section id="optional-elements-xml">
+          <title>Optional elements</title>
+          <para>
+            If an element is optional in an input stream, <emphasis role="bold">xml::optional</emphasis> can be used during unserialization, for example the following document :
+          </para>
+          <programlisting language="xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<element/>]]></programlisting>
+          <para>
+            Can be unserialized with :
+          </para>
+          <programlisting language="cpp"><![CDATA[xis >> xml::start( "element" )
+      >> xml::optional >> xml::start( "non-existing-child" )
+        >> xml::start( "non-existing-grand-child" )
+        >> xml::attribute( "name", name )
+        >> xml::end
+      >> xml::end
+    >> xml::end;]]></programlisting>
+          <para>
+            No exception will be raised as the whole <emphasis>non-existing-child</emphasis> branch will be skipped.
+            Obviously <emphasis>name</emphasis> will not be read, which points out the fact that when using <emphasis role="bold">xml::optional</emphasis> data should probably be initialized with default values prior to unserialization.
+          </para>
+        </section>
+      </section>
+      <section id="data-xml">
+        <title>Managing data</title>
+        <para>
+          Supported data types are :
+        </para>
+        <itemizedlist>
+          <listitem>std::string</listitem>
+          <listitem>const char* (handled as strings and only for output streams)</listitem>
+          <listitem>bool</listitem>
+          <listitem>short</listitem>
+          <listitem>int</listitem>
+          <listitem>long</listitem>
+          <listitem>long long</listitem>
+          <listitem>float</listitem>
+          <listitem>double</listitem>
+          <listitem>long double</listitem>
+          <listitem>unsigned short</listitem>
+          <listitem>unsigned int</listitem>
+          <listitem>unsigned long</listitem>
+          <listitem>unsigned long long</listitem>
+        </itemizedlist>
+        <section id="contents-xml">
+          <title>Contents</title>
+          <para>
+            The content of an element can be directly (un)serialized, for example :
+          </para>
+          <programlisting language="cpp"><![CDATA[xos << xml::start( "element" )
+      << "the text content of the node"
+    << xml::end;]]></programlisting>
+          <para>
+            Will produce the following XML document :
+          </para>
+          <programlisting language="xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<element>
+  the text content of the node
+</element>]]></programlisting>
+          <para>
+            As convenience <emphasis role="bold">xml::content</emphasis> is a shortcut to manage the previous manipulation in one step, for example :
+          </para>
+          <programlisting language="cpp"><![CDATA[xos << xml::content( "element", "the text content of the node" );]]></programlisting>
+          <para>
+            Will perform the exact same operation.
+          </para>
+          <para>
+            A CDATA section happens to be unserialized transparently either directly or with an <emphasis role="bold">xml::content</emphasis>, however it must be manually serialized, for example :
+          </para>
+          <programlisting language="cpp"><![CDATA[xos << xml::start( "element" )
+        << xml::cdata( "the CDATA section of the node" )
+      << xml::end;]]></programlisting>
+          <para>
+            It is worth noting that <emphasis role="bold">xml::cdata</emphasis> can be used inside an <emphasis role="bold">xml::content</emphasis> :
+          </para>
+          <programlisting language="cpp"><![CDATA[xos << xml::content( "element", xml::cdata( "the CDATA section of the node" ) );]]></programlisting>
+          <para>
+            Reading the content of a node is also possible using the following helper function, either :
+          </para>
+          <programlisting language="cpp"><![CDATA[const std::string result = xml::value< std::string >( xis );]]></programlisting>
+          <para>
+            Or by providing a default value if content is optional :
+          </para>
+          <programlisting language="cpp"><![CDATA[const std::string result = xml::value< std::string >( xis, "a default value" );]]></programlisting>
+          <para>
+            Alternatively another helper function reads the content inside a given node directly :
+          </para>
+          <programlisting language="cpp"><![CDATA[const std::string result = xml::content< std::string >( xis, "element" );]]></programlisting>
+          <para>
+            Or also by providing a default value if the node and/or its content is optional :
+          </para>
+          <programlisting language="cpp"><![CDATA[const std::string result = xml::content( xis, "element", "a default value" );]]></programlisting>
+          <para>
+            Note that the first forms require the template to be explicited whereas the second forms deduce it from the default value parameter type.
+          </para>
+          <para>
+            Testing whether a content is available or not on an input stream can be achieved by :
+          </para>
+          <programlisting language="cpp"><![CDATA[bool has_content = xis.has_content();]]></programlisting>
+        </section>
+        <section id="attributes-xml">
+          <title>Attributes</title>
+          <para>
+            Handling attributes involves using <emphasis role="bold">xml::attribute</emphasis>, for example :
+          </para>
+          <programlisting language="cpp"><![CDATA[xos << xml::start( "element" )
+    << xml::attribute( "name", "the-name" )
+    << xml::end;]]></programlisting>
+          <para>
+            Will produce the following XML document :
+          </para>
+          <programlisting language="xml"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<element name="the-name"/>]]></programlisting>
+          <para>
+            Reading an attribute is also possible in a one line statement, using either :
+          </para>
+          <programlisting language="cpp"><![CDATA[const std::string result = xml::attribute< std::string >( xis, "attribute" );]]></programlisting>
+          <para>
+            Or by providing a default value if the attribute is optional :
+          </para>
+          <programlisting language="cpp"><![CDATA[const std::string result = xml::attribute( xis, "attribute", "a default value" );]]></programlisting>
+          <para>
+            Note that the first version requires the template to be explicited whereas the second version deduces it from the default value parameter type.
+          </para>
+          <para>
+            Testing the presence of an attribute on an input stream can be achieved by :
+          </para>
+          <programlisting language="cpp"><![CDATA[bool has_attribute = xis.has_attribute( "an attribute" );]]></programlisting>
+        </section>
+        <section id="list-attributes-xml">
+          <title>Lists of attributes</title>
+          <para>
+            In the same way as nodes, attributes can also be enumerated, for example given the following document :
+          </para>
+          <programlisting language="xml"><![CDATA[<root first="value 1" second="value 2"/>]]></programlisting>
+          <para>
+            A functor to handle the attributes when their names are unknown at the compile time would be :
+          </para>
+          <programlisting language="cpp"><![CDATA[class my_class
+{
+public:
+    void my_method( const std::string& name, xistream& xis ) const;
+};]]></programlisting>
+          <para>
+            Note that this functor has the exact same signature as the similar <emphasis role="bold">xml::list</emphasis> functor.
+          </para>
+          <para>
+            With <emphasis>my-instance</emphasis> being an object of type <emphasis>my_class</emphasis>, the document can be read by the following piece of code :
+          </para>
+          <programlisting language="cpp"><![CDATA[xis >> xml::start( "root" )
+      >> xml::attributes( my_instance, &my_class::my_method )
+    >> xml::end;]]></programlisting>
+        <para>
+          The functor will be called a first time with <emphasis>name</emphasis> equal to <emphasis>first</emphasis> and a second time with <emphasis>name</emphasis> equal to <emphasis>second</emphasis>.
+          The <emphasis>xis</emphasis> parameter will be an input stream already placed on the <emphasis>root</emphasis> node.
+        </para>
+        <para>
+          Additionally STL-style functors are compatible with <emphasis role="bold">xml::attributes</emphasis>, for instance the function :
+        </para>
+        <programlisting language="cpp"><![CDATA[void my_function( xml::xistream& xis )
+{
+  xis >> ...
+}]]></programlisting>
+        <para>
+          Can be used to read data with :
+        </para>
+        <programlisting language="cpp"><![CDATA[xis >> xml::start( "root" )
+    >> xml::attributes( &my_function )
+  >> xml::end;]]></programlisting>
+        <para>
+          In the same way, the following functor :
+        </para>
+        <programlisting language="cpp"><![CDATA[class my_functor
+{
+public:
+  void operator()( xml::xistream& xis )
+  {
+    xis >> ...
+  }
+};]]></programlisting>
+          <para>
+            Can be used like this :
+          </para>
+          <programlisting language="cpp"><![CDATA[xis >> xml::start( "root" )
+    >> xml::attributes( my_functor() )
+  >> xml::end;]]></programlisting>
+          <para>
+            In this case a copy of the functor is made internally (similarly to most of the STL algorithms).
+          </para>
+          <para>
+            In order to pass the functor by reference the template parameter of <emphasis role="bold">xml::attributes</emphasis> has to be explicitly specified :
+          </para>
+          <programlisting language="cpp"><![CDATA[my_functor functor;
+xis >> xml::start( "root" )
+      >> xml::attributes< my_functor& >( functor )
+    >> xml::end;]]></programlisting>
+        </section>
+        <section id="optional-data-xml">
+          <title>Optional data</title>
+          <para>
+            An optional content can be handled by the <emphasis role="bold">xml::optional</emphasis> feature :
+          </para>
+          <programlisting language="cpp"><![CDATA[xis >> xml::optional >> content;]]></programlisting>
+          <para>
+            The variable <emphasis>content</emphasis> will not be read if the current node does not have any content and no exception will be raised.
+          </para>
+          <para>
+            Just the same way an optional attribute can be skipped silently :
+          </para>
+          <programlisting language="cpp"><![CDATA[xis >> xml::start( "element" )
+      >> xml::optional >> xml::attribute( "name", name )
+    >> xml::end;]]></programlisting>
+          <para>
+            The variable <emphasis>name</emphasis> will not be read if the attribute <emphasis>name</emphasis> does not exist in the XML document and no exception will be raised.
+          </para>
+        </section>
+      </section>
+      <section id="processing-instructions-xml">
+        <title>Processing instructions</title>
+        <para>
+          A processing instruction can be added by the <emphasis role="bold">xml::instruction</emphasis> feature, for instance :
+        </para>
+        <programlisting language="cpp"><![CDATA[xos << xml::instruction( "xml-stylesheet", "type=\"text/xsl\" href=\"my_stylesheet.xsl\"" );]]></programlisting>
+        <para>
+          Will produce the following line in the resulting document's prolog :
+        </para>
+        <programlisting language="xml"><![CDATA[<?xml-stylesheet type="text/xsl" href="my_stylesheet.xsl"?>]]></programlisting>
+        <para>
+          Which effectively associates the document with the given style sheet.
+        </para>
+      </section>
+    </section>
+    <section id="xsl">
+      <title>XSL</title>
+      <section id="using-xsl">
+        <title>Using the library</title>
+        <para>
+          Only one include statement is necessary :
+        </para>
+        <programlisting language="cpp"><![CDATA[#include <xeuseuleu/xsl.h>]]></programlisting>
+        <para>
+          Should an error happen manipulating a transformation an exception of type <emphasis>xsl::exception</emphasis> which derives from <emphasis>std::exception</emphasis> will be raised.
+        </para>
+      </section>
+      <section>
+       <title>Creating a transformation</title>
+       <para>
+          The first step is to create the proper transformation depending on the needs.
+       </para>
+       <para>
+         The following code creates a transformation from an XSL document <emphasis>stylesheet.xsl</emphasis> to write the resulting output to a file <emphasis>output</emphasis> :
+       </para>
+       <programlisting language="cpp"><![CDATA[xsl::xftransform xft( "stylesheet.xsl", "output" );]]></programlisting>
+        <para>
+          The following code creates a transformation from an XSL document <emphasis>stylesheet.xsl</emphasis> to write the resulting output to an <emphasis>std::string</emphasis> :
+        </para>
+        <programlisting language="cpp"><![CDATA[xsl::xstringtransform xst( "stylesheet.xsl" );]]></programlisting>
+        <para>
+          After the transformation is finished the resulting output can be retrieved :
+        </para>
+        <programlisting language="cpp"><![CDATA[const std::string xml = xst.str();]]></programlisting>
+       <para>
+         The following code creates a transformation from an XSL document <emphasis>stylesheet.xsl</emphasis> to write the resulting output in a buffer :
+       </para>
+       <programlisting language="cpp"><![CDATA[xsl::xbuffertransform xbt( "stylesheet.xsl" );]]></programlisting>
+       <para>
+         The purpose of this type of transformation is to chain transformations.
+       </para>
+      </section>
+      <section>
+       <title>Performing a transformation</title>
+       <para>
+         A transformation outputs a result when receiving an XML input.
+         For instance the following code manually injects XML :
+       </para>
+       <programlisting language="cpp"><![CDATA[xsl::xstringtransform xst( "stylesheet.xsl" );
+xst << xml::start( "root" )
+      << xml::content( "element", 42 )
+    << xml::end;]]></programlisting>
+       <para>
+         The transformation is actually performed when the input document is valid and has been completely received, therefore after the <emphasis role="bold">xml::end</emphasis> in this example.
+       </para>
+       <para>
+         The following demonstrates the possibility to directly send an <emphasis role="bold">xml::xistream</emphasis> to be transformed :
+       </para>
+       <programlisting language="cpp"><![CDATA[xsl::xstringtransform xst( "stylesheet.xsl" );
+xml::xistringstream xis(
+  "<root>"
+    "<element/>"
+  "</root>"
+);
+xst << xis;]]></programlisting>
+     </section>
+     <section>
+       <title>Chaining transformations</title>
+       <para>
+         In order to avoid a complex and monolithic stylesheet one solution is to divide it into several smaller stylesheets.
+         The <emphasis role="bold">xsl::xbuffertransform</emphasis> has been introduced specifically for the purpose of applying several transformations one after another.
+       </para>
+       <para>
+         For instance to apply <emphasis>stylesheet-1.xsl</emphasis> then <emphasis>stylesheet-2.xsl</emphasis> :
+       </para>
+       <programlisting language="cpp"><![CDATA[xsl::xstringtransform xst( "stylesheet-2.xsl" );
+xsl::xbuffertransform xbt( "stylesheet-1.xsl" );
+xml::xistringstream xis( "<root/>" );
+xst << xbt << xis;]]></programlisting>
+       <para>
+         The final transformation cannot be an <emphasis role="bold">xsl::xbuffertransform</emphasis>.
+       </para>
+       <para>
+         Moreover the output generated by an <emphasis role="bold">xsl::xbuffertransform</emphasis> must be an XML document because it is handed as input to the next transformation.
+       </para>
+       <para>
+         An <emphasis role="bold">xsl::xbuffertransform</emphasis> can be used as many times as needed, for example :
+       </para>
+       <programlisting language="cpp"><![CDATA[xsl::xstringtransform xst( "stylesheet-2.xsl" );
+xsl::xbuffertransform xbt( "stylesheet-1.xsl" );
+xml::xistringstream xis( "<root/>" );
+xst << xml::start( "root" )
+      << xbt << xis
+      << xbt << xis
+    << xml::end;]]></programlisting>
+     </section>
+     <section>
+       <title>Stylesheet parameters</title>
+       <para>
+         Stylesheet parameters can be defined by using <emphasis role="bold">xsl::parameter</emphasis>, for example with the XSL document being :
+       </para>
+       <programlisting language="cpp"><![CDATA[<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:param name="my-key" select="'default'"/>
+<xsl:template match="/root"/>
+</xsl:stylesheet>]]></programlisting>
+       <para>
+         The following code sets the parameter <emphasis>my-key</emphasis> to <emphasis>expression</emphasis> :
+       </para>
+       <programlisting language="cpp"><![CDATA[xsl::xstringtransform xst( "stylesheet.xsl" );
+xml::xistringstream xis( "<root/>" );
+xst << xsl::parameter( "my-key", "expression" )
+    << xis;]]></programlisting>
+     </section>
+    </section>
+
+
+</webpage>

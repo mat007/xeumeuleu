@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE layout PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<layout>
+  <toc page="dummy.xml" filename="dummy.html">
+    <tocentry page="overview.xml" filename="index.html"/>
+    <tocentry page="manual.xml" filename="manual.html"/>
+    <tocentry page="patterns.xml" filename="patterns.html"/>
+    <tocentry page="license.xml" filename="license.html"/>
+    <tocentry page="installation.xml" filename="installation.html"/>
+    <tocentry id="download" href="http://sourceforge.net/project/showfiles.php?group_id=165394">
+        <title>Download</title>
+    </tocentry>
+    <tocentry id="support" href="http://sourceforge.net/tracker/?group_id=165394">
+        <title>Support</title>
+    </tocentry>
+    <tocentry page="reports.xml" filename="reports.html" tocskip="1">
+      <tocentry page="tests.xml" filename="tests.html"/>
+      <tocentry page="cppncss.xml" filename="cppncss.html"/>
+      <tocentry page="cpd.xml" filename="cpd.html"/>
+      <tocentry page="doxygen.xml" filename="reference/xeumeuleu/html/index.html"/>
+    </tocentry>
+  </toc>
+</layout>
