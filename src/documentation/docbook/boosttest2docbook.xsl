@@ -6,12 +6,10 @@
     <xsl:variable name="tests.summary.percent" select="round($tests.summary/@passed * 10000 div $tests.summary.count) div 100"/>
 
     <xsl:template match="/">
-      <webpage id="tests">
-        <head>
-          <title>Unit Tests</title>
-        </head>
+      <section id="tests">
+        <title>Unit Tests</title>
         <xsl:apply-templates/>
-      </webpage>
+      </section>
     </xsl:template>
 
     <xsl:template match="/TestResult">

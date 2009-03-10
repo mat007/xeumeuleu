@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<article>
+  <title>XeuMeuLeu</title>
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sections/dummy.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sections/overview.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sections/manual.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sections/patterns.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sections/license.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="sections/installation.xml"/>
+  <section id="download">
+    <title>Download</title>
+    <ulink url="http://sourceforge.net/project/showfiles.php?group_id=165394">Download</ulink>
+  </section>
+
+</article>

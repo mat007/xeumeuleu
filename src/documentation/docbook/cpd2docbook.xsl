@@ -6,12 +6,10 @@
   <xsl:variable name="cpd.summary.percent" select="round($cpd.summary/@passed * 10000 div $cpd.summary.count) div 100"/>
 
   <xsl:template match="/">
-    <webpage id="cpd">
-      <head>
-        <title>Copy/Paste Detector</title>
-      </head>
+    <section id="cpd">
+      <title>Copy/Paste Detector</title>
       <xsl:apply-templates/>
-    </webpage>
+    </section>
   </xsl:template>
 
   <xsl:template match="/pmd-cpd">
