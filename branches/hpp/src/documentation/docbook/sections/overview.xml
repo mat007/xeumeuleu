@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE webpage PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
-<webpage id="overview">
-  <head>
-    <title>Overview</title>
-  </head>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<section id="overview">
+  <title>Overview</title>
 
   <section>
     <title>What is XeuMeuLeu</title>
@@ -140,4 +138,4 @@ xft << xml::start( "document" )
     </para>
   </section>
 
-</webpage>
+</section>

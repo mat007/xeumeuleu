@@ -2,12 +2,10 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:template match="/">
-    <webpage id="cppncss">
-      <head>
-        <title>CppNcss Measurement Results</title>
-      </head>
+    <section id="cppncss">
+      <title>CppNcss Measurement Results</title>
       <xsl:apply-templates/>
-    </webpage>
+    </section>
   </xsl:template>
 
   <xsl:template match="/cppncss">

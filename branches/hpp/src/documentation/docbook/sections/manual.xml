@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE webpage PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
-<webpage id="manual">
-  <head>
-    <title>Manual</title>
-  </head>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<section id="manual">
+  <title>Manual</title>
 
     <section id="xml">
       <title>XML</title>
@@ -670,5 +668,4 @@ xst << xsl::parameter( "my-key", "expression" )
      </section>
     </section>
 
-
-</webpage>
+</section>
