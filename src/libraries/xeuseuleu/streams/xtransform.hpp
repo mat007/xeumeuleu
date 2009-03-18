@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_xtransform_h
-#define xeuseuleu_xtransform_h
+#ifndef xeuseuleu_xtransform_hpp
+#define xeuseuleu_xtransform_hpp
 
 #include <xeuseuleu/streams/detail/buffer.hpp>
 #include <xeuseuleu/streams/detail/string_output.hpp>
@@ -124,4 +124,4 @@ namespace xsl
     }
 }
 
-#endif // xeuseuleu_xtransform_h
+#endif // xeuseuleu_xtransform_hpp

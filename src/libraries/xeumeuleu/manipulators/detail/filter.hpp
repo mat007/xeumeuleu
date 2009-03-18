@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_filter_h
-#define xeumeuleu_filter_h
+#ifndef xeumeuleu_filter_hpp
+#define xeumeuleu_filter_hpp
 
 #include <xeumeuleu/streams/xistream.hpp>
 #include <xeumeuleu/streams/detail/visitor.hpp>
@@ -92,4 +92,4 @@ xistream& operator>>( xistream& xis, const filter< T >& manipulator )
 
 }
 
-#endif // xeumeuleu_filter_h
+#endif // xeumeuleu_filter_hpp

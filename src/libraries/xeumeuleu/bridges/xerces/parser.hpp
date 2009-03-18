@@ -30,13 +30,13 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_parser_h
-#define xeumeuleu_parser_h
+#ifndef xeumeuleu_parser_hpp
+#define xeumeuleu_parser_hpp
 
 #include <xeumeuleu/streams/exception.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
-#include <xeumeuleu/bridges/xerces/detail/error_handler.hpp>
+#include <xeumeuleu/bridges/xerces/detail/error_hppandler.hpp>
 
 namespace xml
 {
@@ -71,7 +71,7 @@ public:
     //@{
     XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source )
     {
-        error_handler errorHandler;
+        error_hppandler errorHandler;
         builder_.setErrorHandler( &errorHandler );
         XERCES_CPP_NAMESPACE::Wrapper4InputSource input( &source, false );
         XERCES_CPP_NAMESPACE::DOMDocument* document = builder_.parse( input );
@@ -115,4 +115,4 @@ private:
 
 }
 
-#endif // xeumeuleu_parser_h
+#endif // xeumeuleu_parser_hpp

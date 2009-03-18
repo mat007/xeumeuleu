@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_output_h
-#define xeuseuleu_output_h
+#ifndef xeuseuleu_output_hpp
+#define xeuseuleu_output_hpp
 
 #include <xeuseuleu/bridges/xalan/file_output_imp.hpp>
 #include <xeuseuleu/bridges/xalan/buffer_output_imp.hpp>
@@ -111,4 +111,4 @@ private:
 
 }
 
-#endif // xeuseuleu_output_h
+#endif // xeuseuleu_output_hpp

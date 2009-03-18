@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_helpers_h
-#define xeumeuleu_helpers_h
+#ifndef xeumeuleu_hppelpers_hpp
+#define xeumeuleu_hppelpers_hpp
 
 #include <xeumeuleu/streams/xisubstream.hpp>
 #include <xeumeuleu/manipulators/attribute.hpp>
@@ -114,4 +114,4 @@ T content( xisubstream xis, const std::string& tag, const T& defaultValue )
 
 }
 
-#endif // xeumeuleu_helpers_h
+#endif // xeumeuleu_hppelpers_hpp

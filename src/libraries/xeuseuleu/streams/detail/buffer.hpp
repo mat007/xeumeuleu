@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_buffer_h
-#define xeuseuleu_buffer_h
+#ifndef xeuseuleu_buffer_hpp
+#define xeuseuleu_buffer_hpp
 
 #include <xeuseuleu/streams/detail/output.hpp>
 #include <memory>
@@ -134,4 +134,4 @@ private:
 
 }
 
-#endif // xeuseuleu_buffer_h
+#endif // xeuseuleu_buffer_hpp

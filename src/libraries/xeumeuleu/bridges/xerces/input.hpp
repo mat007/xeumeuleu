@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_input_h
-#define xeumeuleu_input_h
+#ifndef xeumeuleu_input_hpp
+#define xeumeuleu_input_hpp
 
 #include <xeumeuleu/streams/xistream.hpp>
 #include <xeumeuleu/streams/exception.hpp>
@@ -356,4 +356,4 @@ namespace xml
 #undef TRY
 #undef CATCH
 
-#endif // xeumeuleu_input_h
+#endif // xeumeuleu_input_hpp

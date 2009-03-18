@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_xsl_h
-#define xeuseuleu_xsl_h
+#ifndef xeuseuleu_xsl_hpp
+#define xeuseuleu_xsl_hpp
 
 #include <xeuseuleu/streams/xftransform.hpp>
 #include <xeuseuleu/streams/xstringtransform.hpp>
@@ -39,4 +39,4 @@
 #include <xeuseuleu/streams/exception.hpp>
 #include <xeuseuleu/manipulators/parameter.hpp>
 
-#endif // xeuseuleu_xsl_h
+#endif // xeuseuleu_xsl_hpp

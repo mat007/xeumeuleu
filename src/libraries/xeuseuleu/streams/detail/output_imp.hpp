@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xsl_output_imp_h
-#define xsl_output_imp_h
+#ifndef xsl_output_imp_hpp
+#define xsl_output_imp_hpp
 
 #include <string>
 
@@ -69,4 +69,4 @@ private:
 
 }
 
-#endif // xsl_output_imp_h
+#endif // xsl_output_imp_hpp

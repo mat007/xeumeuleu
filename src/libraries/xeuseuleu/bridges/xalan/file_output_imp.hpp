@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xsl_file_output_imp_h
-#define xsl_file_output_imp_h
+#ifndef xsl_file_output_imp_hpp
+#define xsl_file_output_imp_hpp
 
 #include <xeuseuleu/streams/exception.hpp>
 #include <xeuseuleu/streams/detail/output_imp.hpp>
@@ -104,4 +104,4 @@ private:
 
 }
 
-#endif // xsl_file_output_imp_h
+#endif // xsl_file_output_imp_hpp

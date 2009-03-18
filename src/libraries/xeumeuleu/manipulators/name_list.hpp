@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_name_list_h
-#define xeumeuleu_name_list_h
+#ifndef xeumeuleu_name_list_hpp
+#define xeumeuleu_name_list_hpp
 
 #include <xeumeuleu/manipulators/detail/adapter.hpp>
 #include <xeumeuleu/manipulators/detail/name_caller.hpp>
@@ -159,4 +159,4 @@ list_name_manipulator< const_name_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > 
 
 }
 
-#endif // xeumeuleu_name_list_h
+#endif // xeumeuleu_name_list_hpp

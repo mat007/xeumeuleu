@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_adapter_h_
-#define _xeumeuleu_adapter_h_
+#ifndef _xeumeuleu_adapter_hpp_
+#define _xeumeuleu_adapter_hpp_
 
 #include <xeumeuleu/streams/xistream.hpp>
 #include <xeumeuleu/streams/detail/visitor.hpp>
@@ -78,4 +78,4 @@ private:
 
 }
 
-#endif // _xeumeuleu_adapter_h_
+#endif // _xeumeuleu_adapter_hpp_

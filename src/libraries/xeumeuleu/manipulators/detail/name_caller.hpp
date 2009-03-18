@@ -30,12 +30,12 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_name_caller_h
-#define xeumeuleu_name_caller_h
+#ifndef xeumeuleu_name_caller_hpp
+#define xeumeuleu_name_caller_hpp
 
 #include <xeumeuleu/manipulators/detail/name_caller0.hpp>
 #include <xeumeuleu/manipulators/detail/name_caller1.hpp>
 #include <xeumeuleu/manipulators/detail/name_caller2.hpp>
 #include <xeumeuleu/manipulators/detail/name_caller3.hpp>
 
-#endif // xeumeuleu_name_caller_h
+#endif // xeumeuleu_name_caller_hpp

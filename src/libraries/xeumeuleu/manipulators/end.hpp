@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_end_h
-#define xeumeuleu_end_h
+#ifndef xeumeuleu_end_hpp
+#define xeumeuleu_end_hpp
 
 #include <xeumeuleu/streams/xistream.hpp>
 #include <xeumeuleu/streams/xostream.hpp>
@@ -103,4 +103,4 @@ inline xostream& operator<<( xostream& xos, const end_manipulator& manipulator )
 
 }
 
-#endif // xeumeuleu_end_h
+#endif // xeumeuleu_end_hpp

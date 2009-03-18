@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_list_h
-#define xeumeuleu_list_h
+#ifndef xeumeuleu_list_hpp
+#define xeumeuleu_list_hpp
 
 #include <xeumeuleu/manipulators/detail/filter.hpp>
 #include <xeumeuleu/manipulators/detail/caller.hpp>
@@ -199,4 +199,4 @@ list_manipulator< const_caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, 
 
 }
 
-#endif // xeumeuleu_list_h
+#endif // xeumeuleu_list_hpp

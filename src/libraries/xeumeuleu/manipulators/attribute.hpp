@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_attribute_h
-#define xeumeuleu_attribute_h
+#ifndef xeumeuleu_attribute_hpp
+#define xeumeuleu_attribute_hpp
 
 #include <xeumeuleu/streams/xistream.hpp>
 #include <xeumeuleu/streams/xostream.hpp>
@@ -127,4 +127,4 @@ attribute_manipulator< T > attribute( const std::string& name, T& value )
 
 }
 
-#endif // xeumeuleu_attribute_h
+#endif // xeumeuleu_attribute_hpp

@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_attributes_h
-#define xeumeuleu_attributes_h
+#ifndef xeumeuleu_attributes_hpp
+#define xeumeuleu_attributes_hpp
 
 #include <xeumeuleu/manipulators/detail/adapter.hpp>
 #include <xeumeuleu/manipulators/detail/name_caller.hpp>
@@ -139,4 +139,4 @@ attributes_manipulator< const_name_caller2< T, Arg1&, T1, Arg2&, T2 > > attribut
 
 }
 
-#endif // xeumeuleu_attributes_h
+#endif // xeumeuleu_attributes_hpp

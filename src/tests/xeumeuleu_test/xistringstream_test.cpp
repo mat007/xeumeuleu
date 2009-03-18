@@ -338,10 +338,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_huge_xml_is_valid
+// Name: reading_hppuge_xml_is_valid
 // Created: AGE 2007-10-22
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_huge_xml_is_valid )
+BOOST_AUTO_TEST_CASE( reading_hppuge_xml_is_valid )
 {
     my_class reader;
     {

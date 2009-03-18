@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_import_h
-#define xeumeuleu_import_h
+#ifndef xeumeuleu_import_hpp
+#define xeumeuleu_import_hpp
 
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/locator.hpp>
@@ -88,4 +88,4 @@ namespace detail
     }
 }
 
-#endif // xeumeuleu_import_h
+#endif // xeumeuleu_import_hpp

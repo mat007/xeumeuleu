@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xostream_h
-#define xeumeuleu_xostream_h
+#ifndef xeumeuleu_xostream_hpp
+#define xeumeuleu_xostream_hpp
 
 #include <xeumeuleu/bridges/xerces/output.hpp>
 #include <string>
@@ -149,4 +149,4 @@ namespace xml
     }
 }
 
-#endif // xeumeuleu_xostream_h
+#endif // xeumeuleu_xostream_hpp

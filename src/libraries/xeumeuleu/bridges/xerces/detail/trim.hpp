@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_trim_h
-#define xeumeuleu_trim_h
+#ifndef xeumeuleu_trim_hpp
+#define xeumeuleu_trim_hpp
 
 #include <string>
 
@@ -46,4 +46,4 @@ namespace xml
     }
 }
 
-#endif // xeumeuleu_trim_h
+#endif // xeumeuleu_trim_hpp

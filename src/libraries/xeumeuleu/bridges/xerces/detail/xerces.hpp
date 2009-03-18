@@ -30,11 +30,11 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xerces_h
-#define xeumeuleu_xerces_h
+#ifndef xeumeuleu_xerces_hpp
+#define xeumeuleu_xerces_hpp
 
 #ifdef __GNUC__
-#   pragma GCC system_header
+#   pragma GCC system_hppeader
 #endif
 
 #include <xercesc/dom/DOM.hpp>
@@ -56,4 +56,4 @@
 #include <xercesc/validators/common/Grammar.hpp>
 #include <xercesc/internal/XMLScanner.hpp>
 
-#endif // xeumeuleu_xerces_h
+#endif // xeumeuleu_xerces_hpp

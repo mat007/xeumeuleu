@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xsl_transform_h
-#define xsl_transform_h
+#ifndef xsl_transform_hpp
+#define xsl_transform_hpp
 
 #include <xeuseuleu/bridges/xalan/xalan.hpp>
 #include <xeumeuleu/bridges/xerces/detail/chained_exception.hpp>
@@ -84,4 +84,4 @@ protected:
 
 }
 
-#endif // xsl_transform_h
+#endif // xsl_transform_hpp

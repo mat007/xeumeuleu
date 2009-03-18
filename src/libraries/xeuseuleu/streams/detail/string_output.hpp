@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_string_output_h
-#define xeuseuleu_string_output_h
+#ifndef xeuseuleu_string_output_hpp
+#define xeuseuleu_string_output_hpp
 
 #include <xeuseuleu/streams/detail/output.hpp>
 #include <xeuseuleu/bridges/xalan/transform.hpp>
@@ -77,4 +77,4 @@ private:
 
 }
 
-#endif // xeuseuleu_string_output_h
+#endif // xeuseuleu_string_output_hpp
