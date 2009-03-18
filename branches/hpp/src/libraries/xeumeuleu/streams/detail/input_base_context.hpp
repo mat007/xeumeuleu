@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_input_base_context_h
-#define xeumeuleu_input_base_context_h
+#ifndef xeumeuleu_input_base_context_hpp
+#define xeumeuleu_input_base_context_hpp
 
 #include <xeumeuleu/streams/detail/input_proxy.hpp>
 #include <xeumeuleu/streams/detail/multi_input.hpp>
@@ -75,4 +75,4 @@ private:
 #   pragma warning( pop )
 #endif
 
-#endif // xeumeuleu_input_base_context_h
+#endif // xeumeuleu_input_base_context_hpp

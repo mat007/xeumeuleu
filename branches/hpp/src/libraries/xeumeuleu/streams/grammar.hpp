@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_grammar_h
-#define xeumeuleu_grammar_h
+#ifndef xeumeuleu_grammar_hpp
+#define xeumeuleu_grammar_hpp
 
 #include <xeumeuleu/bridges/xerces/parser.hpp>
 #include <string>
@@ -146,4 +146,4 @@ public:
 
 }
 
-#endif // xeumeuleu_grammar_h
+#endif // xeumeuleu_grammar_hpp

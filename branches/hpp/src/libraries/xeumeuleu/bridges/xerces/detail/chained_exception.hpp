@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_chained_exception_h
-#define xeumeuleu_chained_exception_h
+#ifndef xeumeuleu_chained_exception_hpp
+#define xeumeuleu_chained_exception_hpp
 
 #include <xeumeuleu/streams/exception.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
@@ -63,4 +63,4 @@ public:
 
 }
 
-#endif // xeumeuleu_chained_exception_h
+#endif // xeumeuleu_chained_exception_hpp

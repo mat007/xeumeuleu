@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xobufferstream_h
-#define xeumeuleu_xobufferstream_h
+#ifndef xeumeuleu_xobufferstream_hpp
+#define xeumeuleu_xobufferstream_hpp
 
 #include <xeumeuleu/streams/xistream.hpp>
 #include <xeumeuleu/streams/xostream.hpp>
@@ -75,4 +75,4 @@ private:
 
 }
 
-#endif // xeumeuleu_xobufferstream_h
+#endif // xeumeuleu_xobufferstream_hpp

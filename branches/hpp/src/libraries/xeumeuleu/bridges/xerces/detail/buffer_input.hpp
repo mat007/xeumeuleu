@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_buffer_input_h
-#define xeumeuleu_buffer_input_h
+#ifndef xeumeuleu_buffer_input_hpp
+#define xeumeuleu_buffer_input_hpp
 
 #include <xeumeuleu/bridges/xerces/document.hpp>
 #include <xeumeuleu/bridges/xerces/input.hpp>
@@ -60,4 +60,4 @@ public:
 
 }
 
-#endif // xeumeuleu_buffer_input_h
+#endif // xeumeuleu_buffer_input_hpp

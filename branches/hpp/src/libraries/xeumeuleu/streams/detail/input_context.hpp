@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_input_context_h
-#define xeumeuleu_input_context_h
+#ifndef xeumeuleu_input_context_hpp
+#define xeumeuleu_input_context_hpp
 
 namespace xml
 {
@@ -67,4 +67,4 @@ private:
 
 }
 
-#endif // xeumeuleu_input_context_h
+#endif // xeumeuleu_input_context_hpp

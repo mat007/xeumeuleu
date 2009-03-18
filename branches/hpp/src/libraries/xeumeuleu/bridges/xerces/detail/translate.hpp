@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_translate_h
-#define xeumeuleu_translate_h
+#ifndef xeumeuleu_translate_hpp
+#define xeumeuleu_translate_hpp
 
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <string>
@@ -123,4 +123,4 @@ inline std::string operator+( const translate& tr, const std::string& str )
 
 }
 
-#endif // xeumeuleu_translate_h
+#endif // xeumeuleu_translate_hpp

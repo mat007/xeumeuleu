@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xistream_h
-#define xeumeuleu_xistream_h
+#ifndef xeumeuleu_xistream_hpp
+#define xeumeuleu_xistream_hpp
 
 #include <xeumeuleu/streams/detail/input_context.hpp>
 #include <xeumeuleu/streams/detail/input_base.hpp>
@@ -198,4 +198,4 @@ namespace xml
     }
 }
 
-#endif // xeumeuleu_xistream_h
+#endif // xeumeuleu_xistream_hpp

@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_multi_input_h
-#define xeumeuleu_multi_input_h
+#ifndef xeumeuleu_multi_input_hpp
+#define xeumeuleu_multi_input_hpp
 
 #include <xeumeuleu/streams/detail/input_base.hpp>
 #include <xeumeuleu/streams/detail/input_context.hpp>
@@ -202,4 +202,4 @@ namespace xml
     }
 }
 
-#endif // xeumeuleu_multi_input_h
+#endif // xeumeuleu_multi_input_hpp

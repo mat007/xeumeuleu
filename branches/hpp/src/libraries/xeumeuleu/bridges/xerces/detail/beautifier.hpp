@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_beautifier_h
-#define xeumeuleu_beautifier_h
+#ifndef xeumeuleu_beautifier_hpp
+#define xeumeuleu_beautifier_hpp
 
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
@@ -133,4 +133,4 @@ private:
 
 }
 
-#endif // xeumeuleu_beautifier_h
+#endif // xeumeuleu_beautifier_hpp

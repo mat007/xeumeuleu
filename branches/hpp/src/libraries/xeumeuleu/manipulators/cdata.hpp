@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_cdata_h
-#define xeumeuleu_cdata_h
+#ifndef xeumeuleu_cdata_hpp
+#define xeumeuleu_cdata_hpp
 
 #include <xeumeuleu/streams/xistream.hpp>
 #include <string>
@@ -92,4 +92,4 @@ inline xostream& operator<<( xostream& xos, const cdata& manipulator )
 
 }
 
-#endif // xeumeuleu_cdata_h
+#endif // xeumeuleu_cdata_hpp

@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_optional_h
-#define xeumeuleu_optional_h
+#ifndef xeumeuleu_optional_hpp
+#define xeumeuleu_optional_hpp
 
 #include <xeumeuleu/streams/xistream.hpp>
 
@@ -88,4 +88,4 @@ inline xistream& operator>>( xistream& xis, const optional_manipulator& manipula
 
 }
 
-#endif // xeumeuleu_optional_h
+#endif // xeumeuleu_optional_hpp

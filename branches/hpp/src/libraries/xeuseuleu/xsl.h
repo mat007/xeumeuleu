@@ -30,10 +30,10 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_deprecated_xsl_h
-#define xeuseuleu_deprecated_xsl_h
+#ifndef xeuseuleu_deprecated_xsl_hpp
+#define xeuseuleu_deprecated_xsl_hpp
 
 #pragma message( "WARNING : <xeuseuleu/xsl.h> is deprecated, use <xeuseuleu/xsl.hpp> instead !" )
 #include <xeuseuleu/xsl.hpp>
 
-#endif // xeuseuleu_deprecated_xsl_h
+#endif // xeuseuleu_deprecated_xsl_hpp

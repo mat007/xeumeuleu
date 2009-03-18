@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_content_h
-#define xeumeuleu_content_h
+#ifndef xeumeuleu_content_hpp
+#define xeumeuleu_content_hpp
 
 #include <xeumeuleu/manipulators/start.hpp>
 #include <xeumeuleu/manipulators/end.hpp>
@@ -136,4 +136,4 @@ content_manipulator< T > content( const std::string& tag, T& value )
 
 }
 
-#endif // xeumeuleu_content_h
+#endif // xeumeuleu_content_hpp

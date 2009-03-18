@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_caller0_h
-#define xeumeuleu_caller0_h
+#ifndef xeumeuleu_caller0_hpp
+#define xeumeuleu_caller0_hpp
 
 namespace xml
 {
@@ -131,4 +131,4 @@ private:
 
 }
 
-#endif // xeumeuleu_caller0_h
+#endif // xeumeuleu_caller0_hpp

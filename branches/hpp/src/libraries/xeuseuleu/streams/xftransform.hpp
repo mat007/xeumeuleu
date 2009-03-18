@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_xftransform_h
-#define xeuseuleu_xftransform_h
+#ifndef xeuseuleu_xftransform_hpp
+#define xeuseuleu_xftransform_hpp
 
 #include <xeuseuleu/streams/xtransform.hpp>
 
@@ -76,4 +76,4 @@ private:
 
 }
 
-#endif // xeuseuleu_xftransform_h
+#endif // xeuseuleu_xftransform_hpp

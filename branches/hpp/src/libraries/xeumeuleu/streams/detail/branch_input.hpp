@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_branch_input_h
-#define xeumeuleu_branch_input_h
+#ifndef xeumeuleu_branch_input_hpp
+#define xeumeuleu_branch_input_hpp
 
 #include <xeumeuleu/streams/detail/input_proxy.hpp>
 
@@ -86,4 +86,4 @@ private:
 
 }
 
-#endif // xeumeuleu_branch_input_h
+#endif // xeumeuleu_branch_input_hpp

@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_test_pch_h
-#define xeuseuleu_test_pch_h
+#ifndef xeuseuleu_test_pch_hpp
+#define xeuseuleu_test_pch_hpp
 
 #ifdef _MSC_VER
 #   pragma warning( disable : 4355 )
@@ -41,7 +41,7 @@
 #   endif
 #   pragma warning( push, 0 )
 #elif defined __GNUC__
-#   pragma GCC system_header
+#   pragma GCC system_hppeader
 #endif
 
 #include <boost/test/auto_unit_test.hpp>
@@ -62,4 +62,4 @@
 
 const std::string BOOST_RESOLVE( const std::string& filename );
 
-#endif // xeuseuleu_test_pch_h
+#endif // xeuseuleu_test_pch_hpp

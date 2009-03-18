@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_null_input_h
-#define xeumeuleu_null_input_h
+#ifndef xeumeuleu_null_input_hpp
+#define xeumeuleu_null_input_hpp
 
 #include <xeumeuleu/streams/exception.hpp>
 #include <xeumeuleu/streams/detail/input_base.hpp>
@@ -154,4 +154,4 @@ private:
 
 }
 
-#endif // xeumeuleu_optional_input_h
+#endif // xeumeuleu_optional_input_hpp

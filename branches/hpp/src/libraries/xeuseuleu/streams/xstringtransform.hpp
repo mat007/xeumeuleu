@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeuseuleu_xstringtransform_h
-#define xeuseuleu_xstringtransform_h
+#ifndef xeuseuleu_xstringtransform_hpp
+#define xeuseuleu_xstringtransform_hpp
 
 #include <xeuseuleu/streams/xtransform.hpp>
 #include <xeuseuleu/streams/detail/string_output.hpp>
@@ -82,4 +82,4 @@ private:
 
 }
 
-#endif // xeuseuleu_xstringtransform_h
+#endif // xeuseuleu_xstringtransform_hpp

@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xi_base_member_h
-#define xeumeuleu_xi_base_member_h
+#ifndef xeumeuleu_xi_base_member_hpp
+#define xeumeuleu_xi_base_member_hpp
 
 #include <xeumeuleu/streams/detail/input_base.hpp>
 #include <memory>
@@ -72,4 +72,4 @@ protected:
 
 }
 
-#endif // xeumeuleu_xi_base_member_h
+#endif // xeumeuleu_xi_base_member_hpp

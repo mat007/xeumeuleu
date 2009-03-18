@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_input_proxy_h
-#define xeumeuleu_input_proxy_h
+#ifndef xeumeuleu_input_proxy_hpp
+#define xeumeuleu_input_proxy_hpp
 
 #include <xeumeuleu/streams/detail/input_base.hpp>
 #include <xeumeuleu/streams/detail/input_context.hpp>
@@ -151,4 +151,4 @@ private:
 
 }
 
-#endif // xeumeuleu_input_proxy_h
+#endif // xeumeuleu_input_proxy_hpp

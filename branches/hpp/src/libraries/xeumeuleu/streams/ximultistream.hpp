@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_ximultistream_h
-#define xeumeuleu_ximultistream_h
+#ifndef xeumeuleu_ximultistream_hpp
+#define xeumeuleu_ximultistream_hpp
 
 #include <xeumeuleu/streams/xistream.hpp>
 #include <xeumeuleu/streams/detail/multi_input.hpp>
@@ -83,4 +83,4 @@ private:
 #   pragma warning( pop )
 #endif
 
-#endif // xeumeuleu_ximultistream_h
+#endif // xeumeuleu_ximultistream_hpp

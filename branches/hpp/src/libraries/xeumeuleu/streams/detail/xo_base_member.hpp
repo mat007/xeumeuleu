@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xo_base_member_h
-#define xeumeuleu_xo_base_member_h
+#ifndef xeumeuleu_xo_base_member_hpp
+#define xeumeuleu_xo_base_member_hpp
 
 #include <xeumeuleu/bridges/xerces/output.hpp>
 #include <memory>
@@ -72,4 +72,4 @@ protected:
 
 }
 
-#endif // xeumeuleu_xo_base_member_h
+#endif // xeumeuleu_xo_base_member_hpp

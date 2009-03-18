@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_output_h
-#define xeumeuleu_output_h
+#ifndef xeumeuleu_output_hpp
+#define xeumeuleu_output_hpp
 
 #include <xeumeuleu/streams/exception.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
@@ -235,4 +235,4 @@ private:
 #undef TRY
 #undef CATCH
 
-#endif // xeumeuleu_output_h
+#endif // xeumeuleu_output_hpp

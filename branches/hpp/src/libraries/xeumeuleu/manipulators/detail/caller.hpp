@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_caller_h
-#define xeumeuleu_caller_h
+#ifndef xeumeuleu_caller_hpp
+#define xeumeuleu_caller_hpp
 
 #include <xeumeuleu/manipulators/detail/caller0.hpp>
 #include <xeumeuleu/manipulators/detail/caller1.hpp>
@@ -40,4 +40,4 @@
 #include <xeumeuleu/manipulators/detail/caller4.hpp>
 #include <xeumeuleu/manipulators/detail/caller5.hpp>
 
-#endif // xeumeuleu_caller_h
+#endif // xeumeuleu_caller_hpp
