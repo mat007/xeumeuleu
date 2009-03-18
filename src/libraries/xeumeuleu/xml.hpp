@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xml_h
-#define xeumeuleu_xml_h
+#ifndef xeumeuleu_xml_hpp
+#define xeumeuleu_xml_hpp
 
 #include <xeumeuleu/streams/xistringstream.hpp>
 #include <xeumeuleu/streams/xostringstream.hpp>
@@ -57,4 +57,4 @@
 #include <xeumeuleu/manipulators/optional.hpp>
 #include <xeumeuleu/manipulators/helpers.hpp>
 
-#endif // xeumeuleu_xml_h
+#endif // xeumeuleu_xml_hpp

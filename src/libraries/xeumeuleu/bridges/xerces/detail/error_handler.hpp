@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_error_hppandler_hpp
-#define xeumeuleu_error_hppandler_hpp
+#ifndef xeumeuleu_error_handler_hpp
+#define xeumeuleu_error_handler_hpp
 
 #include <xeumeuleu/streams/exception.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
@@ -41,19 +41,19 @@
 namespace xml
 {
 // =============================================================================
-/** @class  error_hppandler
+/** @class  error_handler
     @brief  Error handler
 */
 // Created: MAT 2006-01-03
 // =============================================================================
-class error_hppandler : public XERCES_CPP_NAMESPACE::DOMErrorHandler
+class error_handler : public XERCES_CPP_NAMESPACE::DOMErrorHandler
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    error_hppandler()
+    error_handler()
     {}
-    virtual ~error_hppandler()
+    virtual ~error_handler()
     {}
     //@}
 
@@ -82,4 +82,4 @@ private:
 
 }
 
-#endif // xeumeuleu_error_hppandler_hpp
+#endif // xeumeuleu_error_handler_hpp

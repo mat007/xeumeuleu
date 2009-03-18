@@ -36,7 +36,7 @@
 #include <xeumeuleu/streams/exception.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
-#include <xeumeuleu/bridges/xerces/detail/error_hppandler.hpp>
+#include <xeumeuleu/bridges/xerces/detail/error_handler.hpp>
 
 namespace xml
 {
@@ -71,7 +71,7 @@ public:
     //@{
     XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source )
     {
-        error_hppandler errorHandler;
+        error_handler errorHandler;
         builder_.setErrorHandler( &errorHandler );
         XERCES_CPP_NAMESPACE::Wrapper4InputSource input( &source, false );
         XERCES_CPP_NAMESPACE::DOMDocument* document = builder_.parse( input );
