@@ -40,7 +40,7 @@
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces_ptr.hpp>
 #include <xeumeuleu/bridges/xerces/detail/chained_exception.hpp>
-#include <xeumeuleu/bridges/xerces/detail/error_hppandler.hpp>
+#include <xeumeuleu/bridges/xerces/detail/error_handler.hpp>
 #include <xeumeuleu/bridges/xerces/detail/beautifier.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/locator.hpp>
@@ -109,7 +109,7 @@ private:
         if( ! impl )
             throw xml::exception( "Internal error in 'document::write' : DOMImplementation 'LS' not found" );
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMWriter > writer( *dynamic_cast< XERCES_CPP_NAMESPACE::DOMImplementationLS* >( impl )->createDOMWriter() );
-        error_hppandler handler;
+        error_handler handler;
         writer->setErrorHandler( &handler );
         writer->setEncoding( translate( encoding ) );
         writer->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMWRTFormatPrettyPrint, true );

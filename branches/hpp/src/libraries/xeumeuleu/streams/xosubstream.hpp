@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xosubstream_h
-#define xeumeuleu_xosubstream_h
+#ifndef xeumeuleu_xosubstream_hpp
+#define xeumeuleu_xosubstream_hpp
 
 #include <xeumeuleu/streams/xostream.hpp>
 #include <xeumeuleu/streams/detail/xo_base_member.hpp>
@@ -74,4 +74,4 @@ public:
 
 }
 
-#endif // xeumeuleu_xosubstream_h
+#endif // xeumeuleu_xosubstream_hpp

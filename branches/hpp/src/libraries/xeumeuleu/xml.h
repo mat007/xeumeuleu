@@ -30,10 +30,10 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_deprecated_xml_h
-#define xeumeuleu_deprecated_xml_h
+#ifndef xeumeuleu_xml_h
+#define xeumeuleu_xml_h
 
 #pragma message( "WARNING : <xeumeuleu/xml.h> is deprecated, use <xeumeuleu/xml.hpp> instead !" )
 #include <xeumeuleu/xml.hpp>
 
-#endif // xeumeuleu_deprecated_xml_h
+#endif // xeumeuleu_xml_h
