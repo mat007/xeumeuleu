@@ -93,6 +93,21 @@ public:
     void read( unsigned long long& value ) const { input_->read( value ); }
     void read( xostream& xos ) const;
 
+    xistream& operator>>( std::string& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( bool& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( short& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( int& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( long& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( long long& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( float& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( double& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( long double& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( unsigned short& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( unsigned int& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( unsigned long& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( unsigned long long& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( xostream& xos );
+
     std::auto_ptr< input_base > branch( bool clone ) const
     {
         return input_->branch( clone );
@@ -176,18 +191,8 @@ private:
 #   pragma warning( pop )
 #endif
 
-// -----------------------------------------------------------------------------
-// Name: operator>>
-// Created: MAT 2008-01-19
-// -----------------------------------------------------------------------------
-template< typename T >
-xistream& operator>>( xistream& xis, T& value )
-{
-    xis.read( value );
-    return xis;
 }
 
-}
 #include <xeumeuleu/streams/xostream.hpp>
 
 namespace xml
@@ -195,6 +200,11 @@ namespace xml
     inline void xistream::read( xostream& xos ) const
     {
         xos.write( *this );
+    }
+    inline xistream& xistream::operator>>( xostream& xos )
+    {
+        xos.write( *this );
+        return *this;
     }
 }
 
