@@ -3,12 +3,13 @@
 . xml::xostringstream is serialized when calling str()
 . xml::xofstream is written to file when calling flush() or upon destruction
 . xeuseuleu/xsl.h and xeumeuleu/xml.h are deprecated, use xeuseuleu/xsl.hpp and xeumeuleu/xml.hpp instead
+. fixed a bug which prevented to (un)serialize a user type inheriting from another type itself (un)serializable
 
 1.3.2
 . xml::list and xml::attributes functors can be passed as references to be able to handle an internal state
 . added support for long double
 . xml::end and xml::optional can be used without parenthesis
-. fixed for the error context not being transmitted from an xml::xistream to an xml::xobufferstream
+. fixed the error context not being transmitted from an xml::xistream to an xml::xobufferstream
 . added missing constructor with encoding for xml::xistreamstream
 . added has_child, has_attribute and has_content accessors on xml::xistream
 . removed const in return value of xostringstream::str() to allow constructions such as s.switch( xos.str() )

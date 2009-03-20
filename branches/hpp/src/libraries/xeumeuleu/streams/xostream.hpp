@@ -92,6 +92,20 @@ public:
     void write( unsigned long long value ) { output_.write( value ); }
     void write( const xistream& xis );
 
+    xostream& operator<<( const char* value ) { write( std::string( value ) ); return *this; }
+    xostream& operator<<( const std::string& value ) { output_.write( value ); return *this; }
+    xostream& operator<<( bool value ) { output_.write( value ); return *this; }
+    xostream& operator<<( int value ) { output_.write( value ); return *this; }
+    xostream& operator<<( long value ) { output_.write( value ); return *this; }
+    xostream& operator<<( long long value ) { output_.write( value ); return *this; }
+    xostream& operator<<( float value ) { output_.write( value ); return *this; }
+    xostream& operator<<( double value ) { output_.write( value ); return *this; }
+    xostream& operator<<( long double value ) { output_.write( value ); return *this; }
+    xostream& operator<<( unsigned int value ) { output_.write( value ); return *this; }
+    xostream& operator<<( unsigned long value ) { output_.write( value ); return *this; }
+    xostream& operator<<( unsigned long long value ) { output_.write( value ); return *this; }
+    xostream& operator<<( const xistream& xis );
+
     void attribute( const std::string& name, const char* value )
     {
         attribute( name, std::string( value ) );
@@ -126,17 +140,6 @@ private:
     //@}
 };
 
-// -----------------------------------------------------------------------------
-// Name: operator<<
-// Created: MAT 2008-01-19
-// -----------------------------------------------------------------------------
-template< typename T >
-xostream& operator<<( xostream& xos, const T& value )
-{
-    xos.write( value );
-    return xos;
-}
-
 }
 
 #include <xeumeuleu/streams/xistream.hpp>
@@ -146,6 +149,11 @@ namespace xml
     inline void xostream::write( const xistream& xis )
     {
         xis.copy( output_ );
+    }
+    inline xostream& xostream::operator<<( const xistream& xis )
+    {
+        xis.copy( output_ );
+        return *this;
     }
 }
 
