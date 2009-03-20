@@ -41,7 +41,7 @@
 #   endif
 #   pragma warning( push )
 #elif defined __GNUC__
-#   pragma GCC system_hppeader
+#   pragma GCC system_header
 #endif
 
 #include <boost/test/auto_unit_test.hpp>

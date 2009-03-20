@@ -36,7 +36,7 @@
 #ifdef _MSC_VER
 #   pragma warning( push, 0 )
 #elif defined __GNUC__
-#   pragma GCC system_hppeader
+#   pragma GCC system_header
 #endif // MSC_VER
 #include <xalanc/XalanTransformer/XalanTransformer.hpp>
 #ifdef _MSC_VER

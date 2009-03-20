@@ -34,7 +34,7 @@
 #define xeumeuleu_xerces_hpp
 
 #ifdef __GNUC__
-#   pragma GCC system_hppeader
+#   pragma GCC system_header
 #endif
 
 #include <xercesc/dom/DOM.hpp>
