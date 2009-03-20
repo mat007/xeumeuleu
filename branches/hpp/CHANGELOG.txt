@@ -1,7 +1,7 @@
 1.4.0
-. headers only
-. xml::xostringstream is serialized when calling str()
-. xml::xofstream is written to file when calling flush() or upon destruction
+. all libraries are now headers only
+. an xml::xostringstream is now serialized when calling str()
+. an xml::xofstream is now written to file when calling flush() or upon destruction
 . xeuseuleu/xsl.h and xeumeuleu/xml.h are deprecated, use xeuseuleu/xsl.hpp and xeumeuleu/xml.hpp instead
 . fixed a bug which prevented to (un)serialize a user type inheriting from another type itself (un)serializable
 
