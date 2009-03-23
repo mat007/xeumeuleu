@@ -108,7 +108,7 @@ template< typename T >
 T content( xisubstream xis, const std::string& tag, const T& defaultValue )
 {
     T value = defaultValue;
-    xis >> optional() >> start( tag ) >> optional() >> value >> end();
+    xis >> optional() >> start( tag ) >> optional() >> value >> end;
     return value;
 }
 

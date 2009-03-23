@@ -45,7 +45,7 @@ namespace xml
 // Created: ZEBRE 2006-08-30
 // =============================================================================
 template< typename T >
-class list_name_manipulator : public adapter< T >
+class list_name_manipulator : private adapter< T >
 {
 public:
     //! @name Constructors/Destructor
@@ -54,18 +54,16 @@ public:
         : adapter< T >( functor )
     {}
     //@}
-};
 
-// -----------------------------------------------------------------------------
-// Name: operator>>
-// Created: AGE 2006-08-30
-// -----------------------------------------------------------------------------
-template< typename T >
-xistream& operator>>( xistream& xis, const list_name_manipulator< T >& manipulator )
-{
-    xis.nodes( manipulator );
-    return xis;
-}
+    //! @name Operators
+    //@{
+    friend xistream& operator>>( xistream& xis, const list_name_manipulator& m )
+    {
+        xis.nodes( m );
+        return xis;
+    }
+    //@}
+};
 
 // -----------------------------------------------------------------------------
 // Name: list

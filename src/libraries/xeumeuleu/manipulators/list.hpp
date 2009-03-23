@@ -45,7 +45,7 @@ namespace xml
 // Created: MAT 2006-01-05
 // =============================================================================
 template< typename T >
-class list_manipulator : public filter< T >
+class list_manipulator : private filter< T >
 {
 public:
     //! @name Constructors/Destructor
@@ -54,18 +54,16 @@ public:
         : filter< T >( name, functor )
     {}
     //@}
-};
 
-// -----------------------------------------------------------------------------
-// Name: operator>>
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-template< typename T >
-xistream& operator>>( xistream& xis, const list_manipulator< T >& manipulator )
-{
-    xis.nodes( manipulator );
-    return xis;
-}
+    //! @name Operators
+    //@{
+    friend xistream& operator>>( xistream& xis, const list_manipulator& m )
+    {
+        xis.nodes( m );
+        return xis;
+    }
+    //@}
+};
 
 // -----------------------------------------------------------------------------
 // Name: list

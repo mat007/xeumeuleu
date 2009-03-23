@@ -67,14 +67,14 @@ public:
 
     //! @name Operators
     //@{
-    xistream& operator()( xistream& xis ) const
+    friend xistream& operator>>( xistream& xis, const start& s )
     {
-        xis.start( tag_ );
+        xis.start( s.tag_ );
         return xis;
     }
-    xostream& operator()( xostream& xos ) const
+    friend xostream& operator<<( xostream& xos, const start& s )
     {
-        xos.start( tag_ );
+        xos.start( s.tag_ );
         return xos;
     }
     //@}
@@ -85,24 +85,6 @@ private:
     std::string tag_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: operator>>
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-inline xistream& operator>>( xistream& xis, const start& manipulator )
-{
-    return manipulator( xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: operator<<
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-inline xostream& operator<<( xostream& xos, const start& manipulator )
-{
-    return manipulator( xos );
-}
 
 }
 

@@ -53,38 +53,21 @@ namespace xml
 class optional_manipulator
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-    optional_manipulator()
-    {
-        // NOTHING
-    }
-    //@}
-
     //! @name Operators
     //@{
-    const optional_manipulator& operator()() const
-    {
-        return *this;
-    }
-    xistream& operator()( xistream& xis ) const
+    friend xistream& operator>>( xistream& xis, const optional_manipulator& /*m*/ )
     {
         xis.optional();
         return xis;
+    }
+    const optional_manipulator& operator()() const //<! Deprecated !
+    {
+        return *this;
     }
     //@}
 };
 
 const optional_manipulator optional;
-
-// -----------------------------------------------------------------------------
-// Name: operator>>
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-inline xistream& operator>>( xistream& xis, const optional_manipulator& manipulator )
-{
-    return manipulator( xis );
-}
 
 }
 
