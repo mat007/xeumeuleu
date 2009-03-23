@@ -67,9 +67,9 @@ public:
 
     //! @name Operators
     //@{
-    xostream& operator()( xostream& xos ) const
+    friend xostream& operator<<( xostream& xos, const cdata& manipulator )
     {
-        xos.cdata( content_ );
+        xos.cdata( manipulator.content_ );
         return xos;
     }
     //@}
@@ -80,15 +80,6 @@ private:
     std::string content_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: operator<<
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-inline xostream& operator<<( xostream& xos, const cdata& manipulator )
-{
-    return manipulator( xos );
-}
 
 }
 

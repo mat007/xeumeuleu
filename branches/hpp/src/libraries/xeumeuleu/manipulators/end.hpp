@@ -54,52 +54,26 @@ namespace xml
 class end_manipulator
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-    end_manipulator()
-    {
-        // NOTHING
-    }
-    //@}
-
     //! @name Operators
     //@{
-    const end_manipulator& operator()() const
-    {
-        return *this;
-    }
-    xistream& operator()( xistream& xis ) const
+    friend xistream& operator>>( xistream& xis, const end_manipulator& /*m*/ )
     {
         xis.end();
         return xis;
     }
-    xostream& operator()( xostream& xos ) const
+    friend xostream& operator<<( xostream& xos, const end_manipulator& /*m*/ )
     {
         xos.end();
         return xos;
+    }
+    const end_manipulator& operator()() const //<! Deprecated !
+    {
+        return *this;
     }
     //@}
 };
 
 const end_manipulator end;
-
-// -----------------------------------------------------------------------------
-// Name: operator>>
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-inline xistream& operator>>( xistream& xis, const end_manipulator& manipulator )
-{
-    return manipulator( xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: operator<<
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-inline xostream& operator<<( xostream& xos, const end_manipulator& manipulator )
-{
-    return manipulator( xos );
-}
 
 }
 

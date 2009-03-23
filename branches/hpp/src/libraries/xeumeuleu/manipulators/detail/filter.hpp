@@ -65,6 +65,15 @@ public:
     }
     //@}
 
+    //! @name Operators
+    //@{
+    friend xistream& operator>>( xistream& xis, const filter& f )
+    {
+        xis.nodes( f );
+        return xis;
+    }
+    //@}
+
 private:
     //! @name Constructors/Destructor
     //@{
@@ -78,17 +87,6 @@ private:
     mutable T functor_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: operator>>
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-template< typename T >
-xistream& operator>>( xistream& xis, const filter< T >& manipulator )
-{
-    xis.nodes( manipulator );
-    return xis;
-}
 
 }
 

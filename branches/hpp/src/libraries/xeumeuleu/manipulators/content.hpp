@@ -70,13 +70,13 @@ public:
 
     //! @name Operators
     //@{
-    xistream& operator()( xistream& xis ) const
+    friend xistream& operator>>( xistream& xis, const content_manipulator& m )
     {
-        return xis >> start( tag_ ) >> value_ >> end();
+        return xis >> start( m.tag_ ) >> m.value_ >> end;
     }
-    xostream& operator()( xostream& xos ) const
+    friend xostream& operator<<( xostream& xos, const content_manipulator& m )
     {
-        return xos << start( tag_ ) << value_ << end();
+        return xos << start( m.tag_ ) << m.value_ << end;
     }
     //@}
 
@@ -93,26 +93,6 @@ private:
     T& value_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: operator>>
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-template< typename T >
-xistream& operator>>( xistream& xis, const content_manipulator< T >& manipulator )
-{
-    return manipulator( xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: operator<<
-// Created: MAT 2006-01-03
-// -----------------------------------------------------------------------------
-template< typename T >
-xostream& operator<<( xostream& xos, const content_manipulator< T >& manipulator )
-{
-    return manipulator( xos );
-}
 
 // -----------------------------------------------------------------------------
 // Name: content

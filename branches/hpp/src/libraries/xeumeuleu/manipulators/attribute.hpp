@@ -59,14 +59,14 @@ public:
 
     //! @name Operators
     //@{
-    xistream& operator()( xistream& xis ) const
+    friend xistream& operator>>( xistream& xis, const attribute_manipulator& m )
     {
-        xis.attribute( name_, value_ );
+        xis.attribute( m.name_, m.value_ );
         return xis;
     }
-    xostream& operator()( xostream& xos ) const
+    friend xostream& operator<<( xostream& xos, const attribute_manipulator& m )
     {
-        xos.attribute( name_, value_ );
+        xos.attribute( m.name_, m.value_ );
         return xos;
     }
     //@}
@@ -84,26 +84,6 @@ private:
     T& value_;
     //@}
 };
-
-// -----------------------------------------------------------------------------
-// Name: operator>>
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-template< typename T >
-xistream& operator>>( xistream& xis, const attribute_manipulator< T >& manipulator )
-{
-    return manipulator( xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: operator<<
-// Created: MAT 2006-01-05
-// -----------------------------------------------------------------------------
-template< typename T >
-xostream& operator<<( xostream& xos, const attribute_manipulator< T >& manipulator )
-{
-    return manipulator( xos );
-}
 
 // -----------------------------------------------------------------------------
 // Name: attribute
