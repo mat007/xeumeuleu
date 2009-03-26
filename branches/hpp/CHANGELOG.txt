@@ -1,5 +1,6 @@
 1.4.0
 . all libraries are now headers only
+. added a XEUMEULEU_NO_DEPRECATED define to be declared if deprecated features should not be included
 . an xml::xostringstream is now serialized when calling str()
 . an xml::xofstream is now written to file when calling flush() or upon destruction
 . xeuseuleu/xsl.h and xeumeuleu/xml.h are deprecated, use xeuseuleu/xsl.hpp and xeumeuleu/xml.hpp instead

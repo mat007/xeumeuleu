@@ -33,7 +33,10 @@
 #ifndef xeumeuleu_xml_h
 #define xeumeuleu_xml_h
 
-#pragma message( "WARNING : <xeumeuleu/xml.h> is deprecated, use <xeumeuleu/xml.hpp> instead !" )
+#ifdef XEUMEULEU_NO_DEPRECATED
+#   pragma message( "WARNING : <xeumeuleu/xml.h> is deprecated, use <xeumeuleu/xml.hpp> instead !" )
+#endif // XEUMEULEU_NO_DEPRECATED
+
 #include <xeumeuleu/xml.hpp>
 
 #endif // xeumeuleu_xml_h
