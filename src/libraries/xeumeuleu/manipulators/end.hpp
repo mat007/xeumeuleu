@@ -66,10 +66,12 @@ public:
         xos.end();
         return xos;
     }
+#ifndef XEUMEULEU_NO_DEPRECATED
     const end_manipulator& operator()() const //<! Deprecated !
     {
         return *this;
     }
+#endif // XEUMEULEU_NO_DEPRECATED
     //@}
 };
 

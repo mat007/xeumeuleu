@@ -60,10 +60,12 @@ public:
         xis.optional();
         return xis;
     }
+#ifndef XEUMEULEU_NO_DEPRECATED
     const optional_manipulator& operator()() const //<! Deprecated !
     {
         return *this;
     }
+#endif // XEUMEULEU_NO_DEPRECATED
     //@}
 };
 

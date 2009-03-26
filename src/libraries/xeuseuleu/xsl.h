@@ -33,7 +33,10 @@
 #ifndef xeuseuleu_deprecated_xsl_hpp
 #define xeuseuleu_deprecated_xsl_hpp
 
-#pragma message( "WARNING : <xeuseuleu/xsl.h> is deprecated, use <xeuseuleu/xsl.hpp> instead !" )
+#ifdef XEUMEULEU_NO_DEPRECATED
+#   pragma message( "WARNING : <xeuseuleu/xsl.h> is deprecated, use <xeuseuleu/xsl.hpp> instead !" )
+#endif // XEUMEULEU_NO_DEPRECATED
+
 #include <xeuseuleu/xsl.hpp>
 
 #endif // xeuseuleu_deprecated_xsl_hpp
