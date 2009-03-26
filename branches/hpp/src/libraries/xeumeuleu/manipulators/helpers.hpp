@@ -60,7 +60,7 @@ template< typename T >
 T value( xisubstream xis, const T& defaultValue )
 {
     T value = defaultValue;
-    xis >> optional() >> value;
+    xis >> optional >> value;
     return value;
 }
 
@@ -84,7 +84,7 @@ template< typename T >
 T attribute( xisubstream xis, const std::string& name, const T& defaultValue )
 {
     T value = defaultValue;
-    xis >> optional() >> attribute( name, value );
+    xis >> optional >> attribute( name, value );
     return value;
 }
 
@@ -108,7 +108,7 @@ template< typename T >
 T content( xisubstream xis, const std::string& tag, const T& defaultValue )
 {
     T value = defaultValue;
-    xis >> optional() >> start( tag ) >> optional() >> value >> end;
+    xis >> optional >> start( tag ) >> optional >> value >> end;
     return value;
 }
 
