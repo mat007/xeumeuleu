@@ -17,6 +17,11 @@
         <build-lib name="xeuseuleu"/>
     </target>
 
+    <target name="xeumeuleu_static" description="build library">
+         <build-lib name="xeumeuleu_static" input="xeumeuleu">
+             <defineset define="XML_LIBRARY"/> <!-- needed by xerces to avoid dll export in headers -->
+         </build-lib>
+     </target>
     <!--
     ============================================================================
       tests
@@ -199,7 +204,7 @@
     -->
     <target name="test" depends="xeumeuleu_test,xeuseuleu_test" description="run all tests"/>
 
-    <target name="build" depends="xeumeuleu,xeuseuleu,xeumeuleu_bench,xeumeuleu_clean" description="build all"/>
+    <target name="build" depends="xeumeuleu,xeumeuleu_static,xeuseuleu,xeumeuleu_bench,xeumeuleu_clean" description="build all"/>
 
     <target name="configure" description="initialize local project structure with dependencies">
         <update name="boost"/>
