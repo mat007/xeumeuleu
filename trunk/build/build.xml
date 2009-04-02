@@ -88,7 +88,9 @@
                 <include name="optional.h"/>
                 <include name="helpers.h"/>
             </module>
-            <module name="xeumeuleu_static"/>
+            <copy todir="${dist.dir}/lib/${platform}" flatten="true" preservelastmodified="true">
+                <fileset dir="${out.dir}" includes="**/xeumeuleu_static*.lib,**/xeumeuleu_static*.pdb"/>
+            </copy>
             <module name="xeuseuleu">
                 <include name="xsl.h"/>
                 <include name="exception.h"/>
