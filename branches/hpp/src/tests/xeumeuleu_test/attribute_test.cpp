@@ -33,8 +33,6 @@
 #include "xeumeuleu_test_pch.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace mockpp;
-
 // -----------------------------------------------------------------------------
 // Name: read_attribute_from_root_level_throws_an_exception
 // Created: MCO 2006-01-03

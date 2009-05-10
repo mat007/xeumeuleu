@@ -33,8 +33,6 @@
 #include "xeumeuleu_test_pch.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace mockpp;
-
 // -----------------------------------------------------------------------------
 // Name: reading_optional_non_existing_element_does_not_throw_exception
 // Created: MCO 2006-01-03

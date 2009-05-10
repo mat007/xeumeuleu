@@ -33,8 +33,6 @@
 #include "xeuseuleu_test_pch.h"
 #include <xeuseuleu/xsl.hpp>
 
-using namespace mockpp;
-
 // -----------------------------------------------------------------------------
 // Name: xbuffertransform_can_be_serialized
 // Created: SLI 2007-09-25

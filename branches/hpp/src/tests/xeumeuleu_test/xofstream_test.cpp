@@ -34,8 +34,6 @@
 #include <xeumeuleu/xml.hpp>
 #include <fstream>
 
-using namespace mockpp;
-
 namespace
 {
     const std::string load( const std::string& filename )

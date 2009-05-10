@@ -33,8 +33,6 @@
 #include "xeumeuleu_test_pch.h"
 #include <xeumeuleu/bridges/xerces/detail/trim.hpp>
 
-using namespace mockpp;
-
 // -----------------------------------------------------------------------------
 // Name: triming_empty_string_is_no_op
 // Created: MCO 2006-01-03

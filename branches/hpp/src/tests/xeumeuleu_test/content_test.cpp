@@ -33,8 +33,6 @@
 #include "xeumeuleu_test_pch.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace mockpp;
-
 namespace
 {
     template< typename T > std::string write( const T& value )

@@ -33,8 +33,6 @@
 #include "xeuseuleu_test_pch.h"
 #include <xeuseuleu/xsl.hpp>
 
-using namespace mockpp;
-
 namespace
 {
     std::istringstream stylesheet( "<?xml version='1.0' encoding='ISO-8859-1'?>" );
