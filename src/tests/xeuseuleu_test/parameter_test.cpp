@@ -33,8 +33,6 @@
 #include "xeuseuleu_test_pch.h"
 #include <xeuseuleu/xsl.hpp>
 
-using namespace mockpp;
-
 // -----------------------------------------------------------------------------
 // Name: parameters_are_sent_to_the_stylesheet
 // Created: SLI 2007-09-11
