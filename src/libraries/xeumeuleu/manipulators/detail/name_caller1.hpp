@@ -55,7 +55,8 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-    name_caller1( T& instance, M method, Arg value )
+    template< typename I >
+    name_caller1( I& instance, M method, Arg value )
         : method_  ( method )
         , instance_( instance )
         , value_   ( value )
@@ -103,7 +104,8 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-    const_name_caller1( const T& instance, M method, Arg value )
+    template< typename I >
+    const_name_caller1( const I& instance, M method, Arg value )
         : method_  ( method )
         , instance_( instance )
         , value_   ( value )

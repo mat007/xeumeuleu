@@ -5,6 +5,7 @@
 . an xml::xofstream is now written to file when calling flush() or upon destruction
 . xeuseuleu/xsl.h and xeumeuleu/xml.h are deprecated, use xeuseuleu/xsl.hpp and xeumeuleu/xml.hpp instead
 . fixed a bug which prevented to (un)serialize a user type inheriting from another type itself (un)serializable
+. enhanced xml::list and xml::attributes to accept a reference on an instance of a sub-type of the type with the method to call
 
 1.3.2
 . xml::list and xml::attributes functors can be passed as references to be able to handle an internal state
