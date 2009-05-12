@@ -69,7 +69,7 @@ public:
     //@}
 };
 
-const optional_manipulator optional;
+const optional_manipulator optional = optional_manipulator();
 
 }
 

@@ -75,7 +75,7 @@ public:
     //@}
 };
 
-const end_manipulator end;
+const end_manipulator end = end_manipulator();
 
 }
 
