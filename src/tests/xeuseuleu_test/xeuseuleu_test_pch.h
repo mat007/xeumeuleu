@@ -52,10 +52,6 @@
 
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
 
-#define MOCKPP_ENABLE_DEFAULT_FORMATTER
-#include <mockpp/chaining/CountedChainableMethod.h>
-#include <mockpp/chaining/ChainingMockObjectSupport.h>
-
 #ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
