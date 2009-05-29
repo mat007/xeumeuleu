@@ -47,12 +47,12 @@
     <target name="export" depends="build" description="export the distribution">
         <deploy>
             <module name="xeumeuleu">
-                <include name="*.hpp"/>
-                <include name="*.h"/>
+                <include name="**/*.hpp"/>
+                <include name="**/*.h"/>
             </module>
             <module name="xeuseuleu">
-                <include name="*.hpp"/>
-                <include name="*.h"/>
+                <include name="**/*.hpp"/>
+                <include name="**/*.h"/>
             </module>
         </deploy>
         <copy todir="${dist.dir}/lib/${platform}" flatten="true" preservelastmodified="true">
