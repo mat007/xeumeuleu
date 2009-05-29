@@ -31,10 +31,8 @@
  */
 
 #include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.hpp>
 #include <fstream>
-
-using namespace mockpp;
 
 namespace
 {
@@ -61,16 +59,37 @@ BOOST_AUTO_TEST_CASE( empty_tree_does_not_create_any_file )
 }
 
 // -----------------------------------------------------------------------------
-// Name: streaming_elements_creates_a_valid_file
+// Name: streaming_elements_creates_a_valid_file_upon_flush
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( streaming_elements_creates_a_valid_file )
+BOOST_AUTO_TEST_CASE( streaming_elements_creates_a_valid_file_upon_flush )
 {
     const std::string filename = "valid_file.xml";
     xml::xofstream xos( filename );
     xos << xml::start( "element" )
             << xml::start( "child" ) << xml::end
         << xml::end;
+    xos.flush();
+    BOOST_REQUIRE_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                         "<element>\n"
+                         "  <child/>\n"
+                         "</element>\n", load( filename ) );
+    std::remove( filename.c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: streaming_elements_creates_a_valid_file_upon_destruction
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( streaming_elements_creates_a_valid_file_upon_destruction )
+{
+    const std::string filename = "valid_file.xml";
+    {
+        xml::xofstream xos( filename );
+        xos << xml::start( "element" )
+                << xml::start( "child" ) << xml::end
+            << xml::end;
+    }
     BOOST_REQUIRE_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                          "<element>\n"
                          "  <child/>\n"
@@ -87,6 +106,7 @@ BOOST_AUTO_TEST_CASE( utf_16_encoded_file_starts_with_byte_mark_order )
     const std::string filename = "valid_utf_16_file.xml";
     xml::xofstream xos( filename, xml::encoding( "UTF-16LE" ) );
     xos << xml::content( "element", "this is the content !" );
+    xos.flush();
     {
         std::ifstream ifs( filename.c_str() );
         if( ! ifs )

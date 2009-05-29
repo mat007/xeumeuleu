@@ -30,31 +30,13 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_xml_h_
-#define _xeumeuleu_xml_h_
+#ifndef xeumeuleu_xml_h
+#define xeumeuleu_xml_h
 
-#include "xistringstream.h"
-#include "xostringstream.h"
-#include "xifstream.h"
-#include "xofstream.h"
-#include "xobufferstream.h"
-#include "xibufferstream.h"
-#include "xosubstream.h"
-#include "xisubstream.h"
-#include "xistreamstream.h"
-#include "ximultistream.h"
-#include "exception.h"
-#include "start.h"
-#include "end.h"
-#include "content.h"
-#include "cdata.h"
-#include "instruction.h"
-#include "attribute.h"
-#include "list.h"
-#include "name_list.h"
-#include "attributes.h"
-#include "optional.h"
-#include "grammar.h"
-#include "helpers.h"
+#ifdef XEUMEULEU_NO_DEPRECATED
+#   pragma message( "WARNING : <xeumeuleu/xml.h> is deprecated, use <xeumeuleu/xml.hpp> instead !" )
+#endif // XEUMEULEU_NO_DEPRECATED
 
-#endif // _xeumeuleu_xml_h_
+#include <xeumeuleu/xml.hpp>
+
+#endif // xeumeuleu_xml_h

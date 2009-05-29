@@ -31,9 +31,7 @@
  */
 
 #include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/xml.h"
-
-using namespace mockpp;
+#include <xeumeuleu/xml.hpp>
 
 namespace
 {
@@ -338,10 +336,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_huge_xml_is_valid
+// Name: reading_hppuge_xml_is_valid
 // Created: AGE 2007-10-22
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_huge_xml_is_valid )
+BOOST_AUTO_TEST_CASE( reading_hppuge_xml_is_valid )
 {
     my_class reader;
     {
@@ -350,4 +348,17 @@ BOOST_AUTO_TEST_CASE( reading_huge_xml_is_valid )
                 >> xml::list( "element", reader, &my_class::read )
             >> xml::end;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: sending_an_xistream_into_an_xostream_outputs_it
+// Created: MAT 2009-02-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( sending_an_xistream_into_an_xostream_outputs_it )
+{
+    xml::xistringstream xis( "<element/>" );
+    xml::xostringstream xos;
+    xis >> xos;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element/>\n", xos.str() );
 }

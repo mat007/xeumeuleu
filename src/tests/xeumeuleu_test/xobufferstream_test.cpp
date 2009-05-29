@@ -31,9 +31,7 @@
  */
 
 #include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/xml.h"
-
-using namespace mockpp;
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: a_buffer_stream_can_be_used_for_writing_and_reading

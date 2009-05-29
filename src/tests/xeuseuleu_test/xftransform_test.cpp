@@ -31,7 +31,7 @@
  */
 
 #include "xeuseuleu_test_pch.h"
-#include "xeuseuleu/xsl.h"
+#include <xeuseuleu/xsl.hpp>
 #include <fstream>
 
 // -----------------------------------------------------------------------------

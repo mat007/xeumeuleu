@@ -31,9 +31,7 @@
  */
 
 #include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/xml.h"
-
-using namespace mockpp;
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: xistreamstream_adapts_a_standard_input_stream

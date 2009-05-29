@@ -31,9 +31,7 @@
  */
 
 #include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/xml.h"
-
-using namespace mockpp;
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: copy_xistream_from_root_to_empty_xostream

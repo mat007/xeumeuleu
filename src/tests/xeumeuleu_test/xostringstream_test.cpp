@@ -31,9 +31,7 @@
  */
 
 #include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/xml.h"
-
-using namespace mockpp;
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: creating_empty_document
@@ -53,6 +51,18 @@ BOOST_AUTO_TEST_CASE( streaming_root_element_makes_a_valid_document )
 {
     xml::xostringstream xos;
     xos << xml::start( "element" ) << xml::end;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: calling_str_on_uncomplete_stream_serializes_it
+// Created: MCO 2006-03-20
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( calling_str_on_uncomplete_stream_serializes_it )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "element" );
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element/>\n", xos.str() );
 }

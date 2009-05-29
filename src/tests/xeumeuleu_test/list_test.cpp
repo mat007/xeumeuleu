@@ -31,7 +31,7 @@
  */
 
 #include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
 using namespace mockpp;
@@ -609,4 +609,26 @@ BOOST_AUTO_TEST_CASE( list_accepts_boost_bind_as_functor )
         xis >> xml::list( boost::bind( &my_bindable_class::const_my_method_2, boost::ref( my_instance ), _1, _2 ) );
         my_instance.verify();
     }
+}
+
+namespace
+{
+    class super_type
+    {
+    public:
+        void process( xml::xistream& ) {}
+    };
+    class sub_type : public super_type
+    {};
+}
+
+// -----------------------------------------------------------------------------
+// Name: list_accepts_instance_of_sub_type_of_the_type_with_the_method_to_call
+// Created: MAT 2009-05-11
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( list_accepts_instance_of_sub_type_of_the_type_with_the_method_to_call )
+{
+    sub_type type;
+    xml::xistringstream xis( "<element/>" );
+    xis >> xml::list( "element", type, &super_type::process );
 }
