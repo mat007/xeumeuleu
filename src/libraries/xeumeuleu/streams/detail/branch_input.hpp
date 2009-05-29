@@ -75,6 +75,13 @@ public:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    branch_input( const branch_input& );            //!< Copy constructor
+    branch_input& operator=( const branch_input& ); //!< Assignment operator
+    //@}
+
+private:
     //! @name Member data
     //@{
     input_base& input1_;
