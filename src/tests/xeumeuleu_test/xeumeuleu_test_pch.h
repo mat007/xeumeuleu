@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_test_pch_h_
-#define _xeumeuleu_test_pch_h_
+#ifndef xeumeuleu_test_pch_hpp
+#define xeumeuleu_test_pch_hpp
 
 #ifdef _MSC_VER
 #   pragma warning( disable : 4355 )
@@ -56,7 +56,7 @@
 #include <mockpp/chaining/CountedChainableMethod.h>
 #include <mockpp/chaining/ChainingMockObjectSupport.h>
 
-#include <boost/thread/thread.hpp>
+#include <boost/thread/thread.hpp> // $$$$ MAT : this pushes a pragma without poping it
 #undef min
 #undef max
 
@@ -66,4 +66,4 @@
 
 const std::string BOOST_RESOLVE( const std::string& filename );
 
-#endif // _xeumeuleu_test_pch_h_
+#endif // xeumeuleu_test_pch_hpp

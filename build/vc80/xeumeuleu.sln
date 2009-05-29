@@ -3,29 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xeumeuleu", "xeumeuleu.vcproj", "{DC8EF64E-152E-4157-A558-C4E17181B2DE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xeumeuleu_test", "xeumeuleu_test.vcproj", "{A055FEA8-BF30-4DB1-B4F3-F52748839CB3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DC8EF64E-152E-4157-A558-C4E17181B2DE} = {DC8EF64E-152E-4157-A558-C4E17181B2DE}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xeumeuleu_bench", "xeumeuleu_bench.vcproj", "{4DB20A7A-4BE9-4DC8-8682-35A386712CEC}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DC8EF64E-152E-4157-A558-C4E17181B2DE} = {DC8EF64E-152E-4157-A558-C4E17181B2DE}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xeuseuleu", "xeuseuleu.vcproj", "{03CDFC1D-A1C3-4480-B04A-4F5F576AA3A9}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DC8EF64E-152E-4157-A558-C4E17181B2DE} = {DC8EF64E-152E-4157-A558-C4E17181B2DE}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xeuseuleu_test", "xeuseuleu_test.vcproj", "{15D77FA5-6E56-47AD-A55A-CBFF746BFB52}"
-	ProjectSection(ProjectDependencies) = postProject
-		{03CDFC1D-A1C3-4480-B04A-4F5F576AA3A9} = {03CDFC1D-A1C3-4480-B04A-4F5F576AA3A9}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xeumeuleu_clean", "xeumeuleu_clean.vcproj", "{DD257ECB-CB75-483D-810C-DB76B1FDC4B1}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DC8EF64E-152E-4157-A558-C4E17181B2DE} = {DC8EF64E-152E-4157-A558-C4E17181B2DE}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

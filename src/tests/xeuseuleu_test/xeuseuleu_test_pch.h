@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeuseuleu_test_pch_h_
-#define _xeuseuleu_test_pch_h_
+#ifndef xeuseuleu_test_pch_hpp
+#define xeuseuleu_test_pch_hpp
 
 #ifdef _MSC_VER
 #   pragma warning( disable : 4355 )
@@ -52,14 +52,10 @@
 
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
 
-#define MOCKPP_ENABLE_DEFAULT_FORMATTER
-#include <mockpp/chaining/CountedChainableMethod.h>
-#include <mockpp/chaining/ChainingMockObjectSupport.h>
-
 #ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
 
 const std::string BOOST_RESOLVE( const std::string& filename );
 
-#endif // _xeuseuleu_test_pch_h_
+#endif // xeuseuleu_test_pch_hpp

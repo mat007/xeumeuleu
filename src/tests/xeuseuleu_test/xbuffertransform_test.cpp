@@ -31,9 +31,7 @@
  */
 
 #include "xeuseuleu_test_pch.h"
-#include "xeuseuleu/xsl.h"
-
-using namespace mockpp;
+#include <xeuseuleu/xsl.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: xbuffertransform_can_be_serialized
@@ -65,10 +63,10 @@ BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_inserted_in_the_serialization_flow
 }
 
 // -----------------------------------------------------------------------------
-// Name: xbuffertransform_can_have_parameters
+// Name: xbuffertransform_can_hppave_parameters
 // Created: SLI 2007-09-28
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( xbuffertransform_can_have_parameters )
+BOOST_AUTO_TEST_CASE( xbuffertransform_can_hppave_parameters )
 {
     xsl::xstringtransform xst( BOOST_RESOLVE( "stylesheet.xsl" ) );
     xsl::xbuffertransform xbt( BOOST_RESOLVE( "parameter_test.xsl" ) );

@@ -31,10 +31,8 @@
  */
 
 #include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.hpp>
 #include <fstream>
-
-using namespace mockpp;
 
 // -----------------------------------------------------------------------------
 // Name: creating_with_non_existing_file_throws_a_meaningful_exception
