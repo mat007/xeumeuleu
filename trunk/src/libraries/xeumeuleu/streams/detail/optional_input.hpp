@@ -118,6 +118,12 @@ public:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    optional_input( const optional_input& );            //!< Copy constructor
+    optional_input& operator=( const optional_input& ); //!< Assignment operator
+    //@}
+
     //! @name Helpers
     //@{
     template< typename T > void read_content( T& value ) const
