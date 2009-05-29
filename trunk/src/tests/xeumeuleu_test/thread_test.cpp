@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "xeumeuleu_test_pch.h"
-#include "xeumeuleu/xml.h"
+#include <xeumeuleu/xml.hpp>
 
 namespace
 {

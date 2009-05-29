@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="xeuseuleu"
 	ProjectGUID="{03CDFC1D-A1C3-4480-B04A-4F5F576AA3A9}"
+	RootNamespace="xeuseuleu"
 	>
 	<Platforms>
 		<Platform
@@ -162,153 +163,89 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\buffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\buffer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\buffer_output_imp.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\buffer_output_imp.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\exception.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\exception.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\file_output.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\file_output.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\file_output_imp.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\file_output_imp.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\of_base_member.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\of_base_member.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\os_base_member.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\os_base_member.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\output.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\output.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\output_imp.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\parameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\parameter.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\string_output.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\string_output.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\transform.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\transform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xalan.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xbuffertransform.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xbuffertransform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xf_base_member.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xf_base_member.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xftransform.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xftransform.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xs_base_member.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xs_base_member.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\libraries\xeuseuleu\xsl.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xstringtransform.cpp"
+				RelativePath="..\..\src\libraries\xeuseuleu\xsl.hpp"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xstringtransform.h"
+			<Filter
+				Name="manipulators"
 				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xtransform.cpp"
+				<File
+					RelativePath="..\..\src\libraries\xeuseuleu\manipulators\parameter.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="streams"
 				>
-			</File>
-			<File
-				RelativePath="..\..\src\libraries\xeuseuleu\xtransform.h"
+				<File
+					RelativePath="..\..\src\libraries\xeuseuleu\streams\exception.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeuseuleu\streams\xbuffertransform.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeuseuleu\streams\xftransform.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeuseuleu\streams\xstringtransform.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeuseuleu\streams\xtransform.hpp"
+					>
+				</File>
+				<Filter
+					Name="detail"
+					>
+					<File
+						RelativePath="..\..\src\libraries\xeuseuleu\streams\detail\buffer.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeuseuleu\streams\detail\output.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeuseuleu\streams\detail\output_imp.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeuseuleu\streams\detail\string_output.hpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="bridges"
 				>
-			</File>
+				<Filter
+					Name="xalan"
+					>
+					<File
+						RelativePath="..\..\src\libraries\xeuseuleu\bridges\xalan\buffer_output_imp.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeuseuleu\bridges\xalan\file_output_imp.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeuseuleu\bridges\xalan\transform.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeuseuleu\bridges\xalan\xalan.hpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

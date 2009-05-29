@@ -31,9 +31,7 @@
  */
 
 #include "xeuseuleu_test_pch.h"
-#include "xeuseuleu/xsl.h"
-
-using namespace mockpp;
+#include <xeuseuleu/xsl.hpp>
 
 namespace
 {
