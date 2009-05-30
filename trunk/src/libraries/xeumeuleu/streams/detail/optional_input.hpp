@@ -131,14 +131,14 @@ private:
         if( input_.has_content() )
             context_.reset( input_ ).read( value );
         else
-            context_.reset( input_ ).read( value );
+            context_.reset( input_ );
     }
     template< typename T > void read_attribute( const std::string& name, T& value ) const
     {
         if( input_.has_attribute( name ) )
             context_.reset( input_ ).attribute( name, value );
         else
-            context_.reset( null_ ).attribute( name, value );
+            context_.reset( input_ );
     }
     //@}
 
@@ -147,7 +147,7 @@ private:
     //@{
     input_base& input_;
     input_context& context_;
-    mutable null_input null_;
+    null_input null_;
     //@}
 };
 
