@@ -184,7 +184,7 @@ private:
 private:
     //! @name Member data
     //@{
-    input_base& base_;
+    const input_base& base_;
     input_base* input_;
     optional_input optional_;
     //@}
