@@ -207,3 +207,39 @@ BOOST_AUTO_TEST_CASE( writing_the_same_attribute_twice_yields_the_second_value_o
                                  "<root attribute=\"the second value\"/>\n";
     BOOST_CHECK_EQUAL( expected, xos.str() );
 }
+
+namespace
+{
+    class user_type
+    {};
+}
+namespace xml
+{
+    template<>
+    class attribute_manipulator< user_type >
+    {
+    public:
+        attribute_manipulator( const std::string& /*name*/, user_type& /*value*/ )
+        {}
+        friend xistream& operator>>( xistream& xis, const attribute_manipulator& /*m*/ )
+        {
+            return xis;
+        }
+        friend xostream& operator<<( xostream& xos, const attribute_manipulator& /*m*/ )
+        {
+            return xos;
+        }
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: attribute_manipulator_can_be_specialized_for_user_types
+// Created: MCO 2009-05-30
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( attribute_manipulator_can_be_specialized_for_user_types )
+{
+    user_type u;
+    xml::xistringstream xis( "<root attribute=''/>" );
+    xis >> xml::start( "root" )
+            >> xml::attribute( "attribute", u );
+}
