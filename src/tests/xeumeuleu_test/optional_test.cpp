@@ -34,6 +34,18 @@
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
+// Name: reading_optional_root_element_does_not_throw_exception
+// Created: MCO 2009-05-30
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_optional_root_element_does_not_throw_exception )
+{
+    xml::xistringstream xis( "<element/>" );
+    xis >> xml::optional
+            >> xml::start( "non-existing-element" );
+    BOOST_CHECK_NO_THROW( xis >> xml::end );
+}
+
+// -----------------------------------------------------------------------------
 // Name: reading_optional_non_existing_element_does_not_throw_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
@@ -74,10 +86,10 @@ BOOST_AUTO_TEST_CASE( reading_optional_non_existing_element_content_does_not_thr
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_optional_non_existing_element_attribute_does_not_throw_exception
+// Name: reading_optional_non_existing_attribute_does_not_throw_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_optional_non_existing_element_attribute_does_not_throw_exception )
+BOOST_AUTO_TEST_CASE( reading_optional_non_existing_attribute_does_not_throw_exception )
 {
     xml::xistringstream xis( "<element/>" );
     int value = 0;
@@ -86,6 +98,38 @@ BOOST_AUTO_TEST_CASE( reading_optional_non_existing_element_attribute_does_not_t
             >> xml::start( "non-existing-child" );
     BOOST_CHECK_NO_THROW( xis >> xml::attribute( "attribute", value ) );
     BOOST_CHECK_EQUAL( 0, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_optional_non_existing_attribute_in_optional_element_does_not_reset_optional_sub_tree
+// Created: MCO 2009-05-30
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_optional_non_existing_attribute_in_optional_element_does_not_reset_optional_sub_tree )
+{
+    xml::xistringstream xis( "<element/>" );
+    int attribute;
+    xis >> xml::optional
+            >> xml::start( "non-existing-element" )
+                >> xml::optional
+                >> xml::attribute( "non-existing-attribute", attribute );
+    BOOST_CHECK_NO_THROW( xis >> xml::end );
+    BOOST_CHECK_NO_THROW( xis >> xml::start( "element" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_optional_non_existing_content_in_optional_element_does_not_reset_optional_sub_tree
+// Created: MCO 2009-05-30
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_optional_non_existing_content_in_optional_element_does_not_reset_optional_sub_tree )
+{
+    xml::xistringstream xis( "<element/>" );
+    int content;
+    xis >> xml::optional
+            >> xml::start( "non-existing-element" )
+                >> xml::optional
+                >> content;
+    BOOST_CHECK_NO_THROW( xis >> xml::end );
+    BOOST_CHECK_NO_THROW( xis >> xml::start( "element" ) );
 }
 
 // -----------------------------------------------------------------------------
