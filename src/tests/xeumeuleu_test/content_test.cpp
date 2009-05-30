@@ -245,3 +245,38 @@ BOOST_AUTO_TEST_CASE( read_content_in_namespace_is_valid )
     xis >> xml::content( "ns:element", actual );
     BOOST_CHECK_EQUAL( expected, actual );
 }
+
+namespace
+{
+    class user_type
+    {};
+}
+namespace xml
+{
+    template<>
+    class content_manipulator< user_type >
+    {
+    public:
+        content_manipulator( const std::string& /*name*/, user_type& /*value*/ )
+        {}
+        friend xistream& operator>>( xistream& xis, const content_manipulator& /*m*/ )
+        {
+            return xis;
+        }
+        friend xostream& operator<<( xostream& xos, const content_manipulator& /*m*/ )
+        {
+            return xos;
+        }
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: content_manipulator_can_be_specialized_for_user_types
+// Created: MCO 2009-05-30
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( content_manipulator_can_be_specialized_for_user_types )
+{
+    user_type u;
+    xml::xistringstream xis( "<root>1</root>" );
+    xis >> xml::content( "root", u );
+}
