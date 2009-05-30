@@ -60,7 +60,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit xistream( input_base& input )
-        : input_   ( &input )
+        : base_    ( input )
+        , input_   ( &input )
         , optional_( input, *this )
     {}
     virtual ~xistream()
@@ -158,7 +159,8 @@ public:
     //@{
     void optional()
     {
-        input_ = &optional_;
+        if( input_ == &base_ )
+            input_ = &optional_;
     }
     //@}
 
@@ -182,6 +184,7 @@ private:
 private:
     //! @name Member data
     //@{
+    input_base& base_;
     input_base* input_;
     optional_input optional_;
     //@}
