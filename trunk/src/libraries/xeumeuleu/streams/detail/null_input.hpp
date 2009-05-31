@@ -78,19 +78,19 @@ public:
             throw xml::exception( "Cannot move up from root" );
     }
 
-    virtual void read( std::string& /*value*/ ) const {}
-    virtual void read( bool& /*value*/ ) const {}
-    virtual void read( short& /*value*/ ) const {}
-    virtual void read( int& /*value*/ ) const {}
-    virtual void read( long& /*value*/ ) const {}
-    virtual void read( long long& /*value*/ ) const {}
-    virtual void read( float& /*value*/ ) const {}
-    virtual void read( double& /*value*/ ) const {}
-    virtual void read( long double& /*value*/ ) const {}
-    virtual void read( unsigned short& /*value*/ ) const {}
-    virtual void read( unsigned int& /*value*/ ) const {}
-    virtual void read( unsigned long& /*value*/ ) const {}
-    virtual void read( unsigned long long& /*value*/ ) const {}
+    virtual void read( std::string& /*value*/ ) const { reset(); }
+    virtual void read( bool& /*value*/ ) const { reset(); }
+    virtual void read( short& /*value*/ ) const { reset(); }
+    virtual void read( int& /*value*/ ) const { reset(); }
+    virtual void read( long& /*value*/ ) const { reset(); }
+    virtual void read( long long& /*value*/ ) const { reset(); }
+    virtual void read( float& /*value*/ ) const { reset(); }
+    virtual void read( double& /*value*/ ) const { reset(); }
+    virtual void read( long double& /*value*/ ) const { reset(); }
+    virtual void read( unsigned short& /*value*/ ) const { reset(); }
+    virtual void read( unsigned int& /*value*/ ) const { reset(); }
+    virtual void read( unsigned long& /*value*/ ) const { reset(); }
+    virtual void read( unsigned long long& /*value*/ ) const { reset(); }
 
     virtual std::auto_ptr< input_base > branch( bool /*clone*/ ) const
     {
@@ -123,24 +123,34 @@ public:
         return false;
     }
 
-    virtual void attribute( const std::string& /*name*/, std::string& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, bool& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, short& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, int& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, long& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, long long& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, float& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, double& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, long double& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, unsigned short& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, unsigned int& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, unsigned long& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, unsigned long long& /*value*/ ) const {}
+    virtual void attribute( const std::string& /*name*/, std::string& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, bool& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, short& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, int& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, long& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, long long& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, float& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, double& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, long double& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, unsigned short& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, unsigned int& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, unsigned long& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, unsigned long long& /*value*/ ) const { reset(); }
 
     virtual void nodes( const visitor& /*v*/ ) const
     {}
     virtual void attributes( const visitor& /*v*/ ) const
     {}
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void reset() const
+    {
+        if( level_ == 0 )
+            context_->reset( *input_ );
+    }
     //@}
 
 private:

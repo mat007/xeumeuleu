@@ -36,7 +36,6 @@
 #include <xeumeuleu/streams/exception.hpp>
 #include <xeumeuleu/streams/detail/input_proxy.hpp>
 #include <xeumeuleu/streams/detail/input_context.hpp>
-#include <xeumeuleu/streams/detail/null_input.hpp>
 
 namespace xml
 {
@@ -51,11 +50,11 @@ class optional_input : public input_proxy
 public:
     //! @name Constructors/Destructor
     //@{
-    optional_input( input_base& input, input_context& context )
-        : input_proxy( input )
-        , input_  ( input )
+    optional_input( input_base& input1, input_base& input2, input_context& context )
+        : input_proxy( input1 )
+        , input1_ ( input1 )
+        , input2_ ( input2 )
         , context_( context )
-        , null_   ( input_, context_ )
     {}
     virtual ~optional_input()
     {}
@@ -65,14 +64,14 @@ public:
     //@{
     virtual void start( const std::string& tag )
     {
-        if( input_.has_child( tag ) )
-            context_.reset( input_ ).start( tag );
+        if( input1_.has_child( tag ) )
+            context_.reset( input1_ ).start( tag );
         else
-            context_.reset( null_ ).start( tag );
+            context_.reset( input2_ ).start( tag );
     }
     virtual void end()
     {
-        context_.reset( input_ );
+        context_.reset( input1_ );
         throw xml::exception( "Invalid 'end' after an 'optional'" );
     }
 
@@ -109,11 +108,11 @@ public:
 
     virtual void nodes( const visitor& v ) const
     {
-        context_.reset( input_ ).nodes( v );
+        context_.reset( input1_ ).nodes( v );
     }
     virtual void attributes( const visitor& v ) const
     {
-        context_.reset( input_ ).attributes( v );
+        context_.reset( input1_ ).attributes( v );
     }
     //@}
 
@@ -128,26 +127,26 @@ private:
     //@{
     template< typename T > void read_content( T& value ) const
     {
-        if( input_.has_content() )
-            context_.reset( input_ ).read( value );
+        if( input1_.has_content() )
+            context_.reset( input1_ ).read( value );
         else
-            context_.reset( input_ );
+            context_.reset( input2_ ).read( value );
     }
     template< typename T > void read_attribute( const std::string& name, T& value ) const
     {
-        if( input_.has_attribute( name ) )
-            context_.reset( input_ ).attribute( name, value );
+        if( input1_.has_attribute( name ) )
+            context_.reset( input1_ ).attribute( name, value );
         else
-            context_.reset( input_ );
+            context_.reset( input2_ ).attribute( name, value );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    input_base& input_;
+    input_base& input1_;
+    input_base& input2_;
     input_context& context_;
-    null_input null_;
     //@}
 };
 

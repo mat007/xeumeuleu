@@ -147,6 +147,20 @@ BOOST_AUTO_TEST_CASE( moving_out_of_optional_non_existing_element_terminates_the
 }
 
 // -----------------------------------------------------------------------------
+// Name: two_optionals_have_the_same_effect_as_one
+// Created: MCO 2009-05-30
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( two_optionals_have_the_same_effect_as_one )
+{
+    xml::xistringstream xis( "<element/>" );
+    xis >> xml::start( "element" )
+            >> xml::optional >> xml::optional
+            >> xml::start( "non-existing-child" )
+            >> xml::end;
+    BOOST_CHECK_THROW( xis >> xml::start( "non-existing-child" ), xml::exception );
+}
+
+// -----------------------------------------------------------------------------
 // Name: reading_existing_element_inside_optional_non_existing_element_is_still_optional
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
