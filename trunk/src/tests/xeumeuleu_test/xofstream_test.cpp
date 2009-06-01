@@ -59,6 +59,24 @@ BOOST_AUTO_TEST_CASE( empty_tree_does_not_create_any_file )
 }
 
 // -----------------------------------------------------------------------------
+// Name: streaming_elements_creates_a_valid_file_upon_last_end
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( streaming_elements_creates_a_valid_file_upon_last_end )
+{
+    const std::string filename = "valid_file.xml";
+    xml::xofstream xos( filename );
+    xos << xml::start( "element" )
+            << xml::start( "child" ) << xml::end
+        << xml::end;
+    BOOST_REQUIRE_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                         "<element>\n"
+                         "  <child/>\n"
+                         "</element>\n", load( filename ) );
+    std::remove( filename.c_str() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: streaming_elements_creates_a_valid_file_upon_flush
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
@@ -67,8 +85,7 @@ BOOST_AUTO_TEST_CASE( streaming_elements_creates_a_valid_file_upon_flush )
     const std::string filename = "valid_file.xml";
     xml::xofstream xos( filename );
     xos << xml::start( "element" )
-            << xml::start( "child" ) << xml::end
-        << xml::end;
+            << xml::start( "child" ) << xml::end;
     xos.flush();
     BOOST_REQUIRE_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                          "<element>\n"
@@ -87,8 +104,7 @@ BOOST_AUTO_TEST_CASE( streaming_elements_creates_a_valid_file_upon_destruction )
     {
         xml::xofstream xos( filename );
         xos << xml::start( "element" )
-                << xml::start( "child" ) << xml::end
-            << xml::end;
+                << xml::start( "child" ) << xml::end;
     }
     BOOST_REQUIRE_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                          "<element>\n"
