@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE( reading_empty_content_throws_proper_exception )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( streaming_content_writes_text_content_as_it_is )
 {
-    BOOST_CHECK_EQUAL( format(" this is the content  "), write< char* >( " this is the content  " ) );
+    BOOST_CHECK_EQUAL( format( " this is the content  " ), write< const char* >( " this is the content  " ) );
 }
 
 namespace
