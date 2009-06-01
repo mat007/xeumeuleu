@@ -346,6 +346,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\flushable.hpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\input_base.hpp"
 						>
 					</File>

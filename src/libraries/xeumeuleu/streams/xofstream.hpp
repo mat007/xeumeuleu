@@ -37,6 +37,11 @@
 #include <xeumeuleu/streams/encoding.hpp>
 #include <xeumeuleu/bridges/xerces/document.hpp>
 
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable: 4355 )
+#endif
+
 namespace xml
 {
 // =============================================================================
@@ -50,14 +55,14 @@ namespace xml
 */
 // Created: MAT 2006-01-04
 // =============================================================================
-class xofstream : private document, public xostream
+class xofstream : private document, private flushable, public xostream
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit xofstream( const std::string& filename, const encoding& encoding = encoding() )
         : xostream( output_ )
-        , output_  ( *document_, *document_ )
+        , output_  ( *document_, *document_, *this )
         , filename_( filename )
         , encoding_( encoding )
     {}
@@ -76,7 +81,7 @@ public:
 
     //! @name Operations
     //@{
-    void flush()
+    virtual void flush()
     {
         fill( filename_, encoding_ );
     }
@@ -92,5 +97,9 @@ private:
 };
 
 }
+
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 #endif // xeumeuleu_xofstream_hpp
