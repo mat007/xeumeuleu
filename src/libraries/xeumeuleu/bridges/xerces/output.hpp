@@ -34,6 +34,7 @@
 #define xeumeuleu_output_hpp
 
 #include <xeumeuleu/streams/exception.hpp>
+#include <xeumeuleu/streams/detail/flushable.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/trim.hpp>
 #include <xeumeuleu/bridges/xerces/detail/chained_exception.hpp>
@@ -63,9 +64,16 @@ public:
     //! @name Constructors/Destructor
     //@{
     output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root )
-        : document_( document )
-        , root_    ( root )
-        , current_ ( &root )
+        : document_ ( document )
+        , root_     ( root )
+        , current_  ( &root )
+        , flushable_( 0 )
+    {}
+    output( XERCES_CPP_NAMESPACE::DOMDocument& document, XERCES_CPP_NAMESPACE::DOMNode& root, flushable& flushable )
+        : document_ ( document )
+        , root_     ( root )
+        , current_  ( &root )
+        , flushable_( &flushable )
     {}
     virtual ~output()
     {}
@@ -85,6 +93,8 @@ public:
             if( is_root() )
                 throw xml::exception( "Illegal 'end' from root level" );
             current_ = current_->getParentNode();
+            if( flushable_ && is_root() )
+                flushable_->flush();
         CATCH
     }
 
@@ -227,6 +237,7 @@ private:
     XERCES_CPP_NAMESPACE::DOMDocument& document_;
     XERCES_CPP_NAMESPACE::DOMNode& root_;
     XERCES_CPP_NAMESPACE::DOMNode* current_;
+    flushable* flushable_;
     //@}
 };
 

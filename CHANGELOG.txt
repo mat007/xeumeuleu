@@ -2,7 +2,7 @@
 . all libraries are now headers only
 . added a XEUMEULEU_NO_DEPRECATED define to be declared if deprecated features should not be included
 . an xml::xostringstream is now serialized when calling str()
-. an xml::xofstream is now written to file when calling flush() or upon destruction
+. an xml::xofstream is now written to file when calling flush(), upon destruction or when the tree is complete
 . xeuseuleu/xsl.h and xeumeuleu/xml.h are deprecated, use xeuseuleu/xsl.hpp and xeumeuleu/xml.hpp instead
 . fixed a bug which prevented to (un)serialize a user type inheriting from another type itself (un)serializable
 . enhanced xml::list and xml::attributes to accept a reference on an instance of a sub-type of the type with the method to call
