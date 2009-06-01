@@ -195,11 +195,11 @@ private:
     //@}
 };
 
+}
+
 #ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
-
-}
 
 #include <xeumeuleu/streams/xostream.hpp>
 
