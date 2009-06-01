@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_functor_hpp
-#define xeumeuleu_functor_hpp
+#ifndef xeumeuleu_visitor_hpp
+#define xeumeuleu_visitor_hpp
 
 #include <string>
 
@@ -62,4 +62,4 @@ public:
 
 }
 
-#endif // xeumeuleu_functor_hpp
+#endif // xeumeuleu_visitor_hpp
