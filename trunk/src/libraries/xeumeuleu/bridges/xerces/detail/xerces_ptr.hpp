@@ -62,7 +62,7 @@ public:
     {
         return &object_;
     }
-    const T* const operator->() const
+    const T* operator->() const
     {
         return &object_;
     }
@@ -82,7 +82,7 @@ public:
     {
         return &object_;
     }
-    const T* const get() const
+    const T* get() const
     {
         return &object_;
     }

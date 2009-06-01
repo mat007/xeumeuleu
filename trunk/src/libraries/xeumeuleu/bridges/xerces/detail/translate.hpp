@@ -66,7 +66,7 @@ public:
 
     //! @name Operators
     //@{
-    operator const XMLCh* const() const
+    operator const XMLCh*() const
     {
         return ch_;
     }
