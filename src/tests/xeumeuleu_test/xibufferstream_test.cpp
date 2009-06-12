@@ -43,8 +43,8 @@ BOOST_AUTO_TEST_CASE( created_buffer_stream_starts_from_current_stream_level )
                              "  <sub-node/>"
                              "</element>" );
     xis >> xml::start( "element" );
-    xml::xibufferstream xiss( xis );
-    BOOST_CHECK_NO_THROW( xiss >> xml::start( "sub-node" ) );
+    xml::xibufferstream xibs( xis );
+    BOOST_CHECK_NO_THROW( xibs >> xml::start( "sub-node" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,8 +55,8 @@ BOOST_AUTO_TEST_CASE( streaming_end_right_after_creating_a_buffer_stream_throws_
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" );
-    xml::xibufferstream xiss( xis );
-    BOOST_CHECK_THROW( xiss >> xml::end, xml::exception );
+    xml::xibufferstream xibs( xis );
+    BOOST_CHECK_THROW( xibs >> xml::end, xml::exception );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,8 +66,8 @@ BOOST_AUTO_TEST_CASE( streaming_end_right_after_creating_a_buffer_stream_throws_
 BOOST_AUTO_TEST_CASE( creating_a_buffer_stream_does_not_modify_original_stream )
 {
     xml::xistringstream xis( "<element/>" );
-    xml::xibufferstream xiss( xis );
-    xiss >> xml::start( "element" );
+    xml::xibufferstream xibs( xis );
+    xibs >> xml::start( "element" );
     BOOST_CHECK_NO_THROW( xis >> xml::start( "element" ) );
 }
 
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE( creating_buffer_stream_created_after_optional_does_not_res
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional;
-    xml::xibufferstream xiss( xis );
+    xml::xibufferstream xibs( xis );
     BOOST_CHECK_NO_THROW( xis >> xml::start( "non-existing" ) );
 }
 
@@ -91,8 +91,8 @@ BOOST_AUTO_TEST_CASE( buffer_stream_created_after_optional_is_not_optional )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional;
-    xml::xibufferstream xiss( xis );
-    BOOST_CHECK_THROW( xiss >> xml::start( "non-existing" ), xml::exception );
+    xml::xibufferstream xibs( xis );
+    BOOST_CHECK_THROW( xibs >> xml::start( "non-existing" ), xml::exception );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE( creating_buffer_stream_on_optional_non_existing_branch_is_
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional >> xml::start( "non-existing" );
-    xml::xibufferstream xiss( xis );
+    xml::xibufferstream xibs( xis );
     BOOST_CHECK_NO_THROW( xis >> xml::start( "another-non-existing" ) );
 }
 
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE( creating_buffer_stream_on_optional_non_existing_branch_is_
 BOOST_AUTO_TEST_CASE( creating_buffer_stream_on_buffer_stream_is_valid )
 {
     xml::xistringstream xis( "<element/>" );
-    xml::xibufferstream xiss( xis );
-    xml::xibufferstream xisss( xiss );
-    BOOST_CHECK_NO_THROW( xisss >> xml::start( "element" ) );
+    xml::xibufferstream xibs( xis );
+    xml::xibufferstream xibbs( xibs );
+    BOOST_CHECK_NO_THROW( xibbs >> xml::start( "element" ) );
 }
