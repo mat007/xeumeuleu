@@ -130,9 +130,9 @@ public:
             XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
             if( ! attributes )
                 throw xml::exception( context() + " cannot have attributes" );
-            XERCES_CPP_NAMESPACE::DOMAttr* pAttribute = document_.createAttribute( translate( trim( name ) ) );
-            pAttribute->setValue( translate( value ) );
-            attributes->setNamedItem( pAttribute );
+            XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttribute( translate( trim( name ) ) );
+            att->setValue( translate( value ) );
+            attributes->setNamedItem( att );
         CATCH
     }
     template< typename T > void attribute( const std::string& name, T value )
@@ -146,6 +146,11 @@ public:
     {
         TRY
             import( document_, node.getFirstChild(), *current_ );
+            const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* from = node.getAttributes();
+            XERCES_CPP_NAMESPACE::DOMNamedNodeMap* to = current_->getAttributes();
+            if( from && to )
+                for( XMLSize_t index = 0; index < from->getLength(); ++index )
+                    to->setNamedItem( document_.importNode( from->item( index ), false ) );
         CATCH
     }
 
