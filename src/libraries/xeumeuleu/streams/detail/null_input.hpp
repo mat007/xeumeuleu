@@ -99,13 +99,6 @@ public:
 
     virtual void copy( output& /*destination*/ ) const
     {}
-
-    virtual void error( const std::string& message ) const
-    {
-        if( input_ )
-            input_->error( message );
-        throw xml::exception( message );
-    }
     //@}
 
     //! @name Accessors
@@ -141,6 +134,13 @@ public:
     {}
     virtual void attributes( const visitor& /*v*/ ) const
     {}
+
+    virtual std::string context() const
+    {
+        if( input_ )
+            return input_->context();
+        return "";
+    }
     //@}
 
 private:

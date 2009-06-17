@@ -33,7 +33,6 @@
 #ifndef xeumeuleu_builder_hpp
 #define xeumeuleu_builder_hpp
 
-#include <xeumeuleu/streams/exception.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/locator.hpp>

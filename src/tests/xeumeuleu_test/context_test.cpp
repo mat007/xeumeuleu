@@ -34,108 +34,59 @@
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
-// Name: error_from_above_root_throws_exception_without_context
+// Name: root_has_no_context
 // Created: MAT 2007-09-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( error_from_above_root_throws_exception_without_context )
+BOOST_AUTO_TEST_CASE( root_has_no_context )
 {
-    const std::string expected = "this is my message";
     xml::xistringstream xis( "<root/>" );
-    try
-    {
-        xis.error( expected );
-    }
-    catch( std::exception& e )
-    {
-        BOOST_CHECK_EQUAL( expected, e.what() );
-        return;
-    }
-    BOOST_FAIL( "should have thrown" );
+    BOOST_CHECK( xis.context().empty() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: error_from_root_throws_exception_with_context_after_tag
+// Name: root_child_node_has_context
 // Created: MAT 2007-09-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( error_from_root_throws_exception_with_context_after_tag )
+BOOST_AUTO_TEST_CASE( root_child_node_has_context )
 {
-    const std::string message = "this is my message";
     xml::xistringstream xis( "<root/>" );
     xis >> xml::start( "root" );
-    try
-    {
-        xis.error( message );
-    }
-    catch( std::exception& e )
-    {
-        BOOST_CHECK_EQUAL( "string_input (line 1, column 8) : " + message, e.what() );
-        return;
-    }
-    BOOST_FAIL( "should have thrown" );
+    BOOST_CHECK_EQUAL( "string_input (line 1, column 8) : ", xis.context() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: error_from_root_throws_exception_with_context_between_opening_and_closing_tag
+// Name: root_child_node_has_context_between_opening_and_closing_tag
 // Created: MAT 2007-09-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( error_from_root_throws_exception_with_context_between_opening_and_closing_tag )
+BOOST_AUTO_TEST_CASE( root_child_node_has_context_between_opening_and_closing_tag )
 {
-    const std::string message = "this is my message";
     xml::xistringstream xis( "<root></root>" );
     xis >> xml::start( "root" );
-    try
-    {
-        xis.error( message );
-    }
-    catch( std::exception& e )
-    {
-        BOOST_CHECK_EQUAL( "string_input (line 1, column 7) : " + message, e.what() );
-        return;
-    }
-    BOOST_FAIL( "should have thrown" );
+    BOOST_CHECK_EQUAL( "string_input (line 1, column 7) : ", xis.context() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: error_context_is_transmitted_from_an_xistream_to_an_xibufferstream
+// Name: context_is_transmitted_from_an_xistream_to_an_xibufferstream
 // Created: MAT 2007-09-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( error_context_is_transmitted_from_an_xistream_to_an_xibufferstream )
+BOOST_AUTO_TEST_CASE( context_is_transmitted_from_an_xistream_to_an_xibufferstream )
 {
-    const std::string message = "this is my message";
     xml::xistringstream xis( "<root/>" );
     xml::xibufferstream xibs( xis );
     xibs >> xml::start( "root" );
-    try
-    {
-        xibs.error( message );
-    }
-    catch( std::exception& e )
-    {
-        BOOST_CHECK_EQUAL( "string_input (line 1, column 8) : " + message, e.what() );
-        return;
-    }
-    BOOST_FAIL( "should have thrown" );
+    BOOST_CHECK_EQUAL( "string_input (line 1, column 8) : ", xibs.context() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: error_context_is_transmitted_from_an_xistream_to_an_xobufferstream
+// Name: context_is_transmitted_from_an_xistream_to_an_xobufferstream
 // Created: MAT 2007-09-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( error_context_is_transmitted_from_an_xistream_to_an_xobufferstream )
+BOOST_AUTO_TEST_CASE( context_is_transmitted_from_an_xistream_to_an_xobufferstream )
 {
     const std::string message = "this is my message";
     xml::xistringstream xis( "<root/>" );
     xml::xobufferstream xobs;
     xobs << xis;
     xobs >> xml::start( "root" );
-    try
-    {
-        xobs.error( message );
-    }
-    catch( std::exception& e )
-    {
-        BOOST_CHECK_EQUAL( "string_input (line 1, column 8) : " + message, e.what() );
-        return;
-    }
-    BOOST_FAIL( "should have thrown" );
+    BOOST_CHECK_EQUAL( "string_input (line 1, column 8) : ", xobs.context() );
 }
