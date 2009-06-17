@@ -63,10 +63,22 @@ public:
         : xi_base_member( xis.branch( false ) )
         , xistream( *xi_base_member::input_ )
     {}
+    xisubstream( const xistream& xis, const std::string& tag )
+        : xi_base_member( xis.branch( false ) )
+        , xistream( *xi_base_member::input_ )
+    {
+        start( tag );
+    }
     xisubstream( const xisubstream& xiss )
         : xi_base_member( xiss.branch( false ) )
         , xistream( *xi_base_member::input_ )
     {}
+    xisubstream( const xisubstream& xiss, const std::string& tag )
+        : xi_base_member( xiss.branch( false ) )
+        , xistream( *xi_base_member::input_ )
+    {
+        start( tag );
+    }
     virtual ~xisubstream()
     {}
     //@}
