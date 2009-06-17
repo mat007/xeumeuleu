@@ -121,7 +121,7 @@ public:
 
     void error( const std::string& message ) const
     {
-        input_->error( message );
+        throw xml::exception( context() + message );
     }
     //@}
 
@@ -152,6 +152,11 @@ public:
     void attributes( const visitor& v ) const
     {
         input_->attributes( v );
+    }
+
+    std::string context() const
+    {
+        return input_->context();
     }
     //@}
 

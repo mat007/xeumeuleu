@@ -91,11 +91,6 @@ public:
         input_->copy( destination );
     }
 
-    virtual void error( const std::string& message ) const
-    {
-        input_->error( message );
-    }
-
     virtual input_base& reset( input_base& input )
     {
         input_ = &input;
@@ -139,6 +134,11 @@ public:
     virtual void attributes( const visitor& v ) const
     {
         input_->attributes( v );
+    }
+
+    virtual std::string context() const
+    {
+        return input_->context();
     }
     //@}
 

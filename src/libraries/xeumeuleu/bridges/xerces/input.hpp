@@ -48,8 +48,8 @@
 #define TRY try {
 #define CATCH } \
             catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
-            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { error( xml::chained_exception( e ).what() ); throw; } \
-            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { error( xml::chained_exception( e ).what() ); throw; }
+            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw xml::chained_exception( e, context() ); } \
+            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw xml::chained_exception( e, context() ); }
 
 namespace xml
 {
@@ -79,7 +79,7 @@ public:
         TRY
             const XERCES_CPP_NAMESPACE::DOMNode* child = find_child( tag );
             if( ! child )
-                throw xml::exception( location() + context() + " does not have a child named '" + tag + "'" );
+                throw xml::exception( context() + location() + " does not have a child named '" + tag + "'" );
             current_ = child;
         CATCH
     }
@@ -87,10 +87,10 @@ public:
     {
         TRY
             if( current_ == &root_ )
-                throw xml::exception( location() + "Cannot move up from " + context() );
+                throw xml::exception( context() + "Cannot move up from " + location() );
             const XERCES_CPP_NAMESPACE::DOMNode* parent = current_->getParentNode();
             if( ! parent )
-                throw xml::exception( location() + context() + " has no parent" );
+                throw xml::exception( context() + location() + " has no parent" );
             current_ = parent;
         CATCH
     }
@@ -116,11 +116,6 @@ public:
         TRY
             destination.copy( *current_ );
         CATCH
-    }
-
-    virtual void error( const std::string& message ) const
-    {
-        throw xml::exception( location() + message );
     }
     //@}
 
@@ -191,19 +186,25 @@ public:
             }
         CATCH
     }
-    //@}
 
-private:
-    //! @name Helpers
-    //@{
-    const std::string location() const
+    virtual std::string context() const
     {
         const locator* loc = reinterpret_cast< locator* >( current_->getUserData( translate( "locator" ) ) );
         if( loc )
             return *loc;
         return "";
     }
-    const std::string context() const
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void error( const std::string& message ) const
+    {
+        throw xml::exception( context() + message );
+    }
+
+    std::string location() const
     {
         return "node '" + trim( translate( current_->getNodeName() ) ) + "'";
     }
@@ -251,14 +252,14 @@ private:
     {
         const XERCES_CPP_NAMESPACE::DOMNode* child = find_content();
         if( ! child )
-            throw xml::exception( location() + context() + " does not have a content" );
+            throw xml::exception( context() + location() + " does not have a content" );
         return child->getNodeValue();
     }
     const XMLCh* read_attribute( const std::string& name ) const
     {
         const XERCES_CPP_NAMESPACE::DOMNode* attribute = find_attribute( name );
         if( ! attribute )
-            throw xml::exception( location() + context() + " does not have an attribute '" + trim( name ) + "'" );
+            throw xml::exception( context() + location() + " does not have an attribute '" + trim( name ) + "'" );
         return attribute->getNodeValue();
     }
 
@@ -268,14 +269,14 @@ private:
         const double value = XERCES_CPP_NAMESPACE::XMLDouble( from ).getValue();
         const T result = static_cast< T >( value );
         if( static_cast< double >( result ) != value )
-            throw xml::exception( location() + "Value of " + context() + " is not a " + typeid( T ).name() );
+            throw xml::exception( context() + "Value of " + location() + " is not a " + typeid( T ).name() );
         return result;
     }
     float to_float( const XMLCh* from ) const
     {
         const XERCES_CPP_NAMESPACE::XMLFloat value( from );
         if( value.isDataOverflowed() )
-            throw xml::exception( location() + "Value of " + context() + " overflowed (probably a double instead of a float)" );
+            throw xml::exception( context() + "Value of " + location() + " overflowed (probably a double instead of a float)" );
         switch( value.getType() )
         {
             case XERCES_CPP_NAMESPACE::XMLDouble::NegINF :
@@ -292,7 +293,7 @@ private:
     {
         const XERCES_CPP_NAMESPACE::XMLDouble value( from );
         if( value.isDataOverflowed() )
-            throw xml::exception( location() + "Value of " + context() + " overflowed (probably more than a double)" );
+            throw xml::exception( context() + "Value of " + location() + " overflowed (probably more than a double)" );
         switch( value.getType() )
         {
             case XERCES_CPP_NAMESPACE::XMLDouble::NegINF :
@@ -316,7 +317,7 @@ private:
             return true;
         if( value == "false" || value == "0" )
             return false;
-        throw xml::exception( location() + "Value of " + context() + " is not a boolean" );
+        throw xml::exception( context() + "Value of " + location() + " is not a boolean" );
     }
     //@}
 
@@ -338,8 +339,8 @@ private:
 #define TRY try {
 #define CATCH } \
             catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
-            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { error( xml::chained_exception( e ).what() ); throw; } \
-            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { error( xml::chained_exception( e ).what() ); throw; }
+            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw xml::chained_exception( e, context() ); } \
+            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw xml::chained_exception( e, context() ); }
 
 namespace xml
 {
