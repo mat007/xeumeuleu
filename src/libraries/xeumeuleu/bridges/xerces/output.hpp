@@ -129,7 +129,7 @@ public:
         TRY
             XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
             if( ! attributes )
-                throw xml::exception( context() + " cannot have attributes" );
+                throw xml::exception( location() + " cannot have attributes" );
             XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttribute( translate( trim( name ) ) );
             att->setValue( translate( value ) );
             attributes->setNamedItem( att );
@@ -171,7 +171,7 @@ private:
 
     //! @name Helpers
     //@{
-    std::string context() const
+    std::string location() const
     {
         return "node '" + std::string( translate( current_->getNodeName() ) ) + "'";
     }
