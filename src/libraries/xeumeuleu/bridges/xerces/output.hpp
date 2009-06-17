@@ -154,7 +154,7 @@ public:
         CATCH
     }
 
-    std::auto_ptr< output > branch()
+    std::auto_ptr< output > branch() const
     {
         TRY
             return std::auto_ptr< output >( new output( document_, *current_ ) );
