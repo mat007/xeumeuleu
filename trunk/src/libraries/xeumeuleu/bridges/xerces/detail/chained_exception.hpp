@@ -41,7 +41,7 @@ namespace xml
 {
 // =============================================================================
 /** @class  chained_exception
-    @brief  Xml chained exception
+    @brief  Chained exception
 */
 // Created: MAT 2006-01-03
 // =============================================================================
@@ -50,11 +50,11 @@ class chained_exception : public xml::exception
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit chained_exception( const XERCES_CPP_NAMESPACE::XMLException& chained )
-        : xml::exception( translate( chained.getMessage() ) )
+    explicit chained_exception( const XERCES_CPP_NAMESPACE::XMLException& chained, const std::string& message = "" )
+        : xml::exception( message + std::string( translate( chained.getMessage() ) ) )
     {}
-    explicit chained_exception( const XERCES_CPP_NAMESPACE::DOMException& chained )
-        : xml::exception( translate( chained.getMessage() ) )
+    explicit chained_exception( const XERCES_CPP_NAMESPACE::DOMException& chained, const std::string& message = "" )
+        : xml::exception( message + std::string( translate( chained.getMessage() ) ) )
     {}
     virtual ~chained_exception() throw ()
     {}

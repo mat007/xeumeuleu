@@ -108,11 +108,6 @@ public:
         input1_->copy( destination );
         input2_->copy( destination );
     }
-
-    virtual void error( const std::string& message ) const
-    {
-        input2_->error( message );
-    }
     //@}
 
     //! @name Accessors
@@ -153,6 +148,11 @@ public:
     {
         input1_->attributes( v );
         input2_->attributes( v );
+    }
+
+    virtual std::string context() const
+    {
+        return input2_->context();
     }
     //@}
 

@@ -120,6 +120,10 @@ inline std::string operator+( const translate& tr, const std::string& str )
 {
     return std::string( tr ) + str;
 }
+inline std::string operator+( const std::string& str, const translate& tr )
+{
+    return str + std::string( tr );
+}
 
 }
 
