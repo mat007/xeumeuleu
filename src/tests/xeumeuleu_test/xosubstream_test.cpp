@@ -115,3 +115,22 @@ BOOST_AUTO_TEST_CASE( creating_sub_stream_of_sub_stream_is_valid )
     xml::xosubstream xoss( xos );
     xml::xosubstream xosss( xoss );
 }
+
+namespace
+{
+    void some_function( xml::xosubstream xos )
+    {
+        xos << xml::start( "element" );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: sub_output_stream_creates_a_temporary_variable_in_function_call
+// Created: MCO 2009-06-17
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( sub_output_stream_creates_a_temporary_variable_in_function_call )
+{
+    xml::xostringstream xos;
+    some_function( xml::xosubstream( xos, "root" ) );
+    BOOST_CHECK_THROW( xos << xml::start( "root" ), xml::exception );
+}
