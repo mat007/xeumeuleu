@@ -70,7 +70,7 @@ public:
         output_.end();
     }
 
-    std::auto_ptr< output > branch()
+    std::auto_ptr< output > branch() const
     {
         return output_.branch();
     }
