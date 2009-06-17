@@ -34,7 +34,7 @@
 #define xeumeuleu_xistringstream_hpp
 
 #include <xeumeuleu/streams/xistream.hpp>
-#include <xeumeuleu/streams/xistream.hpp>
+#include <xeumeuleu/streams/grammar.hpp>
 #include <xeumeuleu/bridges/xerces/document.hpp>
 #include <xeumeuleu/bridges/xerces/input.hpp>
 
