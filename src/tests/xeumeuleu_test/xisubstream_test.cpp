@@ -143,3 +143,24 @@ BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_throws )
     xml::xisubstream xiss( xis );
     BOOST_CHECK_THROW( xiss.error( "" ), xml::exception );
 }
+
+namespace
+{
+    void some_function( xml::xisubstream xis )
+    {
+        std::string value;
+        xis >> xml::attribute( "attribute", value );
+        BOOST_CHECK_EQUAL( "my-attribute", value );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: sub_input_stream_creates_a_temporary_variable_in_function_call
+// Created: MCO 2009-06-17
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( sub_input_stream_creates_a_temporary_variable_in_function_call )
+{
+    xml::xistringstream xis( "<element attribute='my-attribute'/>" );
+    some_function( xml::xisubstream( xis, "element" ) );
+    BOOST_CHECK_NO_THROW( xis >> xml::start( "element" ) );
+}
