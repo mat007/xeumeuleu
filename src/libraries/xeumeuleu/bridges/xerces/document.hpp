@@ -108,7 +108,7 @@ private:
         XERCES_CPP_NAMESPACE::DOMImplementation* impl = XERCES_CPP_NAMESPACE::DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
         if( ! impl )
             throw xml::exception( "Internal error in 'document::write' : DOMImplementation 'LS' not found" );
-        xerces_ptr< XERCES_CPP_NAMESPACE::DOMWriter > writer( *dynamic_cast< XERCES_CPP_NAMESPACE::DOMImplementationLS* >( impl )->createDOMWriter() );
+        xerces_ptr< XERCES_CPP_NAMESPACE::DOMWriter > writer( dynamic_cast< XERCES_CPP_NAMESPACE::DOMImplementationLS* >( impl )->createDOMWriter() );
         error_handler handler;
         writer->setErrorHandler( &handler );
         writer->setEncoding( translate( encoding ) );
@@ -116,6 +116,7 @@ private:
         writer->setFeature( XERCES_CPP_NAMESPACE::XMLUni:: fgDOMWRTBOM, true );
         beautifier target( destination, writer->getNewLine() );
         writer->writeNode( &target, *document_ );
+        handler.check();
     }
 
     struct Initializer

@@ -33,6 +33,8 @@
 #ifndef xeumeuleu_xerces_wrapper_hpp
 #define xeumeuleu_xerces_wrapper_hpp
 
+#include <stdexcept>
+
 namespace xml
 {
 // =============================================================================
@@ -47,12 +49,28 @@ class xerces_ptr
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xerces_ptr( T& object )
+    explicit xerces_ptr( T* object )
         : object_( object )
+    {}
+    explicit xerces_ptr( T& object )
+        : object_( &object )
     {}
     virtual ~xerces_ptr()
     {
-        object_.release();
+        if( object_ )
+            object_->release();
+    }
+    //@}
+
+    //! @name Operations
+    //@{
+    T& release()
+    {
+        if( ! object_ )
+            throw std::logic_error( "dereferencing null pointer" );
+        T* object = object_;
+        object_ = 0;
+        return *object;
     }
     //@}
 
@@ -60,19 +78,23 @@ public:
     //@{
     T* operator->()
     {
-        return &object_;
+        return object_;
     }
     const T* operator->() const
     {
-        return &object_;
+        return object_;
     }
     T& operator*()
     {
-        return object_;
+        if( ! object_ )
+            throw std::logic_error( "dereferencing null pointer" );
+        return *object_;
     }
     const T& operator*() const
     {
-        return object_;
+        if( ! object_ )
+            throw std::logic_error( "dereferencing null pointer" );
+        return *object_;
     }
     //@}
 
@@ -80,11 +102,11 @@ public:
     //@{
     T* get()
     {
-        return &object_;
+        return object_;
     }
     const T* get() const
     {
-        return &object_;
+        return object_;
     }
     //@}
 
@@ -98,7 +120,7 @@ private:
 private:
     //! @name Member data
     //@{
-    T& object_;
+    T* object_;
     //@}
 };
 
