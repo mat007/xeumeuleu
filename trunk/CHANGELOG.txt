@@ -1,4 +1,4 @@
-1.4.1
+trunk
 . fixed a bug preventing attributes to serialized from the root of an xml::xistream into an xml::xostream
 . added a context() method on xml::xistream to be able to throw from user code without using the error method
 . added missing const to the parameter when constructing an xml::xosubstream
