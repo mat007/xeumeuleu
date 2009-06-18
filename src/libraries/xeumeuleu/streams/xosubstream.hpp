@@ -63,24 +63,20 @@ public:
         : xo_base_member( xos.branch() )
         , xostream( *xo_base_member::output_ )
     {}
-    xosubstream( const xostream& xos, const std::string& tag )
-        : xo_base_member( xos.branch() )
-        , xostream( *xo_base_member::output_ )
-    {
-        start( tag );
-    }
     xosubstream( const xosubstream& xoss )
         : xo_base_member( xoss.branch() )
         , xostream( *xo_base_member::output_ )
     {}
-    xosubstream( const xosubstream& xoss, const std::string& tag )
-        : xo_base_member( xoss.branch() )
-        , xostream( *xo_base_member::output_ )
-    {
-        start( tag );
-    }
     virtual ~xosubstream()
     {}
+    //@}
+
+    //! @name Operators
+    //@{
+    operator xostream&() const
+    {
+        return const_cast< xosubstream& >( *this );
+    }
     //@}
 };
 
