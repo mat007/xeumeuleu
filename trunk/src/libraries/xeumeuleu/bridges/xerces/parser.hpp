@@ -37,6 +37,7 @@
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/error_handler.hpp>
+#include <xeumeuleu/bridges/xerces/detail/xerces_ptr.hpp>
 
 namespace xml
 {
@@ -71,13 +72,12 @@ public:
     //@{
     XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source )
     {
-        error_handler errorHandler;
-        builder_.setErrorHandler( &errorHandler );
+        error_handler handler;
+        builder_.setErrorHandler( &handler );
         XERCES_CPP_NAMESPACE::Wrapper4InputSource input( &source, false );
-        XERCES_CPP_NAMESPACE::DOMDocument* document = builder_.parse( input );
-        if( ! document )
-            throw xml::exception( "Could not generate document" );
-        return *document;
+        xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > document( builder_.parse( input ) );
+        handler.check();
+        return document.release();
     }
 
     void configure( const external_grammar& /*grammar*/, const std::string& uri )

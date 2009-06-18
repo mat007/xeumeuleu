@@ -59,9 +59,16 @@ public:
 
     //! @name Operations
     //@{
+    void check()
+    {
+        if( ! message_.empty() )
+            throw xml::exception( message_ );
+    }
     virtual bool handleError( const XERCES_CPP_NAMESPACE::DOMError& error )
     {
-        throw xml::exception( interpret( error ) );
+        if( message_.empty() )
+            message_ = interpret( error );
+        return false;
     }
     //@}
 
@@ -77,6 +84,12 @@ private:
         message += translate( error.getMessage() );
         return message;
     }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string message_;
     //@}
 };
 
