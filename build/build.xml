@@ -44,7 +44,7 @@
       export
     ============================================================================
     -->
-    <target name="export" depends="build" description="export the distribution">
+    <target name="export" description="export the distribution">
         <deploy>
             <module name="xeumeuleu">
                 <include name="**/*.hpp"/>
