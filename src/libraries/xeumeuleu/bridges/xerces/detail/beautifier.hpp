@@ -70,7 +70,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void writeChars( const XMLByte* const data, const unsigned int count, XERCES_CPP_NAMESPACE::XMLFormatter* const formatter )
+    virtual void writeChars( const XMLByte* const data, const Count_t count, XERCES_CPP_NAMESPACE::XMLFormatter* const formatter )
     {
         if( is_new_line( data, count ) )
         {

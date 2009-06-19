@@ -133,7 +133,12 @@
     <target name="configure" description="initialize local project structure with dependencies">
         <update name="boost"/>
         <update name="mockpp"/>
-        <update name="xerces-c"/>
+        <update name="xerces-c" package="include" todir="../include/xerces-c/2.7.0"/>
+        <update name="xerces-c" package="lib/${platform}" todir="${lib.dir}"/>
+        <update name="xerces-c" package="dll/${platform}" todir="${run.dir}"/>
+        <update name="xerces-c" package="include" todir="../include/xerces-c/3.0.1" version="3.0.1"/>
+        <update name="xerces-c" package="lib/${platform}" todir="${lib.dir}" version="3.0.1"/>
+        <update name="xerces-c" package="dll/${platform}" todir="${run.dir}" version="3.0.1"/>
         <update name="xalan-c"/>
     </target>
 
