@@ -45,10 +45,10 @@ namespace xml
 // Created: MAT 2008-01-19
 // -----------------------------------------------------------------------------
 template< typename T >
-T value( const xistream& xis )
+T value( xisubstream xis )
 {
     T value;
-    xis.read( value );
+    xis >> value;
     return value;
 }
 
@@ -69,10 +69,10 @@ T value( xisubstream xis, const T& defaultValue )
 // Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
 template< typename T >
-T attribute( const xistream& xis, const std::string& name )
+T attribute( xisubstream xis, const std::string& name )
 {
     T value;
-    xis.attribute( name, value );
+    xis >> attribute( name, value );
     return value;
 }
 
