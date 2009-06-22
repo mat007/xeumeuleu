@@ -37,5 +37,7 @@
 #include <xeumeuleu/manipulators/detail/name_caller1.hpp>
 #include <xeumeuleu/manipulators/detail/name_caller2.hpp>
 #include <xeumeuleu/manipulators/detail/name_caller3.hpp>
+#include <xeumeuleu/manipulators/detail/name_caller4.hpp>
+#include <xeumeuleu/manipulators/detail/name_caller5.hpp>
 
 #endif // xeumeuleu_name_caller_hpp

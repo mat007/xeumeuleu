@@ -273,6 +273,14 @@
 						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller3.hpp"
 						>
 					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller4.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller5.hpp"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter
