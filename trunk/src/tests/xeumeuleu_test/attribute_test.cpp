@@ -238,8 +238,19 @@ namespace xml
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( attribute_manipulator_can_be_specialized_for_user_types )
 {
-    user_type u;
     xml::xistringstream xis( "<root attribute=''/>" );
+    user_type u;
     xis >> xml::start( "root" )
             >> xml::attribute( "attribute", u );
+}
+
+// -----------------------------------------------------------------------------
+// Name: attribute_manipulator_can_be_specialized_for_user_types_using_helpers
+// Created: MCO 2009-06-22
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( attribute_manipulator_can_be_specialized_for_user_types_using_helpers )
+{
+    xml::xistringstream xis( "<root attribute=''/>" );
+    xis >> xml::start( "root" );
+    xml::attribute< user_type >( xis, "attribute" );
 }
