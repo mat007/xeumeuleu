@@ -4,6 +4,7 @@ trunk
 . added missing const to the parameter when constructing an xml::xosubstream
 . added the possibility to stream from/to temporaries of types xml::xisubstream and xml::xosubstream
 . enhanced user type support in helper versions of xml::attribute and xml::content
+. added xml::list with node names parameter with 4 and 5 parameters
 
 1.4.0
 . all libraries are now headers only
