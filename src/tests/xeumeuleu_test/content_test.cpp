@@ -276,7 +276,17 @@ namespace xml
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( content_manipulator_can_be_specialized_for_user_types )
 {
-    user_type u;
     xml::xistringstream xis( "<root>1</root>" );
+    user_type u;
     xis >> xml::content( "root", u );
+}
+
+// -----------------------------------------------------------------------------
+// Name: content_manipulator_can_be_specialized_for_user_types_using_helpers
+// Created: MCO 2009-05-30
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( content_manipulator_can_be_specialized_for_user_types_using_helpers )
+{
+    xml::xistringstream xis( "<root>1</root>" );
+    xml::content< user_type >( xis, "root" );
 }
