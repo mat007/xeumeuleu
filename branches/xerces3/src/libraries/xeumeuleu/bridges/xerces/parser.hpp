@@ -59,20 +59,11 @@ public:
     explicit parser( XERCES_CPP_NAMESPACE::DOMLSParser& parser )
         : parser_( parser )
     {
-#if XERCES_VERSION_MAJOR == 3
-        parser.getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgXercesUserAdoptsDOMDocument, true );
-        parser.getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMNamespaces, true );
-        parser.getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMDatatypeNormalization, true );
-        parser.getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgXercesSchema, true );
-#else
-        parser.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesUserAdoptsDOMDocument, true );
-        parser.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMNamespaces, true );
-        parser.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMDatatypeNormalization, true );
-        parser.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesSchema, true );
-#endif // XERCES_VERSION_MAJOR
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgXercesUserAdoptsDOMDocument, true );
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMNamespaces, true );
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMDatatypeNormalization, true );
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgXercesSchema, true );
     }
-    virtual ~parser()
-    {}
     //@}
 
     //! @name Operations
@@ -83,7 +74,7 @@ public:
         XERCES_CPP_NAMESPACE::Wrapper4InputSource input( &source, false );
 #if XERCES_VERSION_MAJOR == 3
         parser_.getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMErrorHandler, &handler );
-        xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > document( *parser_.parse( &input ) );
+        xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > document( parser_.parse( &input ) );
 #else
         parser_.setErrorHandler( &handler );
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > document( parser_.parse( input ) );
@@ -96,33 +87,27 @@ public:
     {
         // $$$$ MAT 2006-03-27: use XERCES_CPP_NAMESPACE::XMLUni::fgXercesSchemaExternalNoNameSpaceSchemaLocation ?
 #if XERCES_VERSION_MAJOR == 3
-        parser_.getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidate, true );
-        parser_.getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgXercesUseCachedGrammarInParse, true );
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidate, true );
 #else
-        parser_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, true );
-        parser_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesUseCachedGrammarInParse, true );
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, true );
 #endif // XERCES_VERSION_MAJOR
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgXercesUseCachedGrammarInParse, true );
         if( ! parser_.loadGrammar( translate( uri ), XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true ) )
             throw xml::exception( "Failed to load grammar '" + uri + "'" );
     }
     void configure( const internal_grammar& /*grammar*/ )
     {
-#if XERCES_VERSION_MAJOR == 3
-        parser_.getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidateIfSchema, true );
-#else
-        parser_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidateIfSchema, true );
-#endif // XERCES_VERSION_MAJOR
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidateIfSchema, true );
     }
 
     void configure( const null_grammar& /*grammar*/ )
     {
 #if XERCES_VERSION_MAJOR == 3
-        parser_.getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidate, false );
-        parser_.getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgXercesLoadExternalDTD, false );
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidate, false );
 #else
-        parser_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, false );
-        parser_.setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgXercesLoadExternalDTD, false );
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, false );
 #endif // XERCES_VERSION_MAJOR
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgXercesLoadExternalDTD, false );
     }
     //@}
 
@@ -131,6 +116,18 @@ private:
     //@{
     parser( const parser& );            //!< Copy constructor
     parser& operator=( const parser& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    void set( const XMLCh feature[], bool value )
+    {
+#if XERCES_VERSION_MAJOR == 3
+        parser_.getDomConfig()->setParameter( feature, value );
+#else
+        parser_.setFeature( feature, value );
+#endif // XERCES_VERSION_MAJOR
+    }
     //@}
 
 private:
