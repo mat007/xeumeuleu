@@ -34,10 +34,10 @@
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
-// Name: node_content_can_be_read_with_hppelper
+// Name: node_content_can_be_read_with_helper
 // Created: MCO 2008-01-19
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( node_content_can_be_read_with_hppelper )
+BOOST_AUTO_TEST_CASE( node_content_can_be_read_with_helper )
 {
     xml::xistringstream xis( "<element>the content</element>");
     xis >> xml::start( "element" );
@@ -45,10 +45,10 @@ BOOST_AUTO_TEST_CASE( node_content_can_be_read_with_hppelper )
 }
 
 // -----------------------------------------------------------------------------
-// Name: empty_node_content_read_with_hppelper_throws
+// Name: empty_node_content_read_with_helper_throws
 // Created: MCO 2008-01-19
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( empty_node_content_read_with_hppelper_throws )
+BOOST_AUTO_TEST_CASE( empty_node_content_read_with_helper_throws )
 {
     xml::xistringstream xis( "<element/>");
     xis >> xml::start( "element" );
@@ -56,10 +56,10 @@ BOOST_AUTO_TEST_CASE( empty_node_content_read_with_hppelper_throws )
 }
 
 // -----------------------------------------------------------------------------
-// Name: empty_node_content_read_with_hppelper_throws
+// Name: empty_node_content_read_with_helper_throws
 // Created: MCO 2008-01-19
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( empty_node_content_read_with_hppelper_and_default_value_returns_default_value )
+BOOST_AUTO_TEST_CASE( empty_node_content_read_with_helper_and_default_value_returns_default_value )
 {
     xml::xistringstream xis( "<element/>");
     xis >> xml::start( "element" );
