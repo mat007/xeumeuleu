@@ -112,10 +112,9 @@ private:
 #if XERCES_VERSION_MAJOR == 3
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMLSSerializer > serializer( *dynamic_cast< XERCES_CPP_NAMESPACE::DOMImplementationLS* >( impl )->createLSSerializer() );
         serializer->getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMErrorHandler, &handler );
-        serializer->getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMWRTFormatPrettyPrint, true );
         if( encoding != "utf-8" && encoding != "UTF-8" ) // $$$$ MAT : to lower
             serializer->getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMWRTBOM, true );
-        beautifier target( destination, serializer->getNewLine() );
+        beautifier target( destination, encoding, serializer->getNewLine() );
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMLSOutput > output( *impl->createLSOutput() );
         output->setByteStream( &target );
         output->setEncoding( translate( encoding ) );
@@ -124,9 +123,8 @@ private:
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMWriter > writer( dynamic_cast< XERCES_CPP_NAMESPACE::DOMImplementationLS* >( impl )->createDOMWriter() );
         writer->setErrorHandler( &handler );
         writer->setEncoding( translate( encoding ) );
-        writer->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMWRTFormatPrettyPrint, true );
         writer->setFeature( XERCES_CPP_NAMESPACE::XMLUni:: fgDOMWRTBOM, true );
-        beautifier target( destination, writer->getNewLine() );
+        beautifier target( destination, encoding, writer->getNewLine() );
         writer->writeNode( &target, *document_ );
 #endif // XERCES_VERSION_MAJOR
         handler.check();
