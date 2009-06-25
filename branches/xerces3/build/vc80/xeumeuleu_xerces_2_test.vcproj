@@ -221,6 +221,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\pretty_print_test.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\xeumeuleu_test\thread_test.cpp"
 				>
 			</File>
