@@ -46,6 +46,7 @@
 #include <xeumeuleu/bridges/xerces/detail/locator.hpp>
 #include <xeumeuleu/bridges/xerces/detail/builder.hpp>
 #include <algorithm>
+#include <cctype>
 #include <fstream>
 
 #define TRY try {
