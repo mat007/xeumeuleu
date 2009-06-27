@@ -194,17 +194,3 @@ BOOST_AUTO_TEST_CASE( streaming_processing_instruction_makes_a_valid_document )
                        "<?xml-stylesheet type=\"text/xsl\" href=\"my_stylesheet.xsl\"?>\n"
                        "<root/>\n", xos.str() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: sending_an_xistream_with_attribute_into_an_xostream_outputs_it
-// Created: MCO 2008-06-17
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( sending_an_xistream_with_attribute_into_an_xostream_outputs_it )
-{
-    xml::xistringstream xis( "<element attribute='some-attribute'/>" );
-    xis >> xml::start( "element" );
-    xml::xostringstream xos;
-    xos << xml::content( "element", xis );
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element attribute=\"some-attribute\"/>\n", xos.str() );
-}
