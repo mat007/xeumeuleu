@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2009, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,49 +30,31 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xerces_hpp
-#define xeumeuleu_xerces_hpp
+#include "xeumeuleu_test_pch.h"
+#include <xeumeuleu/xml.hpp>
 
-#ifdef __GNUC__
-#   pragma GCC system_header
-#endif
-
-#include <xercesc/util/XercesVersion.hpp>
-#include <xercesc/dom/DOM.hpp>
-#if XERCES_VERSION_MAJOR == 3
-#include <xercesc/parsers/DOMLSParserImpl.hpp>
-#else
-#include <xercesc/parsers/DOMBuilderImpl.hpp>
-#endif // XERCES_VERSION_MAJOR
-#include <xercesc/framework/LocalFileInputSource.hpp>
-#include <xercesc/framework/MemBufInputSource.hpp>
-#include <xercesc/framework/LocalFileFormatTarget.hpp>
-#include <xercesc/framework/XMLFormatter.hpp>
-#include <xercesc/framework/MemBufFormatTarget.hpp>
-#include <xercesc/framework/Wrapper4InputSource.hpp>
-#include <xercesc/util/PlatformUtils.hpp>
-#include <xercesc/util/TransService.hpp>
-#include <xercesc/util/OutOfMemoryException.hpp>
-#include <xercesc/util/XMLFloat.hpp>
-#include <xercesc/util/XMLDouble.hpp>
-#include <xercesc/util/XMLInteger.hpp>
-#include <xercesc/util/XMLChar.hpp>
-#include <xercesc/util/XMLUniDefs.hpp>
-#include <xercesc/util/XMLString.hpp>
-#include <xercesc/validators/common/Grammar.hpp>
-#include <xercesc/internal/XMLScanner.hpp>
-
-#if XERCES_VERSION_MAJOR == 3
-typedef XMLSize_t Count_t;
-#else
-typedef XMLSSize_t XMLFileLoc;
-typedef XMLSSize_t XMLFilePos;
-typedef unsigned int Count_t;
-XERCES_CPP_NAMESPACE_BEGIN
-typedef DOMBuilderImpl DOMLSParserImpl;
-typedef DOMBuilder DOMLSParser;
-XERCES_CPP_NAMESPACE_END
-#endif // XERCES_VERSION_MAJOR
-
-
-#endif // xeumeuleu_xerces_hpp
+// -----------------------------------------------------------------------------
+// Name: output_is_pretty_printed
+// Created: MAT 2009-06-25
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( output_is_pretty_printed )
+{
+    xml::xostringstream xos;
+    xos << xml::instruction( "xml-stylesheet", "type=\"text/xsl\" href=\"my_stylesheet.xsl\"" )
+        << xml::start( "root" )
+            << xml::start( "element-1" )
+                << xml::start( "element-2" )
+                << xml::end
+                << xml::content( "element-3", 42 )
+            << xml::end
+            << xml::start( "element-4" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<?xml-stylesheet type=\"text/xsl\" href=\"my_stylesheet.xsl\"?>\n"
+                       "<root>\n"
+                       "  <element-1>\n"
+                       "    <element-2/>\n"
+                       "    <element-3>42</element-3>\n"
+                       "  </element-1>\n"
+                       "  <element-4/>\n"
+                       "</root>\n" , xos.str() );
+}

@@ -72,15 +72,29 @@ public:
 
     //! @name Accessors
     //@{
-    virtual XMLSSize_t getLineNumber() const
+    virtual XMLFileLoc getLineNumber() const
     {
         return line_;
     }
-    virtual XMLSSize_t getColumnNumber() const
+    virtual XMLFileLoc getColumnNumber() const
     {
         return column_;
     }
-    virtual XMLSSize_t getOffset() const
+#if XERCES_VERSION_MAJOR == 3
+    virtual XMLFilePos getByteOffset() const
+    {
+        return 0;
+    }
+    virtual XMLFilePos getUtf16Offset() const
+    {
+        return 0;
+    }
+    virtual XERCES_CPP_NAMESPACE::DOMNode* getRelatedNode() const
+    {
+        return 0;
+    }
+#else
+    virtual XMLFilePos getOffset() const
     {
         return -1;
     }
@@ -88,24 +102,11 @@ public:
     {
         return 0;
     }
+#endif // XERCES_VERSION_MAJOR
     virtual const XMLCh* getURI() const
     {
         return uri_;
     }
-    //@}
-
-    //! @name Modifiers
-    //@{
-    virtual void setLineNumber( const XMLSSize_t /*line*/ )
-    {}
-    virtual void setColumnNumber( const XMLSSize_t /*column*/ )
-    {}
-    virtual void setOffset( const XMLSSize_t /*offset*/ )
-    {}
-    virtual void setErrorNode( XERCES_CPP_NAMESPACE::DOMNode* const /*node*/ )
-    {}
-    virtual void setURI( const XMLCh* const /*uri*/ )
-    {}
     //@}
 
     //! @name Operators
@@ -118,6 +119,22 @@ public:
     }
     //@}
 
+    //! @name Modifiers
+    //@{
+#if XERCES_VERSION_MAJOR < 3
+    virtual void setLineNumber( const XMLSSize_t /*line*/ )
+    {}
+    virtual void setColumnNumber( const XMLSSize_t /*column*/ )
+    {}
+    virtual void setOffset( const XMLSSize_t /*offset*/ )
+    {}
+    virtual void setErrorNode( XERCES_CPP_NAMESPACE::DOMNode* const /*node*/ )
+    {}
+    virtual void setURI( const XMLCh* const /*uri*/ )
+    {}
+#endif // XERCES_VERSION_MAJOR
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -128,7 +145,7 @@ private:
     //! @name Member data
     //@{
     const translate uri_;
-    const XMLSSize_t line_, column_;
+    const XMLFileLoc line_, column_;
     //@}
 };
 
