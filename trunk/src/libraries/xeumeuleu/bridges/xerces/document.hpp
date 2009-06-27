@@ -132,9 +132,13 @@ private:
         handler.check();
     }
 
+    static char to_lower( char c )
+    {
+        return std::tolower( c );
+    }
     bool write_bom( std::string encoding ) const
     {
-        std::transform( encoding.begin(), encoding.end(), encoding.begin(), std::tolower );
+        std::transform( encoding.begin(), encoding.end(), encoding.begin(), &to_lower );
         return encoding != "utf-8";
     }
 
