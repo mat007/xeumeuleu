@@ -37,8 +37,13 @@
 #   pragma GCC system_header
 #endif
 
+#include <xercesc/util/XercesVersion.hpp>
 #include <xercesc/dom/DOM.hpp>
+#if XERCES_VERSION_MAJOR == 3
+#include <xercesc/parsers/DOMLSParserImpl.hpp>
+#else
 #include <xercesc/parsers/DOMBuilderImpl.hpp>
+#endif // XERCES_VERSION_MAJOR
 #include <xercesc/framework/LocalFileInputSource.hpp>
 #include <xercesc/framework/MemBufInputSource.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
@@ -46,6 +51,7 @@
 #include <xercesc/framework/MemBufFormatTarget.hpp>
 #include <xercesc/framework/Wrapper4InputSource.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
+#include <xercesc/util/TransService.hpp>
 #include <xercesc/util/OutOfMemoryException.hpp>
 #include <xercesc/util/XMLFloat.hpp>
 #include <xercesc/util/XMLDouble.hpp>
@@ -55,5 +61,18 @@
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/validators/common/Grammar.hpp>
 #include <xercesc/internal/XMLScanner.hpp>
+
+#if XERCES_VERSION_MAJOR == 3
+typedef XMLSize_t Count_t;
+#else
+typedef XMLSSize_t XMLFileLoc;
+typedef XMLSSize_t XMLFilePos;
+typedef unsigned int Count_t;
+XERCES_CPP_NAMESPACE_BEGIN
+typedef DOMBuilderImpl DOMLSParserImpl;
+typedef DOMBuilder DOMLSParser;
+XERCES_CPP_NAMESPACE_END
+#endif // XERCES_VERSION_MAJOR
+
 
 #endif // xeumeuleu_xerces_hpp
