@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2008, Mathieu Champlon
+ *   Copyright (c) 2009, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -34,34 +34,27 @@
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
-// Name: node_content_can_be_read_with_helper
-// Created: MCO 2008-01-19
+// Name: output_is_pretty_printed
+// Created: MAT 2009-06-25
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( node_content_can_be_read_with_helper )
+BOOST_AUTO_TEST_CASE( output_is_pretty_printed )
 {
-    xml::xistringstream xis( "<element>the content</element>");
-    xis >> xml::start( "element" );
-    BOOST_CHECK_EQUAL( "the content", xml::value< std::string >( xis ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: empty_node_content_read_with_helper_throws
-// Created: MCO 2008-01-19
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( empty_node_content_read_with_helper_throws )
-{
-    xml::xistringstream xis( "<element/>");
-    xis >> xml::start( "element" );
-    BOOST_CHECK_THROW( xml::value< std::string >( xis ), xml::exception );
-}
-
-// -----------------------------------------------------------------------------
-// Name: empty_node_content_read_with_helper_throws
-// Created: MCO 2008-01-19
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( empty_node_content_read_with_helper_and_default_value_returns_default_value )
-{
-    xml::xistringstream xis( "<element/>");
-    xis >> xml::start( "element" );
-    BOOST_CHECK_EQUAL( "the content", xml::value< std::string >( xis, "the content" ) );
+    xml::xostringstream xos;
+    xos << xml::instruction( "xml-stylesheet", "type=\"text/xsl\" href=\"my_stylesheet.xsl\"" )
+        << xml::start( "root" )
+            << xml::start( "element-1" )
+                << xml::start( "element-2" )
+                << xml::end
+                << xml::content( "element-3", 42 )
+            << xml::end
+            << xml::start( "element-4" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<?xml-stylesheet type=\"text/xsl\" href=\"my_stylesheet.xsl\"?>\n"
+                       "<root>\n"
+                       "  <element-1>\n"
+                       "    <element-2/>\n"
+                       "    <element-3>42</element-3>\n"
+                       "  </element-1>\n"
+                       "  <element-4/>\n"
+                       "</root>\n" , xos.str() );
 }

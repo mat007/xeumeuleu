@@ -2,8 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="xeuseuleu_test"
-	ProjectGUID="{15D77FA5-6E56-47AD-A55A-CBFF746BFB52}"
+	Name="xeumeuleu_xerces_2_test"
+	ProjectGUID="{3C66319F-DD9E-4B4D-ADA9-527B4C21A86A}"
+	RootNamespace="xeumeuleu_xerces_2_test"
 	>
 	<Platforms>
 		<Platform
@@ -18,7 +19,6 @@
 			OutputDirectory="../../out/tests/$(ProjectName)/vc80/$(ConfigurationName)"
 			IntermediateDirectory="../../out/tests/$(ProjectName)/vc80/$(ConfigurationName)"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -44,7 +44,7 @@
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="$(ProjectName)_pch.h"
+				PrecompiledHeaderThrough="xeumeuleu_test_pch.h"
 				PrecompiledHeaderFile="$(IntDir)/$(ProjectName).pch"
 				AssemblerListingLocation="$(IntDir)/"
 				ObjectFile="$(IntDir)/"
@@ -64,9 +64,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="xerces-c_2D.lib Xalan-C_1D.lib mockppd.lib"
+				AdditionalDependencies="xerces-c_2D.lib mockppd.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt-gd.exe"
-				AdditionalLibraryDirectories="$(OutDir)"
+				AdditionalLibraryDirectories="../../lib/vc80"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 			/>
@@ -93,7 +93,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd ../../run/vc80&#x0D;&#x0A;&quot;$(TargetDir)$(TargetName).exe&quot; --result_code=no --report_level=no --log_level=messages --data_directory=../../data/tests/$(ProjectName)&#x0D;&#x0A;"
+				CommandLine="cd ../../run/vc80&#x0D;&#x0A;&quot;$(TargetDir)$(TargetName).exe&quot; --result_code=no --report_level=no --log_level=messages --data_directory=../../data/tests/xeumeuleu_test"
 			/>
 		</Configuration>
 		<Configuration
@@ -101,7 +101,6 @@
 			OutputDirectory="../../out/tests/$(ProjectName)/vc80/$(ConfigurationName)"
 			IntermediateDirectory="../../out/tests/$(ProjectName)/vc80/$(ConfigurationName)"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -127,7 +126,7 @@
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="$(ProjectName)_pch.h"
+				PrecompiledHeaderThrough="xeumeuleu_test_pch.h"
 				PrecompiledHeaderFile="$(IntDir)/$(ProjectName).pch"
 				AssemblerListingLocation="$(IntDir)/"
 				ObjectFile="$(IntDir)/"
@@ -147,10 +146,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="xerces-c_2.lib mockpp.lib Xalan-C_1.lib"
+				AdditionalOptions="/fixed:no"
+				AdditionalDependencies="xerces-c_2.lib mockpp.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt.exe"
-				AdditionalLibraryDirectories="$(OutDir)"
-				GenerateDebugInformation="false"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="../../lib/vc80"
+				GenerateDebugInformation="true"
 				SubSystem="1"
 			/>
 			<Tool
@@ -176,7 +177,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="cd ../../run/vc80&#x0D;&#x0A;&quot;$(TargetDir)$(TargetName).exe&quot; --result_code=no --report_level=no --log_level=messages --data_directory=../../data/tests/$(ProjectName)&#x0D;&#x0A;"
+				CommandLine="cd ../../run/vc80&#x0D;&#x0A;&quot;$(TargetDir)$(TargetName).exe&quot; --result_code=no --report_level=no --log_level=messages --data_directory=../../data/tests/xeumeuleu_test"
 			/>
 		</Configuration>
 	</Configurations>
@@ -188,15 +189,55 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
-				RelativePath="..\..\src\tests\xeuseuleu_test\parameter_test.cpp"
+				RelativePath="..\..\src\tests\xeumeuleu_test\attribute_test.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\tests\xeuseuleu_test\xbuffertransform_test.cpp"
+				RelativePath="..\..\src\tests\xeumeuleu_test\attributes_test.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\tests\xeuseuleu_test\xeuseuleu_test_pch.cpp"
+				RelativePath="..\..\src\tests\xeumeuleu_test\cdata_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\content_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\context_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\customization_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\list_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\optional_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\pretty_print_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\thread_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\trim_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\value_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\xeumeuleu_test_pch.cpp"
 				>
 				<FileConfiguration
 					Name="debug|Win32"
@@ -216,15 +257,51 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\src\tests\xeuseuleu_test\xeuseuleu_test_pch.h"
+				RelativePath="..\..\src\tests\xeumeuleu_test\xeumeuleu_test_pch.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\tests\xeuseuleu_test\xftransform_test.cpp"
+				RelativePath="..\..\src\tests\xeumeuleu_test\xibufferstream_test.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\tests\xeuseuleu_test\xstringtransform_test.cpp"
+				RelativePath="..\..\src\tests\xeumeuleu_test\xifstream_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\ximultistream_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\xistreamstream_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\xistringstream_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\xisubstream_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\xobufferstream_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\xofstream_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\xostream_xistream_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\xostringstream_test.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\xosubstream_test.cpp"
 				>
 			</File>
 		</Filter>
