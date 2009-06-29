@@ -64,10 +64,10 @@ BOOST_AUTO_TEST_CASE( streaming_end_to_an_output_sub_stream_at_root_level_throws
 }
 
 // -----------------------------------------------------------------------------
-// Name: creating_root_element_after_it_has_been_created_in_sub_stream_throws_an_exception
+// Name: creating_root_element_after_it_hppas_been_created_in_sub_stream_throws_an_exception
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( creating_root_element_after_it_has_been_created_in_sub_stream_throws_an_exception )
+BOOST_AUTO_TEST_CASE( creating_root_element_after_it_hppas_been_created_in_sub_stream_throws_an_exception )
 {
     xml::xostringstream xos;
     xml::xosubstream xoss( xos );
