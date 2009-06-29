@@ -44,7 +44,9 @@ BOOST_AUTO_TEST_CASE( streaming_cdata_creates_output_with_cdata_section )
             << xml::cdata( "<<<" )
         << xml::end;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element><![CDATA[<<<]]></element>\n", xos.str() );
+                       "<element>\n"
+                       "  <![CDATA[<<<]]>\n"
+                       "</element>\n", xos.str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +58,9 @@ BOOST_AUTO_TEST_CASE( streaming_cdata_content_creates_output_with_cdata_section 
     xml::xostringstream xos;
     xos << xml::content( "element", xml::cdata( "<<<" ) );
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element><![CDATA[<<<]]></element>\n", xos.str() );
+                       "<element>\n"
+                       "  <![CDATA[<<<]]>\n"
+                       "</element>\n", xos.str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +75,9 @@ BOOST_AUTO_TEST_CASE( streaming_cdata_creates_output_with_cdata_content_on_level
         << xml::end;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<root>\n"
-                       "  <element><![CDATA[<<<]]></element>\n"
+                       "  <element>\n"
+                       "    <![CDATA[<<<]]>\n"
+                       "  </element>\n"
                        "</root>\n", xos.str() );
 }
 

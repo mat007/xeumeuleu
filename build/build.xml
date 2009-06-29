@@ -9,16 +9,8 @@
       tests
     ============================================================================
     -->
-    <target name="xeumeuleu_xerces2_test" description="build and run tests">
-        <build-test name="xeumeuleu_xerces2" input="xeumeuleu_test" depends="boost" libs="xerces-c_2">
-            <includepath path="../include/xerces-c/2.7.0"/>
-        </build-test>
-    </target>
-
-    <target name="xeumeuleu_xerces3_test" description="build and run tests">
-        <build-test name="xeumeuleu_xerces3" input="xeumeuleu_test" depends="boost" libs="xerces-c_3">
-            <includepath path="../include/xerces-c/3.0.1"/>
-        </build-test>
+    <target name="xeumeuleu_test" description="build and run tests">
+        <build-test name="xeumeuleu" depends="boost" libs="xerces-c_2"/>
     </target>
 
     <target name="xeuseuleu_test" description="build and run tests">
@@ -63,6 +55,9 @@
                 <include name="**/*.h"/>
             </module>
         </deploy>
+        <copy todir="${dist.dir}/lib/${platform}" flatten="true" preservelastmodified="true">
+            <fileset dir="${out.dir}" includes="**/xeumeuleu_static*.lib,**/xeumeuleu_static*.pdb"/>
+        </copy>
     </target>
 
     <!--
@@ -131,19 +126,14 @@
       main
     ============================================================================
     -->
-    <target name="test" depends="xeumeuleu_xerces2_test,xeumeuleu_xerces3_test,xeuseuleu_test" description="run all tests"/>
+    <target name="test" depends="xeumeuleu_test,xeuseuleu_test" description="run all tests"/>
 
     <target name="build" depends="xeumeuleu_bench,xeumeuleu_clean" description="build all"/>
 
     <target name="configure" description="initialize local project structure with dependencies">
         <update name="boost"/>
         <update name="mockpp"/>
-        <update name="xerces-c" package="include" todir="../include/xerces-c/2.7.0"/>
-        <update name="xerces-c" package="lib/${platform}" todir="${lib.dir}"/>
-        <update name="xerces-c" package="dll/${platform}" todir="${run.dir}"/>
-        <update name="xerces-c" package="include" todir="../include/xerces-c/3.0.1" version="3.0.1"/>
-        <update name="xerces-c" package="lib/${platform}" todir="${lib.dir}" version="3.0.1"/>
-        <update name="xerces-c" package="dll/${platform}" todir="${run.dir}" version="3.0.1"/>
+        <update name="xerces-c"/>
         <update name="xalan-c"/>
     </target>
 
