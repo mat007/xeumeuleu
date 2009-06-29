@@ -45,7 +45,7 @@ namespace xml
 */
 // Created: MAT 2008-11-23
 // =============================================================================
-class builder : public XERCES_CPP_NAMESPACE::DOMBuilderImpl
+class builder : public XERCES_CPP_NAMESPACE::DOMLSParserImpl
 {
 public:
     //! @name Constructors/Destructor
@@ -61,9 +61,9 @@ public:
     //@{
     virtual void startElement( const XERCES_CPP_NAMESPACE::XMLElementDecl& elemDecl, const unsigned int urlId,
                                const XMLCh* const elemPrefix, const XERCES_CPP_NAMESPACE::RefVectorOf< XERCES_CPP_NAMESPACE::XMLAttr >& attrList,
-                               const unsigned int attrCount, const bool isEmpty, const bool isRoot )
+                               const Count_t attrCount, const bool isEmpty, const bool isRoot )
     {
-        XERCES_CPP_NAMESPACE::DOMBuilderImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, isEmpty, isRoot );
+        XERCES_CPP_NAMESPACE::DOMLSParserImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, isEmpty, isRoot );
         XERCES_CPP_NAMESPACE::DOMNode* node = getCurrentNode();
         node->setUserData( translate( "locator" ), new locator( uri_, *getScanner() ), 0 );
     }

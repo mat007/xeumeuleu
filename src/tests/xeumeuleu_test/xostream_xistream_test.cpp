@@ -170,3 +170,17 @@ BOOST_AUTO_TEST_CASE( copy_xistream_from_sub_element_to_xostream_removes_meaning
                        "  <element/>\n"
                        "</root>\n", xos.str() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: sending_an_xistream_with_attribute_into_an_xostream_outputs_it
+// Created: MCO 2008-06-17
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( sending_an_xistream_with_attribute_into_an_xostream_outputs_it )
+{
+    xml::xistringstream xis( "<element attribute='some-attribute'/>" );
+    xis >> xml::start( "element" );
+    xml::xostringstream xos;
+    xos << xml::content( "element", xis );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element attribute=\"some-attribute\"/>\n", xos.str() );
+}

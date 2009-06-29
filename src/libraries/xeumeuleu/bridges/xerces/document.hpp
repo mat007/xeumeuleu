@@ -45,6 +45,8 @@
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/locator.hpp>
 #include <xeumeuleu/bridges/xerces/detail/builder.hpp>
+#include <algorithm>
+#include <cctype>
 #include <fstream>
 
 #define TRY try {
@@ -108,14 +110,25 @@ private:
         XERCES_CPP_NAMESPACE::DOMImplementation* impl = XERCES_CPP_NAMESPACE::DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
         if( ! impl )
             throw xml::exception( "Internal error in 'document::write' : DOMImplementation 'LS' not found" );
-        xerces_ptr< XERCES_CPP_NAMESPACE::DOMWriter > writer( dynamic_cast< XERCES_CPP_NAMESPACE::DOMImplementationLS* >( impl )->createDOMWriter() );
         error_handler handler;
+#if XERCES_VERSION_MAJOR == 3
+        xerces_ptr< XERCES_CPP_NAMESPACE::DOMLSSerializer > serializer( *dynamic_cast< XERCES_CPP_NAMESPACE::DOMImplementationLS* >( impl )->createLSSerializer() );
+        serializer->getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMErrorHandler, &handler );
+        if( XERCES_CPP_NAMESPACE::XMLString::compareIString( encoding.c_str(), "utf-8" ) != 0 )
+            serializer->getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMWRTBOM, true );
+        beautifier target( destination, encoding, serializer->getNewLine() );
+        xerces_ptr< XERCES_CPP_NAMESPACE::DOMLSOutput > output( *impl->createLSOutput() );
+        output->setByteStream( &target );
+        output->setEncoding( translate( encoding ) );
+        serializer->write( document_.get(), output.get() );
+#else
+        xerces_ptr< XERCES_CPP_NAMESPACE::DOMWriter > writer( dynamic_cast< XERCES_CPP_NAMESPACE::DOMImplementationLS* >( impl )->createDOMWriter() );
         writer->setErrorHandler( &handler );
         writer->setEncoding( translate( encoding ) );
-        writer->setFeature( XERCES_CPP_NAMESPACE::XMLUni::fgDOMWRTFormatPrettyPrint, true );
         writer->setFeature( XERCES_CPP_NAMESPACE::XMLUni:: fgDOMWRTBOM, true );
-        beautifier target( destination, writer->getNewLine() );
+        beautifier target( destination, encoding, writer->getNewLine() );
         writer->writeNode( &target, *document_ );
+#endif // XERCES_VERSION_MAJOR
         handler.check();
     }
 
