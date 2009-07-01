@@ -288,7 +288,7 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_xml_validated_by_schema_does_not_thro
 BOOST_AUTO_TEST_CASE( creating_stream_with_xml_validated_by_internally_referenced_schema_does_not_throw_an_exception )
 {
     const std::string schema = BOOST_RESOLVE( "schema.xsd" );
-    const std::string xml( "<element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />" );
+    const std::string xml = "<element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />";
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml, xml::internal_grammar() ) );
 }
 
@@ -299,7 +299,7 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_xml_validated_by_internally_reference
 BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_internally_referenced_schema_throws_an_exception )
 {
     const std::string schema = BOOST_RESOLVE( "schema.xsd" );
-    const std::string xml( "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />" );
+    const std::string xml = "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />";
     BOOST_CHECK_THROW( xml::xistringstream xis( xml, xml::internal_grammar() ), xml::exception );
 }
 
@@ -310,7 +310,7 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_internally_refer
 BOOST_AUTO_TEST_CASE( internal_schema_is_used_only_if_specified )
 {
     const std::string schema = BOOST_RESOLVE( "schema.xsd" );
-    const std::string xml( "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />" );
+    const std::string xml = "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />";
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml ) );
 }
 
@@ -348,17 +348,4 @@ BOOST_AUTO_TEST_CASE( reading_huge_xml_is_valid )
                 >> xml::list( "element", reader, &my_class::read )
             >> xml::end;
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: sending_an_xistream_into_an_xostream_outputs_it
-// Created: MAT 2009-02-12
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( sending_an_xistream_into_an_xostream_outputs_it )
-{
-    xml::xistringstream xis( "<element/>" );
-    xml::xostringstream xos;
-    xis >> xos;
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element/>\n", xos.str() );
 }
