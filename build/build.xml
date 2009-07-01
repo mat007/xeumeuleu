@@ -22,7 +22,9 @@
     </target>
 
     <target name="xeuseuleu_test" description="build and run tests">
-        <build-test name="xeuseuleu" libs="xerces-c_2,Xalan-C_1"/>
+        <build-test name="xeuseuleu" libs="xerces-c_2,Xalan-C_1">
+            <includepath path="../include/xerces-c/2.7.0"/>
+        </build-test>
     </target>
 
     <!--
