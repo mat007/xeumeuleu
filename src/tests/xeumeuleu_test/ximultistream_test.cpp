@@ -307,8 +307,8 @@ BOOST_AUTO_TEST_CASE( an_optional_attribute_not_found_in_either_stream_is_valid 
 BOOST_AUTO_TEST_CASE( an_optional_attribute_not_found_in_an_optional_sub_node_of_either_stream_is_valid )
 {
     xml::xistringstream xis1( "<root>"
-                             "  <sub-node/>"
-                             "</root>" );
+                              "  <sub-node/>"
+                              "</root>" );
     xml::xistringstream xis2( "<root/>" );
     xml::ximultistream xis( xis1, xis2 );
     std::string attribute;
