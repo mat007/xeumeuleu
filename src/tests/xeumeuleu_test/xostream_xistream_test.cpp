@@ -184,3 +184,16 @@ BOOST_AUTO_TEST_CASE( sending_an_xistream_with_attribute_into_an_xostream_output
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element attribute=\"some-attribute\"/>\n", xos.str() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: sending_an_xistream_into_an_xostream_outputs_it
+// Created: MAT 2009-02-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( sending_an_xistream_into_an_xostream_outputs_it )
+{
+    xml::xistringstream xis( "<element/>" );
+    xml::xostringstream xos;
+    xis >> xos;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element/>\n", xos.str() );
+}
