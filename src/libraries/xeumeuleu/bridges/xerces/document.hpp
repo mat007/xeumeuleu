@@ -114,7 +114,7 @@ private:
 #if XERCES_VERSION_MAJOR == 3
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMLSSerializer > serializer( *dynamic_cast< XERCES_CPP_NAMESPACE::DOMImplementationLS* >( impl )->createLSSerializer() );
         serializer->getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMErrorHandler, &handler );
-        if( XERCES_CPP_NAMESPACE::XMLString::compareIString( encoding.c_str(), "utf-8" ) != 0 )
+        if( ! is_utf8( encoding ) )
             serializer->getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMWRTBOM, true );
         beautifier target( destination, encoding, serializer->getNewLine() );
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMLSOutput > output( *impl->createLSOutput() );
@@ -192,6 +192,15 @@ private:
             clean( node->getFirstChild() );
             node = node->getNextSibling();
         }
+    }
+    bool is_utf8( const std::string& encoding ) const
+    {
+        return encoding.size() == 5 &&
+               ( encoding[0] == 'u' || encoding[0] == 'U' ) &&
+               ( encoding[1] == 't' || encoding[1] == 'T' ) &&
+               ( encoding[2] == 'f' || encoding[2] == 'F' ) &&
+               ( encoding[3] == '-' ) &&
+               ( encoding[4] == '8' );
     }
     //@}
 
