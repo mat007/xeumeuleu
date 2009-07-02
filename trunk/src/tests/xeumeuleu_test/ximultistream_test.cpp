@@ -318,3 +318,16 @@ BOOST_AUTO_TEST_CASE( an_optional_attribute_not_found_in_an_optional_sub_node_of
             >> xml::end
         >> xml::end;
 }
+
+// -----------------------------------------------------------------------------
+// Name: the_context_of_an_ximultistream_refers_to_contexts_of_both_streams
+// Created: MAT 2009-06-27
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( the_context_of_an_ximultistream_refers_to_contexts_of_both_streams )
+{
+    xml::xistringstream xis1( "<root/>" );
+    xml::xistringstream xis2( "<root/>" );
+    xml::ximultistream xis( xis1, xis2 );
+    xis >> xml::start( "root" );
+    BOOST_CHECK_EQUAL( "string_input (line 1, column 8) : string_input (line 1, column 8) : ", xis.context() );
+}
