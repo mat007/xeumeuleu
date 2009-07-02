@@ -55,6 +55,11 @@ public:
         , line_  ( scanner.getLocator()->getLineNumber() )
         , column_( scanner.getLocator()->getColumnNumber() )
     {}
+    locator( const std::string& uri )
+        : uri_   ( uri )
+        , line_  ( 0 )
+        , column_( 0 )
+    {}
     locator( const locator& rhs )
         : XERCES_CPP_NAMESPACE::DOMLocator()
         , uri_   ( std::string( rhs.uri_ ) )
