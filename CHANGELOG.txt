@@ -8,6 +8,7 @@ trunk
 . CDATA sections are not indented anymore
 . added support for xerces 3
 . added error context for a newly created document on line 0 and column 0
+. fixed the error context of an xml::ximultistream to aggregate the error contexts of both underlying streams
 
 1.4.0
 . all libraries are now headers only
