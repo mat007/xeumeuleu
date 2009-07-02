@@ -64,8 +64,7 @@ public:
                                const Count_t attrCount, const bool isEmpty, const bool isRoot )
     {
         XERCES_CPP_NAMESPACE::DOMLSParserImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, isEmpty, isRoot );
-        XERCES_CPP_NAMESPACE::DOMNode* node = getCurrentNode();
-        node->setUserData( translate( "locator" ), new locator( uri_, *getScanner() ), 0 );
+        getCurrentNode()->setUserData( translate( "locator" ), new locator( uri_, *getScanner() ), 0 );
     }
     //@}
 
