@@ -159,12 +159,15 @@ private:
     }
     XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source, const encoding* encoding, const grammar& grammar ) const
     {
-        builder builder( translate( source.getSystemId() ) );
+        const std::string uri = translate( source.getSystemId() );
+        builder builder( uri );
         parser parser( builder );
         grammar.configure( parser );
         if( encoding )
             source.setEncoding( translate( *encoding ) );
-        return parser.parse( source );
+        XERCES_CPP_NAMESPACE::DOMDocument& document = parser.parse( source );
+        document.setUserData( translate( "locator" ), new locator( uri ), 0 );
+        return document;
     }
     XERCES_CPP_NAMESPACE::DOMDocument& build( const std::string& filename, const encoding* encoding, const grammar& grammar ) const
     {

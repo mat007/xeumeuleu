@@ -7,6 +7,7 @@ trunk
 . added xml::list with node names parameter with 4 and 5 parameters
 . CDATA sections are not indented anymore
 . added support for xerces 3
+. added error context for a newly created document on line 0 and column 0
 
 1.4.0
 . all libraries are now headers only
