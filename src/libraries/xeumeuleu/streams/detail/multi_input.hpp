@@ -152,7 +152,7 @@ public:
 
     virtual std::string context() const
     {
-        return input2_->context();
+        return input1_->context() + input2_->context();
     }
     //@}
 
