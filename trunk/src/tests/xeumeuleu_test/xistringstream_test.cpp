@@ -314,6 +314,42 @@ BOOST_AUTO_TEST_CASE( internal_schema_is_used_only_if_specified )
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: creating_stream_with_xml_validated_by_internally_referenced_definition_does_not_throw_an_exception
+// Created: MCO 2009-07-04
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( creating_stream_with_xml_validated_by_internally_referenced_definition_does_not_throw_an_exception )
+{
+    const std::string definition = BOOST_RESOLVE( "document_type.dtd" );
+    const std::string xml = "<!DOCTYPE element SYSTEM '" + definition + "'>"
+                            "<element/>";
+    BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml, xml::internal_grammar() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: creating_stream_with_xml_not_validated_by_internally_referenced_definition_throws_an_exception
+// Created: MCO 2009-07-04
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_internally_referenced_definition_throws_an_exception )
+{
+    const std::string definition = BOOST_RESOLVE( "document_type.dtd" );
+    const std::string xml = "<!DOCTYPE element SYSTEM '" + definition + "'>"
+                            "<wrong-element/>";
+    BOOST_CHECK_THROW( xml::xistringstream xis( xml, xml::internal_grammar() ), xml::exception );
+}
+
+// -----------------------------------------------------------------------------
+// Name: internal_definition_is_used_only_if_specified
+// Created: MCO 2009-07-04
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( internal_definition_is_used_only_if_specified )
+{
+    const std::string definition = BOOST_RESOLVE( "document_type.dtd" );
+    const std::string xml = "<!DOCTYPE element SYSTEM '" + definition + "'>"
+                            "<wrong-element/>";
+    BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml ) );
+}
+
 namespace
 {
     class my_class
