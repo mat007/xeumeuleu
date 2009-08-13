@@ -104,8 +104,10 @@ public:
     {
 #if XERCES_VERSION_MAJOR == 3
         set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidate, false );
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgXercesLoadSchema, false );
 #else
         set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, false );
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgXercesSchema, false );
 #endif // XERCES_VERSION_MAJOR
         set( XERCES_CPP_NAMESPACE::XMLUni::fgXercesLoadExternalDTD, false );
     }
