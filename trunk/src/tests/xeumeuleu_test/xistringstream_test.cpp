@@ -315,6 +315,16 @@ BOOST_AUTO_TEST_CASE( internal_schema_is_used_only_if_specified )
 }
 
 // -----------------------------------------------------------------------------
+// Name: non_existing_internal_schema_is_loaded_only_if_necessary
+// Created: MCO 2009-08-13
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( non_existing_internal_schema_is_loaded_only_if_necessary )
+{
+    const std::string xml = "<element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='non existing schema.xsd' />";
+    BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: creating_stream_with_xml_validated_by_internally_referenced_definition_does_not_throw_an_exception
 // Created: MCO 2009-07-04
 // -----------------------------------------------------------------------------
@@ -347,6 +357,17 @@ BOOST_AUTO_TEST_CASE( internal_definition_is_used_only_if_specified )
     const std::string definition = BOOST_RESOLVE( "document_type.dtd" );
     const std::string xml = "<!DOCTYPE element SYSTEM '" + definition + "'>"
                             "<wrong-element/>";
+    BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: non_existing_internal_definition_is_loaded_only_if_necessary
+// Created: MCO 2009-08-13
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( non_existing_internal_definition_is_loaded_only_if_necessary )
+{
+    const std::string xml = "<!DOCTYPE element SYSTEM 'non existing document type.dtd'>"
+                            "<element/>";
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml ) );
 }
 
