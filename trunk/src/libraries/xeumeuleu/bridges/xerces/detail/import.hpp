@@ -79,7 +79,8 @@ namespace detail
     {
         if( from.getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::DOCUMENT_NODE )
         {
-            import( document, *from.getFirstChild(), to );
+            if( from.getFirstChild() )
+                import( document, *from.getFirstChild(), to );
             return document;
         }
         XERCES_CPP_NAMESPACE::DOMNode& added = detail::clone( document, from, to );

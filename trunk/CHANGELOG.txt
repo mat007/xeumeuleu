@@ -1,6 +1,7 @@
 trunk
 . added support for document type definition (DTD)
 . a non existing internal schema definition is ignored instead of producing an error unless xml::internal_grammar is used
+. fixed a crash when creating an xml::xibufferstream from an empty xml::xobufferstream
 
 1.4.1
 . fixed a bug preventing attributes to be serialized from the root of an xml::xistream into an xml::xostream

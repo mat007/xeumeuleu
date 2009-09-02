@@ -34,6 +34,16 @@
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
+// Name: creating_buffer_from_empty_stream_is_valid
+// Created: MCO 2009-09-02
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( creating_buffer_from_empty_stream_is_valid )
+{
+    xml::xobufferstream xis;
+    xml::xibufferstream xibs( xis );
+}
+
+// -----------------------------------------------------------------------------
 // Name: created_buffer_stream_starts_from_current_stream_level
 // Created: MCO 2006-03-18
 // -----------------------------------------------------------------------------
