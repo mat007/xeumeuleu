@@ -62,12 +62,12 @@ public:
     {}
     locator( const locator& rhs )
         : XERCES_CPP_NAMESPACE::DOMLocator()
-        , uri_   ( std::string( rhs.uri_ ) )
+        , uri_   ( rhs.uri_ )
         , line_  ( rhs.line_ )
         , column_( rhs.column_ )
     {}
     locator( const XERCES_CPP_NAMESPACE::DOMLocator& rhs )
-        : uri_   ( rhs.getURI() )
+        : uri_   ( translate( rhs.getURI() ) )
         , line_  ( rhs.getLineNumber() )
         , column_( rhs.getColumnNumber() )
     {}
@@ -110,7 +110,7 @@ public:
 #endif // XERCES_VERSION_MAJOR
     virtual const XMLCh* getURI() const
     {
-        return uri_;
+        return 0;
     }
     //@}
 
@@ -149,7 +149,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const translate uri_;
+    const std::string uri_;
     const XMLFileLoc line_, column_;
     //@}
 };
