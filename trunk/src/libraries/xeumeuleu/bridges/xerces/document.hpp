@@ -114,11 +114,12 @@ private:
 #if XERCES_VERSION_MAJOR == 3
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMLSSerializer > serializer( *dynamic_cast< XERCES_CPP_NAMESPACE::DOMImplementationLS* >( impl )->createLSSerializer() );
         serializer->getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMErrorHandler, &handler );
+        serializer->getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMWRTFormatPrettyPrint, true );
+        serializer->getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMWRTXercesPrettyPrint, false );
         if( ! is_utf8( encoding ) )
             serializer->getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMWRTBOM, true );
-        beautifier target( destination, encoding, serializer->getNewLine() );
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMLSOutput > output( *impl->createLSOutput() );
-        output->setByteStream( &target );
+        output->setByteStream( &destination );
         output->setEncoding( translate( encoding ) );
         serializer->write( document_.get(), output.get() );
 #else
