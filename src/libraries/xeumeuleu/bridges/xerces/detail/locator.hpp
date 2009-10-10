@@ -35,6 +35,7 @@
 
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
+#include <xeumeuleu/bridges/xerces/detail/shared_string.hpp>
 #include <sstream>
 
 namespace xml
@@ -50,12 +51,12 @@ class locator : public XERCES_CPP_NAMESPACE::DOMLocator
 public:
     //! @name Constructors/Destructor
     //@{
-    locator( const std::string& uri, const XERCES_CPP_NAMESPACE::XMLScanner& scanner )
+    locator( const shared_string& uri, const XERCES_CPP_NAMESPACE::XMLScanner& scanner )
         : uri_   ( uri )
         , line_  ( scanner.getLocator()->getLineNumber() )
         , column_( scanner.getLocator()->getColumnNumber() )
     {}
-    locator( const std::string& uri )
+    locator( const shared_string& uri )
         : uri_   ( uri )
         , line_  ( 0 )
         , column_( 0 )
@@ -149,7 +150,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const std::string uri_;
+    const shared_string uri_;
     const XMLFileLoc line_, column_;
     //@}
 };

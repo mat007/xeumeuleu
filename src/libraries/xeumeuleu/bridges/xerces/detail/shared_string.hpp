@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2009, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,53 +30,93 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_builder_hpp
-#define xeumeuleu_builder_hpp
+#ifndef xeumeuleu_shared_string_hpp
+#define xeumeuleu_shared_string_hpp
 
-#include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
-#include <xeumeuleu/bridges/xerces/detail/translate.hpp>
-#include <xeumeuleu/bridges/xerces/detail/locator.hpp>
-#include <xeumeuleu/bridges/xerces/detail/shared_string.hpp>
+#include <string>
 
 namespace xml
 {
 // =============================================================================
-/** @class  builder
-    @brief  Builder
+/** @class  shared_string
+    @brief  Shared string
 */
-// Created: MAT 2008-11-23
+// Created: MAT 2009-10-10
 // =============================================================================
-class builder : public XERCES_CPP_NAMESPACE::DOMLSParserImpl
+class shared_string
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit builder( const std::string& uri )
-        : uri_( uri )
-    {}
-    virtual ~builder()
-    {}
+    shared_string( const std::string& str )
+        : impl_( new impl( str ) )
+    {
+        increase();
+    }
+    explicit shared_string( const shared_string& rhs )
+        : impl_( rhs.impl_ )
+    {
+        increase();
+    }
+    ~shared_string()
+    {
+        decrease();
+    }
     //@}
 
-    //! @name Operations
+    //! @name Operators
     //@{
-    virtual void startElement( const XERCES_CPP_NAMESPACE::XMLElementDecl& elemDecl, const unsigned int urlId,
-                               const XMLCh* const elemPrefix, const XERCES_CPP_NAMESPACE::RefVectorOf< XERCES_CPP_NAMESPACE::XMLAttr >& attrList,
-                               const Count_t attrCount, const bool isEmpty, const bool isRoot )
+    shared_string& operator=( const shared_string& rhs )
     {
-        static const translate tag( "locator" );
-        XERCES_CPP_NAMESPACE::DOMLSParserImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, isEmpty, isRoot );
-        getCurrentNode()->setUserData( tag, new locator( uri_, *getScanner() ), 0 );
+        if( this == &rhs )
+            return *this;
+        decrease();
+        impl_ = rhs.impl_;
+        increase();
+        return *this;
+    }
+
+    std::string operator+( const std::string& str ) const
+    {
+        return impl_->str_ + str;
     }
     //@}
 
 private:
-    //! @name Member data
+    //! @name Helpers
     //@{
-    const shared_string uri_;
+    void increase()
+    {
+        ++impl_->count_;
+    }
+    void decrease()
+    {
+        if( --impl_->count_ == 0 )
+            delete impl_;
+    }
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    struct impl
+    {
+        impl( const std::string& str )
+            : str_  ( str )
+            , count_( 0 )
+        {}
+        std::string str_;
+        int count_;
+    };
+    //@}
+
+private:
+    //! @name Data members
+    //@{
+    impl* impl_;
     //@}
 };
 
 }
 
-#endif // xeumeuleu_builder_hpp
+#endif // xeumeuleu_shared_string_hpp
