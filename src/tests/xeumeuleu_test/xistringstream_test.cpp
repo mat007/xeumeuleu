@@ -36,11 +36,6 @@
 namespace
 {
     const xml::xistringstream xis( "<static-stream-is-valid/>" );
-
-    float error_method_contains_inlined_throw( xml::xistream& xis )
-    {
-        xis.error( "" );
-    }
 }
 
 // -----------------------------------------------------------------------------
