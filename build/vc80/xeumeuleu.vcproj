@@ -453,6 +453,10 @@
 							>
 						</File>
 						<File
+							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\shared_string.hpp"
+							>
+						</File>
+						<File
 							RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\translate.hpp"
 							>
 						</File>
