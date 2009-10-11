@@ -50,17 +50,16 @@ public:
     //@{
     shared_string( const std::string& str )
         : impl_( new impl( str ) )
-    {
-        increase();
-    }
+    {}
     explicit shared_string( const shared_string& rhs )
         : impl_( rhs.impl_ )
     {
-        increase();
+        ++impl_->count_;
     }
     ~shared_string()
     {
-        decrease();
+        if( --impl_->count_ == 0 )
+            delete impl_;
     }
     //@}
 
@@ -68,11 +67,8 @@ public:
     //@{
     shared_string& operator=( const shared_string& rhs )
     {
-        if( this == &rhs )
-            return *this;
-        decrease();
-        impl_ = rhs.impl_;
-        increase();
+        shared_string tmp( rhs );
+        swap( tmp );
         return *this;
     }
 
@@ -82,17 +78,13 @@ public:
     }
     //@}
 
-private:
     //! @name Helpers
     //@{
-    void increase()
+    void swap( shared_string& rhs )
     {
-        ++impl_->count_;
-    }
-    void decrease()
-    {
-        if( --impl_->count_ == 0 )
-            delete impl_;
+        impl* impl = impl_;
+        impl_ = rhs.impl_;
+        rhs.impl_ = impl;
     }
     //@}
 
@@ -103,7 +95,7 @@ private:
     {
         impl( const std::string& str )
             : str_  ( str )
-            , count_( 0 )
+            , count_( 1 )
         {}
         std::string str_;
         int count_;
