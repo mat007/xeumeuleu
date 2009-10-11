@@ -103,7 +103,7 @@ private:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     impl* impl_;
     //@}
