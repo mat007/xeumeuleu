@@ -100,7 +100,7 @@ private:
     //@}
 
 private:
-    //! @name Data members
+    //! @name Member data
     //@{
     const XMLCh* const ch_;
     bool owner_;
