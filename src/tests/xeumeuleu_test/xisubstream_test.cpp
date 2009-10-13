@@ -129,7 +129,7 @@ BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_throws_when_moving_up_fr
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional >> xml::start( "non-existing" );
     xml::xisubstream xiss( xis );
-    BOOST_CHECK_THROW( xiss >> xml::end >> xml::end, xml::exception );
+    BOOST_CHECK_THROW( xiss >> xml::end, xml::exception );
 }
 
 // -----------------------------------------------------------------------------
