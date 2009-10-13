@@ -61,8 +61,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit xistream( input_base& input )
-        : base_ ( input )
-        , input_( &input )
+        : input_( &input )
     {}
     virtual ~xistream()
     {}
@@ -193,7 +192,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const input_base& base_;
     input_base* input_;
     std::auto_ptr< null_input > null_;
     std::auto_ptr< optional_input > optional_;
