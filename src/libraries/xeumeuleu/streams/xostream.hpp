@@ -110,8 +110,7 @@ public:
     {
         attribute( name, std::string( value ) );
     }
-    template< typename T >
-    void attribute( const std::string& name, const T& value )
+    template< typename T > void attribute( const std::string& name, const T& value )
     {
         output_.attribute( name, value );
     }
