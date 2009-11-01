@@ -78,21 +78,7 @@ public:
 
     //! @name Modifiers
     //@{
-    void write( const char* value ) { write( std::string( value ) ); }
-    void write( const std::string& value ) { output_.write( value ); }
-    void write( bool value ) { output_.write( value ); }
-    void write( int value ) { output_.write( value ); }
-    void write( long value ) { output_.write( value ); }
-    void write( long long value ) { output_.write( value ); }
-    void write( float value ) { output_.write( value ); }
-    void write( double value ) { output_.write( value ); }
-    void write( long double value ) { output_.write( value ); }
-    void write( unsigned int value ) { output_.write( value ); }
-    void write( unsigned long value ) { output_.write( value ); }
-    void write( unsigned long long value ) { output_.write( value ); }
-    void write( const xistream& xis );
-
-    xostream& operator<<( const char* value ) { write( std::string( value ) ); return *this; }
+    xostream& operator<<( const char* value ) { output_.write( std::string( value ) ); return *this; }
     xostream& operator<<( const std::string& value ) { output_.write( value ); return *this; }
     xostream& operator<<( bool value ) { output_.write( value ); return *this; }
     xostream& operator<<( int value ) { output_.write( value ); return *this; }
@@ -145,10 +131,6 @@ private:
 
 namespace xml
 {
-    inline void xostream::write( const xistream& xis )
-    {
-        xis.copy( output_ );
-    }
     inline xostream& xostream::operator<<( const xistream& xis )
     {
         xis.copy( output_ );
