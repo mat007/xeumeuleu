@@ -199,7 +199,7 @@ namespace xml
 {
     inline xistream& xistream::operator>>( xostream& xos )
     {
-        xos.write( *this );
+        xos << *this;
         return *this;
     }
 }
