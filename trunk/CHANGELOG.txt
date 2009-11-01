@@ -4,6 +4,7 @@ trunk
 . fixed a crash when creating an xml::xibufferstream from an empty xml::xobufferstream
 . optimized streams creation and cloning
 . reduced input streams memory footprint
+. the optional state of a stream is now correctly transmitted to the sub streams or buffer streams created from it
 
 1.4.1
 . fixed a bug preventing attributes to be serialized from the root of an xml::xistream into an xml::xostream
