@@ -78,21 +78,6 @@ public:
         input_->end();
     }
 
-    void read( std::string& value ) const { input_->read( value ); }
-    void read( bool& value ) const { input_->read( value ); }
-    void read( short& value ) const { input_->read( value ); }
-    void read( int& value ) const { input_->read( value ); }
-    void read( long& value ) const { input_->read( value ); }
-    void read( long long& value ) const { input_->read( value ); }
-    void read( float& value ) const { input_->read( value ); }
-    void read( double& value ) const { input_->read( value ); }
-    void read( long double& value ) const { input_->read( value ); }
-    void read( unsigned short& value ) const { input_->read( value ); }
-    void read( unsigned int& value ) const { input_->read( value ); }
-    void read( unsigned long& value ) const { input_->read( value ); }
-    void read( unsigned long long& value ) const { input_->read( value ); }
-    void read( xostream& xos ) const;
-
     xistream& operator>>( std::string& value ) { input_->read( value ); return *this; }
     xistream& operator>>( bool& value ) { input_->read( value ); return *this; }
     xistream& operator>>( short& value ) { input_->read( value ); return *this; }
@@ -212,10 +197,6 @@ private:
 
 namespace xml
 {
-    inline void xistream::read( xostream& xos ) const
-    {
-        xos.write( *this );
-    }
     inline xistream& xistream::operator>>( xostream& xos )
     {
         xos.write( *this );
