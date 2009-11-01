@@ -85,39 +85,39 @@ BOOST_AUTO_TEST_CASE( creating_sub_stream_created_after_optional_does_not_reset_
 }
 
 // -----------------------------------------------------------------------------
-// Name: sub_stream_created_after_optional_is_not_optional
+// Name: sub_stream_created_after_optional_is_still_optional
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_is_not_optional )
+BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_is_still_optional )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional;
     xml::xisubstream xiss( xis );
-    BOOST_CHECK_THROW( xiss >> xml::start( "non-existing" ), xml::exception );
+    BOOST_CHECK_NO_THROW( xiss >> xml::start( "non-existing" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: creating_sub_stream_on_optional_non_existing_branch_is_valid_and_does_not_reset_optional
+// Name: sub_stream_created_after_non_existing_optional_element_is_still_optional
+// Created: MCO 2009-10-11
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( sub_stream_created_after_non_existing_optional_element_is_still_optional )
+{
+    xml::xistringstream xis( "<element/>" );
+    xis >> xml::start( "element" ) >> xml::optional >> xml::start( "non-existing" );
+    xml::xisubstream xiss( xis );
+    BOOST_CHECK_NO_THROW( xiss >> xml::start( "another-non-existing" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: sub_stream_created_on_optional_non_existing_branch_does_not_reset_optional
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( creating_sub_stream_on_optional_non_existing_branch_is_valid_and_does_not_reset_optional )
+BOOST_AUTO_TEST_CASE( sub_stream_created_on_optional_non_existing_branch_does_not_reset_optional )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional >> xml::start( "non-existing" );
     xml::xisubstream xiss( xis );
     BOOST_CHECK_NO_THROW( xis >> xml::start( "another-non-existing" ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: creating_sub_stream_on_sub_stream_is_valid
-// Created: MCO 2006-11-12
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( creating_sub_stream_on_sub_stream_is_valid )
-{
-    xml::xistringstream xis( "<element/>" );
-    xml::xisubstream xiss( xis );
-    xml::xisubstream xisss( xiss );
-    BOOST_CHECK_NO_THROW( xisss >> xml::start( "element" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,15 +133,40 @@ BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_throws_when_moving_up_fr
 }
 
 // -----------------------------------------------------------------------------
-// Name: sub_stream_created_after_optional_throws
+// Name: sub_stream_created_after_optional_can_throw_upon_error
 // Created: MCO 2008-05-25
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_throws )
+BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_can_throw_upon_error )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional >> xml::start( "non-existing" );
     xml::xisubstream xiss( xis );
     BOOST_CHECK_THROW( xiss.error( "" ), xml::exception );
+}
+
+// -----------------------------------------------------------------------------
+// Name: sub_stream_created_after_optional_does_not_modify_original_stream
+// Created: MCO 2009-10-26
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_does_not_modify_original_stream )
+{
+    xml::xistringstream xis( "<element/>" );
+    xis >> xml::optional >> xml::start( "non-existing" );
+    xml::xisubstream xiss( xis );
+    xiss >> xml::start( "non-existing" ) >> xml::end;
+    BOOST_CHECK_NO_THROW( xis >> xml::end );
+}
+
+// -----------------------------------------------------------------------------
+// Name: creating_sub_stream_on_sub_stream_is_valid
+// Created: MCO 2006-11-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( creating_sub_stream_on_sub_stream_is_valid )
+{
+    xml::xistringstream xis( "<element/>" );
+    xml::xisubstream xiss( xis );
+    xml::xisubstream xisss( xiss );
+    BOOST_CHECK_NO_THROW( xisss >> xml::start( "element" ) );
 }
 
 // -----------------------------------------------------------------------------

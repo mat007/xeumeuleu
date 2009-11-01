@@ -94,15 +94,15 @@ BOOST_AUTO_TEST_CASE( creating_buffer_stream_created_after_optional_does_not_res
 }
 
 // -----------------------------------------------------------------------------
-// Name: buffer_stream_created_after_optional_is_not_optional
+// Name: buffer_stream_created_after_optional_is_still_optional
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( buffer_stream_created_after_optional_is_not_optional )
+BOOST_AUTO_TEST_CASE( buffer_stream_created_after_optional_is_still_optional )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional;
     xml::xibufferstream xibs( xis );
-    BOOST_CHECK_THROW( xibs >> xml::start( "non-existing" ), xml::exception );
+    BOOST_CHECK_NO_THROW( xibs >> xml::start( "non-existing" ) );
 }
 
 // -----------------------------------------------------------------------------

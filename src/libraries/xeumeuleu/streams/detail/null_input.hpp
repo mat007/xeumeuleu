@@ -50,13 +50,8 @@ class null_input : public input_base
 public:
     //! @name Constructors/Destructor
     //@{
-    null_input()
-        : input_  ( 0 )
-        , context_( 0 )
-        , level_  ( 0 )
-    {}
     null_input( input_base& input, input_context& context )
-        : input_  ( &input )
+        : input_  ( input )
         , context_( &context )
         , level_  ( 0 )
     {}
@@ -73,9 +68,9 @@ public:
     virtual void end()
     {
         if( --level_ == 0 && context_ )
-            context_->reset( *input_ );
+            context_->reset( input_ );
         else if( level_ < 0 )
-            throw xml::exception( "Cannot move up from root" );
+            throw xml::exception( "Invalid 'end' at root level" );
     }
 
     virtual void read( std::string& /*value*/ ) const { reset(); }
@@ -94,7 +89,7 @@ public:
 
     virtual std::auto_ptr< input_base > branch( bool /*clone*/ ) const
     {
-        return std::auto_ptr< input_base >( new null_input() );
+        return std::auto_ptr< input_base >( new null_input( input_ ) );
     }
 
     virtual void copy( output& /*destination*/ ) const
@@ -137,26 +132,33 @@ public:
 
     virtual std::string context() const
     {
-        if( input_ )
-            return input_->context();
-        return "";
+        return input_.context();
     }
     //@}
 
 private:
+    //! @name Constructors/Destructor
+    //@{
+    explicit null_input( input_base& input )
+        : input_  ( input )
+        , context_( 0 )
+        , level_  ( 0 )
+    {}
+    //@}
+
     //! @name Helpers
     //@{
     void reset() const
     {
-        if( level_ == 0 )
-            context_->reset( *input_ );
+        if( level_ == 0 && context_ )
+            context_->reset( input_ );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    input_base* input_;
+    input_base& input_;
     input_context* context_;
     int level_;
     //@}
