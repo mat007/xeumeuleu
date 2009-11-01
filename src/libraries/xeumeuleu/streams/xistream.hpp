@@ -138,6 +138,10 @@ public:
     {
         return input_->has_content();
     }
+    bool is_optional() const
+    {
+        return input_ == optional_.get();
+    }
 
     template< typename T > void attribute( const std::string& name, T& value ) const
     {

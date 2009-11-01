@@ -62,11 +62,17 @@ public:
     xisubstream( const xistream& xis )
         : xi_base_member( xis.branch( false ) )
         , xistream( *xi_base_member::input_ )
-    {}
+    {
+        if( xis.is_optional() )
+            optional();
+    }
     xisubstream( const xisubstream& xiss )
         : xi_base_member( xiss.branch( false ) )
         , xistream( *xi_base_member::input_ )
-    {}
+    {
+        if( xiss.is_optional() )
+            optional();
+    }
     virtual ~xisubstream()
     {}
     //@}
