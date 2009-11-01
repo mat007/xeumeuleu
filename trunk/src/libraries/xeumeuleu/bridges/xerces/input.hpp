@@ -263,8 +263,7 @@ private:
         return attribute->getNodeValue();
     }
 
-    template< typename T >
-    T convert( const XMLCh* from ) const
+    template< typename T > T convert( const XMLCh* from ) const
     {
         const double value = XERCES_CPP_NAMESPACE::XMLDouble( from ).getValue();
         const T result = static_cast< T >( value );
