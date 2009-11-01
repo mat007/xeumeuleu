@@ -71,8 +71,7 @@ public:
     }
     virtual void end()
     {
-        context_.reset( input1_ );
-        throw xml::exception( "Invalid 'end' after an 'optional'" );
+        context_.reset( input1_ ).end();
     }
 
     virtual void read( std::string& value ) const { read_content( value ); }

@@ -195,15 +195,16 @@ BOOST_AUTO_TEST_CASE( reading_optional_element_inside_optional_non_existing_elem
 }
 
 // -----------------------------------------------------------------------------
-// Name: setting_optional_before_moving_up_throws_an_exception
+// Name: setting_optional_before_moving_up_resets_optional
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( setting_optional_before_moving_up_throws_an_exception )
+BOOST_AUTO_TEST_CASE( setting_optional_before_moving_up_resets_optional )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
-            >> xml::optional;
-    BOOST_CHECK_THROW( xis >> xml::end, xml::exception );
+            >> xml::optional
+        >> xml::end;
+    BOOST_CHECK_NO_THROW( xis >> xml::start( "element" ) );
 }
 
 namespace
