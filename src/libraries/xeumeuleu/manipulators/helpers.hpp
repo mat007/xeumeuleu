@@ -34,18 +34,18 @@
 #define xeumeuleu_hppelpers_hpp
 
 #include <xeumeuleu/streams/xisubstream.hpp>
+#include <xeumeuleu/manipulators/optional.hpp>
 #include <xeumeuleu/manipulators/attribute.hpp>
-#include <xeumeuleu/manipulators/content.hpp>
 
 namespace xml
 {
-
+#ifndef XEUMEULEU_NO_DEPRECATED
 // -----------------------------------------------------------------------------
 // Name: value
 // Created: MAT 2008-01-19
 // -----------------------------------------------------------------------------
 template< typename T >
-T value( xisubstream xis )
+T value( xisubstream xis ) //<! Deprecated !
 {
     T value;
     xis >> value;
@@ -57,9 +57,9 @@ T value( xisubstream xis )
 // Created: MAT 2008-01-19
 // -----------------------------------------------------------------------------
 template< typename T >
-T value( xisubstream xis, const T& defaultValue )
+T value( xisubstream xis, const T& fallback ) //<! Deprecated !
 {
-    T value = defaultValue;
+    T value = fallback;
     xis >> optional >> value;
     return value;
 }
@@ -69,7 +69,7 @@ T value( xisubstream xis, const T& defaultValue )
 // Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
 template< typename T >
-T attribute( xisubstream xis, const std::string& name )
+T attribute( xisubstream xis, const std::string& name ) //<! Deprecated !
 {
     T value;
     xis >> attribute( name, value );
@@ -81,9 +81,9 @@ T attribute( xisubstream xis, const std::string& name )
 // Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
 template< typename T >
-T attribute( xisubstream xis, const std::string& name, const T& defaultValue )
+T attribute( xisubstream xis, const std::string& name, const T& fallback ) //<! Deprecated !
 {
-    T value = defaultValue;
+    T value = fallback;
     xis >> optional >> attribute( name, value );
     return value;
 }
@@ -93,10 +93,10 @@ T attribute( xisubstream xis, const std::string& name, const T& defaultValue )
 // Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
 template< typename T >
-T content( xisubstream xis, const std::string& tag )
+T content( xisubstream xis, const std::string& tag ) //<! Deprecated !
 {
     T value;
-    xis >> content( tag, value );
+    xis >> start( tag ) >> value;
     return value;
 }
 
@@ -105,13 +105,13 @@ T content( xisubstream xis, const std::string& tag )
 // Created: MAT 2007-07-11
 // -----------------------------------------------------------------------------
 template< typename T >
-T content( xisubstream xis, const std::string& tag, const T& defaultValue )
+T content( xisubstream xis, const std::string& tag, const T& fallback ) //<! Deprecated !
 {
-    T value = defaultValue;
-    xis >> optional >> start( tag ) >> optional >> value >> end;
+    T value = fallback;
+    xis >> optional >> start( tag ) >> optional >> value;
     return value;
 }
-
+#endif // XEUMEULEU_NO_DEPRECATED
 }
 
 #endif // xeumeuleu_hppelpers_hpp

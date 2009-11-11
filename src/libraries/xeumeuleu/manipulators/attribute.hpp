@@ -61,7 +61,7 @@ public:
     //@{
     friend xistream& operator>>( xistream& xis, const attribute_manipulator& m )
     {
-        xis.attribute( m.name_, m.value_ );
+        xis.attribute_by_ref( m.name_, m.value_ );
         return xis;
     }
     friend xostream& operator<<( xostream& xos, const attribute_manipulator& m )

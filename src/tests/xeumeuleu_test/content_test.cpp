@@ -208,7 +208,7 @@ BOOST_AUTO_TEST_CASE( streaming_content_with_invalid_format_throws_an_exception 
 BOOST_AUTO_TEST_CASE( read_content_directly_is_valid )
 {
     xml::xistringstream xis( "<element>the content value</element>" );
-    BOOST_CHECK_EQUAL( "the content value", xml::content< std::string >( xis, "element" ) );
+    BOOST_CHECK_EQUAL( "the content value", xis.content< std::string >( "element" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,7 +219,7 @@ BOOST_AUTO_TEST_CASE( read_content_directly_with_default_value_is_valid )
 {
     xml::xistringstream xis( "<element>the content value</element>" );
     const std::string value = "the default value";
-    BOOST_CHECK_EQUAL( "the content value", xml::content( xis, "element", value ) );
+    BOOST_CHECK_EQUAL( "the content value", xis.content( "element", value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,7 +230,7 @@ BOOST_AUTO_TEST_CASE( read_unexisting_content_directly_with_default_value_is_val
 {
     xml::xistringstream xis( "<element/>" );
     const std::string value = "the default value";
-    BOOST_CHECK_EQUAL( value, xml::content( xis, "element", value ) );
+    BOOST_CHECK_EQUAL( value, xis.content( "element", value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,40 +253,20 @@ namespace
 }
 namespace xml
 {
-    template<>
-    class content_manipulator< user_type >
+    xistream& operator>>( xistream& xis, user_type& )
     {
-    public:
-        content_manipulator( const std::string& /*name*/, user_type& /*value*/ )
-        {}
-        friend xistream& operator>>( xistream& xis, const content_manipulator& /*m*/ )
-        {
-            return xis;
-        }
-        friend xostream& operator<<( xostream& xos, const content_manipulator& /*m*/ )
-        {
-            return xos;
-        }
-    };
+        return xis;
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: content_manipulator_can_be_specialized_for_user_types
+// Name: reading_content_can_be_specialized_for_user_types
 // Created: MCO 2009-05-30
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( content_manipulator_can_be_specialized_for_user_types )
+BOOST_AUTO_TEST_CASE( reading_content_can_be_specialized_for_user_types )
 {
     xml::xistringstream xis( "<root>1</root>" );
     user_type u;
     xis >> xml::content( "root", u );
-}
-
-// -----------------------------------------------------------------------------
-// Name: content_manipulator_can_be_specialized_for_user_types_using_helpers
-// Created: MCO 2009-05-30
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( content_manipulator_can_be_specialized_for_user_types_using_helpers )
-{
-    xml::xistringstream xis( "<root>1</root>" );
-    xml::content< user_type >( xis, "root" );
+    xis.content< user_type >( "root" );
 }
