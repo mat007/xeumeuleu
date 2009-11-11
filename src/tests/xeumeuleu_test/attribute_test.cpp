@@ -140,7 +140,7 @@ BOOST_AUTO_TEST_CASE( read_attribute_directly_is_valid )
 {
     xml::xistringstream xis( "<element attribute='the attribute value'/>" );
     xis >> xml::start( "element" );
-    BOOST_CHECK_EQUAL( "the attribute value", xml::attribute< std::string >( xis, "attribute" ) );
+    BOOST_CHECK_EQUAL( "the attribute value", xis.attribute< std::string >( "attribute" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +152,7 @@ BOOST_AUTO_TEST_CASE( read_attribute_directly_with_default_value_is_valid )
     xml::xistringstream xis( "<element attribute='the attribute value'/>" );
     xis >> xml::start( "element" );
     const std::string value = "the default value";
-    BOOST_CHECK_EQUAL( "the attribute value", xml::attribute( xis, "attribute", value ) );
+    BOOST_CHECK_EQUAL( "the attribute value", xis.attribute( "attribute", value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_CASE( read_unexisting_attribute_directly_with_default_value_is_v
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" );
     const std::string value = "the default value";
-    BOOST_CHECK_EQUAL( value, xml::attribute( xis, "attribute", value ) );
+    BOOST_CHECK_EQUAL( value, xis.attribute( "attribute", value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +175,7 @@ BOOST_AUTO_TEST_CASE( read_from_root_attribute_directly_with_default_value_is_va
 {
     xml::xistringstream xis( "<element/>" );
     const std::string value = "the default value";
-    BOOST_CHECK_EQUAL( value, xml::attribute( xis, "attribute", value ) );
+    BOOST_CHECK_EQUAL( value, xis.attribute( "attribute", value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -233,24 +233,13 @@ namespace xml
 }
 
 // -----------------------------------------------------------------------------
-// Name: attribute_manipulator_can_be_specialized_for_user_types
+// Name: reading_attribute_can_be_specialized_for_user_types
 // Created: MCO 2009-05-30
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( attribute_manipulator_can_be_specialized_for_user_types )
+BOOST_AUTO_TEST_CASE( reading_attribute_can_be_specialized_for_user_types )
 {
     xml::xistringstream xis( "<root attribute=''/>" );
     user_type u;
     xis >> xml::start( "root" )
             >> xml::attribute( "attribute", u );
-}
-
-// -----------------------------------------------------------------------------
-// Name: attribute_manipulator_can_be_specialized_for_user_types_using_helpers
-// Created: MCO 2009-06-22
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( attribute_manipulator_can_be_specialized_for_user_types_using_helpers )
-{
-    xml::xistringstream xis( "<root attribute=''/>" );
-    xis >> xml::start( "root" );
-    xml::attribute< user_type >( xis, "attribute" );
 }

@@ -40,11 +40,6 @@
 #include <string>
 #include <memory>
 
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable: 4355 )
-#endif
-
 namespace xml
 {
     class xostream;
@@ -128,9 +123,30 @@ public:
         return input_ == optional_.get();
     }
 
-    template< typename T > void attribute( const std::string& name, T& value ) const
+    template< typename T > T value() const;
+    template< typename T > T value( const T& fallback ) const;
+    std::string value( const char* fallback ) const
+    {
+        return value< std::string >( fallback );
+    }
+
+    template< typename T > T content( const std::string& name ) const;
+    template< typename T > T content( const std::string& name, const T& fallback ) const;
+    std::string content( const std::string& name, const char* fallback ) const
+    {
+        return content< std::string >( name, fallback );
+    }
+
+    template< typename T > void attribute_by_ref( const std::string& name, T& value ) const
     {
         input_->attribute( name, value );
+    }
+
+    template< typename T > T attribute( const std::string& name ) const;
+    template< typename T > T attribute( const std::string& name, const T& fallback ) const;
+    std::string attribute( const std::string& name, const char* fallback ) const
+    {
+        return attribute< std::string >( name, fallback );
     }
 
     void nodes( const visitor& v ) const
@@ -189,14 +205,64 @@ private:
 
 }
 
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
-
 #include <xeumeuleu/streams/xostream.hpp>
+#include <xeumeuleu/streams/xisubstream.hpp>
 
 namespace xml
 {
+    template< typename T > T xistream::value() const
+    {
+        T value;
+        if( ! has_content() )
+            error( "does not have a content" );
+        xml::xisubstream xiss( *this );
+        xiss >> value;
+        return value;
+    }
+    template< typename T > T xistream::value( const T& fallback ) const
+    {
+        T value = fallback;
+        xml::xisubstream xiss( *this );
+        xiss.optional();
+        xiss >> value;
+        return value;
+    }
+    template< typename T > T xistream::attribute( const std::string& name ) const
+    {
+        T value;
+        if( ! has_attribute( name ) )
+            error( "does not have an attribute '" + name + "'" );
+        attribute_by_ref( name, value );
+        return value;
+    }
+    template< typename T > T xistream::attribute( const std::string& name, const T& fallback ) const
+    {
+        T value = fallback;
+        xml::xisubstream xiss( *this );
+        xiss.optional();
+        xiss.attribute_by_ref( name, value );
+        return value;
+    }
+    template< typename T > T xistream::content( const std::string& name ) const
+    {
+        T value;
+        xml::xisubstream xiss( *this );
+        xiss.start( name );
+        if( ! xiss.has_content() )
+            error( "does not have a content" );
+        xiss >> value;
+        return value;
+    }
+    template< typename T > T xistream::content( const std::string& name, const T& fallback ) const
+    {
+        T value = fallback;
+        xml::xisubstream xiss( *this );
+        xiss.optional();
+        xiss.start( name );
+        xiss.optional();
+        xiss >> value;
+        return value;
+    }
     inline xistream& xistream::operator>>( xostream& xos )
     {
         xos << *this;

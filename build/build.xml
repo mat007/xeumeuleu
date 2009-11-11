@@ -12,12 +12,14 @@
     <target name="xeumeuleu_xerces2_test" description="build and run tests">
         <build-test name="xeumeuleu_xerces2" input="xeumeuleu_test" depends="boost" libs="xerces-c_2">
             <includepath path="../include/xerces-c/2.7.0"/>
+            <defineset define="XEUMEULEU_NO_DEPRECATED"/>
         </build-test>
     </target>
 
     <target name="xeumeuleu_xerces3_test" description="build and run tests">
         <build-test name="xeumeuleu_xerces3" input="xeumeuleu_test" depends="boost" libs="xerces-c_3">
             <includepath path="../include/xerces-c/3.0.1"/>
+            <defineset define="XEUMEULEU_NO_DEPRECATED"/>
         </build-test>
     </target>
 

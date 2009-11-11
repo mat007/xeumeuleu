@@ -378,7 +378,7 @@ namespace
     public:
         void read( xml::xistream& xis )
         {
-            xml::attribute< std::string >( xis, "a" );
+            xis.attribute< std::string >( "a" );
         }
     };
     std::string create()

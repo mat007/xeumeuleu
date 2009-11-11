@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE( node_content_can_be_read_with_helper )
 {
     xml::xistringstream xis( "<element>the content</element>");
     xis >> xml::start( "element" );
-    BOOST_CHECK_EQUAL( "the content", xml::value< std::string >( xis ) );
+    BOOST_CHECK_EQUAL( "the content", xis.value< std::string >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,16 +52,41 @@ BOOST_AUTO_TEST_CASE( empty_node_content_read_with_helper_throws )
 {
     xml::xistringstream xis( "<element/>");
     xis >> xml::start( "element" );
-    BOOST_CHECK_THROW( xml::value< std::string >( xis ), xml::exception );
+    BOOST_CHECK_THROW( xis.value< std::string >(), xml::exception );
 }
 
 // -----------------------------------------------------------------------------
-// Name: empty_node_content_read_with_helper_throws
+// Name: empty_node_content_read_with_helper_and_default_value_returns_default_value
 // Created: MCO 2008-01-19
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( empty_node_content_read_with_helper_and_default_value_returns_default_value )
 {
     xml::xistringstream xis( "<element/>");
     xis >> xml::start( "element" );
-    BOOST_CHECK_EQUAL( "the content", xml::value< std::string >( xis, "the content" ) );
+    BOOST_CHECK_EQUAL( "the content", xis.value( "the content" ) );
+}
+
+namespace
+{
+    class user_type
+    {};
+}
+namespace xml
+{
+    xistream& operator>>( xistream& xis, user_type& )
+    {
+        return xis;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_value_can_be_specialized_for_user_types
+// Created: MCO 2009-05-30
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_value_can_be_specialized_for_user_types )
+{
+    xml::xistringstream xis( "<root>1</root>" );
+    user_type u;
+    xis >> xml::start( "root" )
+            >> u;
 }
