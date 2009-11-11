@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_reads_attribute_from_first_s
     xml::xistringstream xis2( "<root/>" );
     xml::ximultistream xis( xis1, xis2 );
     xis >> xml::start( "root" );
-    BOOST_CHECK_EQUAL( "stream-1", xml::attribute< std::string >( xis, "attribute" ) );
+    BOOST_CHECK_EQUAL( "stream-1", xis.attribute< std::string >( "attribute" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_reads_attribute_from_second_
     xml::xistringstream xis2( "<root attribute='stream-2'/>" );
     xml::ximultistream xis( xis1, xis2 );
     xis >> xml::start( "root" );
-    BOOST_CHECK_EQUAL( "stream-2", xml::attribute< std::string >( xis, "attribute" ) );
+    BOOST_CHECK_EQUAL( "stream-2", xis.attribute< std::string >( "attribute" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +105,7 @@ BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_reads_attribute_with_first_s
     xml::xistringstream xis2( "<root attribute='stream-2'/>" );
     xml::ximultistream xis( xis1, xis2 );
     xis >> xml::start( "root" );
-    BOOST_CHECK_EQUAL( "stream-1", xml::attribute< std::string >( xis, "attribute" ) );
+    BOOST_CHECK_EQUAL( "stream-1", xis.attribute< std::string >( "attribute" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_a_non_existing_attribute_thr
     xml::xistringstream xis2( "<root/>" );
     xml::ximultistream xis( xis1, xis2 );
     xis >> xml::start( "root" );
-    BOOST_CHECK_THROW( xml::attribute< std::string >( xis, "attribute" ), xml::exception );
+    BOOST_CHECK_THROW( xis.attribute< std::string >( "attribute" ), xml::exception );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +131,7 @@ BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_a_non_existing_attribute_fro
     xml::xistringstream xis2( "<root-2/>" );
     xml::ximultistream xis( xis1, xis2 );
     xis >> xml::start( "root-1" );
-    BOOST_CHECK_THROW( xml::attribute< std::string >( xis, "attribute" ), xml::exception );
+    BOOST_CHECK_THROW( xis.attribute< std::string >( "attribute" ), xml::exception );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +165,7 @@ BOOST_AUTO_TEST_CASE( reading_from_an_ximultistream_from_second_branch_does_not_
     xis >> xml::start( "root" )
             >> xml::start( "element" )
             >> xml::end;
-    BOOST_CHECK_EQUAL( "stream-1", xml::attribute< std::string >( xis, "attribute" ) );
+    BOOST_CHECK_EQUAL( "stream-1", xis.attribute< std::string >( "attribute" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,7 +182,7 @@ BOOST_AUTO_TEST_CASE( an_ximultistream_can_be_wrapped_by_an_xisubstream )
         xiss >> xml::start( "root-2" );
     }
     xis >> xml::start( "root-1" );
-    BOOST_CHECK_EQUAL( "stream-1", xml::attribute< std::string >( xis, "attribute" ) );
+    BOOST_CHECK_EQUAL( "stream-1", xis.attribute< std::string >( "attribute" ) );
 }
 
 // -----------------------------------------------------------------------------

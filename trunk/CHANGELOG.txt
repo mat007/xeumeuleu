@@ -6,6 +6,7 @@ trunk
 . reduced input streams memory footprint
 . the optional state of a stream is now correctly transmitted to the sub streams or buffer streams created from it
 . an xml::end after an xml::optional now resets the optional state instead of throwing an exception
+. direct reading helpers have been replaced by methods on an xml::xistream
 
 1.4.1
 . fixed a bug preventing attributes to be serialized from the root of an xml::xistream into an xml::xostream
