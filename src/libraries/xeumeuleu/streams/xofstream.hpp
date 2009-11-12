@@ -65,12 +65,14 @@ public:
         , output_  ( *document_, *document_, *this )
         , filename_( filename )
         , encoding_( encoding )
+        , flushed_ ( false )
     {}
     virtual ~xofstream()
     {
         try
         {
-            flush();
+            if( ! flushed_ )
+                flush();
         }
         catch( ... )
         {
@@ -79,11 +81,13 @@ public:
     }
     //@}
 
+private:
     //! @name Operations
     //@{
     virtual void flush()
     {
         fill( filename_, encoding_ );
+        flushed_ = true;
     }
     //@}
 
@@ -93,6 +97,7 @@ private:
     output output_;
     const std::string filename_;
     const std::string encoding_;
+    bool flushed_;
     //@}
 };
 
