@@ -1,4 +1,8 @@
 trunk
+. removed the undocumented flush public method from xml::xofstream
+. fixed a bug causing an xml::xofstream to be flushed twice to file
+
+1.4.2
 . added support for document type definition (DTD)
 . a non existing internal schema definition is ignored instead of producing an error unless xml::internal_grammar is used
 . fixed a crash when creating an xml::xibufferstream from an empty xml::xobufferstream
