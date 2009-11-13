@@ -60,7 +60,7 @@ public:
     //@}
 
 private:
-    //! @name Constructors/Destructor
+    //! @name Helpers
     //@{
     const std::string load( std::basic_istream< char >& stream ) const
     {
