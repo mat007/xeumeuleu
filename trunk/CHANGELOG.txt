@@ -1,6 +1,7 @@
 trunk
 . removed the undocumented flush public method from xml::xofstream
 . fixed a bug causing an xml::xofstream to be flushed twice to file
+. added an xml::xostreamstream writing output to an std::ostream
 
 1.4.2
 . added support for document type definition (DTD)
