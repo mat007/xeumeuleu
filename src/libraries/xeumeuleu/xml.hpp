@@ -42,6 +42,7 @@
 #include <xeumeuleu/streams/xosubstream.hpp>
 #include <xeumeuleu/streams/xisubstream.hpp>
 #include <xeumeuleu/streams/xistreamstream.hpp>
+#include <xeumeuleu/streams/xostreamstream.hpp>
 #include <xeumeuleu/streams/ximultistream.hpp>
 #include <xeumeuleu/streams/exception.hpp>
 #include <xeumeuleu/streams/grammar.hpp>
