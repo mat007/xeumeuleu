@@ -339,6 +339,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\streams\xostreamstream.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\streams\xostringstream.hpp"
 					>
 				</File>
