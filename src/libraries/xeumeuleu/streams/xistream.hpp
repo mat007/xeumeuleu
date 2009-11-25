@@ -178,6 +178,12 @@ public:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    xistream( const xistream& );            //!< Copy constructor
+    xistream& operator=( const xistream& ); //!< Assignment operator
+    //@}
+
     //! @name Operations
     //@{
     virtual input_base& reset( input_base& input )
@@ -185,13 +191,6 @@ private:
         input_ = &input;
         return *input_;
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    xistream( const xistream& );            //!< Copy constructor
-    xistream& operator=( const xistream& ); //!< Assignment operator
     //@}
 
 private:
@@ -207,14 +206,13 @@ private:
 
 #include <xeumeuleu/streams/xostream.hpp>
 #include <xeumeuleu/streams/xisubstream.hpp>
+#include <xeumeuleu/manipulators/attribute.hpp>
 
 namespace xml
 {
     template< typename T > T xistream::value() const
     {
         T value;
-        if( ! has_content() )
-            error( "does not have a content" );
         xml::xisubstream xiss( *this );
         xiss >> value;
         return value;
@@ -230,9 +228,8 @@ namespace xml
     template< typename T > T xistream::attribute( const std::string& name ) const
     {
         T value;
-        if( ! has_attribute( name ) )
-            error( "does not have an attribute '" + name + "'" );
-        attribute_by_ref( name, value );
+        xml::xisubstream xiss( *this );
+        xiss >> xml::attribute( name, value );
         return value;
     }
     template< typename T > T xistream::attribute( const std::string& name, const T& fallback ) const
@@ -240,7 +237,7 @@ namespace xml
         T value = fallback;
         xml::xisubstream xiss( *this );
         xiss.optional();
-        xiss.attribute_by_ref( name, value );
+        xiss >> xml::attribute( name, value );
         return value;
     }
     template< typename T > T xistream::content( const std::string& name ) const
@@ -248,8 +245,6 @@ namespace xml
         T value;
         xml::xisubstream xiss( *this );
         xiss.start( name );
-        if( ! xiss.has_content() )
-            error( "does not have a content" );
         xiss >> value;
         return value;
     }
