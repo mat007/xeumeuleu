@@ -243,3 +243,14 @@ BOOST_AUTO_TEST_CASE( reading_attribute_can_be_specialized_for_user_types )
     xis >> xml::start( "root" )
             >> xml::attribute( "attribute", u );
 }
+
+// -----------------------------------------------------------------------------
+// Name: direct_reading_attribute_can_be_specialized_for_user_types
+// Created: MCO 2009-11-25
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( direct_reading_attribute_can_be_specialized_for_user_types )
+{
+    xml::xistringstream xis( "<root attribute=''/>" );
+    xis >> xml::start( "root" );
+    xis.attribute< user_type >( "attribute" );
+}
