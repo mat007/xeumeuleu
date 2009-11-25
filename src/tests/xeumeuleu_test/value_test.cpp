@@ -85,8 +85,18 @@ namespace xml
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( reading_value_can_be_specialized_for_user_types )
 {
-    xml::xistringstream xis( "<root>1</root>" );
+    xml::xistringstream xis( "<root/>" );
     user_type u;
     xis >> xml::start( "root" )
             >> u;
+}
+
+// -----------------------------------------------------------------------------
+// Name: direct_reading_value_can_be_specialized_for_user_types
+// Created: MCO 2009-11-25
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( direct_reading_value_can_be_specialized_for_user_types )
+{
+    xml::xistringstream xis( "<root/>" );
+    xis.value< user_type >();
 }

@@ -265,8 +265,17 @@ namespace xml
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( reading_content_can_be_specialized_for_user_types )
 {
-    xml::xistringstream xis( "<root>1</root>" );
+    xml::xistringstream xis( "<root/>" );
     user_type u;
     xis >> xml::content( "root", u );
+}
+
+// -----------------------------------------------------------------------------
+// Name: direct_reading_content_can_be_specialized_for_user_types
+// Created: MCO 2009-05-30
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( direct_reading_content_can_be_specialized_for_user_types )
+{
+    xml::xistringstream xis( "<root/>" );
     xis.content< user_type >( "root" );
 }
