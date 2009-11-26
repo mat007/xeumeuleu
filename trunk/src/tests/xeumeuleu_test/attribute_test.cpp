@@ -211,17 +211,18 @@ BOOST_AUTO_TEST_CASE( writing_the_same_attribute_twice_yields_the_second_value_o
 namespace
 {
     class user_type
+    {};
+}
+namespace xml
+{
+    xistream& operator>>( xistream& xis, user_type& )
     {
-    public:
-        friend xml::xistream& operator>>( xml::xistream& xis, user_type& /*u*/ )
-        {
-            return xis;
-        }
-        friend xml::xostream& operator<<( xml::xostream& xos, const user_type& /*u*/ )
-        {
-            return xos;
-        }
-    };
+        return xis;
+    }
+    xostream& operator<<( xostream& xos, const user_type& )
+    {
+        return xos;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -255,9 +256,8 @@ BOOST_AUTO_TEST_CASE( writing_attribute_can_be_specialized_for_user_types )
 BOOST_AUTO_TEST_CASE( writing_attribute_can_be_specialized_for_const_user_types )
 {
     xml::xostringstream xos;
-    const user_type u = user_type();
     xos << xml::start( "root" )
-            << xml::attribute( "attribute", u );
+            << xml::attribute( "attribute", user_type() );
 }
 
 // -----------------------------------------------------------------------------

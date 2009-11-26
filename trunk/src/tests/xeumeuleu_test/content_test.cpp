@@ -271,6 +271,10 @@ namespace xml
     {
         return xis;
     }
+    xostream& operator<<( xostream& xos, const user_type& )
+    {
+        return xos;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -282,6 +286,27 @@ BOOST_AUTO_TEST_CASE( reading_content_can_be_specialized_for_user_types )
     xml::xistringstream xis( "<root/>" );
     user_type u;
     xis >> xml::content( "root", u );
+}
+
+// -----------------------------------------------------------------------------
+// Name: writing_content_can_be_specialized_for_user_types
+// Created: MCO 2009-11-26
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_content_can_be_specialized_for_user_types )
+{
+    xml::xostringstream xos;
+    user_type u;
+    xos << xml::content( "root", u );
+}
+
+// -----------------------------------------------------------------------------
+// Name: writing_content_can_be_specialized_for_const_user_types
+// Created: MCO 2009-11-26
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_content_can_be_specialized_for_const_user_types )
+{
+    xml::xostringstream xos;
+    xos << xml::content( "root", user_type() );
 }
 
 // -----------------------------------------------------------------------------
