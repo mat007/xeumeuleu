@@ -255,7 +255,7 @@ BOOST_AUTO_TEST_CASE( writing_attribute_can_be_specialized_for_user_types )
 BOOST_AUTO_TEST_CASE( writing_attribute_can_be_specialized_for_const_user_types )
 {
     xml::xostringstream xos;
-    const user_type u;
+    const user_type u = user_type();
     xos << xml::start( "root" )
             << xml::attribute( "attribute", u );
 }
