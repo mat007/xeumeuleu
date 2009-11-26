@@ -354,6 +354,14 @@
 					Name="detail"
 					>
 					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\attribute_input.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\attribute_output.hpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\branch_input.hpp"
 						>
 					</File>
@@ -387,6 +395,10 @@
 					</File>
 					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\optional_input.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\output_base.hpp"
 						>
 					</File>
 					<File

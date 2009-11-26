@@ -33,7 +33,7 @@
 #ifndef xeumeuleu_xo_base_member_hpp
 #define xeumeuleu_xo_base_member_hpp
 
-#include <xeumeuleu/bridges/xerces/output.hpp>
+#include <xeumeuleu/streams/detail/output_base.hpp>
 #include <memory>
 
 namespace xml
@@ -49,7 +49,7 @@ class xo_base_member
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xo_base_member( std::auto_ptr< output > output )
+    explicit xo_base_member( std::auto_ptr< output_base > output )
         : output_( output )
     {}
     virtual ~xo_base_member()
@@ -66,7 +66,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const std::auto_ptr< output > output_;
+    const std::auto_ptr< output_base > output_;
     //@}
 };
 

@@ -36,6 +36,7 @@
 #include <xeumeuleu/streams/xistream.hpp>
 #include <xeumeuleu/streams/xostream.hpp>
 #include <xeumeuleu/bridges/xerces/document.hpp>
+#include <xeumeuleu/bridges/xerces/output.hpp>
 
 namespace xml
 {

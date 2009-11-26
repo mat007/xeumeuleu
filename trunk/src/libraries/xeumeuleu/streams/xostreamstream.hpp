@@ -36,6 +36,7 @@
 #include <xeumeuleu/streams/xostream.hpp>
 #include <xeumeuleu/streams/encoding.hpp>
 #include <xeumeuleu/bridges/xerces/document.hpp>
+#include <xeumeuleu/bridges/xerces/output.hpp>
 #include <algorithm>
 #include <ostream>
 

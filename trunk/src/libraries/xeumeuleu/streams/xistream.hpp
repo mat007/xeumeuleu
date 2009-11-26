@@ -35,8 +35,10 @@
 
 #include <xeumeuleu/streams/detail/input_context.hpp>
 #include <xeumeuleu/streams/detail/input_base.hpp>
+#include <xeumeuleu/streams/detail/output_base.hpp>
 #include <xeumeuleu/streams/detail/null_input.hpp>
 #include <xeumeuleu/streams/detail/optional_input.hpp>
+#include <xeumeuleu/streams/detail/attribute_input.hpp>
 #include <string>
 #include <memory>
 
@@ -93,9 +95,9 @@ public:
         return input_->branch( clone );
     }
 
-    void copy( output& destination ) const
+    void copy( output_base& destination ) const
     {
-        input_->copy( destination );
+        destination.copy( *input_ );
     }
 
     void error( const std::string& message ) const
@@ -139,7 +141,9 @@ public:
 
     template< typename T > void attribute_by_ref( const std::string& name, T& value ) const
     {
-        input_->attribute( name, value );
+        attribute_input input( *input_, name );
+        xistream xis( input );
+        xis >> value;
     }
 
     template< typename T > T attribute( const std::string& name ) const;
