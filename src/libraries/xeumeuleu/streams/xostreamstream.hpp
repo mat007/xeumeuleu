@@ -60,8 +60,8 @@ public:
     //@{
     explicit xostreamstream( std::basic_ostream< char >& stream, const encoding& encoding = encoding() )
         : xostream( output_ )
-        , stream_  ( stream )
         , output_  ( *document_, *document_, *this )
+        , stream_  ( stream )
         , encoding_( encoding )
         , flushed_ ( false )
     {}
