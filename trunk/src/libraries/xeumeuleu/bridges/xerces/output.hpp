@@ -287,7 +287,7 @@ private:
     //@{
     std::string location() const
     {
-        return "node '" + translate( current_->getNodeName() ) + "'";
+        return "node '" + std::string( translate( current_->getNodeName() ) ) + "'";
     }
 
     std::string serialize( float value ) const
