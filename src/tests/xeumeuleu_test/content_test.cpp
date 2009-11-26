@@ -77,6 +77,20 @@ BOOST_AUTO_TEST_CASE( streaming_content_writes_text_content_as_it_is )
     BOOST_CHECK_EQUAL( format( " this is the content  " ), write< const char* >( " this is the content  " ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: streaming_content_in_two_parts_concatenates_content
+// Created: MCO 2009-11-26
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( streaming_content_in_two_parts_concatenates_content )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "element" )
+            << "the value "
+            << 12;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element>the value 12</element>\n", xos.str() );
+}
+
 namespace
 {
     template< typename T > void check_numeric_limits()
