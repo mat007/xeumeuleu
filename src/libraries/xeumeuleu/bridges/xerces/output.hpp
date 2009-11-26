@@ -35,13 +35,14 @@
 
 #include <xeumeuleu/streams/exception.hpp>
 #include <xeumeuleu/streams/detail/flushable.hpp>
+#include <xeumeuleu/streams/detail/output_base.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/trim.hpp>
 #include <xeumeuleu/bridges/xerces/detail/chained_exception.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/import.hpp>
-#include <limits>
 #include <sstream>
+#include <limits>
 #include <memory>
 
 #define TRY try {
@@ -58,7 +59,7 @@ namespace xml
 */
 // Created: MAT 2006-01-04
 // =============================================================================
-class output
+class output : public output_base
 {
 public:
     //! @name Constructors/Destructor
@@ -81,13 +82,13 @@ public:
 
     //! @name Operations
     //@{
-    void start( const std::string& tag )
+    virtual void start( const std::string& tag )
     {
         TRY
             current_ = current_->appendChild( document_.createElement( translate( trim( tag ) ) ) );
         CATCH
     }
-    void end()
+    virtual void end()
     {
         TRY
             if( is_root() )
@@ -98,33 +99,87 @@ public:
         CATCH
     }
 
-    void write( const std::string& value )
+    virtual void write( const std::string& value )
     {
         TRY
             current_->appendChild( document_.createTextNode( translate( value ) ) );
         CATCH
     }
-    template< typename T > void write( T value )
+    virtual void write( bool value )
+    {
+        TRY
+            write( serialize( value ) );
+        CATCH
+    }
+    virtual void write( int value )
+    {
+        TRY
+            write( serialize( value ) );
+        CATCH
+    }
+    virtual void write( long value )
+    {
+        TRY
+            write( serialize( value ) );
+        CATCH
+    }
+    virtual void write( long long value )
+    {
+        TRY
+            write( serialize( value ) );
+        CATCH
+    }
+    virtual void write( float value )
+    {
+        TRY
+            write( serialize( value ) );
+        CATCH
+    }
+    virtual void write( double value )
+    {
+        TRY
+            write( serialize( value ) );
+        CATCH
+    }
+    virtual void write( long double value )
+    {
+        TRY
+            write( serialize( value ) );
+        CATCH
+    }
+    virtual void write( unsigned int value )
+    {
+        TRY
+            write( serialize( value ) );
+        CATCH
+    }
+    virtual void write( unsigned long value )
+    {
+        TRY
+            write( serialize( value ) );
+        CATCH
+    }
+    virtual void write( unsigned long long value )
     {
         TRY
             write( serialize( value ) );
         CATCH
     }
 
-    void cdata( const std::string& value )
+    virtual void cdata( const std::string& value )
     {
         TRY
             current_->appendChild( document_.createCDATASection( translate( value ) ) );
         CATCH
     }
-    void instruction( const std::string& target, const std::string& data )
+    virtual void instruction( const std::string& target, const std::string& data )
     {
         TRY
             current_->appendChild( document_.createProcessingInstruction( translate( target ), translate( data ) ) );
         CATCH
     }
 
-    void attribute( const std::string& name, const std::string& value )
+    virtual void attribute( const std::string& name, const std::string& value )
     {
         TRY
             XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
@@ -135,11 +190,70 @@ public:
             attributes->setNamedItem( att );
         CATCH
     }
-    template< typename T > void attribute( const std::string& name, T value )
+    virtual void attribute( const std::string& name, bool value )
     {
         TRY
             attribute( name, serialize( value ) );
         CATCH
+    }
+    virtual void attribute( const std::string& name, int value )
+    {
+        TRY
+            attribute( name, serialize( value ) );
+        CATCH
+    }
+    virtual void attribute( const std::string& name, long value )
+    {
+        TRY
+            attribute( name, serialize( value ) );
+        CATCH
+    }
+    virtual void attribute( const std::string& name, long long value )
+    {
+        TRY
+            attribute( name, serialize( value ) );
+        CATCH
+    }
+    virtual void attribute( const std::string& name, float value )
+    {
+        TRY
+            attribute( name, serialize( value ) );
+        CATCH
+    }
+    virtual void attribute( const std::string& name, double value )
+    {
+        TRY
+            attribute( name, serialize( value ) );
+        CATCH
+    }
+    virtual void attribute( const std::string& name, long double value )
+    {
+        TRY
+            attribute( name, serialize( value ) );
+        CATCH
+    }
+    virtual void attribute( const std::string& name, unsigned int value )
+    {
+        TRY
+            attribute( name, serialize( value ) );
+        CATCH
+    }
+    virtual void attribute( const std::string& name, unsigned long value )
+    {
+        TRY
+            attribute( name, serialize( value ) );
+        CATCH
+    }
+    virtual void attribute( const std::string& name, unsigned long long value )
+    {
+        TRY
+            attribute( name, serialize( value ) );
+        CATCH
+    }
+
+    virtual void copy( const input_base& input )
+    {
+        input.copy( *this );
     }
 
     void copy( const XERCES_CPP_NAMESPACE::DOMNode& node )
@@ -154,10 +268,10 @@ public:
         CATCH
     }
 
-    std::auto_ptr< output > branch() const
+    virtual std::auto_ptr< output_base > branch() const
     {
         TRY
-            return std::auto_ptr< output >( new output( document_, *current_ ) );
+            return std::auto_ptr< output_base >( new output( document_, *current_ ) );
         CATCH
     }
     //@}
@@ -173,7 +287,7 @@ private:
     //@{
     std::string location() const
     {
-        return "node '" + std::string( translate( current_->getNodeName() ) ) + "'";
+        return "node '" + translate( current_->getNodeName() ) + "'";
     }
 
     std::string serialize( float value ) const

@@ -211,21 +211,13 @@ BOOST_AUTO_TEST_CASE( writing_the_same_attribute_twice_yields_the_second_value_o
 namespace
 {
     class user_type
-    {};
-}
-namespace xml
-{
-    template<>
-    class attribute_manipulator< user_type >
     {
     public:
-        attribute_manipulator( const std::string& /*name*/, user_type& /*value*/ )
-        {}
-        friend xistream& operator>>( xistream& xis, const attribute_manipulator& /*m*/ )
+        friend xml::xistream& operator>>( xml::xistream& xis, user_type& /*u*/ )
         {
             return xis;
         }
-        friend xostream& operator<<( xostream& xos, const attribute_manipulator& /*m*/ )
+        friend xml::xostream& operator<<( xml::xostream& xos, const user_type& /*u*/ )
         {
             return xos;
         }
@@ -242,6 +234,30 @@ BOOST_AUTO_TEST_CASE( reading_attribute_can_be_specialized_for_user_types )
     user_type u;
     xis >> xml::start( "root" )
             >> xml::attribute( "attribute", u );
+}
+
+// -----------------------------------------------------------------------------
+// Name: writing_attribute_can_be_specialized_for_user_types
+// Created: MCO 2009-11-14
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_attribute_can_be_specialized_for_user_types )
+{
+    xml::xostringstream xos;
+    user_type u;
+    xos << xml::start( "root" )
+            << xml::attribute( "attribute", u );
+}
+
+// -----------------------------------------------------------------------------
+// Name: writing_attribute_can_be_specialized_for_const_user_types
+// Created: MCO 2009-11-14
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_attribute_can_be_specialized_for_const_user_types )
+{
+    xml::xostringstream xos;
+    const user_type u;
+    xos << xml::start( "root" )
+            << xml::attribute( "attribute", u );
 }
 
 // -----------------------------------------------------------------------------
