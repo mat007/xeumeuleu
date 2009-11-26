@@ -33,7 +33,8 @@
 #ifndef xeumeuleu_xostream_hpp
 #define xeumeuleu_xostream_hpp
 
-#include <xeumeuleu/bridges/xerces/output.hpp>
+#include <xeumeuleu/streams/detail/output_base.hpp>
+#include <xeumeuleu/streams/detail/attribute_output.hpp>
 #include <string>
 #include <memory>
 
@@ -52,7 +53,7 @@ class xostream
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xostream( output& output )
+    explicit xostream( output_base& output )
         : output_( output )
     {}
     virtual ~xostream()
@@ -70,7 +71,7 @@ public:
         output_.end();
     }
 
-    std::auto_ptr< output > branch() const
+    std::auto_ptr< output_base > branch() const
     {
         return output_.branch();
     }
@@ -98,7 +99,9 @@ public:
     }
     template< typename T > void attribute( const std::string& name, const T& value )
     {
-        output_.attribute( name, value );
+        attribute_output output( output_, name );
+        xostream xos( output );
+        xos << value;
     }
 
     void cdata( const std::string& content )
@@ -121,7 +124,7 @@ private:
 private:
     //! @name Member data
     //@{
-    output& output_;
+    output_base& output_;
     //@}
 };
 
