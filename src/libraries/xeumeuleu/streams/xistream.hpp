@@ -126,18 +126,18 @@ public:
     }
 
     template< typename T > T value() const;
-    template< typename T > T value( const T& fallback ) const;
     std::string value( const char* fallback ) const
     {
-        return value< std::string >( fallback );
+        return value( std::string( fallback ) );
     }
+    template< typename T > T value( const T& fallback ) const;
 
     template< typename T > T content( const std::string& name ) const;
-    template< typename T > T content( const std::string& name, const T& fallback ) const;
     std::string content( const std::string& name, const char* fallback ) const
     {
-        return content< std::string >( name, fallback );
+        return content( name, std::string( fallback ) );
     }
+    template< typename T > T content( const std::string& name, const T& fallback ) const;
 
     template< typename T > void attribute_by_ref( const std::string& name, T& value ) const
     {
@@ -147,11 +147,11 @@ public:
     }
 
     template< typename T > T attribute( const std::string& name ) const;
-    template< typename T > T attribute( const std::string& name, const T& fallback ) const;
     std::string attribute( const std::string& name, const char* fallback ) const
     {
-        return attribute< std::string >( name, fallback );
+        return attribute( name, std::string( fallback ) );
     }
+    template< typename T > T attribute( const std::string& name, const T& fallback ) const;
 
     void nodes( const visitor& v ) const
     {
