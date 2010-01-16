@@ -204,8 +204,7 @@ BOOST_AUTO_TEST_CASE( an_ximultistream_can_be_wrapped_by_another_ximultistream )
             >> xml::attribute( "attribute", actual2 )
         >> xml::end
         >> xml::start( "root-3" )
-            >> xml::attribute( "attribute", actual3 )
-        >> xml::end;
+            >> xml::attribute( "attribute", actual3 );
     BOOST_CHECK_EQUAL( "stream-1", actual1 );
     BOOST_CHECK_EQUAL( "stream-2", actual2 );
     BOOST_CHECK_EQUAL( "stream-3", actual3 );
@@ -241,8 +240,7 @@ BOOST_AUTO_TEST_CASE( serializing_an_ximultistream_into_an_xostream_adds_both_st
     xis >> xml::start( "root" )
             >> xml::start( "root-1" )
             >> xml::end
-            >> xml::start( "root-2" )
-        >> xml::end;
+            >> xml::start( "root-2" );
 }
 
 // -----------------------------------------------------------------------------
@@ -260,8 +258,7 @@ BOOST_AUTO_TEST_CASE( an_ximultistream_can_be_buffered_by_an_xibufferstream )
              >> xml::attribute( "attribute", actual1 )
          >> xml::end
          >> xml::start( "root-2" )
-             >> xml::attribute( "attribute", actual2 )
-        >> xml::end;
+             >> xml::attribute( "attribute", actual2 );
     BOOST_CHECK_EQUAL( "stream-1", actual1 );
     BOOST_CHECK_EQUAL( "stream-2", actual2 );
 }
@@ -278,8 +275,7 @@ BOOST_AUTO_TEST_CASE( an_optional_attribute_not_found_in_first_stream_falls_back
     xml::xibufferstream xibs( xis );
     std::string actual = "stream-1";
     xibs >> xml::start( "root" )
-            >> xml::optional >>xml::attribute( "attribute", actual )
-        >> xml::end;
+            >> xml::optional >>xml::attribute( "attribute", actual );
     BOOST_CHECK_EQUAL( "stream-2", actual );
 }
 
@@ -295,8 +291,7 @@ BOOST_AUTO_TEST_CASE( an_optional_attribute_not_found_in_either_stream_is_valid 
     xml::xibufferstream xibs( xis );
     std::string actual = "no attribute";
     xibs >> xml::start( "root" )
-            >> xml::optional >>xml::attribute( "attribute", actual )
-        >> xml::end;
+            >> xml::optional >>xml::attribute( "attribute", actual );
     BOOST_CHECK_EQUAL( "no attribute", actual );
 }
 
@@ -314,20 +309,5 @@ BOOST_AUTO_TEST_CASE( an_optional_attribute_not_found_in_an_optional_sub_node_of
     std::string attribute;
     xis >> xml::start( "root" )
             >> xml::optional >> xml::start( "sub-node" )
-                >> xml::optional >> xml::attribute( "non-existing-attribute", attribute )
-            >> xml::end
-        >> xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: the_context_of_an_ximultistream_refers_to_contexts_of_both_streams
-// Created: MAT 2009-06-27
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( the_context_of_an_ximultistream_refers_to_contexts_of_both_streams )
-{
-    xml::xistringstream xis1( "<root/>" );
-    xml::xistringstream xis2( "<root/>" );
-    xml::ximultistream xis( xis1, xis2 );
-    xis >> xml::start( "root" );
-    BOOST_CHECK_EQUAL( "string_input (line 1, column 8) : string_input (line 1, column 8) : ", xis.context() );
+                >> xml::optional >> xml::attribute( "non-existing-attribute", attribute );
 }
