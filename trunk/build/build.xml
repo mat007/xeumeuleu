@@ -23,6 +23,9 @@
         </build-test>
     </target>
 
+    <target name="xeumeuleu_test" depends="xeumeuleu_xerces2_test,xeumeuleu_xerces3_test" description="build and run tests">
+    </target>
+
     <target name="xeuseuleu_test" description="build and run tests">
         <build-test name="xeuseuleu" libs="xerces-c_2,Xalan-C_1">
             <includepath path="../include/xerces-c/2.7.0"/>
@@ -139,7 +142,7 @@
       main
     ============================================================================
     -->
-    <target name="test" depends="xeumeuleu_xerces2_test,xeumeuleu_xerces3_test,xeuseuleu_test" description="run all tests"/>
+    <target name="test" depends="xeumeuleu_test,xeuseuleu_test" description="run all tests"/>
 
     <target name="build" depends="xeumeuleu_bench,xeumeuleu_clean" description="build all"/>
 
