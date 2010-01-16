@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2010, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,35 +30,33 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_null_input_hpp
-#define xeumeuleu_null_input_hpp
+#ifndef xeumeuleu_temporary_input_hpp
+#define xeumeuleu_temporary_input_hpp
 
 #include <xeumeuleu/streams/exception.hpp>
 #include <xeumeuleu/streams/detail/input_base.hpp>
 #include <xeumeuleu/streams/detail/input_context.hpp>
+#include <xeumeuleu/streams/detail/null_input.hpp>
 
 namespace xml
 {
 // =============================================================================
-/** @class  null_input
-    @brief  Null input implementation
+/** @class  temporary_input
+    @brief  Temporary input implementation
 */
-// Created: MAT 2006-01-08
+// Created: MAT 2010-01-15
 // =============================================================================
-class null_input : public input_base
+class temporary_input : public input_base
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit null_input( const input_base& input )
-        : context_( input.context() )
-        , level_( 0 )
+    temporary_input( input_base& input, input_context& context )
+        : input_  ( input )
+        , context_( context )
+        , level_  ( 0 )
     {}
-    null_input( const null_input& input )
-        : context_( input.context() )
-        , level_( 0 )
-    {}
-    virtual ~null_input()
+    virtual ~temporary_input()
     {}
     //@}
 
@@ -72,25 +70,26 @@ public:
     {
         if( --level_ < 0 )
             throw xml::exception( "Invalid 'end' at root level" );
+        reset();
     }
 
-    virtual void read( std::string& /*value*/ ) const {}
-    virtual void read( bool& /*value*/ ) const {}
-    virtual void read( short& /*value*/ ) const {}
-    virtual void read( int& /*value*/ ) const {}
-    virtual void read( long& /*value*/ ) const {}
-    virtual void read( long long& /*value*/ ) const {}
-    virtual void read( float& /*value*/ ) const {}
-    virtual void read( double& /*value*/ ) const {}
-    virtual void read( long double& /*value*/ ) const {}
-    virtual void read( unsigned short& /*value*/ ) const {}
-    virtual void read( unsigned int& /*value*/ ) const {}
-    virtual void read( unsigned long& /*value*/ ) const {}
-    virtual void read( unsigned long long& /*value*/ ) const {}
+    virtual void read( std::string& /*value*/ ) const { reset(); }
+    virtual void read( bool& /*value*/ ) const { reset(); }
+    virtual void read( short& /*value*/ ) const { reset(); }
+    virtual void read( int& /*value*/ ) const { reset(); }
+    virtual void read( long& /*value*/ ) const { reset(); }
+    virtual void read( long long& /*value*/ ) const { reset(); }
+    virtual void read( float& /*value*/ ) const { reset(); }
+    virtual void read( double& /*value*/ ) const { reset(); }
+    virtual void read( long double& /*value*/ ) const { reset(); }
+    virtual void read( unsigned short& /*value*/ ) const { reset(); }
+    virtual void read( unsigned int& /*value*/ ) const { reset(); }
+    virtual void read( unsigned long& /*value*/ ) const { reset(); }
+    virtual void read( unsigned long long& /*value*/ ) const { reset(); }
 
     virtual std::auto_ptr< input_base > branch( bool /*clone*/ ) const
     {
-        return std::auto_ptr< input_base >( new null_input( *this ) );
+        return std::auto_ptr< input_base >( new null_input( input_ ) );
     }
 
     virtual void copy( output& /*destination*/ ) const
@@ -112,19 +111,19 @@ public:
         return false;
     }
 
-    virtual void attribute( const std::string& /*name*/, std::string& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, bool& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, short& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, int& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, long& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, long long& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, float& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, double& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, long double& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, unsigned short& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, unsigned int& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, unsigned long& /*value*/ ) const {}
-    virtual void attribute( const std::string& /*name*/, unsigned long long& /*value*/ ) const {}
+    virtual void attribute( const std::string& /*name*/, std::string& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, bool& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, short& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, int& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, long& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, long long& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, float& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, double& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, long double& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, unsigned short& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, unsigned int& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, unsigned long& /*value*/ ) const { reset(); }
+    virtual void attribute( const std::string& /*name*/, unsigned long long& /*value*/ ) const { reset(); }
 
     virtual void nodes( const visitor& /*v*/ ) const
     {}
@@ -133,18 +132,29 @@ public:
 
     virtual std::string context() const
     {
-        return context_;
+        return input_.context();
+    }
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void reset() const
+    {
+        if( level_ == 0 )
+            context_.reset( input_ );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    const std::string context_;
+    input_base& input_;
+    input_context& context_;
     int level_;
     //@}
 };
 
 }
 
-#endif // xeumeuleu_null_input_hpp
+#endif // xeumeuleu_temporary_input_hpp

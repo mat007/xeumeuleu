@@ -36,7 +36,7 @@
 #include <xeumeuleu/streams/detail/input_context.hpp>
 #include <xeumeuleu/streams/detail/input_base.hpp>
 #include <xeumeuleu/streams/detail/output_base.hpp>
-#include <xeumeuleu/streams/detail/null_input.hpp>
+#include <xeumeuleu/streams/detail/temporary_input.hpp>
 #include <xeumeuleu/streams/detail/optional_input.hpp>
 #include <xeumeuleu/streams/detail/attribute_input.hpp>
 #include <string>
@@ -172,10 +172,10 @@ public:
     //@{
     void optional()
     {
-        if( input_ != null_.get() && input_ != optional_.get() )
+        if( input_ != temporary_.get() && input_ != optional_.get() )
         {
-            null_.reset( new null_input( *input_, *this ) );
-            optional_.reset( new optional_input( *input_, *null_, *this ) );
+            temporary_.reset( new temporary_input( *input_, *this ) );
+            optional_.reset( new optional_input( *input_, *temporary_, *this ) );
             input_ = optional_.get();
         }
     }
@@ -201,7 +201,7 @@ private:
     //! @name Member data
     //@{
     input_base* input_;
-    std::auto_ptr< null_input > null_;
+    std::auto_ptr< temporary_input > temporary_;
     std::auto_ptr< optional_input > optional_;
     //@}
 };
