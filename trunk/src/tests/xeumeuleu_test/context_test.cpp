@@ -90,3 +90,31 @@ BOOST_AUTO_TEST_CASE( context_is_transmitted_from_an_xistream_to_an_xobufferstre
     xobs >> xml::start( "root" );
     BOOST_CHECK_EQUAL( "string_input (line 1, column 8) : ", xobs.context() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: context_is_transmitted_from_an_xistream_to_an_xobufferstream_created_on_optional_non_existing_branch
+// Created: MCO 2009-11-16
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( context_is_transmitted_from_an_xistream_to_an_xobufferstream_created_on_optional_non_existing_branch )
+{
+    std::auto_ptr< xml::xibufferstream > xibs;
+    {
+        xml::xistringstream xis( "<root/>" );
+        xis >> xml::start( "root" ) >> xml::optional >> xml::start( "non-existing" );
+        xibs.reset( new xml::xibufferstream( xis ) );
+    }
+    BOOST_CHECK_EQUAL( "string_input (line 1, column 8) : ", xibs->context() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: the_context_of_an_ximultistream_refers_to_contexts_of_both_streams
+// Created: MAT 2009-06-27
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( the_context_of_an_ximultistream_refers_to_contexts_of_both_streams )
+{
+    xml::xistringstream xis1( "<root/>" );
+    xml::xistringstream xis2( "<root/>" );
+    xml::ximultistream xis( xis1, xis2 );
+    xis >> xml::start( "root" );
+    BOOST_CHECK_EQUAL( "string_input (line 1, column 8) : string_input (line 1, column 8) : ", xis.context() );
+}

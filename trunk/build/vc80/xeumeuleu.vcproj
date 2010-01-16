@@ -402,6 +402,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\temporary_input.hpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\visitor.hpp"
 						>
 					</File>
