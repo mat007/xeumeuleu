@@ -164,7 +164,7 @@ public:
                 {
                     input i( *child );
                     xistream xis( i );
-                    v( trim( translate( child->getNodeName() ) ), xis );
+                    v( translate( child->getNodeName() ), xis );
                 }
                 child = child->getNextSibling();
             }
@@ -181,7 +181,7 @@ public:
                     XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( index );
                     input i( *current_ );
                     xistream xis( i );
-                    v( trim( translate( attribute->getNodeName() ) ), xis );
+                    v( translate( attribute->getNodeName() ), xis );
                 }
             }
         CATCH
@@ -206,7 +206,7 @@ private:
 
     std::string location() const
     {
-        return "node '" + trim( translate( current_->getNodeName() ) ) + "'";
+        return "node '" + translate( current_->getNodeName() ) + "'";
     }
 
     const XERCES_CPP_NAMESPACE::DOMNode* find_child( const std::string& name ) const
@@ -214,7 +214,7 @@ private:
         const XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
         while( child )
         {
-            if( trim( name ) == trim( translate( child->getNodeName() ) ) )
+            if( name == translate( child->getNodeName() ) )
                 return child;
             child = child->getNextSibling();
         }
@@ -225,7 +225,7 @@ private:
         const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
         if( ! attributes )
             return 0;
-        return attributes->getNamedItem( translate( trim( name ) ) );
+        return attributes->getNamedItem( translate( name ) );
     }
     const XERCES_CPP_NAMESPACE::DOMNode* find_content() const
     {
@@ -259,7 +259,7 @@ private:
     {
         const XERCES_CPP_NAMESPACE::DOMNode* attribute = find_attribute( name );
         if( ! attribute )
-            throw xml::exception( context() + location() + " does not have an attribute '" + trim( name ) + "'" );
+            throw xml::exception( context() + location() + " does not have an attribute '" + name + "'" );
         return attribute->getNodeValue();
     }
 

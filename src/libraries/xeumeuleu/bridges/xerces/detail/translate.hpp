@@ -57,6 +57,10 @@ public:
         : ch_   ( ch )
         , owner_( false )
     {}
+    translate( const translate& rhs )
+        : ch_   ( rhs.owner_ ? XERCES_CPP_NAMESPACE::XMLString::replicate( rhs.ch_ ) : rhs.ch_ )
+        , owner_( rhs.owner_ )
+    {}
     ~translate()
     {
         if( owner_ )
@@ -95,7 +99,6 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    translate( const translate& );            //!< Copy constructor
     translate& operator=( const translate& ); //!< Assignment operator
     //@}
 
