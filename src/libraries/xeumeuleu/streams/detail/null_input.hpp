@@ -55,7 +55,8 @@ public:
         , level_( 0 )
     {}
     null_input( const null_input& input )
-        : context_( input.context() )
+        : input_base()
+        , context_( input.context() )
         , level_( 0 )
     {}
     virtual ~null_input()
