@@ -51,10 +51,10 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit chained_exception( const XERCES_CPP_NAMESPACE::XMLException& chained, const std::string& message = "" )
-        : xml::exception( message + std::string( translate( chained.getMessage() ) ) )
+        : xml::exception( message + translate( chained.getMessage() ) )
     {}
     explicit chained_exception( const XERCES_CPP_NAMESPACE::DOMException& chained, const std::string& message = "" )
-        : xml::exception( message + std::string( translate( chained.getMessage() ) ) )
+        : xml::exception( message + translate( chained.getMessage() ) )
     {}
     virtual ~chained_exception() throw ()
     {}
