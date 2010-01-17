@@ -37,7 +37,6 @@
 #include <xeumeuleu/streams/detail/flushable.hpp>
 #include <xeumeuleu/streams/detail/output_base.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
-#include <xeumeuleu/bridges/xerces/detail/trim.hpp>
 #include <xeumeuleu/bridges/xerces/detail/chained_exception.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/import.hpp>
@@ -85,7 +84,7 @@ public:
     virtual void start( const std::string& tag )
     {
         TRY
-            current_ = current_->appendChild( document_.createElement( translate( trim( tag ) ) ) );
+            current_ = current_->appendChild( document_.createElement( translate( tag ) ) );
         CATCH
     }
     virtual void end()
@@ -185,7 +184,7 @@ public:
             XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
             if( ! attributes )
                 throw xml::exception( location() + " cannot have attributes" );
-            XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttribute( translate( trim( name ) ) );
+            XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttribute( translate( name ) );
             att->setValue( translate( value ) );
             attributes->setNamedItem( att );
         CATCH
@@ -287,7 +286,7 @@ private:
     //@{
     std::string location() const
     {
-        return "node '" + std::string( translate( current_->getNodeName() ) ) + "'";
+        return "node '" + translate( current_->getNodeName() ) + "'";
     }
 
     std::string serialize( float value ) const
