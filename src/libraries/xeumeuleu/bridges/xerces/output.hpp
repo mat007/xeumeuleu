@@ -44,8 +44,8 @@
 #include <limits>
 #include <memory>
 
-#define TRY try {
-#define CATCH } \
+#define XEUMEULEU_TRY try {
+#define XEUMEULEU_CATCH } \
             catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
             catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e ); } \
             catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e ); }
@@ -83,171 +83,171 @@ public:
     //@{
     virtual void start( const std::string& tag )
     {
-        TRY
+        XEUMEULEU_TRY
             current_ = current_->appendChild( document_.createElement( translate( tag ) ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void end()
     {
-        TRY
+        XEUMEULEU_TRY
             if( is_root() )
                 throw xml::exception( "Illegal 'end' from root level" );
             current_ = current_->getParentNode();
             if( flushable_ && is_root() )
                 flushable_->flush();
-        CATCH
+        XEUMEULEU_CATCH
     }
 
     virtual void write( const std::string& value )
     {
-        TRY
+        XEUMEULEU_TRY
             current_->appendChild( document_.createTextNode( translate( value ) ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void write( bool value )
     {
-        TRY
+        XEUMEULEU_TRY
             write( serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void write( int value )
     {
-        TRY
+        XEUMEULEU_TRY
             write( serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void write( long value )
     {
-        TRY
+        XEUMEULEU_TRY
             write( serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void write( long long value )
     {
-        TRY
+        XEUMEULEU_TRY
             write( serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void write( float value )
     {
-        TRY
+        XEUMEULEU_TRY
             write( serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void write( double value )
     {
-        TRY
+        XEUMEULEU_TRY
             write( serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void write( long double value )
     {
-        TRY
+        XEUMEULEU_TRY
             write( serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void write( unsigned int value )
     {
-        TRY
+        XEUMEULEU_TRY
             write( serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void write( unsigned long value )
     {
-        TRY
+        XEUMEULEU_TRY
             write( serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void write( unsigned long long value )
     {
-        TRY
+        XEUMEULEU_TRY
             write( serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
 
     virtual void cdata( const std::string& value )
     {
-        TRY
+        XEUMEULEU_TRY
             current_->appendChild( document_.createCDATASection( translate( value ) ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void instruction( const std::string& target, const std::string& data )
     {
-        TRY
+        XEUMEULEU_TRY
             current_->appendChild( document_.createProcessingInstruction( translate( target ), translate( data ) ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
 
     virtual void attribute( const std::string& name, const std::string& value )
     {
-        TRY
+        XEUMEULEU_TRY
             XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
             if( ! attributes )
                 throw xml::exception( location() + " cannot have attributes" );
             XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttribute( translate( name ) );
             att->setValue( translate( value ) );
             attributes->setNamedItem( att );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void attribute( const std::string& name, bool value )
     {
-        TRY
+        XEUMEULEU_TRY
             attribute( name, serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void attribute( const std::string& name, int value )
     {
-        TRY
+        XEUMEULEU_TRY
             attribute( name, serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void attribute( const std::string& name, long value )
     {
-        TRY
+        XEUMEULEU_TRY
             attribute( name, serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void attribute( const std::string& name, long long value )
     {
-        TRY
+        XEUMEULEU_TRY
             attribute( name, serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void attribute( const std::string& name, float value )
     {
-        TRY
+        XEUMEULEU_TRY
             attribute( name, serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void attribute( const std::string& name, double value )
     {
-        TRY
+        XEUMEULEU_TRY
             attribute( name, serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void attribute( const std::string& name, long double value )
     {
-        TRY
+        XEUMEULEU_TRY
             attribute( name, serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void attribute( const std::string& name, unsigned int value )
     {
-        TRY
+        XEUMEULEU_TRY
             attribute( name, serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void attribute( const std::string& name, unsigned long value )
     {
-        TRY
+        XEUMEULEU_TRY
             attribute( name, serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void attribute( const std::string& name, unsigned long long value )
     {
-        TRY
+        XEUMEULEU_TRY
             attribute( name, serialize( value ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
 
     virtual void copy( const input_base& input )
@@ -257,21 +257,21 @@ public:
 
     void copy( const XERCES_CPP_NAMESPACE::DOMNode& node )
     {
-        TRY
+        XEUMEULEU_TRY
             import( document_, node.getFirstChild(), *current_ );
             const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* from = node.getAttributes();
             XERCES_CPP_NAMESPACE::DOMNamedNodeMap* to = current_->getAttributes();
             if( from && to )
                 for( XMLSize_t index = 0; index < from->getLength(); ++index )
                     to->setNamedItem( document_.importNode( from->item( index ), false ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
 
     virtual std::auto_ptr< output_base > branch() const
     {
-        TRY
+        XEUMEULEU_TRY
             return std::auto_ptr< output_base >( new output( document_, *current_ ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
     //@}
 
@@ -361,7 +361,7 @@ private:
 
 }
 
-#undef TRY
-#undef CATCH
+#undef XEUMEULEU_TRY
+#undef XEUMEULEU_CATCH
 
 #endif // xeumeuleu_output_hpp

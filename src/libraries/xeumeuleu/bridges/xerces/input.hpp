@@ -45,8 +45,8 @@
 #include <xeumeuleu/bridges/xerces/detail/locator.hpp>
 #include <limits>
 
-#define TRY try {
-#define CATCH } \
+#define XEUMEULEU_TRY try {
+#define XEUMEULEU_CATCH } \
             catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
             catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw xml::chained_exception( e, context() ); } \
             catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw xml::chained_exception( e, context() ); }
@@ -76,46 +76,46 @@ public:
     //@{
     virtual void start( const std::string& tag )
     {
-        TRY
+        XEUMEULEU_TRY
             const XERCES_CPP_NAMESPACE::DOMNode* child = find_child( tag );
             if( ! child )
                 throw xml::exception( context() + location() + " does not have a child named '" + tag + "'" );
             current_ = child;
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void end()
     {
-        TRY
+        XEUMEULEU_TRY
             if( current_ == &root_ )
                 throw xml::exception( context() + "Cannot move up from " + location() );
             const XERCES_CPP_NAMESPACE::DOMNode* parent = current_->getParentNode();
             if( ! parent )
                 throw xml::exception( context() + location() + " has no parent" );
             current_ = parent;
-        CATCH
+        XEUMEULEU_CATCH
     }
 
-    virtual void read( std::string& value ) const { TRY value = translate( read_value() ); CATCH }
-    virtual void read( bool& value ) const { TRY value = to_bool( read_value() ); CATCH }
-    virtual void read( short& value ) const { TRY value = convert< short >( read_value() ); CATCH }
-    virtual void read( int& value ) const { TRY value = to_int( read_value() ); CATCH }
-    virtual void read( long& value ) const { TRY value = convert< long >( read_value() ); CATCH }
-    virtual void read( long long& value ) const { TRY value = convert< long long >( read_value() ); CATCH }
-    virtual void read( float& value ) const { TRY value = to_float( read_value() ); CATCH }
-    virtual void read( double& value ) const { TRY value = to_double( read_value() ); CATCH }
-    virtual void read( long double& value ) const { TRY value = convert< long double >( read_value() ); CATCH }
-    virtual void read( unsigned short& value ) const { TRY value = convert< unsigned short >( read_value() ); CATCH }
-    virtual void read( unsigned int& value ) const { TRY value = convert< unsigned int >( read_value() ); CATCH }
-    virtual void read( unsigned long& value ) const { TRY value = convert< unsigned long >( read_value() ); CATCH }
-    virtual void read( unsigned long long& value ) const { TRY value = convert< unsigned long long >( read_value() ); CATCH }
+    virtual void read( std::string& value ) const { XEUMEULEU_TRY value = translate( read_value() ); XEUMEULEU_CATCH }
+    virtual void read( bool& value ) const { XEUMEULEU_TRY value = to_bool( read_value() ); XEUMEULEU_CATCH }
+    virtual void read( short& value ) const { XEUMEULEU_TRY value = convert< short >( read_value() ); XEUMEULEU_CATCH }
+    virtual void read( int& value ) const { XEUMEULEU_TRY value = to_int( read_value() ); XEUMEULEU_CATCH }
+    virtual void read( long& value ) const { XEUMEULEU_TRY value = convert< long >( read_value() ); XEUMEULEU_CATCH }
+    virtual void read( long long& value ) const { XEUMEULEU_TRY value = convert< long long >( read_value() ); XEUMEULEU_CATCH }
+    virtual void read( float& value ) const { XEUMEULEU_TRY value = to_float( read_value() ); XEUMEULEU_CATCH }
+    virtual void read( double& value ) const { XEUMEULEU_TRY value = to_double( read_value() ); XEUMEULEU_CATCH }
+    virtual void read( long double& value ) const { XEUMEULEU_TRY value = convert< long double >( read_value() ); XEUMEULEU_CATCH }
+    virtual void read( unsigned short& value ) const { XEUMEULEU_TRY value = convert< unsigned short >( read_value() ); XEUMEULEU_CATCH }
+    virtual void read( unsigned int& value ) const { XEUMEULEU_TRY value = convert< unsigned int >( read_value() ); XEUMEULEU_CATCH }
+    virtual void read( unsigned long& value ) const { XEUMEULEU_TRY value = convert< unsigned long >( read_value() ); XEUMEULEU_CATCH }
+    virtual void read( unsigned long long& value ) const { XEUMEULEU_TRY value = convert< unsigned long long >( read_value() ); XEUMEULEU_CATCH }
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const;
 
     virtual void copy( output& destination ) const
     {
-        TRY
+        XEUMEULEU_TRY
             destination.copy( *current_ );
-        CATCH
+        XEUMEULEU_CATCH
     }
     //@}
 
@@ -123,40 +123,40 @@ public:
     //@{
     virtual bool has_child( const std::string& name ) const
     {
-        TRY
+        XEUMEULEU_TRY
             return find_child( name ) != 0;
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual bool has_attribute( const std::string& name ) const
     {
-        TRY
+        XEUMEULEU_TRY
             return find_attribute( name ) != 0;
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual bool has_content() const
     {
-        TRY
+        XEUMEULEU_TRY
             return find_content() != 0;
-        CATCH
+        XEUMEULEU_CATCH
     }
 
-    virtual void attribute( const std::string& name, std::string& value ) const { TRY value = translate( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, bool& value ) const { TRY value = to_bool( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, short& value ) const { TRY value = convert< short >( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, int& value ) const { TRY value = to_int( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, long& value ) const { TRY value = convert< long >( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, long long& value ) const { TRY value = convert< long long >( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, float& value ) const { TRY value = to_float( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, double& value ) const { TRY value = to_double( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, long double& value ) const { TRY value = convert< long double >( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, unsigned short& value ) const { TRY value = convert< unsigned short >( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, unsigned int& value ) const { TRY value = convert< unsigned int >( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, unsigned long& value ) const { TRY value = convert< unsigned long >( read_attribute( name ) ); CATCH }
-    virtual void attribute( const std::string& name, unsigned long long& value ) const { TRY value = convert< unsigned long long >( read_attribute( name ) ); CATCH }
+    virtual void attribute( const std::string& name, std::string& value ) const { XEUMEULEU_TRY value = translate( read_attribute( name ) ); XEUMEULEU_CATCH }
+    virtual void attribute( const std::string& name, bool& value ) const { XEUMEULEU_TRY value = to_bool( read_attribute( name ) ); XEUMEULEU_CATCH }
+    virtual void attribute( const std::string& name, short& value ) const { XEUMEULEU_TRY value = convert< short >( read_attribute( name ) ); XEUMEULEU_CATCH }
+    virtual void attribute( const std::string& name, int& value ) const { XEUMEULEU_TRY value = to_int( read_attribute( name ) ); XEUMEULEU_CATCH }
+    virtual void attribute( const std::string& name, long& value ) const { XEUMEULEU_TRY value = convert< long >( read_attribute( name ) ); XEUMEULEU_CATCH }
+    virtual void attribute( const std::string& name, long long& value ) const { XEUMEULEU_TRY value = convert< long long >( read_attribute( name ) ); XEUMEULEU_CATCH }
+    virtual void attribute( const std::string& name, float& value ) const { XEUMEULEU_TRY value = to_float( read_attribute( name ) ); XEUMEULEU_CATCH }
+    virtual void attribute( const std::string& name, double& value ) const { XEUMEULEU_TRY value = to_double( read_attribute( name ) ); XEUMEULEU_CATCH }
+    virtual void attribute( const std::string& name, long double& value ) const { XEUMEULEU_TRY value = convert< long double >( read_attribute( name ) ); XEUMEULEU_CATCH }
+    virtual void attribute( const std::string& name, unsigned short& value ) const { XEUMEULEU_TRY value = convert< unsigned short >( read_attribute( name ) ); XEUMEULEU_CATCH }
+    virtual void attribute( const std::string& name, unsigned int& value ) const { XEUMEULEU_TRY value = convert< unsigned int >( read_attribute( name ) ); XEUMEULEU_CATCH }
+    virtual void attribute( const std::string& name, unsigned long& value ) const { XEUMEULEU_TRY value = convert< unsigned long >( read_attribute( name ) ); XEUMEULEU_CATCH }
+    virtual void attribute( const std::string& name, unsigned long long& value ) const { XEUMEULEU_TRY value = convert< unsigned long long >( read_attribute( name ) ); XEUMEULEU_CATCH }
 
     virtual void nodes( const visitor& v ) const
     {
-        TRY
+        XEUMEULEU_TRY
             XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
             while( child )
             {
@@ -168,11 +168,11 @@ public:
                 }
                 child = child->getNextSibling();
             }
-        CATCH
+        XEUMEULEU_CATCH
     }
     virtual void attributes( const visitor& v ) const
     {
-        TRY
+        XEUMEULEU_TRY
             const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
             if( attributes )
             {
@@ -184,7 +184,7 @@ public:
                     v( translate( attribute->getNodeName() ), xis );
                 }
             }
-        CATCH
+        XEUMEULEU_CATCH
     }
 
     virtual std::string context() const
@@ -330,13 +330,13 @@ private:
 
 }
 
-#undef TRY
-#undef CATCH
+#undef XEUMEULEU_TRY
+#undef XEUMEULEU_CATCH
 
 #include <xeumeuleu/bridges/xerces/detail/buffer_input.hpp>
 
-#define TRY try {
-#define CATCH } \
+#define XEUMEULEU_TRY try {
+#define XEUMEULEU_CATCH } \
             catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
             catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw xml::chained_exception( e, context() ); } \
             catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw xml::chained_exception( e, context() ); }
@@ -345,15 +345,15 @@ namespace xml
 {
     inline std::auto_ptr< input_base > input::branch( bool clone ) const
     {
-        TRY
+        XEUMEULEU_TRY
             if( clone )
                 return std::auto_ptr< input_base >( new buffer_input( *current_ ) );
             return std::auto_ptr< input_base >( new input( *current_ ) );
-        CATCH
+        XEUMEULEU_CATCH
     }
 }
 
-#undef TRY
-#undef CATCH
+#undef XEUMEULEU_TRY
+#undef XEUMEULEU_CATCH
 
 #endif // xeumeuleu_input_hpp
