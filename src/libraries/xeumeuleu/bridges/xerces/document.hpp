@@ -49,8 +49,8 @@
 #include <cctype>
 #include <fstream>
 
-#define TRY try {
-#define CATCH } \
+#define XEUMEULEU_TRY try {
+#define XEUMEULEU_CATCH } \
     catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
     catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e ); } \
     catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e ); }
@@ -150,13 +150,13 @@ private:
     }
     XERCES_CPP_NAMESPACE::DOMDocument& build() const
     {
-        TRY
+        XEUMEULEU_TRY
             initialize();
             XERCES_CPP_NAMESPACE::DOMImplementation* impl = XERCES_CPP_NAMESPACE::DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
             if( ! impl )
                 throw xml::exception( "Internal error in 'document::build' : DOMImplementation 'LS' not found" );
             return *impl->createDocument();
-        CATCH
+        XEUMEULEU_CATCH
     }
     XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source, const encoding* encoding, const grammar& grammar ) const
     {
@@ -172,21 +172,21 @@ private:
     }
     XERCES_CPP_NAMESPACE::DOMDocument& build( const std::string& filename, const encoding* encoding, const grammar& grammar ) const
     {
-        TRY
+        XEUMEULEU_TRY
             initialize();
             if( ! std::ifstream( filename.c_str() ) )
                 throw xml::exception( "Unable to open file '" + filename + "'" );
             XERCES_CPP_NAMESPACE::LocalFileInputSource source( static_cast< const XMLCh* const >( translate( filename ) ) );
             return parse( source, encoding, grammar );
-        CATCH
+        XEUMEULEU_CATCH
     }
     XERCES_CPP_NAMESPACE::DOMDocument& build( const char* data, std::size_t size, const encoding* encoding, const grammar& grammar ) const
     {
-        TRY
+        XEUMEULEU_TRY
             initialize();
             XERCES_CPP_NAMESPACE::MemBufInputSource source( reinterpret_cast< const XMLByte* >( data ), size, "string_input", false );
             return parse( source, encoding, grammar );
-        CATCH
+        XEUMEULEU_CATCH
     }
     void clean( XERCES_CPP_NAMESPACE::DOMNode* node ) const
     {
@@ -224,7 +224,7 @@ protected:
 
 }
 
-#undef TRY
-#undef CATCH
+#undef XEUMEULEU_TRY
+#undef XEUMEULEU_CATCH
 
 #endif // xeumeuleu_document_hpp
