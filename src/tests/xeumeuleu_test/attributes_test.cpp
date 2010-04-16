@@ -70,8 +70,7 @@ BOOST_AUTO_TEST_CASE( read_attributes_from_element_calls_a_custom_method )
     mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "second" ), eq< std::string >( "attribute content 2" ) );
     xml::xistringstream xis( "<element first='attribute content 1' second='attribute content 2'/>" );
     xis >> xml::start( "element" )
-            >> xml::attributes( mock_custom, &mock_custom_class::process )
-        >> xml::end;
+            >> xml::attributes( mock_custom, &mock_custom_class::process );
     mock_custom.verify();
 }
 
@@ -84,8 +83,7 @@ BOOST_AUTO_TEST_CASE( read_attributes_from_element_without_attribute_does_not_ca
     mock_custom_class mock_custom;
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" )
-            >> xml::attributes( mock_custom, &mock_custom_class::process )
-        >> xml::end;
+            >> xml::attributes( mock_custom, &mock_custom_class::process );
 }
 
 namespace
@@ -225,4 +223,21 @@ BOOST_AUTO_TEST_CASE( attributes_accepts_boost_bind_as_functor )
         xis >> xml::attributes( boost::bind( &my_bindable_class::const_my_method_2, boost::ref( my_instance ), _1, _2 ) );
         my_instance.verify();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: adding_the_same_attribute_twice_reads_only_one_attribute_back
+// Created: MCO 2010-04-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( adding_the_same_attribute_twice_reads_only_one_attribute_back )
+{
+    xml::xobufferstream xos;
+    xos << xml::start( "root" )
+            << xml::attribute( "attribute", "the first value" )
+            << xml::attribute( "attribute", "the second value" );
+    mock_custom_class mock_custom;
+    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "attribute" ), eq< std::string >( "the second value" ) );
+    xos >> xml::start( "root" )
+            >> xml::attributes( mock_custom, &mock_custom_class::process );
+    mock_custom.verify();
 }
