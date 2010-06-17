@@ -66,7 +66,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="xerces-c_2D.lib mockppd.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt-gd.exe"
-				AdditionalLibraryDirectories="../../lib/vc80"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
 			/>
@@ -150,7 +150,7 @@
 				AdditionalDependencies="xerces-c_2.lib mockpp.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../../lib/vc80"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
 			/>
