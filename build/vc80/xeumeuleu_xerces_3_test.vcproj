@@ -38,7 +38,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../src/libraries,../../include/xerces-c/3.0.1"
+				AdditionalIncludeDirectories="../../src/libraries,../../include/xerces-c/3.1.0"
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE,XEUMEULEU_NO_DEPRECATED"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -66,7 +66,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="xerces-c_3D.lib mockppd.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt-gd.exe"
-				AdditionalLibraryDirectories="../../lib/vc80"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
 			/>
@@ -120,7 +120,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="../../src/libraries,../../include/xerces-c/3.0.1"
+				AdditionalIncludeDirectories="../../src/libraries,../../include/xerces-c/3.1.0"
 				PreprocessorDefinitions="WIN32,NDEBUG,_CONSOLE,XEUMEULEU_NO_DEPRECATED"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="2"
@@ -150,7 +150,7 @@
 				AdditionalDependencies="xerces-c_3.lib mockpp.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="../../lib/vc80"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
 				SubSystem="1"
 			/>
