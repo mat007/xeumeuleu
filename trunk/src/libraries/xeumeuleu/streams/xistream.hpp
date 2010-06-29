@@ -75,19 +75,19 @@ public:
         input_->end();
     }
 
-    xistream& operator>>( std::string& value ) { input_->read( value ); return *this; }
-    xistream& operator>>( bool& value ) { input_->read( value ); return *this; }
-    xistream& operator>>( short& value ) { input_->read( value ); return *this; }
-    xistream& operator>>( int& value ) { input_->read( value ); return *this; }
-    xistream& operator>>( long& value ) { input_->read( value ); return *this; }
-    xistream& operator>>( long long& value ) { input_->read( value ); return *this; }
-    xistream& operator>>( float& value ) { input_->read( value ); return *this; }
-    xistream& operator>>( double& value ) { input_->read( value ); return *this; }
-    xistream& operator>>( long double& value ) { input_->read( value ); return *this; }
-    xistream& operator>>( unsigned short& value ) { input_->read( value ); return *this; }
-    xistream& operator>>( unsigned int& value ) { input_->read( value ); return *this; }
-    xistream& operator>>( unsigned long& value ) { input_->read( value ); return *this; }
-    xistream& operator>>( unsigned long long& value ) { input_->read( value ); return *this; }
+    xistream& operator>>( std::string& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( bool& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( short& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( int& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( long& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( long long& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( float& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( double& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( long double& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( unsigned short& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( unsigned int& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( unsigned long& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( unsigned long long& value ) { input_->read().to( value ); return *this; }
     xistream& operator>>( xostream& xos );
 
     std::auto_ptr< input_base > branch( bool clone ) const
