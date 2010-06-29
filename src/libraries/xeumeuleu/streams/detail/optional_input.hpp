@@ -74,37 +74,22 @@ public:
         context_.reset( input1_ ).end();
     }
 
-    virtual void read( std::string& value ) const { read_content( value ); }
-    virtual void read( bool& value ) const { read_content( value ); }
-    virtual void read( short& value ) const { read_content( value ); }
-    virtual void read( int& value ) const { read_content( value ); }
-    virtual void read( long& value ) const { read_content( value ); }
-    virtual void read( long long& value ) const { read_content( value ); }
-    virtual void read( float& value ) const { read_content( value ); }
-    virtual void read( double& value ) const { read_content( value ); }
-    virtual void read( long double& value ) const { read_content( value ); }
-    virtual void read( unsigned short& value ) const { read_content( value ); }
-    virtual void read( unsigned int& value ) const { read_content( value ); }
-    virtual void read( unsigned long& value ) const { read_content( value ); }
-    virtual void read( unsigned long long& value ) const { read_content( value ); }
+    virtual data read() const
+    {
+        if( input1_.has_content() )
+            return context_.reset( input1_ ).read();
+        return context_.reset( input2_ ).read();
+    }
+    virtual data attribute( const std::string& name ) const
+    {
+        if( input1_.has_attribute( name ) )
+            return context_.reset( input1_ ).attribute( name );
+        return context_.reset( input2_ ).attribute( name );
+    }
     //@}
 
     //! @name Accessors
     //@{
-    virtual void attribute( const std::string& name, std::string& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, bool& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, short& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, int& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, long& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, long long& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, float& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, double& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, long double& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned short& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned int& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned long& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned long long& value ) const { read_attribute( name, value ); }
-
     virtual void nodes( const visitor& v ) const
     {
         context_.reset( input1_ ).nodes( v );
@@ -120,24 +105,6 @@ private:
     //@{
     optional_input( const optional_input& );            //!< Copy constructor
     optional_input& operator=( const optional_input& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    template< typename T > void read_content( T& value ) const
-    {
-        if( input1_.has_content() )
-            context_.reset( input1_ ).read( value );
-        else
-            context_.reset( input2_ ).read( value );
-    }
-    template< typename T > void read_attribute( const std::string& name, T& value ) const
-    {
-        if( input1_.has_attribute( name ) )
-            context_.reset( input1_ ).attribute( name, value );
-        else
-            context_.reset( input2_ ).attribute( name, value );
-    }
     //@}
 
 private:

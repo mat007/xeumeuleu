@@ -87,19 +87,18 @@ public:
         input2_->end();
     }
 
-    virtual void read( std::string& value ) const { read_content( value ); }
-    virtual void read( bool& value ) const { read_content( value ); }
-    virtual void read( short& value ) const { read_content( value ); }
-    virtual void read( int& value ) const { read_content( value ); }
-    virtual void read( long& value ) const { read_content( value ); }
-    virtual void read( long long& value ) const { read_content( value ); }
-    virtual void read( float& value ) const { read_content( value ); }
-    virtual void read( double& value ) const { read_content( value ); }
-    virtual void read( long double& value ) const { read_content( value ); }
-    virtual void read( unsigned short& value ) const { read_content( value ); }
-    virtual void read( unsigned int& value ) const { read_content( value ); }
-    virtual void read( unsigned long& value ) const { read_content( value ); }
-    virtual void read( unsigned long long& value ) const { read_content( value ); }
+    virtual data read() const
+    {
+        if( input1_->has_content() )
+            return input1_->read();
+        return input2_->read();
+    }
+    virtual data attribute( const std::string& name ) const
+    {
+        if( input1_->has_attribute( name ) )
+            return input1_->attribute( name );
+        return input2_->attribute( name );
+    }
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const;
 
@@ -125,20 +124,6 @@ public:
         return input1_->has_content() || input2_->has_content();
     }
 
-    virtual void attribute( const std::string& name, std::string& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, bool& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, short& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, int& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, long& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, long long& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, float& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, double& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, long double& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned short& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned int& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned long& value ) const { read_attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned long long& value ) const { read_attribute( name, value ); }
-
     virtual void nodes( const visitor& v ) const
     {
         input1_->nodes( v );
@@ -153,25 +138,6 @@ public:
     virtual std::string context() const
     {
         return input1_->context() + input2_->context();
-    }
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    template< typename T > void read_content( T& value ) const
-    {
-        if( input1_->has_content() )
-            input1_->read( value );
-        else
-            input2_->read( value );
-    }
-    template< typename T > void read_attribute( const std::string& name, T& value ) const
-    {
-        if( input1_->has_attribute( name ) )
-            input1_->attribute( name, value );
-        else
-            input2_->attribute( name, value );
     }
     //@}
 

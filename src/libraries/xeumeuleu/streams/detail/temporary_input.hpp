@@ -73,19 +73,16 @@ public:
         reset();
     }
 
-    virtual void read( std::string& /*value*/ ) const { reset(); }
-    virtual void read( bool& /*value*/ ) const { reset(); }
-    virtual void read( short& /*value*/ ) const { reset(); }
-    virtual void read( int& /*value*/ ) const { reset(); }
-    virtual void read( long& /*value*/ ) const { reset(); }
-    virtual void read( long long& /*value*/ ) const { reset(); }
-    virtual void read( float& /*value*/ ) const { reset(); }
-    virtual void read( double& /*value*/ ) const { reset(); }
-    virtual void read( long double& /*value*/ ) const { reset(); }
-    virtual void read( unsigned short& /*value*/ ) const { reset(); }
-    virtual void read( unsigned int& /*value*/ ) const { reset(); }
-    virtual void read( unsigned long& /*value*/ ) const { reset(); }
-    virtual void read( unsigned long long& /*value*/ ) const { reset(); }
+    virtual data read() const
+    {
+        reset();
+        return data();
+    }
+    virtual data attribute( const std::string& /*name*/ ) const
+    {
+        reset();
+        return data();
+    }
 
     virtual std::auto_ptr< input_base > branch( bool /*clone*/ ) const
     {
@@ -110,20 +107,6 @@ public:
     {
         return false;
     }
-
-    virtual void attribute( const std::string& /*name*/, std::string& /*value*/ ) const { reset(); }
-    virtual void attribute( const std::string& /*name*/, bool& /*value*/ ) const { reset(); }
-    virtual void attribute( const std::string& /*name*/, short& /*value*/ ) const { reset(); }
-    virtual void attribute( const std::string& /*name*/, int& /*value*/ ) const { reset(); }
-    virtual void attribute( const std::string& /*name*/, long& /*value*/ ) const { reset(); }
-    virtual void attribute( const std::string& /*name*/, long long& /*value*/ ) const { reset(); }
-    virtual void attribute( const std::string& /*name*/, float& /*value*/ ) const { reset(); }
-    virtual void attribute( const std::string& /*name*/, double& /*value*/ ) const { reset(); }
-    virtual void attribute( const std::string& /*name*/, long double& /*value*/ ) const { reset(); }
-    virtual void attribute( const std::string& /*name*/, unsigned short& /*value*/ ) const { reset(); }
-    virtual void attribute( const std::string& /*name*/, unsigned int& /*value*/ ) const { reset(); }
-    virtual void attribute( const std::string& /*name*/, unsigned long& /*value*/ ) const { reset(); }
-    virtual void attribute( const std::string& /*name*/, unsigned long long& /*value*/ ) const { reset(); }
 
     virtual void nodes( const visitor& /*v*/ ) const
     {}
