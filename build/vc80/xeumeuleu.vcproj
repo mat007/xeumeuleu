@@ -426,6 +426,10 @@
 					Name="xerces"
 					>
 					<File
+						RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\data.hpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\bridges\xerces\document.hpp"
 						>
 					</File>

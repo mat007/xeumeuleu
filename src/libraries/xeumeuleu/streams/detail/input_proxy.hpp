@@ -67,19 +67,14 @@ public:
         input_->end();
     }
 
-    virtual void read( std::string& value ) const { input_->read( value ); }
-    virtual void read( bool& value ) const { input_->read( value ); }
-    virtual void read( short& value ) const { input_->read( value ); }
-    virtual void read( int& value ) const { input_->read( value ); }
-    virtual void read( long& value ) const { input_->read( value ); }
-    virtual void read( long long& value ) const { input_->read( value ); }
-    virtual void read( float& value ) const { input_->read( value ); }
-    virtual void read( double& value ) const { input_->read( value ); }
-    virtual void read( long double& value ) const { input_->read( value ); }
-    virtual void read( unsigned short& value ) const { input_->read( value ); }
-    virtual void read( unsigned int& value ) const { input_->read( value ); }
-    virtual void read( unsigned long& value ) const { input_->read( value ); }
-    virtual void read( unsigned long long& value ) const { input_->read( value ); }
+    virtual data read() const
+    {
+        return input_->read();
+    }
+    virtual data attribute( const std::string& name ) const
+    {
+        return input_->attribute( name );
+    }
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const
     {
@@ -112,20 +107,6 @@ public:
     {
         return input_->has_content();
     }
-
-    virtual void attribute( const std::string& name, std::string& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, bool& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, short& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, int& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, long& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, long long& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, float& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, double& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, long double& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned short& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned int& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned long& value ) const { input_->attribute( name, value ); }
-    virtual void attribute( const std::string& name, unsigned long long& value ) const { input_->attribute( name, value ); }
 
     virtual void nodes( const visitor& v ) const
     {
