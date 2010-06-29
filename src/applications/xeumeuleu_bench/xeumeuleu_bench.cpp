@@ -55,13 +55,25 @@ int main()
     const ptime start = microsec_clock::local_time();
     for( int file = 0; file < FILES; ++file )
     {
-        xml::xofstream xos( "bench.xml" );
-        xos << xml::start( "root" );
-        for( int node = 0; node < NODES; ++node )
-            xos << xml::start( "element" )
-                    << 12.f
-                    << xml::attribute( "id", 27.f )
-                << xml::end;
+        {
+            xml::xofstream xos( "bench.xml" );
+            xos << xml::start( "root" );
+            for( int node = 0; node < NODES; ++node )
+                xos << xml::start( "element" )
+                        << 12.f
+                        << xml::attribute( "id", 27.f )
+                    << xml::end;
+        }
+        {
+            xml::xifstream xis( "bench.xml" );
+            xis >> xml::start( "root" );
+            float value;
+            for( int node = 0; node < NODES; ++node )
+                xis >> xml::start( "element" )
+                        >> value
+                        >> xml::attribute( "id", value )
+                    >> xml::end;
+        }
     }
     const time_duration duration = microsec_clock::local_time() - start;
     std::cout << "duration : " << duration << std::endl;
