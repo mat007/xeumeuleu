@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<project name="xeumeuleu" default="all">
+
+    <property environment="env"/>
+    <import file="${env.PONEY_HOME}/poney.xml"/>
+
+    <property name="xerces-2.version" value="2.7.0"/>
+    <property name="xerces-3.version" value="3.0.1"/>
+
+    <!--
+    ============================================================================
+      tests
+    ============================================================================
+    -->
+    <target name="xeumeuleu_xerces2_test" description="build and run tests">
+        <build-test name="xeumeuleu_xerces2" input="xeumeuleu_test" depends="boost,mockpp" libs="xerces-c_2">
+            <includepath path="../include/xerces-c/${xerces-2.version}"/>
+            <defineset define="XEUMEULEU_NO_DEPRECATED"/>
+        </build-test>
+    </target>
+
+    <target name="xeumeuleu_xerces3_test" description="build and run tests">
+        <build-test name="xeumeuleu_xerces3" input="xeumeuleu_test" depends="boost,mockpp" libs="xerces-c_3">
+            <includepath path="../include/xerces-c/${xerces-3.version}"/>
+            <defineset define="XEUMEULEU_NO_DEPRECATED"/>
+        </build-test>
+    </target>
+
+    <target name="xeumeuleu_test" depends="xeumeuleu_xerces2_test,xeumeuleu_xerces3_test" description="build and run tests">
+    </target>
+
+    <target name="xeuseuleu_test" description="build and run tests">
+        <build-test name="xeuseuleu" libs="xerces-c_2,Xalan-C_1">
+            <includepath path="../include/xerces-c/${xerces-2.version}"/>
+        </build-test>
+    </target>
+
+    <!--
+    ============================================================================
+      applications
+    ============================================================================
+    -->
+    <target name="xeumeuleu_bench" description="build benchmark application">
+        <build-app name="xeumeuleu_bench" depends="boost" libs="xerces-c_2" subsystem="console">
+            <includepath path="../include/xerces-c/${xerces-2.version}"/>
+        </build-app>
+    </target>
+
+    <target name="xeumeuleu_clean" description="build cleaning application">
+        <build-app name="xeumeuleu_clean" depends="boost" libs="xerces-c_2" subsystem="console">
+            <includepath path="../include/xerces-c/${xerces-2.version}"/>
+        </build-app>
+    </target>
+
+    <!--
+    ============================================================================
+      clean
+    ============================================================================
+    -->
+    <target name="clean" description="clean intermediate build artifacts">
+        <delete dir="${out.dir}"/>
+    </target>
+
+    <!--
+    ============================================================================
+      export
+    ============================================================================
+    -->
+    <target name="export" description="export the distribution">
+        <deploy>
+            <module name="xeumeuleu">
+                <include name="**/*.hpp"/>
+                <include name="**/*.h"/>
+            </module>
+            <module name="xeuseuleu">
+                <include name="**/*.hpp"/>
+                <include name="**/*.h"/>
+            </module>
+        </deploy>
+    </target>
+
+    <!--
+    ============================================================================
+      package
+    ============================================================================
+    -->
+    <target name="package" depends="generate-vc71,generate-vc90" description="package the distribution">
+        <mkdir dir="${dist.dir}"/>
+        <zip destfile="${dist.dir}/${ant.project.name}.zip" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user,src/documentation/**"/>
+        <tar destfile="${dist.dir}/${ant.project.name}.tar.bz2" basedir=".." includes="build/**,src/**,data/**,*.txt" excludes="**/*.suo,**/*.ncb,**/.*,**/*.user,src/documentation/**" compression="bzip2"/>
+    </target>
+
+    <target name="generate-vc71" description="create vc71 build files from vc80 files">
+        <copy todir="vc71" overwrite="true">
+            <fileset dir="vc80" includes="*.sln,*.vcproj"/>
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="vc80" to="vc71"/>
+                    <replacestring from="8.00" to="7.10"/>
+                    <replacestring from="8,00" to="7,10"/>
+                    <replacestring from="9.00" to="8.00"/>
+                    <replacestring from="9,00" to="8,00"/>
+                    <replacestring from="UsePrecompiledHeader=&quot;2&quot;" to="UsePrecompiledHeader=&quot;3&quot;"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
+    </target>
+
+    <target name="generate-vc90" description="create vc90 build files from vc80 files">
+        <copy todir="vc90" overwrite="true">
+            <fileset dir="vc80" includes="*.sln,*.vcproj"/>
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="vc80" to="vc90"/>
+                    <replacestring from="9.00" to="10.00"/>
+                    <replacestring from="9,00" to="10,00"/>
+                    <replacestring from="8.00" to="9.00"/>
+                    <replacestring from="8,00" to="9,00"/>
+                </tokenfilter>
+            </filterchain>
+        </copy>
+    </target>
+
+    <!--
+    ============================================================================
+      documentation
+    ============================================================================
+    -->
+    <target name="documentation" description="create documentation">
+        <cpd-report/>
+        <tests-report/>
+        <cppncss-report>
+            <define name="TRY"/>
+            <define name="CATCH"/>
+            <macro name="BOOST_CHECK_THROW"/>
+            <macro name="BOOST_CHECK_NO_THROW"/>
+            <macro name="BOOST_REQUIRE_THROW"/>
+            <macro name="BOOST_REQUIRE_NO_THROW"/>
+        </cppncss-report>
+        <doxygen-report/>
+    </target>
+
+    <!--
+    ============================================================================
+      main
+    ============================================================================
+    -->
+    <target name="test" depends="xeumeuleu_test,xeuseuleu_test" description="run all tests"/>
+
+    <target name="build" depends="xeumeuleu_bench,xeumeuleu_clean" description="build all"/>
+
+    <target name="configure" description="initialize local project structure with dependencies">
+        <update name="boost"/>
+        <update name="mockpp"/>
+        <update name="xerces-c" package="include" todir="../include/xerces-c/${xerces-2.version}"/>
+        <update name="xerces-c" package="lib/${platform}" todir="${lib.dir}"/>
+        <update name="xerces-c" package="dll/${platform}" todir="${run.dir}"/>
+        <update name="xerces-c" package="include" todir="../include/xerces-c/${xerces-3.version}" version="${xerces-3.version}"/>
+        <update name="xerces-c" package="lib/${platform}" todir="${lib.dir}" version="${xerces-3.version}"/>
+        <update name="xerces-c" package="dll/${platform}" todir="${run.dir}" version="${xerces-3.version}"/>
+        <update name="xalan-c"/>
+    </target>
+
+    <target name="all" depends="configure,build,test,export,package" description="build, run tests, package distribution and create web site"/>
+
+</project>
