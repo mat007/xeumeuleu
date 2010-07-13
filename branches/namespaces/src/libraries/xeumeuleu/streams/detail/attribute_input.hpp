@@ -48,7 +48,7 @@ class attribute_input : public input_base
 public:
     //! @name Constructors/Destructor
     //@{
-    attribute_input( input_base& input, const std::string& ns, const std::string& attribute )
+    attribute_input( const input_base& input, const std::string& ns, const std::string& attribute )
         : input_    ( input )
         , ns_       ( ns )
         , attribute_( attribute )
@@ -128,7 +128,7 @@ private:
 private:
     //! @name Member data
     //@{
-    input_base& input_;
+    const input_base& input_;
     const std::string ns_;
     const std::string& attribute_;
     //@}
