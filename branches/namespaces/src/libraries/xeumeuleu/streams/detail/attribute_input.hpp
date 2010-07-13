@@ -59,10 +59,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& /*tag*/ )
-    {
-        throw xml::exception( context() + "Invalid 'start' while reading attribute" );
-    }
     virtual void start( const std::string& /*ns*/, const std::string& /*tag*/ )
     {
         throw xml::exception( context() + "Invalid 'start' while reading attribute" );
@@ -74,13 +70,7 @@ public:
 
     virtual data read() const
     {
-        if( ns_.empty() )
-            return input_.attribute( attribute_ );
         return input_.attribute( ns_, attribute_ );
-    }
-    virtual data attribute( const std::string& /*name*/ ) const
-    {
-        throw xml::exception( context() + "Invalid 'attribute' while reading attribute" );
     }
     virtual data attribute( const std::string& /*ns*/, const std::string& /*name*/ ) const
     {
@@ -100,15 +90,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool has_child( const std::string& /*name*/ ) const
-    {
-        return false;
-    }
     virtual bool has_child( const std::string& /*ns*/, const std::string& /*name*/ ) const
-    {
-        return false;
-    }
-    virtual bool has_attribute( const std::string& /*name*/ ) const
     {
         return false;
     }

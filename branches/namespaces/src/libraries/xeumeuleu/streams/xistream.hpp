@@ -68,11 +68,7 @@ public:
     //@{
     void start( const std::string& tag )
     {
-        const std::string n = ns();
-        if( n.empty() )
-            input_->start( tag );
-        else
-            input_->start( n, tag );
+        input_->start( ns(), tag );
     }
     void end()
     {
@@ -114,7 +110,7 @@ public:
     //@{
     bool has_child( const std::string& name ) const
     {
-        return input_->has_child( name );
+        return input_->has_child( "", name );
     }
     bool has_child( const std::string& ns, const std::string& name ) const
     {
@@ -122,7 +118,7 @@ public:
     }
     bool has_attribute( const std::string& name ) const
     {
-        return input_->has_attribute( name );
+        return input_->has_attribute( "", name );
     }
     bool has_content() const
     {

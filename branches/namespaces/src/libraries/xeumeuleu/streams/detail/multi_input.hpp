@@ -69,18 +69,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& tag )
-    {
-        if( input1_->has_child( tag ) && ! input2_->has_child( tag ) )
-            context_.reset( branch1_ ).start( tag );
-        else if( input2_->has_child( tag ) && ! input1_->has_child( tag ) )
-            context_.reset( branch2_ ).start( tag );
-        else
-        {
-            input1_->start( tag );
-            input2_->start( tag );
-        }
-    }
     virtual void start( const std::string& ns, const std::string& tag )
     {
         if( input1_->has_child( ns, tag ) && ! input2_->has_child( ns, tag ) )
@@ -105,12 +93,6 @@ public:
             return input1_->read();
         return input2_->read();
     }
-    virtual data attribute( const std::string& name ) const
-    {
-        if( input1_->has_attribute( name ) )
-            return input1_->attribute( name );
-        return input2_->attribute( name );
-    }
     virtual data attribute( const std::string& ns, const std::string& name ) const
     {
         if( input1_->has_attribute( ns, name ) )
@@ -129,17 +111,9 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool has_child( const std::string& name ) const
-    {
-        return input1_->has_child( name ) || input2_->has_child( name );
-    }
     virtual bool has_child( const std::string& ns, const std::string& name ) const
     {
         return input1_->has_child( ns, name ) || input2_->has_child( ns, name );
-    }
-    virtual bool has_attribute( const std::string& name ) const
-    {
-        return input1_->has_attribute( name ) || input2_->has_attribute( name );
     }
     virtual bool has_attribute( const std::string& ns, const std::string& name ) const
     {

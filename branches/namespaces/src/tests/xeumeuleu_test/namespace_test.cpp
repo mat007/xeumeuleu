@@ -34,50 +34,6 @@
 #include <xeumeuleu/xml.hpp>
 
 using namespace mockpp;
-//
-//// -----------------------------------------------------------------------------
-//// Name: default_namespace_declaration_is_not_a_regular_attribute
-//// Created: MAT 2010-07-13
-//// -----------------------------------------------------------------------------
-//BOOST_AUTO_TEST_CASE( default_namespace_declaration_is_not_a_regular_attribute )
-//{
-//    xml::xistringstream xis( "<element xmlns='http://www.example.org'/>" );
-//    xis >> xml::start( "element" );
-//    std::string value;
-//    BOOST_CHECK_THROW( xis >> xml::attribute( "xmlns", value ), xml::exception );
-//}
-//
-//// -----------------------------------------------------------------------------
-//// Name: namespace_declarations_are_not_regular_attributes
-//// Created: MAT 2010-07-13
-//// -----------------------------------------------------------------------------
-//BOOST_AUTO_TEST_CASE( namespace_declarations_are_not_regular_attributes )
-//{
-//    xml::xistringstream xis( "<element xmlns:ns='http://www.example.org'/>" );
-//    xis >> xml::start( "element" );
-//    std::string value;
-//    xis >> xml::ns( "http://www.example.org" ) >> xml::attribute( "xmlns", value );
-//}
-//
-//namespace
-//{
-//    void beeep( const std::string& ns, const std::string& actual )
-//    {
-//        BOOST_CHECK_EQUAL( "", ns );
-//        BOOST_CHECK_EQUAL( "", actual );
-//    }
-//}
-//
-//// -----------------------------------------------------------------------------
-//// Name: namespace_declarations_are_not_regular_attributes2
-//// Created: MAT 2010-07-13
-//// -----------------------------------------------------------------------------
-//BOOST_AUTO_TEST_CASE( namespace_declarations_are_not_regular_attributes2 )
-//{
-//    xml::xistringstream xis( "<element xmlns:ns='http://www.example.org'/>" );
-//    xis >> xml::start( "element" );
-//    xis >> xml::attributes( boost::bind( &beeep, _1, _2 ) );
-//}
 
 // -----------------------------------------------------------------------------
 // Name: reading_start_ignores_namespace_by_default
@@ -87,6 +43,16 @@ BOOST_AUTO_TEST_CASE( reading_start_ignores_namespace_by_default )
 {
     xml::xistringstream xis( "<ns:element xmlns:ns='http://www.example.org'/>" );
     xis >> xml::start( "element" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_start_in_empty_namespace_is_valid
+// Created: MAT 2010-07-13
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_start_in_empty_namespace_is_valid )
+{
+    xml::xistringstream xis( "<element/>" );
+    xis >> xml::ns( "" ) >> xml::start( "element" );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,6 +100,19 @@ BOOST_AUTO_TEST_CASE( reading_attribute_ignores_namespace_by_default )
 }
 
 // -----------------------------------------------------------------------------
+// Name: reading_attribute_in_empty_namespace_is_valid
+// Created: MAT 2010-07-13
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_attribute_in_empty_namespace_is_valid )
+{
+    xml::xistringstream xis( "<element attribute='12'/>" );
+    int value = 0;
+    xis >> xml::start( "element" )
+            >> xml::ns( "" ) >> xml::attribute( "attribute", value );
+    BOOST_CHECK_EQUAL( 12, value );
+}
+
+// -----------------------------------------------------------------------------
 // Name: reading_prefixed_attribute_throws
 // Created: MAT 2010-06-29
 // -----------------------------------------------------------------------------
@@ -169,6 +148,32 @@ BOOST_AUTO_TEST_CASE( reading_attribute_filtered_on_wrong_namespace_throws )
     xis >> xml::start( "element" )
             >> xml::ns( "wrong-namespace" );
     BOOST_CHECK_THROW( xis >> xml::attribute( "attribute", value ), xml::exception );
+}
+
+// -----------------------------------------------------------------------------
+// Name: namespace_declarations_are_regular_attributes
+// Created: MAT 2010-07-13
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( namespace_declarations_are_regular_attributes )
+{
+    xml::xistringstream xis( "<element xmlns:ns='http://www.example.org'/>" );
+    xis >> xml::start( "element" );
+    std::string actual;
+    xis >> xml::ns( "http://www.w3.org/2000/xmlns/" ) >> xml::attribute( "ns", actual );
+    BOOST_CHECK_EQUAL( "http://www.example.org", actual );
+}
+
+// -----------------------------------------------------------------------------
+// Name: default_namespace_declaration_is_a_regular_attribute
+// Created: MAT 2010-07-13
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( default_namespace_declaration_is_a_regular_attribute )
+{
+    xml::xistringstream xis( "<element xmlns='http://www.example.org'/>" );
+    std::string actual;
+    xis >> xml::start( "element" )
+            >> xml::ns( "http://www.w3.org/2000/xmlns/" ) >> xml::attribute( "xmlns", actual );
+    BOOST_CHECK_EQUAL( "http://www.example.org", actual );
 }
 
 namespace
@@ -415,3 +420,5 @@ BOOST_AUTO_TEST_CASE( namespace_is_only_declared_the_first_time_needed )
 // review write tests to conform to spec
 
 // load + filter + write back stream => preserve ns prefixes ?
+
+// http://www.example.org/ VS http://www.example.org

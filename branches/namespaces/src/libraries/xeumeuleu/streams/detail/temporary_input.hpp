@@ -62,10 +62,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& /*tag*/ )
-    {
-        ++level_;
-    }
     virtual void start( const std::string& /*ns*/, const std::string& /*tag*/ )
     {
         ++level_;
@@ -78,11 +74,6 @@ public:
     }
 
     virtual data read() const
-    {
-        reset();
-        return data();
-    }
-    virtual data attribute( const std::string& /*name*/ ) const
     {
         reset();
         return data();
@@ -104,15 +95,7 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool has_child( const std::string& /*name*/ ) const
-    {
-        return false;
-    }
     virtual bool has_child( const std::string& /*ns*/, const std::string& /*name*/ ) const
-    {
-        return false;
-    }
-    virtual bool has_attribute( const std::string& /*name*/ ) const
     {
         return false;
     }

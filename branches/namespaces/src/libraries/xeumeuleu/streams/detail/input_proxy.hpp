@@ -58,10 +58,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& tag )
-    {
-        input_->start( tag );
-    }
     virtual void start( const std::string& ns, const std::string& tag )
     {
         input_->start( ns, tag );
@@ -74,10 +70,6 @@ public:
     virtual data read() const
     {
         return input_->read();
-    }
-    virtual data attribute( const std::string& name ) const
-    {
-        return input_->attribute( name );
     }
     virtual data attribute( const std::string& ns, const std::string& name ) const
     {
@@ -103,17 +95,9 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool has_child( const std::string& name ) const
-    {
-        return input_->has_child( name );
-    }
     virtual bool has_child( const std::string& ns, const std::string& name ) const
     {
         return input_->has_child( ns, name );
-    }
-    virtual bool has_attribute( const std::string& name ) const
-    {
-        return input_->has_attribute( name );
     }
     virtual bool has_attribute( const std::string& ns, const std::string& name ) const
     {
