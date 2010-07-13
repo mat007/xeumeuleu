@@ -103,11 +103,11 @@ public:
         return true;
     }
 
-    virtual void nodes( const visitor& /*v*/ ) const
+    virtual void nodes( const std::string& /*ns*/, const visitor& /*v*/ ) const
     {
         throw xml::exception( context() + "Invalid 'nodes' while reading attribute" );
     }
-    virtual void attributes( const visitor& /*v*/ ) const
+    virtual void attributes( const std::string& /*ns*/, const visitor& /*v*/ ) const
     {
         throw xml::exception( context() + "Invalid 'attributes' while reading attribute" );
     }

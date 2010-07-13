@@ -124,15 +124,15 @@ public:
         return input1_->has_content() || input2_->has_content();
     }
 
-    virtual void nodes( const visitor& v ) const
+    virtual void nodes( const std::string& ns, const visitor& v ) const
     {
-        input1_->nodes( v );
-        input2_->nodes( v );
+        input1_->nodes( ns, v );
+        input2_->nodes( ns, v );
     }
-    virtual void attributes( const visitor& v ) const
+    virtual void attributes( const std::string& ns, const visitor& v ) const
     {
-        input1_->attributes( v );
-        input2_->attributes( v );
+        input1_->attributes( ns, v );
+        input2_->attributes( ns, v );
     }
 
     virtual std::string context() const

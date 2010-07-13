@@ -109,9 +109,9 @@ public:
         return false;
     }
 
-    virtual void nodes( const visitor& /*v*/ ) const
+    virtual void nodes( const std::string& /*ns*/, const visitor& /*v*/ ) const
     {}
-    virtual void attributes( const visitor& /*v*/ ) const
+    virtual void attributes( const std::string& /*ns*/, const visitor& /*v*/ ) const
     {}
 
     virtual std::string context() const

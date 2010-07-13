@@ -108,13 +108,13 @@ public:
         return input_->has_content();
     }
 
-    virtual void nodes( const visitor& v ) const
+    virtual void nodes( const std::string& ns, const visitor& v ) const
     {
-        input_->nodes( v );
+        input_->nodes( ns, v );
     }
-    virtual void attributes( const visitor& v ) const
+    virtual void attributes( const std::string& ns, const visitor& v ) const
     {
-        input_->attributes( v );
+        input_->attributes( ns, v );
     }
 
     virtual std::string context() const

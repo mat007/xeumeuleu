@@ -141,13 +141,14 @@ public:
         XEUMEULEU_CATCH
     }
 
-    virtual void nodes( const visitor& v ) const
+    virtual void nodes( const std::string& ns, const visitor& v ) const
     {
         XEUMEULEU_TRY
             XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
             while( child )
             {
-                if( child->getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::ELEMENT_NODE )
+                if( child->getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::ELEMENT_NODE
+                && ( ns.empty() || ns == translate( child->getNamespaceURI() ) ) )
                 {
                     input i( *child );
                     xistream xis( i );
@@ -157,7 +158,7 @@ public:
             }
         XEUMEULEU_CATCH
     }
-    virtual void attributes( const visitor& v ) const
+    virtual void attributes( const std::string& ns, const visitor& v ) const
     {
         XEUMEULEU_TRY
             const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
@@ -166,9 +167,13 @@ public:
                 for( XMLSize_t index = 0; index < attributes->getLength(); ++index )
                 {
                     XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( index );
-                    input i( *current_ );
-                    xistream xis( i );
-                    v( translate( attribute->getNamespaceURI() ), translate( attribute->getLocalName() ), xis );
+                    if( ns.empty() || ns == translate( attribute->getNamespaceURI() ) )
+                    {
+                        input i( *current_ );
+                        xistream xis( i );
+                        const std::string n = translate( attribute->getNamespaceURI() ? attribute->getNamespaceURI() : attribute->lookupNamespaceURI( 0 ) );
+                        v( n, translate( attribute->getLocalName() ), xis );
+                    }
                 }
             }
         XEUMEULEU_CATCH
@@ -196,31 +201,29 @@ private:
         return "node '" + translate( current_->getNodeName() ) + "'";
     }
 
-    const XERCES_CPP_NAMESPACE::DOMNode* find_child( const std::string& ns, const std::string& name ) const
+    template< typename N >
+    const XERCES_CPP_NAMESPACE::DOMNode* find_node( const N* nodes, const std::string& ns, const std::string& name ) const
     {
-        const XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
-        while( child )
+        if( ! nodes )
+            return 0;
+        for( XMLSize_t i = 0; i < nodes->getLength(); ++i )
         {
-            if( name == translate( child->getLocalName() )
-                && ( ns.empty() || ns == translate( child->getNamespaceURI() ) ) )
-                return child;
-            child = child->getNextSibling();
+            const XERCES_CPP_NAMESPACE::DOMNode* node = nodes->item( i );
+            if( name == translate( node->getLocalName() )
+                && ( ns.empty()
+                    || ns == translate( node->getNamespaceURI() )
+                    || !node->getNamespaceURI() && node->isDefaultNamespace( translate( ns ) ) ) )
+                return node;
         }
         return 0;
     }
+    const XERCES_CPP_NAMESPACE::DOMNode* find_child( const std::string& ns, const std::string& name ) const
+    {
+        return find_node( current_->getChildNodes(), ns, name );
+    }
     const XERCES_CPP_NAMESPACE::DOMNode* find_attribute( const std::string& ns, const std::string& name ) const
     {
-        const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
-        if( ! attributes )
-            return 0;
-        for( XMLSize_t i = 0; i < attributes->getLength(); ++i )
-        {
-            const XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( i );
-            if( name == translate( attribute->getLocalName() )
-                && ( ns.empty() || ns == translate( attribute->getNamespaceURI() ) ) )
-                return attribute;
-        }
-        return 0;
+        return find_node( current_->getAttributes(), ns, name );
     }
     const XERCES_CPP_NAMESPACE::DOMNode* find_content() const
     {
@@ -241,6 +244,26 @@ private:
             return false;
         const XMLCh* const value = node.getNodeValue();
         return ! XERCES_CPP_NAMESPACE::XMLChar1_1::isAllSpaces( value, XERCES_CPP_NAMESPACE::XMLString::stringLen( value ) );
+    }
+
+    template< typename N >
+    void accept( const N* nodes, const std::string& ns, const visitor& v ) const
+    {
+        XEUMEULEU_TRY
+            if( nodes )
+            {
+                for( XMLSize_t index = 0; index < nodes->getLength(); ++index )
+                {
+                    XERCES_CPP_NAMESPACE::DOMNode* node = nodes->item( index );
+                    if( ns.empty() || ns == translate( node->getNamespaceURI() ) )
+                    {
+                        input i( *current_ );
+                        xistream xis( i );
+                        v( translate( node->getNamespaceURI() ), translate( node->getLocalName() ), xis );
+                    }
+                }
+            }
+        XEUMEULEU_CATCH
     }
     //@}
 

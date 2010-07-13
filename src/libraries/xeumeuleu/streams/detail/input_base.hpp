@@ -76,8 +76,8 @@ public:
     virtual bool has_attribute( const std::string& ns, const std::string& name ) const = 0;
     virtual bool has_content() const = 0;
 
-    virtual void nodes( const visitor& v ) const = 0;
-    virtual void attributes( const visitor& v ) const = 0;
+    virtual void nodes( const std::string& ns, const visitor& v ) const = 0;
+    virtual void attributes( const std::string& ns, const visitor& v ) const = 0;
 
     virtual std::string context() const = 0;
     //@}
