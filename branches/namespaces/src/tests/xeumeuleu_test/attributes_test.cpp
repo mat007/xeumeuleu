@@ -48,7 +48,7 @@ namespace
         void process( const std::string& name, xml::xistream& xis )
         {
             std::string content;
-            xis >> xml::attribute( name, content );
+            xis >> content;
             process_mocker.forward( name, content );
         }
         mockpp::ChainableMockMethod< void, std::string, std::string > process_mocker;

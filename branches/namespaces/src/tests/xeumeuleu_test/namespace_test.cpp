@@ -315,7 +315,7 @@ namespace
         void process( const std::string& ns, const std::string& name, xml::xistream& xis )
         {
             std::string content;
-            xis >> xml::ns( ns ) >> xml::attribute( name, content );
+            xis >> content;
             process_mocker.forward( ns, name, content );
         }
         mockpp::ChainableMockMethod< void, std::string, std::string, std::string > process_mocker;
@@ -354,10 +354,12 @@ BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_namespace_fr
     mock_custom_class mock_custom;
     mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "http://www.example.org" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 1" ) );
     mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "http://www.example.org" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 2" ) );
-    xml::xistringstream xis( "<element attribute='attribute 1' ns:attribute='attribute 2' ns2:attribute='attribute 3'"
-                             " xmlns='http://www.example.org' xmlns:ns='http://www.example.org' xmlns:ns2='http://www.example2.org'/>" );
-    xis >> xml::start( "element" )
-            >> xml::ns( "http://www.example.org" ) >> xml::attributes( mock_custom, &mock_custom_class::process );
+    xml::xistringstream xis( "<root xmlns='http://www.example.org' xmlns:ns='http://www.example.org' xmlns:ns2='http://www.example2.org'>"
+                             "  <element attribute='attribute 1' ns:attribute='attribute 2' ns2:attribute='attribute 3'/>"
+                             "</root>" );
+    xis >> xml::start( "root" )
+            >> xml::start( "element" )
+                >> xml::ns( "http://www.example.org" ) >> xml::attributes( mock_custom, &mock_custom_class::process );
     mock_custom.verify();
 }
 
@@ -429,9 +431,9 @@ BOOST_AUTO_TEST_CASE( namespace_is_only_declared_the_first_time_needed )
 // ? ignore namespaces by default
 // ns activates namespace filter for the next operation :
 // v start
-// - attribute
-// - list
-// - attributes
+// v attribute
+// v list
+// v attributes
 // v has_child
 // v has_attribute
 // ? means to resolve a prefix to its namespace

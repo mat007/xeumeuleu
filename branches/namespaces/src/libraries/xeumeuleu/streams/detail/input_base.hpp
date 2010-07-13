@@ -63,7 +63,8 @@ public:
     virtual void end() = 0;
 
     virtual data read() const = 0;
-    virtual data attribute( const std::string& ns, const std::string& name ) const = 0;
+
+    virtual std::auto_ptr< input_base > attribute( const std::string& ns, const std::string& name ) const = 0;
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const = 0;
 

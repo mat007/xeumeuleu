@@ -358,10 +358,6 @@
 					Name="detail"
 					>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\attribute_input.hpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\attribute_output.hpp"
 						>
 					</File>

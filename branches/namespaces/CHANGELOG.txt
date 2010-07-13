@@ -4,6 +4,7 @@ trunk
 . added an xml::xostreamstream writing output to an std::ostream
 . provided easy customisation for user types in attributes
 . fixed a crash when retrieving the context of a buffer stream after a non existing optional
+. fixed a bug causing the stream passed to the functor in xml::attributes not to be positioned on the attribute but on its parent node
 
 1.4.2
 . added support for document type definition (DTD)

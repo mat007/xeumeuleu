@@ -78,10 +78,11 @@ public:
         reset();
         return data();
     }
-    virtual data attribute( const std::string& /*ns*/, const std::string& /*name*/ ) const
+
+    virtual std::auto_ptr< input_base > attribute( const std::string& /*ns*/, const std::string& /*name*/ ) const
     {
         reset();
-        return data();
+        return std::auto_ptr< input_base >();
     }
 
     virtual std::auto_ptr< input_base > branch( bool /*clone*/ ) const
