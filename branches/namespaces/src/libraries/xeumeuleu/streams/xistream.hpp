@@ -159,11 +159,11 @@ public:
 
     void nodes( const visitor& v ) const
     {
-        input_->nodes( v );
+        input_->nodes( ns(), v );
     }
     void attributes( const visitor& v ) const
     {
-        input_->attributes( v );
+        input_->attributes( ns(), v );
     }
 
     std::string context() const
