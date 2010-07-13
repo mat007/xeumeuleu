@@ -48,8 +48,9 @@ class attribute_input : public input_base
 public:
     //! @name Constructors/Destructor
     //@{
-    attribute_input( input_base& input, const std::string& attribute )
+    attribute_input( input_base& input, const std::string& ns, const std::string& attribute )
         : input_    ( input )
+        , ns_       ( ns )
         , attribute_( attribute )
     {}
     virtual ~attribute_input()
@@ -62,6 +63,10 @@ public:
     {
         throw xml::exception( context() + "Invalid 'start' while reading attribute" );
     }
+    virtual void start( const std::string& /*ns*/, const std::string& /*tag*/ )
+    {
+        throw xml::exception( context() + "Invalid 'start' while reading attribute" );
+    }
     virtual void end()
     {
         throw xml::exception( context() + "Invalid 'end' while reading attribute" );
@@ -69,9 +74,15 @@ public:
 
     virtual data read() const
     {
-        return input_.attribute( attribute_ );
+        if( ns_.empty() )
+            return input_.attribute( attribute_ );
+        return input_.attribute( ns_, attribute_ );
     }
     virtual data attribute( const std::string& /*name*/ ) const
+    {
+        throw xml::exception( context() + "Invalid 'attribute' while reading attribute" );
+    }
+    virtual data attribute( const std::string& /*ns*/, const std::string& /*name*/ ) const
     {
         throw xml::exception( context() + "Invalid 'attribute' while reading attribute" );
     }
@@ -93,7 +104,15 @@ public:
     {
         return false;
     }
+    virtual bool has_child( const std::string& /*ns*/, const std::string& /*name*/ ) const
+    {
+        return false;
+    }
     virtual bool has_attribute( const std::string& /*name*/ ) const
+    {
+        return false;
+    }
+    virtual bool has_attribute( const std::string& /*ns*/, const std::string& /*name*/ ) const
     {
         return false;
     }
@@ -128,6 +147,7 @@ private:
     //! @name Member data
     //@{
     input_base& input_;
+    const std::string& ns_;
     const std::string& attribute_;
     //@}
 };

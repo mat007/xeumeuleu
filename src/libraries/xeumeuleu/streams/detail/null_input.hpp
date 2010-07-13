@@ -70,6 +70,10 @@ public:
     {
         ++level_;
     }
+    virtual void start( const std::string& /*ns*/, const std::string& /*tag*/ )
+    {
+        ++level_;
+    }
     virtual void end()
     {
         if( --level_ < 0 )
@@ -81,6 +85,10 @@ public:
         return data();
     }
     virtual data attribute( const std::string& /*name*/ ) const
+    {
+        return data();
+    }
+    virtual data attribute( const std::string& /*ns*/, const std::string& /*name*/ ) const
     {
         return data();
     }
@@ -100,7 +108,15 @@ public:
     {
         return false;
     }
+    virtual bool has_child( const std::string& /*ns*/, const std::string& /*name*/ ) const
+    {
+        return false;
+    }
     virtual bool has_attribute( const std::string& /*name*/ ) const
+    {
+        return false;
+    }
+    virtual bool has_attribute( const std::string& /*ns*/, const std::string& /*name*/ ) const
     {
         return false;
     }

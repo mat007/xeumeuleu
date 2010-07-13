@@ -81,6 +81,18 @@ public:
             input2_->start( tag );
         }
     }
+    virtual void start( const std::string& ns, const std::string& tag )
+    {
+        if( input1_->has_child( ns, tag ) && ! input2_->has_child( ns, tag ) )
+            context_.reset( branch1_ ).start( ns, tag );
+        else if( input2_->has_child( ns, tag ) && ! input1_->has_child( ns, tag ) )
+            context_.reset( branch2_ ).start( ns, tag );
+        else
+        {
+            input1_->start( ns, tag );
+            input2_->start( ns, tag );
+        }
+    }
     virtual void end()
     {
         input1_->end();
@@ -99,6 +111,12 @@ public:
             return input1_->attribute( name );
         return input2_->attribute( name );
     }
+    virtual data attribute( const std::string& ns, const std::string& name ) const
+    {
+        if( input1_->has_attribute( ns, name ) )
+            return input1_->attribute( ns, name );
+        return input2_->attribute( ns, name );
+    }
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const;
 
@@ -115,9 +133,17 @@ public:
     {
         return input1_->has_child( name ) || input2_->has_child( name );
     }
+    virtual bool has_child( const std::string& ns, const std::string& name ) const
+    {
+        return input1_->has_child( ns, name ) || input2_->has_child( ns, name );
+    }
     virtual bool has_attribute( const std::string& name ) const
     {
         return input1_->has_attribute( name ) || input2_->has_attribute( name );
+    }
+    virtual bool has_attribute( const std::string& ns, const std::string& name ) const
+    {
+        return input1_->has_attribute( ns, name ) || input2_->has_attribute( ns, name );
     }
     virtual bool has_content() const
     {

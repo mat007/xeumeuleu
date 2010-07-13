@@ -68,7 +68,11 @@ public:
     //@{
     void start( const std::string& tag )
     {
-        input_->start( tag );
+        const std::string n = ns();
+        if( n.empty() )
+            input_->start( tag );
+        else
+            input_->start( n, tag );
     }
     void end()
     {
@@ -112,6 +116,10 @@ public:
     {
         return input_->has_child( name );
     }
+    bool has_child( const std::string& ns, const std::string& name ) const
+    {
+        return input_->has_child( ns, name );
+    }
     bool has_attribute( const std::string& name ) const
     {
         return input_->has_attribute( name );
@@ -141,7 +149,7 @@ public:
 
     template< typename T > void attribute_by_ref( const std::string& name, T& value ) const
     {
-        attribute_input input( *input_, name );
+        attribute_input input( *input_, ns(), name );
         xistream xis( input );
         xis >> value;
     }
@@ -179,6 +187,10 @@ public:
             input_ = optional_.get();
         }
     }
+    void ns( const std::string& name )
+    {
+        ns_ = name;
+    }
     //@}
 
 private:
@@ -197,12 +209,25 @@ private:
     }
     //@}
 
+    //! @name Helpers
+    //@{
+    std::string ns() const
+    {
+        if( ns_.empty() )
+            return "";
+        std::string ns;
+        ns.swap( ns_ );
+        return ns;
+    }
+    //@}
+
 private:
     //! @name Member data
     //@{
     input_base* input_;
     std::auto_ptr< temporary_input > temporary_;
     std::auto_ptr< optional_input > optional_;
+    mutable std::string ns_;
     //@}
 };
 

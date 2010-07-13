@@ -83,6 +83,15 @@ public:
             current_ = child;
         XEUMEULEU_CATCH
     }
+    virtual void start( const std::string& ns, const std::string& tag )
+    {
+        XEUMEULEU_TRY
+            const XERCES_CPP_NAMESPACE::DOMNode* child = find_child( ns, tag );
+            if( ! child )
+                throw xml::exception( context() + location() + " does not have a child named '" + tag + "'" );
+            current_ = child;
+        XEUMEULEU_CATCH
+    }
     virtual void end()
     {
         XEUMEULEU_TRY
@@ -109,6 +118,13 @@ public:
             throw xml::exception( context() + location() + " does not have an attribute '" + name + "'" );
         return data( attribute );
     }
+    virtual data attribute( const std::string& ns, const std::string& name ) const
+    {
+        const XERCES_CPP_NAMESPACE::DOMNode* attribute = find_attribute( ns, name );
+        if( ! attribute )
+            throw xml::exception( context() + location() + " does not have an attribute '" + name + "'" );
+        return data( attribute );
+    }
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const;
 
@@ -128,10 +144,22 @@ public:
             return find_child( name ) != 0;
         XEUMEULEU_CATCH
     }
+    virtual bool has_child( const std::string& ns, const std::string& name ) const
+    {
+        XEUMEULEU_TRY
+            return find_child( ns, name ) != 0;
+        XEUMEULEU_CATCH
+    }
     virtual bool has_attribute( const std::string& name ) const
     {
         XEUMEULEU_TRY
             return find_attribute( name ) != 0;
+        XEUMEULEU_CATCH
+    }
+    virtual bool has_attribute( const std::string& ns, const std::string& name ) const
+    {
+        XEUMEULEU_TRY
+            return find_attribute( ns, name ) != 0;
         XEUMEULEU_CATCH
     }
     virtual bool has_content() const
@@ -151,7 +179,7 @@ public:
                 {
                     input i( *child );
                     xistream xis( i );
-                    v( translate( child->getNodeName() ), xis );
+                    v( translate( child->getNamespaceURI() ), translate( child->getLocalName() ), xis );
                 }
                 child = child->getNextSibling();
             }
@@ -168,7 +196,7 @@ public:
                     XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( index );
                     input i( *current_ );
                     xistream xis( i );
-                    v( translate( attribute->getNodeName() ), xis );
+                    v( translate( attribute->getNamespaceURI() ), translate( attribute->getLocalName() ), xis );
                 }
             }
         XEUMEULEU_CATCH
@@ -201,7 +229,18 @@ private:
         const XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
         while( child )
         {
-            if( name == translate( child->getNodeName() ) )
+            if( name == translate( child->getLocalName() ) )
+                return child;
+            child = child->getNextSibling();
+        }
+        return 0;
+    }
+    const XERCES_CPP_NAMESPACE::DOMNode* find_child( const std::string& ns, const std::string& name ) const
+    {
+        const XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
+        while( child )
+        {
+            if( name == translate( child->getLocalName() ) && ns == translate( child->getNamespaceURI() ) )
                 return child;
             child = child->getNextSibling();
         }
@@ -212,7 +251,26 @@ private:
         const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
         if( ! attributes )
             return 0;
-        return attributes->getNamedItem( translate( name ) );
+        for( XMLSize_t i = 0; i < attributes->getLength(); ++i )
+        {
+            const XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( i );
+            if( name == translate( attribute->getLocalName() ) )
+                return attribute;
+        }
+        return 0;
+    }
+    const XERCES_CPP_NAMESPACE::DOMNode* find_attribute( const std::string& ns, const std::string& name ) const
+    {
+        const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
+        if( ! attributes )
+            return 0;
+        for( XMLSize_t i = 0; i < attributes->getLength(); ++i )
+        {
+            const XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( i );
+            if( name == translate( attribute->getLocalName() ) && ns == translate( attribute->getNamespaceURI() ) )
+                return attribute;
+        }
+        return 0;
     }
     const XERCES_CPP_NAMESPACE::DOMNode* find_content() const
     {

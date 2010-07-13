@@ -64,7 +64,14 @@ public:
     //@{
     void start( const std::string& tag )
     {
-        output_.start( tag );
+        if( ns_.empty() )
+            output_.start( tag );
+        else
+        {
+            std::string ns;
+            ns.swap( ns_ );
+            output_.start( ns, prefix_.empty() ? tag : prefix_ + ":" + tag );
+        }
     }
     void end()
     {
@@ -112,6 +119,11 @@ public:
     {
         output_.instruction( target, data );
     }
+    void ns( const std::string& prefix, const std::string& name )
+    {
+        prefix_ = prefix;
+        ns_ = name;
+    }
     //@}
 
 private:
@@ -125,6 +137,7 @@ private:
     //! @name Member data
     //@{
     output_base& output_;
+    std::string prefix_, ns_;
     //@}
 };
 

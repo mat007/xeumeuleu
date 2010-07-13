@@ -55,6 +55,7 @@ public:
     //! @name Operations
     //@{
     virtual void start( const std::string& tag ) = 0;
+    virtual void start( const std::string& ns, const std::string& tag ) = 0;
     virtual void end() = 0;
 
     virtual void write( const std::string& value ) = 0;

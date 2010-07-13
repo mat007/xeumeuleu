@@ -90,7 +90,7 @@ namespace
 {
     mockpp::ChainableMockObject my_function_mock( "my_function_mock" );
     mockpp::ChainableMockMethod< void > my_function_mocker( "my_function", &my_function_mock );
-    void my_name_function( const std::string&, xml::xistream& )
+    void my_name_function( const std::string&, const std::string&, xml::xistream& )
     {
         my_function_mocker.forward();
     }
@@ -115,7 +115,7 @@ namespace
     class my_functor_class
     {
     public:
-        void operator()( const std::string&, xml::xistream& ) const
+        void operator()( const std::string&, const std::string&, xml::xistream& ) const
         {
             my_function_mocker.forward();
         }
@@ -143,7 +143,7 @@ namespace
     public:
         my_non_copyable_functor_class() {}
 
-        void operator()( const std::string&, xml::xistream& ) const
+        void operator()( const std::string&, const std::string&, xml::xistream& ) const
         {
             my_function_mocker.forward();
         }
@@ -214,13 +214,13 @@ BOOST_AUTO_TEST_CASE( attributes_accepts_boost_bind_as_functor )
     {
         my_bindable_class my_instance;
         my_instance.my_method_mocker.expects( mockpp::once() );
-        xis >> xml::attributes( boost::bind( &my_bindable_class::my_method_2, boost::ref( my_instance ), _1, _2 ) );
+        xis >> xml::attributes( boost::bind( &my_bindable_class::my_method_2, boost::ref( my_instance ), _2, _3 ) );
         my_instance.verify();
     }
     {
         my_bindable_class my_instance;
         my_instance.my_method_mocker.expects( mockpp::once() );
-        xis >> xml::attributes( boost::bind( &my_bindable_class::const_my_method_2, boost::ref( my_instance ), _1, _2 ) );
+        xis >> xml::attributes( boost::bind( &my_bindable_class::const_my_method_2, boost::ref( my_instance ), _2, _3 ) );
         my_instance.verify();
     }
 }

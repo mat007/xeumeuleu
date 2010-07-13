@@ -207,6 +207,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\ns.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\optional.hpp"
 					>
 				</File>

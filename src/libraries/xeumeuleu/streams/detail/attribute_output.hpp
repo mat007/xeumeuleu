@@ -64,6 +64,10 @@ public:
     {
         throw xml::exception( "Invalid 'start' while writing attribute" );
     }
+    virtual void start( const std::string& /*ns*/, const std::string& /*tag*/ )
+    {
+        throw xml::exception( "Invalid 'start' while writing attribute" );
+    }
     virtual void end()
     {
         throw xml::exception( "Invalid 'end' while writing attribute" );

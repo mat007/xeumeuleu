@@ -84,7 +84,13 @@ public:
     virtual void start( const std::string& tag )
     {
         XEUMEULEU_TRY
-            current_ = current_->appendChild( document_.createElement( translate( tag ) ) );
+            current_ = current_->appendChild( document_.createElementNS( 0, translate( tag ) ) );
+        XEUMEULEU_CATCH
+    }
+    virtual void start( const std::string& ns, const std::string& tag )
+    {
+        XEUMEULEU_TRY
+            current_ = current_->appendChild( document_.createElementNS( translate( ns ), translate( tag ) ) );
         XEUMEULEU_CATCH
     }
     virtual void end()
@@ -184,9 +190,9 @@ public:
             XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
             if( ! attributes )
                 throw xml::exception( location() + " cannot have attributes" );
-            XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttribute( translate( name ) );
+            XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttributeNS( 0, translate( name ) );
             att->setValue( translate( value ) );
-            attributes->setNamedItem( att );
+            attributes->setNamedItemNS( att );
         XEUMEULEU_CATCH
     }
     virtual void attribute( const std::string& name, bool value )

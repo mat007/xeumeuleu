@@ -62,6 +62,10 @@ public:
     {
         input_->start( tag );
     }
+    virtual void start( const std::string& ns, const std::string& tag )
+    {
+        input_->start( ns, tag );
+    }
     virtual void end()
     {
         input_->end();
@@ -74,6 +78,10 @@ public:
     virtual data attribute( const std::string& name ) const
     {
         return input_->attribute( name );
+    }
+    virtual data attribute( const std::string& ns, const std::string& name ) const
+    {
+        return input_->attribute( ns, name );
     }
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const
@@ -99,9 +107,17 @@ public:
     {
         return input_->has_child( name );
     }
+    virtual bool has_child( const std::string& ns, const std::string& name ) const
+    {
+        return input_->has_child( ns, name );
+    }
     virtual bool has_attribute( const std::string& name ) const
     {
         return input_->has_attribute( name );
+    }
+    virtual bool has_attribute( const std::string& ns, const std::string& name ) const
+    {
+        return input_->has_attribute( ns, name );
     }
     virtual bool has_content() const
     {

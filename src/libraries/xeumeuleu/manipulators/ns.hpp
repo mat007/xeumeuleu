@@ -30,52 +30,71 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef _xeumeuleu_adapter_hpp_
-#define _xeumeuleu_adapter_hpp_
+#ifndef xeumeuleu_ns_hpp
+#define xeumeuleu_ns_hpp
 
 #include <xeumeuleu/streams/xistream.hpp>
-#include <xeumeuleu/streams/detail/visitor.hpp>
+#include <xeumeuleu/streams/xostream.hpp>
+#include <string>
 
 namespace xml
 {
 // =============================================================================
-/** @class  adapter
-    @brief  Adapter
+/** @class  ns
+    @brief  Namespace manipulator
+    @par    Using example
+    @code
+    xml::xistream& xis = ...;
+    xis >> xml::ns( "namespace_name" ) >> ...
+
+    xml::xostream& xos = ...;
+    xos << xml::ns( "prefix", "namespace_name" ) << ...
+    @endcode
 */
-// Created: MAT 2007-08-01
+// Created: MAT 2010-06-30
 // =============================================================================
-template< typename T >
-class adapter : public visitor
+class ns
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit adapter( T functor )
-        : functor_( functor )
+    explicit ns( const std::string& name )
+        : name_( name )
+    {}
+    ns( const std::string& prefix, const std::string& name )
+        : prefix_( prefix )
+        , name_  ( name )
     {}
     //@}
 
-    //! @name Operations
+    //! @name Operators
     //@{
-    virtual void operator()( const std::string& ns, const std::string& name, xistream& xis ) const
+    friend xistream& operator>>( xistream& xis, const ns& n )
     {
-        functor_( ns, name, xis );
+        xis.ns( n.name_ );
+        return xis;
+    }
+    friend xostream& operator<<( xostream& xos, const ns& n )
+    {
+        xos.ns( n.prefix_, n.name_ );
+        return xos;
     }
     //@}
 
 private:
-    //! @name Constructors/Destructor
+    //! @name Copy/Assignment
     //@{
-    adapter& operator=( const adapter& ); //!< Assignment operator
+    ns& operator=( const ns& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Member data
     //@{
-    mutable T functor_;
+    const std::string prefix_;
+    std::string name_;
     //@}
 };
 
 }
 
-#endif // _xeumeuleu_adapter_hpp_
+#endif // xeumeuleu_ns_hpp

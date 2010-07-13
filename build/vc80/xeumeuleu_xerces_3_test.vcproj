@@ -217,6 +217,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\tests\xeumeuleu_test\namespace_test.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\tests\xeumeuleu_test\optional_test.cpp"
 				>
 			</File>
