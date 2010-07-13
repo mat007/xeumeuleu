@@ -147,7 +147,7 @@ private:
     //! @name Member data
     //@{
     input_base& input_;
-    const std::string& ns_;
+    const std::string ns_;
     const std::string& attribute_;
     //@}
 };
