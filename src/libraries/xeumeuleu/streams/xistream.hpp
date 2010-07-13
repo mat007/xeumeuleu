@@ -38,7 +38,6 @@
 #include <xeumeuleu/streams/detail/output_base.hpp>
 #include <xeumeuleu/streams/detail/temporary_input.hpp>
 #include <xeumeuleu/streams/detail/optional_input.hpp>
-#include <xeumeuleu/streams/detail/attribute_input.hpp>
 #include <string>
 #include <memory>
 
@@ -145,9 +144,12 @@ public:
 
     template< typename T > void attribute_by_ref( const std::string& name, T& value ) const
     {
-        attribute_input input( *input_, ns(), name );
-        xistream xis( input );
-        xis >> value;
+        std::auto_ptr< input_base > input = input_->attribute( ns(), name );
+        if( input.get() )
+        {
+            xistream xis( *input );
+            xis >> value;
+        }
     }
 
     template< typename T > T attribute( const std::string& name ) const;

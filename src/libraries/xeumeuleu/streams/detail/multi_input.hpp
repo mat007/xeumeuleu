@@ -93,7 +93,8 @@ public:
             return input1_->read();
         return input2_->read();
     }
-    virtual data attribute( const std::string& ns, const std::string& name ) const
+
+    virtual std::auto_ptr< input_base > attribute( const std::string& ns, const std::string& name ) const
     {
         if( input1_->has_attribute( ns, name ) )
             return input1_->attribute( ns, name );

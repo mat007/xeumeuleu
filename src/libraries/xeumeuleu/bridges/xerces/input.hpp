@@ -102,12 +102,13 @@ public:
             throw xml::exception( context() + location() + " does not have a content" );
         return data( child );
     }
-    virtual data attribute( const std::string& ns, const std::string& name ) const
+
+    virtual std::auto_ptr< input_base > attribute( const std::string& ns, const std::string& name ) const
     {
         const XERCES_CPP_NAMESPACE::DOMNode* attribute = find_attribute( ns, name );
         if( ! attribute )
             throw xml::exception( context() + location() + " does not have an attribute '" + name + "'" );
-        return data( attribute );
+        return std::auto_ptr< input_base >( new input( *attribute ) );
     }
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const;
@@ -167,9 +168,11 @@ public:
                 for( XMLSize_t index = 0; index < attributes->getLength(); ++index )
                 {
                     XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( index );
-                    if( ns.empty() || ns == translate( attribute->getNamespaceURI() ) )
+                    if( ( ns.empty()
+                        || ns == translate( attribute->getNamespaceURI() )
+                        || !attribute->getNamespaceURI() && attribute->isDefaultNamespace( translate( ns ) ) ) )
                     {
-                        input i( *current_ );
+                        input i( *attribute );
                         xistream xis( i );
                         const std::string n = translate( attribute->getNamespaceURI() ? attribute->getNamespaceURI() : attribute->lookupNamespaceURI( 0 ) );
                         v( n, translate( attribute->getLocalName() ), xis );
