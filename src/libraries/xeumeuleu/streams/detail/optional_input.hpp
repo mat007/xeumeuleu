@@ -62,13 +62,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& tag )
-    {
-        if( input1_.has_child( tag ) )
-            context_.reset( input1_ ).start( tag );
-        else
-            context_.reset( input2_ ).start( tag );
-    }
     virtual void start( const std::string& ns, const std::string& tag )
     {
         if( input1_.has_child( ns, tag ) )
@@ -86,12 +79,6 @@ public:
         if( input1_.has_content() )
             return context_.reset( input1_ ).read();
         return context_.reset( input2_ ).read();
-    }
-    virtual data attribute( const std::string& name ) const
-    {
-        if( input1_.has_attribute( name ) )
-            return context_.reset( input1_ ).attribute( name );
-        return context_.reset( input2_ ).attribute( name );
     }
     virtual data attribute( const std::string& ns, const std::string& name ) const
     {
