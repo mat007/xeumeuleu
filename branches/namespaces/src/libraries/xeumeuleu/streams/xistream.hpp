@@ -71,6 +71,7 @@ public:
     }
     void end()
     {
+        ns();
         input_->end();
     }
 
