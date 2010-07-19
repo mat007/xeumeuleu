@@ -218,10 +218,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_a_list_resets_the_optional_flag
+// Name: reading_a_list_resets_optional
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_a_list_resets_the_optional_flag )
+BOOST_AUTO_TEST_CASE( reading_a_list_resets_optional )
 {
     custom_class custom;
     xml::xistringstream xis( "<element/>" );
