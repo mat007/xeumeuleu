@@ -97,6 +97,19 @@ BOOST_AUTO_TEST_CASE( reading_start_filtered_on_correct_default_namespace_does_n
 }
 
 // -----------------------------------------------------------------------------
+// Name: reading_end_resets_namespace
+// Created: MAT 2010-07-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_end_resets_namespace )
+{
+    xml::xistringstream xis( "<element xmlns:ns='http://www.example.org'/>" );
+    xis >> xml::start( "element" )
+            >> xml::ns( "http://www.example.org" )
+        >> xml::end
+        >> xml::start( "element" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: reading_attribute_ignores_namespace_by_default
 // Created: MAT 2010-06-29
 // -----------------------------------------------------------------------------
@@ -363,48 +376,44 @@ BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_namespace_fr
     mock_custom.verify();
 }
 
-// -----------------------------------------------------------------------------
-// Name: writing_start_filtered_on_namespace_prefixes_it
-// Created: MAT 2010-06-29
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( writing_start_filtered_on_namespace_prefixes_it )
-{
-    xml::xostringstream xos;
-    xos << xml::ns( "ns", "http://www.example.org" )
-        << xml::start( "element" );
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<ns:element xmlns:ns=\"http://www.example.org\"/>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: writing_start_filtered_on_namespace_prefixes_it
-// Created: MAT 2010-06-29
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( writing_start_filtered_on_default_namespace_does_not_prefix_it )
-{
-    xml::xostringstream xos;
-    xos << xml::ns( "http://www.example.org" )
-        << xml::start( "element" );
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element xmlns=\"http://www.example.org\"/>\n", xos.str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: namespace_is_only_declared_the_first_time_needed
-// Created: MAT 2010-06-29
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( namespace_is_only_declared_the_first_time_needed )
-{
-    xml::xostringstream xos;
-    xos << xml::ns( "ns", "http://www.example.org" )
-        << xml::start( "element" )
-            << xml::ns( "ns", "http://www.example.org" )
-            << xml::start( "sub-element" );
-    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<ns:element xmlns:ns=\"http://www.example.org\">\n"
-                       "  <ns:sub-element/>\n"
-                       "</ns:element>\n", xos.str() );
-}
+//// -----------------------------------------------------------------------------
+//// Name: writing_start_filtered_on_namespace_prefixes_it
+//// Created: MAT 2010-06-29
+//// -----------------------------------------------------------------------------
+//BOOST_AUTO_TEST_CASE( writing_start_filtered_on_namespace_prefixes_it )
+//{
+//    xml::xostringstream xos;
+//    xos << xml::prefix( "http://www.example.org", "ns" ) << xml::ns( "http://www.example.org" ) << xml::start( "element" );
+//    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+//                       "<ns:element xmlns:ns=\"http://www.example.org\"/>\n", xos.str() );
+//}
+//
+//// -----------------------------------------------------------------------------
+//// Name: writing_start_filtered_on_namespace_prefixes_it
+//// Created: MAT 2010-06-29
+//// -----------------------------------------------------------------------------
+//BOOST_AUTO_TEST_CASE( writing_start_filtered_on_default_namespace_does_not_prefix_it )
+//{
+//    xml::xostringstream xos;
+//    xos << xml::ns( "http://www.example.org" ) << xml::start( "element" );
+//    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+//                       "<element xmlns=\"http://www.example.org\"/>\n", xos.str() );
+//}
+//
+//// -----------------------------------------------------------------------------
+//// Name: namespace_is_only_declared_the_first_time_needed
+//// Created: MAT 2010-06-29
+//// -----------------------------------------------------------------------------
+//BOOST_AUTO_TEST_CASE( namespace_is_only_declared_the_first_time_needed )
+//{
+//    xml::xostringstream xos;
+//    xos << xml::prefix( "http://www.example.org", "ns" ) << xml::ns( "http://www.example.org" ) << xml::start( "element" )
+//            << xml::ns( "http://www.example.org" ) << xml::start( "sub-element" );
+//    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+//                       "<ns:element xmlns:ns=\"http://www.example.org\">\n"
+//                       "  <ns:sub-element/>\n"
+//                       "</ns:element>\n", xos.str() );
+//}
 
 //BOOST_AUTO_TEST_CASE( read_use_case )
 //{
@@ -436,16 +445,19 @@ BOOST_AUTO_TEST_CASE( namespace_is_only_declared_the_first_time_needed )
 // v attributes
 // v has_child
 // v has_attribute
+
 // ? means to resolve a prefix to its namespace
-// ? ns+optional (nothing special ?)
-// ? ns+end (idem optional+end ?)
+// v ns+optional (nothing special)
+// v ns+end (idem optional+end)
 // ? ns+ns (idem optional+optional ?)
 // ? xml::attributes with attribute name (possible to have several attributes of same name in same namespace with different prefixes)
 
 // review write tests to conform to spec
 
-// load + filter + write back stream => preserve ns prefixes ?
+// load + filter + write back stream => how to preserve ns prefixes ?
 
 // http://www.example.org/ VS http://www.example.org
 
 // error messages with ns : "node 'element' does not have an attribute 'attribute'"
+
+// xml::ns( "" ) same as 'default namespace' and 'no namespace' ?
