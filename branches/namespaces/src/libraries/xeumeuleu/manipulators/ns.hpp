@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2010, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -42,14 +42,6 @@ namespace xml
 // =============================================================================
 /** @class  ns
     @brief  Namespace manipulator
-    @par    Using example
-    @code
-    xml::xistream& xis = ...;
-    xis >> xml::ns( "namespace_name" ) >> ...
-
-    xml::xostream& xos = ...;
-    xos << xml::ns( "prefix", "namespace_name" ) << ...
-    @endcode
 */
 // Created: MAT 2010-06-30
 // =============================================================================
@@ -60,10 +52,6 @@ public:
     //@{
     explicit ns( const std::string& name )
         : name_( name )
-    {}
-    ns( const std::string& prefix, const std::string& name )
-        : prefix_( prefix )
-        , name_  ( name )
     {}
     //@}
 
@@ -76,7 +64,7 @@ public:
     }
     friend xostream& operator<<( xostream& xos, const ns& n )
     {
-        xos.ns( n.prefix_, n.name_ );
+        xos.ns( n.name_ );
         return xos;
     }
     //@}
@@ -90,7 +78,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const std::string prefix_;
     std::string name_;
     //@}
 };

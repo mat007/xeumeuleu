@@ -215,6 +215,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\prefix.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\start.hpp"
 					>
 				</File>

@@ -143,6 +143,12 @@ public:
             return find_content() != 0;
         XEUMEULEU_CATCH
     }
+    virtual bool has_prefix( const std::string& ns ) const
+    {
+        XEUMEULEU_TRY
+            return current_->lookupPrefix( translate( ns ) ) != 0;
+        XEUMEULEU_CATCH
+    }
 
     virtual void nodes( const std::string& ns, const visitor& v ) const
     {
@@ -181,6 +187,16 @@ public:
                     }
                 }
             }
+        XEUMEULEU_CATCH
+    }
+
+    virtual void prefix( const std::string& ns, std::string& prefix ) const
+    {
+        XEUMEULEU_TRY
+            const XMLCh* p = current_->lookupPrefix( translate( ns ) );
+            if( ! p )
+                throw xml::exception( context() + location() + " has no prefix for namespace '" + ns + "'" );
+            prefix = translate( p );
         XEUMEULEU_CATCH
     }
 

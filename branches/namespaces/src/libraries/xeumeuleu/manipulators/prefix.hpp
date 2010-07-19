@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2010, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,70 +30,81 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_input_base_hpp
-#define xeumeuleu_input_base_hpp
+#ifndef xeumeuleu_prefix_hpp
+#define xeumeuleu_prefix_hpp
 
+#include <xeumeuleu/streams/xistream.hpp>
+#include <xeumeuleu/streams/xostream.hpp>
 #include <string>
-#include <memory>
 
 namespace xml
 {
-    class visitor;
-    class output;
-    class data;
-
 // =============================================================================
-/** @class  input_base
-    @brief  Input definition
+/** @class  prefix_manipulator
+    @brief  Prefix manipulator
 */
-// Created: MAT 2006-01-08
+// Created: MAT 2010-07-19
 // =============================================================================
-class input_base
+template< typename T >
+class prefix_manipulator
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             input_base() {}
-    virtual ~input_base() {}
+    prefix_manipulator( const std::string& ns, T& value )
+        : ns_   ( ns )
+        , value_( value )
+    {}
     //@}
 
-    //! @name Operations
+    //! @name Operators
     //@{
-    virtual void start( const std::string& ns, const std::string& tag ) = 0;
-    virtual void end() = 0;
-
-    virtual data read() const = 0;
-
-    virtual std::auto_ptr< input_base > attribute( const std::string& ns, const std::string& name ) const = 0;
-
-    virtual std::auto_ptr< input_base > branch( bool clone ) const = 0;
-
-    virtual void copy( output& destination ) const = 0;
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual bool has_child( const std::string& ns, const std::string& name ) const = 0;
-    virtual bool has_attribute( const std::string& ns, const std::string& name ) const = 0;
-    virtual bool has_content() const = 0;
-    virtual bool has_prefix( const std::string& ns ) const = 0;
-
-    virtual void nodes( const std::string& ns, const visitor& v ) const = 0;
-    virtual void attributes( const std::string& ns, const visitor& v ) const = 0;
-
-    virtual void prefix( const std::string& ns, std::string& prefix ) const = 0;
-
-    virtual std::string context() const = 0;
+    friend xistream& operator>>( xistream& xis, const prefix_manipulator& m )
+    {
+        xis.prefix( m.ns_, m.value_ );
+        return xis;
+    }
+    friend xostream& operator<<( xostream& xos, const prefix_manipulator& m )
+    {
+        xos.prefix( m.ns_, m.value_ );
+        return xos;
+    }
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    input_base( const input_base& );            //!< Copy constructor
-    input_base& operator=( const input_base& ); //!< Assignment operator
+    prefix_manipulator& operator=( const prefix_manipulator& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string ns_;
+    T& value_;
     //@}
 };
 
+// -----------------------------------------------------------------------------
+// Name: prefix
+// Created: MAT 2006-01-06
+// -----------------------------------------------------------------------------
+template< typename T >
+prefix_manipulator< const T > prefix( const std::string& ns, const T& value )
+{
+    return prefix_manipulator< const T >( ns, value );
 }
 
-#endif // xeumeuleu_input_base_hpp
+// -----------------------------------------------------------------------------
+// Name: prefix
+// Created: MAT 2006-01-06
+// -----------------------------------------------------------------------------
+template< typename T >
+prefix_manipulator< T > prefix( const std::string& ns, T& value )
+{
+    return prefix_manipulator< T >( ns, value );
+}
+
+}
+
+#endif // xeumeuleu_prefix_hpp
