@@ -110,6 +110,17 @@ BOOST_AUTO_TEST_CASE( reading_end_resets_namespace )
 }
 
 // -----------------------------------------------------------------------------
+// Name: namespace_overwrites_any_previous_specification
+// Created: MAT 2010-07-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( namespace_overwrites_any_previous_specification )
+{
+    xml::xistringstream xis( "<element xmlns='http://www.example.org'/>" );
+    xis >> xml::ns( "wrong namespace" )
+        >> xml::ns( "http://www.example.org" ) >> xml::start( "element" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: reading_attribute_ignores_namespace_by_default
 // Created: MAT 2010-06-29
 // -----------------------------------------------------------------------------
@@ -436,28 +447,3 @@ BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_namespace_fr
 //        << xml::ns( "http://www.example.org" )
 //        << xml::start( "element" );
 //}
-
-// ? ignore namespaces by default
-// ns activates namespace filter for the next operation :
-// v start
-// v attribute
-// v list
-// v attributes
-// v has_child
-// v has_attribute
-
-// ? means to resolve a prefix to its namespace
-// v ns+optional (nothing special)
-// v ns+end (idem optional+end)
-// ? ns+ns (idem optional+optional ?)
-// ? xml::attributes with attribute name (possible to have several attributes of same name in same namespace with different prefixes)
-
-// review write tests to conform to spec
-
-// load + filter + write back stream => how to preserve ns prefixes ?
-
-// http://www.example.org/ VS http://www.example.org
-
-// error messages with ns : "node 'element' does not have an attribute 'attribute'"
-
-// xml::ns( "" ) same as 'default namespace' and 'no namespace' ?
