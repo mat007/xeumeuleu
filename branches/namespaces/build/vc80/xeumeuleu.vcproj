@@ -362,10 +362,6 @@
 					Name="detail"
 					>
 					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\attribute_output.hpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\branch_input.hpp"
 						>
 					</File>

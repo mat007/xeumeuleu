@@ -54,7 +54,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& tag ) = 0;
     virtual void start( const std::string& ns, const std::string& tag ) = 0;
     virtual void end() = 0;
 
@@ -73,17 +72,7 @@ public:
     virtual void cdata( const std::string& value ) = 0;
     virtual void instruction( const std::string& target, const std::string& data ) = 0;
 
-    virtual void attribute( const std::string& name, const std::string& value ) = 0;
-    virtual void attribute( const std::string& name, bool value ) = 0;
-    virtual void attribute( const std::string& name, int value ) = 0;
-    virtual void attribute( const std::string& name, long value ) = 0;
-    virtual void attribute( const std::string& name, long long value ) = 0;
-    virtual void attribute( const std::string& name, float value ) = 0;
-    virtual void attribute( const std::string& name, double value ) = 0;
-    virtual void attribute( const std::string& name, long double value ) = 0;
-    virtual void attribute( const std::string& name, unsigned int value ) = 0;
-    virtual void attribute( const std::string& name, unsigned long value ) = 0;
-    virtual void attribute( const std::string& name, unsigned long long value ) = 0;
+    virtual std::auto_ptr< output_base > attribute( const std::string& ns, const std::string& name ) = 0;
 
     virtual void copy( const input_base& input ) = 0;
 

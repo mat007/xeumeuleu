@@ -81,12 +81,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& tag )
-    {
-        XEUMEULEU_TRY
-            current_ = current_->appendChild( document_.createElementNS( 0, translate( tag ) ) );
-        XEUMEULEU_CATCH
-    }
     virtual void start( const std::string& ns, const std::string& tag )
     {
         XEUMEULEU_TRY
@@ -184,75 +178,15 @@ public:
         XEUMEULEU_CATCH
     }
 
-    virtual void attribute( const std::string& name, const std::string& value )
+    virtual std::auto_ptr< output_base > attribute( const std::string& ns, const std::string& name )
     {
         XEUMEULEU_TRY
             XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
             if( ! attributes )
                 throw xml::exception( location() + " cannot have attributes" );
-            XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttributeNS( 0, translate( name ) );
-            att->setValue( translate( value ) );
+            XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttributeNS( translate( ns ), translate( name ) );
             attributes->setNamedItemNS( att );
-        XEUMEULEU_CATCH
-    }
-    virtual void attribute( const std::string& name, bool value )
-    {
-        XEUMEULEU_TRY
-            attribute( name, serialize( value ) );
-        XEUMEULEU_CATCH
-    }
-    virtual void attribute( const std::string& name, int value )
-    {
-        XEUMEULEU_TRY
-            attribute( name, serialize( value ) );
-        XEUMEULEU_CATCH
-    }
-    virtual void attribute( const std::string& name, long value )
-    {
-        XEUMEULEU_TRY
-            attribute( name, serialize( value ) );
-        XEUMEULEU_CATCH
-    }
-    virtual void attribute( const std::string& name, long long value )
-    {
-        XEUMEULEU_TRY
-            attribute( name, serialize( value ) );
-        XEUMEULEU_CATCH
-    }
-    virtual void attribute( const std::string& name, float value )
-    {
-        XEUMEULEU_TRY
-            attribute( name, serialize( value ) );
-        XEUMEULEU_CATCH
-    }
-    virtual void attribute( const std::string& name, double value )
-    {
-        XEUMEULEU_TRY
-            attribute( name, serialize( value ) );
-        XEUMEULEU_CATCH
-    }
-    virtual void attribute( const std::string& name, long double value )
-    {
-        XEUMEULEU_TRY
-            attribute( name, serialize( value ) );
-        XEUMEULEU_CATCH
-    }
-    virtual void attribute( const std::string& name, unsigned int value )
-    {
-        XEUMEULEU_TRY
-            attribute( name, serialize( value ) );
-        XEUMEULEU_CATCH
-    }
-    virtual void attribute( const std::string& name, unsigned long value )
-    {
-        XEUMEULEU_TRY
-            attribute( name, serialize( value ) );
-        XEUMEULEU_CATCH
-    }
-    virtual void attribute( const std::string& name, unsigned long long value )
-    {
-        XEUMEULEU_TRY
-            attribute( name, serialize( value ) );
+            return std::auto_ptr< output_base >( new output( document_, *att ) );
         XEUMEULEU_CATCH
     }
 
@@ -329,11 +263,6 @@ private:
         return stream.str();
     }
 
-    bool is_root() const
-    {
-        return current_ == &root_;
-    }
-
     template< typename T > inline std::string convert( T value ) const
     {
         if( value == std::numeric_limits< T >::infinity() )
@@ -352,6 +281,11 @@ private:
 #   pragma warning( pop )
 #endif
         return buffer;
+    }
+
+    bool is_root() const
+    {
+        return current_ == &root_;
     }
     //@}
 
