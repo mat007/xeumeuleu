@@ -108,6 +108,10 @@ public:
     {
         return input_->has_content();
     }
+    virtual bool has_prefix( const std::string& ns ) const
+    {
+        return input_->has_prefix( ns );
+    }
 
     virtual void nodes( const std::string& ns, const visitor& v ) const
     {
@@ -116,6 +120,11 @@ public:
     virtual void attributes( const std::string& ns, const visitor& v ) const
     {
         input_->attributes( ns, v );
+    }
+
+    virtual void prefix( const std::string& ns, std::string& prefix ) const
+    {
+        input_->prefix( ns, prefix );
     }
 
     virtual std::string context() const

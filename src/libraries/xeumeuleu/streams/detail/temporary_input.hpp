@@ -108,10 +108,17 @@ public:
     {
         return false;
     }
+    virtual bool has_prefix( const std::string& /*ns*/ ) const
+    {
+        return false;
+    }
 
     virtual void nodes( const std::string& /*ns*/, const visitor& /*v*/ ) const
     {}
     virtual void attributes( const std::string& /*ns*/, const visitor& /*v*/ ) const
+    {}
+
+    virtual void prefix( const std::string& /*ns*/, std::string& /*prefix*/ ) const
     {}
 
     virtual std::string context() const

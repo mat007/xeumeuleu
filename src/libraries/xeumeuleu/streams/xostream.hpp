@@ -70,7 +70,7 @@ public:
         {
             std::string ns;
             ns.swap( ns_ );
-            output_.start( ns, prefix_.empty() ? tag : prefix_ + ":" + tag );
+            output_.start( ns, tag );
         }
     }
     void end()
@@ -119,9 +119,8 @@ public:
     {
         output_.instruction( target, data );
     }
-    void ns( const std::string& prefix, const std::string& name )
+    void ns( const std::string& name )
     {
-        prefix_ = prefix;
         ns_ = name;
     }
     //@}
@@ -137,7 +136,7 @@ private:
     //! @name Member data
     //@{
     output_base& output_;
-    std::string prefix_, ns_;
+    std::string ns_;
     //@}
 };
 

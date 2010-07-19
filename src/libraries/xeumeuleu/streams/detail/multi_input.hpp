@@ -124,6 +124,10 @@ public:
     {
         return input1_->has_content() || input2_->has_content();
     }
+    virtual bool has_prefix( const std::string& ns ) const
+    {
+        return input1_->has_prefix( ns ) || input2_->has_prefix( ns );
+    }
 
     virtual void nodes( const std::string& ns, const visitor& v ) const
     {
@@ -134,6 +138,14 @@ public:
     {
         input1_->attributes( ns, v );
         input2_->attributes( ns, v );
+    }
+
+    virtual void prefix( const std::string& ns, std::string& prefix ) const
+    {
+        if( input1_->has_prefix( ns ) )
+            input1_->prefix( ns, prefix );
+        else
+            input2_->prefix( ns, prefix );
     }
 
     virtual std::string context() const

@@ -66,13 +66,13 @@ BOOST_AUTO_TEST_CASE( reading_prefixed_start_throws )
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_start_filtered_on_wrong_namespace_throws
+// Name: reading_start_filtered_on_invalid_namespace_throws
 // Created: MAT 2010-06-29
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_start_filtered_on_wrong_namespace_throws )
+BOOST_AUTO_TEST_CASE( reading_start_filtered_on_invalid_namespace_throws )
 {
     xml::xistringstream xis( "<ns:element xmlns:ns='http://www.example.org'/>" );
-    xis >> xml::ns( "wrong-namespace" );
+    xis >> xml::ns( "invalid namespace" );
     BOOST_CHECK_THROW( xis >> xml::start( "element" ), xml::exception );
 }
 
@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_CASE( reading_end_resets_namespace )
 BOOST_AUTO_TEST_CASE( namespace_overwrites_any_previous_specification )
 {
     xml::xistringstream xis( "<element xmlns='http://www.example.org'/>" );
-    xis >> xml::ns( "wrong namespace" )
+    xis >> xml::ns( "invalid namespace" )
         >> xml::ns( "http://www.example.org" ) >> xml::start( "element" );
 }
 
@@ -185,15 +185,15 @@ BOOST_AUTO_TEST_CASE( reading_attribute_filtered_on_correct_default_namespace_do
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_attribute_filtered_on_wrong_namespace_throws
+// Name: reading_attribute_filtered_on_invalid_namespace_throws
 // Created: MAT 2010-07-12
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_attribute_filtered_on_wrong_namespace_throws )
+BOOST_AUTO_TEST_CASE( reading_attribute_filtered_on_invalid_namespace_throws )
 {
     xml::xistringstream xis( "<element ns:attribute='12' xmlns:ns='http://www.example.org'/>" );
     int value = 0;
     xis >> xml::start( "element" )
-            >> xml::ns( "wrong-namespace" );
+            >> xml::ns( "invalid namespace" );
     BOOST_CHECK_THROW( xis >> xml::attribute( "attribute", value ), xml::exception );
 }
 
@@ -387,6 +387,31 @@ BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_namespace_fr
     mock_custom.verify();
 }
 
+// -----------------------------------------------------------------------------
+// Name: reading_prefix_retrieves_namespace_prefix
+// Created: MAT 2010-07-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_prefix_retrieves_namespace_prefix )
+{
+    std::string prefix;
+    xml::xistringstream xis( "<element xmlns:ns='http://www.example.org'/>" );
+    xis >> xml::start( "element" )
+            >> xml::prefix( "http://www.example.org", prefix );
+    BOOST_CHECK_EQUAL( "ns", prefix );
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_prefix_of_invalid_namespace_throws
+// Created: MAT 2010-07-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_prefix_of_invalid_namespace_throws )
+{
+    std::string prefix;
+    xml::xistringstream xis( "<element/>" );
+    xis >> xml::start( "element" );
+    BOOST_CHECK_THROW( xis >> xml::prefix( "invalid namespace", prefix ), xml::exception );
+}
+
 //// -----------------------------------------------------------------------------
 //// Name: writing_start_filtered_on_namespace_prefixes_it
 //// Created: MAT 2010-06-29
@@ -424,26 +449,4 @@ BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_namespace_fr
 //                       "<ns:element xmlns:ns=\"http://www.example.org\">\n"
 //                       "  <ns:sub-element/>\n"
 //                       "</ns:element>\n", xos.str() );
-//}
-
-//BOOST_AUTO_TEST_CASE( read_use_case )
-//{
-//    xml::xistringstream xis( "<ns:element xmlns:ns='http://www.example.org'/>" );
-//    xis >> xml::ns( "http://www.example.org" )
-//        >> xml::start( "element" );
-//}
-
-//BOOST_AUTO_TEST_CASE( ignore_ns )
-//{
-//    xml::xistringstream xis( "<ns:element xmlns:ns='http://www.example.org'/>" );
-//    xis >> xml::ignore_ns
-//        >> xml::start( "element" );
-//}
-
-//BOOST_AUTO_TEST_CASE( write_use_case )
-//{
-//    xml::xostringstream xos;
-//    xos << xml::prefix( "http://www.example.org", "ns" )
-//        << xml::ns( "http://www.example.org" )
-//        << xml::start( "element" );
 //}

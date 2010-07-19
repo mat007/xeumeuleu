@@ -169,6 +169,11 @@ public:
         input_->attributes( ns(), v );
     }
 
+    void prefix( const std::string& ns, std::string& prefix ) const
+    {
+        input_->prefix( ns, prefix );
+    }
+
     std::string context() const
     {
         return input_->context();
