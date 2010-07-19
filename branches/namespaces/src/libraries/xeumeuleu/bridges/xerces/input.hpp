@@ -146,7 +146,12 @@ public:
     virtual bool has_prefix( const std::string& ns ) const
     {
         XEUMEULEU_TRY
-            return current_->lookupPrefix( translate( ns ) ) != 0;
+            return current_->isDefaultNamespace( translate( ns ) ) ||
+#if XERCES_VERSION_MAJOR == 3
+                current_->lookupPrefix( translate( ns ) ) != 0;
+#else
+                current_->lookupNamespacePrefix( translate( ns ), false ) != 0;
+#endif XERCES_VERSION_MAJOR
         XEUMEULEU_CATCH
     }
 
@@ -193,10 +198,19 @@ public:
     virtual void prefix( const std::string& ns, std::string& prefix ) const
     {
         XEUMEULEU_TRY
-            const XMLCh* p = current_->lookupPrefix( translate( ns ) );
-            if( ! p )
-                throw xml::exception( context() + location() + " has no prefix for namespace '" + ns + "'" );
-            prefix = translate( p );
+            if( current_->isDefaultNamespace( translate( ns ) ) )
+                prefix.clear();
+            else
+            {
+#if XERCES_VERSION_MAJOR == 3
+                const XMLCh* p = current_->lookupPrefix( translate( ns ) );
+#else
+                const XMLCh* p = current_->lookupNamespacePrefix( translate( ns ), false );
+#endif XERCES_VERSION_MAJOR
+                if( ! p )
+                    throw xml::exception( context() + location() + " has no prefix for namespace '" + ns + "'" );
+                prefix = translate( p );
+            }
         XEUMEULEU_CATCH
     }
 
