@@ -79,7 +79,8 @@ public:
         XEUMEULEU_TRY
             const XERCES_CPP_NAMESPACE::DOMNode* child = find_child( ns, tag );
             if( ! child )
-                throw xml::exception( context() + location() + " does not have a child named '" + tag + "'" );
+                throw xml::exception( context() + location() + " does not have a child named '" + tag + "'"
+                    + (ns.empty() ? "" : (" in namespace '" + ns + "'")) );
             current_ = child;
         XEUMEULEU_CATCH
     }
@@ -107,7 +108,8 @@ public:
     {
         const XERCES_CPP_NAMESPACE::DOMNode* attribute = find_attribute( ns, name );
         if( ! attribute )
-            throw xml::exception( context() + location() + " does not have an attribute '" + name + "'" );
+            throw xml::exception( context() + location() + " does not have an attribute '" + name + "'"
+                + (ns.empty() ? "" : (" in namespace '" + ns + "'")) );
         return std::auto_ptr< input_base >( new input( *attribute ) );
     }
 
