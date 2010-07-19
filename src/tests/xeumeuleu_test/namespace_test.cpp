@@ -412,6 +412,49 @@ BOOST_AUTO_TEST_CASE( reading_prefix_of_invalid_namespace_throws )
     BOOST_CHECK_THROW( xis >> xml::prefix( "invalid namespace", prefix ), xml::exception );
 }
 
+// -----------------------------------------------------------------------------
+// Name: reading_prefix_of_default_namespace_retrieves_empty_prefix
+// Created: MAT 2010-07-20
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_prefix_of_default_namespace_retrieves_empty_prefix )
+{
+    std::string prefix;
+    xml::xistringstream xis( "<element xmlns='http://www.example.org'/>" );
+    xis >> xml::start( "element" )
+            >> xml::prefix( "http://www.example.org", prefix );
+    BOOST_CHECK( prefix.empty() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_prefix_in_multi_stream_retrieves_the_first_available
+// Created: MAT 2010-07-20
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_prefix_in_multi_stream_retrieves_the_first_available )
+{
+    std::string prefix;
+    xml::xistringstream xis1( "<element xmlns:ns1='http://www.example.org'/>" );
+    xml::xistringstream xis2( "<element xmlns:ns2='http://www.example.org'/>" );
+    xml::ximultistream xis( xis1, xis2 );
+    xis >> xml::start( "element" )
+            >> xml::prefix( "http://www.example.org", prefix );
+    BOOST_CHECK_EQUAL( "ns1", prefix );
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_default_prefix_in_multi_stream_retrieves_the_first_available
+// Created: MAT 2010-07-20
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_default_prefix_in_multi_stream_retrieves_the_first_available )
+{
+    std::string prefix;
+    xml::xistringstream xis1( "<element xmlns='http://www.example.org'/>" );
+    xml::xistringstream xis2( "<element xmlns:ns='http://www.example.org'/>" );
+    xml::ximultistream xis( xis1, xis2 );
+    xis >> xml::start( "element" )
+            >> xml::prefix( "http://www.example.org", prefix );
+    BOOST_CHECK( prefix.empty() );
+}
+
 //// -----------------------------------------------------------------------------
 //// Name: writing_start_filtered_on_namespace_prefixes_it
 //// Created: MAT 2010-06-29
