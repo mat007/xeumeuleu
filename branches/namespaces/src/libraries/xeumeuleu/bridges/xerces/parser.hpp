@@ -99,7 +99,6 @@ public:
     {
         set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidateIfSchema, true );
     }
-
     void configure( const null_grammar& /*grammar*/ )
     {
 #if XERCES_VERSION_MAJOR == 3
