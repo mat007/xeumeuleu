@@ -94,6 +94,14 @@ public:
     {
         return translate( str ) == ch_;
     }
+    bool operator!=( const XMLCh* const ch ) const
+    {
+        return ! XERCES_CPP_NAMESPACE::XMLString::equals( ch, ch_ );
+    }
+    bool operator!=( const std::string& str ) const
+    {
+        return translate( str ) != ch_;
+    }
     //@}
 
 private:
@@ -117,6 +125,15 @@ inline bool operator==( const XMLCh* const ch, const translate& tr )
 inline bool operator==( const std::string& str, const translate& tr )
 {
     return tr == str;
+}
+
+inline bool operator!=( const XMLCh* const ch, const translate& tr )
+{
+    return tr != ch;
+}
+inline bool operator!=( const std::string& str, const translate& tr )
+{
+    return tr != str;
 }
 
 inline std::string operator+( const translate& tr, const std::string& str )
