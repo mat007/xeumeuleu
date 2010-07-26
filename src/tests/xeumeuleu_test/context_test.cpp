@@ -34,10 +34,10 @@
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
-// Name: root_has_no_context
+// Name: root_has_context
 // Created: MAT 2007-09-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( root_has_no_context )
+BOOST_AUTO_TEST_CASE( root_has_context )
 {
     xml::xistringstream xis( "<root/>" );
     BOOST_CHECK_EQUAL( "string_input (line 0, column 0) : ", xis.context() );
