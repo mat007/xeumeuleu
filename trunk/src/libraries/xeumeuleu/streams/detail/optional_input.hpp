@@ -62,12 +62,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& tag )
+    virtual void start( const std::string* ns, const std::string& tag )
     {
-        if( input1_.has_child( tag ) )
-            context_.reset( input1_ ).start( tag );
+        if( input1_.has_child( ns, tag ) )
+            context_.reset( input1_ ).start( ns, tag );
         else
-            context_.reset( input2_ ).start( tag );
+            context_.reset( input2_ ).start( ns, tag );
     }
     virtual void end()
     {
@@ -80,23 +80,24 @@ public:
             return context_.reset( input1_ ).read();
         return context_.reset( input2_ ).read();
     }
-    virtual data attribute( const std::string& name ) const
+
+    virtual std::auto_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const
     {
-        if( input1_.has_attribute( name ) )
-            return context_.reset( input1_ ).attribute( name );
-        return context_.reset( input2_ ).attribute( name );
+        if( input1_.has_attribute( ns, name ) )
+            return context_.reset( input1_ ).attribute( ns, name );
+        return context_.reset( input2_ ).attribute( ns, name );
     }
     //@}
 
     //! @name Accessors
     //@{
-    virtual void nodes( const visitor& v ) const
+    virtual void nodes( const std::string* ns, const visitor& v ) const
     {
-        context_.reset( input1_ ).nodes( v );
+        context_.reset( input1_ ).nodes( ns, v );
     }
-    virtual void attributes( const visitor& v ) const
+    virtual void attributes( const std::string* ns, const visitor& v ) const
     {
-        context_.reset( input1_ ).attributes( v );
+        context_.reset( input1_ ).attributes( ns, v );
     }
     //@}
 

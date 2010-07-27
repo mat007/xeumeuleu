@@ -179,20 +179,6 @@ BOOST_AUTO_TEST_CASE( read_from_root_attribute_directly_with_default_value_is_va
 }
 
 // -----------------------------------------------------------------------------
-// Name: read_attribute_in_namespace_is_valid
-// Created: MCO 2008-11-23
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( read_attribute_in_namespace_is_valid )
-{
-    xml::xistringstream xis( "<element xmlns:ns='http://www.example.org' ns:attribute='the attribute value'/>" );
-    const std::string expected = "the attribute value";
-    std::string actual;
-    xis >> xml::start( "element" )
-            >> xml::attribute( "ns:attribute", actual );
-    BOOST_CHECK_EQUAL( expected, actual );
-}
-
-// -----------------------------------------------------------------------------
 // Name: writing_the_same_attribute_twice_yields_the_second_value_overwriting_the_first
 // Created: MCO 2008-14-03
 // -----------------------------------------------------------------------------

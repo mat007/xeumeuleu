@@ -57,9 +57,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void operator()( const std::string& name, xistream& xis ) const
+    virtual void operator()( const std::string& ns, const std::string& name, xistream& xis ) const
     {
-        functor_( name, xis );
+        functor_( ns, name, xis );
     }
     //@}
 

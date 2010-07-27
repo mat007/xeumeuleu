@@ -74,5 +74,16 @@ typedef DOMBuilder DOMLSParser;
 XERCES_CPP_NAMESPACE_END
 #endif // XERCES_VERSION_MAJOR
 
+namespace xml
+{
+    inline const XMLCh* lookupPrefix( const XERCES_CPP_NAMESPACE::DOMNode& node, const XMLCh* prefix )
+    {
+#if XERCES_VERSION_MAJOR == 3
+        return node.lookupPrefix( prefix );
+#else
+        return node.lookupNamespacePrefix( prefix, false );
+#endif // XERCES_VERSION_MAJOR
+    }
+}
 
 #endif // xeumeuleu_xerces_hpp
