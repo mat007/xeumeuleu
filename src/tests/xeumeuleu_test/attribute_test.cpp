@@ -168,6 +168,19 @@ BOOST_AUTO_TEST_CASE( read_unexisting_attribute_directly_with_default_value_is_v
 }
 
 // -----------------------------------------------------------------------------
+// Name: read_empty_attribute_is_valid
+// Created: MAT 2010-07-27
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( read_empty_attribute_is_valid )
+{
+    xml::xistringstream xis( "<element id=' '/>" );
+    std::string id;
+    xis >> xml::start( "element" )
+            >> xml::attribute( "id", id );
+    BOOST_CHECK_EQUAL( " ", id );
+}
+
+// -----------------------------------------------------------------------------
 // Name: read_from_root_attribute_directly_with_default_value_is_valid
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------

@@ -261,7 +261,8 @@ private:
         const XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
         while( child )
         {
-            if( has_content( *child ) )
+            if( current_->getNodeType() != XERCES_CPP_NAMESPACE::DOMNode::ELEMENT_NODE
+             || has_content( *child ) )
                 return child;
             child = child->getNextSibling();
         }
