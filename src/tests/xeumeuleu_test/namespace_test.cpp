@@ -552,7 +552,7 @@ BOOST_AUTO_TEST_CASE( reading_writing_default_namespace_declaration )
     xml::xostringstream xos;
     xos << xis;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element xmlns:ns=\"http://www.example.org\"/>\n", xos.str() );
+                       "<element xmlns=\"http://www.example.org\"/>\n", xos.str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -566,16 +566,6 @@ BOOST_AUTO_TEST_CASE( reading_writing_namespace_declaration_and_usage )
     xos << xis;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<ns:element xmlns:ns=\"http://www.example.org\"/>\n", xos.str() );
-
-    //xml::xistringstream xis( "<root xmlns='http://www.example.org' xmlns:ns='http://www.example.org' xmlns:ns2='http://www.example2.org'>"
-    //                         "  <element attribute='attribute 1' ns:attribute='attribute 2' ns2:attribute='attribute 3'/>"
-    //                         "</root>" );
-    //xis >> xml::start( "root" );
-    //xml::xostringstream xos;
-    //xos << xml::start( "root" );
-    //xos << xis;
-    //BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-    //                   "<ns:element xmlns:ns=\"http://www.example.org\"/>\n", xos.str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -591,7 +581,7 @@ BOOST_AUTO_TEST_CASE( writing_start_filtered_on_namespace_prefixes_it )
 }
 
 // -----------------------------------------------------------------------------
-// Name: writing_start_filtered_on_namespace_prefixes_it
+// Name: writing_start_filtered_on_default_namespace_does_not_prefix_it
 // Created: MAT 2010-06-29
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( writing_start_filtered_on_default_namespace_does_not_prefix_it )
