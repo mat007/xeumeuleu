@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2009, Mathieu Champlon
+ *   Copyright (c) 2010, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,64 +30,81 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_output_base_hpp
-#define xeumeuleu_output_base_hpp
+#ifndef xeumeuleu_prefix_hpp
+#define xeumeuleu_prefix_hpp
 
+#include <xeumeuleu/streams/xistream.hpp>
+#include <xeumeuleu/streams/xostream.hpp>
 #include <string>
 
 namespace xml
 {
 // =============================================================================
-/** @class  output_base
-    @brief  Output base
+/** @class  prefix_manipulator
+    @brief  Prefix manipulator
 */
-// Created: MAT 2009-11-25
+// Created: MAT 2010-07-19
 // =============================================================================
-class output_base
+template< typename T >
+class prefix_manipulator
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             output_base() {}
-    virtual ~output_base() {}
+    prefix_manipulator( const std::string& ns, T& value )
+        : ns_   ( ns )
+        , value_( value )
+    {}
     //@}
 
-    //! @name Operations
+    //! @name Operators
     //@{
-    virtual void start( const std::string& ns, const std::string& tag ) = 0;
-    virtual void end() = 0;
-
-    virtual void write( const std::string& value ) = 0;
-    virtual void write( bool value ) = 0;
-    virtual void write( int value ) = 0;
-    virtual void write( long value ) = 0;
-    virtual void write( long long value ) = 0;
-    virtual void write( float value ) = 0;
-    virtual void write( double value ) = 0;
-    virtual void write( long double value ) = 0;
-    virtual void write( unsigned int value ) = 0;
-    virtual void write( unsigned long value ) = 0;
-    virtual void write( unsigned long long value ) = 0;
-
-    virtual void cdata( const std::string& value ) = 0;
-    virtual void instruction( const std::string& target, const std::string& data ) = 0;
-    virtual void prefix( const std::string& ns, const std::string& prefix ) = 0;
-
-    virtual std::auto_ptr< output_base > attribute( const std::string& ns, const std::string& name ) = 0;
-
-    virtual void copy( const input_base& input ) = 0;
-
-    virtual std::auto_ptr< output_base > branch() const = 0;
+    friend xistream& operator>>( xistream& xis, const prefix_manipulator& m )
+    {
+        xis.prefix( m.ns_, m.value_ );
+        return xis;
+    }
+    friend xostream& operator<<( xostream& xos, const prefix_manipulator& m )
+    {
+        xos.prefix( m.ns_, m.value_ );
+        return xos;
+    }
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    output_base( const output_base& );            //!< Copy constructor
-    output_base& operator=( const output_base& ); //!< Assignment operator
+    prefix_manipulator& operator=( const prefix_manipulator& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string ns_;
+    T& value_;
     //@}
 };
 
+// -----------------------------------------------------------------------------
+// Name: prefix
+// Created: MAT 2006-01-06
+// -----------------------------------------------------------------------------
+template< typename T >
+prefix_manipulator< const T > prefix( const std::string& ns, const T& value )
+{
+    return prefix_manipulator< const T >( ns, value );
 }
 
-#endif // xeumeuleu_output_base_hpp
+// -----------------------------------------------------------------------------
+// Name: prefix
+// Created: MAT 2006-01-06
+// -----------------------------------------------------------------------------
+template< typename T >
+prefix_manipulator< T > prefix( const std::string& ns, T& value )
+{
+    return prefix_manipulator< T >( ns, value );
+}
+
+}
+
+#endif // xeumeuleu_prefix_hpp

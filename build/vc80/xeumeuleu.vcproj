@@ -207,7 +207,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\ns.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\optional.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\libraries\xeumeuleu\manipulators\prefix.hpp"
 					>
 				</File>
 				<File
@@ -353,14 +361,6 @@
 				<Filter
 					Name="detail"
 					>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\attribute_input.hpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\attribute_output.hpp"
-						>
-					</File>
 					<File
 						RelativePath="..\..\src\libraries\xeumeuleu\streams\detail\branch_input.hpp"
 						>

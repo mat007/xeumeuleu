@@ -52,6 +52,8 @@
 #include <xeumeuleu/manipulators/cdata.hpp>
 #include <xeumeuleu/manipulators/instruction.hpp>
 #include <xeumeuleu/manipulators/attribute.hpp>
+#include <xeumeuleu/manipulators/prefix.hpp>
+#include <xeumeuleu/manipulators/ns.hpp>
 #include <xeumeuleu/manipulators/list.hpp>
 #include <xeumeuleu/manipulators/name_list.hpp>
 #include <xeumeuleu/manipulators/attributes.hpp>

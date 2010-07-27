@@ -38,7 +38,6 @@
 #include <xeumeuleu/streams/detail/output_base.hpp>
 #include <xeumeuleu/streams/detail/temporary_input.hpp>
 #include <xeumeuleu/streams/detail/optional_input.hpp>
-#include <xeumeuleu/streams/detail/attribute_input.hpp>
 #include <string>
 #include <memory>
 
@@ -68,10 +67,12 @@ public:
     //@{
     void start( const std::string& tag )
     {
-        input_->start( tag );
+        std::auto_ptr< std::string > ns = ns_;
+        input_->start( ns.get(), tag );
     }
     void end()
     {
+        ns_.reset();
         input_->end();
     }
 
@@ -110,11 +111,19 @@ public:
     //@{
     bool has_child( const std::string& name ) const
     {
-        return input_->has_child( name );
+        return input_->has_child( 0, name );
+    }
+    bool has_child( const std::string& ns, const std::string& name ) const
+    {
+        return input_->has_child( &ns, name );
     }
     bool has_attribute( const std::string& name ) const
     {
-        return input_->has_attribute( name );
+        return input_->has_attribute( 0, name );
+    }
+    bool has_attribute( const std::string& ns, const std::string& name ) const
+    {
+        return input_->has_attribute( &ns, name );
     }
     bool has_content() const
     {
@@ -141,9 +150,13 @@ public:
 
     template< typename T > void attribute_by_ref( const std::string& name, T& value ) const
     {
-        attribute_input input( *input_, name );
-        xistream xis( input );
-        xis >> value;
+        std::auto_ptr< std::string > ns = ns_;
+        std::auto_ptr< input_base > input = input_->attribute( ns.get(), name );
+        if( input.get() )
+        {
+            xistream xis( *input );
+            xis >> value;
+        }
     }
 
     template< typename T > T attribute( const std::string& name ) const;
@@ -155,11 +168,18 @@ public:
 
     void nodes( const visitor& v ) const
     {
-        input_->nodes( v );
+        std::auto_ptr< std::string > ns = ns_;
+        input_->nodes( ns.get(), v );
     }
     void attributes( const visitor& v ) const
     {
-        input_->attributes( v );
+        std::auto_ptr< std::string > ns = ns_;
+        input_->attributes( ns.get(), v );
+    }
+
+    void prefix( const std::string& ns, std::string& prefix ) const
+    {
+        input_->prefix( ns, prefix );
     }
 
     std::string context() const
@@ -178,6 +198,10 @@ public:
             optional_.reset( new optional_input( *input_, *temporary_, *this ) );
             input_ = optional_.get();
         }
+    }
+    void ns( const std::string& name )
+    {
+        ns_.reset( new std::string( name ) );
     }
     //@}
 
@@ -203,6 +227,7 @@ private:
     input_base* input_;
     std::auto_ptr< temporary_input > temporary_;
     std::auto_ptr< optional_input > optional_;
+    mutable std::auto_ptr< std::string > ns_;
     //@}
 };
 

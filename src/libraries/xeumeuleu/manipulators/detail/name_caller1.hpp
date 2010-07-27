@@ -65,7 +65,7 @@ public:
 
     //! @name Operations
     //@{
-    void operator()( const std::string& name, xistream& xis ) const
+    void operator()( const std::string& /*ns*/, const std::string& name, xistream& xis ) const
     {
         (instance_.*method_)( name, xis, value_ );
     }
@@ -114,7 +114,7 @@ public:
 
     //! @name Operations
     //@{
-    void operator()( const std::string& name, xistream& xis ) const
+    void operator()( const std::string& /*ns*/, const std::string& name, xistream& xis ) const
     {
         (instance_.*method_)( name, xis, value_ );
     }
@@ -124,6 +124,104 @@ private:
     //! @name Constructors/Destructor
     //@{
     const_name_caller1& operator=( const const_name_caller1& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    M method_;
+    const T& instance_;
+    Arg value_;
+    //@}
+};
+
+// =============================================================================
+/** @class  ns_name_caller1
+    @brief  Method call functor with element name in namespace and one fixed parameter
+*/
+// Created: MAT 2010-07-12
+// =============================================================================
+template< typename T, typename Arg, typename T1 >
+class ns_name_caller1
+{
+private:
+    //! @name Types
+    //@{
+    typedef void (T::*M)( const std::string&, const std::string&, xistream&, T1 );
+    //@}
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+    template< typename I >
+    ns_name_caller1( I& instance, M method, Arg value )
+        : method_  ( method )
+        , instance_( instance )
+        , value_   ( value )
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    void operator()( const std::string& ns, const std::string& name, xistream& xis ) const
+    {
+        (instance_.*method_)( ns, name, xis, value_ );
+    }
+    //@}
+
+private:
+    //! @name Constructors/Destructor
+    //@{
+    ns_name_caller1& operator=( const ns_name_caller1& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    M method_;
+    T& instance_;
+    Arg value_;
+    //@}
+};
+
+// =============================================================================
+/** @class  const_ns_name_caller1
+    @brief  Const method call functor with element name in namespace and one fixed parameter
+*/
+// Created: MAT 2010-07-12
+// =============================================================================
+template< typename T, typename Arg, typename T1 >
+class const_ns_name_caller1
+{
+private:
+    //! @name Types
+    //@{
+    typedef void (T::*M)( const std::string&, const std::string&, xistream&, T1 ) const;
+    //@}
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+    template< typename I >
+    const_ns_name_caller1( const I& instance, M method, Arg value )
+        : method_  ( method )
+        , instance_( instance )
+        , value_   ( value )
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    void operator()( const std::string& ns, const std::string& name, xistream& xis ) const
+    {
+        (instance_.*method_)( ns, name, xis, value_ );
+    }
+    //@}
+
+private:
+    //! @name Constructors/Destructor
+    //@{
+    const_ns_name_caller1& operator=( const const_ns_name_caller1& ); //!< Assignment operator
     //@}
 
 private:

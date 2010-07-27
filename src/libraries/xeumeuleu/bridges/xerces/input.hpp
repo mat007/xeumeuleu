@@ -74,12 +74,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& tag )
+    virtual void start( const std::string* ns, const std::string& tag )
     {
         XEUMEULEU_TRY
-            const XERCES_CPP_NAMESPACE::DOMNode* child = find_child( tag );
+            const XERCES_CPP_NAMESPACE::DOMNode* child = find_child( ns, tag );
             if( ! child )
-                throw xml::exception( context() + location() + " does not have a child named '" + tag + "'" );
+                throw xml::exception( context() + location() + " does not have a child named '" + tag + "'"
+                    + (!ns || ns->empty() ? "" : (" in namespace '" + *ns + "'")) );
             current_ = child;
         XEUMEULEU_CATCH
     }
@@ -102,12 +103,14 @@ public:
             throw xml::exception( context() + location() + " does not have a content" );
         return data( child );
     }
-    virtual data attribute( const std::string& name ) const
+
+    virtual std::auto_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const
     {
-        const XERCES_CPP_NAMESPACE::DOMNode* attribute = find_attribute( name );
+        const XERCES_CPP_NAMESPACE::DOMNode* attribute = find_attribute( ns, name );
         if( ! attribute )
-            throw xml::exception( context() + location() + " does not have an attribute '" + name + "'" );
-        return data( attribute );
+            throw xml::exception( context() + location() + " does not have an attribute '" + name + "'"
+                + (!ns || ns->empty() ? "" : (" in namespace '" + *ns + "'")) );
+        return std::auto_ptr< input_base >( new input( *attribute ) );
     }
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const;
@@ -122,16 +125,16 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool has_child( const std::string& name ) const
+    virtual bool has_child( const std::string* ns, const std::string& name ) const
     {
         XEUMEULEU_TRY
-            return find_child( name ) != 0;
+            return find_child( ns, name ) != 0;
         XEUMEULEU_CATCH
     }
-    virtual bool has_attribute( const std::string& name ) const
+    virtual bool has_attribute( const std::string* ns, const std::string& name ) const
     {
         XEUMEULEU_TRY
-            return find_attribute( name ) != 0;
+            return find_attribute( ns, name ) != 0;
         XEUMEULEU_CATCH
     }
     virtual bool has_content() const
@@ -140,24 +143,41 @@ public:
             return find_content() != 0;
         XEUMEULEU_CATCH
     }
+    virtual bool has_prefix( const std::string& ns ) const
+    {
+        XEUMEULEU_TRY
+            return current_->isDefaultNamespace( translate( ns ) ) ||
+                lookupPrefix( *current_, translate( ns ) ) != 0;
+        XEUMEULEU_CATCH
+    }
 
-    virtual void nodes( const visitor& v ) const
+    bool accept( const std::string* ns, const XERCES_CPP_NAMESPACE::DOMNode* node ) const
+    {
+        if( !ns )
+            return true;
+        if( ns->empty() )
+            return ! node->getNamespaceURI();
+        return *ns == translate( node->getNamespaceURI() );
+    }
+
+    virtual void nodes( const std::string* ns, const visitor& v ) const
     {
         XEUMEULEU_TRY
             XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
             while( child )
             {
-                if( child->getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::ELEMENT_NODE )
+                if( child->getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::ELEMENT_NODE
+                 && accept( ns, child ) )
                 {
                     input i( *child );
                     xistream xis( i );
-                    v( translate( child->getNodeName() ), xis );
+                    v( translate( child->getNamespaceURI() ), translate( child->getLocalName() ), xis );
                 }
                 child = child->getNextSibling();
             }
         XEUMEULEU_CATCH
     }
-    virtual void attributes( const visitor& v ) const
+    virtual void attributes( const std::string* ns, const visitor& v ) const
     {
         XEUMEULEU_TRY
             const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
@@ -166,10 +186,28 @@ public:
                 for( XMLSize_t index = 0; index < attributes->getLength(); ++index )
                 {
                     XERCES_CPP_NAMESPACE::DOMNode* attribute = attributes->item( index );
-                    input i( *current_ );
-                    xistream xis( i );
-                    v( translate( attribute->getNodeName() ), xis );
+                    if( accept( ns, attribute ) )
+                    {
+                        input i( *attribute );
+                        xistream xis( i );
+                        v( translate( attribute->getNamespaceURI() ), translate( attribute->getLocalName() ), xis );
+                    }
                 }
+            }
+        XEUMEULEU_CATCH
+    }
+
+    virtual void prefix( const std::string& ns, std::string& prefix ) const
+    {
+        XEUMEULEU_TRY
+            if( current_->isDefaultNamespace( translate( ns ) ) )
+                prefix.clear();
+            else
+            {
+                const XMLCh* p = lookupPrefix( *current_, translate( ns ) );
+                if( ! p )
+                    throw xml::exception( context() + location() + " has no prefix for namespace '" + ns + "'" );
+                prefix = translate( p );
             }
         XEUMEULEU_CATCH
     }
@@ -196,23 +234,27 @@ private:
         return "node '" + translate( current_->getNodeName() ) + "'";
     }
 
-    const XERCES_CPP_NAMESPACE::DOMNode* find_child( const std::string& name ) const
+    template< typename N >
+    const XERCES_CPP_NAMESPACE::DOMNode* find_node( const N* nodes, const std::string* ns, const std::string& name ) const
     {
-        const XERCES_CPP_NAMESPACE::DOMNode* child = current_->getFirstChild();
-        while( child )
+        if( ! nodes )
+            return 0;
+        for( XMLSize_t i = 0; i < nodes->getLength(); ++i )
         {
-            if( name == translate( child->getNodeName() ) )
-                return child;
-            child = child->getNextSibling();
+            const XERCES_CPP_NAMESPACE::DOMNode* node = nodes->item( i );
+            if( name == translate( node->getLocalName() )
+                && accept( ns, node ) )
+                return node;
         }
         return 0;
     }
-    const XERCES_CPP_NAMESPACE::DOMNode* find_attribute( const std::string& name ) const
+    const XERCES_CPP_NAMESPACE::DOMNode* find_child( const std::string* ns, const std::string& name ) const
     {
-        const XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
-        if( ! attributes )
-            return 0;
-        return attributes->getNamedItem( translate( name ) );
+        return find_node( current_->getChildNodes(), ns, name );
+    }
+    const XERCES_CPP_NAMESPACE::DOMNode* find_attribute( const std::string* ns, const std::string& name ) const
+    {
+        return find_node( current_->getAttributes(), ns, name );
     }
     const XERCES_CPP_NAMESPACE::DOMNode* find_content() const
     {
@@ -233,6 +275,26 @@ private:
             return false;
         const XMLCh* const value = node.getNodeValue();
         return ! XERCES_CPP_NAMESPACE::XMLChar1_1::isAllSpaces( value, XERCES_CPP_NAMESPACE::XMLString::stringLen( value ) );
+    }
+
+    template< typename N >
+    void accept( const N* nodes, const std::string& ns, const visitor& v ) const
+    {
+        XEUMEULEU_TRY
+            if( nodes )
+            {
+                for( XMLSize_t index = 0; index < nodes->getLength(); ++index )
+                {
+                    XERCES_CPP_NAMESPACE::DOMNode* node = nodes->item( index );
+                    if( ns.empty() || ns == translate( node->getNamespaceURI() ) )
+                    {
+                        input i( *current_ );
+                        xistream xis( i );
+                        v( translate( node->getNamespaceURI() ), translate( node->getLocalName() ), xis );
+                    }
+                }
+            }
+        XEUMEULEU_CATCH
     }
     //@}
 

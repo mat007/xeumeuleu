@@ -247,19 +247,6 @@ BOOST_AUTO_TEST_CASE( read_unexisting_content_directly_with_default_value_is_val
     BOOST_CHECK_EQUAL( value, xis.content( "element", value ) );
 }
 
-// -----------------------------------------------------------------------------
-// Name: read_content_in_namespace_is_valid
-// Created: MCO 2008-11-23
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( read_content_in_namespace_is_valid )
-{
-    xml::xistringstream xis( "<ns:element xmlns:ns='http://www.example.org'>the content value</ns:element>" );
-    const std::string expected = "the content value";
-    std::string actual;
-    xis >> xml::content( "ns:element", actual );
-    BOOST_CHECK_EQUAL( expected, actual );
-}
-
 namespace
 {
     class user_type
