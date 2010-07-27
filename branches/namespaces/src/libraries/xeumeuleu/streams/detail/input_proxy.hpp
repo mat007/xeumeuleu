@@ -58,7 +58,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& ns, const std::string& tag )
+    virtual void start( const std::string* ns, const std::string& tag )
     {
         input_->start( ns, tag );
     }
@@ -72,7 +72,7 @@ public:
         return input_->read();
     }
 
-    virtual std::auto_ptr< input_base > attribute( const std::string& ns, const std::string& name ) const
+    virtual std::auto_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const
     {
         return input_->attribute( ns, name );
     }
@@ -96,11 +96,11 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool has_child( const std::string& ns, const std::string& name ) const
+    virtual bool has_child( const std::string* ns, const std::string& name ) const
     {
         return input_->has_child( ns, name );
     }
-    virtual bool has_attribute( const std::string& ns, const std::string& name ) const
+    virtual bool has_attribute( const std::string* ns, const std::string& name ) const
     {
         return input_->has_attribute( ns, name );
     }
@@ -113,11 +113,11 @@ public:
         return input_->has_prefix( ns );
     }
 
-    virtual void nodes( const std::string& ns, const visitor& v ) const
+    virtual void nodes( const std::string* ns, const visitor& v ) const
     {
         input_->nodes( ns, v );
     }
-    virtual void attributes( const std::string& ns, const visitor& v ) const
+    virtual void attributes( const std::string* ns, const visitor& v ) const
     {
         input_->attributes( ns, v );
     }

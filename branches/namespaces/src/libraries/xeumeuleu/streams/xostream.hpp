@@ -114,6 +114,10 @@ public:
     {
         output_.instruction( target, data );
     }
+    void prefix( const std::string& ns, const std::string& prefix )
+    {
+        output_.prefix( ns, prefix );
+    }
     void ns( const std::string& name )
     {
         ns_ = name;
