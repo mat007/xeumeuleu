@@ -132,7 +132,7 @@ namespace
     class my_functor_ext
     {
     public:
-        void operator()( const std::string&, xml::xistream& ) {}
+        void operator()( const std::string&, const std::string&, xml::xistream& ) {}
     };
 
     void warning_check()
@@ -385,6 +385,66 @@ BOOST_AUTO_TEST_CASE( move_up_from_sub_node_throws_an_exception )
 
 namespace
 {
+    class mock_custom_class_name_list : public mockpp::ChainableMockObject
+    {
+    public:
+        mock_custom_class_name_list()
+            : mockpp::ChainableMockObject( "mock_custom_class_name_list", 0 )
+            , process_mocker( "process", this )
+        {}
+        void process( const std::string& name, xml::xistream& xis )
+        {
+            std::string content;
+            xis >> content;
+            process_mocker.forward( name, content );
+        }
+        mockpp::ChainableMockMethod< void, std::string, std::string > process_mocker;
+
+    private:
+        mock_custom_class_name_list( const mock_custom_class_name_list& );
+        mock_custom_class_name_list& operator=( const mock_custom_class_name_list& );
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: read_name_list_is_called_with_each_element
+// Created: MAT 2010-07-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( read_name_list_is_called_with_each_element )
+{
+    xml::xistringstream xis( "<element>"
+                               "<sub-node1>content number one</sub-node1>"
+                               "<sub-node2>content number two</sub-node2>"
+                             "</element>" );
+    mock_custom_class_name_list mock_custom;
+    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "sub-node1" ), eq< std::string >( "content number one" ) );
+    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "sub-node2" ), eq< std::string >( "content number two" ) );
+    xis >> xml::start( "element" )
+            >> xml::list( mock_custom, &mock_custom_class_name_list::process )
+        >> xml::end;
+    mock_custom.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: read_name_list_is_not_called_with_content
+// Created: ZEBRE 2006-08-30
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( read_name_list_is_not_called_with_content )
+{
+    xml::xistringstream xis( "<element>"
+                               "content not to be read"
+                               "<sub-node>content</sub-node>"
+                             "</element>" );
+    mock_custom_class_name_list mock_custom;
+    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "sub-node" ), eq< std::string >( "content" ) );
+    xis >> xml::start( "element" )
+            >> xml::list( mock_custom, &mock_custom_class_name_list::process )
+        >> xml::end;
+    mock_custom.verify();
+}
+
+namespace
+{
     class mock_custom_class_name_list_with_parameters : public mockpp::ChainableMockObject
     {
     public:
@@ -428,47 +488,6 @@ BOOST_AUTO_TEST_CASE( read_name_list_with_parameters )
 
 namespace
 {
-    class mock_custom_class_name_list : public mockpp::ChainableMockObject
-    {
-    public:
-        mock_custom_class_name_list()
-            : mockpp::ChainableMockObject( "mock_custom_class_name_list", 0 )
-            , process_mocker( "process", this )
-        {}
-        void process( const std::string& name, xml::xistream& xis )
-        {
-            std::string content;
-            xis >> content;
-            process_mocker.forward( name, content );
-        }
-        mockpp::ChainableMockMethod< void, std::string, std::string > process_mocker;
-
-    private:
-        mock_custom_class_name_list( const mock_custom_class_name_list& );
-        mock_custom_class_name_list& operator=( const mock_custom_class_name_list& );
-    };
-}
-
-// -----------------------------------------------------------------------------
-// Name: read_name_list_is_not_called_with_content
-// Created: ZEBRE 2006-08-30
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( read_name_list_is_not_called_with_content )
-{
-    xml::xistringstream xis( "<element>"
-                               "content not to be read"
-                               "<sub-node>content</sub-node>"
-                             "</element>" );
-    mock_custom_class_name_list mock_custom;
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "sub-node" ), eq< std::string >( "content" ) );
-    xis >> xml::start( "element" )
-            >> xml::list( mock_custom, &mock_custom_class_name_list::process )
-        >> xml::end;
-    mock_custom.verify();
-}
-
-namespace
-{
     class a_class_virtually_inheriting_from_another : virtual public an_interface
     {
     public:
@@ -498,7 +517,7 @@ namespace
     {
         my_function_mocker.forward();
     }
-    void my_name_function( const std::string&, xml::xistream& )
+    void my_name_function( const std::string&, const std::string&, xml::xistream& )
     {
         my_function_mocker.forward();
     }
@@ -533,7 +552,7 @@ namespace
         {
             my_function_mocker.forward();
         }
-        void operator()( const std::string&, xml::xistream& ) const
+        void operator()( const std::string&, const std::string&, xml::xistream& ) const
         {
             my_function_mocker.forward();
         }
@@ -639,13 +658,13 @@ BOOST_AUTO_TEST_CASE( list_accepts_boost_bind_as_functor )
     {
         my_bindable_class my_instance;
         my_instance.my_method_mocker.expects( mockpp::once() );
-        xis >> xml::list( boost::bind( &my_bindable_class::my_method_2, boost::ref( my_instance ), _1, _2 ) );
+        xis >> xml::list( boost::bind( &my_bindable_class::my_method_2, boost::ref( my_instance ), _2, _3 ) );
         my_instance.verify();
     }
     {
         my_bindable_class my_instance;
         my_instance.my_method_mocker.expects( mockpp::once() );
-        xis >> xml::list( boost::bind( &my_bindable_class::const_my_method_2, boost::ref( my_instance ), _1, _2 ) );
+        xis >> xml::list( boost::bind( &my_bindable_class::const_my_method_2, boost::ref( my_instance ), _2, _3 ) );
         my_instance.verify();
     }
 }

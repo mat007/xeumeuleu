@@ -34,7 +34,6 @@
 #define xeumeuleu_xostream_hpp
 
 #include <xeumeuleu/streams/detail/output_base.hpp>
-#include <xeumeuleu/streams/detail/attribute_output.hpp>
 #include <string>
 #include <memory>
 
@@ -64,7 +63,7 @@ public:
     //@{
     void start( const std::string& tag )
     {
-        output_.start( tag );
+        output_.start( ns(), tag );
     }
     void end()
     {
@@ -99,9 +98,12 @@ public:
     }
     template< typename T > void attribute( const std::string& name, const T& value )
     {
-        attribute_output output( output_, name );
-        xostream xos( output );
-        xos << value;
+        std::auto_ptr< output_base > output = output_.attribute( ns(), name );
+        if( output.get() )
+        {
+            xostream xos( *output );
+            xos << value;
+        }
     }
 
     void cdata( const std::string& content )
@@ -112,6 +114,14 @@ public:
     {
         output_.instruction( target, data );
     }
+    void prefix( const std::string& ns, const std::string& prefix )
+    {
+        output_.prefix( ns, prefix );
+    }
+    void ns( const std::string& name )
+    {
+        ns_ = name;
+    }
     //@}
 
 private:
@@ -121,10 +131,23 @@ private:
     xostream& operator=( const xostream& ); //!< Assignment operator
     //@}
 
+    //! @name Helpers
+    //@{
+    std::string ns()
+    {
+        if( ns_.empty() )
+            return "";
+        std::string ns;
+        ns.swap( ns_ );
+        return ns;
+    }
+    //@}
+
 private:
     //! @name Member data
     //@{
     output_base& output_;
+    std::string ns_;
     //@}
 };
 

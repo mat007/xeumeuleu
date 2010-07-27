@@ -61,9 +61,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& tag )
+    virtual void start( const std::string* ns, const std::string& tag )
     {
-        input1_.start( tag );
+        input1_.start( ns, tag );
         ++level_;
     }
     virtual void end()

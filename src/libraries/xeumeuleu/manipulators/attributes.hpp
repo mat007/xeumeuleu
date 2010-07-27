@@ -87,12 +87,32 @@ attributes_manipulator< name_caller0< T > > attributes( I& instance, void (T::*m
 
 // -----------------------------------------------------------------------------
 // Name: attributes
+// Created: MAT 2010-07-12
+// -----------------------------------------------------------------------------
+template< typename I, typename T >
+attributes_manipulator< ns_name_caller0< T > > attributes( I& instance, void (T::*method)( const std::string&, const std::string&, xistream& ) )
+{
+    return attributes_manipulator< ns_name_caller0< T > >( ns_name_caller0< T >( instance, method ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: attributes
 // Created: MAT 2007-08-01
 // -----------------------------------------------------------------------------
 template< typename I, typename T >
 attributes_manipulator< const_name_caller0< T > > attributes( const I& instance, void (T::*method)( const std::string&, xistream& ) const )
 {
     return attributes_manipulator< const_name_caller0< T > >( const_name_caller0< T >( instance, method ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: attributes
+// Created: MAT 2010-07-12
+// -----------------------------------------------------------------------------
+template< typename I, typename T >
+attributes_manipulator< const_ns_name_caller0< T > > attributes( const I& instance, void (T::*method)( const std::string&, const std::string&, xistream& ) const )
+{
+    return attributes_manipulator< const_ns_name_caller0< T > >( const_ns_name_caller0< T >( instance, method ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,12 +127,32 @@ attributes_manipulator< name_caller1< T, Arg1&, T1 > > attributes( I& instance, 
 
 // -----------------------------------------------------------------------------
 // Name: attributes
+// Created: MAT 2010-07-12
+// -----------------------------------------------------------------------------
+template< typename I, typename T, typename Arg1, typename T1 >
+attributes_manipulator< ns_name_caller1< T, Arg1&, T1 > > attributes( I& instance, void (T::*method)( const std::string&, const std::string&, xistream&, T1 ), Arg1& value )
+{
+    return attributes_manipulator< ns_name_caller1< T, Arg1&, T1 > >( ns_name_caller1< T, Arg1&, T1 >( instance, method, value ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: attributes
 // Created: MAT 2007-08-01
 // -----------------------------------------------------------------------------
 template< typename I, typename T, typename Arg1, typename T1 >
 attributes_manipulator< const_name_caller1< T, Arg1&, T1 > > attributes( const I& instance, void (T::*method)( const std::string&, xistream&, T1 ) const, Arg1& value )
 {
     return attributes_manipulator< const_name_caller1< T, Arg1&, T1 > >( const_name_caller1< T, Arg1&, T1 >( instance, method, value ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: attributes
+// Created: MAT 2010-07-12
+// -----------------------------------------------------------------------------
+template< typename I, typename T, typename Arg1, typename T1 >
+attributes_manipulator< const_ns_name_caller1< T, Arg1&, T1 > > attributes( const I& instance, void (T::*method)( const std::string&, const std::string&, xistream&, T1 ) const, Arg1& value )
+{
+    return attributes_manipulator< const_ns_name_caller1< T, Arg1&, T1 > >( const_ns_name_caller1< T, Arg1&, T1 >( instance, method, value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,12 +167,32 @@ attributes_manipulator< name_caller2< T, Arg1&, T1, Arg2&, T2 > > attributes( I&
 
 // -----------------------------------------------------------------------------
 // Name: attributes
+// Created: MAT 2010-07-12
+// -----------------------------------------------------------------------------
+template< typename I, typename T, typename Arg1, typename T1, typename Arg2, typename T2 >
+attributes_manipulator< ns_name_caller2< T, Arg1&, T1, Arg2&, T2 > > attributes( I& instance, void (T::*method)( const std::string&, const std::string&, xistream&, T1, T2 ), Arg1& value1, Arg2& value2 )
+{
+    return attributes_manipulator< ns_name_caller2< T, Arg1&, T1, Arg2&, T2 > >( ns_name_caller2< T, Arg1&, T1, Arg2&, T2 >( instance, method, value1, value2 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: attributes
 // Created: MAT 2007-08-01
 // -----------------------------------------------------------------------------
 template< typename I, typename T, typename Arg1, typename T1, typename Arg2, typename T2 >
 attributes_manipulator< const_name_caller2< T, Arg1&, T1, Arg2&, T2 > > attributes( const I& instance, void (T::*method)( const std::string&, xistream&, T1, T2 ) const, Arg1& value1, Arg2& value2 )
 {
     return attributes_manipulator< const_name_caller2< T, Arg1&, T1, Arg2&, T2 > >( const_name_caller2< T, Arg1&, T1, Arg2&, T2 >( instance, method, value1, value2 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: attributes
+// Created: MAT 2010-07-12
+// -----------------------------------------------------------------------------
+template< typename I, typename T, typename Arg1, typename T1, typename Arg2, typename T2 >
+attributes_manipulator< const_ns_name_caller2< T, Arg1&, T1, Arg2&, T2 > > attributes( const I& instance, void (T::*method)( const std::string&, const std::string&, xistream&, T1, T2 ) const, Arg1& value1, Arg2& value2 )
+{
+    return attributes_manipulator< const_ns_name_caller2< T, Arg1&, T1, Arg2&, T2 > >( const_ns_name_caller2< T, Arg1&, T1, Arg2&, T2 >( instance, method, value1, value2 ) );
 }
 
 }
