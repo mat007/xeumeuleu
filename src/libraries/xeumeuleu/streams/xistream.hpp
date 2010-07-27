@@ -67,11 +67,12 @@ public:
     //@{
     void start( const std::string& tag )
     {
-        input_->start( ns(), tag );
+        std::auto_ptr< std::string > ns = ns_;
+        input_->start( ns.get(), tag );
     }
     void end()
     {
-        ns();
+        ns_.reset();
         input_->end();
     }
 
@@ -110,15 +111,19 @@ public:
     //@{
     bool has_child( const std::string& name ) const
     {
-        return input_->has_child( "", name );
+        return input_->has_child( 0, name );
     }
     bool has_child( const std::string& ns, const std::string& name ) const
     {
-        return input_->has_child( ns, name );
+        return input_->has_child( &ns, name );
     }
     bool has_attribute( const std::string& name ) const
     {
-        return input_->has_attribute( "", name );
+        return input_->has_attribute( 0, name );
+    }
+    bool has_attribute( const std::string& ns, const std::string& name ) const
+    {
+        return input_->has_attribute( &ns, name );
     }
     bool has_content() const
     {
@@ -145,7 +150,8 @@ public:
 
     template< typename T > void attribute_by_ref( const std::string& name, T& value ) const
     {
-        std::auto_ptr< input_base > input = input_->attribute( ns(), name );
+        std::auto_ptr< std::string > ns = ns_;
+        std::auto_ptr< input_base > input = input_->attribute( ns.get(), name );
         if( input.get() )
         {
             xistream xis( *input );
@@ -162,11 +168,13 @@ public:
 
     void nodes( const visitor& v ) const
     {
-        input_->nodes( ns(), v );
+        std::auto_ptr< std::string > ns = ns_;
+        input_->nodes( ns.get(), v );
     }
     void attributes( const visitor& v ) const
     {
-        input_->attributes( ns(), v );
+        std::auto_ptr< std::string > ns = ns_;
+        input_->attributes( ns.get(), v );
     }
 
     void prefix( const std::string& ns, std::string& prefix ) const
@@ -193,7 +201,7 @@ public:
     }
     void ns( const std::string& name )
     {
-        ns_ = name;
+        ns_.reset( new std::string( name ) );
     }
     //@}
 
@@ -213,25 +221,13 @@ private:
     }
     //@}
 
-    //! @name Helpers
-    //@{
-    std::string ns() const
-    {
-        if( ns_.empty() )
-            return "";
-        std::string ns;
-        ns.swap( ns_ );
-        return ns;
-    }
-    //@}
-
 private:
     //! @name Member data
     //@{
     input_base* input_;
     std::auto_ptr< temporary_input > temporary_;
     std::auto_ptr< optional_input > optional_;
-    mutable std::string ns_;
+    mutable std::auto_ptr< std::string > ns_;
     //@}
 };
 

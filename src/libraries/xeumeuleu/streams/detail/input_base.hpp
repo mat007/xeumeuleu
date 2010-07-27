@@ -59,12 +59,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string& ns, const std::string& tag ) = 0;
+    virtual void start( const std::string* ns, const std::string& tag ) = 0;
     virtual void end() = 0;
 
     virtual data read() const = 0;
 
-    virtual std::auto_ptr< input_base > attribute( const std::string& ns, const std::string& name ) const = 0;
+    virtual std::auto_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const = 0;
 
     virtual std::auto_ptr< input_base > branch( bool clone ) const = 0;
 
@@ -73,13 +73,13 @@ public:
 
     //! @name Accessors
     //@{
-    virtual bool has_child( const std::string& ns, const std::string& name ) const = 0;
-    virtual bool has_attribute( const std::string& ns, const std::string& name ) const = 0;
+    virtual bool has_child( const std::string* ns, const std::string& name ) const = 0;
+    virtual bool has_attribute( const std::string* ns, const std::string& name ) const = 0;
     virtual bool has_content() const = 0;
     virtual bool has_prefix( const std::string& ns ) const = 0;
 
-    virtual void nodes( const std::string& ns, const visitor& v ) const = 0;
-    virtual void attributes( const std::string& ns, const visitor& v ) const = 0;
+    virtual void nodes( const std::string* ns, const visitor& v ) const = 0;
+    virtual void attributes( const std::string* ns, const visitor& v ) const = 0;
 
     virtual void prefix( const std::string& ns, std::string& prefix ) const = 0;
 

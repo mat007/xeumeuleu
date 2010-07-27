@@ -172,19 +172,6 @@ BOOST_AUTO_TEST_CASE( reading_attribute_filtered_on_correct_namespace_does_not_t
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_attribute_filtered_on_correct_default_namespace_does_not_throw
-// Created: MAT 2010-07-12
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_attribute_filtered_on_correct_default_namespace_does_not_throw )
-{
-    xml::xistringstream xis( "<element attribute='12' xmlns='http://www.example.org'/>" );
-    int value = 0;
-    xis >> xml::start( "element" )
-            >> xml::ns( "http://www.example.org" ) >> xml::attribute( "attribute", value );
-    BOOST_CHECK_EQUAL( 12, value );
-}
-
-// -----------------------------------------------------------------------------
 // Name: reading_attribute_filtered_on_invalid_namespace_throws
 // Created: MAT 2010-07-12
 // -----------------------------------------------------------------------------
@@ -247,6 +234,26 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: reading_list_with_namespace_elements
+// Created: MAT 2010-07-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_list_with_namespace_elements )
+{
+    xml::xistringstream xis( "<element xmlns='http://www.example.org' xmlns:ns2='http://www.example2.org' xmlns:ns3='http://www.example.org'>"
+                             "  <sub-node>content number one</sub-node>"
+                             "  <ns2:sub-node>content number two</ns2:sub-node>"
+                             "  <ns3:sub-node>content number three</ns3:sub-node>"
+                             "</element>" );
+    mock_custom_class_list mock_custom;
+    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "content number one" ) );
+    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "content number two" ) );
+    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "content number three" ) );
+    xis >> xml::start( "element" )
+            >> xml::list( "sub-node", mock_custom, &mock_custom_class_list::process );
+    mock_custom.verify();
+}
+
+// -----------------------------------------------------------------------------
 // Name: reading_list_filtered_on_correct_namespace_filters_elements
 // Created: MAT 2010-07-12
 // -----------------------------------------------------------------------------
@@ -262,6 +269,25 @@ BOOST_AUTO_TEST_CASE( reading_list_filtered_on_correct_namespace_filters_element
     mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "content number three" ) );
     xis >> xml::start( "element" )
             >> xml::ns( "http://www.example.org" ) >> xml::list( "sub-node", mock_custom, &mock_custom_class_list::process );
+    mock_custom.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_list_filtered_on_no_namespace_filters_elements
+// Created: MAT 2010-07-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_list_filtered_on_no_namespace_filters_elements )
+{
+    xml::xistringstream xis( "<element xmlns='http://www.example.org' xmlns:ns2='http://www.example2.org' xmlns:ns3='http://www.example.org'>"
+                             "  <sub-node xmlns=''>content number one</sub-node>"
+                             "  <sub-node>content number two</sub-node>"
+                             "  <ns2:sub-node>content number three</ns2:sub-node>"
+                             "  <ns3:sub-node>content number four</ns3:sub-node>"
+                             "</element>" );
+    mock_custom_class_list mock_custom;
+    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "content number one" ) );
+    xis >> xml::start( "element" )
+            >> xml::ns( "" ) >> xml::list( "sub-node", mock_custom, &mock_custom_class_list::process );
     mock_custom.verify();
 }
 
@@ -289,10 +315,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_name_list_calls_with_each_element_in_namespace
+// Name: reading_name_list_with_namespace_elements
 // Created: MAT 2010-07-12
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_name_list_calls_with_each_element_in_namespace )
+BOOST_AUTO_TEST_CASE( reading_name_list_with_namespace_elements )
 {
     xml::xistringstream xis( "<element xmlns='http://www.example.org' xmlns:ns='http://www.example.org' xmlns:ns2='http://www.example2.org'>"
                              "  <sub-node1>content number one</sub-node1>"
@@ -309,10 +335,10 @@ BOOST_AUTO_TEST_CASE( reading_name_list_calls_with_each_element_in_namespace )
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_name_list_filtered_on_namespace_calls_with_each_element_in_namespace
+// Name: reading_name_list_filtered_on_namespace_filters_elements
 // Created: MAT 2010-07-12
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_name_list_filtered_on_namespace_calls_with_each_element_in_namespace )
+BOOST_AUTO_TEST_CASE( reading_name_list_filtered_on_namespace_filters_elements )
 {
     xml::xistringstream xis( "<element xmlns='http://www.example.org' xmlns:ns='http://www.example.org' xmlns:ns2='http://www.example2.org'>"
                              "  <sub-node1>content number one</sub-node1>"
@@ -324,6 +350,25 @@ BOOST_AUTO_TEST_CASE( reading_name_list_filtered_on_namespace_calls_with_each_el
     mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "http://www.example.org" ), eq< std::string >( "sub-node2" ), eq< std::string >( "content number two" ) );
     xis >> xml::start( "element" )
             >> xml::ns( "http://www.example.org" ) >> xml::list( mock_custom, &mock_custom_class_name_list::process );
+    mock_custom.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_name_list_filtered_on_no_namespace_filters_elements
+// Created: MAT 2010-07-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_name_list_filtered_on_no_namespace_filters_elements )
+{
+    xml::xistringstream xis( "<element xmlns='http://www.example.org' xmlns:ns='http://www.example.org' xmlns:ns2='http://www.example2.org'>"
+                             "  <sub-node1 xmlns=''>content number one</sub-node1>"
+                             "  <sub-node2>content number two</sub-node2>"
+                             "  <ns:sub-node3>content number three</ns:sub-node3>"
+                             "  <ns2:sub-node4>content number four</ns2:sub-node4>"
+                             "</element>" );
+    mock_custom_class_name_list mock_custom;
+    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "" ), eq< std::string >( "sub-node1" ), eq< std::string >( "content number one" ) );
+    xis >> xml::start( "element" )
+            >> xml::ns( "" ) >> xml::list( mock_custom, &mock_custom_class_name_list::process );
     mock_custom.verify();
 }
 
@@ -351,13 +396,13 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_attributes_with_namespace_from_element_calls_a_custom_method
+// Name: reading_attributes_with_namespace_from_element_filters_attributes
 // Created: MAT 2010-07-12
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_from_element_calls_a_custom_method )
+BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_from_element_filters_attributes )
 {
     mock_custom_class mock_custom;
-    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "http://www.example.org" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 1" ) );
+    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 1" ) );
     mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "http://www.example.org" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 2" ) );
     mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "http://www.example2.org" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 3" ) );
     xml::xistringstream xis( "<root xmlns='http://www.example.org' xmlns:ns='http://www.example.org' xmlns:ns2='http://www.example2.org'>"
@@ -370,13 +415,12 @@ BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_from_element_calls_a_cus
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_attributes_with_namespace_filtered_on_namespace_from_element_calls_a_custom_method
+// Name: reading_attributes_with_namespace_filtered_on_namespace_from_element_filters_attributes
 // Created: MAT 2010-07-12
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_namespace_from_element_calls_a_custom_method )
+BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_namespace_from_element_filters_attributes )
 {
     mock_custom_class mock_custom;
-    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "http://www.example.org" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 1" ) );
     mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "http://www.example.org" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 2" ) );
     xml::xistringstream xis( "<root xmlns='http://www.example.org' xmlns:ns='http://www.example.org' xmlns:ns2='http://www.example2.org'>"
                              "  <element attribute='attribute 1' ns:attribute='attribute 2' ns2:attribute='attribute 3'/>"
@@ -384,6 +428,23 @@ BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_namespace_fr
     xis >> xml::start( "root" )
             >> xml::start( "element" )
                 >> xml::ns( "http://www.example.org" ) >> xml::attributes( mock_custom, &mock_custom_class::process );
+    mock_custom.verify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_attributes_with_namespace_filtered_on_no_namespace_from_element_filters_attributes
+// Created: MAT 2010-07-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_no_namespace_from_element_filters_attributes )
+{
+    mock_custom_class mock_custom;
+    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 1" ) );
+    xml::xistringstream xis( "<root xmlns='http://www.example.org' xmlns:ns='http://www.example.org' xmlns:ns2='http://www.example2.org'>"
+                             "  <element attribute='attribute 1' ns:attribute='attribute 2' ns2:attribute='attribute 3'/>"
+                             "</root>" );
+    xis >> xml::start( "root" )
+            >> xml::start( "element" )
+                >> xml::ns( "" ) >> xml::attributes( mock_custom, &mock_custom_class::process );
     mock_custom.verify();
 }
 
@@ -398,6 +459,19 @@ BOOST_AUTO_TEST_CASE( reading_prefix_retrieves_namespace_prefix )
     xis >> xml::start( "element" )
             >> xml::prefix( "http://www.example.org", prefix );
     BOOST_CHECK_EQUAL( "ns", prefix );
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_prefix_for_no_namespace_retrieves_an_empty_prefix
+// Created: MAT 2010-07-27
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_prefix_for_no_namespace_retrieves_an_empty_prefix )
+{
+    std::string prefix = "?";
+    xml::xistringstream xis( "<element/>" );
+    xis >> xml::start( "element" )
+            >> xml::prefix( "", prefix );
+    BOOST_CHECK( prefix.empty() );
 }
 
 // -----------------------------------------------------------------------------
@@ -455,41 +529,137 @@ BOOST_AUTO_TEST_CASE( reading_default_prefix_in_multi_stream_retrieves_the_first
     BOOST_CHECK( prefix.empty() );
 }
 
-//// -----------------------------------------------------------------------------
-//// Name: writing_start_filtered_on_namespace_prefixes_it
-//// Created: MAT 2010-06-29
-//// -----------------------------------------------------------------------------
-//BOOST_AUTO_TEST_CASE( writing_start_filtered_on_namespace_prefixes_it )
-//{
-//    xml::xostringstream xos;
-//    xos << xml::prefix( "http://www.example.org", "ns" ) << xml::ns( "http://www.example.org" ) << xml::start( "element" );
-//    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-//                       "<ns:element xmlns:ns=\"http://www.example.org\"/>\n", xos.str() );
-//}
-//
-//// -----------------------------------------------------------------------------
-//// Name: writing_start_filtered_on_namespace_prefixes_it
-//// Created: MAT 2010-06-29
-//// -----------------------------------------------------------------------------
-//BOOST_AUTO_TEST_CASE( writing_start_filtered_on_default_namespace_does_not_prefix_it )
-//{
-//    xml::xostringstream xos;
-//    xos << xml::ns( "http://www.example.org" ) << xml::start( "element" );
-//    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-//                       "<element xmlns=\"http://www.example.org\"/>\n", xos.str() );
-//}
-//
-//// -----------------------------------------------------------------------------
-//// Name: namespace_is_only_declared_the_first_time_needed
-//// Created: MAT 2010-06-29
-//// -----------------------------------------------------------------------------
-//BOOST_AUTO_TEST_CASE( namespace_is_only_declared_the_first_time_needed )
-//{
-//    xml::xostringstream xos;
-//    xos << xml::prefix( "http://www.example.org", "ns" ) << xml::ns( "http://www.example.org" ) << xml::start( "element" )
-//            << xml::ns( "http://www.example.org" ) << xml::start( "sub-element" );
-//    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-//                       "<ns:element xmlns:ns=\"http://www.example.org\">\n"
-//                       "  <ns:sub-element/>\n"
-//                       "</ns:element>\n", xos.str() );
-//}
+// -----------------------------------------------------------------------------
+// Name: reading_writing_namespace_declaration
+// Created: MAT 2010-07-22
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_writing_namespace_declaration )
+{
+    xml::xistringstream xis( "<element xmlns:ns='http://www.example.org'/>" );
+    xml::xostringstream xos;
+    xos << xis;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element xmlns:ns=\"http://www.example.org\"/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_writing_default_namespace_declaration
+// Created: MAT 2010-07-22
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_writing_default_namespace_declaration )
+{
+    xml::xistringstream xis( "<element xmlns='http://www.example.org'/>" );
+    xml::xostringstream xos;
+    xos << xis;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element xmlns:ns=\"http://www.example.org\"/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_writing_namespace_declaration_and_usage
+// Created: MAT 2010-07-22
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_writing_namespace_declaration_and_usage )
+{
+    xml::xistringstream xis( "<ns:element xmlns:ns='http://www.example.org'/>" );
+    xml::xostringstream xos;
+    xos << xis;
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<ns:element xmlns:ns=\"http://www.example.org\"/>\n", xos.str() );
+
+    //xml::xistringstream xis( "<root xmlns='http://www.example.org' xmlns:ns='http://www.example.org' xmlns:ns2='http://www.example2.org'>"
+    //                         "  <element attribute='attribute 1' ns:attribute='attribute 2' ns2:attribute='attribute 3'/>"
+    //                         "</root>" );
+    //xis >> xml::start( "root" );
+    //xml::xostringstream xos;
+    //xos << xml::start( "root" );
+    //xos << xis;
+    //BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+    //                   "<ns:element xmlns:ns=\"http://www.example.org\"/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: writing_start_filtered_on_namespace_prefixes_it
+// Created: MAT 2010-06-29
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_start_filtered_on_namespace_prefixes_it )
+{
+    xml::xostringstream xos;
+    xos << xml::ns( "http://www.example.org" ) << xml::start( "element" ) << xml::prefix( "http://www.example.org", "ns" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<ns:element xmlns:ns=\"http://www.example.org\"/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: writing_start_filtered_on_namespace_prefixes_it
+// Created: MAT 2010-06-29
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_start_filtered_on_default_namespace_does_not_prefix_it )
+{
+    xml::xostringstream xos;
+    xos << xml::ns( "http://www.example.org" ) << xml::start( "element" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element xmlns=\"http://www.example.org\"/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: writing_start_filtered_on_no_namespace_does_not_prefix_it
+// Created: MAT 2010-07-27
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_start_filtered_on_no_namespace_does_not_prefix_it )
+{
+    xml::xostringstream xos;
+    xos << xml::ns( "" ) << xml::start( "element" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: writing_prefix_for_non_existing_namespace_adds_prefix_declaration
+// Created: MAT 2010-07-27
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_prefix_for_non_existing_namespace_adds_prefix_declaration )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "element" ) << xml::prefix( "http://www.example.org", "ns" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+        "<element xmlns:ns=\"http://www.example.org\"/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: writing_prefix_for_no_namespace_throws
+// Created: MAT 2010-07-27
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_prefix_for_no_namespace_throws )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "element" );
+    BOOST_CHECK_THROW( xos << xml::prefix( "", "ns" ), xml::exception );
+}
+
+// -----------------------------------------------------------------------------
+// Name: writing_no_prefix_for_no_namespace_throws
+// Created: MAT 2010-07-27
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_no_prefix_for_no_namespace_throws )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "element" );
+    BOOST_CHECK_THROW( xos << xml::prefix( "", "" ), xml::exception );
+}
+
+// -----------------------------------------------------------------------------
+// Name: namespace_is_only_declared_the_first_time_needed
+// Created: MAT 2010-06-29
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( namespace_is_only_declared_the_first_time_needed )
+{
+    xml::xostringstream xos;
+    xos << xml::ns( "http://www.example.org" ) << xml::start( "element" ) << xml::prefix( "http://www.example.org", "ns" )
+            << xml::ns( "http://www.example.org" ) << xml::start( "sub-element" )
+                << xml::ns( "http://www.example.org" ) << xml::attribute( "attribute", 42 );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<ns:element xmlns:ns=\"http://www.example.org\">\n"
+                       "  <ns:sub-element ns:attribute=\"42\"/>\n"
+                       "</ns:element>\n", xos.str() );
+}

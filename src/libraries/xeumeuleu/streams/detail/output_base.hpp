@@ -71,6 +71,7 @@ public:
 
     virtual void cdata( const std::string& value ) = 0;
     virtual void instruction( const std::string& target, const std::string& data ) = 0;
+    virtual void prefix( const std::string& ns, const std::string& prefix ) = 0;
 
     virtual std::auto_ptr< output_base > attribute( const std::string& ns, const std::string& name ) = 0;
 

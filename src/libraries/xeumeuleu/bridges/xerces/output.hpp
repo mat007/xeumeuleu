@@ -85,6 +85,9 @@ public:
     {
         XEUMEULEU_TRY
             current_ = current_->appendChild( document_.createElementNS( translate( ns ), translate( tag ) ) );
+            const XMLCh* prefix = current_->lookupPrefix( translate( ns ) );
+            if( prefix )
+                current_->setPrefix( prefix );
         XEUMEULEU_CATCH
     }
     virtual void end()
@@ -177,6 +180,19 @@ public:
             current_->appendChild( document_.createProcessingInstruction( translate( target ), translate( data ) ) );
         XEUMEULEU_CATCH
     }
+    virtual void prefix( const std::string& ns, const std::string& prefix )
+    {
+        XEUMEULEU_TRY
+            XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
+            if( ! attributes )
+                throw xml::exception( location() + " cannot have attributes" );
+            XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttributeNS( XERCES_CPP_NAMESPACE::XMLUni::fgXMLNSURIName, translate( "xmlns:" + prefix ) );
+            att->setValue( translate( ns ) );
+            attributes->setNamedItemNS( att );
+            if( ! current_->getPrefix() && current_->getNamespaceURI() == translate( ns ) )
+                current_->setPrefix( translate( prefix ) );
+        XEUMEULEU_CATCH
+    }
 
     virtual std::auto_ptr< output_base > attribute( const std::string& ns, const std::string& name )
     {
@@ -186,6 +202,9 @@ public:
                 throw xml::exception( location() + " cannot have attributes" );
             XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttributeNS( translate( ns ), translate( name ) );
             attributes->setNamedItemNS( att );
+            const XMLCh* prefix = current_->lookupPrefix( translate( ns ) );
+            if( prefix )
+                att->setPrefix( prefix );
             return std::auto_ptr< output_base >( new output( document_, *att ) );
         XEUMEULEU_CATCH
     }
