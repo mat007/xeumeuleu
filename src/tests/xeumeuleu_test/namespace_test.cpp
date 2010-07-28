@@ -56,13 +56,13 @@ BOOST_AUTO_TEST_CASE( reading_start_in_empty_namespace_is_valid )
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_prefixed_start_throws
+// Name: reading_prefixed_start_is_valid
 // Created: MAT 2010-06-29
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_prefixed_start_throws )
+BOOST_AUTO_TEST_CASE( reading_prefixed_start_is_valid )
 {
     xml::xistringstream xis( "<ns:element xmlns:ns='http://www.example.org'/>" );
-    BOOST_CHECK_THROW( xis >> xml::start( "ns:element" ), xml::exception );
+    xis >> xml::start( "ns:element" );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,15 +147,16 @@ BOOST_AUTO_TEST_CASE( reading_attribute_in_empty_namespace_does_not_throw )
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_prefixed_attribute_throws
+// Name: reading_prefixed_attribute_does_not_throw
 // Created: MAT 2010-06-29
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_prefixed_attribute_throws )
+BOOST_AUTO_TEST_CASE( reading_prefixed_attribute_does_not_throw )
 {
     xml::xistringstream xis( "<element ns:attribute='12' xmlns:ns='http://www.example.org'/>" );
     int value;
-    xis >> xml::start( "element" );
-    BOOST_CHECK_THROW( xis >> xml::attribute( "ns:element", value ), xml::exception );
+    xis >> xml::start( "element" )
+            >> xml::attribute( "ns:attribute", value );
+    BOOST_CHECK_EQUAL( 12, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -569,6 +570,18 @@ BOOST_AUTO_TEST_CASE( reading_writing_namespace_declaration_and_usage )
 }
 
 // -----------------------------------------------------------------------------
+// Name: writing_prefixed_start_is_valid
+// Created: MAT 2010-07-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_prefixed_start_is_valid )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "ns:element" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<ns:element/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: writing_start_filtered_on_namespace_prefixes_it
 // Created: MAT 2010-06-29
 // -----------------------------------------------------------------------------
@@ -628,14 +641,27 @@ BOOST_AUTO_TEST_CASE( writing_prefix_for_no_namespace_throws )
 }
 
 // -----------------------------------------------------------------------------
-// Name: writing_no_prefix_for_no_namespace_throws
+// Name: writing_default_prefix_for_no_namespace_throws
 // Created: MAT 2010-07-27
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( writing_no_prefix_for_no_namespace_throws )
+BOOST_AUTO_TEST_CASE( writing_default_prefix_for_no_namespace_throws )
 {
     xml::xostringstream xos;
     xos << xml::start( "element" );
     BOOST_CHECK_THROW( xos << xml::prefix( "", "" ), xml::exception );
+}
+
+// -----------------------------------------------------------------------------
+// Name: writing_prefix_for_default_namespace_adds_prefix_declaration
+// Created: MAT 2010-07-27
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_prefix_for_default_namespace_adds_prefix_declaration )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "element" )
+            << xml::prefix( "http://www.example.org", "" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element xmlns=\"http://www.example.org\"/>\n", xos.str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -652,4 +678,33 @@ BOOST_AUTO_TEST_CASE( namespace_is_only_declared_the_first_time_needed )
                        "<ns:element xmlns:ns=\"http://www.example.org\">\n"
                        "  <ns:sub-element ns:attribute=\"42\"/>\n"
                        "</ns:element>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: writing_schemas
+// Created: MAT 2010-07-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_schemas )
+{
+    xml::xostringstream xos;
+    xos << xml::ns( "http://www.example.org" ) << xml::start( "element" )
+            << xml::prefix( "http://www.w3.org/2001/XMLSchema-instance", "xsi" )
+            << xml::ns( "http://www.w3.org/2001/XMLSchema-instance" )
+                << xml::attribute( "noNamespaceSchemaLocation", "my-schema.xsd" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element xmlns=\"http://www.example.org\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"my-schema.xsd\"/>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: writing_schemas_with_attributes
+// Created: MAT 2010-07-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( writing_schemas_with_attributes )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "element" )
+        << xml::attribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" )
+            << xml::attribute( "xsi:noNamespaceSchemaLocation", "my-schema.xsd" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"my-schema.xsd\"/>\n", xos.str() );
 }
