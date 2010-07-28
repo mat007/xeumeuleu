@@ -33,6 +33,8 @@
 #include "xeumeuleu_test_pch.h"
 #include <xeumeuleu/xml.hpp>
 
+using namespace mockpp;
+
 // -----------------------------------------------------------------------------
 // Name: a_buffer_stream_can_be_used_for_writing_and_reading
 // Created: MCO 2008-04-26
@@ -120,4 +122,45 @@ BOOST_AUTO_TEST_CASE( adding_several_times_a_buffer_stream_duplicates_the_branch
                        "  <sub-node/>\n"
                        "  <sub-node/>\n"
                        "</element>\n", xos.str() );
+}
+
+namespace
+{
+    class mock_custom_class : public mockpp::ChainableMockObject
+    {
+    public:
+        mock_custom_class()
+            : mockpp::ChainableMockObject( "mock_custom_class", 0 )
+            , process_mocker( "process", this )
+        {}
+        void process( xml::xistream& xis )
+        {
+            std::string content;
+            xis >> content;
+            process_mocker.forward( content );
+        }
+        mockpp::ChainableMockMethod< void, std::string > process_mocker;
+
+    private:
+        mock_custom_class( const mock_custom_class& );
+        mock_custom_class& operator=( const mock_custom_class& );
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: buffered_elements_can_be_read_with_a_list
+// Created: MAT 2010-07-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( buffered_elements_can_be_read_with_a_list )
+{
+    mock_custom_class mock_custom;
+    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "content number one" ) );
+    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "content number two" ) );
+    xml::xobufferstream xos;
+    xos << xml::start( "element" )
+            << xml::content( "sub-node", "content number one" )
+            << xml::content( "sub-node", "content number two" );
+    xos >> xml::start( "element" )
+            >> xml::list( "sub-node", mock_custom, &mock_custom_class::process );
+    mock_custom.verify();
 }

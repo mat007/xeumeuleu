@@ -171,7 +171,8 @@ public:
                 {
                     input i( *child );
                     xistream xis( i );
-                    v( translate( child->getNamespaceURI() ), translate( child->getLocalName() ), xis );
+                    const XMLCh* name = child->getLocalName() ? child->getLocalName() : child->getNodeName();
+                    v( translate( child->getNamespaceURI() ), translate( name ), xis );
                 }
                 child = child->getNextSibling();
             }
