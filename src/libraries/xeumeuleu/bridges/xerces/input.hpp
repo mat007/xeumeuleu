@@ -190,7 +190,8 @@ public:
                     {
                         input i( *attribute );
                         xistream xis( i );
-                        v( translate( attribute->getNamespaceURI() ), translate( attribute->getLocalName() ), xis );
+                        const XMLCh* name = attribute->getLocalName() ? attribute->getLocalName() : attribute->getNodeName();
+                        v( translate( attribute->getNamespaceURI() ), translate( name ), xis );
                     }
                 }
             }
@@ -242,7 +243,7 @@ private:
         for( XMLSize_t i = 0; i < nodes->getLength(); ++i )
         {
             const XERCES_CPP_NAMESPACE::DOMNode* node = nodes->item( i );
-            if( name == translate( node->getLocalName() )
+            if( (name == translate( node->getLocalName() ) || name == translate( node->getNodeName() ))
                 && accept( ns, node ) )
                 return node;
         }
