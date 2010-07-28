@@ -63,7 +63,8 @@ public:
     //@{
     void start( const std::string& tag )
     {
-        output_.start( ns(), tag );
+        std::auto_ptr< std::string > ns = ns_;
+        output_.start( ns.get(), tag );
     }
     void end()
     {
@@ -98,7 +99,8 @@ public:
     }
     template< typename T > void attribute( const std::string& name, const T& value )
     {
-        std::auto_ptr< output_base > output = output_.attribute( ns(), name );
+        std::auto_ptr< std::string > ns = ns_;
+        std::auto_ptr< output_base > output = output_.attribute( ns.get(), name );
         if( output.get() )
         {
             xostream xos( *output );
@@ -120,7 +122,7 @@ public:
     }
     void ns( const std::string& name )
     {
-        ns_ = name;
+        ns_.reset( new std::string( name ) );
     }
     //@}
 
@@ -131,23 +133,11 @@ private:
     xostream& operator=( const xostream& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    std::string ns()
-    {
-        if( ns_.empty() )
-            return "";
-        std::string ns;
-        ns.swap( ns_ );
-        return ns;
-    }
-    //@}
-
 private:
     //! @name Member data
     //@{
     output_base& output_;
-    std::string ns_;
+    std::auto_ptr< std::string > ns_;
     //@}
 };
 
