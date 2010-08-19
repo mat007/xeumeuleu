@@ -37,11 +37,23 @@
 #   pragma GCC system_header
 #endif
 
-#include <xercesc/util/XercesVersion.hpp>
-#include <xercesc/dom/DOM.hpp>
+#include <xercesc/dom/DOMLocator.hpp>
+#include <xercesc/dom/DOMErrorHandler.hpp>
+#include <xercesc/dom/DOMImplementationRegistry.hpp>
+#include <xercesc/dom/DOMImplementation.hpp>
+#include <xercesc/dom/DOMElement.hpp>
+#include <xercesc/dom/DOMText.hpp>
+#include <xercesc/dom/DOMProcessingInstruction.hpp>
+#include <xercesc/dom/DOMCDATASection.hpp>
+#include <xercesc/dom/DOMAttr.hpp>
+#include <xercesc/dom/DOMNamedNodeMap.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 #if XERCES_VERSION_MAJOR == 3
+#include <xercesc/dom/DOMLSSerializer.hpp>
+#include <xercesc/dom/DOMLSOutput.hpp>
 #include <xercesc/parsers/DOMLSParserImpl.hpp>
 #else
+#include <xercesc/dom/DOMWriter.hpp>
 #include <xercesc/parsers/DOMBuilderImpl.hpp>
 #endif // XERCES_VERSION_MAJOR
 #include <xercesc/framework/LocalFileInputSource.hpp>
