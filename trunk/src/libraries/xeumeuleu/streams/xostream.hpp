@@ -79,19 +79,19 @@ public:
 
     //! @name Modifiers
     //@{
-    xostream& operator<<( const char* value ) { output_.write( std::string( value ) ); return *this; }
-    xostream& operator<<( const std::string& value ) { output_.write( value ); return *this; }
-    xostream& operator<<( bool value ) { output_.write( value ); return *this; }
-    xostream& operator<<( int value ) { output_.write( value ); return *this; }
-    xostream& operator<<( long value ) { output_.write( value ); return *this; }
-    xostream& operator<<( long long value ) { output_.write( value ); return *this; }
-    xostream& operator<<( float value ) { output_.write( value ); return *this; }
-    xostream& operator<<( double value ) { output_.write( value ); return *this; }
-    xostream& operator<<( long double value ) { output_.write( value ); return *this; }
-    xostream& operator<<( unsigned int value ) { output_.write( value ); return *this; }
-    xostream& operator<<( unsigned long value ) { output_.write( value ); return *this; }
-    xostream& operator<<( unsigned long long value ) { output_.write( value ); return *this; }
-    xostream& operator<<( const xistream& xis );
+    friend xostream& operator<<( xostream& xos, const char* value ) { xos.output_.write( std::string( value ) ); return xos; }
+    friend xostream& operator<<( xostream& xos, const std::string& value ) { xos.output_.write( value ); return xos; }
+    friend xostream& operator<<( xostream& xos, bool value ) { xos.output_.write( value ); return xos; }
+    friend xostream& operator<<( xostream& xos, int value ) { xos.output_.write( value ); return xos; }
+    friend xostream& operator<<( xostream& xos, long value ) { xos.output_.write( value ); return xos; }
+    friend xostream& operator<<( xostream& xos, long long value ) { xos.output_.write( value ); return xos; }
+    friend xostream& operator<<( xostream& xos, float value ) { xos.output_.write( value ); return xos; }
+    friend xostream& operator<<( xostream& xos, double value ) { xos.output_.write( value ); return xos; }
+    friend xostream& operator<<( xostream& xos, long double value ) { xos.output_.write( value ); return xos; }
+    friend xostream& operator<<( xostream& xos, unsigned int value ) { xos.output_.write( value ); return xos; }
+    friend xostream& operator<<( xostream& xos, unsigned long value ) { xos.output_.write( value ); return xos; }
+    friend xostream& operator<<( xostream& xos, unsigned long long value ) { xos.output_.write( value ); return xos; }
+    friend xostream& operator<<( xostream& xos, const xistream& xis );
 
     void attribute( const std::string& name, const char* value )
     {
@@ -147,10 +147,10 @@ private:
 
 namespace xml
 {
-    inline xostream& xostream::operator<<( const xistream& xis )
+    inline xostream& operator<<( xostream& xos, const xistream& xis )
     {
-        xis.copy( output_ );
-        return *this;
+        xis.copy( xos.output_ );
+        return xos;
     }
 }
 

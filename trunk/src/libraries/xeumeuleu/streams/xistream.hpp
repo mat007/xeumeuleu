@@ -76,20 +76,19 @@ public:
         input_->end();
     }
 
-    xistream& operator>>( std::string& value ) { input_->read().to( value ); return *this; }
-    xistream& operator>>( bool& value ) { input_->read().to( value ); return *this; }
-    xistream& operator>>( short& value ) { input_->read().to( value ); return *this; }
-    xistream& operator>>( int& value ) { input_->read().to( value ); return *this; }
-    xistream& operator>>( long& value ) { input_->read().to( value ); return *this; }
-    xistream& operator>>( long long& value ) { input_->read().to( value ); return *this; }
-    xistream& operator>>( float& value ) { input_->read().to( value ); return *this; }
-    xistream& operator>>( double& value ) { input_->read().to( value ); return *this; }
-    xistream& operator>>( long double& value ) { input_->read().to( value ); return *this; }
-    xistream& operator>>( unsigned short& value ) { input_->read().to( value ); return *this; }
-    xistream& operator>>( unsigned int& value ) { input_->read().to( value ); return *this; }
-    xistream& operator>>( unsigned long& value ) { input_->read().to( value ); return *this; }
-    xistream& operator>>( unsigned long long& value ) { input_->read().to( value ); return *this; }
-    xistream& operator>>( xostream& xos );
+    friend xistream& operator>>( xistream& xis, std::string& value ) { xis.input_->read().to( value ); return xis; }
+    friend xistream& operator>>( xistream& xis, bool& value ) { xis.input_->read().to( value ); return xis; }
+    friend xistream& operator>>( xistream& xis, short& value ) { xis.input_->read().to( value ); return xis; }
+    friend xistream& operator>>( xistream& xis, int& value ) { xis.input_->read().to( value ); return xis; }
+    friend xistream& operator>>( xistream& xis, long& value ) { xis.input_->read().to( value ); return xis; }
+    friend xistream& operator>>( xistream& xis, long long& value ) { xis.input_->read().to( value ); return xis; }
+    friend xistream& operator>>( xistream& xis, float& value ) { xis.input_->read().to( value ); return xis; }
+    friend xistream& operator>>( xistream& xis, double& value ) { xis.input_->read().to( value ); return xis; }
+    friend xistream& operator>>( xistream& xis, long double& value ) { xis.input_->read().to( value ); return xis; }
+    friend xistream& operator>>( xistream& xis, unsigned short& value ) { xis.input_->read().to( value ); return xis; }
+    friend xistream& operator>>( xistream& xis, unsigned int& value ) { xis.input_->read().to( value ); return xis; }
+    friend xistream& operator>>( xistream& xis, unsigned long& value ) { xis.input_->read().to( value ); return xis; }
+    friend xistream& operator>>( xistream& xis, unsigned long long& value ) { xis.input_->read().to( value ); return xis; }
 
     std::auto_ptr< input_base > branch( bool clone ) const
     {
@@ -287,10 +286,10 @@ namespace xml
         xiss >> value;
         return value;
     }
-    inline xistream& xistream::operator>>( xostream& xos )
+    inline xistream& operator>>( xistream& xis, xostream& xos )
     {
-        xos << *this;
-        return *this;
+        xos << xis;
+        return xis;
     }
 }
 
