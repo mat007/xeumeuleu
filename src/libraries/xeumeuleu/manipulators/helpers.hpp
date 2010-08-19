@@ -30,8 +30,8 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_hppelpers_hpp
-#define xeumeuleu_hppelpers_hpp
+#ifndef xeumeuleu_helpers_hpp
+#define xeumeuleu_helpers_hpp
 
 #include <xeumeuleu/streams/xisubstream.hpp>
 #include <xeumeuleu/manipulators/optional.hpp>
@@ -114,4 +114,4 @@ T content( xisubstream xis, const std::string& tag, const T& fallback ) //<! Dep
 #endif // XEUMEULEU_NO_DEPRECATED
 }
 
-#endif // xeumeuleu_hppelpers_hpp
+#endif // xeumeuleu_helpers_hpp

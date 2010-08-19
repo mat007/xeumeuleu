@@ -33,8 +33,6 @@
 #ifndef xeumeuleu_optional_hpp
 #define xeumeuleu_optional_hpp
 
-#include <xeumeuleu/streams/xistream.hpp>
-
 namespace xml
 {
     class xistream;
@@ -55,11 +53,6 @@ class optional_manipulator
 public:
     //! @name Operators
     //@{
-    friend xistream& operator>>( xistream& xis, const optional_manipulator& /*m*/ )
-    {
-        xis.optional();
-        return xis;
-    }
 #ifndef XEUMEULEU_NO_DEPRECATED
     const optional_manipulator& operator()() const //<! Deprecated !
     {

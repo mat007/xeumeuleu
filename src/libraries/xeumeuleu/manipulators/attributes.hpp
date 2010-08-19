@@ -45,7 +45,7 @@ namespace xml
 // Created: MAT 2007-08-01
 // =============================================================================
 template< typename T >
-class attributes_manipulator : private adapter< T >
+class attributes_manipulator : public adapter< T >
 {
 public:
     //! @name Constructors/Destructor
@@ -53,15 +53,6 @@ public:
     explicit attributes_manipulator( T functor )
         : adapter< T >( functor )
     {}
-    //@}
-
-    //! @name Operators
-    //@{
-    friend xistream& operator>>( xistream& xis, const attributes_manipulator& m )
-    {
-        xis.attributes( m );
-        return xis;
-    }
     //@}
 };
 
