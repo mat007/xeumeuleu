@@ -32,9 +32,8 @@
 
 #include "xeumeuleu_test_pch.h"
 #include <xeumeuleu/xml.hpp>
+#include <turtle/mock.hpp>
 #include <boost/bind.hpp>
-
-using namespace mockpp;
 
 namespace
 {
@@ -227,24 +226,15 @@ namespace
 
 namespace
 {
-    class mock_custom_class : public mockpp::ChainableMockObject
+    MOCK_CLASS( mock_custom_class )
     {
-    public:
-        mock_custom_class()
-            : mockpp::ChainableMockObject( "mock_custom_class", 0 )
-            , process_mocker( "process", this )
-        {}
         void process( xml::xistream& xis )
         {
             std::string content;
             xis >> content;
-            process_mocker.forward( content );
+            forward( content );
         }
-        mockpp::ChainableMockMethod< void, std::string > process_mocker;
-
-    private:
-        mock_custom_class( const mock_custom_class& );
-        mock_custom_class& operator=( const mock_custom_class& );
+        MOCK_METHOD_EXT( forward, 1, void( std::string ), forward )
     };
 }
 
@@ -255,38 +245,27 @@ namespace
 BOOST_AUTO_TEST_CASE( read_list_from_element_calls_a_custom_method )
 {
     mock_custom_class mock_custom;
-    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "content number one" ) );
-    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "content number two" ) );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "content number one" );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "content number two" );
     xml::xistringstream xis( "<element>"
                                "<sub-node>content number one</sub-node>"
                                "<sub-node>content number two</sub-node>"
                              "</element>" );
     xis >> xml::start( "element" )
-            >> xml::list( "sub-node", mock_custom, &mock_custom_class::process )
-        >> xml::end;
-    mock_custom.verify();
+            >> xml::list( "sub-node", mock_custom, &mock_custom_class::process );
 }
 
 namespace
 {
-    class mock_custom_class_with_parameters : public mockpp::ChainableMockObject
+    MOCK_CLASS( mock_custom_class_with_parameters )
     {
-    public:
-        mock_custom_class_with_parameters()
-            : mockpp::ChainableMockObject( "mock_custom_class_with_parameters", 0 )
-            , process_mocker( "process", this )
-        {}
         void process( xml::xistream& xis, int p1, const float p2 )
         {
             std::string content;
             xis >> content;
-            process_mocker.forward( content, p1, p2 );
+            forward( content, p1, p2 );
         }
-        mockpp::ChainableMockMethod< void, std::string, int, float > process_mocker;
-
-    private:
-        mock_custom_class_with_parameters( const mock_custom_class_with_parameters& );
-        mock_custom_class_with_parameters& operator=( const mock_custom_class_with_parameters& );
+        MOCK_METHOD_EXT( forward, 3, void( std::string, int, float ), forward )
     };
 }
 
@@ -299,14 +278,12 @@ BOOST_AUTO_TEST_CASE( read_list_from_element_calls_a_custom_method_with_paramete
     mock_custom_class_with_parameters mock_custom;
     int p1 = 12;
     const float p2 = 12.42f;
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "content" ), eq( p1 ), eq( p2 ) );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "content", p1, p2 );
     xml::xistringstream xis( "<element>"
                                "<sub-node>content</sub-node>"
                              "</element>" );
     xis >> xml::start( "element" )
-            >> xml::list( "sub-node", mock_custom, &mock_custom_class_with_parameters::process, p1, p2 )
-        >> xml::end;
-    mock_custom.verify();
+            >> xml::list( "sub-node", mock_custom, &mock_custom_class_with_parameters::process, p1, p2 );
 }
 
 namespace
@@ -315,24 +292,15 @@ namespace
     {
     };
 
-    class mock_custom_class_with_polymorphic_parameter : public mockpp::ChainableMockObject
+    MOCK_CLASS( mock_custom_class_with_polymorphic_parameter )
     {
-    public:
-        mock_custom_class_with_polymorphic_parameter()
-            : mockpp::ChainableMockObject( "mock_custom_class_with_polymorphic_parameter", 0 )
-            , process_mocker( "process", this )
-        {}
         void process( xml::xistream& xis, an_interface& p1 )
         {
             std::string content;
             xis >> content;
-            process_mocker.forward( content, &p1 );
+            forward( content, p1 );
         }
-        mockpp::ChainableMockMethod< void, std::string, an_interface* > process_mocker;
-
-    private:
-        mock_custom_class_with_polymorphic_parameter( const mock_custom_class_with_polymorphic_parameter& );
-        mock_custom_class_with_polymorphic_parameter& operator=( const mock_custom_class_with_polymorphic_parameter& );
+        MOCK_METHOD_EXT( forward, 2, void( std::string, an_interface& ), forward )
     };
 
     class a_class : public an_interface
@@ -348,14 +316,12 @@ BOOST_AUTO_TEST_CASE( read_list_from_element_calls_a_custom_method_with_polymorp
 {
     mock_custom_class_with_polymorphic_parameter mock_custom;
     a_class my_instance;
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "content" ), eq< an_interface* >( &my_instance ) );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "content", mock::same( my_instance ) );
     xml::xistringstream xis( "<element>"
                                "<sub-node>content</sub-node>"
                              "</element>" );
     xis >> xml::start( "element" )
-            >> xml::list( "sub-node", mock_custom, &mock_custom_class_with_polymorphic_parameter::process, my_instance )
-        >> xml::end;
-    mock_custom.verify();
+            >> xml::list( "sub-node", mock_custom, &mock_custom_class_with_polymorphic_parameter::process, my_instance );
 }
 
 namespace
@@ -385,24 +351,15 @@ BOOST_AUTO_TEST_CASE( move_up_from_sub_node_throws_an_exception )
 
 namespace
 {
-    class mock_custom_class_name_list : public mockpp::ChainableMockObject
+    MOCK_CLASS( mock_custom_class_name_list )
     {
-    public:
-        mock_custom_class_name_list()
-            : mockpp::ChainableMockObject( "mock_custom_class_name_list", 0 )
-            , process_mocker( "process", this )
-        {}
         void process( const std::string& name, xml::xistream& xis )
         {
             std::string content;
             xis >> content;
-            process_mocker.forward( name, content );
+            forward( name, content );
         }
-        mockpp::ChainableMockMethod< void, std::string, std::string > process_mocker;
-
-    private:
-        mock_custom_class_name_list( const mock_custom_class_name_list& );
-        mock_custom_class_name_list& operator=( const mock_custom_class_name_list& );
+        MOCK_METHOD_EXT( forward, 2, void( std::string, std::string ), forward )
     };
 }
 
@@ -417,12 +374,10 @@ BOOST_AUTO_TEST_CASE( read_name_list_is_called_with_each_element )
                                "<sub-node2>content number two</sub-node2>"
                              "</element>" );
     mock_custom_class_name_list mock_custom;
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "sub-node1" ), eq< std::string >( "content number one" ) );
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "sub-node2" ), eq< std::string >( "content number two" ) );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "sub-node1", "content number one" );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "sub-node2", "content number two" );
     xis >> xml::start( "element" )
-            >> xml::list( mock_custom, &mock_custom_class_name_list::process )
-        >> xml::end;
-    mock_custom.verify();
+            >> xml::list( mock_custom, &mock_custom_class_name_list::process );
 }
 
 // -----------------------------------------------------------------------------
@@ -436,33 +391,22 @@ BOOST_AUTO_TEST_CASE( read_name_list_is_not_called_with_content )
                                "<sub-node>content</sub-node>"
                              "</element>" );
     mock_custom_class_name_list mock_custom;
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "sub-node" ), eq< std::string >( "content" ) );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "sub-node", "content" );
     xis >> xml::start( "element" )
-            >> xml::list( mock_custom, &mock_custom_class_name_list::process )
-        >> xml::end;
-    mock_custom.verify();
+            >> xml::list( mock_custom, &mock_custom_class_name_list::process );
 }
 
 namespace
 {
-    class mock_custom_class_name_list_with_parameters : public mockpp::ChainableMockObject
+    MOCK_CLASS( mock_custom_class_name_list_with_parameters )
     {
-    public:
-        mock_custom_class_name_list_with_parameters()
-            : mockpp::ChainableMockObject( "mock_custom_class_name_list_with_parameters", 0 )
-            , process_mocker( "process", this )
-        {}
         void process( const std::string& name, xml::xistream& xis, int p1 )
         {
             std::string content;
             xis >> content;
-            process_mocker.forward( name, content, p1 );
+            forward( name, content, p1 );
         }
-        mockpp::ChainableMockMethod< void, std::string, std::string, int > process_mocker;
-
-    private:
-        mock_custom_class_name_list_with_parameters( const mock_custom_class_name_list_with_parameters& );
-        mock_custom_class_name_list_with_parameters& operator=( const mock_custom_class_name_list_with_parameters& );
+        MOCK_METHOD_EXT( forward, 3, void( std::string, std::string, int ), forward )
     };
 }
 
@@ -478,12 +422,10 @@ BOOST_AUTO_TEST_CASE( read_name_list_with_parameters )
                              "</element>" );
     int p1 = 12;
     mock_custom_class_name_list_with_parameters mock_custom;
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "sub-node1" ), eq< std::string >( "content number one" ), eq( p1 ) );
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "sub-node2" ), eq< std::string >( "content number two" ), eq( p1 ) );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "sub-node1", "content number one", p1 );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "sub-node2", "content number two", p1 );
     xis >> xml::start( "element" )
-            >> xml::list( mock_custom, &mock_custom_class_name_list_with_parameters::process, p1 )
-        >> xml::end;
-    mock_custom.verify();
+            >> xml::list( mock_custom, &mock_custom_class_name_list_with_parameters::process, p1 );
 }
 
 namespace
@@ -508,18 +450,16 @@ BOOST_AUTO_TEST_CASE( msvc_does_not_issue_packing_related_warning_C4355_or_C4121
     a_class_virtually_inheriting_from_another my_instance;
     xis >> xml::list( "element", my_instance, &a_class_virtually_inheriting_from_another::process );
 }
-
 namespace
 {
-    mockpp::ChainableMockObject my_function_mock( "my_function_mock" );
-    mockpp::ChainableMockMethod< void > my_function_mocker( "my_function", &my_function_mock );
+    MOCK_FUNCTOR( void() ) forward;
     void my_function( xml::xistream& )
     {
-        my_function_mocker.forward();
+        forward();
     }
     void my_name_function( const std::string&, const std::string&, xml::xistream& )
     {
-        my_function_mocker.forward();
+        forward();
     }
 }
 
@@ -530,16 +470,15 @@ namespace
 BOOST_AUTO_TEST_CASE( list_accepts_function_as_functor )
 {
     xml::xistringstream xis( "<element/>" );
-    my_function_mock.reset();
+    MOCK_RESET( forward, _ );
     {
-        my_function_mocker.expects( mockpp::once() );
+        MOCK_EXPECT( forward, _ ).once();
         xis >> xml::list( "element", &my_function );
-        my_function_mock.verify();
+        mock::verify();
     }
     {
-        my_function_mocker.expects( mockpp::once() );
+        MOCK_EXPECT( forward, _ ).once();
         xis >> xml::list( &my_name_function );
-        my_function_mock.verify();
     }
 }
 
@@ -550,11 +489,11 @@ namespace
     public:
         void operator()( xml::xistream& ) const
         {
-            my_function_mocker.forward();
+            forward();
         }
         void operator()( const std::string&, const std::string&, xml::xistream& ) const
         {
-            my_function_mocker.forward();
+            forward();
         }
     };
 }
@@ -566,16 +505,15 @@ namespace
 BOOST_AUTO_TEST_CASE( list_accepts_functor_by_copy )
 {
     xml::xistringstream xis( "<element/>" );
-    my_function_mock.reset();
+    MOCK_RESET( forward, _ );
     {
-        my_function_mocker.expects( mockpp::once() );
+        MOCK_EXPECT( forward, _ ).once();
         xis >> xml::list( "element", my_functor_class() );
-        my_function_mock.verify();
+        mock::verify();
     }
     {
-        my_function_mocker.expects( mockpp::once() );
+        MOCK_EXPECT( forward, _ ).once();
         xis >> xml::list( my_functor_class() );
-        my_function_mock.verify();
     }
 }
 
@@ -586,53 +524,42 @@ BOOST_AUTO_TEST_CASE( list_accepts_functor_by_copy )
 BOOST_AUTO_TEST_CASE( list_accepts_functor_by_reference )
 {
     xml::xistringstream xis( "<element/>" );
-    my_function_mock.reset();
+    MOCK_RESET( forward, _ );
     {
-        my_function_mocker.expects( mockpp::once() );
+        MOCK_EXPECT( forward, _ ).once();
         my_functor_class functor;
         xis >> xml::list< my_functor_class& >( "element", functor );
-        my_function_mock.verify();
+        mock::verify();
     }
     {
-        my_function_mocker.expects( mockpp::once() );
+        MOCK_EXPECT( forward, _ ).once();
         my_functor_class functor;
         xis >> xml::list< my_functor_class& >( functor );
-        my_function_mock.verify();
     }
 }
 
 namespace
 {
-    class my_bindable_class : public mockpp::ChainableMockObject
+    MOCK_CLASS( my_bindable_class )
     {
     public:
-        my_bindable_class()
-            : mockpp::ChainableMockObject( "my_bindable_class", 0 )
-            , my_method_mocker( "my_method", this )
-        {}
-
         void my_method_1( xml::xistream& )
         {
-            my_method_mocker.forward();
+            forward();
         }
         void const_my_method_1( xml::xistream& ) const
         {
-            my_method_mocker.forward();
+            forward();
         }
         void my_method_2( const std::string&, xml::xistream& )
         {
-            my_method_mocker.forward();
+            forward();
         }
         void const_my_method_2( const std::string&, xml::xistream& ) const
         {
-            my_method_mocker.forward();
+            forward();
         }
-
-        mockpp::ChainableMockMethod< void > my_method_mocker;
-
-    private:
-        my_bindable_class( const my_bindable_class& );
-        my_bindable_class& operator=( const my_bindable_class& );
+        MOCK_METHOD_EXT( forward, 0, void(), forward )
     };
 }
 
@@ -645,27 +572,26 @@ BOOST_AUTO_TEST_CASE( list_accepts_boost_bind_as_functor )
     xml::xistringstream xis( "<element/>" );
     {
         my_bindable_class my_instance;
-        my_instance.my_method_mocker.expects( mockpp::once() );
+        MOCK_EXPECT( my_instance, forward ).once();
         xis >> xml::list( "element", boost::bind( &my_bindable_class::my_method_1, boost::ref( my_instance ), _1 ) );
-        my_instance.verify();
+        mock::verify();
     }
     {
         my_bindable_class my_instance;
-        my_instance.my_method_mocker.expects( mockpp::once() );
+        MOCK_EXPECT( my_instance, forward ).once();
         xis >> xml::list( "element", boost::bind( &my_bindable_class::const_my_method_1, boost::ref( my_instance ), _1 ) );
-        my_instance.verify();
+        mock::verify();
     }
     {
         my_bindable_class my_instance;
-        my_instance.my_method_mocker.expects( mockpp::once() );
+        MOCK_EXPECT( my_instance, forward ).once();
         xis >> xml::list( boost::bind( &my_bindable_class::my_method_2, boost::ref( my_instance ), _2, _3 ) );
-        my_instance.verify();
+        mock::verify();
     }
     {
         my_bindable_class my_instance;
-        my_instance.my_method_mocker.expects( mockpp::once() );
+        MOCK_EXPECT( my_instance, forward ).once();
         xis >> xml::list( boost::bind( &my_bindable_class::const_my_method_2, boost::ref( my_instance ), _2, _3 ) );
-        my_instance.verify();
     }
 }
 
