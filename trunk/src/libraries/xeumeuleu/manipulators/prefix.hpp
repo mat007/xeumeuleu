@@ -33,8 +33,6 @@
 #ifndef xeumeuleu_prefix_hpp
 #define xeumeuleu_prefix_hpp
 
-#include <xeumeuleu/streams/xistream.hpp>
-#include <xeumeuleu/streams/xostream.hpp>
 #include <string>
 
 namespace xml
@@ -57,27 +55,13 @@ public:
     {}
     //@}
 
-    //! @name Operators
-    //@{
-    friend xistream& operator>>( xistream& xis, const prefix_manipulator& m )
-    {
-        xis.prefix( m.ns_, m.value_ );
-        return xis;
-    }
-    friend xostream& operator<<( xostream& xos, const prefix_manipulator& m )
-    {
-        xos.prefix( m.ns_, m.value_ );
-        return xos;
-    }
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
     prefix_manipulator& operator=( const prefix_manipulator& ); //!< Assignment operator
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     std::string ns_;

@@ -33,8 +33,6 @@
 #ifndef xeumeuleu_attribute_hpp
 #define xeumeuleu_attribute_hpp
 
-#include <xeumeuleu/streams/xistream.hpp>
-#include <xeumeuleu/streams/xostream.hpp>
 #include <string>
 
 namespace xml
@@ -57,27 +55,13 @@ public:
     {}
     //@}
 
-    //! @name Operators
-    //@{
-    friend xistream& operator>>( xistream& xis, const attribute_manipulator& m )
-    {
-        xis.attribute_by_ref( m.name_, m.value_ );
-        return xis;
-    }
-    friend xostream& operator<<( xostream& xos, const attribute_manipulator& m )
-    {
-        xos.attribute( m.name_, m.value_ );
-        return xos;
-    }
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
     attribute_manipulator& operator=( const attribute_manipulator& ); //!< Assignment operator
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     std::string name_;

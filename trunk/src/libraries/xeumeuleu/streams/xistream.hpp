@@ -38,6 +38,16 @@
 #include <xeumeuleu/streams/detail/output_base.hpp>
 #include <xeumeuleu/streams/detail/temporary_input.hpp>
 #include <xeumeuleu/streams/detail/optional_input.hpp>
+#include <xeumeuleu/manipulators/attribute.hpp>
+#include <xeumeuleu/manipulators/attributes.hpp>
+#include <xeumeuleu/manipulators/content.hpp>
+#include <xeumeuleu/manipulators/end.hpp>
+#include <xeumeuleu/manipulators/start.hpp>
+#include <xeumeuleu/manipulators/list.hpp>
+#include <xeumeuleu/manipulators/name_list.hpp>
+#include <xeumeuleu/manipulators/ns.hpp>
+#include <xeumeuleu/manipulators/optional.hpp>
+#include <xeumeuleu/manipulators/prefix.hpp>
 #include <string>
 #include <memory>
 
@@ -76,19 +86,82 @@ public:
         input_->end();
     }
 
-    friend xistream& operator>>( xistream& xis, std::string& value ) { xis.input_->read().to( value ); return xis; }
-    friend xistream& operator>>( xistream& xis, bool& value ) { xis.input_->read().to( value ); return xis; }
-    friend xistream& operator>>( xistream& xis, short& value ) { xis.input_->read().to( value ); return xis; }
-    friend xistream& operator>>( xistream& xis, int& value ) { xis.input_->read().to( value ); return xis; }
-    friend xistream& operator>>( xistream& xis, long& value ) { xis.input_->read().to( value ); return xis; }
-    friend xistream& operator>>( xistream& xis, long long& value ) { xis.input_->read().to( value ); return xis; }
-    friend xistream& operator>>( xistream& xis, float& value ) { xis.input_->read().to( value ); return xis; }
-    friend xistream& operator>>( xistream& xis, double& value ) { xis.input_->read().to( value ); return xis; }
-    friend xistream& operator>>( xistream& xis, long double& value ) { xis.input_->read().to( value ); return xis; }
-    friend xistream& operator>>( xistream& xis, unsigned short& value ) { xis.input_->read().to( value ); return xis; }
-    friend xistream& operator>>( xistream& xis, unsigned int& value ) { xis.input_->read().to( value ); return xis; }
-    friend xistream& operator>>( xistream& xis, unsigned long& value ) { xis.input_->read().to( value ); return xis; }
-    friend xistream& operator>>( xistream& xis, unsigned long long& value ) { xis.input_->read().to( value ); return xis; }
+    template< typename T >
+    xistream& operator>>( const attribute_manipulator< T >& m )
+    {
+        std::auto_ptr< std::string > ns = ns_;
+        std::auto_ptr< input_base > input = input_->attribute( ns.get(), m.name_ );
+        if( input.get() )
+        {
+            xistream xis( *input );
+            xis >> m.value_;
+        }
+        return *this;
+    }
+    template< typename T >
+    xistream& operator>>( const attributes_manipulator< T >& m )
+    {
+        attributes( m );
+        return *this;
+    }
+    template< typename T >
+    xistream& operator>>( const content_manipulator< T >& m )
+    {
+        return *this >> start_manipulator( m.tag_ ) >> m.value_ >> end_manipulator();
+    }
+    xistream& operator>>( const end_manipulator& /*m*/ )
+    {
+        end();
+        return *this;
+    }
+    xistream& operator>>( const start_manipulator& s )
+    {
+        start( s.tag_ );
+        return *this;
+    }
+    template< typename T >
+    xistream& operator>>( const list_manipulator< T >& m )
+    {
+        nodes( m );
+        return *this;
+    }
+    template< typename T >
+    xistream& operator>>( const list_name_manipulator< T >& m )
+    {
+        nodes( m );
+        return *this;
+    }
+    xistream& operator>>( const ns_manipulator& m )
+    {
+        ns( m.name_ );
+        return *this;
+    }
+    xistream& operator>>( const optional_manipulator& /*m*/ )
+    {
+        optional();
+        return *this;
+    }
+    template< typename T >
+    xistream& operator>>( const prefix_manipulator< T >& m )
+    {
+        prefix( m.ns_, m.value_ );
+        return *this;
+    }
+
+    xistream& operator>>( std::string& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( bool& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( short& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( int& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( long& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( long long& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( float& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( double& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( long double& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( unsigned short& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( unsigned int& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( unsigned long& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( unsigned long long& value ) { input_->read().to( value ); return *this; }
+    xistream& operator>>( xostream& xos );
 
     std::auto_ptr< input_base > branch( bool clone ) const
     {
@@ -146,17 +219,6 @@ public:
         return content( name, std::string( fallback ) );
     }
     template< typename T > T content( const std::string& name, const T& fallback ) const;
-
-    template< typename T > void attribute_by_ref( const std::string& name, T& value ) const
-    {
-        std::auto_ptr< std::string > ns = ns_;
-        std::auto_ptr< input_base > input = input_->attribute( ns.get(), name );
-        if( input.get() )
-        {
-            xistream xis( *input );
-            xis >> value;
-        }
-    }
 
     template< typename T > T attribute( const std::string& name ) const;
     std::string attribute( const std::string& name, const char* fallback ) const
@@ -286,10 +348,10 @@ namespace xml
         xiss >> value;
         return value;
     }
-    inline xistream& operator>>( xistream& xis, xostream& xos )
+    inline xistream& xistream::operator>>( xostream& xos )
     {
-        xos << xis;
-        return xis;
+        xos << *this;
+        return *this;
     }
 }
 

@@ -33,14 +33,12 @@
 #ifndef xeumeuleu_start_hpp
 #define xeumeuleu_start_hpp
 
-#include <xeumeuleu/streams/xistream.hpp>
-#include <xeumeuleu/streams/xostream.hpp>
 #include <string>
 
 namespace xml
 {
 // =============================================================================
-/** @class  start
+/** @class  start_manipulator
     @brief  Start tag manipulator
     @par    Using example
     @code
@@ -53,38 +51,33 @@ namespace xml
 */
 // Created: MAT 2006-01-03
 // =============================================================================
-class start
+class start_manipulator
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit start( const std::string& tag )
+    explicit start_manipulator( const std::string& tag )
         : tag_( tag )
     {
         // NOTHING
     }
     //@}
 
-    //! @name Operators
-    //@{
-    friend xistream& operator>>( xistream& xis, const start& s )
-    {
-        xis.start( s.tag_ );
-        return xis;
-    }
-    friend xostream& operator<<( xostream& xos, const start& s )
-    {
-        xos.start( s.tag_ );
-        return xos;
-    }
-    //@}
-
-private:
+public:
     //! @name Member data
     //@{
     std::string tag_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: start
+// Created: MAT 2010-08-19
+// -----------------------------------------------------------------------------
+inline start_manipulator start( const std::string& tag )
+{
+    return start_manipulator( tag );
+}
 
 }
 

@@ -46,18 +46,6 @@
 #include <xeumeuleu/streams/ximultistream.hpp>
 #include <xeumeuleu/streams/exception.hpp>
 #include <xeumeuleu/streams/grammar.hpp>
-#include <xeumeuleu/manipulators/start.hpp>
-#include <xeumeuleu/manipulators/end.hpp>
-#include <xeumeuleu/manipulators/content.hpp>
-#include <xeumeuleu/manipulators/cdata.hpp>
-#include <xeumeuleu/manipulators/instruction.hpp>
-#include <xeumeuleu/manipulators/attribute.hpp>
-#include <xeumeuleu/manipulators/prefix.hpp>
-#include <xeumeuleu/manipulators/ns.hpp>
-#include <xeumeuleu/manipulators/list.hpp>
-#include <xeumeuleu/manipulators/name_list.hpp>
-#include <xeumeuleu/manipulators/attributes.hpp>
-#include <xeumeuleu/manipulators/optional.hpp>
 #include <xeumeuleu/manipulators/helpers.hpp>
 
 #endif // xeumeuleu_xml_hpp

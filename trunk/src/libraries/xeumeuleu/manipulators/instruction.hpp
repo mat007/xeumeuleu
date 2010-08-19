@@ -33,13 +33,12 @@
 #ifndef xeumeuleu_instruction_hpp
 #define xeumeuleu_instruction_hpp
 
-#include <xeumeuleu/streams/xostream.hpp>
 #include <string>
 
 namespace xml
 {
 // =============================================================================
-/** @class  instruction
+/** @class  instruction_manipulator
     @brief  Processing instruction manipulator
     @par Using example
     @code
@@ -49,12 +48,12 @@ namespace xml
 */
 // Created: MCO 2008-06-17
 // =============================================================================
-class instruction
+class instruction_manipulator
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    instruction( const std::string& target, const std::string& data )
+    instruction_manipulator( const std::string& target, const std::string& data )
         : target_( target )
         , data_  ( data )
     {
@@ -62,22 +61,22 @@ public:
     }
     //@}
 
-    //! @name Operators
-    //@{
-    friend xostream& operator<<( xostream& xos, const instruction& manipulator )
-    {
-        xos.instruction( manipulator.target_, manipulator.data_ );
-        return xos;
-    }
-    //@}
-
-private:
+public:
     //! @name Member data
     //@{
     std::string target_;
     std::string data_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: instruction
+// Created: MAT 2010-08-19
+// -----------------------------------------------------------------------------
+inline instruction_manipulator instruction( const std::string& target, const std::string& data )
+{
+    return instruction_manipulator( target, data );
+}
 
 }
 

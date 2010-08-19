@@ -33,54 +33,41 @@
 #ifndef xeumeuleu_ns_hpp
 #define xeumeuleu_ns_hpp
 
-#include <xeumeuleu/streams/xistream.hpp>
-#include <xeumeuleu/streams/xostream.hpp>
 #include <string>
 
 namespace xml
 {
 // =============================================================================
-/** @class  ns
+/** @class  ns_manipulator
     @brief  Namespace manipulator
 */
 // Created: MAT 2010-06-30
 // =============================================================================
-class ns
+class ns_manipulator
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ns( const std::string& name )
+    explicit ns_manipulator( const std::string& name )
         : name_( name )
     {}
     //@}
 
-    //! @name Operators
-    //@{
-    friend xistream& operator>>( xistream& xis, const ns& n )
-    {
-        xis.ns( n.name_ );
-        return xis;
-    }
-    friend xostream& operator<<( xostream& xos, const ns& n )
-    {
-        xos.ns( n.name_ );
-        return xos;
-    }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ns& operator=( const ns& ); //!< Assignment operator
-    //@}
-
-private:
+public:
     //! @name Member data
     //@{
     std::string name_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: ns
+// Created: MAT 2010-08-19
+// -----------------------------------------------------------------------------
+inline ns_manipulator ns( const std::string& name )
+{
+    return ns_manipulator( name );
+}
 
 }
 
