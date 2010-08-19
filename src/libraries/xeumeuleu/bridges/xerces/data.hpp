@@ -40,6 +40,7 @@
 #include <xeumeuleu/bridges/xerces/detail/chained_exception.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/locator.hpp>
+#include <typeinfo>
 #include <limits>
 
 #define XEUMEULEU_TRY try {
