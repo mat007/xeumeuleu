@@ -33,7 +33,6 @@
 #ifndef xeumeuleu_cdata_hpp
 #define xeumeuleu_cdata_hpp
 
-#include <xeumeuleu/streams/xistream.hpp>
 #include <string>
 
 namespace xml
@@ -65,16 +64,7 @@ public:
     }
     //@}
 
-    //! @name Operators
-    //@{
-    friend xostream& operator<<( xostream& xos, const cdata& manipulator )
-    {
-        xos.cdata( manipulator.content_ );
-        return xos;
-    }
-    //@}
-
-private:
+public:
     //! @name Member data
     //@{
     std::string content_;

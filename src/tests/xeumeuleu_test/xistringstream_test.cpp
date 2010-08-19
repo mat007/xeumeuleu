@@ -58,6 +58,15 @@ BOOST_AUTO_TEST_CASE( streaming_document_with_one_element )
 }
 
 // -----------------------------------------------------------------------------
+// Name: streaming_document_with_one_element_with_temporary
+// Created: MCO 2010-08-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( streaming_document_with_one_element_with_temporary )
+{
+    xml::xistringstream( "<element/>" ) >> xml::start( "element" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: streaming_document_with_prolog_and_one_element
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------

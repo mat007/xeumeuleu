@@ -34,6 +34,14 @@
 #define xeumeuleu_xostream_hpp
 
 #include <xeumeuleu/streams/detail/output_base.hpp>
+#include <xeumeuleu/manipulators/attribute.hpp>
+#include <xeumeuleu/manipulators/cdata.hpp>
+#include <xeumeuleu/manipulators/content.hpp>
+#include <xeumeuleu/manipulators/end.hpp>
+#include <xeumeuleu/manipulators/start.hpp>
+#include <xeumeuleu/manipulators/instruction.hpp>
+#include <xeumeuleu/manipulators/ns.hpp>
+#include <xeumeuleu/manipulators/prefix.hpp>
 #include <string>
 #include <memory>
 
@@ -79,19 +87,62 @@ public:
 
     //! @name Modifiers
     //@{
-    friend xostream& operator<<( xostream& xos, const char* value ) { xos.output_.write( std::string( value ) ); return xos; }
-    friend xostream& operator<<( xostream& xos, const std::string& value ) { xos.output_.write( value ); return xos; }
-    friend xostream& operator<<( xostream& xos, bool value ) { xos.output_.write( value ); return xos; }
-    friend xostream& operator<<( xostream& xos, int value ) { xos.output_.write( value ); return xos; }
-    friend xostream& operator<<( xostream& xos, long value ) { xos.output_.write( value ); return xos; }
-    friend xostream& operator<<( xostream& xos, long long value ) { xos.output_.write( value ); return xos; }
-    friend xostream& operator<<( xostream& xos, float value ) { xos.output_.write( value ); return xos; }
-    friend xostream& operator<<( xostream& xos, double value ) { xos.output_.write( value ); return xos; }
-    friend xostream& operator<<( xostream& xos, long double value ) { xos.output_.write( value ); return xos; }
-    friend xostream& operator<<( xostream& xos, unsigned int value ) { xos.output_.write( value ); return xos; }
-    friend xostream& operator<<( xostream& xos, unsigned long value ) { xos.output_.write( value ); return xos; }
-    friend xostream& operator<<( xostream& xos, unsigned long long value ) { xos.output_.write( value ); return xos; }
-    friend xostream& operator<<( xostream& xos, const xistream& xis );
+    template< typename T >
+    xostream& operator<<( const attribute_manipulator< T >& m )
+    {
+        attribute( m.name_, m.value_ );
+        return *this;
+    }
+    xostream& operator<<( const cdata& manipulator )
+    {
+        cdata( manipulator.content_ );
+        return *this;
+    }
+    template< typename T >
+    xostream& operator<<( const content_manipulator< T >& m )
+    {
+        return *this << start_manipulator( m.tag_ ) << m.value_ << end_manipulator();
+    }
+    xostream& operator<<( const end_manipulator& /*m*/ )
+    {
+        end();
+        return *this;
+    }
+    xostream& operator<<( const start_manipulator& s )
+    {
+        start( s.tag_ );
+        return *this;
+    }
+    xostream& operator<<( const instruction_manipulator& m )
+    {
+        instruction( m.target_, m.data_ );
+        return *this;
+    }
+    xostream& operator<<( const ns_manipulator& m )
+    {
+        ns( m.name_ );
+        return *this;
+    }
+    template< typename T >
+    xostream& operator<<( const prefix_manipulator< T >& m )
+    {
+        prefix( m.ns_, m.value_ );
+        return *this;
+    }
+
+    xostream& operator<<( const char* value ) { output_.write( std::string( value ) ); return *this; }
+    xostream& operator<<( const std::string& value ) { output_.write( value ); return *this; }
+    xostream& operator<<( bool value ) { output_.write( value ); return *this; }
+    xostream& operator<<( int value ) { output_.write( value ); return *this; }
+    xostream& operator<<( long value ) { output_.write( value ); return *this; }
+    xostream& operator<<( long long value ) { output_.write( value ); return *this; }
+    xostream& operator<<( float value ) { output_.write( value ); return *this; }
+    xostream& operator<<( double value ) { output_.write( value ); return *this; }
+    xostream& operator<<( long double value ) { output_.write( value ); return *this; }
+    xostream& operator<<( unsigned int value ) { output_.write( value ); return *this; }
+    xostream& operator<<( unsigned long value ) { output_.write( value ); return *this; }
+    xostream& operator<<( unsigned long long value ) { output_.write( value ); return *this; }
+    xostream& operator<<( const xistream& xis );
 
     void attribute( const std::string& name, const char* value )
     {
@@ -147,10 +198,10 @@ private:
 
 namespace xml
 {
-    inline xostream& operator<<( xostream& xos, const xistream& xis )
+    inline xostream& xostream::operator<<( const xistream& xis )
     {
-        xis.copy( xos.output_ );
-        return xos;
+        xis.copy( output_ );
+        return *this;
     }
 }
 

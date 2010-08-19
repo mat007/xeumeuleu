@@ -33,9 +33,6 @@
 #ifndef xeumeuleu_content_hpp
 #define xeumeuleu_content_hpp
 
-#include <xeumeuleu/manipulators/start.hpp>
-#include <xeumeuleu/manipulators/end.hpp>
-#include <xeumeuleu/manipulators/optional.hpp>
 #include <string>
 
 namespace xml
@@ -68,25 +65,13 @@ public:
     {}
     //@}
 
-    //! @name Operators
-    //@{
-    friend xistream& operator>>( xistream& xis, const content_manipulator& m )
-    {
-        return xis >> start( m.tag_ ) >> m.value_ >> end;
-    }
-    friend xostream& operator<<( xostream& xos, const content_manipulator& m )
-    {
-        return xos << start( m.tag_ ) << m.value_ << end;
-    }
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
     content_manipulator& operator=( const content_manipulator& ); //!< Assignment operator
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     std::string tag_;

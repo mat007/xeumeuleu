@@ -33,9 +33,6 @@
 #ifndef xeumeuleu_end_hpp
 #define xeumeuleu_end_hpp
 
-#include <xeumeuleu/streams/xistream.hpp>
-#include <xeumeuleu/streams/xostream.hpp>
-
 namespace xml
 {
 // =============================================================================
@@ -56,16 +53,6 @@ class end_manipulator
 public:
     //! @name Operators
     //@{
-    friend xistream& operator>>( xistream& xis, const end_manipulator& /*m*/ )
-    {
-        xis.end();
-        return xis;
-    }
-    friend xostream& operator<<( xostream& xos, const end_manipulator& /*m*/ )
-    {
-        xos.end();
-        return xos;
-    }
 #ifndef XEUMEULEU_NO_DEPRECATED
     const end_manipulator& operator()() const //<! Deprecated !
     {
