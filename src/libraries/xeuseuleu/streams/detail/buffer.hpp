@@ -74,15 +74,15 @@ public:
         output_.parameter( key, expression );
     }
 
-    buffer* apply( const xml::start& start )
+    buffer* apply( const xml::start_manipulator& m )
     {
-        output_.apply( start );
+        output_.apply( m );
         ++level_;
         return this;
     }
-    buffer* apply( const xml::end_manipulator& end )
+    buffer* apply( const xml::end_manipulator& m )
     {
-        output_.apply( end );
+        output_.apply( m );
         --level_;
         return transform();
     }
