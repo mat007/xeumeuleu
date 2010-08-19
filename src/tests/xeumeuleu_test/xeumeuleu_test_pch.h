@@ -39,7 +39,7 @@
 #       pragma warning( disable : 4127 )
 #       pragma warning( disable : 4702 )
 #   endif
-#   pragma warning( push )
+#   pragma warning( push, 0 )
 #elif defined __GNUC__
 #   pragma GCC system_header
 #endif
@@ -52,11 +52,7 @@
 
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
 
-#define MOCKPP_ENABLE_DEFAULT_FORMATTER
-#include <mockpp/chaining/CountedChainableMethod.h>
-#include <mockpp/chaining/ChainingMockObjectSupport.h>
-
-#include <boost/thread/thread.hpp> // $$$$ MAT : this pushes a pragma without poping it
+#include <boost/thread/thread.hpp>
 #undef min
 #undef max
 

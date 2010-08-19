@@ -32,30 +32,20 @@
 
 #include "xeumeuleu_test_pch.h"
 #include <xeumeuleu/xml.hpp>
+#include <turtle/mock.hpp>
 #include <boost/bind.hpp>
-
-using namespace mockpp;
 
 namespace
 {
-    class mock_custom_class : public mockpp::ChainableMockObject
+    MOCK_CLASS( mock_custom_class )
     {
-    public:
-        mock_custom_class()
-            : mockpp::ChainableMockObject( "mock_custom_class", 0 )
-            , process_mocker( "process", this )
-        {}
         void process( const std::string& name, xml::xistream& xis )
         {
             std::string content;
             xis >> content;
-            process_mocker.forward( name, content );
+            forward( name, content );
         }
-        mockpp::ChainableMockMethod< void, std::string, std::string > process_mocker;
-
-    private:
-        mock_custom_class( const mock_custom_class& );
-        mock_custom_class& operator=( const mock_custom_class& );
+        MOCK_METHOD_EXT( forward, 2, void( std::string, std::string ), forward )
     };
 }
 
@@ -66,12 +56,11 @@ namespace
 BOOST_AUTO_TEST_CASE( read_attributes_from_element_calls_a_custom_method )
 {
     mock_custom_class mock_custom;
-    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "first" ), eq< std::string >( "attribute content 1" ) );
-    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "second" ), eq< std::string >( "attribute content 2" ) );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "first", "attribute content 1" );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "second", "attribute content 2" );
     xml::xistringstream xis( "<element first='attribute content 1' second='attribute content 2'/>" );
     xis >> xml::start( "element" )
             >> xml::attributes( mock_custom, &mock_custom_class::process );
-    mock_custom.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -86,13 +75,28 @@ BOOST_AUTO_TEST_CASE( read_attributes_from_element_without_attribute_does_not_ca
             >> xml::attributes( mock_custom, &mock_custom_class::process );
 }
 
+// -----------------------------------------------------------------------------
+// Name: adding_the_same_attribute_twice_reads_only_one_attribute_back
+// Created: MCO 2010-04-15
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( adding_the_same_attribute_twice_reads_only_one_attribute_back )
+{
+    xml::xobufferstream xos;
+    xos << xml::start( "root" )
+            << xml::attribute( "attribute", "the first value" )
+            << xml::attribute( "attribute", "the second value" );
+    mock_custom_class mock_custom;
+        MOCK_EXPECT( mock_custom, forward ).once().with( "attribute", "the second value" );
+    xos >> xml::start( "root" )
+            >> xml::attributes( mock_custom, &mock_custom_class::process );
+}
+
 namespace
 {
-    mockpp::ChainableMockObject my_function_mock( "my_function_mock" );
-    mockpp::ChainableMockMethod< void > my_function_mocker( "my_function", &my_function_mock );
+    MOCK_FUNCTOR( void() ) forward;
     void my_name_function( const std::string&, const std::string&, xml::xistream& )
     {
-        my_function_mocker.forward();
+        forward();
     }
 }
 
@@ -104,10 +108,9 @@ BOOST_AUTO_TEST_CASE( attributes_accepts_function_as_functor )
 {
     xml::xistringstream xis( "<element attribute='my_attribute'/>" );
     xis >> xml::start( "element" );
-    my_function_mock.reset();
-    my_function_mocker.expects( mockpp::once() );
-    xis >> xml::attributes( my_name_function );
-    my_function_mock.verify();
+    MOCK_RESET( forward, _ );
+    MOCK_EXPECT( forward, _ ).once();
+    xis >> xml::attributes( &my_name_function );
 }
 
 namespace
@@ -117,7 +120,7 @@ namespace
     public:
         void operator()( const std::string&, const std::string&, xml::xistream& ) const
         {
-            my_function_mocker.forward();
+            forward();
         }
     };
 }
@@ -130,10 +133,9 @@ BOOST_AUTO_TEST_CASE( attributes_accepts_functor_and_makes_an_internal_copy )
 {
     xml::xistringstream xis( "<element attribute='my_attribute'/>" );
     xis >> xml::start( "element" );
-    my_function_mock.reset();
-    my_function_mocker.expects( mockpp::once() );
+    MOCK_RESET( forward, _ );
+    MOCK_EXPECT( forward, _ ).once();
     xis >> xml::attributes( my_functor_class() );
-    my_function_mock.verify();
 }
 
 namespace
@@ -145,7 +147,7 @@ namespace
 
         void operator()( const std::string&, const std::string&, xml::xistream& ) const
         {
-            my_function_mocker.forward();
+            forward();
         }
     private:
         my_non_copyable_functor_class( const my_non_copyable_functor_class& );
@@ -161,45 +163,33 @@ BOOST_AUTO_TEST_CASE( attributes_accepts_functor_as_reference )
 {
     xml::xistringstream xis( "<element attribute='my_attribute'/>" );
     xis >> xml::start( "element" );
-    my_function_mock.reset();
-    my_function_mocker.expects( mockpp::once() );
+    MOCK_RESET( forward, _ );
+    MOCK_EXPECT( forward, _ ).once();
     my_non_copyable_functor_class functor;
     xis >> xml::attributes< my_non_copyable_functor_class& >( functor );
-    my_function_mock.verify();
 }
 
 namespace
 {
-    class my_bindable_class : public mockpp::ChainableMockObject
+    MOCK_CLASS( my_bindable_class )
     {
-    public:
-        my_bindable_class()
-            : mockpp::ChainableMockObject( "my_bindable_class", 0 )
-            , my_method_mocker( "my_method", this )
-        {}
-
         void my_method_1( xml::xistream& )
         {
-            my_method_mocker.forward();
+            forward();
         }
         void const_my_method_1( xml::xistream& ) const
         {
-            my_method_mocker.forward();
+            forward();
         }
         void my_method_2( const std::string&, xml::xistream& )
         {
-            my_method_mocker.forward();
+            forward();
         }
         void const_my_method_2( const std::string&, xml::xistream& ) const
         {
-            my_method_mocker.forward();
+            forward();
         }
-
-        mockpp::ChainableMockMethod< void > my_method_mocker;
-
-    private:
-        my_bindable_class( const my_bindable_class& );
-        my_bindable_class& operator=( const my_bindable_class& );
+        MOCK_METHOD_EXT( forward, 0, void(), forward )
     };
 }
 
@@ -213,31 +203,13 @@ BOOST_AUTO_TEST_CASE( attributes_accepts_boost_bind_as_functor )
     xis >> xml::start( "element" );
     {
         my_bindable_class my_instance;
-        my_instance.my_method_mocker.expects( mockpp::once() );
+        MOCK_EXPECT( my_instance, forward ).once();
         xis >> xml::attributes( boost::bind( &my_bindable_class::my_method_2, boost::ref( my_instance ), _2, _3 ) );
-        my_instance.verify();
+        mock::verify();
     }
     {
         my_bindable_class my_instance;
-        my_instance.my_method_mocker.expects( mockpp::once() );
+        MOCK_EXPECT( my_instance, forward ).once();
         xis >> xml::attributes( boost::bind( &my_bindable_class::const_my_method_2, boost::ref( my_instance ), _2, _3 ) );
-        my_instance.verify();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: adding_the_same_attribute_twice_reads_only_one_attribute_back
-// Created: MCO 2010-04-15
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( adding_the_same_attribute_twice_reads_only_one_attribute_back )
-{
-    xml::xobufferstream xos;
-    xos << xml::start( "root" )
-            << xml::attribute( "attribute", "the first value" )
-            << xml::attribute( "attribute", "the second value" );
-    mock_custom_class mock_custom;
-    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "attribute" ), eq< std::string >( "the second value" ) );
-    xos >> xml::start( "root" )
-            >> xml::attributes( mock_custom, &mock_custom_class::process );
-    mock_custom.verify();
 }
