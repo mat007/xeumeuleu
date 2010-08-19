@@ -5,14 +5,19 @@
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
     <property name="xerces-2.version" value="2.7.0"/>
-    <property name="xerces-3.version" value="3.0.1"/>
+    <condition property="xerces-3.version" value="3.1.1" else="3.0.1">
+        <or>
+            <isset property="is-vc80"/>
+            <isset property="is-linux"/>
+        </or>
+    </condition>
 
     <!--
     ============================================================================
       tests
     ============================================================================
     -->
-    <target name="xeumeuleu_xerces2_test" description="build and run tests">
+    <target name="xeumeuleu_xerces2_test" description="build and run tests" unless="is-linux">
         <build-test name="xeumeuleu_xerces2" input="xeumeuleu_test" depends="boost,mockpp" libs="xerces-c_2">
             <includepath path="../include/xerces-c/${xerces-2.version}"/>
             <defineset define="XEUMEULEU_NO_DEPRECATED"/>
@@ -29,7 +34,7 @@
     <target name="xeumeuleu_test" depends="xeumeuleu_xerces2_test,xeumeuleu_xerces3_test" description="build and run tests">
     </target>
 
-    <target name="xeuseuleu_test" description="build and run tests">
+    <target name="xeuseuleu_test" description="build and run tests" unless="is-linux">
         <build-test name="xeuseuleu" libs="xerces-c_2,Xalan-C_1">
             <includepath path="../include/xerces-c/${xerces-2.version}"/>
         </build-test>
@@ -40,13 +45,13 @@
       applications
     ============================================================================
     -->
-    <target name="xeumeuleu_bench" description="build benchmark application">
+    <target name="xeumeuleu_bench" description="build benchmark application" unless="is-linux">
         <build-app name="xeumeuleu_bench" depends="boost" libs="xerces-c_2" subsystem="console">
             <includepath path="../include/xerces-c/${xerces-2.version}"/>
         </build-app>
     </target>
 
-    <target name="xeumeuleu_clean" description="build cleaning application">
+    <target name="xeumeuleu_clean" description="build cleaning application" unless="is-linux">
         <build-app name="xeumeuleu_clean" depends="boost" libs="xerces-c_2" subsystem="console">
             <includepath path="../include/xerces-c/${xerces-2.version}"/>
         </build-app>
