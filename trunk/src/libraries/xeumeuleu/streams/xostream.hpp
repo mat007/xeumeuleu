@@ -93,9 +93,9 @@ public:
         attribute( m.name_, m.value_ );
         return *this;
     }
-    xostream& operator<<( const cdata& manipulator )
+    xostream& operator<<( const cdata_manipulator& m )
     {
-        cdata( manipulator.content_ );
+        cdata( m.content_ );
         return *this;
     }
     template< typename T >
