@@ -33,7 +33,6 @@
 #ifndef xeumeuleu_filter_hpp
 #define xeumeuleu_filter_hpp
 
-#include <xeumeuleu/streams/xistream.hpp>
 #include <xeumeuleu/streams/detail/visitor.hpp>
 
 namespace xml
@@ -62,15 +61,6 @@ public:
     {
         if( name == name_ )
             functor_( xis );
-    }
-    //@}
-
-    //! @name Operators
-    //@{
-    friend xistream& operator>>( xistream& xis, const filter& f )
-    {
-        xis.nodes( f );
-        return xis;
     }
     //@}
 

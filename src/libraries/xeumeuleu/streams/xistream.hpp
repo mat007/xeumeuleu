@@ -38,13 +38,12 @@
 #include <xeumeuleu/streams/detail/output_base.hpp>
 #include <xeumeuleu/streams/detail/temporary_input.hpp>
 #include <xeumeuleu/streams/detail/optional_input.hpp>
+#include <xeumeuleu/streams/detail/visitor.hpp>
 #include <xeumeuleu/manipulators/attribute.hpp>
 #include <xeumeuleu/manipulators/attributes.hpp>
 #include <xeumeuleu/manipulators/content.hpp>
 #include <xeumeuleu/manipulators/end.hpp>
 #include <xeumeuleu/manipulators/start.hpp>
-#include <xeumeuleu/manipulators/list.hpp>
-#include <xeumeuleu/manipulators/name_list.hpp>
 #include <xeumeuleu/manipulators/ns.hpp>
 #include <xeumeuleu/manipulators/optional.hpp>
 #include <xeumeuleu/manipulators/prefix.hpp>
@@ -119,16 +118,9 @@ public:
         start( s.tag_ );
         return *this;
     }
-    template< typename T >
-    xistream& operator>>( const list_manipulator< T >& m )
+    xistream& operator>>( const visitor& v )
     {
-        nodes( m );
-        return *this;
-    }
-    template< typename T >
-    xistream& operator>>( const list_name_manipulator< T >& m )
-    {
-        nodes( m );
+        nodes( v );
         return *this;
     }
     xistream& operator>>( const ns_manipulator& m )
