@@ -40,7 +40,7 @@ namespace xml
     class xostream;
 
 // =============================================================================
-/** @class  cdata
+/** @class  cdata_manipulator
     @brief  CDATA manipulator
     @par Using example
     @code
@@ -52,12 +52,12 @@ namespace xml
 */
 // Created: MCO 2007-03-14
 // =============================================================================
-class cdata
+class cdata_manipulator
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit cdata( const std::string& content )
+    explicit cdata_manipulator( const std::string& content )
         : content_( content )
     {
         // NOTHING
@@ -70,6 +70,15 @@ public:
     std::string content_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: start
+// Created: MAT 2010-08-19
+// -----------------------------------------------------------------------------
+inline cdata_manipulator cdata( const std::string& content )
+{
+    return cdata_manipulator( content );
+}
 
 }
 
