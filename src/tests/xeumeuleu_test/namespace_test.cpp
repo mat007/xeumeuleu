@@ -32,8 +32,7 @@
 
 #include "xeumeuleu_test_pch.h"
 #include <xeumeuleu/xml.hpp>
-
-using namespace mockpp;
+#include <turtle/mock.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: reading_start_ignores_namespace_by_default
@@ -213,24 +212,15 @@ BOOST_AUTO_TEST_CASE( default_namespace_declaration_is_a_regular_attribute )
 
 namespace
 {
-    class mock_custom_class_list : public mockpp::ChainableMockObject
+    MOCK_CLASS( mock_custom_class_list )
     {
-    public:
-        mock_custom_class_list()
-            : mockpp::ChainableMockObject( "mock_custom_class_list", 0 )
-            , process_mocker( "process", this )
-        {}
         void process( xml::xistream& xis )
         {
             std::string content;
             xis >> content;
-            process_mocker.forward( content );
+            forward( content );
         }
-        mockpp::ChainableMockMethod< void, std::string > process_mocker;
-
-    private:
-        mock_custom_class_list( const mock_custom_class_list& );
-        mock_custom_class_list& operator=( const mock_custom_class_list& );
+        MOCK_METHOD_EXT( forward, 1, void( std::string ), forward );
     };
 }
 
@@ -246,12 +236,11 @@ BOOST_AUTO_TEST_CASE( reading_list_with_namespace_elements )
                              "  <ns3:sub-node>content number three</ns3:sub-node>"
                              "</element>" );
     mock_custom_class_list mock_custom;
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "content number one" ) );
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "content number two" ) );
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "content number three" ) );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "content number one" );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "content number two" );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "content number three" );
     xis >> xml::start( "element" )
             >> xml::list( "sub-node", mock_custom, &mock_custom_class_list::process );
-    mock_custom.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -266,11 +255,10 @@ BOOST_AUTO_TEST_CASE( reading_list_filtered_on_correct_namespace_filters_element
                              "  <ns3:sub-node>content number three</ns3:sub-node>"
                              "</element>" );
     mock_custom_class_list mock_custom;
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "content number one" ) );
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "content number three" ) );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "content number one" );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "content number three" );
     xis >> xml::start( "element" )
             >> xml::ns( "http://www.example.org" ) >> xml::list( "sub-node", mock_custom, &mock_custom_class_list::process );
-    mock_custom.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -286,32 +274,22 @@ BOOST_AUTO_TEST_CASE( reading_list_filtered_on_no_namespace_filters_elements )
                              "  <ns3:sub-node>content number four</ns3:sub-node>"
                              "</element>" );
     mock_custom_class_list mock_custom;
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "content number one" ) );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "content number one" );
     xis >> xml::start( "element" )
             >> xml::ns( "" ) >> xml::list( "sub-node", mock_custom, &mock_custom_class_list::process );
-    mock_custom.verify();
 }
 
 namespace
 {
-    class mock_custom_class_name_list : public mockpp::ChainableMockObject
+    MOCK_CLASS( mock_custom_class_name_list )
     {
-    public:
-        mock_custom_class_name_list()
-            : mockpp::ChainableMockObject( "mock_custom_class_name_list", 0 )
-            , process_mocker( "process", this )
-        {}
         void process( const std::string& ns, const std::string& name, xml::xistream& xis )
         {
             std::string content;
             xis >> content;
-            process_mocker.forward( ns, name, content );
+            forward( ns, name, content );
         }
-        mockpp::ChainableMockMethod< void, std::string, std::string, std::string > process_mocker;
-
-    private:
-        mock_custom_class_name_list( const mock_custom_class_name_list& );
-        mock_custom_class_name_list& operator=( const mock_custom_class_name_list& );
+        MOCK_METHOD_EXT( forward, 3, void( std::string, std::string, std::string ), forward )
     };
 }
 
@@ -327,12 +305,11 @@ BOOST_AUTO_TEST_CASE( reading_name_list_with_namespace_elements )
                              "  <ns2:sub-node3>content number three</ns2:sub-node3>"
                              "</element>" );
     mock_custom_class_name_list mock_custom;
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "http://www.example.org" ), eq< std::string >( "sub-node1" ), eq< std::string >( "content number one" ) );
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "http://www.example.org" ), eq< std::string >( "sub-node2" ), eq< std::string >( "content number two" ) );
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "http://www.example2.org" ), eq< std::string >( "sub-node3" ), eq< std::string >( "content number three" ) );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example.org", "sub-node1", "content number one" );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example.org", "sub-node2", "content number two" );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example2.org", "sub-node3", "content number three" );
     xis >> xml::start( "element" )
             >> xml::list( mock_custom, &mock_custom_class_name_list::process );
-    mock_custom.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -347,11 +324,10 @@ BOOST_AUTO_TEST_CASE( reading_name_list_filtered_on_namespace_filters_elements )
                              "  <ns2:sub-node3>content number three</ns2:sub-node3>"
                              "</element>" );
     mock_custom_class_name_list mock_custom;
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "http://www.example.org" ), eq< std::string >( "sub-node1" ), eq< std::string >( "content number one" ) );
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "http://www.example.org" ), eq< std::string >( "sub-node2" ), eq< std::string >( "content number two" ) );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example.org", "sub-node1", "content number one" );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example.org", "sub-node2", "content number two" );
     xis >> xml::start( "element" )
             >> xml::ns( "http://www.example.org" ) >> xml::list( mock_custom, &mock_custom_class_name_list::process );
-    mock_custom.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -367,32 +343,23 @@ BOOST_AUTO_TEST_CASE( reading_name_list_filtered_on_no_namespace_filters_element
                              "  <ns2:sub-node4>content number four</ns2:sub-node4>"
                              "</element>" );
     mock_custom_class_name_list mock_custom;
-    mock_custom.process_mocker.expects( mockpp::once() ).with( eq< std::string >( "" ), eq< std::string >( "sub-node1" ), eq< std::string >( "content number one" ) );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "", "sub-node1", "content number one" );
     xis >> xml::start( "element" )
             >> xml::ns( "" ) >> xml::list( mock_custom, &mock_custom_class_name_list::process );
-    mock_custom.verify();
 }
 
 namespace
 {
-    class mock_custom_class : public mockpp::ChainableMockObject
+    MOCK_CLASS( mock_custom_class )
     {
     public:
-        mock_custom_class()
-            : mockpp::ChainableMockObject( "mock_custom_class", 0 )
-            , process_mocker( "process", this )
-        {}
         void process( const std::string& ns, const std::string& name, xml::xistream& xis )
         {
             std::string content;
             xis >> content;
-            process_mocker.forward( ns, name, content );
+            forward( ns, name, content );
         }
-        mockpp::ChainableMockMethod< void, std::string, std::string, std::string > process_mocker;
-
-    private:
-        mock_custom_class( const mock_custom_class& );
-        mock_custom_class& operator=( const mock_custom_class& );
+        MOCK_METHOD_EXT( forward, 3, void( std::string, std::string, std::string ), forward )
     };
 }
 
@@ -402,17 +369,16 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_from_element_filters_attributes )
 {
-    mock_custom_class mock_custom;
-    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 1" ) );
-    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "http://www.example.org" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 2" ) );
-    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "http://www.example2.org" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 3" ) );
     xml::xistringstream xis( "<root xmlns='http://www.example.org' xmlns:ns='http://www.example.org' xmlns:ns2='http://www.example2.org'>"
                              "  <element attribute='attribute 1' ns:attribute='attribute 2' ns2:attribute='attribute 3'/>"
                              "</root>" );
+    mock_custom_class mock_custom;
+    MOCK_EXPECT( mock_custom, forward ).once().with( "", "attribute", "attribute 1" );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example.org", "attribute", "attribute 2" );
+    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example2.org", "attribute", "attribute 3" );
     xis >> xml::start( "root" )
             >> xml::start( "element" )
                 >> xml::attributes( mock_custom, &mock_custom_class::process );
-    mock_custom.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -421,15 +387,14 @@ BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_from_element_filters_att
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_namespace_from_element_filters_attributes )
 {
-    mock_custom_class mock_custom;
-    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "http://www.example.org" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 2" ) );
     xml::xistringstream xis( "<root xmlns='http://www.example.org' xmlns:ns='http://www.example.org' xmlns:ns2='http://www.example2.org'>"
                              "  <element attribute='attribute 1' ns:attribute='attribute 2' ns2:attribute='attribute 3'/>"
                              "</root>" );
+    mock_custom_class mock_custom;
+    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example.org", "attribute", "attribute 2" );
     xis >> xml::start( "root" )
             >> xml::start( "element" )
                 >> xml::ns( "http://www.example.org" ) >> xml::attributes( mock_custom, &mock_custom_class::process );
-    mock_custom.verify();
 }
 
 // -----------------------------------------------------------------------------
@@ -438,15 +403,14 @@ BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_namespace_fr
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_no_namespace_from_element_filters_attributes )
 {
-    mock_custom_class mock_custom;
-    mock_custom.process_mocker.expects( once() ).with( eq< std::string >( "" ), eq< std::string >( "attribute" ), eq< std::string >( "attribute 1" ) );
     xml::xistringstream xis( "<root xmlns='http://www.example.org' xmlns:ns='http://www.example.org' xmlns:ns2='http://www.example2.org'>"
                              "  <element attribute='attribute 1' ns:attribute='attribute 2' ns2:attribute='attribute 3'/>"
                              "</root>" );
+    mock_custom_class mock_custom;
+    MOCK_EXPECT( mock_custom, forward ).once().with( "", "attribute", "attribute 1" );
     xis >> xml::start( "root" )
             >> xml::start( "element" )
                 >> xml::ns( "" ) >> xml::attributes( mock_custom, &mock_custom_class::process );
-    mock_custom.verify();
 }
 
 // -----------------------------------------------------------------------------

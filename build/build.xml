@@ -18,14 +18,14 @@
     ============================================================================
     -->
     <target name="xeumeuleu_xerces2_test" description="build and run tests">
-        <build-test name="xeumeuleu_xerces2" input="xeumeuleu_test" depends="boost,mockpp" libs="xerces-c_2">
+        <build-test name="xeumeuleu_xerces2" input="xeumeuleu_test" depends="boost" libs="xerces-c_2">
             <includepath path="../include/xerces-c/${xerces-2.version}"/>
             <defineset define="XEUMEULEU_NO_DEPRECATED"/>
         </build-test>
     </target>
 
     <target name="xeumeuleu_xerces3_test" description="build and run tests">
-        <build-test name="xeumeuleu_xerces3" input="xeumeuleu_test" depends="boost,mockpp" libs="xerces-c_3">
+        <build-test name="xeumeuleu_xerces3" input="xeumeuleu_test" depends="boost" libs="xerces-c_3">
             <includepath path="../include/xerces-c/${xerces-3.version}"/>
             <defineset define="XEUMEULEU_NO_DEPRECATED"/>
         </build-test>
@@ -155,7 +155,7 @@
 
     <target name="configure" description="initialize local project structure with dependencies">
         <update name="boost"/>
-        <update name="mockpp"/>
+        <update name="turtle"/>
         <update name="xerces-c" package="include" todir="../include/xerces-c/${xerces-2.version}"/>
         <update name="xerces-c" package="lib/${platform}" todir="${lib.dir}"/>
         <update name="xerces-c" package="dll/${platform}" todir="${run.dir}"/>
