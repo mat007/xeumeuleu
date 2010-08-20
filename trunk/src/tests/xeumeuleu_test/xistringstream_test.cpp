@@ -197,64 +197,6 @@ BOOST_AUTO_TEST_CASE( streaming_node_value_mixed_with_sub_node )
 }
 
 // -----------------------------------------------------------------------------
-// Name: creating_an_UTF_8_stream_with_non_UTF_8_characters_throws_an_exception
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( creating_an_UTF_8_stream_with_non_UTF_8_characters_throws_an_exception )
-{
-    BOOST_CHECK_THROW( xml::xistringstream( "<?xml version='1.0' encoding='UTF-8' standalone='no' ?>"
-                                            "<element>ça c'est sûr !</element>" ), xml::exception );
-}
-
-// -----------------------------------------------------------------------------
-// Name: creating_an_UTF_16_stream_with_extended_characters_throws_an_exception
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( creating_an_UTF_16_stream_with_extended_characters_throws_an_exception )
-{
-    BOOST_CHECK_THROW( xml::xistringstream( "<?xml version='1.0' encoding='UTF-16' standalone='no' ?>"
-                                            "<element>ça c'est sûr !</element>" ), xml::exception );
-}
-
-// -----------------------------------------------------------------------------
-// Name: creating_an_ISO_8859_1_stream_with_extended_characters_does_not_throw_an_exception
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( creating_an_ISO_8859_1_stream_with_extended_characters_does_not_throw_an_exception )
-{
-    xml::xistringstream xis( "<?xml version='1.0' encoding='ISO-8859-1' standalone='no' ?>"
-                             "<element>ça c'est sûr !</element>" );
-    std::string value;
-    xis >> xml::content( "element", value );
-    BOOST_CHECK_EQUAL( "ça c'est sûr !", value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: forcing_encoding_to_ISO_8859_1_allows_to_read_content
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( forcing_encoding_to_ISO_8859_1_allows_to_read_content )
-{
-    xml::xistringstream xis( "<element>ça c'est sûr !</element>", xml::encoding( "ISO-8859-1" ) );
-    std::string value;
-    xis >> xml::content( "element", value );
-    BOOST_CHECK_EQUAL( "ça c'est sûr !", value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: forcing_encoding_to_ISO_8859_1_whereas_UTF_8_is_specified_in_document_allows_to_read_content
-// Created: MCO 2006-01-03
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( forcing_encoding_to_ISO_8859_1_whereas_UTF_8_is_specified_in_document_allows_to_read_content )
-{
-    xml::xistringstream xis( "<?xml version='1.0' encoding='UTF-8' standalone='no' ?>"
-                             "<element>ça c'est sûr !</element>", xml::encoding( "ISO-8859-1" ) );
-    std::string value;
-    xis >> xml::content( "element", value );
-    BOOST_CHECK_EQUAL( "ça c'est sûr !", value );
-}
-
-// -----------------------------------------------------------------------------
 // Name: creating_stream_with_xml_not_validated_by_schema_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
