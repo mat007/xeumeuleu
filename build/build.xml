@@ -28,11 +28,21 @@
 
     <target name="xeumeuleu_test" depends="xeumeuleu_xerces2_test,xeumeuleu_xerces3_test" description="build and run tests"/>
 
-    <target name="xeuseuleu_test" description="build and run tests" if="is-vc80">
+    <target name="xeuseuleu_xerces2_test" description="build and run tests" unless="is-linux">
         <build-test name="xeuseuleu" libs="xerces-c_2,Xalan-C_1">
             <includepath path="../include/xerces-c/${xerces-2.version}"/>
+            <includepath path="../include/xalan-c/current"/>
         </build-test>
     </target>
+
+    <target name="xeuseuleu_xerces3_test" description="build and run tests" if="is-vc80">
+        <build-test name="xeuseuleu" libs="xerces-c_3,Xalan-C_1">
+            <includepath path="../include/xerces-c/${xerces-3.version}"/>
+            <includepath path="../include/xalan-c/new"/>
+        </build-test>
+    </target>
+
+    <target name="xeuseuleu_test" depends="xeuseuleu_xerces2_test,xeuseuleu_xerces3_test" description="build and run tests"/>
 
     <!--
     ============================================================================
@@ -157,6 +167,7 @@
         <update name="xerces-c" package="include" todir="../include/xerces-c/${xerces-3.version}" version="${xerces-3.version}"/>
         <update name="xerces-c" package="lib/${platform}" todir="${lib.dir}" version="${xerces-3.version}"/>
         <update name="xerces-c" package="dll/${platform}" todir="${run.dir}" version="${xerces-3.version}"/>
+        <update name="xalan-c" package="include" todir="../include/xalan-c/${xerces-2.version}"/>
         <update name="xalan-c"/>
     </target>
 
