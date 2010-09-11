@@ -151,7 +151,7 @@
     <target name="configure" description="initialize local project structure with dependencies">
         <update name="boost"/>
         <update name="turtle"/>
-        <update name="xerces-c" package="include" todir="../include/xerces-c/${xerces-2.version}" version="${xerces-3.version}"/>
+        <update name="xerces-c" package="include" todir="../include/xerces-c/${xerces-2.version}" version="${xerces-2.version}"/>
         <update name="xerces-c" package="lib/${platform}" todir="${lib.dir}" version="${xerces-2.version}"/>
         <update name="xerces-c" package="dll/${platform}" todir="${run.dir}" version="${xerces-2.version}"/>
         <update name="xerces-c" package="include" todir="../include/xerces-c/${xerces-3.version}"/>
