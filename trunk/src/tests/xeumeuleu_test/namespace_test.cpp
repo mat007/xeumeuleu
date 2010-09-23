@@ -672,3 +672,34 @@ BOOST_AUTO_TEST_CASE( writing_schemas_with_attributes )
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                        "<element xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"my-schema.xsd\"/>\n", xos.str() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: elements_are_in_default_namespace_if_any
+// Created: MAT 2010-09-16
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( elements_are_in_default_namespace_if_any )
+{
+    xml::xostringstream xos;
+    xos << xml::ns( "http://www.example.org" ) << xml::start( "root" )
+            << xml::start( "element" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<root xmlns=\"http://www.example.org\">\n"
+                       "  <element/>\n"
+                       "</root>\n", xos.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: attributes_are_in_default_namespace_if_any
+// Created: MAT 2010-09-16
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( attributes_are_in_default_namespace_if_any )
+{
+    xml::xostringstream xos;
+    xos << xml::ns( "http://www.example.org" ) << xml::start( "root" )
+            << xml::ns( "http://www.example.org" ) << xml::start( "element" )
+                << xml::attribute( "attribute", 12 );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<root xmlns=\"http://www.example.org\">\n"
+                       "  <element attribute=\"12\"/>\n"
+                       "</root>\n", xos.str() );
+}

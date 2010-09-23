@@ -92,7 +92,14 @@ public:
                     current_->setPrefix( prefix );
             }
             else
-                current_ = current_->appendChild( document_.createElement( translate( tag ) ) );
+            {
+                const XMLCh* defaultNs =
+                    current_->getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::DOCUMENT_NODE ? 0 : current_->lookupNamespaceURI( 0 );
+                if( defaultNs )
+                    current_ = current_->appendChild( document_.createElementNS( defaultNs, translate( tag ) ) );
+                else
+                    current_ = current_->appendChild( document_.createElement( translate( tag ) ) );
+            }
         XEUMEULEU_CATCH
     }
     virtual void end()
