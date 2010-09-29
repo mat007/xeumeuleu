@@ -138,3 +138,23 @@ BOOST_AUTO_TEST_CASE( utf_16_encoded_file_starts_with_byte_mark_order )
     }
     std::remove( filename.c_str() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: file_is_not_created_upon_stream_destruction_if_an_exception_is_uncaught
+// Created: MAT 2010-09-29
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( file_is_not_created_upon_stream_destruction_if_an_exception_is_uncaught )
+{
+    const std::string filename = "non_created_file.xml";
+    try
+    {
+        xml::xofstream xos( filename );
+        xos << xml::start( "element" );
+        throw std::runtime_error( "some exception" );
+    }
+    catch( ... )
+    {
+        BOOST_CHECK( ! std::ifstream( filename.c_str() ) );
+        std::remove( filename.c_str() );
+    }
+}
