@@ -76,6 +76,7 @@
                 <include name="**/*.h"/>
             </module>
         </deploy>
+        <info version="svn rev ${svn.revision}" todir="${dist.dir}"/>
     </target>
 
     <!--
