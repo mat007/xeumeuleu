@@ -72,7 +72,7 @@ public:
     {
         try
         {
-            if( ! flushed_ )
+            if( ! std::uncaught_exception() && ! flushed_ )
                 flush();
         }
         catch( ... )
