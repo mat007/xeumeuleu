@@ -20,9 +20,6 @@
             <isset property="is-cygwin"/>
        </not>
     </condition>
-    <condition property="has-xalan">
-        <isset property="is-vc80"/>
-    </condition>
 
     <!--
     ============================================================================
