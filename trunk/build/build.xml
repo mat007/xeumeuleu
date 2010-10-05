@@ -15,6 +15,14 @@
             <isset property="is-cygwin"/>
        </or>
     </condition>
+    <condition property="has-xerces-3">
+        <not>
+            <isset property="is-cygwin"/>
+       </not>
+    </condition>
+    <condition property="has-xalan">
+        <isset property="is-vc80"/>
+    </condition>
 
     <!--
     ============================================================================
@@ -28,7 +36,7 @@
         </build-test>
     </target>
 
-    <target name="xeumeuleu_xerces3_test" description="build and run tests">
+    <target name="xeumeuleu_xerces3_test" description="build and run tests" if="has-xerces-3">
         <build-test name="xeumeuleu_xerces3" input="xeumeuleu_test" depends="boost" libs="xerces-c_3">
             <includepath path="../include/xerces-c/${xerces-3.version}"/>
             <defineset define="XEUMEULEU_NO_DEPRECATED"/>
@@ -37,7 +45,7 @@
 
     <target name="xeumeuleu_test" depends="xeumeuleu_xerces2_test,xeumeuleu_xerces3_test" description="build and run tests"/>
 
-    <target name="xeuseuleu_test" description="build and run tests" if="is-vc80">
+    <target name="xeuseuleu_test" description="build and run tests" if="has-xalan">
         <build-test name="xeuseuleu" libs="xerces-c_3,Xalan-C_1">
             <includepath path="../include/xerces-c/${xerces-3.version}"/>
         </build-test>
@@ -48,13 +56,13 @@
       applications
     ============================================================================
     -->
-    <target name="xeumeuleu_bench" description="build benchmark application">
+    <target name="xeumeuleu_bench" description="build benchmark application" if="has-xerces-3">
         <build-app name="xeumeuleu_bench" depends="boost" libs="xerces-c_3" subsystem="console">
             <includepath path="../include/xerces-c/${xerces-3.version}"/>
         </build-app>
     </target>
 
-    <target name="xeumeuleu_clean" description="build cleaning application">
+    <target name="xeumeuleu_clean" description="build cleaning application" if="has-xerces-3">
         <build-app name="xeumeuleu_clean" depends="boost" libs="xerces-c_3" subsystem="console">
             <includepath path="../include/xerces-c/${xerces-3.version}"/>
         </build-app>
