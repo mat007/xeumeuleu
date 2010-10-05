@@ -49,14 +49,14 @@
     ============================================================================
     -->
     <target name="xeumeuleu_bench" description="build benchmark application">
-        <build-app name="xeumeuleu_bench" depends="boost" libs="xerces-c_2" subsystem="console">
-            <includepath path="../include/xerces-c/${xerces-2.version}"/>
+        <build-app name="xeumeuleu_bench" depends="boost" libs="xerces-c_3" subsystem="console">
+            <includepath path="../include/xerces-c/${xerces-3.version}"/>
         </build-app>
     </target>
 
     <target name="xeumeuleu_clean" description="build cleaning application">
-        <build-app name="xeumeuleu_clean" depends="boost" libs="xerces-c_2" subsystem="console">
-            <includepath path="../include/xerces-c/${xerces-2.version}"/>
+        <build-app name="xeumeuleu_clean" depends="boost" libs="xerces-c_3" subsystem="console">
+            <includepath path="../include/xerces-c/${xerces-3.version}"/>
         </build-app>
     </target>
 
