@@ -46,10 +46,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: empty_tree_does_not_create_any_file
+// Name: an_empty_document_does_not_create_any_file
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( empty_tree_does_not_create_any_file )
+BOOST_AUTO_TEST_CASE( an_empty_document_does_not_create_any_file )
 {
     const std::string filename = "no_file.xml";
     {
@@ -67,7 +67,8 @@ BOOST_AUTO_TEST_CASE( streaming_elements_creates_a_valid_file_upon_last_end )
     const std::string filename = "valid_file.xml";
     xml::xofstream xos( filename );
     xos << xml::start( "element" )
-            << xml::start( "child" ) << xml::end
+            << xml::start( "child" )
+            << xml::end
         << xml::end;
     BOOST_REQUIRE_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                          "<element>\n"
@@ -86,7 +87,7 @@ BOOST_AUTO_TEST_CASE( streaming_elements_creates_a_valid_file_upon_destruction )
     {
         xml::xofstream xos( filename );
         xos << xml::start( "element" )
-                << xml::start( "child" ) << xml::end;
+                << xml::start( "child" );
     }
     BOOST_REQUIRE_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                          "<element>\n"
