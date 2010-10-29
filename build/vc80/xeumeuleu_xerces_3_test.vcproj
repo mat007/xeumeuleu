@@ -38,7 +38,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../src/libraries,../../include/xerces-c/3.1.0"
+				AdditionalIncludeDirectories="../../src/libraries,../../include/xerces-c/3.1.1"
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE,XEUMEULEU_NO_DEPRECATED"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -120,7 +120,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="../../src/libraries,../../include/xerces-c/3.1.0"
+				AdditionalIncludeDirectories="../../src/libraries,../../include/xerces-c/3.1.1"
 				PreprocessorDefinitions="WIN32,NDEBUG,_CONSOLE,XEUMEULEU_NO_DEPRECATED"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="2"
