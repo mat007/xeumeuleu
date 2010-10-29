@@ -1,0 +1,104 @@
+trunk
+. removed the undocumented flush public method from xml::xofstream
+. fixed a bug causing an xml::xofstream to be flushed twice to file
+. added an xml::xostreamstream writing output to an std::ostream
+. provided easy customisation for user types in attributes
+. fixed a crash when retrieving the context of a buffer stream after a non existing optional
+. fixed a bug causing the stream passed to the functor in xml::attributes not to be positioned on the attribute but on its parent node
+. added namespaces support
+
+1.4.2
+. added support for document type definition (DTD)
+. a non existing internal schema definition is ignored instead of producing an error unless xml::internal_grammar is used
+. fixed a crash when creating an xml::xibufferstream from an empty xml::xobufferstream
+. optimized streams creation and cloning
+. reduced input streams memory footprint
+. the optional state of a stream is now correctly transmitted to the sub streams or buffer streams created from it
+. an xml::end after an xml::optional now resets the optional state instead of throwing an exception
+. direct reading helpers have been replaced by methods on an xml::xistream
+
+1.4.1
+. fixed a bug preventing attributes to be serialized from the root of an xml::xistream into an xml::xostream
+. added a context() method on xml::xistream to be able to throw from user code without using the error method
+. added missing const to the parameter when constructing an xml::xosubstream
+. added the possibility to stream from/to temporaries of types xml::xisubstream and xml::xosubstream
+. enhanced user type support in helper versions of xml::attribute and xml::content
+. added xml::list with node names parameter with 4 and 5 parameters
+. CDATA sections are not indented anymore
+. added support for xerces 3
+. added error context for a newly created document on line 0 and column 0
+. fixed the error context of an xml::ximultistream to aggregate the error contexts of both underlying streams
+
+1.4.0
+. all libraries are now headers only
+. added a XEUMEULEU_NO_DEPRECATED define to be declared if deprecated features should not be included
+. an xml::xostringstream is now serialized when calling str()
+. an xml::xofstream is now written to file when calling flush(), upon destruction or when the tree is complete
+. xeuseuleu/xsl.h and xeumeuleu/xml.h are deprecated, use xeuseuleu/xsl.hpp and xeumeuleu/xml.hpp instead
+. fixed a bug which prevented to (un)serialize a user type inheriting from another type itself (un)serializable
+. enhanced xml::list and xml::attributes to accept a reference on an instance of a sub-type of the type with the method to call
+
+1.3.2
+. xml::list and xml::attributes functors can be passed as references to be able to handle an internal state
+. added support for long double
+. xml::end and xml::optional can be used without parenthesis
+. fixed the error context not being transmitted from an xml::xistream to an xml::xobufferstream
+. added missing constructor with encoding for xml::xistreamstream
+. added has_child, has_attribute and has_content accessors on xml::xistream
+. removed const in return value of xostringstream::str() to allow constructions such as s.switch( xos.str() )
+
+1.3.1
+. fixed a crash when cascading several xml::ximultistream wrappers
+. added an exception when trying to move up from the root of an xml::xisubstream created on an optional non-existing branch
+. fixed a crash when calling error on an xml::xisubstream created on an optional non-existing branch
+. changed xml::xobufferstream to make it both an xml::xostream and an xml::xistream so that it can be used as a buffer
+. fixed xml::cdata beautification
+. fixed a bug that caused an xml::xosubstream not to write to output when created on the root level of an xml::xostream
+. fixed thread safety when creating streams and transformations
+. added xml::instruction to output processing instructions
+. changed the exception message to a more meaningful one when failing to load an external grammar
+
+1.3.0
+. added support for XSLT using Apache Xalan
+. added xml::ximultistream implementing a composite of input streams
+. added xml::value helper to read directly from an xml::xistream
+. fixed error context not being transmitted from an xml::xistream to an xml::xibufferstream
+. added error context in xml::xistream exceptions thrown during read
+. fixed a crash when creating a stream at namespace scope
+. optimized floating point numbers output speed
+. fixed byte-order-mark at beginning of output where missing
+. added support for STL-style functors in xml::list and xml::attributes
+. fixed const-correctness in various locations
+
+1.2.2
+. fixed output indentation issues when serializing an xml::xistream directly into an xml::xostream
+. added xml::list with node names parameter with 3 parameters
+. added an operator to unserialize from an xml::xistream directly to an xml::xostream
+. added support for long long and unsigned long long
+. fixed a bug that caused an xibufferstream to become invalid when the xistream it had been created from was destroyed
+. added a method to throw an exception within the current context of an xml::xistream
+. added xml::attributes similar to xml::list but for attributes
+
+1.2.1
+. added const to the xml::xobufferstream parameter serialized to an xml::xostream
+. added CDATA support
+. xml::list callbacks now accept parameters passed by value
+. added xml::xibufferstream recursively cloning the current node of a given xml::xistream
+. added xml::xistream serialization to an xml::xostream
+. fixed msvc warnings when using xml::list with an instance of a class virtually inheriting from another
+. added attribute and content direct reading helper functions
+
+1.2.0
+. added support for short, unsigned short, unsigned int, long and unsigned long data types
+. added a wrapper stream to create xml streams from standard input streams
+. xml::grammar renamed to xml::external_grammar
+. added support for INF, -INF and NaN
+
+1.1.0
+. added 4 and 5 parameters xml::list support
+. added xml::internal_grammar to use internal schema definition validation
+. added xml::list with node names parameter (up to 2 parameters)
+. fixed a typo in 3 parameters xml::list
+. fixed a sub_output bug which triggered too many writes to ouput
+
+1.0.0
