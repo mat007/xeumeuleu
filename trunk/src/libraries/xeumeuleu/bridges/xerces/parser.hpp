@@ -43,6 +43,7 @@ namespace xml
 {
     class external_grammar;
     class internal_grammar;
+    class memory_grammar;
     class null_grammar;
 
 // =============================================================================
@@ -85,19 +86,25 @@ public:
 
     void configure( const external_grammar& /*grammar*/, const std::string& uri )
     {
-        // $$$$ MAT 2006-03-27: use XERCES_CPP_NAMESPACE::XMLUni::fgXercesSchemaExternalNoNameSpaceSchemaLocation ?
-#if XERCES_VERSION_MAJOR == 3
-        set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidate, true );
-#else
-        set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, true );
-#endif // XERCES_VERSION_MAJOR
-        set( XERCES_CPP_NAMESPACE::XMLUni::fgXercesUseCachedGrammarInParse, true );
+        configure();
         if( ! parser_.loadGrammar( translate( uri ), XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true ) )
             throw xml::exception( "Failed to load grammar '" + uri + "'" );
     }
     void configure( const internal_grammar& /*grammar*/ )
     {
         set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidateIfSchema, true );
+    }
+    void configure( const memory_grammar& /*grammar*/, const std::string& schema )
+    {
+        configure();
+        XERCES_CPP_NAMESPACE::MemBufInputSource source( reinterpret_cast< const XMLByte* >( schema.c_str() ), schema.size(), "memory_grammar" );
+        XERCES_CPP_NAMESPACE::Wrapper4InputSource input( &source, false );
+#if XERCES_VERSION_MAJOR == 3
+        if( ! parser_.loadGrammar( &input, XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true ) )
+#else
+        if( ! parser_.loadGrammar( input, XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true ) )
+#endif // XERCES_VERSION_MAJOR
+            throw xml::exception( "Failed to load memory grammar" );
     }
     void configure( const null_grammar& /*grammar*/ )
     {
@@ -128,6 +135,16 @@ private:
 #else
         parser_.setFeature( feature, value );
 #endif // XERCES_VERSION_MAJOR
+    }
+    void configure()
+    {
+        // $$$$ MAT 2006-03-27: use XERCES_CPP_NAMESPACE::XMLUni::fgXercesSchemaExternalNoNameSpaceSchemaLocation ?
+#if XERCES_VERSION_MAJOR == 3
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidate, true );
+#else
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, true );
+#endif // XERCES_VERSION_MAJOR
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgXercesUseCachedGrammarInParse, true );
     }
     //@}
 

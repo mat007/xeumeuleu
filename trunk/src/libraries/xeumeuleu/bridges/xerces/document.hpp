@@ -184,7 +184,7 @@ private:
     {
         XEUMEULEU_TRY
             initialize();
-            XERCES_CPP_NAMESPACE::MemBufInputSource source( reinterpret_cast< const XMLByte* >( data ), size, "string_input", false );
+            XERCES_CPP_NAMESPACE::MemBufInputSource source( reinterpret_cast< const XMLByte* >( data ), size, "string_input" );
             return parse( source, encoding, grammar );
         XEUMEULEU_CATCH
     }
