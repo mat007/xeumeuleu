@@ -175,6 +175,6 @@
         <update name="xalan-c"/>
     </target>
 
-    <target name="all" depends="configure,build,test,export,package" description="build, run tests, package distribution and create web site"/>
+    <target name="all" depends="configure,build,test,export" description="build, run tests, package distribution and create web site"/>
 
 </project>
