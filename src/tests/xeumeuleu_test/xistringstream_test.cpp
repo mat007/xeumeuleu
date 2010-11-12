@@ -205,6 +205,27 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_schema_throws_an
     BOOST_CHECK_THROW( xml::xistringstream( "<wrong-element/>", xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) ), xml::exception );
 }
 
+namespace
+{
+    const std::string load( const std::string& filename )
+    {
+        std::ifstream ifs( filename.c_str() );
+        if( ! ifs )
+            throw std::runtime_error( "File " + filename + " not found" );
+        return std::string( std::istreambuf_iterator< char >( ifs ), std::istreambuf_iterator< char >() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: creating_stream_with_xml_not_validated_by_in_memory_schema_throws_an_exception
+// Created: MCO 2010-11-10
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_in_memory_schema_throws_an_exception )
+{
+    const std::string grammar = load( BOOST_RESOLVE( "schema.xsd" ) );
+    BOOST_CHECK_THROW( xml::xistringstream( "<wrong-element/>", xml::memory_grammar( grammar ) ), xml::exception );
+}
+
 // -----------------------------------------------------------------------------
 // Name: creating_stream_with_non_existing_schema_throws_a_meaningful_exception
 // Created: MCO 2008-07-17

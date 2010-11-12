@@ -40,7 +40,7 @@ namespace xml
 {
 // =============================================================================
 /** @class  grammar
-    @brief  Grammar definition
+    @brief  Grammar declaration
 */
 // Created: MAT 2006-03-24
 // =============================================================================
@@ -61,7 +61,7 @@ public:
 
 // =============================================================================
 /** @class  external_grammar
-    @brief  Grammar implementation to specify an external schema for validation
+    @brief  Grammar implementation to set an external schema for validation
 */
 // Created: MAT 2006-03-24
 // =============================================================================
@@ -94,7 +94,7 @@ private:
 
 // =============================================================================
 /** @class  internal_grammar
-    @brief  Grammar implementation to specify internal schema validation
+    @brief  Grammar implementation to set internal schema validation
 */
 // Created: ZEBRE 2006-08-30
 // =============================================================================
@@ -119,8 +119,41 @@ public:
 };
 
 // =============================================================================
+/** @class  memory_grammar
+    @brief  Grammar implementation to set an in-memory schema for validation
+*/
+// Created: MAT 2010-11-12
+// =============================================================================
+class memory_grammar : public grammar
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    explicit memory_grammar( const std::string& schema )
+        : schema_( schema )
+    {}
+    virtual ~memory_grammar()
+    {}
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void configure( parser& parser ) const
+    {
+        parser.configure( *this, schema_ );
+    }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string schema_;
+    //@}
+};
+
+// =============================================================================
 /** @class  null_grammar
-    @brief  Grammar implementation to disable schema validation
+    @brief  Grammar implementation to disable validation
 */
 // Created: MCO 2007-01-16
 // =============================================================================

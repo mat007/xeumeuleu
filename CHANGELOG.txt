@@ -5,7 +5,8 @@ trunk
 . provided easy customisation for user types in attributes
 . fixed a crash when retrieving the context of a buffer stream after a non existing optional
 . fixed a bug causing the stream passed to the functor in xml::attributes not to be positioned on the attribute but on its parent node
-. added namespaces support
+. added XML namespaces support
+. added a memory_grammar implementation for in-memory schema validation
 
 1.4.2
 . added support for document type definition (DTD)
