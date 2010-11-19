@@ -38,6 +38,7 @@
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/error_handler.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces_ptr.hpp>
+#include <sstream>
 
 namespace xml
 {
@@ -97,7 +98,7 @@ public:
     void configure( const memory_grammar& /*grammar*/, const std::string& schema )
     {
         configure();
-        XERCES_CPP_NAMESPACE::MemBufInputSource source( reinterpret_cast< const XMLByte* >( schema.c_str() ), schema.size(), "memory_grammar" );
+        XERCES_CPP_NAMESPACE::MemBufInputSource source( reinterpret_cast< const XMLByte* >( schema.c_str() ), schema.size(), make_id().c_str() );
         XERCES_CPP_NAMESPACE::Wrapper4InputSource input( &source, false );
 #if XERCES_VERSION_MAJOR == 3
         if( ! parser_.loadGrammar( &input, XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true ) )
@@ -141,10 +142,20 @@ private:
         // $$$$ MAT 2006-03-27: use XERCES_CPP_NAMESPACE::XMLUni::fgXercesSchemaExternalNoNameSpaceSchemaLocation ?
 #if XERCES_VERSION_MAJOR == 3
         set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidate, true );
+#if XERCES_VERSION_MINOR >=1
+        set( XERCES_CPP_NAMESPACE::XMLUni::fgXercesHandleMultipleImports, true );
+#endif // XERCES_VERSION_MINOR
 #else
         set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMValidation, true );
 #endif // XERCES_VERSION_MAJOR
         set( XERCES_CPP_NAMESPACE::XMLUni::fgXercesUseCachedGrammarInParse, true );
+    }
+    std::string make_id()
+    {
+        static int i = 0;
+        std::stringstream s;
+        s << "memory grammar " << i++;
+        return s.str();
     }
     //@}
 
