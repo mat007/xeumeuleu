@@ -177,6 +177,37 @@ public:
     //@}
 };
 
+namespace detail
+{
+// =============================================================================
+/** @class  grammars
+    @brief  Grammar implementation to combine grammars
+*/
+// Created: MAT 2010-11-19
+// =============================================================================
+class grammars : public grammar
+{
+public:
+    grammars( const grammar& lhs, const grammar& rhs )
+        : lhs_( &lhs )
+        , rhs_( &rhs )
+    {}
+    virtual void configure( parser& parser ) const
+    {
+        lhs_->configure( parser );
+        rhs_->configure( parser );
+    }
+private:
+    const grammar* lhs_;
+    const grammar* rhs_;
+};
+}
+
+inline detail::grammars operator+( const grammar& lhs, const grammar& rhs )
+{
+    return detail::grammars( lhs, rhs );
+}
+
 }
 
 #endif // xeumeuleu_grammar_hpp
