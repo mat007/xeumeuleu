@@ -34,6 +34,7 @@
 #define xeumeuleu_grammar_hpp
 
 #include <xeumeuleu/bridges/xerces/parser.hpp>
+#include <vector>
 #include <string>
 
 namespace xml
@@ -46,13 +47,14 @@ namespace xml
 // =============================================================================
 class grammar
 {
-public:
+protected:
     //! @name Constructors/Destructor
     //@{
-             grammar() {}
-    virtual ~grammar() {}
+     grammar() {}
+    ~grammar() {}
     //@}
 
+public:
     //! @name Operations
     //@{
     virtual void configure( parser& parser ) const = 0;
@@ -72,8 +74,6 @@ public:
     //@{
     explicit external_grammar( const std::string& uri )
         : uri_( uri )
-    {}
-    virtual ~external_grammar()
     {}
     //@}
 
@@ -101,14 +101,6 @@ private:
 class internal_grammar : public grammar
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-    internal_grammar()
-    {}
-    virtual ~internal_grammar()
-    {}
-    //@}
-
     //! @name Operations
     //@{
     virtual void configure( parser& parser ) const
@@ -131,8 +123,6 @@ public:
     //@{
     explicit memory_grammar( const std::string& schema )
         : schema_( schema )
-    {}
-    virtual ~memory_grammar()
     {}
     //@}
 
@@ -160,14 +150,6 @@ private:
 class null_grammar : public grammar
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-    null_grammar()
-    {}
-    virtual ~null_grammar()
-    {}
-    //@}
-
     //! @name Operations
     //@{
     virtual void configure( parser& parser ) const
@@ -177,8 +159,6 @@ public:
     //@}
 };
 
-namespace detail
-{
 // =============================================================================
 /** @class  grammars
     @brief  Grammar implementation to combine grammars
@@ -188,24 +168,34 @@ namespace detail
 class grammars : public grammar
 {
 public:
-    grammars( const grammar& lhs, const grammar& rhs )
-        : lhs_( &lhs )
-        , rhs_( &rhs )
-    {}
+    //! @name Operations
+    //@{
+    void add( const grammar& g )
+    {
+        grammars_.push_back( &g );
+    }
+
     virtual void configure( parser& parser ) const
     {
-        lhs_->configure( parser );
-        rhs_->configure( parser );
+        for( std::vector< const grammar* >::const_iterator it = grammars_.begin();
+            it != grammars_.end(); ++it )
+            (*it)->configure( parser );
     }
-private:
-    const grammar* lhs_;
-    const grammar* rhs_;
-};
-}
+    //@}
 
-inline detail::grammars operator+( const grammar& lhs, const grammar& rhs )
+private:
+    //! @name Member data
+    //@{
+    std::vector< const grammar* > grammars_;
+    //@}
+};
+
+inline grammars operator+( const grammar& lhs, const grammar& rhs )
 {
-    return detail::grammars( lhs, rhs );
+    grammars g;
+    g.add( lhs );
+    g.add( rhs );
+    return g;
 }
 
 }
