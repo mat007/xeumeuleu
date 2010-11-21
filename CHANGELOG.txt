@@ -8,7 +8,7 @@ trunk
 . added XML namespaces support
 . added a memory_grammar implementation for in-memory schema validation
 . added xml::grammars a composite grammar to accumulate several grammars for validation
-. fixed a possible issue with the base class grammar being usable polymorphically, now its constructor and destructor are now protected
+. fixed an issue with the base class xml::grammar being usable polymorphically by changing its constructor and destructor visibility to protected
 
 1.4.2
 . added support for document type definition (DTD)
