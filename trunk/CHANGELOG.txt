@@ -7,7 +7,8 @@ trunk
 . fixed a bug causing the stream passed to the functor in xml::attributes not to be positioned on the attribute but on its parent node
 . added XML namespaces support
 . added a memory_grammar implementation for in-memory schema validation
-. added the means to accumulate several grammars for validation
+. added xml::grammars a composite grammar to accumulate several grammars for validation
+. fixed a possible issue with the base class grammar being usable polymorphically, now its constructor and destructor are now protected
 
 1.4.2
 . added support for document type definition (DTD)
