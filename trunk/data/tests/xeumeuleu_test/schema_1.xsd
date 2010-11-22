@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.org">
+  <xs:element name="element">
+    <xs:complexType>
+      <xs:attribute name="attribute" type="type"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
