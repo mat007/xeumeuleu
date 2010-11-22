@@ -146,28 +146,14 @@ BOOST_AUTO_TEST_CASE( xs_including_an_invalid_schema_does_not_throw )
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( "<element/>", xml::memory_grammar( schema ) ) );
 }
 
-namespace
-{
-    const std::string schema_1 = "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://example.org'>"
-                                 "  <xs:element name='element'>"
-                                 "    <xs:complexType>"
-                                 "      <xs:attribute name='attribute' type='type'/>"
-                                 "    </xs:complexType>"
-                                 "  </xs:element>"
-                                 "</xs:schema>";
-    const std::string schema_2 = "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>"
-                                 "  <xs:simpleType name='type'>"
-                                 "    <xs:restriction base='xs:int'/>"
-                                 "  </xs:simpleType>"
-                                 "</xs:schema>";
-}
-
 // -----------------------------------------------------------------------------
-// Name: several_grammars_can_be_combined
+// Name: several_memory_grammars_can_be_combined
 // Created: MAT 2010-11-21
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( several_grammars_can_be_combined )
+BOOST_AUTO_TEST_CASE( several_memory_grammars_can_be_combined )
 {
+    const std::string schema_1 = load( BOOST_RESOLVE( "schema_1.xsd" ) );
+    const std::string schema_2 = load( BOOST_RESOLVE( "schema_2.xsd" ) );
     xml::grammars composite;
     xml::memory_grammar grammar_1( schema_1 );
     xml::memory_grammar grammar_2( schema_2 );
@@ -177,11 +163,34 @@ BOOST_AUTO_TEST_CASE( several_grammars_can_be_combined )
 }
 
 // -----------------------------------------------------------------------------
+// Name: several_external_grammars_can_be_combined
+// Created: MAT 2010-11-22
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( several_external_grammars_can_be_combined )
+{
+    BOOST_CHECK_NO_THROW( xml::xistringstream xis( "<element xmlns='http://example.org' attribute='42'/>",
+        xml::external_grammar( BOOST_RESOLVE( "schema_2.xsd" ) ) + xml::external_grammar( BOOST_RESOLVE( "schema_1.xsd" ) ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: several_memory_and_external_grammars_can_be_combined
+// Created: MAT 2010-11-22
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( several_memory_and_external_grammars_can_be_combined )
+{
+    const std::string schema_2 = load( BOOST_RESOLVE( "schema_2.xsd" ) );
+    BOOST_CHECK_NO_THROW( xml::xistringstream xis( "<element xmlns='http://example.org' attribute='42'/>",
+        xml::memory_grammar( schema_2 ) + xml::external_grammar( BOOST_RESOLVE( "schema_1.xsd" ) ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: several_grammars_can_be_combined_using_operator_plus
 // Created: MAT 2010-11-17
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( several_grammars_can_be_combined_using_operator_plus )
 {
+    const std::string schema_1 = load( BOOST_RESOLVE( "schema_1.xsd" ) );
+    const std::string schema_2 = load( BOOST_RESOLVE( "schema_2.xsd" ) );
     BOOST_CHECK_THROW( xml::xistringstream xis( "<element xmlns='http://example.org' attribute='42'/>", xml::memory_grammar( schema_1 ) ), xml::exception );
     BOOST_CHECK_THROW( xml::xistringstream xis( "<element xmlns='http://example.org' attribute='42'/>", xml::memory_grammar( schema_1 ) + xml::memory_grammar( schema_2 ) ), xml::exception );
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( "<element xmlns='http://example.org' attribute='42'/>", xml::memory_grammar( schema_2 ) + xml::memory_grammar( schema_1 ) ) );
