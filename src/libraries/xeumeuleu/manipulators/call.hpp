@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2010, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,25 +30,56 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xml_hpp
-#define xeumeuleu_xml_hpp
+#ifndef xeumeuleu_call_hpp
+#define xeumeuleu_call_hpp
 
-#include <xeumeuleu/streams/xistringstream.hpp>
-#include <xeumeuleu/streams/xostringstream.hpp>
-#include <xeumeuleu/streams/xifstream.hpp>
-#include <xeumeuleu/streams/xofstream.hpp>
-#include <xeumeuleu/streams/xobufferstream.hpp>
-#include <xeumeuleu/streams/xibufferstream.hpp>
-#include <xeumeuleu/streams/xosubstream.hpp>
-#include <xeumeuleu/streams/xisubstream.hpp>
-#include <xeumeuleu/streams/xistreamstream.hpp>
-#include <xeumeuleu/streams/xostreamstream.hpp>
-#include <xeumeuleu/streams/ximultistream.hpp>
-#include <xeumeuleu/streams/exception.hpp>
-#include <xeumeuleu/streams/grammar.hpp>
-#include <xeumeuleu/manipulators/list.hpp>
-#include <xeumeuleu/manipulators/name_list.hpp>
-#include <xeumeuleu/manipulators/helpers.hpp>
-#include <xeumeuleu/manipulators/call.hpp>
+namespace xml
+{
+// =============================================================================
+/** @class  call
+    @brief  Call manipulator
+    @code
+    xml::xistream& xis = ...;
+    xis >> xml::call( functor );
+    @endcode
+*/
+// Created: MAT 2010-11-26
+// =============================================================================
+template< typename F >
+class call_manipulator
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    call_manipulator( F functor )
+        : functor_( functor )
+    {}
+    friend xml::xistream& operator>>( xml::xistream& xis, const call_manipulator& m )
+    {
+        m.functor_( xis );
+        return xis;
+    }
+    //@}
 
-#endif // xeumeuleu_xml_hpp
+private:
+    //! @name Constructors/Destructor
+    //@{
+    call_manipulator& operator=( const call_manipulator& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    F functor_;
+    //@}
+};
+
+template< typename F >
+call_manipulator< F > call( F functor )
+{
+    return call_manipulator< F >( functor );
+}
+
+}
+
+#endif // xeumeuleu_call_hpp

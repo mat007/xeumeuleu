@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2010, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,25 +30,31 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xml_hpp
-#define xeumeuleu_xml_hpp
+#include "xeumeuleu_test_pch.h"
+#include <xeumeuleu/xml.hpp>
+#include <turtle/mock.hpp>
 
-#include <xeumeuleu/streams/xistringstream.hpp>
-#include <xeumeuleu/streams/xostringstream.hpp>
-#include <xeumeuleu/streams/xifstream.hpp>
-#include <xeumeuleu/streams/xofstream.hpp>
-#include <xeumeuleu/streams/xobufferstream.hpp>
-#include <xeumeuleu/streams/xibufferstream.hpp>
-#include <xeumeuleu/streams/xosubstream.hpp>
-#include <xeumeuleu/streams/xisubstream.hpp>
-#include <xeumeuleu/streams/xistreamstream.hpp>
-#include <xeumeuleu/streams/xostreamstream.hpp>
-#include <xeumeuleu/streams/ximultistream.hpp>
-#include <xeumeuleu/streams/exception.hpp>
-#include <xeumeuleu/streams/grammar.hpp>
-#include <xeumeuleu/manipulators/list.hpp>
-#include <xeumeuleu/manipulators/name_list.hpp>
-#include <xeumeuleu/manipulators/helpers.hpp>
-#include <xeumeuleu/manipulators/call.hpp>
+// -----------------------------------------------------------------------------
+// Name: call_allows_to_call_a_functor
+// Created: MCO 2010-11-26
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( call_allows_to_call_a_functor )
+{
+    MOCK_FUNCTOR( void( xml::xistream& ) ) f;
+    xml::xistringstream xis( "<element/>" );
+    MOCK_EXPECT( f, _ ).once();
+    xis >> xml::call( f );
+}
 
-#endif // xeumeuleu_xml_hpp
+// -----------------------------------------------------------------------------
+// Name: call_allows_to_call_a_functor_by_reference
+// Created: MCO 2010-11-26
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( call_allows_to_call_a_functor_by_reference )
+{
+    typedef MOCK_FUNCTOR( void( xml::xistream& ) ) functor;
+    functor f;
+    xml::xistringstream xis( "<element/>" );
+    MOCK_EXPECT( f, _ ).once();
+    xis >> xml::call< functor& >( f );
+}
