@@ -144,8 +144,8 @@
         <cpd-report/>
         <tests-report/>
         <cppncss-report>
-            <define name="TRY"/>
-            <define name="CATCH"/>
+            <define name="XEUMEULEU_TRY"/>
+            <define name="XEUMEULEU_CATCH"/>
             <macro name="BOOST_CHECK_THROW"/>
             <macro name="BOOST_CHECK_NO_THROW"/>
             <macro name="BOOST_REQUIRE_THROW"/>
