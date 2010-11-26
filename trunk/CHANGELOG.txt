@@ -1,3 +1,6 @@
+trunk
+. added an xml::call manipulator to call a functor
+
 1.5.0
 . removed the undocumented flush public method from xml::xofstream
 . fixed a bug causing an xml::xofstream to be flushed twice to file
