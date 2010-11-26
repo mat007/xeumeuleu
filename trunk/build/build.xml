@@ -146,6 +146,14 @@
         <cppncss-report>
             <define name="XEUMEULEU_TRY"/>
             <define name="XEUMEULEU_CATCH"/>
+            <define name="XERCES_CPP_NAMESPACE_BEGIN" value="namespace XERCES_CPP_NAMESPACE {"/>
+            <define name="XERCES_CPP_NAMESPACE_END" value="}"/>
+            <macro name="MOCK_METHOD"/>
+            <macro name="MOCK_METHOD_TPL"/>
+            <macro name="MOCK_METHOD_EXT"/>
+            <macro name="MOCK_FUNCTOR" value="MOCK_FUNCTOR"/>
+            <macro name="MOCK_CLASS" value="class mock"/>
+            <macro name="MOCK_BASE_CLASS" value="class mock"/>
             <macro name="BOOST_CHECK_THROW"/>
             <macro name="BOOST_CHECK_NO_THROW"/>
             <macro name="BOOST_REQUIRE_THROW"/>
