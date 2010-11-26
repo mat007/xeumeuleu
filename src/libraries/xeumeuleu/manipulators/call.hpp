@@ -35,6 +35,9 @@
 
 namespace xml
 {
+    class xistream;
+    class xostream;
+
 // =============================================================================
 /** @class  call
     @brief  Call manipulator
@@ -57,12 +60,12 @@ public:
     call_manipulator( F functor )
         : functor_( functor )
     {}
-    friend xml::xistream& operator>>( xml::xistream& xis, const call_manipulator& m )
+    friend xistream& operator>>( xistream& xis, const call_manipulator& m )
     {
         m.functor_( xis );
         return xis;
     }
-    friend xml::xostream& operator<<( xml::xostream& xos, const call_manipulator& m )
+    friend xostream& operator<<( xostream& xos, const call_manipulator& m )
     {
         m.functor_( xos );
         return xos;
