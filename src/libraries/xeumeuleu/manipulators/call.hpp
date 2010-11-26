@@ -41,6 +41,9 @@ namespace xml
     @code
     xml::xistream& xis = ...;
     xis >> xml::call( functor );
+
+    xml::xostream& xos = ...;
+    xos << xml::call( functor );
     @endcode
 */
 // Created: MAT 2010-11-26
@@ -58,6 +61,11 @@ public:
     {
         m.functor_( xis );
         return xis;
+    }
+    friend xml::xostream& operator<<( xml::xostream& xos, const call_manipulator& m )
+    {
+        m.functor_( xos );
+        return xos;
     }
     //@}
 

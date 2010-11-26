@@ -35,15 +35,27 @@
 #include <turtle/mock.hpp>
 
 // -----------------------------------------------------------------------------
-// Name: call_allows_to_call_a_functor
+// Name: call_allows_to_call_a_read_functor
 // Created: MCO 2010-11-26
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( call_allows_to_call_a_functor )
+BOOST_AUTO_TEST_CASE( call_allows_to_call_a_read_functor )
 {
     MOCK_FUNCTOR( void( xml::xistream& ) ) f;
     xml::xistringstream xis( "<element/>" );
     MOCK_EXPECT( f, _ ).once();
     xis >> xml::call( f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: call_allows_to_call_a_write_functor
+// Created: MCO 2010-11-26
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( call_allows_to_call_a_write_functor )
+{
+    MOCK_FUNCTOR( void( xml::xostream& ) ) f;
+    xml::xostringstream xos;
+    MOCK_EXPECT( f, _ ).once();
+    xos << xml::call( f );
 }
 
 // -----------------------------------------------------------------------------
