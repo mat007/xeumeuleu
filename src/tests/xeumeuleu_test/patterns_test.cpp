@@ -36,29 +36,29 @@
 namespace
 {
     template< typename T >
-    class value_or_percentage_manipulator
+    struct value_or_percentage_manipulator
     {
-    public:
         value_or_percentage_manipulator( T& value, const T& maximum )
             : value_  ( &value )
             , maximum_( maximum )
         {}
-        friend xml::xistream& operator>>( xml::xistream& xis, const value_or_percentage_manipulator& m )
-        {
-            const std::string s = xis.value< std::string >();
-            std::stringstream ss( s );
-            ss >> *m.value_;
-            if( ! s.empty() && *s.rbegin() == '%' )
-                *m.value_ = *m.value_ * m.maximum_ / T( 100 );
-            return xis;
-        }
-    private:
         T* value_;
         T maximum_;
     };
 
     template< typename T >
-    inline value_or_percentage_manipulator< T > value_or_percentage( T& value, const T& maximum )
+    xml::xistream& operator>>( xml::xistream& xis, const value_or_percentage_manipulator< T >& m )
+    {
+        const std::string s = xis.value< std::string >();
+        std::stringstream ss( s );
+        ss >> *m.value_;
+        if( ! s.empty() && *s.rbegin() == '%' )
+            *m.value_ = *m.value_ * m.maximum_ / T( 100 );
+        return xis;
+    }
+
+    template< typename T >
+    value_or_percentage_manipulator< T > value_or_percentage( T& value, const T& maximum )
     {
         return value_or_percentage_manipulator< T >( value, maximum );
     }
