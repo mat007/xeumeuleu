@@ -72,6 +72,90 @@ namespace
             >> xml::list( c, &my_caller_class::my_method, p, p, p, p, p )
             >> xml::list( "node", c, &my_caller_class::my_method, p, p, p, p, p );
     }
+
+    class my_const_caller_class
+    {
+    public:
+        void my_method( const std::string&, xml::xistream& ) const {}
+        void my_method( xml::xistream& ) const {}
+        void my_method( const std::string&, xml::xistream&, int ) const {}
+        void my_method( xml::xistream&, int ) const {}
+        void my_method( const std::string&, xml::xistream&, int, int ) const {}
+        void my_method( xml::xistream&, int, int ) const {}
+        void my_method( const std::string&, xml::xistream&, int, int, int ) const {}
+        void my_method( xml::xistream&, int, int, int ) const {}
+        void my_method( const std::string&, xml::xistream&, int, int, int, int ) const {}
+        void my_method( xml::xistream&, int, int, int, int ) const {}
+        void my_method( const std::string&, xml::xistream&, int, int, int, int, int ) const {}
+        void my_method( xml::xistream&, int, int, int, int, int ) const {}
+    };
+
+    void my_function_to_test_const_caller_implementations()
+    {
+        xml::xistream& xis = *(xml::xistream*)0;
+        const my_const_caller_class c;
+        int p = 1;
+        xis >> xml::list( c, &my_const_caller_class::my_method )
+            >> xml::list( "node", c, &my_const_caller_class::my_method )
+            >> xml::list( c, &my_const_caller_class::my_method, p )
+            >> xml::list( "node", c, &my_const_caller_class::my_method, p )
+            >> xml::list( c, &my_const_caller_class::my_method, p, p )
+            >> xml::list( "node", c, &my_const_caller_class::my_method, p, p )
+            >> xml::list( c, &my_const_caller_class::my_method, p, p, p )
+            >> xml::list( "node", c, &my_const_caller_class::my_method, p, p, p )
+            >> xml::list( c, &my_const_caller_class::my_method, p, p, p, p )
+            >> xml::list( "node", c, &my_const_caller_class::my_method, p, p, p, p )
+            >> xml::list( c, &my_const_caller_class::my_method, p, p, p, p, p )
+            >> xml::list( "node", c, &my_const_caller_class::my_method, p, p, p, p, p );
+    }
+
+    class my_caller_class_with_namespace
+    {
+    public:
+        void my_method( const std::string&, const std::string&, xml::xistream& ) {}
+        void my_method( const std::string&, const std::string&, xml::xistream&, int ) {}
+        void my_method( const std::string&, const std::string&, xml::xistream&, int, int ) {}
+        void my_method( const std::string&, const std::string&, xml::xistream&, int, int, int ) {}
+        void my_method( const std::string&, const std::string&, xml::xistream&, int, int, int, int ) {}
+        void my_method( const std::string&, const std::string&, xml::xistream&, int, int, int, int, int ) {}
+    };
+
+    void my_function_to_test_caller_implementations_with_namespace()
+    {
+        xml::xistream& xis = *(xml::xistream*)0;
+        my_caller_class_with_namespace c;
+        int p = 1;
+        xis >> xml::list( c, &my_caller_class_with_namespace::my_method )
+            >> xml::list( c, &my_caller_class_with_namespace::my_method, p )
+            >> xml::list( c, &my_caller_class_with_namespace::my_method, p, p )
+            >> xml::list( c, &my_caller_class_with_namespace::my_method, p, p, p )
+            >> xml::list( c, &my_caller_class_with_namespace::my_method, p, p, p, p )
+            >> xml::list( c, &my_caller_class_with_namespace::my_method, p, p, p, p, p );
+    }
+
+    class my_const_caller_class_with_namespace
+    {
+    public:
+        void my_method( const std::string&, const std::string&, xml::xistream& ) const {}
+        void my_method( const std::string&, const std::string&, xml::xistream&, int ) const {}
+        void my_method( const std::string&, const std::string&, xml::xistream&, int, int ) const {}
+        void my_method( const std::string&, const std::string&, xml::xistream&, int, int, int ) const {}
+        void my_method( const std::string&, const std::string&, xml::xistream&, int, int, int, int ) const {}
+        void my_method( const std::string&, const std::string&, xml::xistream&, int, int, int, int, int ) const {}
+    };
+
+    void my_function_to_test_const_caller_implementations_with_namespace()
+    {
+        xml::xistream& xis = *(xml::xistream*)0;
+        const my_const_caller_class_with_namespace c;
+        int p = 1;
+        xis >> xml::list( c, &my_const_caller_class_with_namespace::my_method )
+            >> xml::list( c, &my_const_caller_class_with_namespace::my_method, p )
+            >> xml::list( c, &my_const_caller_class_with_namespace::my_method, p, p )
+            >> xml::list( c, &my_const_caller_class_with_namespace::my_method, p, p, p )
+            >> xml::list( c, &my_const_caller_class_with_namespace::my_method, p, p, p, p )
+            >> xml::list( c, &my_const_caller_class_with_namespace::my_method, p, p, p, p, p );
+    }
 }
 
 namespace
