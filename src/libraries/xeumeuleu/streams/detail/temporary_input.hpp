@@ -69,7 +69,7 @@ public:
     virtual void end()
     {
         if( --level_ < 0 )
-            throw xml::exception( "Invalid 'end' at root level" );
+            throw exception( "Invalid 'end' at root level" );
         reset();
     }
 

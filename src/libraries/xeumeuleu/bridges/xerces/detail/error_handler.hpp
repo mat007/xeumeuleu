@@ -62,7 +62,7 @@ public:
     void check()
     {
         if( ! message_.empty() )
-            throw xml::exception( message_ );
+            throw exception( message_ );
     }
     virtual bool handleError( const XERCES_CPP_NAMESPACE::DOMError& error )
     {

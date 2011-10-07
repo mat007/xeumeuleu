@@ -167,7 +167,7 @@ public:
 
     void error( const std::string& message ) const
     {
-        throw xml::exception( context() + message );
+        throw exception( context() + message );
     }
     //@}
 
@@ -295,14 +295,14 @@ namespace xml
     template< typename T > T xistream::value() const
     {
         T value;
-        xml::xisubstream xiss( *this );
+        xisubstream xiss( *this );
         xiss >> value;
         return value;
     }
     template< typename T > T xistream::value( const T& fallback ) const
     {
         T value = fallback;
-        xml::xisubstream xiss( *this );
+        xisubstream xiss( *this );
         xiss.optional();
         xiss >> value;
         return value;
@@ -310,22 +310,22 @@ namespace xml
     template< typename T > T xistream::attribute( const std::string& name ) const
     {
         T value;
-        xml::xisubstream xiss( *this );
-        xiss >> xml::attribute( name, value );
+        xisubstream xiss( *this );
+        xiss >> attribute_manipulator< T >( name, value );
         return value;
     }
     template< typename T > T xistream::attribute( const std::string& name, const T& fallback ) const
     {
         T value = fallback;
-        xml::xisubstream xiss( *this );
+        xisubstream xiss( *this );
         xiss.optional();
-        xiss >> xml::attribute( name, value );
+        xiss >> attribute_manipulator< T >( name, value );
         return value;
     }
     template< typename T > T xistream::content( const std::string& name ) const
     {
         T value;
-        xml::xisubstream xiss( *this );
+        xisubstream xiss( *this );
         xiss.start( name );
         xiss >> value;
         return value;
@@ -333,7 +333,7 @@ namespace xml
     template< typename T > T xistream::content( const std::string& name, const T& fallback ) const
     {
         T value = fallback;
-        xml::xisubstream xiss( *this );
+        xisubstream xiss( *this );
         xiss.optional();
         xiss.start( name );
         xiss.optional();

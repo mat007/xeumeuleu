@@ -79,7 +79,7 @@ public:
             transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
         std::ostringstream os;
         if( transformer.transform( in, xsl, os ) )
-            throw xsl::exception( "XSL buffer : " + std::string( transformer.getLastError() ) );
+            throw exception( "XSL buffer : " + std::string( transformer.getLastError() ) );
         return os.str();
     }
     //@}

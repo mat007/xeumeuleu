@@ -51,7 +51,7 @@
 
 #define XEUMEULEU_TRY try {
 #define XEUMEULEU_CATCH } \
-    catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
+    catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "Out of memory" ); } \
     catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e ); } \
     catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e ); }
 
@@ -109,7 +109,7 @@ private:
     {
         XERCES_CPP_NAMESPACE::DOMImplementation* impl = XERCES_CPP_NAMESPACE::DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
         if( ! impl )
-            throw xml::exception( "Internal error in 'document::write' : DOMImplementation 'LS' not found" );
+            throw exception( "Internal error in 'document::write' : DOMImplementation 'LS' not found" );
         error_handler handler;
 #if XERCES_VERSION_MAJOR == 3
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMLSSerializer > serializer( *dynamic_cast< XERCES_CPP_NAMESPACE::DOMImplementationLS* >( impl )->createLSSerializer() );
@@ -154,7 +154,7 @@ private:
             initialize();
             XERCES_CPP_NAMESPACE::DOMImplementation* impl = XERCES_CPP_NAMESPACE::DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
             if( ! impl )
-                throw xml::exception( "Internal error in 'document::build' : DOMImplementation 'LS' not found" );
+                throw exception( "Internal error in 'document::build' : DOMImplementation 'LS' not found" );
             return *impl->createDocument();
         XEUMEULEU_CATCH
     }
@@ -175,7 +175,7 @@ private:
         XEUMEULEU_TRY
             initialize();
             if( ! std::ifstream( filename.c_str() ) )
-                throw xml::exception( "Unable to open file '" + filename + "'" );
+                throw exception( "Unable to open file '" + filename + "'" );
             XERCES_CPP_NAMESPACE::LocalFileInputSource source( static_cast< const XMLCh* const >( translate( filename ) ) );
             return parse( source, encoding, grammar );
         XEUMEULEU_CATCH
