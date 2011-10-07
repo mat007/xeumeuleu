@@ -47,9 +47,9 @@
 
 #define XEUMEULEU_TRY try {
 #define XEUMEULEU_CATCH } \
-            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
-            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw xml::chained_exception( e, context() ); } \
-            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw xml::chained_exception( e, context() ); }
+            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "Out of memory" ); } \
+            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e, context() ); } \
+            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e, context() ); }
 
 namespace xml
 {
@@ -79,7 +79,7 @@ public:
         XEUMEULEU_TRY
             const XERCES_CPP_NAMESPACE::DOMNode* child = find_child( ns, tag );
             if( ! child )
-                throw xml::exception( context() + location() + " does not have a child named '" + tag + "'"
+                throw exception( context() + location() + " does not have a child named '" + tag + "'"
                     + (!ns || ns->empty() ? "" : (" in namespace '" + *ns + "'")) );
             current_ = child;
         XEUMEULEU_CATCH
@@ -88,10 +88,10 @@ public:
     {
         XEUMEULEU_TRY
             if( current_ == &root_ )
-                throw xml::exception( context() + "Cannot move up from " + location() );
+                throw exception( context() + "Cannot move up from " + location() );
             const XERCES_CPP_NAMESPACE::DOMNode* parent = current_->getParentNode();
             if( ! parent )
-                throw xml::exception( context() + location() + " has no parent" );
+                throw exception( context() + location() + " has no parent" );
             current_ = parent;
         XEUMEULEU_CATCH
     }
@@ -100,7 +100,7 @@ public:
     {
         const XERCES_CPP_NAMESPACE::DOMNode* child = find_content();
         if( ! child )
-            throw xml::exception( context() + location() + " does not have a content" );
+            throw exception( context() + location() + " does not have a content" );
         return data( child );
     }
 
@@ -108,7 +108,7 @@ public:
     {
         const XERCES_CPP_NAMESPACE::DOMNode* attribute = find_attribute( ns, name );
         if( ! attribute )
-            throw xml::exception( context() + location() + " does not have an attribute '" + name + "'"
+            throw exception( context() + location() + " does not have an attribute '" + name + "'"
                 + (!ns || ns->empty() ? "" : (" in namespace '" + *ns + "'")) );
         return std::auto_ptr< input_base >( new input( *attribute ) );
     }
@@ -208,7 +208,7 @@ public:
             {
                 const XMLCh* p = lookupPrefix( *current_, translate( ns ) );
                 if( ! p )
-                    throw xml::exception( context() + location() + " has no prefix for namespace '" + ns + "'" );
+                    throw exception( context() + location() + " has no prefix for namespace '" + ns + "'" );
                 prefix = translate( p );
             }
         XEUMEULEU_CATCH
@@ -228,7 +228,7 @@ private:
     //@{
     void error( const std::string& message ) const
     {
-        throw xml::exception( context() + message );
+        throw exception( context() + message );
     }
 
     std::string location() const
@@ -318,9 +318,9 @@ private:
 
 #define XEUMEULEU_TRY try {
 #define XEUMEULEU_CATCH } \
-            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
-            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw xml::chained_exception( e, context() ); } \
-            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw xml::chained_exception( e, context() ); }
+            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "Out of memory" ); } \
+            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e, context() ); } \
+            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e, context() ); }
 
 namespace xml
 {

@@ -118,7 +118,7 @@ private:
         XERCES_CPP_NAMESPACE::XMLTranscoder* transcoder =
             XERCES_CPP_NAMESPACE::XMLPlatformUtils::fgTransService->makeNewTranscoderFor( encoding.c_str(), code, detail::BLOCK_SIZE );
         if( code != XERCES_CPP_NAMESPACE::XMLTransService::Ok )
-            throw xml::exception( "internal error while creating transcoder" );
+            throw exception( "internal error while creating transcoder" );
         return transcoder;
     }
     void transcode( const XMLCh* const data, detail::bytes& b ) const

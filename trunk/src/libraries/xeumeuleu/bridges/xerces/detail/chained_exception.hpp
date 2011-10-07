@@ -45,16 +45,16 @@ namespace xml
 */
 // Created: MAT 2006-01-03
 // =============================================================================
-class chained_exception : public xml::exception
+class chained_exception : public exception
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit chained_exception( const XERCES_CPP_NAMESPACE::XMLException& chained, const std::string& message = "" )
-        : xml::exception( message + translate( chained.getMessage() ) )
+        : exception( message + translate( chained.getMessage() ) )
     {}
     explicit chained_exception( const XERCES_CPP_NAMESPACE::DOMException& chained, const std::string& message = "" )
-        : xml::exception( message + translate( chained.getMessage() ) )
+        : exception( message + translate( chained.getMessage() ) )
     {}
     virtual ~chained_exception() throw ()
     {}

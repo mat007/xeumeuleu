@@ -59,7 +59,7 @@ public:
         : stylesheet_( stylesheet )
     {
         if( ! std::ifstream( stylesheet.c_str() ) )
-            throw xsl::exception( "Unable to open style sheet '" + stylesheet + "'" );
+            throw exception( "Unable to open style sheet '" + stylesheet + "'" );
     }
     virtual ~file_output_imp()
     {}
@@ -82,7 +82,7 @@ public:
             transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
         std::ostringstream os;
         if( transformer.transform( in, xsl, os ) )
-            throw xsl::exception( stylesheet_ + " : " + transformer.getLastError() );
+            throw exception( stylesheet_ + " : " + transformer.getLastError() );
         return os.str();
     }
     //@}
