@@ -47,14 +47,14 @@ namespace xsl
 class transform
 {
 private:
-        struct Initializer
+        struct initializer
         {
-            Initializer()
+            initializer()
             {
                 XERCES_CPP_NAMESPACE::XMLPlatformUtils::Initialize();
                 XALAN_CPP_NAMESPACE::XalanTransformer::initialize();
             }
-            ~Initializer()
+            ~initializer()
             {
 #ifndef __CYGWIN__ // $$$$ MAT : xalan seems to have a problem with cygwin/gcc, not sure why it crashes exactly...
                 XALAN_CPP_NAMESPACE::XalanTransformer::terminate();
@@ -70,7 +70,7 @@ protected:
     {
         try
         {
-            static const struct Initializer initializer;
+            static const initializer i;
         }
         catch( const XERCES_CPP_NAMESPACE::XMLException& e )
         {
