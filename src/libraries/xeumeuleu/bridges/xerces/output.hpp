@@ -46,7 +46,7 @@
 
 #define XEUMEULEU_TRY try {
 #define XEUMEULEU_CATCH } \
-            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw xml::exception( "Out of memory" ); } \
+            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "Out of memory" ); } \
             catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e ); } \
             catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e ); }
 
@@ -106,7 +106,7 @@ public:
     {
         XEUMEULEU_TRY
             if( is_root() )
-                throw xml::exception( "Illegal 'end' from root level" );
+                throw exception( "Illegal 'end' from root level" );
             current_ = current_->getParentNode();
             if( flushable_ && is_root() )
                 flushable_->flush();
@@ -197,7 +197,7 @@ public:
         XEUMEULEU_TRY
             XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
             if( ! attributes )
-                throw xml::exception( location() + " cannot have attributes" );
+                throw exception( location() + " cannot have attributes" );
             const std::string p = prefix.empty() ? "xmlns" : "xmlns:" + prefix;
             XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttributeNS( XERCES_CPP_NAMESPACE::XMLUni::fgXMLNSURIName, translate( p ) );
             att->setValue( translate( ns ) );
@@ -212,7 +212,7 @@ public:
         XEUMEULEU_TRY
             XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
             if( ! attributes )
-                throw xml::exception( location() + " cannot have attributes" );
+                throw exception( location() + " cannot have attributes" );
             XERCES_CPP_NAMESPACE::DOMAttr* att = ns ? create_attribute( *attributes, *ns, name ) : create_attribute( *attributes, name );
             return std::auto_ptr< output_base >( new output( document_, *att ) );
         XEUMEULEU_CATCH
