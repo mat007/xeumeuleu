@@ -50,8 +50,8 @@ class grammar
 protected:
     //! @name Constructors/Destructor
     //@{
-     grammar() {}
-    ~grammar() {}
+    grammar() {}
+    virtual ~grammar() {}
     //@}
 
 public:

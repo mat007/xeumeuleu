@@ -133,20 +133,20 @@ private:
         handler.check();
     }
 
-    struct Initializer
+    struct initializer
     {
-        Initializer()
+        initializer()
         {
             XERCES_CPP_NAMESPACE::XMLPlatformUtils::Initialize();
         }
-        ~Initializer()
+        ~initializer()
         {
             XERCES_CPP_NAMESPACE::XMLPlatformUtils::Terminate();
         }
     };
     void initialize() const
     {
-        static const Initializer initializer;
+        static const initializer i;
     }
     XERCES_CPP_NAMESPACE::DOMDocument& build() const
     {

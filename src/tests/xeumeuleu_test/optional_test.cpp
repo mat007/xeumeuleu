@@ -232,10 +232,10 @@ BOOST_AUTO_TEST_CASE( reading_a_list_resets_optional )
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_an_optional_non_existing_attribute_does_not_throw_an_exception
+// Name: reading_an_optional_non_existing_attribute_does_not_throw
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_attribute_does_not_throw_an_exception )
+BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_attribute_does_not_throw )
 {
     xml::xistringstream xis( "<element/>" );
     int value = 0;
@@ -246,10 +246,10 @@ BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_attribute_does_not_throw_
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_an_optional_non_existing_text_content_does_not_throw_an_exception
+// Name: reading_an_optional_non_existing_text_content_does_not_throw
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_text_content_does_not_throw_an_exception )
+BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_text_content_does_not_throw )
 {
     xml::xistringstream xis( "<element/>" );
     int value = 0;
@@ -260,14 +260,27 @@ BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_text_content_does_not_thr
 }
 
 // -----------------------------------------------------------------------------
-// Name: reading_an_optional_non_existing_content_in_existing_tag_throws_an_exception
+// Name: reading_an_optional_non_existing_content_in_existing_tag_throws
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_content_in_existing_tag_throws_an_exception )
+BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_content_in_existing_tag_throws )
 {
     xml::xistringstream xis( "<element/>" );
     std::string value;
     xis >> xml::optional;
     BOOST_CHECK_THROW( xis >> xml::content( "element", value ), std::exception ); // because content = start + read + end
+    BOOST_CHECK_EQUAL( "", value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_an_optional_non_existing_content_in_non_existing_tag_does_not_throw
+// Created: MCO 2006-01-03
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_content_in_non_existing_tag_does_not_throw )
+{
+    xml::xistringstream xis( "<root/>" );
+    std::string value;
+    xis >> xml::start( "root" )
+            >> xml::optional >> xml::content( "element", value );
     BOOST_CHECK_EQUAL( "", value );
 }
