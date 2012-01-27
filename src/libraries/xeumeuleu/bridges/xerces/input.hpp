@@ -101,7 +101,7 @@ public:
         const XERCES_CPP_NAMESPACE::DOMNode* child = find_content();
         if( ! child )
             throw exception( context() + location() + " does not have a content" );
-        return data( child );
+        return data( *current_, *child );
     }
 
     virtual std::auto_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const
@@ -233,7 +233,7 @@ private:
 
     std::string location() const
     {
-        return "node '" + translate( current_->getNodeName() ) + "'";
+        return "Node '" + translate( current_->getNodeName() ) + "'";
     }
 
     template< typename N >

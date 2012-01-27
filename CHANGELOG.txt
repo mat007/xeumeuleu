@@ -2,6 +2,7 @@ trunk
 . added an xml::call manipulator to call a functor
 . fixed typos in the name version of xml::list for 3 and 5 arguments
 . removed unnecessary xml namespace prefixes
+. fixed missing error context when data conversion failed
 
 1.5.0
 . removed the undocumented flush public method from xml::xofstream
