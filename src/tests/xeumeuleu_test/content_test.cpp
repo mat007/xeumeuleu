@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE( reading_empty_content_throws_proper_exception )
     }
     catch( std::exception& e )
     {
-        BOOST_CHECK_EQUAL( "string_input (line 1, column 11) : node 'element' does not have a content", e.what() );
+        BOOST_CHECK_EQUAL( "string_input (line 1, column 11) : Node 'element' does not have a content", e.what() );
         return;
     }
     BOOST_FAIL( "should have thrown" );
@@ -143,6 +143,26 @@ BOOST_AUTO_TEST_CASE( streaming_content_writes_node_special_value_content )
     BOOST_CHECK_EQUAL( format( "-INF" ), write< double >( - std::numeric_limits< double >::infinity() ) );
     BOOST_CHECK_EQUAL( format( "NaN" ), write< double >( std::numeric_limits< double >::quiet_NaN() ) );
     BOOST_CHECK_EQUAL( format( "NaN" ), write< double >( std::numeric_limits< double >::signaling_NaN() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: data_conversion_failure_provides_error_context
+// Created: MAT 2012-01-27
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( data_conversion_failure_provides_error_context )
+{
+    try
+    {
+        short value;
+        xml::xistringstream xis( "<element>300000</element>");
+        xis >> xml::content( "element", value );
+    }
+    catch( std::exception& e )
+    {
+        BOOST_CHECK_EQUAL( "string_input (line 1, column 10) : Value of Node '#text' is not a short", e.what() );
+        return;
+    }
+    BOOST_FAIL( "should have thrown" );
 }
 
 // -----------------------------------------------------------------------------
