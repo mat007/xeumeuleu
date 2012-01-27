@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="xeumeuleu_xerces_2_test"
 	ProjectGUID="{3C66319F-DD9E-4B4D-ADA9-527B4C21A86A}"
 	RootNamespace="xeumeuleu_xerces_2_test"
@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="xerces-c_2D.lib mockppd.lib"
+				AdditionalDependencies="xerces-c_2D.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt-gd.exe"
 				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="true"
@@ -147,7 +147,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/fixed:no"
-				AdditionalDependencies="xerces-c_2.lib mockpp.lib"
+				AdditionalDependencies="xerces-c_2.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories=""
