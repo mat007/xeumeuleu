@@ -144,8 +144,8 @@ namespace
 BOOST_AUTO_TEST_CASE( buffered_elements_can_be_read_with_a_list )
 {
     mock_custom_class mock_custom;
-    MOCK_EXPECT( mock_custom, forward ).once().with( "content number one" );
-    MOCK_EXPECT( mock_custom, forward ).once().with( "content number two" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "content number one" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "content number two" );
     xml::xobufferstream xos;
     xos << xml::start( "element" )
             << xml::content( "sub-node", "content number one" )
