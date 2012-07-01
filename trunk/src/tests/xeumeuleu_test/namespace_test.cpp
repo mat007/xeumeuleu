@@ -236,9 +236,9 @@ BOOST_AUTO_TEST_CASE( reading_list_with_namespace_elements )
                              "  <ns3:sub-node>content number three</ns3:sub-node>"
                              "</element>" );
     mock_custom_class_list mock_custom;
-    MOCK_EXPECT( mock_custom, forward ).once().with( "content number one" );
-    MOCK_EXPECT( mock_custom, forward ).once().with( "content number two" );
-    MOCK_EXPECT( mock_custom, forward ).once().with( "content number three" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "content number one" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "content number two" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "content number three" );
     xis >> xml::start( "element" )
             >> xml::list( "sub-node", mock_custom, &mock_custom_class_list::process );
 }
@@ -255,8 +255,8 @@ BOOST_AUTO_TEST_CASE( reading_list_filtered_on_correct_namespace_filters_element
                              "  <ns3:sub-node>content number three</ns3:sub-node>"
                              "</element>" );
     mock_custom_class_list mock_custom;
-    MOCK_EXPECT( mock_custom, forward ).once().with( "content number one" );
-    MOCK_EXPECT( mock_custom, forward ).once().with( "content number three" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "content number one" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "content number three" );
     xis >> xml::start( "element" )
             >> xml::ns( "http://www.example.org" ) >> xml::list( "sub-node", mock_custom, &mock_custom_class_list::process );
 }
@@ -274,7 +274,7 @@ BOOST_AUTO_TEST_CASE( reading_list_filtered_on_no_namespace_filters_elements )
                              "  <ns3:sub-node>content number four</ns3:sub-node>"
                              "</element>" );
     mock_custom_class_list mock_custom;
-    MOCK_EXPECT( mock_custom, forward ).once().with( "content number one" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "content number one" );
     xis >> xml::start( "element" )
             >> xml::ns( "" ) >> xml::list( "sub-node", mock_custom, &mock_custom_class_list::process );
 }
@@ -305,9 +305,9 @@ BOOST_AUTO_TEST_CASE( reading_name_list_with_namespace_elements )
                              "  <ns2:sub-node3>content number three</ns2:sub-node3>"
                              "</element>" );
     mock_custom_class_name_list mock_custom;
-    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example.org", "sub-node1", "content number one" );
-    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example.org", "sub-node2", "content number two" );
-    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example2.org", "sub-node3", "content number three" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "http://www.example.org", "sub-node1", "content number one" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "http://www.example.org", "sub-node2", "content number two" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "http://www.example2.org", "sub-node3", "content number three" );
     xis >> xml::start( "element" )
             >> xml::list( mock_custom, &mock_custom_class_name_list::process );
 }
@@ -324,8 +324,8 @@ BOOST_AUTO_TEST_CASE( reading_name_list_filtered_on_namespace_filters_elements )
                              "  <ns2:sub-node3>content number three</ns2:sub-node3>"
                              "</element>" );
     mock_custom_class_name_list mock_custom;
-    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example.org", "sub-node1", "content number one" );
-    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example.org", "sub-node2", "content number two" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "http://www.example.org", "sub-node1", "content number one" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "http://www.example.org", "sub-node2", "content number two" );
     xis >> xml::start( "element" )
             >> xml::ns( "http://www.example.org" ) >> xml::list( mock_custom, &mock_custom_class_name_list::process );
 }
@@ -343,7 +343,7 @@ BOOST_AUTO_TEST_CASE( reading_name_list_filtered_on_no_namespace_filters_element
                              "  <ns2:sub-node4>content number four</ns2:sub-node4>"
                              "</element>" );
     mock_custom_class_name_list mock_custom;
-    MOCK_EXPECT( mock_custom, forward ).once().with( "", "sub-node1", "content number one" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "", "sub-node1", "content number one" );
     xis >> xml::start( "element" )
             >> xml::ns( "" ) >> xml::list( mock_custom, &mock_custom_class_name_list::process );
 }
@@ -373,9 +373,9 @@ BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_from_element_filters_att
                              "  <element attribute='attribute 1' ns:attribute='attribute 2' ns2:attribute='attribute 3'/>"
                              "</root>" );
     mock_custom_class mock_custom;
-    MOCK_EXPECT( mock_custom, forward ).once().with( "", "attribute", "attribute 1" );
-    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example.org", "attribute", "attribute 2" );
-    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example2.org", "attribute", "attribute 3" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "", "attribute", "attribute 1" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "http://www.example.org", "attribute", "attribute 2" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "http://www.example2.org", "attribute", "attribute 3" );
     xis >> xml::start( "root" )
             >> xml::start( "element" )
                 >> xml::attributes( mock_custom, &mock_custom_class::process );
@@ -391,7 +391,7 @@ BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_namespace_fr
                              "  <element attribute='attribute 1' ns:attribute='attribute 2' ns2:attribute='attribute 3'/>"
                              "</root>" );
     mock_custom_class mock_custom;
-    MOCK_EXPECT( mock_custom, forward ).once().with( "http://www.example.org", "attribute", "attribute 2" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "http://www.example.org", "attribute", "attribute 2" );
     xis >> xml::start( "root" )
             >> xml::start( "element" )
                 >> xml::ns( "http://www.example.org" ) >> xml::attributes( mock_custom, &mock_custom_class::process );
@@ -407,7 +407,7 @@ BOOST_AUTO_TEST_CASE( reading_attributes_with_namespace_filtered_on_no_namespace
                              "  <element attribute='attribute 1' ns:attribute='attribute 2' ns2:attribute='attribute 3'/>"
                              "</root>" );
     mock_custom_class mock_custom;
-    MOCK_EXPECT( mock_custom, forward ).once().with( "", "attribute", "attribute 1" );
+    MOCK_EXPECT( mock_custom.forward ).once().with( "", "attribute", "attribute 1" );
     xis >> xml::start( "root" )
             >> xml::start( "element" )
                 >> xml::ns( "" ) >> xml::attributes( mock_custom, &mock_custom_class::process );

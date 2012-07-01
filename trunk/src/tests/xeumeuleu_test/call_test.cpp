@@ -40,9 +40,9 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( call_allows_to_call_a_read_functor )
 {
-    MOCK_FUNCTOR( void( xml::xistream& ) ) f;
+    MOCK_FUNCTOR( f, void( xml::xistream& ) );
     xml::xistringstream xis( "<element/>" );
-    MOCK_EXPECT( f, _ ).once();
+    MOCK_EXPECT( f ).once();
     xis >> xml::call( f );
 }
 
@@ -52,9 +52,9 @@ BOOST_AUTO_TEST_CASE( call_allows_to_call_a_read_functor )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( call_allows_to_call_a_write_functor )
 {
-    MOCK_FUNCTOR( void( xml::xostream& ) ) f;
+    MOCK_FUNCTOR( f, void( xml::xostream& ) );
     xml::xostringstream xos;
-    MOCK_EXPECT( f, _ ).once();
+    MOCK_EXPECT( f ).once();
     xos << xml::call( f );
 }
 
@@ -64,9 +64,8 @@ BOOST_AUTO_TEST_CASE( call_allows_to_call_a_write_functor )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( call_allows_to_call_a_functor_by_reference )
 {
-    typedef MOCK_FUNCTOR( void( xml::xistream& ) ) functor;
-    functor f;
+    MOCK_FUNCTOR( f, void( xml::xistream& ) );
     xml::xistringstream xis( "<element/>" );
-    MOCK_EXPECT( f, _ ).once();
-    xis >> xml::call< functor& >( f );
+    MOCK_EXPECT( f ).once();
+    xis >> xml::call< mock::function< void( xml::xistream& )>& >( f );
 }
