@@ -36,6 +36,7 @@
 #define XEUMEULEU_TRANSCODER_ENCODING "utf-8"
 
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
+#include <vector>
 #include <string>
 
 namespace xml
