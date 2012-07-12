@@ -123,9 +123,9 @@ private:
     XERCES_CPP_NAMESPACE::XMLTranscoder* create() const
     {
         XERCES_CPP_NAMESPACE::XMLTransService::Codes result;
-        XERCES_CPP_NAMESPACE::Janitor< XERCES_CPP_NAMESPACE::XMLTranscoder > transcoder
-            = XERCES_CPP_NAMESPACE::XMLPlatformUtils::fgTransService->makeNewTranscoderFor(
-                XEUMEULEU_TRANSCODER_ENCODING, result, 16 * 1024 );
+        XERCES_CPP_NAMESPACE::Janitor< XERCES_CPP_NAMESPACE::XMLTranscoder > transcoder(
+            XERCES_CPP_NAMESPACE::XMLPlatformUtils::fgTransService->makeNewTranscoderFor(
+                XEUMEULEU_TRANSCODER_ENCODING, result, 16 * 1024 ) );
         if( result != XERCES_CPP_NAMESPACE::XMLTransService::Ok )
             throw xml::exception( std::string( "unable to create transcoder for " ) + XEUMEULEU_TRANSCODER_ENCODING );
         return transcoder.release();
