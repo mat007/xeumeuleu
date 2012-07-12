@@ -32,6 +32,7 @@
 
 #include "xeumeuleu_test_pch.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/assign/list_of.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: creating_an_input_stream_with_invalid_encoding_throws
@@ -75,4 +76,20 @@ BOOST_AUTO_TEST_CASE( forcing_encoding_upon_write_overrides_prolog_encoding )
     xml::xostringstream xos2( xml::encoding( "UTF-16" ) );
     xos2 << xml::start( "element" );
     BOOST_CHECK_NE( xos1.str(), xos2.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: reading_data_in_arabic_preserves_utf_8_characters
+// Created: MCO 2012-07-12
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_data_in_arabic_preserves_utf_8_characters )
+{
+    xml::xifstream xis( BOOST_RESOLVE( "arabic.xml" ) );
+    std::string name;
+    xis >> xml::start( "resource" );
+    xis >> xml::attribute( "name", name );
+    std::vector< char > v = boost::assign::list_of
+        ( -40 )( -89 )( -39 )( -124 )( -40 )( -71 )( -40 )
+        ( -79 )( -40 )( -88 )( -39 )( -118 )( -40 )( -87 );
+    BOOST_CHECK_EQUAL_COLLECTIONS( v.begin(), v.end(), name.begin(), name.end() );
 }
