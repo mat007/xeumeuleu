@@ -42,6 +42,10 @@
 #include <xeumeuleu/bridges/xerces/detail/locator.hpp>
 #include <typeinfo>
 #include <limits>
+#ifdef __GNUC__
+#include <cxxabi.h>
+#include <cstdlib>
+#endif
 
 #define XEUMEULEU_TRY try {
 #define XEUMEULEU_CATCH } \
@@ -98,12 +102,27 @@ private:
     {
         return node_->getNodeValue();
     }
+    std::string name( const std::type_info& info ) const
+    {
+        const char* name = info.name();
+#ifdef __GNUC__
+        int status = 0;
+        char* demangled = abi::__cxa_demangle( name, NULL, 0, &status );
+        if( ! status && demangled )
+        {
+            std::string result( demangled );
+            free( demangled );
+            return result;
+        }
+#endif
+        return name;
+    }
     template< typename T > T convert( const XMLCh* from ) const
     {
         const double data = XERCES_CPP_NAMESPACE::XMLDouble( from ).getValue();
         const T result = static_cast< T >( data );
         if( static_cast< double >( result ) != data )
-            throw exception( context() + "Value of " + location() + " is not a " + typeid( T ).name() );
+            throw exception( context() + "Value of " + location() + " is not a " + name( typeid( T ) ) );
         return result;
     }
     float to_float( const XMLCh* from ) const
