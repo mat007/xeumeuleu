@@ -58,6 +58,15 @@ BOOST_AUTO_TEST_CASE( call_allows_to_call_a_write_functor )
     xos << xml::call( f );
 }
 
+namespace
+{
+    template< typename F >
+    void call( xml::xistream& xis, F& f )
+    {
+        xis >> xml::call( f );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: call_allows_to_call_a_functor_by_reference
 // Created: MCO 2010-11-26
@@ -67,5 +76,5 @@ BOOST_AUTO_TEST_CASE( call_allows_to_call_a_functor_by_reference )
     MOCK_FUNCTOR( f, void( xml::xistream& ) );
     xml::xistringstream xis( "<element/>" );
     MOCK_EXPECT( f ).once();
-    xis >> xml::call< mock::function< void( xml::xistream& )>& >( f );
+    call( xis, f );
 }
