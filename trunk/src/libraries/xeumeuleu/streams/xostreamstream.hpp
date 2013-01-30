@@ -49,7 +49,7 @@ namespace xml
 {
 // =============================================================================
 /** @class  xostreamstream
-    @brief  Xml stream to adapt a standard onput stream
+    @brief  Xml stream to adapt a standard output stream
 */
 // Created: MCO 2009-11-12
 // =============================================================================
