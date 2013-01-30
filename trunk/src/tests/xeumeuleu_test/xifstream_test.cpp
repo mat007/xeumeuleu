@@ -35,22 +35,12 @@
 #include <fstream>
 
 // -----------------------------------------------------------------------------
-// Name: creating_with_non_existing_file_throws_a_meaningful_exception
+// Name: creating_with_non_existing_file_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( creating_with_non_existing_file_throws_a_meaningful_exception )
+BOOST_AUTO_TEST_CASE( creating_with_non_existing_file_throws_an_exception )
 {
-    const std::string filename = "directory/non_existing_file.xml";
-    try
-    {
-        xml::xifstream xis( filename );
-    }
-    catch( xml::exception& e )
-    {
-        BOOST_CHECK_EQUAL( "Unable to open file '" + filename + "'", e.what() );
-        return;
-    }
-    BOOST_FAIL( "meaningful exception expected" );
+    BOOST_REQUIRE_THROW( xml::xifstream xis( "directory/non_existing_file.xml" ), xml::exception );
 }
 
 // -----------------------------------------------------------------------------

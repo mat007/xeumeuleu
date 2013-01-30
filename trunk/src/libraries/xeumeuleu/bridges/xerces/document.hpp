@@ -89,7 +89,7 @@ protected:
     {
         if( ! document_->hasChildNodes() )
             return;
-        XERCES_CPP_NAMESPACE::LocalFileFormatTarget target( filename.c_str() );
+        XERCES_CPP_NAMESPACE::LocalFileFormatTarget target( static_cast< const XMLCh* const >( translate( filename ) ) );
         write( target, encoding );
     }
     void fill( std::string& data, const std::string& encoding ) const
@@ -174,8 +174,6 @@ private:
     {
         XEUMEULEU_TRY
             initialize();
-            if( ! std::ifstream( filename.c_str() ) )
-                throw exception( "Unable to open file '" + filename + "'" );
             XERCES_CPP_NAMESPACE::LocalFileInputSource source( static_cast< const XMLCh* const >( translate( filename ) ) );
             return parse( source, encoding, grammar );
         XEUMEULEU_CATCH
