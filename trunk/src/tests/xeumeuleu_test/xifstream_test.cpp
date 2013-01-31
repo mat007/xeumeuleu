@@ -32,6 +32,8 @@
 
 #include "xeumeuleu_test_pch.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/detail/utf8_codecvt_facet.hpp> 
 #include <fstream>
 
 // -----------------------------------------------------------------------------
@@ -69,4 +71,32 @@ BOOST_AUTO_TEST_CASE( creating_with_valid_file )
     xml::xifstream xis( filename );
     xis >> xml::start( "element" ) >> xml::end;
     std::remove( filename.c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: creating_file_with_unicode_name
+// Created: MCO 2013-01-31
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( creating_file_with_unicode_name )
+{
+    std::string name;
+    {
+        xml::xifstream xis( BOOST_RESOLVE( "arabic.xml" ) );
+        xis >> xml::start( "resource" )
+                >> xml::attribute( "name", name );
+    }
+    {
+        xml::xofstream xos( name );
+        xos << xml::start( "resource" )
+                << xml::attribute( "name", name );
+    }
+    {
+        xml::xifstream xis( name );
+        xis >> xml::start( "resource" )
+                >> xml::attribute( "name", name );
+    }
+    BOOST_CHECK(
+        boost::filesystem::remove(
+            boost::filesystem::path( name.c_str(),
+            boost::filesystem::detail::utf8_codecvt_facet() ) ) );
 }
