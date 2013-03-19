@@ -32,6 +32,8 @@
 
 #include "xeuseuleu_test_pch.h"
 #include <xeuseuleu/xsl.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/detail/utf8_codecvt_facet.hpp> 
 #include <fstream>
 
 // -----------------------------------------------------------------------------
@@ -45,7 +47,34 @@ BOOST_AUTO_TEST_CASE( tranformation_creates_a_file )
         xsl::xftransform xf( BOOST_RESOLVE( "stylesheet.xsl" ), filename );
         xf << xml::start( "root" )
            << xml::end;
-        BOOST_REQUIRE( ! std::ifstream( filename.c_str() ).fail() );
     }
+    BOOST_CHECK( boost::filesystem::remove( filename ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: tranformation_uses_a_stylesheet_with_unicode_name
+// Created: MCO 2013-03-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( tranformation_uses_a_stylesheet_with_unicode_name )
+{
+    std::string stylesheet;
+    xml::xifstream( BOOST_RESOLVE( "japanese.xml" ) )
+        >> xml::start( "root" )
+            >> xml::attribute( "name", stylesheet );
+    stylesheet += ".xsl";
+    const boost::filesystem::path path(
+        stylesheet.c_str(),
+        boost::filesystem::detail::utf8_codecvt_facet() );
+    boost::filesystem::copy_file(
+        BOOST_RESOLVE( "stylesheet.xsl" ),
+        path,
+        boost::filesystem::copy_option::overwrite_if_exists );
+    const std::string filename = "file";
+    {
+        xsl::xftransform xf( stylesheet, filename );
+        xf << xml::start( "root" )
+           << xml::end;
+    }
+    boost::filesystem::remove( path );
     std::remove( filename.c_str() );
 }

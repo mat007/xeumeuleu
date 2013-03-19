@@ -58,8 +58,11 @@ public:
     explicit file_output_imp( const std::string& stylesheet )
         : stylesheet_( stylesheet )
     {
-        if( ! std::ifstream( stylesheet.c_str() ) )
+        XERCES_CPP_NAMESPACE::FileHandle handle =
+            XERCES_CPP_NAMESPACE::XMLPlatformUtils::openFile( xml::translate( stylesheet ) );
+        if( ! handle )
             throw exception( "Unable to open style sheet '" + stylesheet + "'" );
+        XERCES_CPP_NAMESPACE::XMLPlatformUtils::closeFile( handle );
     }
     virtual ~file_output_imp()
     {}
@@ -76,7 +79,8 @@ public:
     {
         std::istringstream is( input );
         XALAN_CPP_NAMESPACE::XSLTInputSource in( &is );
-        XALAN_CPP_NAMESPACE::XSLTInputSource xsl( stylesheet_.c_str() );
+        XALAN_CPP_NAMESPACE::XSLTInputSource xsl(
+            static_cast< const XMLCh* >( xml::translate( stylesheet_ ) ) );
         XALAN_CPP_NAMESPACE::XalanTransformer transformer;
         for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
             transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
