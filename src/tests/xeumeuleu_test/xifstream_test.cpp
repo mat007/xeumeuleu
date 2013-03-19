@@ -79,24 +79,14 @@ BOOST_AUTO_TEST_CASE( creating_with_valid_file )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_file_with_unicode_name )
 {
-    std::string name;
-    {
-        xml::xifstream xis( BOOST_RESOLVE( "arabic.xml" ) );
-        xis >> xml::start( "resource" )
-                >> xml::attribute( "name", name );
-    }
-    {
-        xml::xofstream xos( name );
-        xos << xml::start( "resource" )
-                << xml::attribute( "name", name );
-    }
-    {
-        xml::xifstream xis( name );
-        xis >> xml::start( "resource" )
-                >> xml::attribute( "name", name );
-    }
-    BOOST_CHECK(
-        boost::filesystem::remove(
-            boost::filesystem::path( name.c_str(),
-            boost::filesystem::detail::utf8_codecvt_facet() ) ) );
+    std::string filename;
+    xml::xifstream( BOOST_RESOLVE( "arabic.xml" ) )
+        >> xml::start( "root" )
+            >> xml::attribute( "name", filename );
+    const boost::filesystem::path path(
+        filename.c_str(),
+        boost::filesystem::detail::utf8_codecvt_facet() );
+    boost::filesystem::remove( path );
+    xml::xofstream( filename ) << xml::start( "root" );
+    BOOST_CHECK( boost::filesystem::remove( path ) );
 }
