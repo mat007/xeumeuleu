@@ -40,12 +40,12 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: non_existing_style_sheet_file_throws
+// Name: non_existing_stylesheet_file_throws
 // Created: MAT 2007-09-10
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( unexisting_style_sheet_file_throws )
+BOOST_AUTO_TEST_CASE( non_existing_stylesheet_file_throws )
 {
-    BOOST_CHECK_THROW( xsl::xstringtransform( "non_existing.xsl" ), std::exception );
+    BOOST_CHECK_THROW( xsl::xstringtransform( "non-existing.xsl" ), xsl::exception );
 }
 
 // -----------------------------------------------------------------------------
