@@ -83,6 +83,7 @@ BOOST_AUTO_TEST_CASE( creating_file_with_unicode_name )
     xml::xifstream( BOOST_RESOLVE( "arabic.xml" ) )
         >> xml::start( "root" )
             >> xml::attribute( "name", filename );
+    filename += ".xml";
     const boost::filesystem::path path(
         filename.c_str(),
         boost::filesystem::detail::utf8_codecvt_facet() );
