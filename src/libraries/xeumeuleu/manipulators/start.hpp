@@ -58,9 +58,7 @@ public:
     //@{
     explicit start_manipulator( const std::string& tag )
         : tag_( tag )
-    {
-        // NOTHING
-    }
+    {}
     //@}
 
 public:
