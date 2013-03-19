@@ -55,13 +55,11 @@ class output
 public:
     //! @name Constructors/Destructor
     //@{
-    output( std::ostream& target, const std::string& stylesheet )
-        : target_( target )
-        , output_( new file_output_imp( stylesheet ) )
+    output( const std::string& stylesheet )
+        : output_( new file_output_imp( stylesheet ) )
     {}
-    output( std::ostream& target, std::istream& stylesheet )
-        : target_( target )
-        , output_( new buffer_output_imp( stylesheet ) )
+    output( std::istream& stylesheet )
+        : output_( new buffer_output_imp( stylesheet ) )
     {}
     virtual ~output()
     {}
@@ -77,7 +75,7 @@ public:
     void transform()
     {
         buffer_ << output_->transform( xos_.str() );
-        target_ << buffer_.str();
+        flush( buffer_.str() );
     }
 
     void apply( const output& output )
@@ -93,6 +91,12 @@ public:
     //@}
 
 private:
+    //! @name Operations
+    //@{
+    virtual void flush( const std::string& data ) = 0;
+    //@}
+
+private:
     //! @name Copy/Assignment
     //@{
     output( const output& );            //!< Copy constructor
@@ -102,7 +106,6 @@ private:
 private:
     //! @name Member data
     //@{
-    std::ostream& target_;
     xml::xostringstream xos_;
     std::ostringstream buffer_;
     std::auto_ptr< output_imp > output_;
