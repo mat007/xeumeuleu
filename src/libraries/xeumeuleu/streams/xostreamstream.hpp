@@ -73,9 +73,7 @@ public:
                 flush();
         }
         catch( ... )
-        {
-            // NOTHING
-        }
+        {}
     }
     //@}
 

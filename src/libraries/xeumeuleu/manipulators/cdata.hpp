@@ -59,9 +59,7 @@ public:
     //@{
     explicit cdata_manipulator( const std::string& content )
         : content_( content )
-    {
-        // NOTHING
-    }
+    {}
     //@}
 
 public:
