@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_CASE( reading_data_in_arabic_preserves_utf_8_characters )
 {
     xml::xifstream xis( BOOST_RESOLVE( "arabic.xml" ) );
     std::string name;
-    xis >> xml::start( "resource" );
+    xis >> xml::start( "root" );
     xis >> xml::attribute( "name", name );
     std::vector< char > v = boost::assign::list_of
         ( -40 )( -89 )( -39 )( -124 )( -40 )( -71 )( -40 )
