@@ -52,6 +52,15 @@ BOOST_AUTO_TEST_CASE( tranformation_creates_a_file )
 }
 
 // -----------------------------------------------------------------------------
+// Name: tranformation_with_a_non_existing_stylesheet_throws
+// Created: MCO 2013-03-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( tranformation_with_a_non_existing_stylesheet_throws )
+{
+    BOOST_CHECK_THROW( xsl::xftransform( "non-existing.xsl", "file" ), xsl::exception );
+}
+
+// -----------------------------------------------------------------------------
 // Name: tranformation_uses_a_stylesheet_with_unicode_name
 // Created: MCO 2013-03-19
 // -----------------------------------------------------------------------------
