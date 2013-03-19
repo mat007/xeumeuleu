@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="xerces-c_3D.lib Xalan-C_1D.lib mockppd.lib"
+				AdditionalDependencies="xerces-c_3D.lib Xalan-C_1D.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt-gd.exe"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="true"
@@ -147,7 +147,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="xerces-c_3.lib mockpp.lib Xalan-C_1.lib"
+				AdditionalDependencies="xerces-c_3.lib Xalan-C_1.lib"
 				OutputFile="$(OutDir)/$(ProjectName)-vc80-mt.exe"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="false"
