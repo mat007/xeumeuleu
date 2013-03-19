@@ -36,6 +36,26 @@
 #include <boost/filesystem/detail/utf8_codecvt_facet.hpp> 
 #include <fstream>
 
+namespace
+{
+    const std::string load( const std::string& filename )
+    {
+        std::ifstream ifs( filename.c_str() );
+        if( ! ifs )
+            throw std::runtime_error( "File " + filename + " not found" );
+        return std::string( std::istreambuf_iterator< char >( ifs ), std::istreambuf_iterator< char >() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: tranformation_with_a_non_existing_stylesheet_throws
+// Created: MCO 2013-03-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( tranformation_with_a_non_existing_stylesheet_throws )
+{
+    BOOST_CHECK_THROW( xsl::xftransform( "non-existing.xsl", "file" ), xsl::exception );
+}
+
 // -----------------------------------------------------------------------------
 // Name: tranformation_creates_a_file
 // Created: SLI 2007-09-07
@@ -48,16 +68,10 @@ BOOST_AUTO_TEST_CASE( tranformation_creates_a_file )
         xf << xml::start( "root" )
            << xml::end;
     }
-    BOOST_CHECK( boost::filesystem::remove( filename ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: tranformation_with_a_non_existing_stylesheet_throws
-// Created: MCO 2013-03-19
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( tranformation_with_a_non_existing_stylesheet_throws )
-{
-    BOOST_CHECK_THROW( xsl::xftransform( "non-existing.xsl", "file" ), xsl::exception );
+    BOOST_REQUIRE_EQUAL(
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?><new-root/>",
+        load( filename ) );
+    std::remove( filename.c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,6 +98,30 @@ BOOST_AUTO_TEST_CASE( tranformation_uses_a_stylesheet_with_unicode_name )
         xf << xml::start( "root" )
            << xml::end;
     }
+    BOOST_REQUIRE_EQUAL(
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?><new-root/>",
+        load( filename ) );
     boost::filesystem::remove( path );
     std::remove( filename.c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: tranformation_creates_a_file_with_unicode_name
+// Created: MCO 2013-03-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( tranformation_creates_a_file_with_unicode_name )
+{
+    std::string filename;
+    xml::xifstream( BOOST_RESOLVE( "japanese.xml" ) )
+        >> xml::start( "root" )
+            >> xml::attribute( "name", filename );
+    const boost::filesystem::path path(
+        filename.c_str(),
+        boost::filesystem::detail::utf8_codecvt_facet() );
+    boost::filesystem::remove( path );
+    {
+        xsl::xftransform xf( BOOST_RESOLVE( "stylesheet.xsl" ), filename );
+        xf << xml::start( "root" );
+    }
+    BOOST_CHECK( boost::filesystem::remove( path ) );
 }

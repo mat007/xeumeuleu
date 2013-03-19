@@ -47,30 +47,55 @@ namespace xsl
 */
 // Created: SLI 2007-09-07
 // =============================================================================
-class xftransform : private transform, public xtransform
+class xftransform : private transform, public xtransform, private output
 {
 public:
     //! @name Constructors/Destructor
     //@{
     xftransform( const std::string& stylesheet, const std::string& filename )
-        : xtransform( output_ )
-        , os_    ( filename.c_str() )
-        , output_( os_, stylesheet )
+        : xtransform( static_cast< output& >( *this ) )
+        , output    ( stylesheet )
+        , handle_   ( open( filename ) )
     {}
     xftransform( std::istream& stylesheet, const std::string& filename )
-        : xtransform( output_ )
-        , os_    ( filename.c_str() )
-        , output_( os_, stylesheet )
+        : xtransform( static_cast< output& >( *this ) )
+        , output    ( stylesheet )
+        , handle_   ( open( filename ) )
     {}
     virtual ~xftransform()
-    {}
+    {
+        XERCES_CPP_NAMESPACE::XMLPlatformUtils::closeFile( handle_ );
+    }
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void flush( const std::string& data )
+    {
+        XERCES_CPP_NAMESPACE::XMLPlatformUtils::writeBufferToFile(
+            handle_, data.size(), reinterpret_cast< const XMLByte* >( data.c_str() ) );
+    }
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    static XERCES_CPP_NAMESPACE::FileHandle open( const std::string& filename )
+    {
+        XERCES_CPP_NAMESPACE::FileHandle handle =
+            XERCES_CPP_NAMESPACE::XMLPlatformUtils::openFileToWrite(
+                static_cast< const XMLCh* >( xml::translate( filename ) ) );
+        if( ! handle )
+            throw exception( "Unable to open output file '" + filename + "'" );
+        return handle;
+    }
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::ofstream os_;
-    output output_;
+    XERCES_CPP_NAMESPACE::FileHandle handle_;
     //@}
 };
 
