@@ -56,9 +56,7 @@ public:
     instruction_manipulator( const std::string& target, const std::string& data )
         : target_( target )
         , data_  ( data )
-    {
-        // NOTHING
-    }
+    {}
     //@}
 
 public:

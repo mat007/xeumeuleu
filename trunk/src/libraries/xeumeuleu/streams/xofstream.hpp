@@ -80,9 +80,7 @@ public:
                 flush();
         }
         catch( ... )
-        {
-            // NOTHING
-        }
+        {}
     }
     //@}
 

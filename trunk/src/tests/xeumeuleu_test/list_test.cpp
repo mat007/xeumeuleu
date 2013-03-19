@@ -518,9 +518,7 @@ namespace
     {
     public:
         void process( xml::xistream& /*xis*/ )
-        {
-            // NOTHING
-        }
+        {}
     };
 }
 
