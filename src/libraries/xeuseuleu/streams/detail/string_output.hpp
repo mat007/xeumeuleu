@@ -51,10 +51,10 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit string_output( const std::string& stylesheet )
-        : output( os_, stylesheet )
+        : output( stylesheet )
     {}
     explicit string_output( std::istream& stylesheet )
-        : output( os_, stylesheet )
+        : output( stylesheet )
     {}
     virtual ~string_output()
     {}
@@ -65,6 +65,15 @@ public:
     std::string str() const
     {
         return os_.str();
+    }
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void flush( const std::string& data )
+    {
+        os_ << data;
     }
     //@}
 
