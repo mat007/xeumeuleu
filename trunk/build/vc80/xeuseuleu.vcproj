@@ -216,10 +216,6 @@
 						RelativePath="..\..\src\libraries\xeuseuleu\streams\detail\output_imp.hpp"
 						>
 					</File>
-					<File
-						RelativePath="..\..\src\libraries\xeuseuleu\streams\detail\string_output.hpp"
-						>
-					</File>
 				</Filter>
 			</Filter>
 			<Filter
