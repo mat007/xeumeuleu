@@ -34,7 +34,8 @@
 #define xeuseuleu_xtransform_hpp
 
 #include <xeuseuleu/streams/detail/buffer.hpp>
-#include <xeuseuleu/streams/detail/string_output.hpp>
+#include <xeuseuleu/streams/detail/output.hpp>
+#include <xeuseuleu/bridges/xalan/transform.hpp>
 
 namespace xsl
 {
@@ -46,7 +47,7 @@ namespace xsl
 */
 // Created: SLI 2007-09-10
 // =============================================================================
-class xtransform
+class xtransform : private transform, private output
 {
 public:
     //! @name Constructors/Destructor
@@ -57,14 +58,8 @@ public:
 
     //! @name Operations
     //@{
-    void add( const std::string& stylesheet )
-    {
-        buffer_.reset( new buffer( std::auto_ptr< output >( new string_output( stylesheet ) ), buffer_ ) );
-    }
-    void add( std::istream& stylesheet )
-    {
-        buffer_.reset( new buffer( std::auto_ptr< output >( new string_output( stylesheet ) ), buffer_ ) );
-    }
+    void add( const std::string& stylesheet );
+    void add( std::istream& stylesheet );
 
     void write( const xbuffertransform& buffer );
 
@@ -82,9 +77,16 @@ public:
 protected:
     //! @name Constructors/Destructor
     //@{
-    explicit xtransform( output& output )
-        : buffer_( new buffer( output ) )
-    {}
+    xtransform( const std::string& stylesheet )
+        : output( stylesheet )
+    {
+        buffer_.reset( new buffer( *this ) );
+    }
+    xtransform( std::istream& stylesheet )
+        : output( stylesheet )
+    {
+        buffer_.reset( new buffer( *this ) );
+    }
     //@}
 
 private:
@@ -115,9 +117,19 @@ xtransform& operator<<( xtransform& xt, const T& value )
 }
 
 #include <xeuseuleu/streams/xbuffertransform.hpp>
+#include <xeuseuleu/streams/xstringtransform.hpp>
 
 namespace xsl
 {
+    inline void xtransform::add( const std::string& stylesheet )
+    {
+        buffer_.reset( new buffer( std::auto_ptr< output >( new xstringtransform( stylesheet ) ), buffer_ ) );
+    }
+    inline void xtransform::add( std::istream& stylesheet )
+    {
+        buffer_.reset( new buffer( std::auto_ptr< output >( new xstringtransform( stylesheet ) ), buffer_ ) );
+    }
+
     inline void xtransform::write( const xbuffertransform& buffer )
     {
         buffer.apply( *this );

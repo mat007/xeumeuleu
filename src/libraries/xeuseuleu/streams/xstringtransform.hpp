@@ -34,7 +34,6 @@
 #define xeuseuleu_xstringtransform_hpp
 
 #include <xeuseuleu/streams/xtransform.hpp>
-#include <xeuseuleu/streams/detail/string_output.hpp>
 
 namespace xsl
 {
@@ -54,12 +53,10 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit xstringtransform( const std::string& stylesheet )
-        : xtransform( output_ )
-        , output_( stylesheet )
+        : xtransform( stylesheet )
     {}
     explicit xstringtransform( std::istream& stylesheet )
-        : xtransform( output_ )
-        , output_( stylesheet )
+        : xtransform( stylesheet )
     {}
     virtual ~xstringtransform()
     {}
@@ -69,14 +66,23 @@ public:
     //@{
     std::string str() const
     {
-        return output_.str();
+        return os_.str();
+    }
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void flush( const std::string& data )
+    {
+        os_ << data;
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    string_output output_;
+    std::ostringstream os_;
     //@}
 };
 

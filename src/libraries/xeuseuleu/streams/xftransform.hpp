@@ -47,19 +47,17 @@ namespace xsl
 */
 // Created: SLI 2007-09-07
 // =============================================================================
-class xftransform : private transform, public xtransform, private output
+class xftransform : public xtransform
 {
 public:
     //! @name Constructors/Destructor
     //@{
     xftransform( const std::string& stylesheet, const std::string& filename )
-        : xtransform( static_cast< output& >( *this ) )
-        , output    ( stylesheet )
+        : xtransform( stylesheet )
         , handle_   ( open( filename ) )
     {}
     xftransform( std::istream& stylesheet, const std::string& filename )
-        : xtransform( static_cast< output& >( *this ) )
-        , output    ( stylesheet )
+        : xtransform( stylesheet )
         , handle_   ( open( filename ) )
     {}
     virtual ~xftransform()
