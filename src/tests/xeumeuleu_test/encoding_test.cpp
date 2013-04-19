@@ -93,3 +93,21 @@ BOOST_AUTO_TEST_CASE( reading_data_in_arabic_preserves_utf_8_characters )
         ( -79 )( -40 )( -88 )( -39 )( -118 )( -40 )( -87 );
     BOOST_CHECK_EQUAL_COLLECTIONS( v.begin(), v.end(), name.begin(), name.end() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: reading_data_in_japanese_preserves_utf_8_characters
+// Created: MCO 2013-04-19
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( reading_data_in_japanese_preserves_utf_8_characters )
+{
+    xml::xifstream xis( BOOST_RESOLVE( "japanese.xml" ) );
+    std::string name;
+    xis >> xml::start( "resource" );
+    xis >> xml::attribute( "name", name );
+    std::vector< char > v = boost::assign::list_of
+        ( -29 )( -127 )( -78 )( -29 )( -126 )( -119 )( -29 )
+        ( -127 )( -116 )( -29 )( -127 )( -86 )( -29 )( -127 )
+        ( -78 )( -29 )( -126 )( -119 )( -29 )( -127 )( -116 )
+        ( -29 )( -127 )( -86 );
+    BOOST_CHECK_EQUAL_COLLECTIONS( v.begin(), v.end(), name.begin(), name.end() );
+}
