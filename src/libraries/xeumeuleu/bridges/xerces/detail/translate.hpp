@@ -37,6 +37,9 @@
 #define XEUMEULEU_TRANSCODER_BUFFER_SIZE 128
 
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
+#include <algorithm>
+#include <iterator>
+#include <vector>
 #include <string>
 
 namespace xml
@@ -55,7 +58,7 @@ public:
     explicit translate( const std::string& str )
         : transcoder_( create() )
         , s_         ( transcode( str ) )
-        , ch_        ( s_.c_str() )
+        , ch_        ( &s_[0] )
     {}
     explicit translate( const XMLCh* const ch )
         : transcoder_( create() )
@@ -64,7 +67,7 @@ public:
     translate( const translate& rhs )
         : transcoder_( create() )
         , s_         ( rhs.s_ )
-        , ch_        ( s_.empty() ? rhs.ch_ : s_.c_str() )
+        , ch_        ( s_.empty() ? rhs.ch_ : &s_[0] )
     {}
     //@}
 
@@ -77,8 +80,6 @@ public:
     operator std::string() const
     {
         std::string result;
-        if( ! ch_ )
-            return result;
         const XMLSize_t size = XERCES_CPP_NAMESPACE::XMLString::stringLen( ch_ );
         XMLByte s[ XEUMEULEU_TRANSCODER_BUFFER_SIZE ];
         XMLSize_t done = 0;
@@ -128,9 +129,9 @@ private:
             throw xml::exception( std::string( "unable to create transcoder for " ) + XEUMEULEU_TRANSCODER_ENCODING );
         return transcoder.release();
     }
-    std::basic_string< XMLCh > transcode( const std::string& str ) const
+    std::vector< XMLCh > transcode( const std::string& str ) const
     {
-        std::basic_string< XMLCh > result;
+        std::vector< XMLCh > result;
         const XMLByte* in = reinterpret_cast< const XMLByte* >( str.c_str() );
         const XMLSize_t length = str.length();
         XMLCh s[ XEUMEULEU_TRANSCODER_BUFFER_SIZE ];
@@ -146,8 +147,9 @@ private:
             if( read == 0 )
                 throw xml::exception( "failed to transcode string" );
             done += read;
-            result.append( s, written );
+            std::copy( s, s + written, std::back_inserter( result ) );
         }
+        result.resize( result.size() + 4 );
         return result;
     }
     //@}
@@ -162,7 +164,7 @@ private:
     //! @name Member data
     //@{
     XERCES_CPP_NAMESPACE::Janitor< XERCES_CPP_NAMESPACE::XMLTranscoder > transcoder_;
-    const std::basic_string< XMLCh > s_;
+    const std::vector< XMLCh > s_;
     const XMLCh* const ch_;
     //@}
 };
