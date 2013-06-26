@@ -32,6 +32,7 @@
 
 #include "xeuseuleu_test_pch.h"
 #include <xeuseuleu/xsl.hpp>
+#include <boost/assign/list_of.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: parameters_are_sent_to_the_stylesheet
@@ -39,10 +40,35 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( parameters_are_sent_to_the_stylesheet )
 {
-    xsl::xstringtransform xf( BOOST_RESOLVE( "parameter_test.xsl" ) );
+    xsl::xstringtransform xf( BOOST_RESOLVE( "parameters.xsl" ) );
     xml::xistringstream xis( "<root/>" );
     xf << xsl::parameter( "key1", "expression1" )
        << xsl::parameter( "key2", "expression2" )
        << xis;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root key1=\"expression1\" key2=\"expression2\"/>", xf.str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: unicode_parameters_are_sent_to_the_stylesheet
+// Created: MCO 2013-06-26
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( unicode_parameters_are_sent_to_the_stylesheet )
+{
+    std::string name;
+    xml::xifstream( BOOST_RESOLVE( "japanese.xml" ) )
+        >> xml::start( "root" )
+            >> xml::attribute( "name", name );
+    xsl::xstringtransform xf( BOOST_RESOLVE( "parameter.xsl" ) );
+    xf << xsl::parameter( "key", name )
+       << xml::xistringstream( "<root/>" );
+    std::string attribute;
+    xml::xistringstream xis( xf.str() );
+    xis >> xml::start( "root" )
+            >> xml::attribute( "key", attribute );
+    std::vector< char > v = boost::assign::list_of
+        ( -29 )( -127 )( -78 )( -29 )( -126 )( -119 )( -29 )
+        ( -127 )( -116 )( -29 )( -127 )( -86 )( -29 )( -127 )
+        ( -78 )( -29 )( -126 )( -119 )( -29 )( -127 )( -116 )
+        ( -29 )( -127 )( -86 );
+    BOOST_CHECK_EQUAL_COLLECTIONS( v.begin(), v.end(), attribute.begin(), attribute.end() );
 }

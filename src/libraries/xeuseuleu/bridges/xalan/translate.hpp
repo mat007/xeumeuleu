@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2007, Mathieu Champlon
+ *   Copyright (c) 2013, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,63 +30,18 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xsl_file_output_imp_hpp
-#define xsl_file_output_imp_hpp
+#ifndef xsl_translate_hpp
+#define xsl_translate_hpp
 
-#include <xeuseuleu/streams/exception.hpp>
-#include <xeuseuleu/streams/detail/output_imp.hpp>
-#include <xeuseuleu/bridges/xalan/translate.hpp>
 #include <xeuseuleu/bridges/xalan/xalan.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <string>
 
 namespace xsl
 {
-// =============================================================================
-/** @class  file_output_imp
-    @brief  File output implementation
-*/
-// Created: SLI 2007-07-06
-// =============================================================================
-class file_output_imp : public output_imp
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-    explicit file_output_imp( const std::string& stylesheet )
-        : stylesheet_( stylesheet )
+    inline XALAN_CPP_NAMESPACE::XalanDOMString translate( const std::string& s )
     {
-        XERCES_CPP_NAMESPACE::FileHandle handle =
-            XERCES_CPP_NAMESPACE::XMLPlatformUtils::openFile( xml::translate( stylesheet ) );
-        if( ! handle )
-            throw exception( "Unable to open style sheet '" + stylesheet + "'" );
-        XERCES_CPP_NAMESPACE::XMLPlatformUtils::closeFile( handle );
+        return XALAN_CPP_NAMESPACE::XalanDOMString( xml::translate( s ) );
     }
-    virtual ~file_output_imp()
-    {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual const std::string transform( const std::string& input ) const
-    {
-        const XALAN_CPP_NAMESPACE::XSLTInputSource xsl( xsl::translate( stylesheet_ ) );
-        return output_imp::transform( input, xsl );
-    }
-
-    virtual void error( const std::string& message ) const
-    {
-        throw exception( stylesheet_ + " : " + message );
-    }
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const std::string stylesheet_;
-    //@}
-};
-
 }
 
-#endif // xsl_file_output_imp_hpp
+#endif // xsl_translate_hpp

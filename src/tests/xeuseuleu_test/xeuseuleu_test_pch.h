@@ -35,6 +35,7 @@
 
 #ifdef _MSC_VER
 #   pragma warning( disable : 4355 )
+#   pragma warning( disable : 4996 )
 #   if _MSC_VER <= 1310
 #       pragma warning( disable : 4127 )
 #       pragma warning( disable : 4702 )
