@@ -36,11 +36,7 @@
 #include <xeuseuleu/streams/exception.hpp>
 #include <xeuseuleu/streams/detail/output_imp.hpp>
 #include <xeuseuleu/bridges/xalan/xalan.hpp>
-#include <xeumeuleu/xml.hpp>
-#include <string>
-#include <vector>
-#include <fstream>
-#include <sstream>
+#include <iosfwd>
 
 namespace xsl
 {
@@ -64,38 +60,22 @@ public:
 
     //! @name Operations
     //@{
-    virtual void parameter( const std::string& key, const std::string& expression )
-    {
-        parameters_.push_back( std::make_pair( key, "'" + expression + "'" ) );
-    }
-
     virtual const std::string transform( const std::string& input ) const
     {
-        std::istringstream is( input );
-        XALAN_CPP_NAMESPACE::XSLTInputSource in( &is );
-        XALAN_CPP_NAMESPACE::XSLTInputSource xsl( &stylesheet_ );
-        XALAN_CPP_NAMESPACE::XalanTransformer transformer;
-        for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
-            transformer.setStylesheetParam( it->first.c_str(), it->second.c_str() );
-        std::ostringstream os;
-        if( transformer.transform( in, xsl, os ) )
-            throw exception( "XSL buffer : " + std::string( transformer.getLastError() ) );
-        return os.str();
+        return output_imp::transform( input,
+            XALAN_CPP_NAMESPACE::XSLTInputSource( stylesheet_ ) );
     }
-    //@}
 
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< std::pair< std::string, std::string > > T_Parameters;
-    typedef T_Parameters::const_iterator                       CIT_Parameters;
+    virtual void error( const std::string& message ) const
+    {
+        throw exception( "XSL buffer : " + message );
+    }
     //@}
 
 private:
     //! @name Member data
     //@{
     std::istream& stylesheet_;
-    T_Parameters parameters_;
     //@}
 };
 
