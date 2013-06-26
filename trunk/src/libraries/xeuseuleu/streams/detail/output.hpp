@@ -36,7 +36,6 @@
 #include <xeuseuleu/bridges/xalan/file_output_imp.hpp>
 #include <xeuseuleu/bridges/xalan/buffer_output_imp.hpp>
 #include <xeumeuleu/xml.hpp>
-#include <string>
 #include <sstream>
 #include <memory>
 

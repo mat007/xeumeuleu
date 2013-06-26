@@ -33,7 +33,11 @@
 #ifndef xsl_output_imp_hpp
 #define xsl_output_imp_hpp
 
-#include <string>
+#include <xeuseuleu/bridges/xalan/translate.hpp>
+#include <xeuseuleu/bridges/xalan/xalan.hpp>
+#include <fstream>
+#include <sstream>
+#include <vector>
 
 namespace xsl
 {
@@ -54,9 +58,42 @@ public:
 
     //! @name Operations
     //@{
-    virtual void parameter( const std::string& key, const std::string& expression ) = 0;
+    void parameter( const std::string& key, const std::string& expression )
+    {
+        parameters_.push_back( std::make_pair( key, "'" + expression + "'" ) );
+    }
 
     virtual const std::string transform( const std::string& input ) const = 0;
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    std::string transform( const std::string& input,
+        const XALAN_CPP_NAMESPACE::XSLTInputSource& xsl ) const
+    {
+        std::istringstream is( input );
+        XALAN_CPP_NAMESPACE::XSLTInputSource in( is );
+        XALAN_CPP_NAMESPACE::XalanTransformer transformer;
+        for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
+            transformer.setStylesheetParam( xsl::translate( it->first ), xsl::translate( it->second ) );
+        std::ostringstream os;
+        if( transformer.transform( in, xsl, os ) )
+            error( std::string( transformer.getLastError() ) );
+        return os.str();
+    }
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void error( const std::string& message ) const = 0;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::vector< std::pair< std::string, std::string > > T_Parameters;
+    typedef T_Parameters::const_iterator                       CIT_Parameters;
     //@}
 
 private:
@@ -64,6 +101,12 @@ private:
     //@{
     output_imp( const output_imp& );            //!< Copy constructor
     output_imp& operator=( const output_imp& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    T_Parameters parameters_;
     //@}
 };
 
