@@ -165,10 +165,13 @@ public:
         destination.copy( *input_ );
     }
 
+#ifndef XEUMEULEU_NO_DEPRECATED
+    // instead use throw xml::exception( xis.context() + message )
     void error( const std::string& message ) const
     {
         throw exception( context() + message );
     }
+#endif // XEUMEULEU_NO_DEPRECATED
     //@}
 
     //! @name Accessors
