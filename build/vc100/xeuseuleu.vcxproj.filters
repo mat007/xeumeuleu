@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6eb68106-7a9d-4419-8c95-ed9853f1a370}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx;h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\manipulators">
+      <UniqueIdentifier>{63afde49-c087-4743-a03e-b880013e9a18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\streams">
+      <UniqueIdentifier>{74151908-359d-4051-b271-e7b7e1267130}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\streams\detail">
+      <UniqueIdentifier>{8860bc78-1adf-44c9-87a4-f23e8e4ca887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\bridges">
+      <UniqueIdentifier>{644f8957-3dd9-4b49-b287-aba64947ffb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\bridges\xalan">
+      <UniqueIdentifier>{ecb1b793-1ae8-49ef-b125-81204183f3f6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\xsl.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\xsl.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\manipulators\parameter.hpp">
+      <Filter>Source Files\manipulators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\streams\exception.hpp">
+      <Filter>Source Files\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\streams\xbuffertransform.hpp">
+      <Filter>Source Files\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\streams\xftransform.hpp">
+      <Filter>Source Files\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\streams\xstringtransform.hpp">
+      <Filter>Source Files\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\streams\xtransform.hpp">
+      <Filter>Source Files\streams</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\streams\detail\buffer.hpp">
+      <Filter>Source Files\streams\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\streams\detail\output.hpp">
+      <Filter>Source Files\streams\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\streams\detail\output_imp.hpp">
+      <Filter>Source Files\streams\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\bridges\xalan\buffer_output_imp.hpp">
+      <Filter>Source Files\bridges\xalan</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\bridges\xalan\file_output_imp.hpp">
+      <Filter>Source Files\bridges\xalan</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\bridges\xalan\transform.hpp">
+      <Filter>Source Files\bridges\xalan</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\bridges\xalan\xalan.hpp">
+      <Filter>Source Files\bridges\xalan</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeuseuleu\bridges\xalan\translate.hpp">
+      <Filter>Source Files\bridges\xalan</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
