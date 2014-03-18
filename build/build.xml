@@ -98,7 +98,7 @@
       package
     ============================================================================
     -->
-    <target name="package" depends="generate-vc71,generate-vc90" description="package the distribution">
+    <target name="package" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/${ant.project.name}.zip">
             <fileset dir="${root.dir}" includes="*.txt"/>
