@@ -49,18 +49,7 @@ namespace xml
 // Created: MAT 2006-01-03
 // =============================================================================
 class end_manipulator
-{
-public:
-    //! @name Operators
-    //@{
-#ifndef XEUMEULEU_NO_DEPRECATED
-    const end_manipulator& operator()() const //<! Deprecated !
-    {
-        return *this;
-    }
-#endif // XEUMEULEU_NO_DEPRECATED
-    //@}
-};
+{};
 
 const end_manipulator end = end_manipulator();
 
