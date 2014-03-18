@@ -100,8 +100,14 @@
     -->
     <target name="package" depends="generate-vc71,generate-vc90" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
-        <zip destfile="${dist.dir}/${ant.project.name}.zip" basedir=".." includes="src/**,data/**,*.txt" excludes="src/documentation/**"/>
-        <tar destfile="${dist.dir}/${ant.project.name}.tar.bz2" basedir=".." includes="src/**,data/**,*.txt" excludes="src/documentation/**" compression="bzip2"/>
+        <zip destfile="${dist.dir}/${ant.project.name}.zip">
+            <fileset dir="${root.dir}" includes="*.txt"/>
+            <fileset dir="${libraries.dir}" includes="**"/>
+        </zip>
+        <tar destfile="${dist.dir}/${ant.project.name}.tar.bz2" compression="bzip2">
+            <fileset dir="${root.dir}" includes="*.txt"/>
+            <fileset dir="${libraries.dir}" includes="**"/>
+        </tar>
     </target>
 
     <target name="generate-vc71" description="create vc71 build files from vc80 files">
