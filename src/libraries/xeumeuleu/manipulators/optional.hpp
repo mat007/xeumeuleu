@@ -49,18 +49,7 @@ namespace xml
 // Created: MAT 2006-01-07
 // =============================================================================
 class optional_manipulator
-{
-public:
-    //! @name Operators
-    //@{
-#ifndef XEUMEULEU_NO_DEPRECATED
-    const optional_manipulator& operator()() const //<! Deprecated !
-    {
-        return *this;
-    }
-#endif // XEUMEULEU_NO_DEPRECATED
-    //@}
-};
+{};
 
 const optional_manipulator optional = optional_manipulator();
 

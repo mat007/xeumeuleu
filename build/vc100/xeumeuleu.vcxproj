@@ -174,7 +174,6 @@
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\cdata.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\content.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\end.hpp" />
-    <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\helpers.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\instruction.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\list.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\name_list.hpp" />
