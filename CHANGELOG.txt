@@ -10,6 +10,8 @@
 . added support for utf-8 parameter key and expression in xsl
 . deprecated xml::xistream::error
 . removed deprecated xml.h and xsl.h
+. removed deprecated no-op operator() on xml::end and xml::optional
+. removed deprecated xml::xisubstream based helpers
 
 1.5.0
 . removed the undocumented flush public method from xml::xofstream
