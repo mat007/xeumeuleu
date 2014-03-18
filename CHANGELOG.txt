@@ -1,8 +1,14 @@
-trunk
+1.5.1
 . added an xml::call manipulator to call a functor
 . fixed typos in the name version of xml::list for 3 and 5 arguments
-. removed unnecessary xml namespace prefixes
 . fixed missing error context when data conversion failed
+. changed text conversions from native code page to utf-8
+. fixed type name demangling for gcc
+. fixed encoding of file names when opening files
+. added support for utf-8 stylesheet file path
+. added support for utf-8 output file path in xsl
+. added support for utf-8 parameter key and expression in xsl
+. deprecated xml::xistream::error
 
 1.5.0
 . removed the undocumented flush public method from xml::xofstream
