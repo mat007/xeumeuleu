@@ -48,7 +48,6 @@
 #include <xeumeuleu/streams/grammar.hpp>
 #include <xeumeuleu/manipulators/list.hpp>
 #include <xeumeuleu/manipulators/name_list.hpp>
-#include <xeumeuleu/manipulators/helpers.hpp>
 #include <xeumeuleu/manipulators/call.hpp>
 
 #endif // xeumeuleu_xml_hpp
