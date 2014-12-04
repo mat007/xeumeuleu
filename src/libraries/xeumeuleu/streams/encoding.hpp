@@ -53,7 +53,7 @@ public:
     explicit encoding( const std::string& name = "UTF-8" )
         : name_( name )
     {}
-    virtual ~encoding()
+    ~encoding()
     {}
     //@}
 

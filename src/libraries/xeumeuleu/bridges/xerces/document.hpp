@@ -74,8 +74,8 @@ protected:
     document( const std::string& filename, const encoding* encoding, const grammar& grammar )
         : document_( build( filename, encoding, grammar ) )
     {}
-    document( const char* data, std::size_t size, const encoding* encoding, const grammar& grammar )
-        : document_( build( data, size, encoding, grammar ) )
+    document( const char* data, std::size_t size, const encoding* encoding, const grammar& grammar, const id& id )
+        : document_( build( data, size, encoding, grammar, id ) )
     {}
     virtual ~document()
     {
@@ -178,11 +178,11 @@ private:
             return parse( source, encoding, grammar );
         XEUMEULEU_CATCH
     }
-    XERCES_CPP_NAMESPACE::DOMDocument& build( const char* data, std::size_t size, const encoding* encoding, const grammar& grammar ) const
+    XERCES_CPP_NAMESPACE::DOMDocument& build( const char* data, std::size_t size, const encoding* encoding, const grammar& grammar, const id& id ) const
     {
         XEUMEULEU_TRY
             initialize();
-            XERCES_CPP_NAMESPACE::MemBufInputSource source( reinterpret_cast< const XMLByte* >( data ), size, "string_input" );
+            XERCES_CPP_NAMESPACE::MemBufInputSource source( reinterpret_cast< const XMLByte* >( data ), size, id );
             return parse( source, encoding, grammar );
         XEUMEULEU_CATCH
     }

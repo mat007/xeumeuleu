@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2014, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,64 +30,48 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_xistringstream_hpp
-#define xeumeuleu_xistringstream_hpp
+#ifndef xeumeuleu_id_hpp
+#define xeumeuleu_id_hpp
 
-#include <xeumeuleu/streams/xistream.hpp>
-#include <xeumeuleu/streams/grammar.hpp>
-#include <xeumeuleu/streams/id.hpp>
-#include <xeumeuleu/bridges/xerces/document.hpp>
-#include <xeumeuleu/bridges/xerces/input.hpp>
+#include <string>
 
 namespace xml
 {
-    class encoding;
+// =============================================================================
+/** @class  id
+    @brief  Identifier wrapper
 
-// =============================================================================
-/** @class  xistringstream
-    @brief  Xml input string stream
-    @par    Using example
-    @code
-    std::string data( ... );
-    xml::xistringstream xis( data );
-    xml::xistringstream xis( data, xml::encoding( "UTF-8" ) );
-    @endcode
+    Wraps custom context identifier.
 */
-// Created: MAT 2006-01-03
+// Created: MAT 2014-12-04
 // =============================================================================
-class xistringstream : private document, public xistream
+    class id
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    xistringstream( const std::string& data, const grammar& grammar = null_grammar(), const id& id = id() )
-        : document( data.c_str(), data.size(), 0, grammar, id )
-        , xistream( input_ )
-        , input_( *document_ )
+    explicit id( const std::string& id = "string_input" )
+        : id_( id )
     {}
-    xistringstream( const std::string& data, const encoding& encoding, const grammar& grammar = null_grammar(), const id& id = id() )
-        : document( data.c_str(), data.size(), &encoding, grammar, id )
-        , xistream( input_ )
-        , input_( *document_ )
-    {}
-    virtual ~xistringstream()
+    ~id()
     {}
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Operators
     //@{
-    xistringstream( const xistringstream& );            //!< Copy constructor
-    xistringstream& operator=( const xistringstream& ); //!< Assignment operator
+    operator const char*() const
+    {
+        return id_.c_str();
+    }
     //@}
 
 private:
     //! @name Member data
     //@{
-    input input_;
+    std::string id_;
     //@}
 };
 
 }
 
-#endif // xeumeuleu_xistringstream_hpp
+#endif // xeumeuleu_id_hpp
