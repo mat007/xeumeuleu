@@ -46,7 +46,7 @@ namespace xml
 */
 // Created: MAT 2007-09-20
 // =============================================================================
-class locator : public XERCES_CPP_NAMESPACE::DOMLocator
+class locator
 {
 public:
     //! @name Constructors/Destructor
@@ -62,8 +62,7 @@ public:
         , column_( 0 )
     {}
     locator( const locator& rhs )
-        : XERCES_CPP_NAMESPACE::DOMLocator()
-        , uri_   ( rhs.uri_ )
+        : uri_   ( rhs.uri_ )
         , line_  ( rhs.line_ )
         , column_( rhs.column_ )
     {}
@@ -72,47 +71,6 @@ public:
         , line_  ( rhs.getLineNumber() )
         , column_( rhs.getColumnNumber() )
     {}
-    virtual ~locator()
-    {}
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual XMLFileLoc getLineNumber() const
-    {
-        return line_;
-    }
-    virtual XMLFileLoc getColumnNumber() const
-    {
-        return column_;
-    }
-#if XERCES_VERSION_MAJOR == 3
-    virtual XMLFilePos getByteOffset() const
-    {
-        return 0;
-    }
-    virtual XMLFilePos getUtf16Offset() const
-    {
-        return 0;
-    }
-    virtual XERCES_CPP_NAMESPACE::DOMNode* getRelatedNode() const
-    {
-        return 0;
-    }
-#else
-    virtual XMLFilePos getOffset() const
-    {
-        return -1;
-    }
-    virtual XERCES_CPP_NAMESPACE::DOMNode* getErrorNode() const
-    {
-        return 0;
-    }
-#endif // XERCES_VERSION_MAJOR
-    virtual const XMLCh* getURI() const
-    {
-        return 0;
-    }
     //@}
 
     //! @name Operators
@@ -123,22 +81,6 @@ public:
         stream << " (line " << line_ << ", column " << column_ << ") : ";
         return uri_ + stream.str();
     }
-    //@}
-
-    //! @name Modifiers
-    //@{
-#if XERCES_VERSION_MAJOR < 3
-    virtual void setLineNumber( const XMLSSize_t /*line*/ )
-    {}
-    virtual void setColumnNumber( const XMLSSize_t /*column*/ )
-    {}
-    virtual void setOffset( const XMLSSize_t /*offset*/ )
-    {}
-    virtual void setErrorNode( XERCES_CPP_NAMESPACE::DOMNode* const /*node*/ )
-    {}
-    virtual void setURI( const XMLCh* const /*uri*/ )
-    {}
-#endif // XERCES_VERSION_MAJOR
     //@}
 
 private:
