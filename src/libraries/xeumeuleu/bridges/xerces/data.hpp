@@ -69,12 +69,10 @@ public:
     //! @name Constructors/Destructor
     //@{
     data()
-        : parent_( 0 )
-        , node_  ( 0 )
+        : node_( 0 )
     {}
-    data( const XERCES_CPP_NAMESPACE::DOMNode& parent, const XERCES_CPP_NAMESPACE::DOMNode& node )
-        : parent_( &parent )
-        , node_  ( &node )
+    explicit data( const XERCES_CPP_NAMESPACE::DOMNode& node )
+        : node_( &node )
     {}
     //@}
 
@@ -175,21 +173,20 @@ private:
 
     std::string context() const
     {
-        const locator* loc = reinterpret_cast< locator* >( parent_->getUserData( translate( "locator" ) ) );
+        const locator* loc = reinterpret_cast< locator* >( node_->getParentNode()->getUserData( translate( "locator" ) ) );
         if( loc )
             return *loc;
         return "";
     }
     std::string location() const
     {
-        return "Node '" + translate( node_->getNodeName() ) + "'";
+        return "Node '" + translate( node_->getParentNode()->getNodeName() ) + "'";
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    const XERCES_CPP_NAMESPACE::DOMNode* parent_;
     const XERCES_CPP_NAMESPACE::DOMNode* node_;
     //@}
 };

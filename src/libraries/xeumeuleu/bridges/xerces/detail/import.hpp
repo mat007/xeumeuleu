@@ -53,7 +53,7 @@ namespace detail
                                                  const XERCES_CPP_NAMESPACE::DOMNode& from,
                                                  XERCES_CPP_NAMESPACE::DOMNode& to )
     {
-        static const translate tag( "locator" );
+        const translate tag( "locator" );
         XERCES_CPP_NAMESPACE::DOMNode& added = *to.appendChild( document.importNode( const_cast< XERCES_CPP_NAMESPACE::DOMNode* >( &from ), false ) );
         const locator* loc = reinterpret_cast< locator* >( from.getUserData( tag ) );
         if( loc )

@@ -57,6 +57,19 @@ BOOST_AUTO_TEST_CASE( read_unexisting_attribute_throws_an_exception )
 }
 
 // -----------------------------------------------------------------------------
+// Name: read_invalid_type_attribute_throws_an_exception
+// Created: MCO MCO 2014-11-13
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( read_invalid_type_attribute_throws_an_exception )
+{
+    xml::xistringstream xis( "<element attribute='-1'/>" );
+    unsigned int value;
+    xis >> xml::start( "element" );
+    BOOST_CHECK_THROW_WHAT( xis >> xml::attribute( "attribute", value ),
+        "string_input (line 1, column 26) : Value of Node 'attribute' is not a unsigned int" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: add_attribute_at_root_level_throws_an_exception
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
