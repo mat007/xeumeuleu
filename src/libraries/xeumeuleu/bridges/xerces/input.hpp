@@ -233,7 +233,7 @@ private:
 
     std::string location() const
     {
-        return "Node '" + translate( current_->getNodeName() ) + "'";
+        return "'" + translate( current_->getNodeName() ) + "'";
     }
 
     template< typename N >
