@@ -166,6 +166,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\id.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\xml.h" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\xml.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\attribute.hpp" />

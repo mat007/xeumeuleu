@@ -262,5 +262,8 @@
     <ClInclude Include="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\xerces_ptr.hpp">
       <Filter>Source Files\bridges\xerces\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\id.hpp">
+      <Filter>Source Files\streams</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

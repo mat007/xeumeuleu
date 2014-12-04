@@ -130,3 +130,14 @@ BOOST_AUTO_TEST_CASE( the_context_of_an_ximultistream_refers_to_contexts_of_both
     xis >> xml::start( "root" );
     BOOST_CHECK_EQUAL( "string_input (line 1, column 8) : string_input (line 1, column 8) : ", xis.context() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: the_context_of_an_xistringstream_can_be_customized
+// Created: MAT 2014-12-04
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( the_context_of_an_xistringstream_can_be_customized )
+{
+    xml::xistringstream xis( "<root/>", xml::null_grammar(), xml::id( "custom id" ) );
+    xis >> xml::start( "root" );
+    BOOST_CHECK_EQUAL( "custom id (line 1, column 8) : ", xis.context() );
+}
