@@ -1,3 +1,6 @@
+trunk
+. added customization of std::stringstream context
+
 1.6.0
 . added an xml::call manipulator to call a functor
 . fixed typos in the name version of xml::list for 3 and 5 arguments
