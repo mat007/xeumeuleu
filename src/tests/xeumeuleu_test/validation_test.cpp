@@ -69,16 +69,8 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_in_memory_schema
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_stream_with_non_existing_schema_throws_a_meaningful_exception )
 {
-    try
-    {
-        xml::xistringstream( "<element/>", xml::external_grammar( "non-existing.xsd" ) );
-    }
-    catch( xml::exception& e )
-    {
-        BOOST_CHECK_EQUAL( "Failed to load grammar 'non-existing.xsd'", e.what() );
-        return;
-    }
-    BOOST_FAIL( "meaningful exception expected" );
+    BOOST_CHECK_THROW_WHAT( xml::xistringstream( "<element/>", xml::external_grammar( "non-existing.xsd" ) ),
+        "Failed to load grammar 'non-existing.xsd'" );
 }
 
 // -----------------------------------------------------------------------------
