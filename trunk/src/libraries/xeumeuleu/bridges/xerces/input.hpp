@@ -101,7 +101,7 @@ public:
         const XERCES_CPP_NAMESPACE::DOMNode* child = find_content();
         if( ! child )
             throw exception( context() + location() + " does not have a content" );
-        return data( *current_, *child );
+        return data( *child );
     }
 
     virtual std::auto_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const

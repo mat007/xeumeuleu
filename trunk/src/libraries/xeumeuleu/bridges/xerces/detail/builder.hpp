@@ -64,9 +64,14 @@ public:
                                const XMLCh* const elemPrefix, const XERCES_CPP_NAMESPACE::RefVectorOf< XERCES_CPP_NAMESPACE::XMLAttr >& attrList,
                                const Count_t attrCount, const bool isEmpty, const bool isRoot )
     {
-        static const translate tag( "locator" );
+        const translate tag( "locator" );
         XERCES_CPP_NAMESPACE::DOMLSParserImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, isEmpty, isRoot );
-        getCurrentNode()->setUserData( tag, new locator( uri_, *getScanner() ), 0 );
+        XERCES_CPP_NAMESPACE::DOMNode* current = getCurrentNode();
+        current->setUserData( tag, new locator( uri_, *getScanner() ), 0 );
+        XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current->getAttributes();
+        if( attributes )
+            for( Count_t i = 0; i < attributes->getLength(); ++i )
+                attributes->item( i )->setUserData( tag, new locator( uri_, *getScanner() ), 0 );
     }
     //@}
 
