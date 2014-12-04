@@ -47,7 +47,7 @@
 
 #define XEUMEULEU_TRY try {
 #define XEUMEULEU_CATCH } \
-            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "Out of memory" ); } \
+            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "out of memory" ); } \
             catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e, context() ); } \
             catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e, context() ); }
 
@@ -88,7 +88,7 @@ public:
     {
         XEUMEULEU_TRY
             if( current_ == &root_ )
-                throw exception( context() + "Cannot move up from " + location() );
+                throw exception( context() + "cannot move up from " + location() );
             const XERCES_CPP_NAMESPACE::DOMNode* parent = current_->getParentNode();
             if( ! parent )
                 throw exception( context() + location() + " has no parent" );
@@ -318,7 +318,7 @@ private:
 
 #define XEUMEULEU_TRY try {
 #define XEUMEULEU_CATCH } \
-            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "Out of memory" ); } \
+            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "out of memory" ); } \
             catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e, context() ); } \
             catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e, context() ); }
 

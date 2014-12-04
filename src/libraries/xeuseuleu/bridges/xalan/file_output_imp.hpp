@@ -59,7 +59,7 @@ public:
         XERCES_CPP_NAMESPACE::FileHandle handle =
             XERCES_CPP_NAMESPACE::XMLPlatformUtils::openFile( xml::translate( stylesheet ) );
         if( ! handle )
-            throw exception( "Unable to open style sheet '" + stylesheet + "'" );
+            throw exception( "unable to open style sheet '" + stylesheet + "'" );
         XERCES_CPP_NAMESPACE::XMLPlatformUtils::closeFile( handle );
     }
     virtual ~file_output_imp()

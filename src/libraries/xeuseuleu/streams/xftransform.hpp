@@ -85,7 +85,7 @@ private:
             XERCES_CPP_NAMESPACE::XMLPlatformUtils::openFileToWrite(
                 static_cast< const XMLCh* >( xml::translate( filename ) ) );
         if( ! handle )
-            throw exception( "Unable to open output file '" + filename + "'" );
+            throw exception( "unable to open output file '" + filename + "'" );
         return handle;
     }
     //@}

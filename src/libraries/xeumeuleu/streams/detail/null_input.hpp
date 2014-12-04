@@ -73,7 +73,7 @@ public:
     virtual void end()
     {
         if( --level_ < 0 )
-            throw exception( "Invalid 'end' at root level" );
+            throw exception( "invalid 'end' at root level" );
     }
 
     virtual data read() const
