@@ -78,8 +78,8 @@ public:
     operator std::string() const
     {
         std::stringstream stream;
-        stream << " (line " << line_ << ", column " << column_ << ") : ";
-        return uri_ + stream.str();
+        stream << uri_ << " (line " << line_ << ", column " << column_ << ") : ";
+        return stream.str();
     }
     //@}
 
