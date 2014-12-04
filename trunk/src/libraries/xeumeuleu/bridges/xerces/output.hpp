@@ -46,7 +46,7 @@
 
 #define XEUMEULEU_TRY try {
 #define XEUMEULEU_CATCH } \
-            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "Out of memory" ); } \
+            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "out of memory" ); } \
             catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e ); } \
             catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e ); }
 
@@ -106,7 +106,7 @@ public:
     {
         XEUMEULEU_TRY
             if( is_root() )
-                throw exception( "Illegal 'end' from root level" );
+                throw exception( "illegal 'end' from root level" );
             current_ = current_->getParentNode();
             if( flushable_ && is_root() )
                 flushable_->flush();

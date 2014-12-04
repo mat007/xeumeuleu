@@ -89,7 +89,7 @@ public:
     {
         configure();
         if( ! parser_.loadGrammar( translate( uri ), XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true ) )
-            throw exception( "Failed to load grammar '" + uri + "'" );
+            throw exception( "failed to load grammar '" + uri + "'" );
     }
     void configure( const internal_grammar& /*grammar*/ )
     {
@@ -105,7 +105,7 @@ public:
 #else
         if( ! parser_.loadGrammar( input, XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true ) )
 #endif // XERCES_VERSION_MAJOR
-            throw exception( "Failed to load memory grammar" );
+            throw exception( "failed to load memory grammar" );
     }
     void configure( const null_grammar& /*grammar*/ )
     {

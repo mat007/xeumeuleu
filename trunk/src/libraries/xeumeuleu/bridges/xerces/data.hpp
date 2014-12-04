@@ -49,7 +49,7 @@
 
 #define XEUMEULEU_TRY try {
 #define XEUMEULEU_CATCH } \
-            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "Out of memory" ); } \
+            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "out of memory" ); } \
             catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e, context() ); } \
             catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e, context() ); }
 
@@ -120,14 +120,14 @@ private:
         const double data = XERCES_CPP_NAMESPACE::XMLDouble( from ).getValue();
         const T result = static_cast< T >( data );
         if( static_cast< double >( result ) != data )
-            throw exception( context() + "Value of " + location() + " is not a " + name( typeid( T ) ) );
+            throw exception( context() + "value of " + location() + " is not a " + name( typeid( T ) ) );
         return result;
     }
     float to_float( const XMLCh* from ) const
     {
         const XERCES_CPP_NAMESPACE::XMLFloat data( from );
         if( data.isDataOverflowed() )
-            throw exception( context() + "Value of " + location() + " overflowed (probably a double instead of a float)" );
+            throw exception( context() + "value of " + location() + " overflowed (probably a double instead of a float)" );
         switch( data.getType() )
         {
             case XERCES_CPP_NAMESPACE::XMLDouble::NegINF :
@@ -144,7 +144,7 @@ private:
     {
         const XERCES_CPP_NAMESPACE::XMLDouble data( from );
         if( data.isDataOverflowed() )
-            throw exception( context() + "Value of " + location() + " overflowed (probably more than a double)" );
+            throw exception( context() + "value of " + location() + " overflowed (probably more than a double)" );
         switch( data.getType() )
         {
             case XERCES_CPP_NAMESPACE::XMLDouble::NegINF :
@@ -168,7 +168,7 @@ private:
             return true;
         if( data == "false" || data == "0" )
             return false;
-        throw exception( context() + "Value of " + location() + " is not a boolean" );
+        throw exception( context() + "value of " + location() + " is not a boolean" );
     }
 
     std::string context() const
