@@ -56,16 +56,8 @@ BOOST_AUTO_TEST_CASE( reading_empty_content_throws_proper_exception )
 {
     xml::xistringstream xis( "<element/>" );
     std::string value;
-    try
-    {
-        xis >> xml::content( "element", value );
-    }
-    catch( std::exception& e )
-    {
-        BOOST_CHECK_EQUAL( "string_input (line 1, column 11) : Node 'element' does not have a content", e.what() );
-        return;
-    }
-    BOOST_FAIL( "should have thrown" );
+    BOOST_CHECK_THROW_WHAT( xis >> xml::content( "element", value ),
+        "string_input (line 1, column 11) : Node 'element' does not have a content" );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,18 +143,10 @@ BOOST_AUTO_TEST_CASE( streaming_content_writes_node_special_value_content )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( data_conversion_failure_provides_error_context )
 {
-    try
-    {
-        short value;
-        xml::xistringstream xis( "<element>300000</element>");
-        xis >> xml::content( "element", value );
-    }
-    catch( std::exception& e )
-    {
-        BOOST_CHECK_EQUAL( "string_input (line 1, column 10) : Value of Node '#text' is not a short", e.what() );
-        return;
-    }
-    BOOST_FAIL( "should have thrown" );
+    short value;
+    xml::xistringstream xis( "<element>300000</element>" );
+    BOOST_CHECK_THROW_WHAT( xis >> xml::content( "element", value ),
+        "string_input (line 1, column 10) : Value of Node '#text' is not a short" );
 }
 
 // -----------------------------------------------------------------------------
