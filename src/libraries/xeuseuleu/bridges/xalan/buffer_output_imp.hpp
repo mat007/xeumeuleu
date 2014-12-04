@@ -68,7 +68,7 @@ public:
 
     virtual void error( const std::string& message ) const
     {
-        throw exception( "XSL buffer : " + message );
+        throw exception( "xsl buffer : " + message );
     }
     //@}
 
