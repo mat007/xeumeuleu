@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE( context_is_transmitted_from_an_xistream_to_an_xisubstream_
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional >> xml::start( "non-existing" );
     xml::xisubstream xiss( xis );
-    BOOST_CHECK_EQUAL( xiss.context(), "string_input (line 1, column 11) : " );
+    BOOST_CHECK_EQUAL( "string_input (line 1, column 11) : ", xiss.context() );
 }
 
 // -----------------------------------------------------------------------------
