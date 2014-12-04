@@ -188,9 +188,14 @@ private:
     }
     void clean( XERCES_CPP_NAMESPACE::DOMNode* node ) const
     {
+        const translate tag( "locator" );
         while( node )
         {
-            delete reinterpret_cast< locator* >( node->getUserData( translate( "locator" ) ) );
+            delete reinterpret_cast< locator* >( node->getUserData( tag ) );
+            XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = node->getAttributes();
+            if( attributes )
+                for( Count_t i = 0; i < attributes->getLength(); ++i )
+                    delete reinterpret_cast< locator* >( attributes->item( i )->getUserData( tag ) );
             clean( node->getFirstChild() );
             node = node->getNextSibling();
         }
