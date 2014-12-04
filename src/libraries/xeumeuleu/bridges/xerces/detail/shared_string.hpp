@@ -34,6 +34,7 @@
 #define xeumeuleu_shared_string_hpp
 
 #include <string>
+#include <ostream>
 
 namespace xml
 {
@@ -72,9 +73,9 @@ public:
         return *this;
     }
 
-    std::string operator+( const std::string& str ) const
+    friend std::ostream& operator<<( std::ostream& os, const shared_string& s )
     {
-        return impl_->str_ + str;
+        return os << s.impl_->str_;
     }
     //@}
 
