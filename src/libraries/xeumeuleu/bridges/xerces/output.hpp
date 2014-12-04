@@ -106,7 +106,7 @@ public:
     {
         XEUMEULEU_TRY
             if( is_root() )
-                throw exception( "illegal 'end' from root level" );
+                throw exception( "illegal end from root" );
             current_ = current_->getParentNode();
             if( flushable_ && is_root() )
                 flushable_->flush();
