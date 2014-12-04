@@ -180,7 +180,7 @@ private:
     }
     std::string location() const
     {
-        return "Node '" + translate( node_->getParentNode()->getNodeName() ) + "'";
+        return "'" + translate( node_->getParentNode()->getNodeName() ) + "'";
     }
     //@}
 
