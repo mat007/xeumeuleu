@@ -62,4 +62,14 @@
 
 const std::string BOOST_RESOLVE( const std::string& filename );
 
+#define BOOST_CHECK_THROW_WHAT( S, M )                                          \
+    try {                                                                       \
+        BOOST_TEST_PASSPOINT();                                                 \
+        S;                                                                      \
+        BOOST_CHECK_IMPL( false, "exception is expected", CHECK, CHECK_MSG ); } \
+    catch( std::exception& e ) {                                                \
+        BOOST_CHECK_EQUAL( M, e.what() );                                       \
+    }                                                                           \
+
+
 #endif // xeumeuleu_test_pch_hpp
