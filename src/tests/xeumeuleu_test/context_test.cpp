@@ -40,7 +40,7 @@
 BOOST_AUTO_TEST_CASE( root_has_context )
 {
     xml::xistringstream xis( "<root/>" );
-    BOOST_CHECK_EQUAL( "string_input (line 0, column 0) : ", xis.context() );
+    BOOST_CHECK_EQUAL( "string_input : ", xis.context() );
 }
 
 // -----------------------------------------------------------------------------
