@@ -78,7 +78,10 @@ public:
     operator std::string() const
     {
         std::stringstream stream;
-        stream << uri_ << " (line " << line_ << ", column " << column_ << ") : ";
+        stream << uri_;
+        if( line_ > 0 && column_ > 0 )
+            stream << " (line " << line_ << ", column " << column_ << ")";
+        stream << " : ";
         return stream.str();
     }
     //@}
