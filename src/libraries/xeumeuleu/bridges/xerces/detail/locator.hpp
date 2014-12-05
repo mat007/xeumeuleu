@@ -135,6 +135,8 @@ inline void clean( XERCES_CPP_NAMESPACE::DOMNode* node )
 
 inline std::string location( const XERCES_CPP_NAMESPACE::DOMNode& node )
 {
+    if( node.getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::DOCUMENT_NODE )
+        return "document";
     return "'" + translate( node.getNodeName() ) + "'";
 }
 
