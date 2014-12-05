@@ -167,7 +167,7 @@ private:
         if( encoding )
             source.setEncoding( translate( *encoding ) );
         XERCES_CPP_NAMESPACE::DOMDocument& document = parser.parse( source );
-        document.setUserData( translate( "locator" ), new locator( uri ), 0 );
+        locate( document, uri );
         return document;
     }
     XERCES_CPP_NAMESPACE::DOMDocument& build( const std::string& filename, const encoding* encoding, const grammar& grammar ) const
@@ -185,20 +185,6 @@ private:
             XERCES_CPP_NAMESPACE::MemBufInputSource source( reinterpret_cast< const XMLByte* >( data ), size, id );
             return parse( source, encoding, grammar );
         XEUMEULEU_CATCH
-    }
-    void clean( XERCES_CPP_NAMESPACE::DOMNode* node ) const
-    {
-        const translate tag( "locator" );
-        while( node )
-        {
-            delete reinterpret_cast< locator* >( node->getUserData( tag ) );
-            XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = node->getAttributes();
-            if( attributes )
-                for( Count_t i = 0; i < attributes->getLength(); ++i )
-                    delete reinterpret_cast< locator* >( attributes->item( i )->getUserData( tag ) );
-            clean( node->getFirstChild() );
-            node = node->getNextSibling();
-        }
     }
     bool is_utf8( const std::string& encoding ) const
     {
