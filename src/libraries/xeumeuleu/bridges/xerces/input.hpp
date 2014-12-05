@@ -216,10 +216,7 @@ public:
 
     virtual std::string context() const
     {
-        const locator* loc = reinterpret_cast< locator* >( current_->getUserData( translate( "locator" ) ) );
-        if( loc )
-            return *loc;
-        return "";
+        return xml::context( *current_ );
     }
     //@}
 
