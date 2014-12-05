@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_CASE( streaming_document_with_wrong_element_throws_an_exception 
 BOOST_AUTO_TEST_CASE( leaving_root_throws_an_exception )
 {
     xml::xistringstream xis( "<element/>" );
-    BOOST_CHECK_THROW( xis >> xml::end, xml::exception );
+    BOOST_CHECK_THROW_WHAT( xis >> xml::end, "string_input : cannot move up from document" );
 }
 
 // -----------------------------------------------------------------------------
