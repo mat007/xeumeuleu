@@ -230,7 +230,7 @@ private:
 
     std::string location() const
     {
-        return "'" + translate( current_->getNodeName() ) + "'";
+        return xml::location( *current_ );
     }
 
     template< typename N >
