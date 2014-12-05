@@ -177,7 +177,7 @@ private:
     }
     std::string location() const
     {
-        return "'" + translate( node_->getParentNode()->getNodeName() ) + "'";
+        return xml::location( *node_->getParentNode() );
     }
     //@}
 
