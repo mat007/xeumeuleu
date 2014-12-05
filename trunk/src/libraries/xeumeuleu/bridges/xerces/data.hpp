@@ -173,10 +173,7 @@ private:
 
     std::string context() const
     {
-        const locator* loc = reinterpret_cast< locator* >( node_->getParentNode()->getUserData( translate( "locator" ) ) );
-        if( loc )
-            return *loc;
-        return "";
+        return xml::context( *node_->getParentNode() );
     }
     std::string location() const
     {
