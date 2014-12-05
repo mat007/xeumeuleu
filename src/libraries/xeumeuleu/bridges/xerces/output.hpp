@@ -254,7 +254,7 @@ private:
     //@{
     std::string location() const
     {
-        return "'" + translate( current_->getNodeName() ) + "'";
+        return xml::location( *current_ );
     }
 
     std::string serialize( float value ) const
