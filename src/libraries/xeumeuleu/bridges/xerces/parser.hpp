@@ -33,7 +33,6 @@
 #ifndef xeumeuleu_parser_hpp
 #define xeumeuleu_parser_hpp
 
-#include <xeumeuleu/streams/exception.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/error_handler.hpp>
@@ -65,6 +64,19 @@ public:
         set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMNamespaces, true );
         set( XERCES_CPP_NAMESPACE::XMLUni::fgDOMDatatypeNormalization, true );
         set( XERCES_CPP_NAMESPACE::XMLUni::fgXercesSchema, true );
+#if XERCES_VERSION_MAJOR == 3
+        parser_.getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMErrorHandler, &handler_ );
+#else
+        parser_.setErrorHandler( &handler_ );
+#endif // XERCES_VERSION_MAJOR
+    }
+    ~parser()
+    {
+#if XERCES_VERSION_MAJOR == 3
+        parser_.getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMErrorHandler, static_cast< void* >( 0 ) );
+#else
+        parser_.setErrorHandler( 0 );
+#endif // XERCES_VERSION_MAJOR
     }
     //@}
 
@@ -72,24 +84,21 @@ public:
     //@{
     XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source )
     {
-        error_handler handler;
         XERCES_CPP_NAMESPACE::Wrapper4InputSource input( &source, false );
 #if XERCES_VERSION_MAJOR == 3
-        parser_.getDomConfig()->setParameter( XERCES_CPP_NAMESPACE::XMLUni::fgDOMErrorHandler, &handler );
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > document( parser_.parse( &input ) );
 #else
-        parser_.setErrorHandler( &handler );
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > document( parser_.parse( input ) );
 #endif // XERCES_VERSION_MAJOR
-        handler.check();
+        handler_.check();
         return document.release();
     }
 
     void configure( const external_grammar& /*grammar*/, const std::string& uri )
     {
         configure();
-        if( ! parser_.loadGrammar( translate( uri ), XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true ) )
-            throw exception( "failed to load grammar '" + uri + "'" );
+        parser_.loadGrammar( translate( uri ), XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true );
+        handler_.check( "failed to load grammar '" + uri + "'" );
     }
     void configure( const internal_grammar& /*grammar*/ )
     {
@@ -101,11 +110,11 @@ public:
         XERCES_CPP_NAMESPACE::MemBufInputSource source( reinterpret_cast< const XMLByte* >( schema.c_str() ), schema.size(), make_id().c_str() );
         XERCES_CPP_NAMESPACE::Wrapper4InputSource input( &source, false );
 #if XERCES_VERSION_MAJOR == 3
-        if( ! parser_.loadGrammar( &input, XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true ) )
+        parser_.loadGrammar( &input, XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true );
 #else
-        if( ! parser_.loadGrammar( input, XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true ) )
+        parser_.loadGrammar( input, XERCES_CPP_NAMESPACE::Grammar::SchemaGrammarType, true );
 #endif // XERCES_VERSION_MAJOR
-            throw exception( "failed to load memory grammar" );
+        handler_.check( "failed to load memory grammar" );
     }
     void configure( const null_grammar& /*grammar*/ )
     {
@@ -163,6 +172,7 @@ private:
     //! @name Member data
     //@{
     XERCES_CPP_NAMESPACE::DOMLSParser& parser_;
+    error_handler handler_;
     //@}
 };
 

@@ -2,7 +2,8 @@ trunk
 . added customization of std::stringstream context
 . fixed name of element and attribute in error messages
 . changed document name from '#document' to 'document' in error messages
-. cleaned up error messages to all start with a minuscule
+. cleaned up error messages to all start with lower case
+. reworked error handling to diagnose invalid schema syntax
 
 1.6.0
 . added an xml::call manipulator to call a functor

@@ -71,5 +71,16 @@ const std::string BOOST_RESOLVE( const std::string& filename );
         BOOST_CHECK_EQUAL( M, e.what() );                                       \
     }                                                                           \
 
+#define BOOST_CHECK_THROW_WHAT_SUB( S, M )                                      \
+    try {                                                                       \
+        BOOST_TEST_PASSPOINT();                                                 \
+        S;                                                                      \
+        BOOST_CHECK_IMPL( false, "exception is expected", CHECK, CHECK_MSG ); } \
+    catch( std::exception& e ) {                                                \
+        BOOST_CHECK_MESSAGE(                                                    \
+            std::string( e.what() ).find( M ) != std::string::npos,             \
+            '"' + std::string( M ) + "' not found in '" + e.what() + '"' );     \
+    }                                                                           \
+
 
 #endif // xeumeuleu_test_pch_hpp
