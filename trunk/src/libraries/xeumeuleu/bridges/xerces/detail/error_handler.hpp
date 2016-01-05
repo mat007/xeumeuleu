@@ -59,10 +59,21 @@ public:
 
     //! @name Operations
     //@{
-    void check()
+    void check( const std::string& context = "" )
     {
-        if( ! message_.empty() )
-            throw exception( message_ );
+        std::string message;
+        message.swap( message_ );
+        if( ! message.empty() )
+        {
+            if( ! context.empty() )
+            {
+                if( message.find( " : " ) == 0 )
+                    message = context + message;
+                else
+                    message = context + " : " + message;
+            }
+            throw exception( message );
+        }
     }
     virtual bool handleError( const XERCES_CPP_NAMESPACE::DOMError& error )
     {

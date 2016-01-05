@@ -69,7 +69,16 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_in_memory_schema
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_stream_with_non_existing_schema_throws_a_meaningful_exception )
 {
-    BOOST_CHECK_THROW_WHAT( xml::xistringstream( "<element/>", xml::external_grammar( "non-existing.xsd" ) ), "failed to load grammar 'non-existing.xsd'" );
+    BOOST_CHECK_THROW_WHAT_SUB( xml::xistringstream( "<element/>", xml::external_grammar( "non-existing.xsd" ) ), "failed to load grammar 'non-existing.xsd' : unable to open primary document entity" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: creating_stream_with_invalid_schema_throws_a_meaningful_exception
+// Created: MCO 2015-12-14
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( creating_stream_with_invalid_schema_throws_a_meaningful_exception )
+{
+    BOOST_CHECK_THROW_WHAT_SUB( xml::xistringstream( "<element/>", xml::external_grammar( BOOST_RESOLVE( "invalid.xsd" ) ) ), "invalid content in 'schema' element" );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,16 +134,16 @@ BOOST_AUTO_TEST_CASE( non_existing_internal_schema_is_loaded_only_if_necessary )
 }
 
 // -----------------------------------------------------------------------------
-// Name: xs_including_an_invalid_schema_does_not_throw
+// Name: including_a_non_existing_schema_throws
 // Created: MAT 2010-11-17
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( xs_including_an_invalid_schema_does_not_throw )
+BOOST_AUTO_TEST_CASE( including_a_non_existing_schema_throws )
 {
     const std::string schema = "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema'>"
-                               "  <xs:include schemaLocation='invalid.xsd'/>"
+                               "  <xs:include schemaLocation='non-existing.xsd'/>"
                                "  <xs:element name='element'/>"
                                "</xs:schema>";
-    BOOST_CHECK_NO_THROW( xml::xistringstream xis( "<element/>", xml::memory_grammar( schema ) ) );
+    BOOST_CHECK_THROW( xml::xistringstream xis( "<element/>", xml::memory_grammar( schema ) ), xml::exception );
 }
 
 // -----------------------------------------------------------------------------
