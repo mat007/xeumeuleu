@@ -55,7 +55,7 @@ namespace detail
     {
         const translate tag( "locator" );
         XERCES_CPP_NAMESPACE::DOMNode& added = *to.appendChild( document.importNode( const_cast< XERCES_CPP_NAMESPACE::DOMNode* >( &from ), false ) );
-        const locator* loc = reinterpret_cast< locator* >( from.getUserData( tag ) );
+        const locator* loc = static_cast< locator* >( from.getUserData( tag ) );
         if( loc )
             added.setUserData( tag, new locator( *loc ), 0 );
         return added;
