@@ -112,7 +112,7 @@ inline void locate( XERCES_CPP_NAMESPACE::DOMNode& node, const shared_string& ur
 
 inline std::string context( const XERCES_CPP_NAMESPACE::DOMNode& node )
 {
-    const locator* loc = reinterpret_cast< locator* >( node.getUserData( translate( "locator" ) ) );
+    const locator* loc = static_cast< locator* >( node.getUserData( translate( "locator" ) ) );
     if( loc )
         return *loc;
     return "";
@@ -123,11 +123,11 @@ inline void clean( XERCES_CPP_NAMESPACE::DOMNode* node )
     const translate tag( "locator" );
     while( node )
     {
-        delete reinterpret_cast< locator* >( node->getUserData( tag ) );
+        delete static_cast< locator* >( node->getUserData( tag ) );
         XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = node->getAttributes();
         if( attributes )
             for( Count_t i = 0; i < attributes->getLength(); ++i )
-                delete reinterpret_cast< locator* >( attributes->item( i )->getUserData( tag ) );
+                delete static_cast< locator* >( attributes->item( i )->getUserData( tag ) );
         clean( node->getFirstChild() );
         node = node->getNextSibling();
     }
