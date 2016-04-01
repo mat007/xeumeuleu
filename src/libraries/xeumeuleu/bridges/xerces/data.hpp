@@ -39,7 +39,7 @@
 #include <xeumeuleu/bridges/xerces/detail/trim.hpp>
 #include <xeumeuleu/bridges/xerces/detail/chained_exception.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
-#include <xeumeuleu/bridges/xerces/detail/locator.hpp>
+#include <xeumeuleu/bridges/xerces/detail/locator_handler.hpp>
 #include <typeinfo>
 #include <limits>
 #ifdef __GNUC__

@@ -48,6 +48,7 @@
 #include <xercesc/dom/DOMAttr.hpp>
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
+#include <xercesc/dom/DOMUserDataHandler.hpp>
 #if XERCES_VERSION_MAJOR == 3
 #include <xercesc/dom/DOMLSSerializer.hpp>
 #include <xercesc/dom/DOMLSOutput.hpp>

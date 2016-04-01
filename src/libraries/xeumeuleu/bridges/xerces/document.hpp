@@ -45,6 +45,7 @@
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/locator.hpp>
 #include <xeumeuleu/bridges/xerces/detail/builder.hpp>
+#include <xeumeuleu/bridges/xerces/detail/locator_handler.hpp>
 #include <algorithm>
 #include <cctype>
 #include <fstream>
@@ -78,9 +79,7 @@ protected:
         : document_( build( data, size, encoding, grammar, id ) )
     {}
     virtual ~document()
-    {
-        clean( document_.get() );
-    }
+    {}
     //@}
 
     //! @name Operations
@@ -148,29 +147,31 @@ private:
     {
         static const initializer i;
     }
-    XERCES_CPP_NAMESPACE::DOMDocument& build() const
+    XERCES_CPP_NAMESPACE::DOMDocument& build()
     {
         XEUMEULEU_TRY
             initialize();
             XERCES_CPP_NAMESPACE::DOMImplementation* impl = XERCES_CPP_NAMESPACE::DOMImplementationRegistry::getDOMImplementation( translate( "LS" ) );
             if( ! impl )
                 throw exception( "internal error in 'document::build' : DOMImplementation 'LS' not found" );
-            return *impl->createDocument();
+            XERCES_CPP_NAMESPACE::DOMDocument& document = *impl->createDocument();
+            handler_.locate( document, "" );
+            return document;
         XEUMEULEU_CATCH
     }
-    XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source, const encoding* encoding, const grammar& grammar ) const
+    XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source, const encoding* encoding, const grammar& grammar )
     {
         const std::string uri = translate( source.getSystemId() );
-        builder builder( uri );
+        builder builder( uri, handler_ );
         parser parser( builder );
         grammar.configure( parser );
         if( encoding )
             source.setEncoding( translate( *encoding ) );
         XERCES_CPP_NAMESPACE::DOMDocument& document = parser.parse( source );
-        locate( document, uri );
+        handler_.locate( document, uri );
         return document;
     }
-    XERCES_CPP_NAMESPACE::DOMDocument& build( const std::string& filename, const encoding* encoding, const grammar& grammar ) const
+    XERCES_CPP_NAMESPACE::DOMDocument& build( const std::string& filename, const encoding* encoding, const grammar& grammar )
     {
         XEUMEULEU_TRY
             initialize();
@@ -178,7 +179,7 @@ private:
             return parse( source, encoding, grammar );
         XEUMEULEU_CATCH
     }
-    XERCES_CPP_NAMESPACE::DOMDocument& build( const char* data, std::size_t size, const encoding* encoding, const grammar& grammar, const id& id ) const
+    XERCES_CPP_NAMESPACE::DOMDocument& build( const char* data, std::size_t size, const encoding* encoding, const grammar& grammar, const id& id )
     {
         XEUMEULEU_TRY
             initialize();
@@ -207,6 +208,7 @@ private:
 protected:
     //! @name Member data
     //@{
+    locator_handler handler_;
     xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > document_;
     //@}
 };

@@ -34,7 +34,6 @@
 #define xeumeuleu_import_hpp
 
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
-#include <xeumeuleu/bridges/xerces/detail/locator.hpp>
 
 namespace xml
 {
@@ -53,12 +52,9 @@ namespace detail
                                                  const XERCES_CPP_NAMESPACE::DOMNode& from,
                                                  XERCES_CPP_NAMESPACE::DOMNode& to )
     {
-        const translate tag( "locator" );
-        XERCES_CPP_NAMESPACE::DOMNode& added = *to.appendChild( document.importNode( const_cast< XERCES_CPP_NAMESPACE::DOMNode* >( &from ), false ) );
-        const locator* loc = static_cast< locator* >( from.getUserData( tag ) );
-        if( loc )
-            added.setUserData( tag, new locator( *loc ), 0 );
-        return added;
+        xerces_ptr< XERCES_CPP_NAMESPACE::DOMNode > child( document.importNode( const_cast< XERCES_CPP_NAMESPACE::DOMNode* >( &from ), false ) );
+        *to.appendChild( child.get() );
+        return child.release();
     }
 }
 
