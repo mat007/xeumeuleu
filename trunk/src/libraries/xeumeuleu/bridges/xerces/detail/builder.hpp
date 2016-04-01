@@ -35,8 +35,8 @@
 
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
-#include <xeumeuleu/bridges/xerces/detail/locator.hpp>
 #include <xeumeuleu/bridges/xerces/detail/shared_string.hpp>
+#include <xeumeuleu/bridges/xerces/detail/locator_handler.hpp>
 
 namespace xml
 {
@@ -51,8 +51,9 @@ class builder : public XERCES_CPP_NAMESPACE::DOMLSParserImpl
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit builder( const std::string& uri )
+    explicit builder( const std::string& uri, locator_handler& handler )
         : uri_( uri )
+        , handler_( handler )
     {}
     virtual ~builder()
     {}
@@ -66,11 +67,11 @@ public:
     {
         XERCES_CPP_NAMESPACE::DOMLSParserImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, isEmpty, isRoot );
         XERCES_CPP_NAMESPACE::DOMNode* current = getCurrentNode();
-        locate( *current, uri_, *getScanner() );
+        handler_.locate( *current, uri_, *getScanner() );
         XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current->getAttributes();
         if( attributes )
             for( Count_t i = 0; i < attributes->getLength(); ++i )
-                locate( *attributes->item( i ), uri_, *getScanner() );
+                handler_.locate( *attributes->item( i ), uri_, *getScanner() );
     }
     //@}
 
@@ -78,6 +79,7 @@ private:
     //! @name Member data
     //@{
     const shared_string uri_;
+    locator_handler& handler_;
     //@}
 };
 

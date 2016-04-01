@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2006, Mathieu Champlon
+ *   Copyright (c) 2016, Mathieu Champlon
  *   All rights reserved.
  *
  *   Redistribution  and use  in source  and binary  forms, with  or without
@@ -30,83 +30,70 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifndef xeumeuleu_locator_hpp
-#define xeumeuleu_locator_hpp
+#ifndef xeumeuleu_locator_handler_hpp
+#define xeumeuleu_locator_handler_hpp
 
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
-#include <xeumeuleu/bridges/xerces/detail/translate.hpp>
-#include <xeumeuleu/bridges/xerces/detail/shared_string.hpp>
-#include <sstream>
+#include <xeumeuleu/bridges/xerces/detail/locator.hpp>
 
 namespace xml
 {
 // =============================================================================
-/** @class  locator
-    @brief  Locator implementation
+/** @class  locator_handler
+    @brief  User data handler
 */
-// Created: MAT 2007-09-20
+// Created: MAT 2016-31-03
 // =============================================================================
-class locator
+class locator_handler : public XERCES_CPP_NAMESPACE::DOMUserDataHandler
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    locator( const shared_string& uri, const XERCES_CPP_NAMESPACE::XMLScanner& scanner )
-        : uri_   ( uri )
-        , line_  ( scanner.getLocator()->getLineNumber() )
-        , column_( scanner.getLocator()->getColumnNumber() )
+    locator_handler()
     {}
-    locator( const shared_string& uri )
-        : uri_   ( uri )
-        , line_  ( 0 )
-        , column_( 0 )
-    {}
-    locator( const locator& rhs )
-        : uri_   ( rhs.uri_ )
-        , line_  ( rhs.line_ )
-        , column_( rhs.column_ )
-    {}
-    locator( const XERCES_CPP_NAMESPACE::DOMLocator& rhs )
-        : uri_   ( translate( rhs.getURI() ) )
-        , line_  ( rhs.getLineNumber() )
-        , column_( rhs.getColumnNumber() )
+    virtual ~locator_handler()
     {}
     //@}
 
-    //! @name Operators
+    //! @name Operations
     //@{
-    operator std::string() const
+    void locate( XERCES_CPP_NAMESPACE::DOMNode& node, const std::string& uri )
     {
-        std::stringstream stream;
-        stream << uri_;
-        if( line_ > 0 && column_ > 0 )
-            stream << " (line " << line_ << ", column " << column_ << ")";
-        stream << " : ";
-        return stream.str();
+        node.setUserData( translate( "locator" ), new locator( uri ), this );
     }
-    //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    locator& operator=( const locator& ); //!< Assignment operator
-    //@}
+    void locate( XERCES_CPP_NAMESPACE::DOMNode& node, const shared_string& uri, XERCES_CPP_NAMESPACE::XMLScanner& scanner )
+    {
+        node.setUserData( translate( "locator" ), new locator( uri, scanner ), this );
+    }
 
-private:
-    //! @name Member data
-    //@{
-    const shared_string uri_;
-    const XMLFileLoc line_, column_;
+    virtual void handle( DOMOperationType operation, const XMLCh* const key, void* data, const XERCES_CPP_NAMESPACE::DOMNode* src, XERCES_CPP_NAMESPACE::DOMNode* dst )
+    {
+        switch( operation )
+        {
+        case NODE_DELETED:
+            delete static_cast< locator* >( data );
+            break;
+        case NODE_CLONED:
+        case NODE_IMPORTED:
+            const locator* l = static_cast< locator* >( src->getUserData( key ) );
+            delete static_cast< locator* >( dst->getUserData( key ) );
+            dst->setUserData( key, l ? new locator( *l ) : 0, this );
+            break;
+        }
+    }
     //@}
 };
 
-inline std::string location( const XERCES_CPP_NAMESPACE::DOMNode& node )
+
+inline std::string context( const XERCES_CPP_NAMESPACE::DOMNode& node )
 {
-    if( node.getNodeType() == XERCES_CPP_NAMESPACE::DOMNode::DOCUMENT_NODE )
-        return "document";
-    return "'" + translate( node.getNodeName() ) + "'";
+    const locator* loc = static_cast< locator* >( node.getUserData( translate( "locator" ) ) );
+    if( loc )
+        return *loc;
+    return "";
 }
 
 }
 
-#endif // xeumeuleu_locator_hpp
+#endif // xeumeuleu_locator_handler_hpp
