@@ -265,5 +265,8 @@
     <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\id.hpp">
       <Filter>Source Files\streams</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\locator_handler.hpp">
+      <Filter>Source Files\bridges\xerces\detail</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

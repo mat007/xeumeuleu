@@ -240,6 +240,7 @@
     <ClInclude Include="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\error_handler.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\import.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\locator.hpp" />
+    <ClInclude Include="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\locator_handler.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\shared_string.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\translate.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\trim.hpp" />
