@@ -45,12 +45,6 @@
 #include <xeumeuleu/bridges/xerces/detail/locator.hpp>
 #include <limits>
 
-#define XEUMEULEU_TRY try {
-#define XEUMEULEU_CATCH } \
-            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "out of memory" ); } \
-            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e, context() ); } \
-            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e, context() ); }
-
 namespace xml
 {
 // =============================================================================
@@ -82,7 +76,7 @@ public:
                 throw exception( context() + location() + " does not have a child named '" + tag + "'"
                     + (!ns || ns->empty() ? "" : (" in namespace '" + *ns + "'")) );
             current_ = child;
-        XEUMEULEU_CATCH
+        XEUMEULEU_CATCH_WITH_CONTEXT
     }
     virtual void end()
     {
@@ -93,7 +87,7 @@ public:
             if( ! parent )
                 throw exception( context() + location() + " has no parent" );
             current_ = parent;
-        XEUMEULEU_CATCH
+        XEUMEULEU_CATCH_WITH_CONTEXT
     }
 
     virtual data read() const
@@ -119,7 +113,7 @@ public:
     {
         XEUMEULEU_TRY
             destination.copy( *current_ );
-        XEUMEULEU_CATCH
+        XEUMEULEU_CATCH_WITH_CONTEXT
     }
     //@}
 
@@ -129,26 +123,26 @@ public:
     {
         XEUMEULEU_TRY
             return find_child( ns, name ) != 0;
-        XEUMEULEU_CATCH
+        XEUMEULEU_CATCH_WITH_CONTEXT
     }
     virtual bool has_attribute( const std::string* ns, const std::string& name ) const
     {
         XEUMEULEU_TRY
             return find_attribute( ns, name ) != 0;
-        XEUMEULEU_CATCH
+        XEUMEULEU_CATCH_WITH_CONTEXT
     }
     virtual bool has_content() const
     {
         XEUMEULEU_TRY
             return find_content() != 0;
-        XEUMEULEU_CATCH
+        XEUMEULEU_CATCH_WITH_CONTEXT
     }
     virtual bool has_prefix( const std::string& ns ) const
     {
         XEUMEULEU_TRY
             return current_->isDefaultNamespace( translate( ns ) ) ||
                 lookupPrefix( *current_, translate( ns ) ) != 0;
-        XEUMEULEU_CATCH
+        XEUMEULEU_CATCH_WITH_CONTEXT
     }
 
     bool accept( const std::string* ns, const XERCES_CPP_NAMESPACE::DOMNode* node ) const
@@ -176,7 +170,7 @@ public:
                 }
                 child = child->getNextSibling();
             }
-        XEUMEULEU_CATCH
+        XEUMEULEU_CATCH_WITH_CONTEXT
     }
     virtual void attributes( const std::string* ns, const visitor& v ) const
     {
@@ -196,7 +190,7 @@ public:
                     }
                 }
             }
-        XEUMEULEU_CATCH
+        XEUMEULEU_CATCH_WITH_CONTEXT
     }
 
     virtual void prefix( const std::string& ns, std::string& prefix ) const
@@ -211,7 +205,7 @@ public:
                     throw exception( context() + location() + " has no prefix for namespace '" + ns + "'" );
                 prefix = translate( p );
             }
-        XEUMEULEU_CATCH
+        XEUMEULEU_CATCH_WITH_CONTEXT
     }
 
     virtual std::string context() const
@@ -294,7 +288,7 @@ private:
                     }
                 }
             }
-        XEUMEULEU_CATCH
+        XEUMEULEU_CATCH_WITH_CONTEXT
     }
     //@}
 
@@ -308,16 +302,7 @@ private:
 
 }
 
-#undef XEUMEULEU_TRY
-#undef XEUMEULEU_CATCH
-
 #include <xeumeuleu/bridges/xerces/detail/buffer_input.hpp>
-
-#define XEUMEULEU_TRY try {
-#define XEUMEULEU_CATCH } \
-            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "out of memory" ); } \
-            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e, context() ); } \
-            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e, context() ); }
 
 namespace xml
 {
@@ -327,11 +312,8 @@ namespace xml
             if( clone )
                 return std::auto_ptr< input_base >( new buffer_input( *current_ ) );
             return std::auto_ptr< input_base >( new input( *current_ ) );
-        XEUMEULEU_CATCH
+        XEUMEULEU_CATCH_WITH_CONTEXT
     }
 }
-
-#undef XEUMEULEU_TRY
-#undef XEUMEULEU_CATCH
 
 #endif // xeumeuleu_input_hpp
