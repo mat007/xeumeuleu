@@ -47,12 +47,6 @@
 #include <cstdlib>
 #endif
 
-#define XEUMEULEU_TRY try {
-#define XEUMEULEU_CATCH } \
-            catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "out of memory" ); } \
-            catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e, context() ); } \
-            catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e, context() ); }
-
 namespace xml
 {
     class input;
@@ -78,19 +72,19 @@ public:
 
     //! @name Operations
     //@{
-    void to( std::string& v ) const { XEUMEULEU_TRY if( node_ ) v = translate( get_data() ); XEUMEULEU_CATCH }
-    void to( bool& v ) const { XEUMEULEU_TRY if( node_ ) v = to_bool( get_data() ); XEUMEULEU_CATCH }
-    void to( short& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< short >( get_data() ); XEUMEULEU_CATCH }
-    void to( int& v ) const { XEUMEULEU_TRY if( node_ ) v = to_int( get_data() ); XEUMEULEU_CATCH }
-    void to( long& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< long >( get_data() ); XEUMEULEU_CATCH }
-    void to( long long& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< long long >( get_data() ); XEUMEULEU_CATCH }
-    void to( float& v ) const { XEUMEULEU_TRY if( node_ ) v = to_float( get_data() ); XEUMEULEU_CATCH }
-    void to( double& v ) const { XEUMEULEU_TRY if( node_ ) v = to_double( get_data() ); XEUMEULEU_CATCH }
-    void to( long double& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< long double >( get_data() ); XEUMEULEU_CATCH }
-    void to( unsigned short& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< unsigned short >( get_data() ); XEUMEULEU_CATCH }
-    void to( unsigned int& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< unsigned int >( get_data() ); XEUMEULEU_CATCH }
-    void to( unsigned long& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< unsigned long >( get_data() ); XEUMEULEU_CATCH }
-    void to( unsigned long long& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< unsigned long long >( get_data() ); XEUMEULEU_CATCH }
+    void to( std::string& v ) const { XEUMEULEU_TRY if( node_ ) v = translate( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( bool& v ) const { XEUMEULEU_TRY if( node_ ) v = to_bool( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( short& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< short >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( int& v ) const { XEUMEULEU_TRY if( node_ ) v = to_int( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( long& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< long >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( long long& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< long long >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( float& v ) const { XEUMEULEU_TRY if( node_ ) v = to_float( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( double& v ) const { XEUMEULEU_TRY if( node_ ) v = to_double( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( long double& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< long double >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( unsigned short& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< unsigned short >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( unsigned int& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< unsigned int >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( unsigned long& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< unsigned long >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( unsigned long long& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< unsigned long long >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
     //@}
 
 private:
@@ -189,8 +183,5 @@ private:
 };
 
 }
-
-#undef XEUMEULEU_TRY
-#undef XEUMEULEU_CATCH
 
 #endif // xeumeuleu_data_hpp

@@ -50,12 +50,6 @@
 #include <cctype>
 #include <fstream>
 
-#define XEUMEULEU_TRY try {
-#define XEUMEULEU_CATCH } \
-    catch( const XERCES_CPP_NAMESPACE::OutOfMemoryException& ) { throw exception( "out of memory" ); } \
-    catch( const XERCES_CPP_NAMESPACE::XMLException& e ) { throw chained_exception( e ); } \
-    catch( const XERCES_CPP_NAMESPACE::DOMException& e ) { throw chained_exception( e ); }
-
 namespace xml
 {
 // =============================================================================
@@ -214,8 +208,5 @@ protected:
 };
 
 }
-
-#undef XEUMEULEU_TRY
-#undef XEUMEULEU_CATCH
 
 #endif // xeumeuleu_document_hpp
