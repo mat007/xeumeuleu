@@ -37,8 +37,6 @@
 #define XEUMEULEU_TRANSCODER_BUFFER_SIZE 128
 
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
-#include <algorithm>
-#include <iterator>
 #include <vector>
 #include <string>
 
@@ -147,7 +145,7 @@ private:
             if( read == 0 )
                 throw xml::exception( "failed to transcode string" );
             done += read;
-            std::copy( s, s + written, std::back_inserter( result ) );
+            result.insert( result.end(), s, s + written );
         }
         result.resize( result.size() + 4 );
         return result;
