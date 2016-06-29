@@ -84,7 +84,7 @@ public:
         while( done < size )
         {
             Count_t read = 0;
-            Count_t written = transcoder_->transcodeTo(
+            const Count_t written = transcoder_->transcodeTo(
                 ch_ + done, size - done,
                 s, XEUMEULEU_TRANSCODER_BUFFER_SIZE,
                 read, XERCES_CPP_NAMESPACE::XMLTranscoder::UnRep_RepChar );
@@ -131,15 +131,15 @@ private:
     {
         std::vector< XMLCh > result;
         const XMLByte* in = reinterpret_cast< const XMLByte* >( str.c_str() );
-        const XMLSize_t length = str.length();
+        const XMLSize_t size = str.length();
         XMLCh s[ XEUMEULEU_TRANSCODER_BUFFER_SIZE ];
         unsigned char sizes[ XEUMEULEU_TRANSCODER_BUFFER_SIZE ];
         XMLSize_t done = 0;
-        while( done < length )
+        while( done < size )
         {
             Count_t read = 0;
-            XMLSize_t written = transcoder_->transcodeFrom(
-                in + done, length - done,
+            const XMLSize_t written = transcoder_->transcodeFrom(
+                in + done, size - done,
                 s, XEUMEULEU_TRANSCODER_BUFFER_SIZE,
                 read, sizes );
             if( read == 0 )
