@@ -253,30 +253,15 @@ private:
 
     std::string serialize( float value ) const
     {
-        return convert( value );
+        return convert( value, "%g" );
     }
     std::string serialize( double value ) const
     {
-        return convert( value );
+        return convert( value, "%g" );
     }
     std::string serialize( long double value ) const
     {
-        if( value == std::numeric_limits< long double >::infinity() )
-            return "INF";
-        if( value == - std::numeric_limits< long double >::infinity() )
-            return "-INF";
-        if( value != value )
-            return "NaN";
-        char buffer[255];
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4996 )
-#endif
-        sprintf( buffer, "%Lg", value );
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
-        return buffer;
+        return convert( value, "%Lg" );
     }
     template< typename T > std::string serialize( T value ) const
     {
@@ -285,7 +270,7 @@ private:
         return stream.str();
     }
 
-    template< typename T > inline std::string convert( T value ) const
+    template< typename T > std::string convert( T value, const char* format ) const
     {
         if( value == std::numeric_limits< T >::infinity() )
             return "INF";
@@ -298,7 +283,7 @@ private:
 #   pragma warning( push )
 #   pragma warning( disable : 4996 )
 #endif
-        sprintf( buffer, "%g", value );
+        sprintf( buffer, format, value );
 #ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
