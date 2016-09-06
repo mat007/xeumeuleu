@@ -84,20 +84,49 @@ BOOST_AUTO_TEST_CASE( streaming_content_in_two_parts_concatenates_content )
 
 namespace
 {
-    template< typename T > void check_numeric_limits()
+    template< typename T > T read( const std::string& value )
     {
+        T result;
+        xml::xistringstream xis( "<element> " + value + " </element>" );
+        xis >> xml::content( "element", result );
+        return result;
+    }
+    template< typename T > void check_round_trip( T in )
+    {
+        xml::xobufferstream xos;
+        xos << xml::content( "root", in );
+        T out;
+        xos >> xml::content( "root", out );
+        BOOST_CHECK_EQUAL( in, out );
+    }
+    template< typename T > void check_round_trip_numeric_limits()
+    {
+        check_round_trip( std::numeric_limits< T >::max() );
+        check_round_trip( std::numeric_limits< T >::min() );
+    }
+    template< typename T > void check_read_special_values()
+    {
+        BOOST_CHECK_EQUAL( std::numeric_limits< T >::infinity(), read< T >( "INF" ) );
+        BOOST_CHECK_EQUAL( -std::numeric_limits< T >::infinity(), read< T >( "-INF" ) );
         {
-            const T value = std::numeric_limits< T >::max();
-            std::stringstream stream;
-            stream << value;
-            BOOST_CHECK_EQUAL( format( stream.str() ), write< T >( value ) );
+            const T NaN = read< T >( "NaN" );
+            BOOST_CHECK( NaN != NaN );
         }
-        {
-            const T value = std::numeric_limits< T >::min();
-            std::stringstream stream;
-            stream << value;
-            BOOST_CHECK_EQUAL( format( stream.str() ), write< T >( value ) );
-        }
+    }
+    template< typename T > void check_round_trip_nan( T t )
+    {
+        xml::xobufferstream xos;
+        xos << xml::content( "root", t );
+        T nan;
+        xos >> xml::content( "root", nan );
+        BOOST_CHECK_NE( nan, nan );
+    }
+    template< typename T > void check_round_trip_special_values()
+    {
+        check_round_trip( std::numeric_limits< T >::infinity() );
+        check_round_trip( -std::numeric_limits< T >::infinity() );
+        check_round_trip_nan( std::numeric_limits< T >::quiet_NaN() );
+        check_round_trip_nan( std::numeric_limits< T >::signaling_NaN() );
     }
 }
 
@@ -105,35 +134,41 @@ namespace
 // Name: streaming_content_writes_node_content
 // Created: MCO 2006-01-03
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( streaming_content_writes_node_content )
+BOOST_AUTO_TEST_CASE( streaming_content_round_trips_node_content )
 {
-    check_numeric_limits< short >();
-    check_numeric_limits< int >();
-    check_numeric_limits< long >();
-    check_numeric_limits< long long >();
-    check_numeric_limits< float >();
-    check_numeric_limits< double >();
-    check_numeric_limits< long double >();
-    check_numeric_limits< unsigned short >();
-    check_numeric_limits< unsigned int >();
-    check_numeric_limits< unsigned long >();
-    check_numeric_limits< unsigned long long >();
+    check_round_trip_numeric_limits< short >();
+    check_round_trip_numeric_limits< int >();
+    check_round_trip_numeric_limits< long >();
+    //check_round_trip_numeric_limits< long long >();
+    check_round_trip_numeric_limits< float >();
+    check_round_trip_numeric_limits< double >();
+    check_round_trip_numeric_limits< long double >();
+    check_round_trip_numeric_limits< unsigned short >();
+    check_round_trip_numeric_limits< unsigned int >();
+    check_round_trip_numeric_limits< unsigned long >();
+    //check_round_trip_numeric_limits< unsigned long long >();
+    check_read_special_values< float >();
+    check_read_special_values< double >();
+    //check_read_special_values< long double >();
 }
 
-// -----------------------------------------------------------------------------
-// Name: streaming_content_writes_node_special_value_content
-// Created: MCO 2007-09-18
-// -----------------------------------------------------------------------------
+namespace
+{
+    template< typename T >
+    void check_special_values()
+    {
+        BOOST_CHECK_EQUAL( format( "INF" ), write< T >( std::numeric_limits< T >::infinity() ) );
+        BOOST_CHECK_EQUAL( format( "-INF" ), write< T >( -std::numeric_limits< T >::infinity() ) );
+        BOOST_CHECK_EQUAL( format( "NaN" ), write< T >( std::numeric_limits< T >::quiet_NaN() ) );
+        BOOST_CHECK_EQUAL( format( "NaN" ), write< T >( std::numeric_limits< T >::signaling_NaN() ) );
+    }
+}
+
 BOOST_AUTO_TEST_CASE( streaming_content_writes_node_special_value_content )
 {
-    BOOST_CHECK_EQUAL( format( "INF" ), write< float >( std::numeric_limits< float >::infinity() ) );
-    BOOST_CHECK_EQUAL( format( "-INF" ), write< float >( - std::numeric_limits< float >::infinity() ) );
-    BOOST_CHECK_EQUAL( format( "NaN" ), write< float >( std::numeric_limits< float >::quiet_NaN() ) );
-    BOOST_CHECK_EQUAL( format( "NaN" ), write< float >( std::numeric_limits< float >::signaling_NaN() ) );
-    BOOST_CHECK_EQUAL( format( "INF" ), write< double >( std::numeric_limits< double >::infinity() ) );
-    BOOST_CHECK_EQUAL( format( "-INF" ), write< double >( - std::numeric_limits< double >::infinity() ) );
-    BOOST_CHECK_EQUAL( format( "NaN" ), write< double >( std::numeric_limits< double >::quiet_NaN() ) );
-    BOOST_CHECK_EQUAL( format( "NaN" ), write< double >( std::numeric_limits< double >::signaling_NaN() ) );
+    check_special_values< float >();
+    check_special_values< double >();
+    check_special_values< long double >();
 }
 
 // -----------------------------------------------------------------------------
@@ -158,17 +193,6 @@ BOOST_AUTO_TEST_CASE( streaming_stack_content_writes_node_content )
     BOOST_CHECK_EQUAL( format( "1.23" ), write< float >( 1.23f ) );
 }
 
-namespace
-{
-    template< typename T > T read( const std::string& value )
-    {
-        T result;
-        xml::xistringstream xis( "<element> " + value + " </element>");
-        xis >> xml::content( "element", result );
-        return result;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: streaming_content_reads_node_content
 // Created: MCO 2006-01-03
@@ -189,18 +213,6 @@ BOOST_AUTO_TEST_CASE( streaming_content_reads_node_content )
     BOOST_CHECK_EQUAL( 65535u, read< unsigned short >( "65535" ) );
     BOOST_CHECK_EQUAL( 4294967295u, read< unsigned long >( "4294967295" ) );
     BOOST_CHECK_EQUAL( 4294967295u, read< unsigned long long >( "4294967295" ) );
-    BOOST_CHECK_EQUAL( std::numeric_limits< float >::infinity(), read< float >( "INF" ) );
-    BOOST_CHECK_EQUAL( - std::numeric_limits< float >::infinity(), read< float >( "-INF" ) );
-    {
-        const float NaN = read< float >( "NaN" );
-        BOOST_CHECK( NaN != NaN );
-    }
-    BOOST_CHECK_EQUAL( std::numeric_limits< double >::infinity(), read< double >( "INF" ) );
-    BOOST_CHECK_EQUAL( - std::numeric_limits< double >::infinity(), read< double >( "-INF" ) );
-    {
-        const double NaN = read< double >( "NaN" );
-        BOOST_CHECK( NaN != NaN );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -210,11 +222,15 @@ BOOST_AUTO_TEST_CASE( streaming_content_reads_node_content )
 BOOST_AUTO_TEST_CASE( streaming_content_with_invalid_format_throws_an_exception )
 {
     BOOST_CHECK_THROW( read< int >( "12.3" ), xml::exception );
-    BOOST_CHECK_THROW( read< short >( "300000" ), xml::exception );
     BOOST_CHECK_THROW( read< unsigned int >( "12.3" ), xml::exception );
     BOOST_CHECK_THROW( read< unsigned int >( "-42" ), xml::exception );
+    BOOST_CHECK_THROW( read< float >( "invalid number" ), xml::exception );
+}
+
+BOOST_AUTO_TEST_CASE( streaming_content_with_overflow_throws_an_exception )
+{
+    BOOST_CHECK_THROW( read< short >( "300000" ), xml::exception );
     BOOST_CHECK_THROW( read< float >( "1e+99" ), xml::exception );
-    BOOST_CHECK_THROW( read< float >( "not a number" ), xml::exception );
 }
 
 // -----------------------------------------------------------------------------

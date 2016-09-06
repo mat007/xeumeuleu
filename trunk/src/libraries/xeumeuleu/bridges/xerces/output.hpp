@@ -253,15 +253,15 @@ private:
 
     std::string serialize( float value ) const
     {
-        return convert( value, "%g" );
+        return convert( value, "%.*g" );
     }
     std::string serialize( double value ) const
     {
-        return convert( value, "%g" );
+        return convert( value, "%.*g" );
     }
     std::string serialize( long double value ) const
     {
-        return convert( value, "%Lg" );
+        return convert( value, "%.*Lg" );
     }
     template< typename T > std::string serialize( T value ) const
     {
@@ -283,11 +283,18 @@ private:
 #   pragma warning( push )
 #   pragma warning( disable : 4996 )
 #endif
-        sprintf( buffer, format, value );
+        sprintf( buffer, format, max_digits< T >(), value );
 #ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
         return buffer;
+    }
+
+    template< typename T >
+    int max_digits() const
+    {
+        // actually std::numeric_limits< T >::max_digits10 in C++11
+        return 2 +  std::numeric_limits< T >::digits10;
     }
 
     XERCES_CPP_NAMESPACE::DOMAttr* create_attribute( XERCES_CPP_NAMESPACE::DOMNamedNodeMap& attributes, const std::string& ns, const std::string& name )
