@@ -4,6 +4,7 @@ trunk
 . changed document name from '#document' to 'document' in error messages
 . cleaned up error messages to all start with lower case
 . reworked error handling to diagnose invalid schema syntax
+. changed formatting of floating point numbers to output all significant digits
 
 1.6.0
 . added an xml::call manipulator to call a functor
