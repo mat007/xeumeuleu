@@ -32,6 +32,7 @@
 
 #include "xeumeuleu_test_pch.h"
 #include <xeumeuleu/xml.hpp>
+#include <turtle/mock.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: read_attribute_from_root_level_throws_an_exception
@@ -223,14 +224,10 @@ namespace
 {
     class user_type
     {};
-}
-namespace xml
-{
-    xistream& operator>>( xistream& xis, user_type& )
-    {
-        return xis;
-    }
-    xostream& operator<<( xostream& xos, const user_type& )
+
+    MOCK_FUNCTION( operator>>, 2, xml::xistream&( xml::xistream&, user_type& ), read );
+
+    xml::xostream& operator<<( xml::xostream& xos, const user_type& )
     {
         return xos;
     }
@@ -244,6 +241,7 @@ BOOST_AUTO_TEST_CASE( reading_attribute_can_be_specialized_for_user_types )
 {
     xml::xistringstream xis( "<root attribute=''/>" );
     user_type u;
+    MOCK_EXPECT( read ).once().returns( boost::ref( xis ) );
     xis >> xml::start( "root" )
             >> xml::attribute( "attribute", u );
 }
@@ -279,5 +277,6 @@ BOOST_AUTO_TEST_CASE( direct_reading_attribute_can_be_specialized_for_user_types
 {
     xml::xistringstream xis( "<root attribute=''/>" );
     xis >> xml::start( "root" );
+    MOCK_EXPECT( read ).once().returns( boost::ref( xis ) );
     xis.attribute< user_type >( "attribute" );
 }
