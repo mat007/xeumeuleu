@@ -32,21 +32,20 @@
 
 #include "xeumeuleu_test_pch.h"
 #include <xeumeuleu/xml.hpp>
+#include <turtle/mock.hpp>
 
 namespace
 {
     class user_type
     {
-    public:
-        friend xml::xistream& operator>>( xml::xistream& xis, user_type& )
-        {
-            return xis;
-        }
-        friend xml::xostream& operator<<( xml::xostream& xos, const user_type& )
-        {
-            return xos;
-        }
     };
+
+    MOCK_FUNCTION( operator>>, 2, xml::xistream&( xml::xistream&, user_type& ), read );
+
+    xml::xostream& operator<<( xml::xostream& xos, const user_type& )
+    {
+        return xos;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -57,6 +56,7 @@ BOOST_AUTO_TEST_CASE( user_type_with_unserialization_friend_function_can_be_read
 {
     xml::xistringstream xis( "<root/>" );
     user_type t;
+    MOCK_EXPECT( read ).once().returns( boost::ref( xis ) );
     xis >> t;
 }
 
@@ -85,6 +85,7 @@ BOOST_AUTO_TEST_CASE( user_type_derived_from_user_type_with_unserialization_frie
 {
     xml::xistringstream xis( "<root/>" );
     user_derived_type t;
+    MOCK_EXPECT( read ).once().returns( boost::ref( xis ) );
     xis >> t;
 }
 
