@@ -57,7 +57,7 @@ class call_manipulator
 public:
     //! @name Constructors/Destructor
     //@{
-    call_manipulator( F functor )
+    call_manipulator( const F& functor )
         : functor_( functor )
     {}
     friend xistream& operator>>( xistream& xis, const call_manipulator& m )
@@ -72,13 +72,6 @@ public:
     }
     //@}
 
-private:
-    //! @name Constructors/Destructor
-    //@{
-    call_manipulator& operator=( const call_manipulator& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     F functor_;
