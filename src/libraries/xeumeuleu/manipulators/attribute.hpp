@@ -50,7 +50,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     attribute_manipulator( const std::string& name, T& value )
-        : name_ ( name )
+        : name_( name )
         , value_( value )
     {}
     //@}
@@ -69,24 +69,61 @@ public:
     //@}
 };
 
-// -----------------------------------------------------------------------------
-// Name: attribute
-// Created: MAT 2006-01-06
-// -----------------------------------------------------------------------------
+template< typename T >
+class attribute_manipulator_default
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    attribute_manipulator_default( const std::string& name, T& value, const T& defaultValue )
+        : name_( name )
+        , value_( value )
+        , defaultValue_( defaultValue )
+    {}
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    attribute_manipulator_default& operator=( const attribute_manipulator_default& ); //!< Assignment operator
+    //@}
+
+public:
+    //! @name Member data
+    //@{
+    std::string name_;
+    T& value_;
+    const T& defaultValue_;
+    //@}
+};
+
 template< typename T >
 attribute_manipulator< const T > attribute( const std::string& name, const T& value )
 {
     return attribute_manipulator< const T >( name, value );
 }
 
-// -----------------------------------------------------------------------------
-// Name: attribute
-// Created: MAT 2006-01-06
-// -----------------------------------------------------------------------------
+template< typename T >
+attribute_manipulator_default< const T > attribute( const std::string& name, const T& value, const T& defaultValue )
+{
+    return attribute_manipulator_default< const T >( name, value, defaultValue );
+}
+
+inline attribute_manipulator_default< const char* > attribute( const std::string& name, const char* value, const char* defaultValue )
+{
+    return attribute_manipulator_default< const char* >( name, value, defaultValue );
+}
+
 template< typename T >
 attribute_manipulator< T > attribute( const std::string& name, T& value )
 {
     return attribute_manipulator< T >( name, value );
+}
+
+template< typename T >
+attribute_manipulator_default< T > attribute( const std::string& name, T& value, const T& defaultValue )
+{
+    return attribute_manipulator_default< T >( name, value, defaultValue );
 }
 
 }

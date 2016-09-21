@@ -93,6 +93,19 @@ public:
         attribute( m.name_, m.value_ );
         return *this;
     }
+    template< typename T >
+    xostream& operator<<( const attribute_manipulator_default< T >& m )
+    {
+        if( m.value_ != m.defaultValue_ )
+            attribute( m.name_, m.value_ );
+        return *this;
+    }
+    xostream& operator<<( const attribute_manipulator_default< const char* >& m )
+    {
+        if( std::strcmp( m.value_, m.defaultValue_ ) )
+            attribute( m.name_, m.value_ );
+        return *this;
+    }
     xostream& operator<<( const cdata_manipulator& m )
     {
         cdata( m.content_ );
@@ -148,6 +161,10 @@ public:
     {
         attribute( name, std::string( value ) );
     }
+    void attribute( const std::string& name, const char* value, const char* defaultValue )
+    {
+        attribute( name, std::string( value ), std::string( defaultValue ) );
+    }
     template< typename T > void attribute( const std::string& name, const T& value )
     {
         std::auto_ptr< std::string > ns = ns_;
@@ -157,6 +174,12 @@ public:
             xostream xos( *output );
             xos << value;
         }
+    }
+    template< typename T > void attribute( const std::string& name, const T& value, const T& defaultValue )
+    {
+        if( value == defaultValue )
+            return;
+        attribute( name, value );
     }
 
     void cdata( const std::string& content )

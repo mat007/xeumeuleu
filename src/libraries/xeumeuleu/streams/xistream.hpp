@@ -98,6 +98,13 @@ public:
         return *this;
     }
     template< typename T >
+    xistream& operator>>( const attribute_manipulator_default< T >& m )
+    {
+        m.value_ = attribute( m.name_, m.defaultValue_ );
+        return *this;
+    }
+
+    template< typename T >
     xistream& operator>>( const attributes_manipulator< T >& m )
     {
         attributes( m );

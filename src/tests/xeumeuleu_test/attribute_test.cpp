@@ -213,11 +213,50 @@ BOOST_AUTO_TEST_CASE( writing_the_same_attribute_twice_yields_the_second_value_o
     xml::xostringstream xos;
     xos << xml::start( "root" )
             << xml::attribute( "attribute", "the first value" )
-            << xml::attribute( "attribute", "the second value" )
-        << xml::end;
+            << xml::attribute( "attribute", "the second value" );
     const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                                  "<root attribute=\"the second value\"/>\n";
     BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_attribute_with_default_value_writes_it_when_actual_value_differs )
+{
+    {
+        xml::xostringstream xos;
+        xos << xml::start( "root" )
+                << xml::attribute( "attribute", "the value", "the default value" );
+        const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                     "<root attribute=\"the value\"/>\n";
+        BOOST_CHECK_EQUAL( expected, xos.str() );
+    }
+    {
+        xml::xostringstream xos;
+        xos << xml::start( "root" )
+                << xml::attribute( "attribute", 12, 42 );
+        const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                     "<root attribute=\"12\"/>\n";
+        BOOST_CHECK_EQUAL( expected, xos.str() );
+    }
+}
+
+BOOST_AUTO_TEST_CASE( writing_attribute_with_default_value_skips_it_when_actual_value_is_the_same )
+{
+    {
+        xml::xostringstream xos;
+        xos << xml::start( "root" )
+                << xml::attribute( "attribute", "the default value", "the default value" );
+        const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                     "<root/>\n";
+        BOOST_CHECK_EQUAL( expected, xos.str() );
+    }
+    {
+        xml::xostringstream xos;
+        xos << xml::start( "root" )
+                << xml::attribute( "attribute", 12, 12 );
+        const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                     "<root/>\n";
+        BOOST_CHECK_EQUAL( expected, xos.str() );
+    }
 }
 
 namespace
