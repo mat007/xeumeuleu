@@ -35,21 +35,19 @@
 
 namespace xml
 {
-    class xistream;
-
 // =============================================================================
 /** @class  caller5
     @brief  Method call functor with five fixed parameters
 */
 // Created: MCO 2006-06-22
 // =============================================================================
-template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4, typename Arg5, typename T5 >
+template< typename X, typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4, typename Arg5, typename T5 >
 class caller5
 {
 private:
     //! @name Types
     //@{
-    typedef void (T::*M)( xistream&, T1, T2, T3, T4, T5 );
+    typedef void (T::*M)( X&, T1, T2, T3, T4, T5 );
     //@}
 
 public:
@@ -69,9 +67,9 @@ public:
 
     //! @name Operations
     //@{
-    void operator()( xistream& xis ) const
+    void operator()( X& x ) const
     {
-        (instance_.*method_)( xis, value1_, value2_, value3_, value4_, value5_ );
+        (instance_.*method_)( x, value1_, value2_, value3_, value4_, value5_ );
     }
     //@}
 
@@ -100,13 +98,13 @@ private:
 */
 // Created: MCO 2006-06-22
 // =============================================================================
-template< typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4, typename Arg5, typename T5 >
+template< typename X, typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4, typename Arg5, typename T5 >
 class const_caller5
 {
 private:
     //! @name Types
     //@{
-    typedef void (T::*M)( xistream&, T1, T2, T3, T4, T5 ) const;
+    typedef void (T::*M)( X&, T1, T2, T3, T4, T5 ) const;
     //@}
 
 public:
@@ -126,9 +124,9 @@ public:
 
     //! @name Operations
     //@{
-    void operator()( xistream& xis ) const
+    void operator()( X& x ) const
     {
-        (instance_.*method_)( xis, value1_, value2_, value3_, value4_, value5_ );
+        (instance_.*method_)( x, value1_, value2_, value3_, value4_, value5_ );
     }
     //@}
 

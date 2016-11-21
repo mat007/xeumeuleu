@@ -57,7 +57,7 @@ class call_manipulator
 public:
     //! @name Constructors/Destructor
     //@{
-    call_manipulator( F functor )
+    call_manipulator( const F& functor )
         : functor_( functor )
     {}
     friend xistream& operator>>( xistream& xis, const call_manipulator& m )
@@ -86,7 +86,7 @@ private:
 };
 
 template< typename F >
-call_manipulator< F > call( F functor )
+call_manipulator< F > call( const F& functor )
 {
     return call_manipulator< F >( functor );
 }
