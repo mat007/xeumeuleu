@@ -35,21 +35,19 @@
 
 namespace xml
 {
-    class xistream;
-
 // =============================================================================
 /** @class  caller1
     @brief  Method call functor with one fixed parameter
 */
 // Created: AGE 2006-01-27
 // =============================================================================
-template< typename T, typename Arg, typename T1 >
+template< typename X, typename T, typename Arg, typename T1 >
 class caller1
 {
 private:
     //! @name Types
     //@{
-    typedef void (T::*M)( xistream&, T1 );
+    typedef void (T::*M)( X&, T1 );
     //@}
 
 public:
@@ -65,9 +63,9 @@ public:
 
     //! @name Operations
     //@{
-    void operator()( xistream& xis ) const
+    void operator()( X& x ) const
     {
-        (instance_.*method_)( xis, value_ );
+        (instance_.*method_)( x, value_ );
     }
     //@}
 
@@ -92,13 +90,13 @@ private:
 */
 // Created: AGE 2006-01-27
 // =============================================================================
-template< typename T, typename Arg, typename T1 >
+template< typename X, typename T, typename Arg, typename T1 >
 class const_caller1
 {
 private:
     //! @name Types
     //@{
-    typedef void (T::*M)( xistream&, T1 ) const;
+    typedef void (T::*M)( X&, T1 ) const;
     //@}
 
 public:
@@ -114,9 +112,9 @@ public:
 
     //! @name Operations
     //@{
-    void operator()( xistream& xis ) const
+    void operator()( X& x ) const
     {
-        (instance_.*method_)( xis, value_ );
+        (instance_.*method_)( x, value_ );
     }
     //@}
 
