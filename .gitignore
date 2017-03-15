@@ -1,6 +1,3 @@
-*.user
-*.VC.*
-ipch
-.vs
 /out
 /run
+/*.patch
