@@ -78,3 +78,71 @@ BOOST_AUTO_TEST_CASE( call_allows_to_call_a_functor_by_reference )
     MOCK_EXPECT( f ).once();
     call( xis, f );
 }
+
+namespace
+{
+    MOCK_CLASS( mock_element )
+    {
+        MOCK_CONST_METHOD( write, 1, void( xml::xostream& ) )
+    };
+}
+
+namespace xml
+{
+    template < typename M1, typename M2 >
+    struct sequence_manipulator
+    {
+        sequence_manipulator( const M1& m1, const M2& m2 )
+            : m1_( m1 )
+            , m2_( m2 )
+        {}
+
+        friend xistream& operator>>( xistream& xis, const sequence_manipulator& m )
+        {
+            xml::xisubstream xiss( xis );
+            xiss >> m.m1_;
+            xiss >> m.m2_;
+            return xis;
+        }
+        friend xostream& operator<<( xostream& xos, const sequence_manipulator& m )
+        {
+            xml::xosubstream xoss( xos );
+            xoss << m.m1_;
+            xoss << m.m2_;
+            return xos;
+        }
+
+    private:
+        sequence_manipulator& operator=( const sequence_manipulator& );
+
+    private:
+        M1 m1_;
+        M2 m2_;
+    };
+
+    template < typename I, typename T >
+    sequence_manipulator<
+        start_manipulator,
+        call_manipulator< const_caller0< xostream, T > > >
+    call( const std::string& name, I& instance, void ( T::*method )( xostream& ) const )
+    {
+        return sequence_manipulator<
+            start_manipulator,
+            call_manipulator< const_caller0< xostream, T > > >(
+                xml::start( name ),
+                call_manipulator< const_caller0< xostream, T > >(
+                    const_caller0< xostream, T >( instance, method ) ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: call_allows_to_call_member_function
+// Created: MCO 2016-11-21
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( call_allows_to_call_member_function )
+{
+    xml::xostringstream xos;
+    mock_element e;
+    MOCK_EXPECT( e.write ).once();
+    xos << xml::call( "element", e, &mock_element::write );
+}
