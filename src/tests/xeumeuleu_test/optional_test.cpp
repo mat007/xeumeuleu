@@ -40,8 +40,7 @@
 BOOST_AUTO_TEST_CASE( reading_optional_root_element_does_not_throw_exception )
 {
     xml::xistringstream xis( "<element/>" );
-    xis >> xml::optional
-            >> xml::start( "non-existing-element" );
+    xis >> xml::optional >> xml::start( "non-existing-element" );
     BOOST_CHECK_NO_THROW( xis >> xml::end );
 }
 
@@ -284,3 +283,137 @@ BOOST_AUTO_TEST_CASE( reading_an_optional_non_existing_content_in_non_existing_t
             >> xml::optional >> xml::content( "element", value );
     BOOST_CHECK_EQUAL( "", value );
 }
+
+BOOST_AUTO_TEST_CASE( writing_optional_element_does_not_write_it )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "non-existing-element" );
+    BOOST_CHECK_EQUAL( "", xos.str() );
+    xos << xml::end;
+    BOOST_CHECK_EQUAL( "", xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_twice_optional_element_does_not_write_it )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::optional << xml::start( "non-existing-element" );
+    BOOST_CHECK_EQUAL( "", xos.str() );
+    xos << xml::end;
+    BOOST_CHECK_EQUAL( "", xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_optional_element_after_another_optional_element_does_not_write_them )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "non-existing-element" )
+            << xml::optional << xml::start( "non-existing-sub-element" );
+    BOOST_CHECK_EQUAL( "", xos.str() );
+    xos << xml::end;
+    BOOST_CHECK_EQUAL( "", xos.str() );
+    xos << xml::end;
+    BOOST_CHECK_EQUAL( "", xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_element_after_optional_element_writes_them_both )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "root" )
+            << xml::start( "element" );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root>\n"
+                                 "  <element/>\n"
+                                 "</root>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_element_after_twice_optional_element_writes_them_both )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::optional << xml::start( "root" )
+            << xml::start( "element" );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root>\n"
+                                 "  <element/>\n"
+                                 "</root>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_attribute_after_optional_element_writes_them_both )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "root" )
+            << xml::attribute( "attribute", 3 );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root attribute=\"3\"/>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_xistream_after_optional_element_writes_them_both )
+{
+    xml::xistringstream xis( "<element-1/>" ) ;
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "root" )
+            << xis
+            << xml::start( "element-2" );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root>\n"
+                                 "  <element-1/>\n"
+                                 "  <element-2/>\n"
+                                 "</root>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_attribute_after_optional_resets_it )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xml::optional << xml::attribute( "attribute", 3 )
+            << xml::start( "element" );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root attribute=\"3\">\n"
+                                 "  <element/>\n"
+                                 "</root>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_value_after_optional_element_writes_them_both )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "root" )
+            << 3;
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root>3</root>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_element_after_end_from_optional_element_writes_it )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xml::optional << xml::start( "non-existing-element" )
+            << xml::end
+            << xml::start( "element" );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root>\n"
+                                 "  <element/>\n"
+                                 "</root>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_end_after_optional_resets_it )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xml::start( "element-1" )
+                << xml::optional
+            << xml::end
+            << xml::start( "element-2" );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root>\n"
+                                 "  <element-1/>\n"
+                                 "  <element-2/>\n"
+                                 "</root>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+// branch

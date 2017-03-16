@@ -35,8 +35,6 @@
 
 namespace xml
 {
-    class xistream;
-
 // =============================================================================
 /** @class  optional_manipulator
     @brief  Optional manipulator

@@ -259,5 +259,11 @@
     <ClInclude Include="..\..\src\libraries\xeumeuleu\bridges\xerces\detail\locator_handler.hpp">
       <Filter>Source Files\bridges\xerces\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\detail\output_context.hpp">
+      <Filter>Source Files\streams\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\detail\optional_output.hpp">
+      <Filter>Source Files\streams\detail</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

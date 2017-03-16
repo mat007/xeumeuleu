@@ -62,11 +62,15 @@ public:
     xosubstream( const xostream& xos )
         : xo_base_member( xos.branch() )
         , xostream( *xo_base_member::output_ )
-    {}
+    {
+        optional( xos );
+    }
     xosubstream( const xosubstream& xoss )
         : xo_base_member( xoss.branch() )
         , xostream( *xo_base_member::output_ )
-    {}
+    {
+        optional( xoss );
+    }
     virtual ~xosubstream()
     {}
     //@}
@@ -76,6 +80,16 @@ public:
     operator xostream&() const
     {
         return const_cast< xosubstream& >( *this );
+    }
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual output_base& reset( std::unique_ptr< output_base > output )
+    {
+        xo_base_member::output_ = std::move( output );
+        return xostream::reset( *xo_base_member::output_ );
     }
     //@}
 };

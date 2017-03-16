@@ -125,5 +125,111 @@ BOOST_AUTO_TEST_CASE( sub_output_stream_creates_a_mutable_temporary )
     xml::xostringstream xos;
     xml::xosubstream( xos ) << xml::start( "element" );
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                       "<element/>\n", xos.str() );
+                       "<element/>\n",
+                       xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( optional_after_creating_sub_stream_is_no_op )
+{
+    xml::xostringstream xos;
+    {
+        xml::xosubstream xoss( xos );
+        xoss << xml::optional;
+    }
+    xos << xml::start( "element" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element/>\n",
+                       xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( creating_sub_stream_after_optional_throws )
+{
+    xml::xostringstream xos;
+    xos << xml::optional;
+    BOOST_CHECK_THROW( xml::xosubstream xoss( xos ), xml::exception );
+}
+
+BOOST_AUTO_TEST_CASE( creating_sub_stream_after_optional_element_is_no_op )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "root" );
+    {
+        xml::xosubstream xoss( xos );
+    }
+    xos << xml::start( "element" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<root>\n"
+                       "  <element/>\n"
+                       "</root>\n",
+                       xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( creating_sub_stream_after_optional_element_and_writing_elements_writes_them_all )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "root" );
+    {
+        xml::xosubstream xoss( xos );
+        xoss << xml::start( "element-1" )
+                << xml::start( "element-2" );
+    }
+    xos << xml::start( "element-3" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<root>\n"
+                       "  <element-1>\n"
+                       "    <element-2/>\n"
+                       "  </element-1>\n"
+                       "  <element-3/>\n"
+                       "</root>\n",
+                       xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( creating_sub_stream_after_optional_element_and_writing_interleaved_elements_writes_them_all )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "root" );
+    xml::xosubstream xoss( xos );
+    xos << xml::start( "element-1" );
+    xoss << xml::start( "element-2" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<root>\n"
+                       "  <element-1/>\n"
+                       "  <element-2/>\n"
+                       "</root>\n",
+                       xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( creating_sub_streams_after_optional_element_and_writing_another_element_writes_them_all )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "root" );
+    {
+        xml::xosubstream xoss( xos );
+        {
+            xml::xosubstream xoss2( xos );
+            xoss2 << xml::start( "element-1" );
+        }
+        xoss << xml::start( "element-2" );
+    }
+    xos << xml::start( "element-3" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<root>\n"
+                       "  <element-1/>\n"
+                       "  <element-2/>\n"
+                       "  <element-3/>\n"
+                       "</root>\n",
+                       xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( optional_element_after_creating_sub_stream_is_no_op )
+{
+    xml::xostringstream xos;
+    {
+        xml::xosubstream xoss( xos );
+        xoss << xml::optional << xml::start( "non-existing-element" );
+    }
+    xos << xml::start( "element" );
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<element/>\n",
+                       xos.str() );
 }
