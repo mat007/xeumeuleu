@@ -90,13 +90,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    xtransform( const xtransform& );            //!< Copy constructor
-    xtransform& operator=( const xtransform& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     std::auto_ptr< buffer > buffer_;

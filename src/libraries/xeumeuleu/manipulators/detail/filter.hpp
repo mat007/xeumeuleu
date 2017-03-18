@@ -49,7 +49,7 @@ class filter : public visitor
 public:
     //! @name Constructors/Destructor
     //@{
-    filter( const std::string& name, T functor )
+    filter( const std::string& name, const T& functor )
         : name_   ( name )
         , functor_( functor )
     {}

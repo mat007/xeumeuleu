@@ -58,6 +58,12 @@ public:
     //@{
     virtual void operator()( const std::string& ns, const std::string& name, xistream& xis ) const = 0;
     //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    visitor& operator=( const visitor& ); //!< Assignment operator
+    //@}
 };
 
 }

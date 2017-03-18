@@ -63,13 +63,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    input_base_context( const input_base_context& );            //!< Copy constructor
-    input_base_context& operator=( const input_base_context& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     multi_input multi_;

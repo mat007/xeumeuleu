@@ -238,12 +238,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    output( const output& );            //!< Copy constructor
-    output& operator=( const output& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     std::string location() const

@@ -102,13 +102,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    optional_input( const optional_input& );            //!< Copy constructor
-    optional_input& operator=( const optional_input& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     input_base& input1_;

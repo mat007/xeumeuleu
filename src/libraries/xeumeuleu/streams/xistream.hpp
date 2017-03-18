@@ -262,12 +262,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    xistream( const xistream& );            //!< Copy constructor
-    xistream& operator=( const xistream& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual input_base& reset( input_base& input )
