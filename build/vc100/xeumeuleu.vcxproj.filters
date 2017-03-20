@@ -73,9 +73,6 @@
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\start.hpp">
       <Filter>Source Files\manipulators</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\adapter.hpp">
-      <Filter>Source Files\manipulators\detail</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\caller.hpp">
       <Filter>Source Files\manipulators\detail</Filter>
     </ClInclude>
@@ -95,9 +92,6 @@
       <Filter>Source Files\manipulators\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\caller5.hpp">
-      <Filter>Source Files\manipulators\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\filter.hpp">
       <Filter>Source Files\manipulators\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller.hpp">
@@ -200,9 +194,6 @@
       <Filter>Source Files\streams\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\detail\temporary_input.hpp">
-      <Filter>Source Files\streams\detail</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\detail\visitor.hpp">
       <Filter>Source Files\streams\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\detail\xi_base_member.hpp">

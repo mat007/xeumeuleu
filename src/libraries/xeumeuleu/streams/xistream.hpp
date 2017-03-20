@@ -38,7 +38,6 @@
 #include <xeumeuleu/streams/detail/output_base.hpp>
 #include <xeumeuleu/streams/detail/temporary_input.hpp>
 #include <xeumeuleu/streams/detail/optional_input.hpp>
-#include <xeumeuleu/streams/detail/visitor.hpp>
 #include <xeumeuleu/manipulators/attribute.hpp>
 #include <xeumeuleu/manipulators/attributes.hpp>
 #include <xeumeuleu/manipulators/content.hpp>

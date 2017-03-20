@@ -33,7 +33,6 @@
 #ifndef xeumeuleu_name_list_hpp
 #define xeumeuleu_name_list_hpp
 
-#include <xeumeuleu/manipulators/detail/adapter.hpp>
 #include <xeumeuleu/manipulators/detail/name_caller.hpp>
 
 namespace xml
@@ -45,14 +44,34 @@ namespace xml
 // Created: ZEBRE 2006-08-30
 // =============================================================================
 template< typename T >
-class list_name_manipulator : public adapter< T >
+class list_name_manipulator
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit list_name_manipulator( T functor )
-        : adapter< T >( functor )
+        : functor_( functor )
     {}
+    //@}
+
+    //! @name Operators
+    //@{
+    void operator()( const std::string& ns, const std::string& name, xistream& xis )
+    {
+        functor_( ns, name, xis );
+    }
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    list_name_manipulator& operator=( const list_name_manipulator& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    T functor_;
     //@}
 };
 

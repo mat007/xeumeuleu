@@ -35,12 +35,15 @@
 
 #include <string>
 #include <memory>
+#include <functional>
 
 namespace xml
 {
-    class visitor;
     class output;
     class data;
+    class xistream;
+
+    typedef std::function< void( const std::string&, const std::string&, xistream& ) > visitor;
 
 // =============================================================================
 /** @class  input_base

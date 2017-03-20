@@ -35,7 +35,6 @@
 
 #include <xeumeuleu/streams/xistream.hpp>
 #include <xeumeuleu/streams/exception.hpp>
-#include <xeumeuleu/streams/detail/visitor.hpp>
 #include <xeumeuleu/bridges/xerces/output.hpp>
 #include <xeumeuleu/bridges/xerces/data.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>

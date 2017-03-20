@@ -33,7 +33,6 @@
 #ifndef xeumeuleu_attributes_hpp
 #define xeumeuleu_attributes_hpp
 
-#include <xeumeuleu/manipulators/detail/adapter.hpp>
 #include <xeumeuleu/manipulators/detail/name_caller.hpp>
 
 namespace xml
@@ -45,14 +44,34 @@ namespace xml
 // Created: MAT 2007-08-01
 // =============================================================================
 template< typename T >
-class attributes_manipulator : public adapter< T >
+class attributes_manipulator
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit attributes_manipulator( T functor )
-        : adapter< T >( functor )
+        : functor_( functor )
     {}
+    //@}
+
+    //! @name Operators
+    //@{
+    void operator()( const std::string& ns, const std::string& name, xistream& xis )
+    {
+        functor_( ns, name, xis );
+    }
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    attributes_manipulator& operator=( const attributes_manipulator& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    T functor_;
     //@}
 };
 

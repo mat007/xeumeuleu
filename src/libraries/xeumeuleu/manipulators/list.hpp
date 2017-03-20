@@ -33,7 +33,6 @@
 #ifndef xeumeuleu_list_hpp
 #define xeumeuleu_list_hpp
 
-#include <xeumeuleu/manipulators/detail/filter.hpp>
 #include <xeumeuleu/manipulators/detail/caller.hpp>
 
 namespace xml
@@ -45,14 +44,37 @@ namespace xml
 // Created: MAT 2006-01-05
 // =============================================================================
 template< typename T >
-class list_manipulator : public filter< T >
+class list_manipulator
 {
 public:
     //! @name Constructors/Destructor
     //@{
     list_manipulator( const std::string& name, T functor )
-        : filter< T >( name, functor )
+        : name_   ( name )
+        , functor_( functor )
     {}
+    //@}
+
+    //! @name Operators
+    //@{
+    void operator()( const std::string& /*ns*/, const std::string& name, xistream& xis )
+    {
+        if( name == name_ )
+            functor_( xis );
+    }
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    list_manipulator& operator=( const list_manipulator& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string name_;
+    T functor_;
     //@}
 };
 

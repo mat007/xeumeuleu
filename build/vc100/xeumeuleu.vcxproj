@@ -182,7 +182,6 @@
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\optional.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\prefix.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\start.hpp" />
-    <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\adapter.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\caller.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\caller0.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\caller1.hpp" />
@@ -190,7 +189,6 @@
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\caller3.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\caller4.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\caller5.hpp" />
-    <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\filter.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller0.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\detail\name_caller1.hpp" />
@@ -225,7 +223,6 @@
     <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\detail\optional_input.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\detail\output_base.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\detail\temporary_input.hpp" />
-    <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\detail\visitor.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\detail\xi_base_member.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\detail\xo_base_member.hpp" />
     <ClInclude Include="..\..\src\libraries\xeumeuleu\bridges\xerces\data.hpp" />
