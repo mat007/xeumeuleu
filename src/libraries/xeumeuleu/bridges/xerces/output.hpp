@@ -81,7 +81,7 @@ public:
             if( ns )
             {
                 current_ = current_->appendChild( document_.createElementNS( translate( *ns ), translate( tag ) ) );
-                const XMLCh* prefix = lookupPrefix( *current_, translate( *ns ) );
+                const XMLCh* prefix = current_->lookupPrefix( translate( *ns ) );
                 if( prefix )
                     current_->setPrefix( prefix );
             }
@@ -295,7 +295,7 @@ private:
     {
         XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttributeNS( translate( ns ), translate( name ) );
         attributes.setNamedItemNS( att );
-        const XMLCh* prefix = lookupPrefix( *current_, translate( ns ) );
+        const XMLCh* prefix = current_->lookupPrefix( translate( ns ) );
         if( prefix )
             att->setPrefix( prefix );
         return att;

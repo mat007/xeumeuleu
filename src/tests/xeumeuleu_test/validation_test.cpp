@@ -196,7 +196,6 @@ BOOST_AUTO_TEST_CASE( several_grammars_can_be_combined_using_operator_plus )
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( "<element xmlns='http://example.org' attribute='42'/>", xml::memory_grammar( schema_2 ) + xml::memory_grammar( schema_1 ) ) );
 }
 
-#if (XERCES_VERSION_MAJOR == 3) && (XERCES_VERSION_MINOR >=1 ) // required for fgXercesHandleMultipleImports
 // -----------------------------------------------------------------------------
 // Name: several_grammars_with_the_same_target_namespace_can_be_combined
 // Created: MAT 2010-11-17
@@ -219,7 +218,6 @@ BOOST_AUTO_TEST_CASE( several_grammars_with_the_same_target_namespace_can_be_com
     BOOST_CHECK_THROW( xml::xistringstream xis( "<element attribute='42'/>", xml::memory_grammar( schema_1 ) + xml::memory_grammar( schema_2 ) ), xml::exception );
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( "<element attribute='42'/>", xml::memory_grammar( schema_2 ) + xml::memory_grammar( schema_1 ) ) );
 }
-#endif
 
 // -----------------------------------------------------------------------------
 // Name: creating_stream_with_xml_validated_by_internally_referenced_definition_does_not_throw_an_exception

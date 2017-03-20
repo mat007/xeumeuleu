@@ -141,7 +141,7 @@ public:
     {
         XEUMEULEU_TRY
             return current_->isDefaultNamespace( translate( ns ) ) ||
-                lookupPrefix( *current_, translate( ns ) ) != 0;
+                current_->lookupPrefix( translate( ns ) ) != 0;
         XEUMEULEU_CATCH_WITH_CONTEXT
     }
 
@@ -200,7 +200,7 @@ public:
                 prefix.clear();
             else
             {
-                const XMLCh* p = lookupPrefix( *current_, translate( ns ) );
+                const XMLCh* p = current_->lookupPrefix( translate( ns ) );
                 if( ! p )
                     throw exception( context() + location() + " has no prefix for namespace '" + ns + "'" );
                 prefix = translate( p );
@@ -269,26 +269,6 @@ private:
             return false;
         const XMLCh* const value = node.getNodeValue();
         return ! XERCES_CPP_NAMESPACE::XMLChar1_1::isAllSpaces( value, XERCES_CPP_NAMESPACE::XMLString::stringLen( value ) );
-    }
-
-    template< typename N >
-    void accept( const N* nodes, const std::string& ns, const visitor& v ) const
-    {
-        XEUMEULEU_TRY
-            if( nodes )
-            {
-                for( XMLSize_t index = 0; index < nodes->getLength(); ++index )
-                {
-                    XERCES_CPP_NAMESPACE::DOMNode* node = nodes->item( index );
-                    if( ns.empty() || ns == translate( node->getNamespaceURI() ) )
-                    {
-                        input i( *current_ );
-                        xistream xis( i );
-                        v( translate( node->getNamespaceURI() ), translate( node->getLocalName() ), xis );
-                    }
-                }
-            }
-        XEUMEULEU_CATCH_WITH_CONTEXT
     }
     //@}
 

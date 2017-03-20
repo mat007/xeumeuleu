@@ -56,7 +56,7 @@ namespace detail
     {
     public:
         XMLByte data[BLOCK_SIZE];
-        Count_t size;
+        XMLSize_t size;
     };
 }
 // =============================================================================
@@ -96,7 +96,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void writeChars( const XMLByte* const data, const Count_t count, XERCES_CPP_NAMESPACE::XMLFormatter* const formatter )
+    virtual void writeChars( const XMLByte* const data, const XMLSize_t count, XERCES_CPP_NAMESPACE::XMLFormatter* const formatter )
     {
         pre( data, count, formatter );
         target_.writeChars( data, count, formatter );
@@ -123,33 +123,33 @@ private:
     }
     void transcode( const XMLCh* const data, detail::bytes& b ) const
     {
-        const Count_t size = XERCES_CPP_NAMESPACE::XMLString::stringLen( data );
-        Count_t handled = 0;
+        const XMLSize_t size = XERCES_CPP_NAMESPACE::XMLString::stringLen( data );
+        XMLSize_t handled = 0;
         b.size = transcoder_->transcodeTo( data, size, b.data, detail::BLOCK_SIZE, handled, XERCES_CPP_NAMESPACE::XMLTranscoder::UnRep_Throw );
     }
-    bool equals( const XMLByte* const data, Count_t count, const detail::bytes& b ) const
+    bool equals( const XMLByte* const data, XMLSize_t count, const detail::bytes& b ) const
     {
         if( count != b.size )
             return false;
-        for( Count_t i = 0; i < b.size; ++i )
+        for( XMLSize_t i = 0; i < b.size; ++i )
             if( data[i] != b.data[i] )
                 return false;
         return true;
     }
-    bool ends( const XMLByte* const data, Count_t count, const detail::bytes& b ) const
+    bool ends( const XMLByte* const data, XMLSize_t count, const detail::bytes& b ) const
     {
         if( count < b.size )
             return false;
-        for( Count_t i = 0; i < b.size; ++i )
+        for( XMLSize_t i = 0; i < b.size; ++i )
             if( data[count - b.size + i] != b.data[i] )
                 return false;
         return true;
     }
-    bool starts( const XMLByte* const data, Count_t count, const detail::bytes& b ) const
+    bool starts( const XMLByte* const data, XMLSize_t count, const detail::bytes& b ) const
     {
         if( count < b.size )
             return false;
-        for( Count_t i = 0; i < b.size; ++i )
+        for( XMLSize_t i = 0; i < b.size; ++i )
             if( data[i] != b.data[i] )
                 return false;
         return true;
@@ -163,7 +163,7 @@ private:
     {
         target_.writeChars( new_line_.data, new_line_.size, formatter );
     }
-    void pre( const XMLByte* const data, const Count_t count, XERCES_CPP_NAMESPACE::XMLFormatter* const formatter )
+    void pre( const XMLByte* const data, const XMLSize_t count, XERCES_CPP_NAMESPACE::XMLFormatter* const formatter )
     {
         if( cdata_ )
             return;
@@ -178,7 +178,7 @@ private:
         else if( ! inline_ && equals( data, count, open_angle_forward_slash_ ) )
             shift( formatter );
     }
-    void post( const XMLByte* const data, const Count_t count, XERCES_CPP_NAMESPACE::XMLFormatter* const formatter )
+    void post( const XMLByte* const data, const XMLSize_t count, XERCES_CPP_NAMESPACE::XMLFormatter* const formatter )
     {
         if( cdata( data, count ) )
             return;
@@ -190,7 +190,7 @@ private:
         else if( ! inline_ && ends( data, count, close_angle_ ) )
             newline( formatter );
     }
-    bool cdata( const XMLByte* const data, const Count_t count )
+    bool cdata( const XMLByte* const data, const XMLSize_t count )
     {
         if( starts( data, count, cdata_start_ ) )
             cdata_ = true;

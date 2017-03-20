@@ -1,4 +1,5 @@
 trunk
+. dropped support for Xerces 2
 . added customization of std::stringstream context
 . fixed name of element and attribute in error messages
 . changed document name from '#document' to 'document' in error messages

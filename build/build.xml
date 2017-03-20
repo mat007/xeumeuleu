@@ -4,47 +4,22 @@
     <property environment="env"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
-    <property name="xerces-2.version" value="2.7.0"/>
-    <property name="xerces-3.version" value="3.1.1"/>
-
-    <condition property="has-xerces-2">
-        <or>
-            <isset property="is-vc71"/>
-            <isset property="is-vc80"/>
-            <isset property="is-vc90"/>
-            <isset property="is-cygwin"/>
-       </or>
-    </condition>
-    <condition property="has-xerces-3">
-        <not>
-            <isset property="is-cygwin"/>
-       </not>
-    </condition>
-
     <!--
     ============================================================================
       tests
     ============================================================================
     -->
-    <target name="xeumeuleu_xerces2_test" description="build and run tests" if="has-xerces-2">
-        <build-test name="xeumeuleu_xerces2" input="xeumeuleu_test" depends="boost" libs="xerces-c_2">
-            <includepath path="../include/xerces-c/${xerces-2.version}"/>
+
+    <target name="xeumeuleu_test" depends="xeumeuleu_xerces2_test,xeumeuleu_xerces3_test" description="build and run tests">
+        <build-test name="xeumeuleu_xerces" input="xeumeuleu_test" depends="boost" libs="xerces-c_3">
+            <includepath path="../include/xerces-c"/>
             <defineset define="XEUMEULEU_NO_DEPRECATED"/>
         </build-test>
     </target>
-
-    <target name="xeumeuleu_xerces3_test" description="build and run tests" if="has-xerces-3">
-        <build-test name="xeumeuleu_xerces3" input="xeumeuleu_test" depends="boost" libs="xerces-c_3">
-            <includepath path="../include/xerces-c/${xerces-3.version}"/>
-            <defineset define="XEUMEULEU_NO_DEPRECATED"/>
-        </build-test>
-    </target>
-
-    <target name="xeumeuleu_test" depends="xeumeuleu_xerces2_test,xeumeuleu_xerces3_test" description="build and run tests"/>
 
     <target name="xeuseuleu_test" description="build and run tests" if="has-xalan">
         <build-test name="xeuseuleu" depends="boost" libs="xerces-c_3,Xalan-C_1">
-            <includepath path="../include/xerces-c/${xerces-3.version}"/>
+            <includepath path="../include/xerces-c"/>
         </build-test>
     </target>
 
@@ -55,13 +30,13 @@
     -->
     <target name="xeumeuleu_bench" description="build benchmark application" if="has-xerces-3">
         <build-app name="xeumeuleu_bench" depends="boost" libs="xerces-c_3" subsystem="console">
-            <includepath path="../include/xerces-c/${xerces-3.version}"/>
+            <includepath path="../include/xerces-c"/>
         </build-app>
     </target>
 
     <target name="xeumeuleu_clean" description="build cleaning application" if="has-xerces-3">
         <build-app name="xeumeuleu_clean" depends="boost" libs="xerces-c_3" subsystem="console">
-            <includepath path="../include/xerces-c/${xerces-3.version}"/>
+            <includepath path="../include/xerces-c"/>
         </build-app>
     </target>
 
@@ -110,37 +85,6 @@
         </tar>
     </target>
 
-    <target name="generate-vc71" description="create vc71 build files from vc80 files">
-        <copy todir="vc71" overwrite="true">
-            <fileset dir="vc80" includes="*.sln,*.vcproj"/>
-            <filterchain>
-                <tokenfilter>
-                    <replacestring from="vc80" to="vc71"/>
-                    <replacestring from="8.00" to="7.10"/>
-                    <replacestring from="8,00" to="7,10"/>
-                    <replacestring from="9.00" to="8.00"/>
-                    <replacestring from="9,00" to="8,00"/>
-                    <replacestring from="UsePrecompiledHeader=&quot;2&quot;" to="UsePrecompiledHeader=&quot;3&quot;"/>
-                </tokenfilter>
-            </filterchain>
-        </copy>
-    </target>
-
-    <target name="generate-vc90" description="create vc90 build files from vc80 files">
-        <copy todir="vc90" overwrite="true">
-            <fileset dir="vc80" includes="*.sln,*.vcproj"/>
-            <filterchain>
-                <tokenfilter>
-                    <replacestring from="vc80" to="vc90"/>
-                    <replacestring from="9.00" to="10.00"/>
-                    <replacestring from="9,00" to="10,00"/>
-                    <replacestring from="8.00" to="9.00"/>
-                    <replacestring from="8,00" to="9,00"/>
-                </tokenfilter>
-            </filterchain>
-        </copy>
-    </target>
-
     <!--
     ============================================================================
       documentation
@@ -180,12 +124,7 @@
     <target name="configure" description="initialize local project structure with dependencies">
         <update name="boost"/>
         <update name="turtle"/>
-        <update name="xerces-c" package="include" todir="../include/xerces-c/${xerces-2.version}" version="${xerces-2.version}"/>
-        <update name="xerces-c" package="lib/${platform}" todir="${lib.dir}" version="${xerces-2.version}"/>
-        <update name="xerces-c" package="dll/${platform}" todir="${run.dir}" version="${xerces-2.version}"/>
-        <update name="xerces-c" package="include" todir="../include/xerces-c/${xerces-3.version}"/>
-        <update name="xerces-c" package="lib/${platform}" todir="${lib.dir}"/>
-        <update name="xerces-c" package="dll/${platform}" todir="${run.dir}"/>
+        <update name="xerces-c"/>
         <update name="xalan-c"/>
     </target>
 

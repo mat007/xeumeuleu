@@ -83,8 +83,8 @@ public:
         XMLSize_t done = 0;
         while( done < size )
         {
-            Count_t read = 0;
-            const Count_t written = transcoder_->transcodeTo(
+            XMLSize_t read = 0;
+            const XMLSize_t written = transcoder_->transcodeTo(
                 ch_ + done, size - done,
                 s, XEUMEULEU_TRANSCODER_BUFFER_SIZE,
                 read, XERCES_CPP_NAMESPACE::XMLTranscoder::UnRep_RepChar );
@@ -137,7 +137,7 @@ private:
         XMLSize_t done = 0;
         while( done < size )
         {
-            Count_t read = 0;
+            XMLSize_t read = 0;
             const XMLSize_t written = transcoder_->transcodeFrom(
                 in + done, size - done,
                 s, XEUMEULEU_TRANSCODER_BUFFER_SIZE,

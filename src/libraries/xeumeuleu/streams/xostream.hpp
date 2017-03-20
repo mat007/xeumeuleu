@@ -178,6 +178,12 @@ public:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    xostream( const xostream& );            //!< Copy constructor
+    xostream& operator=( const xostream& ); //!< Assignment operator
+    //@}
+
 private:
     //! @name Member data
     //@{

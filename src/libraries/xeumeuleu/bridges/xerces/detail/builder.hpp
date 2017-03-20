@@ -63,14 +63,14 @@ public:
     //@{
     virtual void startElement( const XERCES_CPP_NAMESPACE::XMLElementDecl& elemDecl, const unsigned int urlId,
                                const XMLCh* const elemPrefix, const XERCES_CPP_NAMESPACE::RefVectorOf< XERCES_CPP_NAMESPACE::XMLAttr >& attrList,
-                               const Count_t attrCount, const bool isEmpty, const bool isRoot )
+                               const XMLSize_t attrCount, const bool isEmpty, const bool isRoot )
     {
         XERCES_CPP_NAMESPACE::DOMLSParserImpl::startElement( elemDecl, urlId, elemPrefix, attrList, attrCount, isEmpty, isRoot );
         XERCES_CPP_NAMESPACE::DOMNode* current = getCurrentNode();
         handler_.locate( *current, uri_, *getScanner() );
         XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current->getAttributes();
         if( attributes )
-            for( Count_t i = 0; i < attributes->getLength(); ++i )
+            for( XMLSize_t i = 0; i < attributes->getLength(); ++i )
                 handler_.locate( *attributes->item( i ), uri_, *getScanner() );
     }
     //@}

@@ -49,14 +49,9 @@
 #include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/dom/DOMUserDataHandler.hpp>
-#if XERCES_VERSION_MAJOR == 3
 #include <xercesc/dom/DOMLSSerializer.hpp>
 #include <xercesc/dom/DOMLSOutput.hpp>
 #include <xercesc/parsers/DOMLSParserImpl.hpp>
-#else
-#include <xercesc/dom/DOMWriter.hpp>
-#include <xercesc/parsers/DOMBuilderImpl.hpp>
-#endif // XERCES_VERSION_MAJOR
 #include <xercesc/framework/LocalFileInputSource.hpp>
 #include <xercesc/framework/MemBufInputSource.hpp>
 #include <xercesc/framework/LocalFileFormatTarget.hpp>
@@ -74,29 +69,5 @@
 #include <xercesc/util/XMLString.hpp>
 #include <xercesc/validators/common/Grammar.hpp>
 #include <xercesc/internal/XMLScanner.hpp>
-
-#if XERCES_VERSION_MAJOR == 3
-typedef XMLSize_t Count_t;
-#else
-typedef XMLSSize_t XMLFileLoc;
-typedef XMLSSize_t XMLFilePos;
-typedef unsigned int Count_t;
-XERCES_CPP_NAMESPACE_BEGIN
-typedef DOMBuilderImpl DOMLSParserImpl;
-typedef DOMBuilder DOMLSParser;
-XERCES_CPP_NAMESPACE_END
-#endif // XERCES_VERSION_MAJOR
-
-namespace xml
-{
-    inline const XMLCh* lookupPrefix( const XERCES_CPP_NAMESPACE::DOMNode& node, const XMLCh* prefix )
-    {
-#if XERCES_VERSION_MAJOR == 3
-        return node.lookupPrefix( prefix );
-#else
-        return node.lookupNamespacePrefix( prefix, false );
-#endif // XERCES_VERSION_MAJOR
-    }
-}
 
 #endif // xeumeuleu_xerces_hpp
