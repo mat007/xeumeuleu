@@ -73,11 +73,11 @@ public:
     virtual void instruction( const std::string& target, const std::string& data ) = 0;
     virtual void prefix( const std::string& ns, const std::string& prefix ) = 0;
 
-    virtual std::auto_ptr< output_base > attribute( const std::string* ns, const std::string& name ) = 0;
+    virtual std::unique_ptr< output_base > attribute( const std::string* ns, const std::string& name ) = 0;
 
     virtual void copy( const input_base& input ) = 0;
 
-    virtual std::auto_ptr< output_base > branch() const = 0;
+    virtual std::unique_ptr< output_base > branch() const = 0;
     //@}
 
 private:

@@ -39,7 +39,7 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_buffer_from_empty_stream_is_valid )
 {
-    std::auto_ptr< xml::xibufferstream > xibs;
+    std::unique_ptr< xml::xibufferstream > xibs;
     {
         xml::xobufferstream xis;
         xibs.reset( new xml::xibufferstream( xis ) );
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE( creating_buffer_from_empty_stream_is_valid )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( created_buffer_stream_starts_from_current_stream_level )
 {
-    std::auto_ptr< xml::xibufferstream > xibs;
+    std::unique_ptr< xml::xibufferstream > xibs;
     {
         xml::xistringstream xis( "<element>"
                                  "  <sub-node/>"
@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE( created_buffer_stream_starts_from_current_stream_level )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( streaming_end_right_after_creating_a_buffer_stream_throws_an_exception )
 {
-    std::auto_ptr< xml::xibufferstream > xibs;
+    std::unique_ptr< xml::xibufferstream > xibs;
     {
         xml::xistringstream xis( "<element/>" );
         xis >> xml::start( "element" );
@@ -108,7 +108,7 @@ BOOST_AUTO_TEST_CASE( creating_buffer_stream_created_after_optional_does_not_res
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( buffer_stream_created_after_optional_is_still_optional )
 {
-    std::auto_ptr< xml::xibufferstream > xibs;
+    std::unique_ptr< xml::xibufferstream > xibs;
     {
         xml::xistringstream xis( "<element/>" );
         xis >> xml::start( "element" ) >> xml::optional;

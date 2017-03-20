@@ -92,7 +92,7 @@ protected:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< buffer > buffer_;
+    std::unique_ptr< buffer > buffer_;
     //@}
 };
 
@@ -116,11 +116,11 @@ namespace xsl
 {
     inline void xtransform::add( const std::string& stylesheet )
     {
-        buffer_.reset( new buffer( std::auto_ptr< output >( new xstringtransform( stylesheet ) ), buffer_ ) );
+        buffer_.reset( new buffer( std::unique_ptr< output >( new xstringtransform( stylesheet ) ), std::move( buffer_ ) ) );
     }
     inline void xtransform::add( std::istream& stylesheet )
     {
-        buffer_.reset( new buffer( std::auto_ptr< output >( new xstringtransform( stylesheet ) ), buffer_ ) );
+        buffer_.reset( new buffer( std::unique_ptr< output >( new xstringtransform( stylesheet ) ), std::move( buffer_ ) ) );
     }
 
     inline void xtransform::write( const xbuffertransform& buffer )

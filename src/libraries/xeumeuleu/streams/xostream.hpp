@@ -71,7 +71,8 @@ public:
     //@{
     void start( const std::string& tag )
     {
-        std::auto_ptr< std::string > ns = ns_;
+        std::unique_ptr< std::string > ns;
+        ns.swap( ns_ );
         output_.start( ns.get(), tag );
     }
     void end()
@@ -79,7 +80,7 @@ public:
         output_.end();
     }
 
-    std::auto_ptr< output_base > branch() const
+    std::unique_ptr< output_base > branch() const
     {
         return output_.branch();
     }
@@ -150,9 +151,10 @@ public:
     }
     template< typename T > void attribute( const std::string& name, const T& value )
     {
-        std::auto_ptr< std::string > ns = ns_;
-        std::auto_ptr< output_base > output = output_.attribute( ns.get(), name );
-        if( output.get() )
+        std::unique_ptr< std::string > ns;
+        ns.swap( ns_ );
+        std::unique_ptr< output_base > output = output_.attribute( ns.get(), name );
+        if( output )
         {
             xostream xos( *output );
             xos << value;
@@ -188,7 +190,7 @@ private:
     //! @name Member data
     //@{
     output_base& output_;
-    std::auto_ptr< std::string > ns_;
+    std::unique_ptr< std::string > ns_;
     //@}
 };
 

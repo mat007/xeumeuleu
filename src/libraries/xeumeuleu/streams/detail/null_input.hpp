@@ -81,14 +81,14 @@ public:
         return data();
     }
 
-    virtual std::auto_ptr< input_base > attribute( const std::string* /*ns*/, const std::string& /*name*/ ) const
+    virtual std::unique_ptr< input_base > attribute( const std::string* /*ns*/, const std::string& /*name*/ ) const
     {
-        return std::auto_ptr< input_base >();
+        return std::unique_ptr< input_base >();
     }
 
-    virtual std::auto_ptr< input_base > branch( bool /*clone*/ ) const
+    virtual std::unique_ptr< input_base > branch( bool /*clone*/ ) const
     {
-        return std::auto_ptr< input_base >( new null_input( *this ) );
+        return std::unique_ptr< input_base >( new null_input( *this ) );
     }
 
     virtual void copy( output& /*destination*/ ) const

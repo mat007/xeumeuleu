@@ -201,14 +201,14 @@ public:
         XEUMEULEU_CATCH
     }
 
-    virtual std::auto_ptr< output_base > attribute( const std::string* ns, const std::string& name )
+    virtual std::unique_ptr< output_base > attribute( const std::string* ns, const std::string& name )
     {
         XEUMEULEU_TRY
             XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
             if( ! attributes )
                 throw exception( location() + " cannot have attributes" );
             XERCES_CPP_NAMESPACE::DOMAttr* att = ns ? create_attribute( *attributes, *ns, name ) : create_attribute( *attributes, name );
-            return std::auto_ptr< output_base >( new output( document_, *att ) );
+            return std::unique_ptr< output_base >( new output( document_, *att ) );
         XEUMEULEU_CATCH
     }
 
@@ -229,10 +229,10 @@ public:
         XEUMEULEU_CATCH
     }
 
-    virtual std::auto_ptr< output_base > branch() const
+    virtual std::unique_ptr< output_base > branch() const
     {
         XEUMEULEU_TRY
-            return std::auto_ptr< output_base >( new output( document_, *current_ ) );
+            return std::unique_ptr< output_base >( new output( document_, *current_ ) );
         XEUMEULEU_CATCH
     }
     //@}

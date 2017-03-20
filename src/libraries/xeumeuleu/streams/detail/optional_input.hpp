@@ -81,7 +81,7 @@ public:
         return context_.reset( input2_ ).read();
     }
 
-    virtual std::auto_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const
+    virtual std::unique_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const
     {
         if( input1_.has_attribute( ns, name ) )
             return context_.reset( input1_ ).attribute( ns, name );

@@ -49,8 +49,8 @@ class xi_base_member
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xi_base_member( std::auto_ptr< input_base > input )
-        : input_( input )
+    explicit xi_base_member( std::unique_ptr< input_base > input )
+        : input_( std::move( input ) )
     {}
     virtual ~xi_base_member()
     {}
@@ -66,7 +66,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const std::auto_ptr< input_base > input_;
+    const std::unique_ptr< input_base > input_;
     //@}
 };
 

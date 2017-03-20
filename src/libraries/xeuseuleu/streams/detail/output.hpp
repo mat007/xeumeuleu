@@ -107,7 +107,7 @@ private:
     //@{
     xml::xostringstream xos_;
     std::ostringstream buffer_;
-    std::auto_ptr< output_imp > output_;
+    std::unique_ptr< output_imp > output_;
     //@}
 };
 

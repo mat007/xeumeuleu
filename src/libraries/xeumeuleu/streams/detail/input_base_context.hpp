@@ -54,9 +54,9 @@ class input_base_context : public input_proxy
 public:
     //! @name Constructors/Destructor
     //@{
-    input_base_context( std::auto_ptr< input_base > input1, std::auto_ptr< input_base > input2 )
+    input_base_context( std::unique_ptr< input_base > input1, std::unique_ptr< input_base > input2 )
         : input_proxy( multi_ )
-        , multi_( input1, input2, *this )
+        , multi_( std::move( input1 ), std::move( input2 ), *this )
     {}
     virtual ~input_base_context()
     {}
