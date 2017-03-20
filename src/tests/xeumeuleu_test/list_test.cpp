@@ -32,8 +32,9 @@
 
 #include "xeumeuleu_test_pch.h"
 #include <xeumeuleu/xml.hpp>
-#include <turtle/mock.hpp>
 #include <boost/bind.hpp>
+#define MOCK_NO_AUTO_PTR
+#include <turtle/mock.hpp>
 
 namespace
 {
