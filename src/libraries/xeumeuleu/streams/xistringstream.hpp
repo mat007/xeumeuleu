@@ -75,13 +75,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    xistringstream( const xistringstream& );            //!< Copy constructor
-    xistringstream& operator=( const xistringstream& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     input input_;

@@ -49,22 +49,16 @@ class buffer
 public:
     //! @name Constructors/Destructor
     //@{
-    buffer( std::auto_ptr< output > output, std::auto_ptr< buffer > next )
-        : output_( *output.release() )
-        , owned_ ( true )
-        , next_  ( next )
+    buffer( std::unique_ptr< output > output, std::unique_ptr< buffer > next )
+        : owned_ ( std::move( output ) )
+        , next_  ( std::move( next ) )
+        , output_( *owned_ )
         , level_ ( 0 )
     {}
     explicit buffer( output& output )
         : output_( output )
-        , owned_ ( false )
         , level_ ( 0 )
     {}
-    ~buffer()
-    {
-        if( owned_ )
-            delete &output_;
-    }
     //@}
 
     //! @name Operations
@@ -108,7 +102,7 @@ private:
         if( level_ == 0 )
         {
             output_.transform();
-            if( next_.get() )
+            if( next_ )
                 return chain();
         }
         return this;
@@ -125,9 +119,9 @@ private:
 private:
     //! @name Member data
     //@{
+    std::unique_ptr< output > owned_;
+    std::unique_ptr< buffer > next_;
     output& output_;
-    bool owned_; // $$$$ MAT : not so great...
-    std::auto_ptr< buffer > next_;
     unsigned int level_;
     //@}
 };

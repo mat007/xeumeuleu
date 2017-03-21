@@ -30,6 +30,9 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
+#ifdef BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MAIN
+#endif
 #include "xeuseuleu_test_pch.h"
 #include <string>
 

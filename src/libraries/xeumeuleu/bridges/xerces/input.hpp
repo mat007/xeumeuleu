@@ -35,7 +35,6 @@
 
 #include <xeumeuleu/streams/xistream.hpp>
 #include <xeumeuleu/streams/exception.hpp>
-#include <xeumeuleu/streams/detail/visitor.hpp>
 #include <xeumeuleu/bridges/xerces/output.hpp>
 #include <xeumeuleu/bridges/xerces/data.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
@@ -98,16 +97,16 @@ public:
         return data( *child );
     }
 
-    virtual std::auto_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const
+    virtual std::unique_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const
     {
         const XERCES_CPP_NAMESPACE::DOMNode* attribute = find_attribute( ns, name );
         if( ! attribute )
             throw exception( context() + location() + " does not have an attribute '" + name + "'"
                 + (!ns || ns->empty() ? "" : (" in namespace '" + *ns + "'")) );
-        return std::auto_ptr< input_base >( new input( *attribute ) );
+        return std::unique_ptr< input_base >( new input( *attribute ) );
     }
 
-    virtual std::auto_ptr< input_base > branch( bool clone ) const;
+    virtual std::unique_ptr< input_base > branch( bool clone ) const;
 
     virtual void copy( output& destination ) const
     {
@@ -141,7 +140,7 @@ public:
     {
         XEUMEULEU_TRY
             return current_->isDefaultNamespace( translate( ns ) ) ||
-                lookupPrefix( *current_, translate( ns ) ) != 0;
+                current_->lookupPrefix( translate( ns ) ) != 0;
         XEUMEULEU_CATCH_WITH_CONTEXT
     }
 
@@ -200,7 +199,7 @@ public:
                 prefix.clear();
             else
             {
-                const XMLCh* p = lookupPrefix( *current_, translate( ns ) );
+                const XMLCh* p = current_->lookupPrefix( translate( ns ) );
                 if( ! p )
                     throw exception( context() + location() + " has no prefix for namespace '" + ns + "'" );
                 prefix = translate( p );
@@ -270,26 +269,6 @@ private:
         const XMLCh* const value = node.getNodeValue();
         return ! XERCES_CPP_NAMESPACE::XMLChar1_1::isAllSpaces( value, XERCES_CPP_NAMESPACE::XMLString::stringLen( value ) );
     }
-
-    template< typename N >
-    void accept( const N* nodes, const std::string& ns, const visitor& v ) const
-    {
-        XEUMEULEU_TRY
-            if( nodes )
-            {
-                for( XMLSize_t index = 0; index < nodes->getLength(); ++index )
-                {
-                    XERCES_CPP_NAMESPACE::DOMNode* node = nodes->item( index );
-                    if( ns.empty() || ns == translate( node->getNamespaceURI() ) )
-                    {
-                        input i( *current_ );
-                        xistream xis( i );
-                        v( translate( node->getNamespaceURI() ), translate( node->getLocalName() ), xis );
-                    }
-                }
-            }
-        XEUMEULEU_CATCH_WITH_CONTEXT
-    }
     //@}
 
 private:
@@ -306,12 +285,12 @@ private:
 
 namespace xml
 {
-    inline std::auto_ptr< input_base > input::branch( bool clone ) const
+    inline std::unique_ptr< input_base > input::branch( bool clone ) const
     {
         XEUMEULEU_TRY
             if( clone )
-                return std::auto_ptr< input_base >( new buffer_input( *current_ ) );
-            return std::auto_ptr< input_base >( new input( *current_ ) );
+                return std::unique_ptr< input_base >( new buffer_input( *current_ ) );
+            return std::unique_ptr< input_base >( new input( *current_ ) );
         XEUMEULEU_CATCH_WITH_CONTEXT
     }
 }

@@ -81,7 +81,7 @@ public:
             if( ns )
             {
                 current_ = current_->appendChild( document_.createElementNS( translate( *ns ), translate( tag ) ) );
-                const XMLCh* prefix = lookupPrefix( *current_, translate( *ns ) );
+                const XMLCh* prefix = current_->lookupPrefix( translate( *ns ) );
                 if( prefix )
                     current_->setPrefix( prefix );
             }
@@ -201,14 +201,14 @@ public:
         XEUMEULEU_CATCH
     }
 
-    virtual std::auto_ptr< output_base > attribute( const std::string* ns, const std::string& name )
+    virtual std::unique_ptr< output_base > attribute( const std::string* ns, const std::string& name )
     {
         XEUMEULEU_TRY
             XERCES_CPP_NAMESPACE::DOMNamedNodeMap* attributes = current_->getAttributes();
             if( ! attributes )
                 throw exception( location() + " cannot have attributes" );
             XERCES_CPP_NAMESPACE::DOMAttr* att = ns ? create_attribute( *attributes, *ns, name ) : create_attribute( *attributes, name );
-            return std::auto_ptr< output_base >( new output( document_, *att ) );
+            return std::unique_ptr< output_base >( new output( document_, *att ) );
         XEUMEULEU_CATCH
     }
 
@@ -229,21 +229,15 @@ public:
         XEUMEULEU_CATCH
     }
 
-    virtual std::auto_ptr< output_base > branch() const
+    virtual std::unique_ptr< output_base > branch() const
     {
         XEUMEULEU_TRY
-            return std::auto_ptr< output_base >( new output( document_, *current_ ) );
+            return std::unique_ptr< output_base >( new output( document_, *current_ ) );
         XEUMEULEU_CATCH
     }
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    output( const output& );            //!< Copy constructor
-    output& operator=( const output& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     std::string location() const
@@ -301,7 +295,7 @@ private:
     {
         XERCES_CPP_NAMESPACE::DOMAttr* att = document_.createAttributeNS( translate( ns ), translate( name ) );
         attributes.setNamedItemNS( att );
-        const XMLCh* prefix = lookupPrefix( *current_, translate( ns ) );
+        const XMLCh* prefix = current_->lookupPrefix( translate( ns ) );
         if( prefix )
             att->setPrefix( prefix );
         return att;

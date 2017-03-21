@@ -79,7 +79,7 @@ public:
 };
 
 template< typename F >
-call_manipulator< F > call( F functor )
+call_manipulator< F > call( const F& functor )
 {
     return call_manipulator< F >( functor );
 }

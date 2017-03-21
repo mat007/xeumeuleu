@@ -35,12 +35,15 @@
 
 #include <string>
 #include <memory>
+#include <functional>
 
 namespace xml
 {
-    class visitor;
     class output;
     class data;
+    class xistream;
+
+    typedef std::function< void( const std::string&, const std::string&, xistream& ) > visitor;
 
 // =============================================================================
 /** @class  input_base
@@ -64,9 +67,9 @@ public:
 
     virtual data read() const = 0;
 
-    virtual std::auto_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const = 0;
+    virtual std::unique_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const = 0;
 
-    virtual std::auto_ptr< input_base > branch( bool clone ) const = 0;
+    virtual std::unique_ptr< input_base > branch( bool clone ) const = 0;
 
     virtual void copy( output& destination ) const = 0;
     //@}

@@ -56,9 +56,9 @@ class multi_input : public input_base
 public:
     //! @name Constructors/Destructor
     //@{
-    multi_input( std::auto_ptr< input_base > input1, std::auto_ptr< input_base > input2, input_context& context )
-        : input1_ ( input1 )
-        , input2_ ( input2 )
+    multi_input( std::unique_ptr< input_base > input1, std::unique_ptr< input_base > input2, input_context& context )
+        : input1_ ( std::move( input1 ) )
+        , input2_ ( std::move( input2 ) )
         , branch1_( *input1_, *this, context )
         , branch2_( *input2_, *this, context )
         , context_( context )
@@ -94,14 +94,14 @@ public:
         return input2_->read();
     }
 
-    virtual std::auto_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const
+    virtual std::unique_ptr< input_base > attribute( const std::string* ns, const std::string& name ) const
     {
         if( input1_->has_attribute( ns, name ) )
             return input1_->attribute( ns, name );
         return input2_->attribute( ns, name );
     }
 
-    virtual std::auto_ptr< input_base > branch( bool clone ) const;
+    virtual std::unique_ptr< input_base > branch( bool clone ) const;
 
     virtual void copy( output& destination ) const
     {
@@ -157,8 +157,8 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< input_base > input1_;
-    std::auto_ptr< input_base > input2_;
+    std::unique_ptr< input_base > input1_;
+    std::unique_ptr< input_base > input2_;
     branch_input branch1_;
     branch_input branch2_;
     input_context& context_;
@@ -175,9 +175,9 @@ private:
 
 namespace xml
 {
-    inline std::auto_ptr< input_base > multi_input::branch( bool clone ) const
+    inline std::unique_ptr< input_base > multi_input::branch( bool clone ) const
     {
-        return std::auto_ptr< input_base >( new input_base_context( input1_->branch( clone ), input2_->branch( clone ) ) );
+        return std::unique_ptr< input_base >( new input_base_context( input1_->branch( clone ), input2_->branch( clone ) ) );
     }
 }
 

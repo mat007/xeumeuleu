@@ -38,7 +38,6 @@
 #include <xeumeuleu/streams/detail/output_base.hpp>
 #include <xeumeuleu/streams/detail/temporary_input.hpp>
 #include <xeumeuleu/streams/detail/optional_input.hpp>
-#include <xeumeuleu/streams/detail/visitor.hpp>
 #include <xeumeuleu/manipulators/attribute.hpp>
 #include <xeumeuleu/manipulators/attributes.hpp>
 #include <xeumeuleu/manipulators/content.hpp>
@@ -76,7 +75,8 @@ public:
     //@{
     void start( const std::string& tag )
     {
-        std::auto_ptr< std::string > ns = ns_;
+        std::unique_ptr< std::string > ns;
+        ns.swap( ns_ );
         input_->start( ns.get(), tag );
     }
     void end()
@@ -88,9 +88,10 @@ public:
     template< typename T >
     xistream& operator>>( const attribute_manipulator< T >& m )
     {
-        std::auto_ptr< std::string > ns = ns_;
-        std::auto_ptr< input_base > input = input_->attribute( ns.get(), m.name_ );
-        if( input.get() )
+        std::unique_ptr< std::string > ns;
+        ns.swap( ns_ );
+        std::unique_ptr< input_base > input = input_->attribute( ns.get(), m.name_ );
+        if( input )
         {
             xistream xis( *input );
             xis >> m.value_;
@@ -155,7 +156,7 @@ public:
     xistream& operator>>( unsigned long long& value ) { input_->read().to( value ); return *this; }
     xistream& operator>>( xostream& xos );
 
-    std::auto_ptr< input_base > branch( bool clone ) const
+    std::unique_ptr< input_base > branch( bool clone ) const
     {
         return input_->branch( clone );
     }
@@ -224,12 +225,14 @@ public:
 
     void nodes( const visitor& v ) const
     {
-        std::auto_ptr< std::string > ns = ns_;
+        std::unique_ptr< std::string > ns;
+        ns.swap( ns_ );
         input_->nodes( ns.get(), v );
     }
     void attributes( const visitor& v ) const
     {
-        std::auto_ptr< std::string > ns = ns_;
+        std::unique_ptr< std::string > ns;
+        ns.swap( ns_ );
         input_->attributes( ns.get(), v );
     }
 
@@ -262,12 +265,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    xistream( const xistream& );            //!< Copy constructor
-    xistream& operator=( const xistream& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual input_base& reset( input_base& input )
@@ -281,9 +278,9 @@ private:
     //! @name Member data
     //@{
     input_base* input_;
-    std::auto_ptr< temporary_input > temporary_;
-    std::auto_ptr< optional_input > optional_;
-    mutable std::auto_ptr< std::string > ns_;
+    std::unique_ptr< temporary_input > temporary_;
+    std::unique_ptr< optional_input > optional_;
+    mutable std::unique_ptr< std::string > ns_;
     //@}
 };
 

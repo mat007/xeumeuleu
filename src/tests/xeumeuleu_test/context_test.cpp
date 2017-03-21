@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE( context_is_transmitted_from_an_xistream_to_an_xobufferstre
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( context_is_transmitted_from_an_xistream_to_an_xobufferstream_created_on_optional_non_existing_branch )
 {
-    std::auto_ptr< xml::xibufferstream > xibs;
+    std::unique_ptr< xml::xibufferstream > xibs;
     {
         xml::xistringstream xis( "<root/>" );
         xis >> xml::start( "root" ) >> xml::optional >> xml::start( "non-existing" );

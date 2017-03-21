@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 2.8)
+project(xeumeuleu)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+enable_testing()
+add_subdirectory(src/tests/xeumeuleu_test)
+add_subdirectory(src/tests/xeuseuleu_test)

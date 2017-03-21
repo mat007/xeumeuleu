@@ -80,10 +80,10 @@ BOOST_AUTO_TEST_CASE( stylesheet_can_be_a_stream )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tranformation_is_applied_at_end_root_level
+// Name: transformation_is_applied_at_end_root_level
 // Created: SLI 2007-09-07
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( tranformation_is_applied_at_end_root_level )
+BOOST_AUTO_TEST_CASE( transformation_is_applied_at_end_root_level )
 {
     xsl::xstringtransform xst( BOOST_RESOLVE( "stylesheet.xsl" ) );
     xst << xml::start( "root" )
@@ -97,10 +97,10 @@ BOOST_AUTO_TEST_CASE( tranformation_is_applied_at_end_root_level )
 }
 
 // -----------------------------------------------------------------------------
-// Name: tranformation_from_an_xistream_is_valid
+// Name: transformation_from_an_xistream_is_valid
 // Created: SLI 2007-09-10
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( tranformation_from_an_xistream_is_valid )
+BOOST_AUTO_TEST_CASE( transformation_from_an_xistream_is_valid )
 {
     xsl::xstringtransform xst( BOOST_RESOLVE( "stylesheet.xsl" ) );
     xml::xistringstream xis(

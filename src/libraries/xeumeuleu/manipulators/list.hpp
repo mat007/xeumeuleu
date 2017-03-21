@@ -33,7 +33,6 @@
 #ifndef xeumeuleu_list_hpp
 #define xeumeuleu_list_hpp
 
-#include <xeumeuleu/manipulators/detail/filter.hpp>
 #include <xeumeuleu/manipulators/detail/caller.hpp>
 
 namespace xml
@@ -45,14 +44,37 @@ namespace xml
 // Created: MAT 2006-01-05
 // =============================================================================
 template< typename T >
-class list_manipulator : public filter< T >
+class list_manipulator
 {
 public:
     //! @name Constructors/Destructor
     //@{
     list_manipulator( const std::string& name, T functor )
-        : filter< T >( name, functor )
+        : name_   ( name )
+        , functor_( functor )
     {}
+    //@}
+
+    //! @name Operators
+    //@{
+    void operator()( const std::string& /*ns*/, const std::string& name, xistream& xis )
+    {
+        if( name == name_ )
+            functor_( xis );
+    }
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    list_manipulator& operator=( const list_manipulator& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::string name_;
+    T functor_;
     //@}
 };
 
@@ -71,9 +93,9 @@ list_manipulator< F > list( const std::string& name, F functor )
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
 template< typename I, typename T >
-list_manipulator< caller0< T > > list( const std::string& name, I& instance, void (T::*method)( xistream& ) )
+list_manipulator< caller0< xistream, T > > list( const std::string& name, I& instance, void (T::*method)( xistream& ) )
 {
-    return list_manipulator< caller0< T > >( name, caller0< T >( instance, method ) );
+    return list_manipulator< caller0< xistream, T > >( name, caller0< xistream, T >( instance, method ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,9 +103,9 @@ list_manipulator< caller0< T > > list( const std::string& name, I& instance, voi
 // Created: MAT 2006-01-03
 // -----------------------------------------------------------------------------
 template< typename I, typename T >
-list_manipulator< const_caller0< T > > list( const std::string& name, const I& instance, void (T::*method)( xistream& ) const )
+list_manipulator< const_caller0< xistream, T > > list( const std::string& name, const I& instance, void (T::*method)( xistream& ) const )
 {
-    return list_manipulator< const_caller0< T > >( name, const_caller0< T >( instance, method ) );
+    return list_manipulator< const_caller0< xistream, T > >( name, const_caller0< xistream, T >( instance, method ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,9 +113,9 @@ list_manipulator< const_caller0< T > > list( const std::string& name, const I& i
 // Created: AGE 2006-02-01
 // -----------------------------------------------------------------------------
 template< typename I, typename T, typename Arg1, typename T1 >
-list_manipulator< caller1< T, Arg1&, T1 > > list( const std::string& name, I& instance, void (T::*method)( xistream&, T1 ), Arg1& value )
+list_manipulator< caller1< xistream, T, Arg1&, T1 > > list( const std::string& name, I& instance, void (T::*method)( xistream&, T1 ), Arg1& value )
 {
-    return list_manipulator< caller1< T, Arg1&, T1 > >( name, caller1< T, Arg1&, T1 >( instance, method, value ) );
+    return list_manipulator< caller1< xistream, T, Arg1&, T1 > >( name, caller1< xistream, T, Arg1&, T1 >( instance, method, value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,9 +123,9 @@ list_manipulator< caller1< T, Arg1&, T1 > > list( const std::string& name, I& in
 // Created: AGE 2006-02-01
 // -----------------------------------------------------------------------------
 template< typename I, typename T, typename Arg1, typename T1 >
-list_manipulator< const_caller1< T, Arg1&, T1 > > list( const std::string& name, const I& instance, void (T::*method)( xistream&, T1 ) const, Arg1& value )
+list_manipulator< const_caller1< xistream, T, Arg1&, T1 > > list( const std::string& name, const I& instance, void (T::*method)( xistream&, T1 ) const, Arg1& value )
 {
-    return list_manipulator< const_caller1< T, Arg1&, T1 > >( name, const_caller1< T, Arg1&, T1 >( instance, method, value ) );
+    return list_manipulator< const_caller1< xistream, T, Arg1&, T1 > >( name, const_caller1< xistream, T, Arg1&, T1 >( instance, method, value ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,9 +133,9 @@ list_manipulator< const_caller1< T, Arg1&, T1 > > list( const std::string& name,
 // Created: AGE 2006-02-01
 // -----------------------------------------------------------------------------
 template< typename I, typename T, typename Arg1, typename T1, typename Arg2, typename T2 >
-list_manipulator< caller2< T, Arg1&, T1, Arg2&, T2 > > list( const std::string& name, I& instance, void (T::*method)( xistream&, T1, T2 ), Arg1& value1, Arg2& value2 )
+list_manipulator< caller2< xistream, T, Arg1&, T1, Arg2&, T2 > > list( const std::string& name, I& instance, void (T::*method)( xistream&, T1, T2 ), Arg1& value1, Arg2& value2 )
 {
-    return list_manipulator< caller2< T, Arg1&, T1, Arg2&, T2 > >( name, caller2< T, Arg1&, T1, Arg2&, T2 >( instance, method, value1, value2 ) );
+    return list_manipulator< caller2< xistream, T, Arg1&, T1, Arg2&, T2 > >( name, caller2< xistream, T, Arg1&, T1, Arg2&, T2 >( instance, method, value1, value2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,9 +143,9 @@ list_manipulator< caller2< T, Arg1&, T1, Arg2&, T2 > > list( const std::string& 
 // Created: AGE 2006-02-01
 // -----------------------------------------------------------------------------
 template< typename I, typename T, typename Arg1, typename T1, typename Arg2, typename T2 >
-list_manipulator< const_caller2< T, Arg1&, T1, Arg2&, T2 > > list( const std::string& name, const I& instance, void (T::*method)( xistream&, T1, T2 ) const, Arg1& value1, Arg2& value2 )
+list_manipulator< const_caller2< xistream, T, Arg1&, T1, Arg2&, T2 > > list( const std::string& name, const I& instance, void (T::*method)( xistream&, T1, T2 ) const, Arg1& value1, Arg2& value2 )
 {
-    return list_manipulator< const_caller2< T, Arg1&, T1, Arg2&, T2 > >( name, const_caller2< T, Arg1&, T1, Arg2&, T2 >( instance, method, value1, value2 ) );
+    return list_manipulator< const_caller2< xistream, T, Arg1&, T1, Arg2&, T2 > >( name, const_caller2< xistream, T, Arg1&, T1, Arg2&, T2 >( instance, method, value1, value2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,9 +153,9 @@ list_manipulator< const_caller2< T, Arg1&, T1, Arg2&, T2 > > list( const std::st
 // Created: MCO 2006-03-17
 // -----------------------------------------------------------------------------
 template< typename I, typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3 >
-list_manipulator< caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > > list( const std::string& name, I& instance, void (T::*method)( xistream&, T1, T2, T3 ), Arg1& value1, Arg2& value2, Arg3& value3 )
+list_manipulator< caller3< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > > list( const std::string& name, I& instance, void (T::*method)( xistream&, T1, T2, T3 ), Arg1& value1, Arg2& value2, Arg3& value3 )
 {
-    return list_manipulator< caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > >( name, caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 >( instance, method, value1, value2, value3 ) );
+    return list_manipulator< caller3< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > >( name, caller3< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3 >( instance, method, value1, value2, value3 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,9 +163,9 @@ list_manipulator< caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > > list( const st
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
 template< typename I, typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3 >
-list_manipulator< const_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > > list( const std::string& name, const I& instance, void (T::*method)( xistream&, T1, T2, T3 ) const, Arg1& value1, Arg2& value2, Arg3& value3 )
+list_manipulator< const_caller3< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > > list( const std::string& name, const I& instance, void (T::*method)( xistream&, T1, T2, T3 ) const, Arg1& value1, Arg2& value2, Arg3& value3 )
 {
-    return list_manipulator< const_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > >( name, const_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 >( instance, method, value1, value2, value3 ) );
+    return list_manipulator< const_caller3< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > >( name, const_caller3< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3 >( instance, method, value1, value2, value3 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -151,9 +173,9 @@ list_manipulator< const_caller3< T, Arg1&, T1, Arg2&, T2, Arg3&, T3 > > list( co
 // Created: SBO 2006-05-16
 // -----------------------------------------------------------------------------
 template< typename I, typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4 >
-list_manipulator< caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 > > list( const std::string& name, I& instance, void (T::*method)( xistream&, T1, T2, T3, T4 ), Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4 )
+list_manipulator< caller4< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 > > list( const std::string& name, I& instance, void (T::*method)( xistream&, T1, T2, T3, T4 ), Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4 )
 {
-    return list_manipulator< caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 > >( name, caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 >( instance, method, value1, value2, value3, value4 ) );
+    return list_manipulator< caller4< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 > >( name, caller4< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 >( instance, method, value1, value2, value3, value4 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,9 +183,9 @@ list_manipulator< caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 > > lis
 // Created: SBO 2006-05-16
 // -----------------------------------------------------------------------------
 template< typename I, typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4 >
-list_manipulator< const_caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 > > list( const std::string& name, const I& instance, void (T::*method)( xistream&, T1, T2, T3, T4 ) const, Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4 )
+list_manipulator< const_caller4< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 > > list( const std::string& name, const I& instance, void (T::*method)( xistream&, T1, T2, T3, T4 ) const, Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4 )
 {
-    return list_manipulator< const_caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 > >( name, const_caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 >( instance, method, value1, value2, value3, value4 ) );
+    return list_manipulator< const_caller4< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 > >( name, const_caller4< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 >( instance, method, value1, value2, value3, value4 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,9 +193,9 @@ list_manipulator< const_caller4< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4 >
 // Created: MCO 2006-06-22
 // -----------------------------------------------------------------------------
 template< typename I, typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4, typename Arg5, typename T5 >
-list_manipulator< caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 > > list( const std::string& name, I& instance, void (T::*method)( xistream&, T1, T2, T3, T4, T5 ), Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4, Arg5& value5 )
+list_manipulator< caller5< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 > > list( const std::string& name, I& instance, void (T::*method)( xistream&, T1, T2, T3, T4, T5 ), Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4, Arg5& value5 )
 {
-    return list_manipulator< caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 > >( name, caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 >( instance, method, value1, value2, value3, value4, value5 ) );
+    return list_manipulator< caller5< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 > >( name, caller5< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 >( instance, method, value1, value2, value3, value4, value5 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,9 +203,9 @@ list_manipulator< caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&,
 // Created: MCO 2006-06-22
 // -----------------------------------------------------------------------------
 template< typename I, typename T, typename Arg1, typename T1, typename Arg2, typename T2, typename Arg3, typename T3, typename Arg4, typename T4, typename Arg5, typename T5 >
-list_manipulator< const_caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 > > list( const std::string& name, const I& instance, void (T::*method)( xistream&, T1, T2, T3, T4, T5 ) const, Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4, Arg5& value5 )
+list_manipulator< const_caller5< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 > > list( const std::string& name, const I& instance, void (T::*method)( xistream&, T1, T2, T3, T4, T5 ) const, Arg1& value1, Arg2& value2, Arg3& value3, Arg4& value4, Arg5& value5 )
 {
-    return list_manipulator< const_caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 > >( name, const_caller5< T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 >( instance, method, value1, value2, value3, value4, value5 ) );
+    return list_manipulator< const_caller5< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 > >( name, const_caller5< xistream, T, Arg1&, T1, Arg2&, T2, Arg3&, T3, Arg4&, T4, Arg5&, T5 >( instance, method, value1, value2, value3, value4, value5 ) );
 }
 
 }
