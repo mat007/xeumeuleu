@@ -6,6 +6,7 @@ include_directories(${xeumeuleu_SOURCE_DIR}/src/libraries
                     ${XercesC_INCLUDE_DIR}
                     ${XalanC_INCLUDE_DIR})
 add_definitions(-DBOOST_TEST_DYN_LINK)
+add_definitions(-DBOOST_NO_CXX11_SCOPED_ENUMS)
 add_executable(xeuseuleu_test parameter_test.cpp
                               xbuffertransform_test.cpp
                               xeuseuleu_test_pch.cpp
