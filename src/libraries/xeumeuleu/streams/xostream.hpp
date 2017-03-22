@@ -33,7 +33,9 @@
 #ifndef xeumeuleu_xostream_hpp
 #define xeumeuleu_xostream_hpp
 
+#include <xeumeuleu/streams/detail/output_context.hpp>
 #include <xeumeuleu/streams/detail/output_base.hpp>
+#include <xeumeuleu/streams/detail/optional_output.hpp>
 #include <xeumeuleu/manipulators/attribute.hpp>
 #include <xeumeuleu/manipulators/cdata.hpp>
 #include <xeumeuleu/manipulators/content.hpp>
@@ -55,13 +57,13 @@ namespace xml
 */
 // Created: MAT 2006-01-04
 // =============================================================================
-class xostream
+class xostream : private output_context
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit xostream( output_base& output )
-        : output_( output )
+        : output_( &output )
     {}
     virtual ~xostream()
     {}
@@ -73,16 +75,16 @@ public:
     {
         std::unique_ptr< std::string > ns;
         ns.swap( ns_ );
-        output_.start( ns.get(), tag );
+        output_->start( ns.get(), tag );
     }
     void end()
     {
-        output_.end();
+        output_->end();
     }
 
     std::unique_ptr< output_base > branch() const
     {
-        return output_.branch();
+        return output_->branch();
     }
     //@}
 
@@ -127,6 +129,11 @@ public:
         ns( m.name_ );
         return *this;
     }
+    xostream& operator<<( const optional_manipulator& /*m*/ )
+    {
+        optional();
+        return *this;
+    }
     template< typename T >
     xostream& operator<<( const prefix_manipulator< T >& m )
     {
@@ -134,18 +141,18 @@ public:
         return *this;
     }
 
-    xostream& operator<<( const char* value ) { output_.write( std::string( value ) ); return *this; }
-    xostream& operator<<( const std::string& value ) { output_.write( value ); return *this; }
-    xostream& operator<<( bool value ) { output_.write( value ); return *this; }
-    xostream& operator<<( int value ) { output_.write( value ); return *this; }
-    xostream& operator<<( long value ) { output_.write( value ); return *this; }
-    xostream& operator<<( long long value ) { output_.write( value ); return *this; }
-    xostream& operator<<( float value ) { output_.write( value ); return *this; }
-    xostream& operator<<( double value ) { output_.write( value ); return *this; }
-    xostream& operator<<( long double value ) { output_.write( value ); return *this; }
-    xostream& operator<<( unsigned int value ) { output_.write( value ); return *this; }
-    xostream& operator<<( unsigned long value ) { output_.write( value ); return *this; }
-    xostream& operator<<( unsigned long long value ) { output_.write( value ); return *this; }
+    xostream& operator<<( const char* value ) { output_->write( std::string( value ) ); return *this; }
+    xostream& operator<<( const std::string& value ) { output_->write( value ); return *this; }
+    xostream& operator<<( bool value ) { output_->write( value ); return *this; }
+    xostream& operator<<( int value ) { output_->write( value ); return *this; }
+    xostream& operator<<( long value ) { output_->write( value ); return *this; }
+    xostream& operator<<( long long value ) { output_->write( value ); return *this; }
+    xostream& operator<<( float value ) { output_->write( value ); return *this; }
+    xostream& operator<<( double value ) { output_->write( value ); return *this; }
+    xostream& operator<<( long double value ) { output_->write( value ); return *this; }
+    xostream& operator<<( unsigned int value ) { output_->write( value ); return *this; }
+    xostream& operator<<( unsigned long value ) { output_->write( value ); return *this; }
+    xostream& operator<<( unsigned long long value ) { output_->write( value ); return *this; }
     xostream& operator<<( const xistream& xis );
 
     void attribute( const std::string& name, const char* value )
@@ -157,7 +164,7 @@ public:
     {
         std::unique_ptr< std::string > ns;
         ns.swap( ns_ );
-        std::unique_ptr< output_base > output = output_.attribute( ns.get(), name );
+        std::unique_ptr< output_base > output = output_->attribute( ns.get(), name );
         if( output )
         {
             xostream xos( *output );
@@ -167,15 +174,32 @@ public:
 
     void cdata( const std::string& content )
     {
-        output_.cdata( content );
+        output_->cdata( content );
     }
     void instruction( const std::string& target, const std::string& data )
     {
-        output_.instruction( target, data );
+        output_->instruction( target, data );
     }
     void prefix( const std::string& ns, const std::string& prefix )
     {
-        output_.prefix( ns, prefix );
+        output_->prefix( ns, prefix );
+    }
+    void optional( const xostream& xos )
+    {
+        if( xos.output_ == xos.optional_.get() )
+        {
+            optional_.reset( new optional_output( *xos.optional_, *output_, *this ) );
+            output_ = optional_.get();
+        }
+    }
+    void optional()
+    {
+        if( output_ != optional_.get() )
+        {
+            optional_.reset( new optional_output( *output_, *this ) );
+            output_ = optional_.get();
+        }
+        optional_->optional();
     }
     void ns( const std::string& name )
     {
@@ -183,17 +207,30 @@ public:
     }
     //@}
 
-private:
-    //! @name Copy/Assignment
+protected:
+    //! @name Operations
     //@{
-    xostream( const xostream& );            //!< Copy constructor
-    xostream& operator=( const xostream& ); //!< Assignment operator
+    virtual output_base& reset( output_base& output )
+    {
+        output_ = &output;
+        return *output_;
+    }
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual output_base& reset( std::unique_ptr< output_base > /*output*/ )
+    {
+        throw std::runtime_error( "internal error in reset" );
+    }
     //@}
 
 private:
     //! @name Member data
     //@{
-    output_base& output_;
+    output_base* output_;
+    std::unique_ptr< optional_output > optional_;
     std::unique_ptr< std::string > ns_;
     //@}
 };
@@ -206,7 +243,7 @@ namespace xml
 {
     inline xostream& xostream::operator<<( const xistream& xis )
     {
-        xis.copy( output_ );
+        xis.copy( *output_ );
         return *this;
     }
 }

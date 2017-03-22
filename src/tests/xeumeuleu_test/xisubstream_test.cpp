@@ -73,10 +73,10 @@ BOOST_AUTO_TEST_CASE( creating_a_sub_stream_does_not_modify_original_input_strea
 }
 
 // -----------------------------------------------------------------------------
-// Name: creating_sub_stream_created_after_optional_does_not_reset_optional
+// Name: sub_stream_created_after_optional_does_not_reset_optional
 // Created: MCO 2006-03-20
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( creating_sub_stream_created_after_optional_does_not_reset_optional )
+BOOST_AUTO_TEST_CASE( sub_stream_created_after_optional_does_not_reset_optional )
 {
     xml::xistringstream xis( "<element/>" );
     xis >> xml::start( "element" ) >> xml::optional;

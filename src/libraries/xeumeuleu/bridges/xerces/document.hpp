@@ -36,6 +36,7 @@
 #include <xeumeuleu/streams/grammar.hpp>
 #include <xeumeuleu/streams/encoding.hpp>
 #include <xeumeuleu/streams/exception.hpp>
+#include <xeumeuleu/streams/id.hpp>
 #include <xeumeuleu/bridges/xerces/parser.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/xerces_ptr.hpp>

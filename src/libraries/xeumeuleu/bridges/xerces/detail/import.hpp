@@ -34,6 +34,7 @@
 #define xeumeuleu_import_hpp
 
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
+#include <xeumeuleu/bridges/xerces/detail/xerces_ptr.hpp>
 
 namespace xml
 {

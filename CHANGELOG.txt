@@ -8,6 +8,7 @@ trunk
 . reworked error handling to diagnose invalid schema syntax
 . changed formatting of floating point numbers to output all significant digits
 . added fallback support for attribute and content in xostream
+. added xml::optional support to xml::xostream
 
 1.6.0
 . added an xml::call manipulator to call a functor

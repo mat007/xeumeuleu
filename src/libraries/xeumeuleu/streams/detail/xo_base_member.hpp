@@ -66,7 +66,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    const std::unique_ptr< output_base > output_;
+    std::unique_ptr< output_base > output_;
     //@}
 };
 
