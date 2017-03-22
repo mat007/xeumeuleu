@@ -280,3 +280,23 @@ BOOST_AUTO_TEST_CASE( direct_reading_attribute_can_be_specialized_for_user_types
     MOCK_EXPECT( read ).once().returns( boost::ref( xis ) );
     xis.attribute< user_type >( "attribute" );
 }
+
+BOOST_AUTO_TEST_CASE( writing_attribute_equal_to_fallback_value_does_not_write_it )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xml::attribute( "attribute", 42, 42 );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root/>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_attribute_different_from_fallback_value_writes_it )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xml::attribute( "attribute", 43, 42 );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root attribute=\"43\"/>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}

@@ -49,9 +49,10 @@ class attribute_manipulator
 public:
     //! @name Constructors/Destructor
     //@{
-    attribute_manipulator( const std::string& name, T& value )
+    attribute_manipulator( const std::string& name, T& value, bool skip = false )
         : name_ ( name )
         , value_( value )
+        , skip_( skip )
     {}
     //@}
 
@@ -66,6 +67,7 @@ public:
     //@{
     std::string name_;
     T& value_;
+    bool skip_;
     //@}
 };
 
@@ -77,6 +79,16 @@ template< typename T >
 attribute_manipulator< const T > attribute( const std::string& name, const T& value )
 {
     return attribute_manipulator< const T >( name, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: attribute
+// Created: MAT 2017-03-21
+// -----------------------------------------------------------------------------
+template< typename T, typename F >
+attribute_manipulator< const T > attribute( const std::string& name, const T& value, const F& fallback )
+{
+    return attribute_manipulator< const T >( name, value, value == fallback );
 }
 
 // -----------------------------------------------------------------------------

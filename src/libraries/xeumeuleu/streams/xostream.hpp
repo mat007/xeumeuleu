@@ -91,7 +91,8 @@ public:
     template< typename T >
     xostream& operator<<( const attribute_manipulator< T >& m )
     {
-        attribute( m.name_, m.value_ );
+        if( !m.skip_ )
+            attribute( m.name_, m.value_ );
         return *this;
     }
     xostream& operator<<( const cdata_manipulator& m )
@@ -102,6 +103,8 @@ public:
     template< typename T >
     xostream& operator<<( const content_manipulator< T >& m )
     {
+        if( m.skip_ )
+            return *this;
         return *this << start_manipulator( m.tag_ ) << m.value_ << end_manipulator();
     }
     xostream& operator<<( const end_manipulator& /*m*/ )
@@ -149,7 +152,8 @@ public:
     {
         attribute( name, std::string( value ) );
     }
-    template< typename T > void attribute( const std::string& name, const T& value )
+    template< typename T >
+    void attribute( const std::string& name, const T& value )
     {
         std::unique_ptr< std::string > ns;
         ns.swap( ns_ );

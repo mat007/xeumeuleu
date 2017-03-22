@@ -59,9 +59,10 @@ class content_manipulator
 public:
     //! @name Constructors/Destructor
     //@{
-    content_manipulator( const std::string& tag, T& value )
+    content_manipulator( const std::string& tag, T& value, bool skip = false )
         : tag_  ( tag )
         , value_( value )
+        , skip_ ( skip )
     {}
     //@}
 
@@ -76,6 +77,7 @@ public:
     //@{
     std::string tag_;
     T& value_;
+    bool skip_;
     //@}
 };
 
@@ -87,6 +89,16 @@ template< typename T >
 content_manipulator< const T > content( const std::string& tag, const T& value )
 {
     return content_manipulator< const T >( tag, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: content
+// Created: MAT 2017-03-21
+// -----------------------------------------------------------------------------
+template< typename T, typename F >
+content_manipulator< const T > content( const std::string& tag, const T& value, const F& fallback )
+{
+    return content_manipulator< const T >( tag, value, value == fallback );
 }
 
 // -----------------------------------------------------------------------------

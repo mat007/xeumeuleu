@@ -322,3 +322,25 @@ BOOST_AUTO_TEST_CASE( direct_reading_content_can_be_specialized_for_user_types )
     MOCK_EXPECT( read ).once().returns( boost::ref( xis ) );
     xis.content< user_type >( "root" );
 }
+
+BOOST_AUTO_TEST_CASE( writing_content_equal_to_fallback_value_does_not_write_it )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xml::content( "element", 42, 42 );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root/>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_content_different_from_fallback_value_writes_it )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xml::content( "element", 43, 42 );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root>\n"
+                                 "  <element>43</element>\n"
+                                 "</root>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
