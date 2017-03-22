@@ -281,7 +281,7 @@ BOOST_AUTO_TEST_CASE( direct_reading_attribute_can_be_specialized_for_user_types
     xis.attribute< user_type >( "attribute" );
 }
 
-BOOST_AUTO_TEST_CASE( writing_attribute_equal_to_fallback_value_does_not_write_it )
+BOOST_AUTO_TEST_CASE( writing_attribute_value_equal_to_fallback_value_does_not_write_it )
 {
     xml::xostringstream xos;
     xos << xml::start( "root" )
@@ -291,12 +291,42 @@ BOOST_AUTO_TEST_CASE( writing_attribute_equal_to_fallback_value_does_not_write_i
     BOOST_CHECK_EQUAL( expected, xos.str() );
 }
 
-BOOST_AUTO_TEST_CASE( writing_attribute_different_from_fallback_value_writes_it )
+BOOST_AUTO_TEST_CASE( writing_attribute_value_different_from_fallback_value_writes_it )
 {
     xml::xostringstream xos;
     xos << xml::start( "root" )
             << xml::attribute( "attribute", 43, 42 );
     const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
                                  "<root attribute=\"43\"/>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+namespace
+{
+    xml::xostream& operator<<( xml::xostream& xos, const user_type* )
+    {
+        return xos << 7;
+    }
+}
+
+BOOST_AUTO_TEST_CASE( writing_attribute_pointer_equal_to_nullptr_fallback_value_does_not_write_it )
+{
+    xml::xostringstream xos;
+    const user_type* t = 0;
+    xos << xml::start( "root" )
+            << xml::attribute( "attribute", t, nullptr );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root/>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_attribute_pointer_different_from_nullptr_fallback_value_writes_it )
+{
+    xml::xostringstream xos;
+    const user_type t;
+    xos << xml::start( "root" )
+            << xml::attribute( "attribute", &t, nullptr );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root attribute=\"7\"/>\n";
     BOOST_CHECK_EQUAL( expected, xos.str() );
 }
