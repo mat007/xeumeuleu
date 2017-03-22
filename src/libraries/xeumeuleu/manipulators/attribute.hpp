@@ -93,6 +93,16 @@ attribute_manipulator< const T > attribute( const std::string& name, const T& va
 
 // -----------------------------------------------------------------------------
 // Name: attribute
+// Created: MAT 2017-03-21
+// -----------------------------------------------------------------------------
+template< typename T >
+attribute_manipulator< const T* > attribute( const std::string& name, const T* value, std::nullptr_t )
+{
+    return attribute_manipulator< const T* >( name, value, !value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: attribute
 // Created: MAT 2006-01-06
 // -----------------------------------------------------------------------------
 template< typename T >
