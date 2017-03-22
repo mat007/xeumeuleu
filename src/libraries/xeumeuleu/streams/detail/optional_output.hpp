@@ -35,9 +35,25 @@
 
 #include <xeumeuleu/streams/detail/output_base.hpp>
 #include <xeumeuleu/streams/detail/output_context.hpp>
+#include <xeumeuleu/bridges/xerces/input.hpp>
+#include <xeumeuleu/bridges/xerces/output.hpp>
 
 namespace xml
 {
+namespace detail
+{
+    class delayed_data
+    {
+    public:
+        virtual ~delayed_data()
+        {}
+
+        virtual void commit( output_base& output ) const = 0;
+
+        virtual bool end() const = 0;
+    };
+}
+
 // =============================================================================
 /** @class  optional_output
     @brief  Output base
@@ -67,26 +83,18 @@ public:
 
     //! @name Operations
     //@{
-    virtual void start( const std::string* ns, const std::string& tag )
-    {
-        if( optional_ )
-        {
-            tags_.push_back(
-                std::make_pair(
-                    std::unique_ptr< std::string >(
-                        ns ? new std::string( *ns ) : 0 ), tag ) );
-            optional_ = false;
-        }
-        else
-            commit().start( ns, tag );
-    }
+    virtual void start( const std::string* ns, const std::string& tag );
     virtual void end()
     {
-        if( tags_.empty() )
+        bool end = false;
+        while( !delayed_.empty() && !end )
+        {
+            end = delayed_.back()->end();
+            delayed_.pop_back();
+        }
+        if( !end )
             output_.end();
-        else
-            tags_.pop_back();
-        if( tags_.empty() )
+        if( delayed_.empty() )
             context_.reset( output_ );
     }
 
@@ -148,10 +156,7 @@ public:
         commit().prefix( ns, prefix );
     }
 
-    virtual std::unique_ptr< output_base > attribute( const std::string* ns, const std::string& name )
-    {
-        return commit().attribute( ns, name );
-    }
+    virtual std::unique_ptr< output_base > attribute( const std::string* ns, const std::string& name );
 
     virtual void copy( const input_base& input )
     {
@@ -181,9 +186,9 @@ private:
         std::unique_ptr< output_base > output;
         if( parent_ )
             output = parent_->commit().branch();
-        for( auto it = tags_.begin(); it != tags_.end(); ++it )
-            output_.start( it->first.get(), it->second );
-        tags_.clear();
+        for( auto it = delayed_.begin(); it != delayed_.end(); ++it )
+            (*it)->commit( output_ );
+        delayed_.clear();
         if( output )
             return context_.reset( std::move( output ) );
         commit_ = output_.branch();
@@ -197,14 +202,100 @@ private:
     optional_output* parent_;
     output_base& output_;
     output_context& context_;
-    bool optional_;
-    std::vector<
-        std::pair<
-            std::unique_ptr< std::string >, std::string > > tags_;
     std::unique_ptr< output_base > commit_;
+    std::vector< std::unique_ptr< detail::delayed_data > > delayed_;
+    bool optional_;
     //@}
 };
 
+}
+
+#include <xeumeuleu/bridges/xerces/document.hpp>
+
+namespace xml
+{
+namespace detail
+{
+    class delayed_start : public delayed_data
+    {
+    public:
+        delayed_start( const std::string* ns, const std::string& tag )
+            : ns_ ( ns ? new std::string( *ns ) : 0 )
+            , tag_( tag )
+        {}
+
+    private:
+        virtual void commit( output_base& output ) const
+        {
+            output.start( ns_.get(), tag_ );
+        }
+
+        virtual bool end() const
+        {
+            return true;
+        }
+
+    private:
+        std::unique_ptr< std::string > ns_;
+        std::string tag_;
+    };
+
+    class delayed_attribute : public delayed_data, private document
+    {
+    public:
+        delayed_attribute()
+            : output_( *document_, *document_ )
+            , input_ ( *document_ )
+        {
+            output_.start( 0, "root" );
+            input_.start( 0, "root" );
+        }
+
+        std::unique_ptr< output_base > attribute( const std::string* ns, const std::string& name )
+        {
+            return output_.attribute( ns, name );
+        }
+
+    private:
+        virtual void commit( output_base& output ) const
+        {
+            output.copy( input_ );
+        }
+
+        virtual bool end() const
+        {
+            return false;
+        }
+
+    private:
+        output output_;
+        input input_;
+    };
+}
+
+    inline void optional_output::start( const std::string* ns, const std::string& tag )
+    {
+        if( optional_ )
+        {
+            optional_ = false;
+            delayed_.push_back( std::unique_ptr< detail::delayed_start >( new detail::delayed_start( ns, tag ) ) );
+        }
+        else
+            commit().start( ns, tag );
+    }
+
+    inline std::unique_ptr< output_base > optional_output::attribute( const std::string* ns, const std::string& name )
+    {
+        if( optional_ )
+        {
+            optional_ = false;
+            std::unique_ptr< detail::delayed_attribute > data( new detail::delayed_attribute() );
+            auto output = data->attribute( ns, name );
+            delayed_.push_back( std::move( data ) );
+            return std::move( output );
+        }
+        return commit().attribute( ns, name );
+    }
 }
 
 #endif // xeumeuleu_optional_output_hpp

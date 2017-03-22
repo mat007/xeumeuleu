@@ -314,6 +314,36 @@ BOOST_AUTO_TEST_CASE( writing_optional_element_after_another_optional_element_do
     BOOST_CHECK_EQUAL( "", xos.str() );
 }
 
+BOOST_AUTO_TEST_CASE( writing_optional_attribute_after_another_optional_element_does_not_write_them )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "non-existing-element" )
+            << xml::optional << xml::attribute( "non-existing-attribute", 42 );
+    BOOST_CHECK_EQUAL( "", xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_optional_attribute_before_another_attribute_writes_them_both )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "root" )
+            << xml::optional << xml::attribute( "attribute-1", 42 )
+            << xml::attribute( "attribute-2", 77 );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root attribute-1=\"42\" attribute-2=\"77\"/>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_optional_attribute_after_another_attribute_does_not_write_it )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "root" )
+            << xml::attribute( "attribute", 12 )
+            << xml::optional << xml::attribute( "non-existing-attribute", 42 );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root attribute=\"12\"/>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
 BOOST_AUTO_TEST_CASE( writing_element_after_optional_element_writes_them_both )
 {
     xml::xostringstream xos;
@@ -363,7 +393,7 @@ BOOST_AUTO_TEST_CASE( writing_xistream_after_optional_element_writes_them_both )
     BOOST_CHECK_EQUAL( expected, xos.str() );
 }
 
-BOOST_AUTO_TEST_CASE( writing_attribute_after_optional_resets_it )
+BOOST_AUTO_TEST_CASE( writing_element_after_optional_attribute_writes_it )
 {
     xml::xostringstream xos;
     xos << xml::start( "root" )
@@ -415,5 +445,3 @@ BOOST_AUTO_TEST_CASE( writing_end_after_optional_resets_it )
                                  "</root>\n";
     BOOST_CHECK_EQUAL( expected, xos.str() );
 }
-
-// branch
