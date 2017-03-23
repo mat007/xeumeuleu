@@ -286,7 +286,7 @@ namespace detail
 
     inline std::unique_ptr< output_base > optional_output::attribute( const std::string* ns, const std::string& name )
     {
-        if( optional_ )
+        if( optional_ && !delayed_.empty() )
         {
             optional_ = false;
             std::unique_ptr< detail::delayed_attribute > data( new detail::delayed_attribute() );

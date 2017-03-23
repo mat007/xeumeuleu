@@ -322,6 +322,14 @@ BOOST_AUTO_TEST_CASE( writing_optional_attribute_after_another_optional_element_
     BOOST_CHECK_EQUAL( "", xos.str() );
 }
 
+BOOST_AUTO_TEST_CASE( writing_skipped_attribute_after_another_optional_element_does_not_write_them )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "non-existing-element" )
+            << xml::attribute( "non-existing-attribute", 42, 42 );
+    BOOST_CHECK_EQUAL( "", xos.str() );
+}
+
 BOOST_AUTO_TEST_CASE( writing_optional_attribute_before_another_attribute_writes_them_both )
 {
     xml::xostringstream xos;
@@ -333,14 +341,14 @@ BOOST_AUTO_TEST_CASE( writing_optional_attribute_before_another_attribute_writes
     BOOST_CHECK_EQUAL( expected, xos.str() );
 }
 
-BOOST_AUTO_TEST_CASE( writing_optional_attribute_after_another_attribute_does_not_write_it )
+BOOST_AUTO_TEST_CASE( writing_optional_attribute_on_element_non_longer_optional_writes_it )
 {
     xml::xostringstream xos;
     xos << xml::optional << xml::start( "root" )
-            << xml::attribute( "attribute", 12 )
-            << xml::optional << xml::attribute( "non-existing-attribute", 42 );
+            << xml::attribute( "attribute-1", 42 )
+            << xml::optional << xml::attribute( "attribute-2", 77 );
     const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
-                                 "<root attribute=\"12\"/>\n";
+                                 "<root attribute-1=\"42\" attribute-2=\"77\"/>\n";
     BOOST_CHECK_EQUAL( expected, xos.str() );
 }
 
@@ -403,6 +411,16 @@ BOOST_AUTO_TEST_CASE( writing_element_after_optional_attribute_writes_it )
                                  "<root attribute=\"3\">\n"
                                  "  <element/>\n"
                                  "</root>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( writing_optional_attribute_after_non_optional_element_writes_it )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xml::optional << xml::attribute( "attribute", 3 );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root attribute=\"3\"/>\n";
     BOOST_CHECK_EQUAL( expected, xos.str() );
 }
 
