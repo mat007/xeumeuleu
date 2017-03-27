@@ -9,6 +9,7 @@ trunk
 . changed formatting of floating point numbers to output all significant digits
 . added fallback support for attribute and content in xostream
 . added xml::optional support to xml::xostream
+. fixed double deletion issue in xsl::xtransform
 
 1.6.0
 . added an xml::call manipulator to call a functor

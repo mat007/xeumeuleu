@@ -63,9 +63,12 @@ public:
 
     void write( const xbuffertransform& buffer );
 
-    template< typename T > void write( const T& value )
+    template< typename T >
+    void write( const T& value )
     {
-        buffer_.reset( buffer_->apply( value ) );
+        auto buffer = buffer_->apply( value );
+        if( buffer != buffer_.get() )
+            buffer_.reset( buffer );
     }
 
     void parameter( const std::string& key, const std::string& expression )
@@ -79,13 +82,15 @@ protected:
     //@{
     xtransform( const std::string& stylesheet )
         : output( stylesheet )
+        , buffer_( new buffer( *this ) )
     {
-        buffer_.reset( new buffer( *this ) );
+        // NOTHING
     }
     xtransform( std::istream& stylesheet )
         : output( stylesheet )
+        , buffer_( new buffer( *this ) )
     {
-        buffer_.reset( new buffer( *this ) );
+        // NOTHING
     }
     //@}
 
@@ -116,11 +121,13 @@ namespace xsl
 {
     inline void xtransform::add( const std::string& stylesheet )
     {
-        buffer_.reset( new buffer( std::unique_ptr< output >( new xstringtransform( stylesheet ) ), std::move( buffer_ ) ) );
+        std::unique_ptr< output > output( new xstringtransform( stylesheet ) );
+        buffer_.reset( new buffer( std::move( output ), std::move( buffer_ ) ) );
     }
     inline void xtransform::add( std::istream& stylesheet )
     {
-        buffer_.reset( new buffer( std::unique_ptr< output >( new xstringtransform( stylesheet ) ), std::move( buffer_ ) ) );
+        std::unique_ptr< output > output( new xstringtransform( stylesheet ) );
+        buffer_.reset( new buffer( std::move( output ), std::move( buffer_ ) ) );
     }
 
     inline void xtransform::write( const xbuffertransform& buffer )
