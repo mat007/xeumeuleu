@@ -52,7 +52,7 @@ public:
     attribute_manipulator( const std::string& name, T& value, bool skip = false )
         : name_ ( name )
         , value_( value )
-        , skip_( skip )
+        , skip_ ( skip )
     {}
     //@}
 
@@ -96,9 +96,9 @@ attribute_manipulator< const T > attribute( const std::string& name, const T& va
 // Created: MAT 2017-03-21
 // -----------------------------------------------------------------------------
 template< typename T >
-attribute_manipulator< const T* > attribute( const std::string& name, const T* value, std::nullptr_t )
+attribute_manipulator< const T > attribute( const std::string& name, const T& value, std::nullptr_t )
 {
-    return attribute_manipulator< const T* >( name, value, !value );
+    return attribute_manipulator< const T >( name, value, !value );
 }
 
 // -----------------------------------------------------------------------------
