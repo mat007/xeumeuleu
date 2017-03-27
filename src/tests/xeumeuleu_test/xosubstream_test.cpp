@@ -233,3 +233,23 @@ BOOST_AUTO_TEST_CASE( optional_element_after_creating_sub_stream_is_no_op )
                        "<element/>\n",
                        xos.str() );
 }
+
+BOOST_AUTO_TEST_CASE( optional_both_before_and_after_substream_writes_them_all )
+{
+    xml::xostringstream xos;
+    xos << xml::optional << xml::start( "root" );
+    {
+        xml::xosubstream xoss( xos );
+        xoss << xml::optional << xml::start( "element" )
+                 << xml::start( "sub-element" )
+                 << xml::end
+            << xml::end;
+    }
+    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                       "<root>\n"
+                       "  <element>\n"
+                       "    <sub-element/>\n"
+                       "  </element>\n"
+                       "</root>\n",
+                       xos.str() );
+}

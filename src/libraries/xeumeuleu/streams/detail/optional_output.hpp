@@ -187,7 +187,7 @@ private:
         if( parent_ )
             output = parent_->commit().branch();
         for( auto it = delayed_.begin(); it != delayed_.end(); ++it )
-            (*it)->commit( output_ );
+            (*it)->commit( output ? *output : output_ );
         delayed_.clear();
         if( output )
             return context_.reset( std::move( output ) );
