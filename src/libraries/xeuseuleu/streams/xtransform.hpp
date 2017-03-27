@@ -37,6 +37,11 @@
 #include <xeuseuleu/streams/detail/output.hpp>
 #include <xeuseuleu/bridges/xalan/transform.hpp>
 
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable: 4355 )
+#endif
+
 namespace xsl
 {
     class xbuffertransform;
@@ -135,5 +140,9 @@ namespace xsl
         buffer.apply( *this );
     }
 }
+
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 #endif // xeuseuleu_xtransform_hpp
