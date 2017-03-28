@@ -49,7 +49,7 @@ class attributes_manipulator
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit attributes_manipulator( T functor )
+    explicit attributes_manipulator( const T& functor )
         : functor_( functor )
     {}
     //@}
@@ -80,7 +80,7 @@ private:
 // Created: MAT 2008-02-29
 // -----------------------------------------------------------------------------
 template< typename F >
-attributes_manipulator< F > attributes( F functor )
+attributes_manipulator< F > attributes( const F& functor )
 {
     return attributes_manipulator< F >( functor );
 }

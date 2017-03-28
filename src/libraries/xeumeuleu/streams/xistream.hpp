@@ -41,6 +41,8 @@
 #include <xeumeuleu/manipulators/attribute.hpp>
 #include <xeumeuleu/manipulators/attributes.hpp>
 #include <xeumeuleu/manipulators/content.hpp>
+#include <xeumeuleu/manipulators/list.hpp>
+#include <xeumeuleu/manipulators/name_list.hpp>
 #include <xeumeuleu/manipulators/end.hpp>
 #include <xeumeuleu/manipulators/start.hpp>
 #include <xeumeuleu/manipulators/ns.hpp>
@@ -119,9 +121,16 @@ public:
         start( s.tag_ );
         return *this;
     }
-    xistream& operator>>( const visitor& v )
+    template< typename T >
+    xistream& operator>>( const list_manipulator< T >& m )
     {
-        nodes( v );
+        nodes( m );
+        return *this;
+    }
+    template< typename T >
+    xistream& operator>>( const list_name_manipulator< T >& m )
+    {
+        nodes( m );
         return *this;
     }
     xistream& operator>>( const ns_manipulator& m )
