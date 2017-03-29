@@ -49,7 +49,7 @@ class list_manipulator
 public:
     //! @name Constructors/Destructor
     //@{
-    list_manipulator( const std::string& name, T functor )
+    list_manipulator( const std::string& name, const T& functor )
         : name_   ( name )
         , functor_( functor )
     {}
@@ -83,7 +83,7 @@ private:
 // Created: MAT 2008-02-29
 // -----------------------------------------------------------------------------
 template< typename F >
-list_manipulator< F > list( const std::string& name, F functor )
+list_manipulator< F > list( const std::string& name, const F& functor )
 {
     return list_manipulator< F >( name, functor );
 }
