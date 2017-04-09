@@ -303,7 +303,7 @@ namespace xml
 {
     template< typename T > T xistream::value() const
     {
-        T value;
+        T value = T();
         xisubstream xiss( *this );
         xiss >> value;
         return value;
@@ -318,7 +318,7 @@ namespace xml
     }
     template< typename T > T xistream::attribute( const std::string& name ) const
     {
-        T value;
+        T value = T();
         xisubstream xiss( *this );
         xiss >> attribute_manipulator< T >( name, value );
         return value;
@@ -333,7 +333,7 @@ namespace xml
     }
     template< typename T > T xistream::content( const std::string& name ) const
     {
-        T value;
+        T value = T();
         xisubstream xiss( *this );
         xiss.start( name );
         xiss >> value;

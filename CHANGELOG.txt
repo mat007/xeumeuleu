@@ -10,6 +10,7 @@ trunk
 . added fallback support for attribute and content in xostream
 . added xml::optional support to xml::xostream
 . fixed double deletion issue in xsl::xtransform
+. default initialized values in direct readers
 
 1.6.0
 . added an xml::call manipulator to call a functor
