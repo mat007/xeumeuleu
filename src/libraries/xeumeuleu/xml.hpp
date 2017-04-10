@@ -44,10 +44,6 @@
 #include <xeumeuleu/streams/xistreamstream.hpp>
 #include <xeumeuleu/streams/xostreamstream.hpp>
 #include <xeumeuleu/streams/ximultistream.hpp>
-#include <xeumeuleu/streams/exception.hpp>
-#include <xeumeuleu/streams/grammar.hpp>
-#include <xeumeuleu/manipulators/list.hpp>
-#include <xeumeuleu/manipulators/name_list.hpp>
 #include <xeumeuleu/manipulators/call.hpp>
 
 #endif // xeumeuleu_xml_hpp

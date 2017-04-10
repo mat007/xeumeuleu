@@ -39,6 +39,9 @@
 #include <xeumeuleu/manipulators/attribute.hpp>
 #include <xeumeuleu/manipulators/cdata.hpp>
 #include <xeumeuleu/manipulators/content.hpp>
+#include <xeumeuleu/manipulators/list.hpp>
+#include <xeumeuleu/manipulators/name_list.hpp>
+#include <xeumeuleu/manipulators/range_list.hpp>
 #include <xeumeuleu/manipulators/end.hpp>
 #include <xeumeuleu/manipulators/start.hpp>
 #include <xeumeuleu/manipulators/instruction.hpp>
@@ -117,6 +120,30 @@ public:
     xostream& operator<<( const start_manipulator& s )
     {
         start( s.tag_ );
+        return *this;
+    }
+    template< typename T >
+    xostream& operator<<( const list_manipulator< T >& m )
+    {
+        m( *this );
+        return *this;
+    }
+    template< typename T >
+    xostream& operator<<( const name_list_manipulator< T >& m )
+    {
+        m( *this );
+        return *this;
+    }
+    template< typename R, typename T >
+    xostream& operator<<( const range_list_manipulator< R, T >& m )
+    {
+        m( *this );
+        return *this;
+    }
+    template< typename R, typename T >
+    xostream& operator<<( const range_name_list_manipulator< R, T >& m )
+    {
+        m( *this );
         return *this;
     }
     xostream& operator<<( const instruction_manipulator& m )

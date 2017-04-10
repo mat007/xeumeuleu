@@ -11,6 +11,8 @@ trunk
 . added xml::optional support to xml::xostream
 . fixed double deletion issue in xsl::xtransform
 . default initialized values in direct readers
+. dropped support for non-const functors in xml::list
+. added support for xml::list to write a range to an xml::xostream
 
 1.6.0
 . added an xml::call manipulator to call a functor

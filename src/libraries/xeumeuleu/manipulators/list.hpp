@@ -34,9 +34,13 @@
 #define xeumeuleu_list_hpp
 
 #include <xeumeuleu/manipulators/detail/caller.hpp>
+#include <iterator>
 
 namespace xml
 {
+    class xitream;
+    class xostream;
+
 // =============================================================================
 /** @class  list_manipulator
     @brief  List manipulator
@@ -49,18 +53,23 @@ class list_manipulator
 public:
     //! @name Constructors/Destructor
     //@{
-    list_manipulator( const std::string& name, const T& functor )
-        : name_   ( name )
-        , functor_( functor )
+    list_manipulator( const std::string& name, const T& t )
+        : name_( name )
+        , t_   ( t )
     {}
     //@}
 
     //! @name Operators
     //@{
-    void operator()( const std::string& /*ns*/, const std::string& name, xistream& xis )
+    void operator()( const std::string& /*ns*/, const std::string& name, xistream& xis ) const
     {
         if( name == name_ )
-            functor_( xis );
+            t_( xis );
+    }
+    void operator()( xostream& xos ) const
+    {
+        for( auto it = std::begin( t_ ); it != std::end( t_ ); ++it )
+            xos << xml::content( name_, *it );
     }
     //@}
 
@@ -73,8 +82,8 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string name_;
-    T functor_;
+    const std::string name_;
+    const T t_;
     //@}
 };
 
@@ -83,9 +92,14 @@ private:
 // Created: MAT 2008-02-29
 // -----------------------------------------------------------------------------
 template< typename F >
-list_manipulator< F > list( const std::string& name, const F& functor )
+list_manipulator< const F& > list( const std::string& name, const F& functor )
 {
-    return list_manipulator< F >( name, functor );
+    return list_manipulator< const F& >( name, functor );
+}
+template< typename F >
+list_manipulator< const F& > list( const char* name, const F& functor )
+{
+    return list_manipulator< const F& >( name, functor );
 }
 
 // -----------------------------------------------------------------------------

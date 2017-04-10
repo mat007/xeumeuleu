@@ -43,6 +43,7 @@
 #include <xeumeuleu/manipulators/content.hpp>
 #include <xeumeuleu/manipulators/list.hpp>
 #include <xeumeuleu/manipulators/name_list.hpp>
+#include <xeumeuleu/manipulators/range_list.hpp>
 #include <xeumeuleu/manipulators/end.hpp>
 #include <xeumeuleu/manipulators/start.hpp>
 #include <xeumeuleu/manipulators/ns.hpp>
@@ -128,7 +129,7 @@ public:
         return *this;
     }
     template< typename T >
-    xistream& operator>>( const list_name_manipulator< T >& m )
+    xistream& operator>>( const name_list_manipulator< T >& m )
     {
         nodes( m );
         return *this;
