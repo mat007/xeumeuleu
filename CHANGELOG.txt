@@ -1,4 +1,4 @@
-trunk
+1.7.0
 . switched to C++11
 . dropped support for Xerces 2
 . added customization of std::stringstream context

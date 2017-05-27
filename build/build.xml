@@ -10,7 +10,7 @@
     ============================================================================
     -->
 
-    <target name="xeumeuleu_test" depends="xeumeuleu_xerces2_test,xeumeuleu_xerces3_test" description="build and run tests">
+    <target name="xeumeuleu_test" description="build and run tests">
         <build-test name="xeumeuleu_xerces" input="xeumeuleu_test" depends="boost" libs="xerces-c_3">
             <includepath path="../include/xerces-c"/>
             <defineset define="XEUMEULEU_NO_DEPRECATED"/>
@@ -76,12 +76,12 @@
     <target name="package" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/${ant.project.name}.zip">
-            <fileset dir="${root.dir}" includes="*.txt"/>
-            <fileset dir="${libraries.dir}" includes="**"/>
+            <fileset dir="${root.dir}" includes="*.txt" excludes="CMakeLists.txt"/>
+            <fileset dir="${libraries.dir}" excludes="**/turtle/**"/>
         </zip>
         <tar destfile="${dist.dir}/${ant.project.name}.tar.bz2" compression="bzip2">
-            <fileset dir="${root.dir}" includes="*.txt"/>
-            <fileset dir="${libraries.dir}" includes="**"/>
+            <fileset dir="${root.dir}" includes="*.txt" excludes="CMakeLists.txt"/>
+            <fileset dir="${libraries.dir}" excludes="**/turtle/**"/>
         </tar>
     </target>
 
