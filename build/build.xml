@@ -76,12 +76,12 @@
     <target name="package" description="package the distribution">
         <mkdir dir="${dist.dir}"/>
         <zip destfile="${dist.dir}/${ant.project.name}.zip">
-            <fileset dir="${root.dir}" includes="*.txt"/>
-            <fileset dir="${libraries.dir}" includes="**"/>
+            <fileset dir="${root.dir}" includes="*.txt" excludes="CMakeLists.txt"/>
+            <fileset dir="${libraries.dir}" excludes="**/turtle/**"/>
         </zip>
         <tar destfile="${dist.dir}/${ant.project.name}.tar.bz2" compression="bzip2">
-            <fileset dir="${root.dir}" includes="*.txt"/>
-            <fileset dir="${libraries.dir}" includes="**"/>
+            <fileset dir="${root.dir}" includes="*.txt" excludes="CMakeLists.txt"/>
+            <fileset dir="${libraries.dir}" excludes="**/turtle/**"/>
         </tar>
     </target>
 
