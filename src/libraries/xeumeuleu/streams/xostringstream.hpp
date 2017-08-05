@@ -58,7 +58,12 @@ class xostringstream : private document, public xostream
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xostringstream( const encoding& encoding = encoding() )
+    xostringstream()
+        : xostream( output_ )
+        , output_  ( *document_, *document_ )
+        , encoding_( encoding() )
+    {}
+    explicit xostringstream( const encoding& encoding )
         : xostream( output_ )
         , output_  ( *document_, *document_ )
         , encoding_( encoding )

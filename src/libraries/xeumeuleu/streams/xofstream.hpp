@@ -61,7 +61,14 @@ class xofstream : private document, private flushable, public xostream
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xofstream( const std::string& filename, const encoding& encoding = encoding() )
+    explicit xofstream( const std::string& filename )
+        : xostream( output_ )
+        , output_  ( *document_, *document_, *this )
+        , filename_( filename )
+        , encoding_( encoding() )
+        , flushed_ ( false )
+    {}
+    xofstream( const std::string& filename, const encoding& encoding )
         : xostream( output_ )
         , output_  ( *document_, *document_, *this )
         , filename_( filename )
