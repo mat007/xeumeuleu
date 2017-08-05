@@ -45,7 +45,7 @@ namespace xml
 */
 // Created: MAT 2014-12-04
 // =============================================================================
-    class id
+class id
 {
 public:
     //! @name Constructors/Destructor
