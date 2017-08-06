@@ -54,7 +54,7 @@ namespace detail
                                                  XERCES_CPP_NAMESPACE::DOMNode& to )
     {
         xerces_ptr< XERCES_CPP_NAMESPACE::DOMNode > child( document.importNode( const_cast< XERCES_CPP_NAMESPACE::DOMNode* >( &from ), false ) );
-        *to.appendChild( child.get() );
+        to.appendChild( child.get() );
         return child.release();
     }
 }

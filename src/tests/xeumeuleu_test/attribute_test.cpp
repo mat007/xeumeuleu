@@ -324,7 +324,7 @@ BOOST_AUTO_TEST_CASE( writing_attribute_pointer_equal_to_nullptr_fallback_value_
 BOOST_AUTO_TEST_CASE( writing_attribute_pointer_different_from_nullptr_fallback_value_writes_it )
 {
     xml::xostringstream xos;
-    const user_type t;
+    const user_type t = user_type();
     xos << xml::start( "root" )
             << xml::attribute( "attribute", &t, nullptr );
     const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"

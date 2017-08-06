@@ -60,12 +60,22 @@ class xistringstream : private document, public xistream
 public:
     //! @name Constructors/Destructor
     //@{
-    xistringstream( const std::string& data, const grammar& grammar = null_grammar(), const id& id = id() )
+    explicit xistringstream( const std::string& data, const grammar& grammar = null_grammar() )
+        : document( data.c_str(), data.size(), 0, grammar, id() )
+        , xistream( input_ )
+        , input_( *document_ )
+    {}
+    xistringstream( const std::string& data, const grammar& grammar, const id& id )
         : document( data.c_str(), data.size(), 0, grammar, id )
         , xistream( input_ )
         , input_( *document_ )
     {}
-    xistringstream( const std::string& data, const encoding& encoding, const grammar& grammar = null_grammar(), const id& id = id() )
+    xistringstream( const std::string& data, const encoding& encoding, const grammar& grammar = null_grammar() )
+        : document( data.c_str(), data.size(), &encoding, grammar, id() )
+        , xistream( input_ )
+        , input_( *document_ )
+    {}
+    xistringstream( const std::string& data, const encoding& encoding, const grammar& grammar, const id& id )
         : document( data.c_str(), data.size(), &encoding, grammar, id )
         , xistream( input_ )
         , input_( *document_ )

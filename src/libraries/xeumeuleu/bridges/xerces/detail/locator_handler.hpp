@@ -76,9 +76,13 @@ public:
             break;
         case NODE_CLONED:
         case NODE_IMPORTED:
+        {
             const locator* l = static_cast< locator* >( src->getUserData( key ) );
             delete static_cast< locator* >( dst->getUserData( key ) );
             dst->setUserData( key, l ? new locator( *l ) : 0, this );
+            break;
+        }
+        default:
             break;
         }
     }

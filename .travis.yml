@@ -9,8 +9,8 @@ env:
 #  - CXX_STANDARD=c++14
 
 compiler:
-#  - clang
   - gcc
+  - clang
 
 before_install:
   - CMAKE_URL="https://cmake.org/files/v3.7/cmake-3.7.2-Linux-x86_64.tar.gz"
@@ -29,6 +29,6 @@ before_install:
 script:
   - mkdir build/cmake
   - cd build/cmake
-  - cmake -G "Unix Makefiles" ../..
+  - cmake ../..
   - make
   - ctest

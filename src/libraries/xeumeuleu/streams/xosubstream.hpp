@@ -75,14 +75,6 @@ public:
     {}
     //@}
 
-    //! @name Operators
-    //@{
-    operator xostream&() const
-    {
-        return const_cast< xosubstream& >( *this );
-    }
-    //@}
-
 private:
     //! @name Operations
     //@{

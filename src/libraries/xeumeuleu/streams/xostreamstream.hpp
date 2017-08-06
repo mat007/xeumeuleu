@@ -58,7 +58,14 @@ class xostreamstream : private document, private flushable, public xostream
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit xostreamstream( std::basic_ostream< char >& stream, const encoding& encoding = encoding() )
+    explicit xostreamstream( std::basic_ostream< char >& stream )
+        : xostream( output_ )
+        , output_  ( *document_, *document_, *this )
+        , stream_  ( stream )
+        , encoding_( encoding() )
+        , flushed_ ( false )
+    {}
+    xostreamstream( std::basic_ostream< char >& stream, const encoding& encoding )
         : xostream( output_ )
         , output_  ( *document_, *document_, *this )
         , stream_  ( stream )
