@@ -1,3 +1,6 @@
+1.7.1
+. fixed clang compilation
+
 1.7.0
 . switched to C++11
 . dropped support for Xerces 2
