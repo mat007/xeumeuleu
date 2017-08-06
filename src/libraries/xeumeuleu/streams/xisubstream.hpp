@@ -76,14 +76,6 @@ public:
     virtual ~xisubstream()
     {}
     //@}
-
-    //! @name Operators
-    //@{
-    operator xistream&() const
-    {
-        return const_cast< xisubstream& >( *this );
-    }
-    //@}
 };
 
 }
