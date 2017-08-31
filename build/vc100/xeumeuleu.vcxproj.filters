@@ -265,5 +265,8 @@
     <ClInclude Include="..\..\src\libraries\xeumeuleu\streams\detail\optional_output.hpp">
       <Filter>Source Files\streams\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\xeumeuleu\manipulators\range_list.hpp">
+      <Filter>Source Files\manipulators</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

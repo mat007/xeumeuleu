@@ -210,13 +210,15 @@ namespace
     class my_functor
     {
     public:
-        void operator()( xml::xistream& ) {}
+        void operator()( xml::xistream& ) const
+        {}
     };
 
     class my_functor_ext
     {
     public:
-        void operator()( const std::string&, const std::string&, xml::xistream& ) {}
+        void operator()( const std::string&, const std::string&, xml::xistream& ) const
+        {}
     };
 
     void warning_check()
@@ -295,16 +297,8 @@ namespace
            xis >> xml::list( "node", f );
        }
        {
-           my_functor f;
-           xis >> xml::list< my_functor& >( "node", f );
-       }
-       {
            my_functor_ext f;
            xis >> xml::list( f );
-       }
-       {
-           my_functor_ext f;
-           xis >> xml::list< my_functor_ext& >( f );
        }
     }
 }
@@ -536,6 +530,7 @@ BOOST_AUTO_TEST_CASE( msvc_does_not_issue_packing_related_warning_C4355_or_C4121
 namespace
 {
     MOCK_FUNCTOR( forward, void() );
+
     void my_function( xml::xistream& )
     {
         forward();
@@ -698,4 +693,94 @@ BOOST_AUTO_TEST_CASE( list_accepts_instance_of_sub_type_of_the_type_with_the_met
     sub_type type;
     xml::xistringstream xis( "<element/>" );
     xis >> xml::list( "element", type, &super_type::process );
+}
+
+namespace
+{
+    std::vector< std::string > make_range()
+    {
+        std::vector< std::string > v;
+        v.push_back( "value-1" );
+        v.push_back( "value-2" );
+        v.push_back( "value-3" );
+        return v;
+    }
+}
+
+BOOST_AUTO_TEST_CASE( write_name_list_range_with_functor )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xml::list( "element",
+                          make_range(),
+                          []( xml::xostream& x, const std::string& s )
+                          {
+                              x << s;
+                          } );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root>\n"
+                                 "  <element>value-1</element>\n"
+                                 "  <element>value-2</element>\n"
+                                 "  <element>value-3</element>\n"
+                                 "</root>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( write_list_range_with_functor )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xml::list( make_range(),
+                          []( xml::xostream& x, const std::string& s )
+                          {
+                              x << xml::start( "element" )
+                                    << s;
+                          } );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root>\n"
+                                 "  <element>value-1</element>\n"
+                                 "  <element>value-2</element>\n"
+                                 "  <element>value-3</element>\n"
+                                 "</root>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+BOOST_AUTO_TEST_CASE( write_name_list_range )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xml::list( "element", make_range() );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root>\n"
+                                 "  <element>value-1</element>\n"
+                                 "  <element>value-2</element>\n"
+                                 "  <element>value-3</element>\n"
+                                 "</root>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
+}
+
+namespace
+{
+    class some_type
+    {
+    };
+
+    xml::xostream& operator<<( xml::xostream& xos, const some_type& )
+    {
+        return xos << xml::start( "some_type" );
+    }
+}
+
+BOOST_AUTO_TEST_CASE( write_list_range )
+{
+    xml::xostringstream xos;
+    xos << xml::start( "root" )
+            << xml::list( std::vector< some_type >( 3 ) );
+    const std::string expected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"
+                                 "<root>\n"
+                                 "  <some_type/>\n"
+                                 "  <some_type/>\n"
+                                 "  <some_type/>\n"
+                                 "</root>\n";
+    BOOST_CHECK_EQUAL( expected, xos.str() );
 }
