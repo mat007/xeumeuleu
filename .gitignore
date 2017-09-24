@@ -1,5 +1,6 @@
+.vscode
+/bin
 /out
 /run
 /*.patch
 /build/cmake
-/src/libraries/turtle

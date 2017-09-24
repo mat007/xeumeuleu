@@ -69,7 +69,9 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_in_memory_schema
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_stream_with_non_existing_schema_throws_a_meaningful_exception )
 {
-    BOOST_CHECK_THROW_WHAT_SUB( xml::xistringstream( "<element/>", xml::external_grammar( "non-existing.xsd" ) ), "failed to load grammar 'non-existing.xsd' : unable to open primary document entity" );
+    BOOST_CHECK_THROW_WHAT_SUB( xml::xistringstream( "<element/>", xml::external_grammar( "non-existing.xsd" ) ),
+        xml::exception,
+        "failed to load grammar 'non-existing.xsd' : unable to open primary document entity" );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +80,9 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_non_existing_schema_throws_a_meaningf
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_stream_with_invalid_schema_throws_a_meaningful_exception )
 {
-    BOOST_CHECK_THROW_WHAT_SUB( xml::xistringstream( "<element/>", xml::external_grammar( BOOST_RESOLVE( "invalid.xsd" ) ) ), "invalid content in 'schema' element" );
+    BOOST_CHECK_THROW_WHAT_SUB( xml::xistringstream( "<element/>", xml::external_grammar( BOOST_RESOLVE( "invalid.xsd" ) ) ),
+        xml::exception,
+        "invalid content in 'schema' element" );
 }
 
 // -----------------------------------------------------------------------------
