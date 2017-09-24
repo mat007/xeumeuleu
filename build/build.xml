@@ -123,9 +123,7 @@
 
     <target name="configure" description="initialize local project structure with dependencies">
         <update name="boost"/>
-        <update name="turtle"/>
-        <update name="xerces-c"/>
-        <update name="xalan-c"/>
+        <update name="cpplibs"/>
     </target>
 
     <target name="all" depends="configure,build,test,export" description="build, run tests, package distribution and create web site"/>
