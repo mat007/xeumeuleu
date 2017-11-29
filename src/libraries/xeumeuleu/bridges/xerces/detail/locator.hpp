@@ -46,7 +46,7 @@ namespace xml
 */
 // Created: MAT 2007-09-20
 // =============================================================================
-class locator
+class locator : public XERCES_CPP_NAMESPACE::DOMUserDataHandler
 {
 public:
     //! @name Constructors/Destructor
@@ -56,7 +56,7 @@ public:
         , line_  ( scanner.getLocator()->getLineNumber() )
         , column_( scanner.getLocator()->getColumnNumber() )
     {}
-    locator( const shared_string& uri )
+    explicit locator( const shared_string& uri )
         : uri_   ( uri )
         , line_  ( 0 )
         , column_( 0 )
@@ -66,10 +66,12 @@ public:
         , line_  ( rhs.line_ )
         , column_( rhs.column_ )
     {}
-    locator( const XERCES_CPP_NAMESPACE::DOMLocator& rhs )
+    explicit locator( const XERCES_CPP_NAMESPACE::DOMLocator& rhs )
         : uri_   ( translate( rhs.getURI() ) )
         , line_  ( rhs.getLineNumber() )
         , column_( rhs.getColumnNumber() )
+    {}
+    virtual ~locator()
     {}
     //@}
 
@@ -92,6 +94,29 @@ private:
     locator& operator=( const locator& ); //!< Assignment operator
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void handle( DOMOperationType operation, const XMLCh* const key, void* data, const XERCES_CPP_NAMESPACE::DOMNode* src, XERCES_CPP_NAMESPACE::DOMNode* dst )
+    {
+        switch( operation )
+        {
+        case NODE_DELETED:
+            delete static_cast< locator* >( data );
+            break;
+        case NODE_CLONED:
+        case NODE_IMPORTED:
+            if( const auto loc = static_cast< locator* >( src->getUserData( key ) ) )
+            {
+                auto l = new locator( *loc );
+                delete static_cast< locator* >( dst->setUserData( key, l, l ) );
+            }
+            break;
+        default:
+            break;
+        }
+    }
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -99,6 +124,27 @@ private:
     const XMLFileLoc line_, column_;
     //@}
 };
+
+inline void locate( XERCES_CPP_NAMESPACE::DOMNode& node, const std::string& uri )
+{
+    const translate key( "locator" );
+    auto l = new locator( uri );
+    node.setUserData( key, l, l );
+}
+
+inline void locate( XERCES_CPP_NAMESPACE::DOMNode& node, const shared_string& uri, XERCES_CPP_NAMESPACE::XMLScanner& scanner )
+{
+    const translate key( "locator" );
+    auto l = new locator( uri, scanner );
+    node.setUserData( key, l, l );
+}
+
+inline std::string context( const XERCES_CPP_NAMESPACE::DOMNode& node )
+{
+    if( const auto loc = static_cast< locator* >( node.getUserData( translate( "locator" ) ) ) )
+        return *loc;
+    return "";
+}
 
 inline std::string location( const XERCES_CPP_NAMESPACE::DOMNode& node )
 {
