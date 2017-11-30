@@ -36,10 +36,17 @@
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/shared_string.hpp>
+#include <memory>
 #include <sstream>
 
 namespace xml
 {
+    inline void locate( XERCES_CPP_NAMESPACE::DOMNode& node, std::unique_ptr< XERCES_CPP_NAMESPACE::DOMUserDataHandler > l )
+    {
+        delete static_cast< XERCES_CPP_NAMESPACE::DOMUserDataHandler* >( node.setUserData( translate( "locator" ), l.get(), l.get() ) );
+        l.release();
+    }
+
 // =============================================================================
 /** @class  locator
     @brief  Locator implementation
@@ -98,22 +105,11 @@ private:
     //@{
     virtual void handle( DOMOperationType operation, const XMLCh* const key, void* data, const XERCES_CPP_NAMESPACE::DOMNode* src, XERCES_CPP_NAMESPACE::DOMNode* dst )
     {
-        switch( operation )
-        {
-        case NODE_DELETED:
+        if( operation == NODE_DELETED )
             delete static_cast< locator* >( data );
-            break;
-        case NODE_CLONED:
-        case NODE_IMPORTED:
+        else if( src && dst && src != dst )
             if( const auto loc = static_cast< locator* >( src->getUserData( key ) ) )
-            {
-                auto l = new locator( *loc );
-                delete static_cast< locator* >( dst->setUserData( key, l, l ) );
-            }
-            break;
-        default:
-            break;
-        }
+                locate( *dst, std::unique_ptr< locator >( new locator( *loc ) ) );
     }
     //@}
 
@@ -127,16 +123,12 @@ private:
 
 inline void locate( XERCES_CPP_NAMESPACE::DOMNode& node, const std::string& uri )
 {
-    const translate key( "locator" );
-    auto l = new locator( uri );
-    node.setUserData( key, l, l );
+    locate( node, std::unique_ptr< locator >( new locator( uri ) ) );
 }
 
 inline void locate( XERCES_CPP_NAMESPACE::DOMNode& node, const shared_string& uri, XERCES_CPP_NAMESPACE::XMLScanner& scanner )
 {
-    const translate key( "locator" );
-    auto l = new locator( uri, scanner );
-    node.setUserData( key, l, l );
+    locate( node, std::unique_ptr< locator >( new locator( uri, scanner ) ) );
 }
 
 inline std::string context( const XERCES_CPP_NAMESPACE::DOMNode& node )
