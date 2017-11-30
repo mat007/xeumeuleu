@@ -36,17 +36,24 @@
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/shared_string.hpp>
+#include <memory>
 #include <sstream>
 
 namespace xml
 {
+    inline void locate( XERCES_CPP_NAMESPACE::DOMNode& node, std::unique_ptr< XERCES_CPP_NAMESPACE::DOMUserDataHandler > l )
+    {
+        delete static_cast< XERCES_CPP_NAMESPACE::DOMUserDataHandler* >( node.setUserData( translate( "locator" ), l.get(), l.get() ) );
+        l.release();
+    }
+
 // =============================================================================
 /** @class  locator
     @brief  Locator implementation
 */
 // Created: MAT 2007-09-20
 // =============================================================================
-class locator
+class locator : public XERCES_CPP_NAMESPACE::DOMUserDataHandler
 {
 public:
     //! @name Constructors/Destructor
@@ -56,7 +63,7 @@ public:
         , line_  ( scanner.getLocator()->getLineNumber() )
         , column_( scanner.getLocator()->getColumnNumber() )
     {}
-    locator( const shared_string& uri )
+    explicit locator( const shared_string& uri )
         : uri_   ( uri )
         , line_  ( 0 )
         , column_( 0 )
@@ -66,10 +73,12 @@ public:
         , line_  ( rhs.line_ )
         , column_( rhs.column_ )
     {}
-    locator( const XERCES_CPP_NAMESPACE::DOMLocator& rhs )
+    explicit locator( const XERCES_CPP_NAMESPACE::DOMLocator& rhs )
         : uri_   ( translate( rhs.getURI() ) )
         , line_  ( rhs.getLineNumber() )
         , column_( rhs.getColumnNumber() )
+    {}
+    virtual ~locator()
     {}
     //@}
 
@@ -92,6 +101,18 @@ private:
     locator& operator=( const locator& ); //!< Assignment operator
     //@}
 
+    //! @name Operations
+    //@{
+    virtual void handle( DOMOperationType operation, const XMLCh* const key, void* data, const XERCES_CPP_NAMESPACE::DOMNode* src, XERCES_CPP_NAMESPACE::DOMNode* dst )
+    {
+        if( operation == NODE_DELETED )
+            delete static_cast< locator* >( data );
+        else if( src && dst && src != dst )
+            if( const auto loc = static_cast< locator* >( src->getUserData( key ) ) )
+                locate( *dst, std::unique_ptr< locator >( new locator( *loc ) ) );
+    }
+    //@}
+
 private:
     //! @name Member data
     //@{
@@ -99,6 +120,23 @@ private:
     const XMLFileLoc line_, column_;
     //@}
 };
+
+inline void locate( XERCES_CPP_NAMESPACE::DOMNode& node, const std::string& uri )
+{
+    locate( node, std::unique_ptr< locator >( new locator( uri ) ) );
+}
+
+inline void locate( XERCES_CPP_NAMESPACE::DOMNode& node, const shared_string& uri, XERCES_CPP_NAMESPACE::XMLScanner& scanner )
+{
+    locate( node, std::unique_ptr< locator >( new locator( uri, scanner ) ) );
+}
+
+inline std::string context( const XERCES_CPP_NAMESPACE::DOMNode& node )
+{
+    if( const auto loc = static_cast< locator* >( node.getUserData( translate( "locator" ) ) ) )
+        return *loc;
+    return "";
+}
 
 inline std::string location( const XERCES_CPP_NAMESPACE::DOMNode& node )
 {

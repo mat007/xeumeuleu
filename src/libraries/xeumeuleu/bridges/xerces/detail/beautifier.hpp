@@ -34,6 +34,7 @@
 #define xeumeuleu_beautifier_hpp
 
 #include <xeumeuleu/bridges/xerces/detail/xerces.hpp>
+#include <memory>
 
 namespace xml
 {
@@ -89,9 +90,7 @@ public:
         transcode( detail::SPACE, space_ );
     }
     virtual ~beautifier()
-    {
-        delete transcoder_; // $$$$ MCO 2007-03-16: delete ?
-    }
+    {}
     //@}
 
     //! @name Operations
@@ -206,7 +205,7 @@ private:
     //! @name Member data
     //@{
     XERCES_CPP_NAMESPACE::XMLFormatTarget& target_;
-    XERCES_CPP_NAMESPACE::XMLTranscoder* transcoder_;
+    std::unique_ptr< XERCES_CPP_NAMESPACE::XMLTranscoder > transcoder_;
     detail::bytes open_angle_, close_angle_;
     detail::bytes forward_slash_;
     detail::bytes open_angle_forward_slash_;

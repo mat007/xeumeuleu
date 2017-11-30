@@ -46,7 +46,7 @@
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/locator.hpp>
 #include <xeumeuleu/bridges/xerces/detail/builder.hpp>
-#include <xeumeuleu/bridges/xerces/detail/locator_handler.hpp>
+#include <xeumeuleu/bridges/xerces/detail/locator.hpp>
 #include <algorithm>
 #include <cctype>
 #include <fstream>
@@ -141,20 +141,20 @@ private:
             if( ! impl )
                 throw exception( "internal error in 'document::build' : DOMImplementation 'LS' not found" );
             XERCES_CPP_NAMESPACE::DOMDocument& document = *impl->createDocument();
-            handler_.locate( document, "" );
+            locate( document, "" );
             return document;
         XEUMEULEU_CATCH
     }
     XERCES_CPP_NAMESPACE::DOMDocument& parse( XERCES_CPP_NAMESPACE::InputSource& source, const encoding* encoding, const grammar& grammar )
     {
         const std::string uri = translate( source.getSystemId() );
-        builder builder( uri, handler_ );
+        builder builder( uri );
         parser parser( builder );
         grammar.configure( parser );
         if( encoding )
             source.setEncoding( translate( *encoding ) );
         XERCES_CPP_NAMESPACE::DOMDocument& document = parser.parse( source );
-        handler_.locate( document, uri );
+        locate( document, uri );
         return document;
     }
     XERCES_CPP_NAMESPACE::DOMDocument& build( const std::string& filename, const encoding* encoding, const grammar& grammar )
@@ -194,7 +194,6 @@ private:
 protected:
     //! @name Member data
     //@{
-    locator_handler handler_;
     xerces_ptr< XERCES_CPP_NAMESPACE::DOMDocument > document_;
     //@}
 };
