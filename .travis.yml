@@ -3,10 +3,10 @@ sudo: required
 language: cpp
 
 env:
-  - CXX_STANDARD=c++98
-#  - CXX_STANDARD=c++0x
-#  - CXX_STANDARD=c++11
-#  - CXX_STANDARD=c++14
+  - CXX_STANDARD=98
+  - CXX_STANDARD=11
+  - CXX_STANDARD=14
+  - CXX_STANDARD=17
 
 compiler:
   - gcc
@@ -29,6 +29,6 @@ before_install:
 script:
   - mkdir build/cmake
   - cd build/cmake
-  - cmake ../..
+  - cmake ../.. -DCMAKE_CXX_STANDARD=${CXX_STANDARD}
   - make
   - ctest
