@@ -121,7 +121,7 @@ BOOST_AUTO_TEST_CASE( streaming_value_at_root_level_throws_an_exception )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( streaming_text_node_value_mixed_with_sub_node )
 {
-    BOOST_TODO; // $$$$ MAT 2006-10-16: of course this test fails as we format the output : should it be considered a bug or a feature ?
+    BOOST_WARN_MESSAGE( 0, "TODO !" ); // $$$$ MAT 2006-10-16: of course this test fails as we format the output : should it be considered a bug or a feature ?
 //    xml::xostringstream xos;
 //    xos << xml::start( "element" ) << " \n text node content " << xml::start( "child" ) << xml::end << xml::end;
 //    BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n"

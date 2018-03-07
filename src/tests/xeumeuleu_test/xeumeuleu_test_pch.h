@@ -47,11 +47,6 @@
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
-#define BOOST_LIB_NAME boost_unit_test_framework
-#include <boost/config/auto_link.hpp>
-
-#define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
-
 #include <boost/thread/thread.hpp>
 #undef min
 #undef max
@@ -59,8 +54,6 @@
 #ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
-
-const std::string BOOST_RESOLVE( const std::string& filename );
 
 #define BOOST_CHECK_THROW_WHAT( S, E, M ) \
     BOOST_CHECK_EXCEPTION( S, E, \

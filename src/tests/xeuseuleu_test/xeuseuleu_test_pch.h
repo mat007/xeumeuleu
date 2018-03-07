@@ -48,15 +48,8 @@
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
-#define BOOST_LIB_NAME boost_unit_test_framework
-#include <boost/config/auto_link.hpp>
-
-#define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
-
 #ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
-
-const std::string BOOST_RESOLVE( const std::string& filename );
 
 #endif // xeuseuleu_test_pch_hpp

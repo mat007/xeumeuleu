@@ -3,7 +3,12 @@ find_package(XercesC REQUIRED)
 include_directories(${xeumeuleu_SOURCE_DIR}/src/libraries
                     ${Boost_INCLUDE_DIRS}
                     ${XercesC_INCLUDE_DIR})
-add_definitions(-DBOOST_TEST_DYN_LINK)
+if( MSVC )
+    link_directories(${Boost_LIBRARY_DIRS})
+else()
+    add_definitions(-DBOOST_TEST_DYN_LINK)
+endif()
+add_definitions(-DBoost_LIB_DIAGNOSTIC_DEFINITIONS)
 add_executable(xeumeuleu_test attribute_test.cpp
                               attributes_test.cpp
                               call_test.cpp
@@ -41,4 +46,5 @@ target_link_libraries(xeumeuleu_test
                       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
                       ${Boost_THREAD_LIBRARY}
                       ${XercesC_LIBRARY})
-add_test(NAME xeumeuleu_test COMMAND xeumeuleu_test --result_code=no --report_level=no --log_level=warning --data_directory=../../data/tests/xeumeuleu_test)
+message( " --- PROJECT_SOURCE_DIR " ${PROJECT_SOURCE_DIR} )
+add_test(NAME xeumeuleu_test COMMAND xeumeuleu_test --log_level=warning WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/data/tests/xeumeuleu_test)

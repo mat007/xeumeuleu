@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE( stylesheet_can_be_a_stream )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( transformation_is_applied_at_end_root_level )
 {
-    xsl::xstringtransform xst( BOOST_RESOLVE( "stylesheet.xsl" ) );
+    xsl::xstringtransform xst( "stylesheet.xsl" );
     xst << xml::start( "root" )
             << xml::start( "element" )
             << xml::end
@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE( transformation_is_applied_at_end_root_level )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( transformation_from_an_xistream_is_valid )
 {
-    xsl::xstringtransform xst( BOOST_RESOLVE( "stylesheet.xsl" ) );
+    xsl::xstringtransform xst( "stylesheet.xsl" );
     xml::xistringstream xis(
         "<root>"
             "<element/>"

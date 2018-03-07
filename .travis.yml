@@ -30,5 +30,5 @@ script:
   - mkdir build/cmake
   - cd build/cmake
   - cmake ../.. -DCMAKE_CXX_STANDARD=${CXX_STANDARD}
-  - make
-  - ctest
+  - cmake --build .
+  - ctest --verbose
