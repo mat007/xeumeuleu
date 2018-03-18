@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE( tranformation_creates_a_file )
 {
     const std::string filename = "file";
     {
-        xsl::xftransform xf( BOOST_RESOLVE( "stylesheet.xsl" ), filename );
+        xsl::xftransform xf( "stylesheet.xsl", filename );
         xf << xml::start( "root" )
            << xml::end;
     }
@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE( tranformation_creates_a_file )
 BOOST_AUTO_TEST_CASE( tranformation_uses_a_stylesheet_with_unicode_name )
 {
     std::string stylesheet;
-    xml::xifstream( BOOST_RESOLVE( "japanese.xml" ) )
+    xml::xifstream( "japanese.xml" )
         >> xml::start( "root" )
             >> xml::attribute( "name", stylesheet );
     stylesheet += ".xsl";
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE( tranformation_uses_a_stylesheet_with_unicode_name )
         stylesheet.c_str(),
         boost::filesystem::detail::utf8_codecvt_facet() );
     boost::filesystem::copy_file(
-        BOOST_RESOLVE( "stylesheet.xsl" ),
+        "stylesheet.xsl",
         path,
         boost::filesystem::copy_option::overwrite_if_exists );
     const std::string filename = "file";
@@ -112,7 +112,7 @@ BOOST_AUTO_TEST_CASE( tranformation_uses_a_stylesheet_with_unicode_name )
 BOOST_AUTO_TEST_CASE( tranformation_creates_a_file_with_unicode_name )
 {
     std::string filename;
-    xml::xifstream( BOOST_RESOLVE( "japanese.xml" ) )
+    xml::xifstream( "japanese.xml" )
         >> xml::start( "root" )
             >> xml::attribute( "name", filename );
     const boost::filesystem::path path(
@@ -120,7 +120,7 @@ BOOST_AUTO_TEST_CASE( tranformation_creates_a_file_with_unicode_name )
         boost::filesystem::detail::utf8_codecvt_facet() );
     boost::filesystem::remove( path );
     {
-        xsl::xftransform xf( BOOST_RESOLVE( "stylesheet.xsl" ), filename );
+        xsl::xftransform xf( "stylesheet.xsl", filename );
         xf << xml::start( "root" );
     }
     BOOST_CHECK( boost::filesystem::remove( path ) );

@@ -30,48 +30,5 @@
  *   OF THIS SOFTWARE, EVEN  IF  ADVISED OF  THE POSSIBILITY  OF SUCH DAMAGE.
  */
 
-#ifdef BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MAIN
-#endif
 #include "xeuseuleu_test_pch.h"
-#include <string>
-
-namespace
-{
-    std::string data_directory;
-
-    void set_data_directory( int argc, char* argv[] )
-    {
-        while( argc-- )
-        {
-            const std::string argument = argv[argc];
-            const std::string::size_type n = argument.find( '=' );
-            if( n != std::string::npos && argument.substr( 0, n ) == "--data_directory" )
-                data_directory = argument.substr( n+1 );
-        }
-    }
-    const std::string extract_name( const std::string& path )
-    {
-        const std::size_t separator = path.find_last_of( "/\\" );
-        return path.substr( std::max( std::size_t(), separator ) );
-    }
-    void set_master_suite_name( const std::string& path )
-    {
-        const std::string name = path.substr( path.find_last_of( "/\\" ) + 1 );
-        boost::unit_test::framework::master_test_suite().p_name.set( name );
-    }
-}
-
-::boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] )
-{
-    set_master_suite_name( argv[0] );
-    set_data_directory( argc, argv );
-    return 0;
-}
-
-const std::string BOOST_RESOLVE( const std::string& filename )
-{
-    if( data_directory.empty() )
-        return filename;
-    return data_directory + '/' + filename;
-}

@@ -40,12 +40,13 @@
 #include <xeumeuleu/bridges/xerces/detail/chained_exception.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/locator.hpp>
-#include <typeinfo>
-#include <limits>
+#include <cstdio>
 #ifdef __GNUC__
 #include <cxxabi.h>
 #include <cstdlib>
 #endif
+#include <limits>
+#include <typeinfo>
 
 namespace xml
 {
@@ -74,17 +75,17 @@ public:
     //@{
     void to( std::string& v ) const { XEUMEULEU_TRY if( node_ ) v = translate( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
     void to( bool& v ) const { XEUMEULEU_TRY if( node_ ) v = to_bool( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
-    void to( short& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< short >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
-    void to( int& v ) const { XEUMEULEU_TRY if( node_ ) v = to_int( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
-    void to( long& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< long >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
-    void to( long long& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< long long >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
-    void to( float& v ) const { XEUMEULEU_TRY if( node_ ) v = to_float( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
-    void to( double& v ) const { XEUMEULEU_TRY if( node_ ) v = to_double( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
-    void to( long double& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< long double >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
-    void to( unsigned short& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< unsigned short >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
-    void to( unsigned int& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< unsigned int >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
-    void to( unsigned long& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< unsigned long >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
-    void to( unsigned long long& v ) const { XEUMEULEU_TRY if( node_ ) v = convert< unsigned long long >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( short& v ) const { XEUMEULEU_TRY if( node_ ) v = to_signed< short >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( int& v ) const { XEUMEULEU_TRY if( node_ ) v = to_signed< int >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( long& v ) const { XEUMEULEU_TRY if( node_ ) v = to_signed< long >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( long long& v ) const { XEUMEULEU_TRY if( node_ ) v = to_signed< long long >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( float& v ) const { XEUMEULEU_TRY if( node_ ) v = to_float< float > ( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( double& v ) const { XEUMEULEU_TRY if( node_ ) v = to_float< double >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( long double& v ) const { XEUMEULEU_TRY if( node_ ) v = to_float< long double >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( unsigned short& v ) const { XEUMEULEU_TRY if( node_ ) v = to_unsigned< unsigned short >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( unsigned int& v ) const { XEUMEULEU_TRY if( node_ ) v = to_unsigned< unsigned int >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( unsigned long& v ) const { XEUMEULEU_TRY if( node_ ) v = to_unsigned< unsigned long >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
+    void to( unsigned long long& v ) const { XEUMEULEU_TRY if( node_ ) v = to_unsigned< unsigned long long >( get_data() ); XEUMEULEU_CATCH_WITH_CONTEXT }
     //@}
 
 private:
@@ -109,51 +110,36 @@ private:
 #endif
         return name;
     }
-    template< typename T > T convert( const XMLCh* from ) const
+    template< typename T > T to_signed( const XMLCh* from ) const
     {
-        const double data = XERCES_CPP_NAMESPACE::XMLDouble( from ).getValue();
-        const T result = static_cast< T >( data );
-        if( static_cast< double >( result ) != data )
-            throw exception( context() + "value of " + location() + " is not a " + name( typeid( T ) ) );
-        return result;
+        return convert< T >( trim( translate( from ) ) );
     }
-    float to_float( const XMLCh* from ) const
+    template< typename T > T to_unsigned( const XMLCh* from ) const
     {
-        const XERCES_CPP_NAMESPACE::XMLFloat data( from );
-        if( data.isDataOverflowed() )
-            throw exception( context() + "value of " + location() + " overflowed (probably a double instead of a float)" );
-        switch( data.getType() )
-        {
-            case XERCES_CPP_NAMESPACE::XMLDouble::NegINF :
-                return - std::numeric_limits< float >::infinity();
-            case XERCES_CPP_NAMESPACE::XMLDouble::PosINF :
-                return std::numeric_limits< float >::infinity();
-            case XERCES_CPP_NAMESPACE::XMLDouble::NaN :
-                return std::numeric_limits< float >::quiet_NaN();
-            default:
-                return static_cast< float >( data.getValue() );
-        }
+        const std::string data = trim( translate( from ) );
+        if( data.empty() || data[0] == '-' )
+            throw exception( context() + "value of " + location() + " is not a " + name( typeid( T ) ) + ": " + data );
+        return convert< T >( data );
     }
-    double to_double( const XMLCh* from ) const
+    template< typename T > T to_float( const XMLCh* from ) const
     {
-        const XERCES_CPP_NAMESPACE::XMLDouble data( from );
-        if( data.isDataOverflowed() )
-            throw exception( context() + "value of " + location() + " overflowed (probably more than a double)" );
-        switch( data.getType() )
-        {
-            case XERCES_CPP_NAMESPACE::XMLDouble::NegINF :
-                return - std::numeric_limits< double >::infinity();
-            case XERCES_CPP_NAMESPACE::XMLDouble::PosINF :
-                return std::numeric_limits< double >::infinity();
-            case XERCES_CPP_NAMESPACE::XMLDouble::NaN :
-                return std::numeric_limits< double >::quiet_NaN();
-            default:
-                return data.getValue();
-        }
+        const std::string data = trim( translate( from ) );
+        if( data == "INF" )
+            return std::numeric_limits< T >::infinity();
+        if( data == "-INF" )
+            return - std::numeric_limits< T >::infinity();
+        if( data == "NaN" )
+            return - std::numeric_limits< T >::quiet_NaN();
+        return convert< T >( data );
     }
-    int to_int( const XMLCh* from ) const
+    template< typename T > T convert( const std::string& data ) const
     {
-        return XERCES_CPP_NAMESPACE::XMLString::parseInt( from );
+        std::stringstream stream( data );
+        T value;
+        stream >> value;
+        if( stream && stream.eof() )
+            return value;
+        throw exception( context() + "value of " + location() + " is not a " + name( typeid( T ) ) + ": " + data );
     }
     bool to_bool( const XMLCh* from ) const
     {
@@ -162,7 +148,7 @@ private:
             return true;
         if( data == "false" || data == "0" )
             return false;
-        throw exception( context() + "value of " + location() + " is not a boolean" );
+        throw exception( context() + "value of " + location() + " is not a boolean: " + trim( translate( from ) ) );
     }
 
     std::string context() const

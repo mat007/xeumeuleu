@@ -39,8 +39,8 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_serialized )
 {
-    xsl::xstringtransform xst( BOOST_RESOLVE( "buffer_test.xsl" ) );
-    xsl::xbuffertransform xbt( BOOST_RESOLVE( "stylesheet.xsl" ) );
+    xsl::xstringtransform xst( "buffer_test.xsl" );
+    xsl::xbuffertransform xbt( "stylesheet.xsl" );
     xml::xistringstream xis( "<root/>" );
     xst << xbt << xis;
     BOOST_CHECK_EQUAL( "<?xml version=\"1.0\" encoding=\"UTF-8\"?><buffer-root/>", xst.str() );
@@ -52,8 +52,8 @@ BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_serialized )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_inserted_in_the_serialization_flow )
 {
-    xsl::xstringtransform xst( BOOST_RESOLVE( "flow_test.xsl" ) );
-    xsl::xbuffertransform xbt( BOOST_RESOLVE( "stylesheet.xsl" ) );
+    xsl::xstringtransform xst( "flow_test.xsl" );
+    xsl::xbuffertransform xbt( "stylesheet.xsl" );
     xml::xistringstream xis( "<root/>" );
     xst << xml::start( "root" )
             << xbt << xis
@@ -68,8 +68,8 @@ BOOST_AUTO_TEST_CASE( xbuffertransform_can_be_inserted_in_the_serialization_flow
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( xbuffertransform_can_have_parameters )
 {
-    xsl::xstringtransform xst( BOOST_RESOLVE( "stylesheet.xsl" ) );
-    xsl::xbuffertransform xbt( BOOST_RESOLVE( "parameters.xsl" ) );
+    xsl::xstringtransform xst( "stylesheet.xsl" );
+    xsl::xbuffertransform xbt( "parameters.xsl" );
     xml::xistringstream xis( "<root/>" );
     xst << xbt << xsl::parameter( "key1", "expression1" )
                << xsl::parameter( "key2", "expression2" )

@@ -39,7 +39,7 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_schema_throws_an_exception )
 {
-    BOOST_CHECK_THROW( xml::xistringstream( "<wrong-element/>", xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) ), xml::exception );
+    BOOST_CHECK_THROW( xml::xistringstream( "<wrong-element/>", xml::external_grammar( "schema.xsd" ) ), xml::exception );
 }
 
 namespace
@@ -59,7 +59,7 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_in_memory_schema_throws_an_exception )
 {
-    const std::string grammar = load( BOOST_RESOLVE( "schema.xsd" ) );
+    const std::string grammar = load( "schema.xsd" );
     BOOST_CHECK_THROW( xml::xistringstream( "<wrong-element/>", xml::memory_grammar( grammar ) ), xml::exception );
 }
 
@@ -80,7 +80,7 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_non_existing_schema_throws_a_meaningf
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_stream_with_invalid_schema_throws_a_meaningful_exception )
 {
-    BOOST_CHECK_THROW_WHAT_SUB( xml::xistringstream( "<element/>", xml::external_grammar( BOOST_RESOLVE( "invalid.xsd" ) ) ),
+    BOOST_CHECK_THROW_WHAT_SUB( xml::xistringstream( "<element/>", xml::external_grammar( "invalid.xsd" ) ),
         xml::exception,
         "invalid content in 'schema' element" );
 }
@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_invalid_schema_throws_a_meaningful_ex
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_stream_with_xml_validated_by_schema_does_not_throw_an_exception )
 {
-    BOOST_CHECK_NO_THROW( xml::xistringstream( "<element/>", xml::external_grammar( BOOST_RESOLVE( "schema.xsd" ) ) ) );
+    BOOST_CHECK_NO_THROW( xml::xistringstream( "<element/>", xml::external_grammar( "schema.xsd" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_xml_validated_by_schema_does_not_thro
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_stream_with_xml_validated_by_internally_referenced_schema_does_not_throw_an_exception )
 {
-    const std::string schema = BOOST_RESOLVE( "schema.xsd" );
+    const std::string schema = "schema.xsd";
     const std::string xml = "<element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />";
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml, xml::internal_grammar() ) );
 }
@@ -111,7 +111,7 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_xml_validated_by_internally_reference
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_internally_referenced_schema_throws_an_exception )
 {
-    const std::string schema = BOOST_RESOLVE( "schema.xsd" );
+    const std::string schema = "schema.xsd";
     const std::string xml = "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />";
     BOOST_CHECK_THROW( xml::xistringstream xis( xml, xml::internal_grammar() ), xml::exception );
 }
@@ -122,7 +122,7 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_internally_refer
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( internal_schema_is_used_only_if_specified )
 {
-    const std::string schema = BOOST_RESOLVE( "schema.xsd" );
+    const std::string schema = "schema.xsd";
     const std::string xml = "<wrong-element xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='" + schema + "' />";
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml ) );
 }
@@ -156,8 +156,8 @@ BOOST_AUTO_TEST_CASE( including_a_non_existing_schema_throws )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( several_memory_grammars_can_be_combined )
 {
-    const std::string schema_1 = load( BOOST_RESOLVE( "schema_1.xsd" ) );
-    const std::string schema_2 = load( BOOST_RESOLVE( "schema_2.xsd" ) );
+    const std::string schema_1 = load( "schema_1.xsd" );
+    const std::string schema_2 = load( "schema_2.xsd" );
     xml::grammars composite;
     xml::memory_grammar grammar_1( schema_1 );
     xml::memory_grammar grammar_2( schema_2 );
@@ -173,7 +173,7 @@ BOOST_AUTO_TEST_CASE( several_memory_grammars_can_be_combined )
 BOOST_AUTO_TEST_CASE( several_external_grammars_can_be_combined )
 {
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( "<element xmlns='http://example.org' attribute='42'/>",
-        xml::external_grammar( BOOST_RESOLVE( "schema_2.xsd" ) ) + xml::external_grammar( BOOST_RESOLVE( "schema_1.xsd" ) ) ) );
+        xml::external_grammar( "schema_2.xsd" ) + xml::external_grammar( "schema_1.xsd" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,9 +182,9 @@ BOOST_AUTO_TEST_CASE( several_external_grammars_can_be_combined )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( several_memory_and_external_grammars_can_be_combined )
 {
-    const std::string schema_2 = load( BOOST_RESOLVE( "schema_2.xsd" ) );
+    const std::string schema_2 = load( "schema_2.xsd" );
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( "<element xmlns='http://example.org' attribute='42'/>",
-        xml::memory_grammar( schema_2 ) + xml::external_grammar( BOOST_RESOLVE( "schema_1.xsd" ) ) ) );
+        xml::memory_grammar( schema_2 ) + xml::external_grammar( "schema_1.xsd" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,8 +193,8 @@ BOOST_AUTO_TEST_CASE( several_memory_and_external_grammars_can_be_combined )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( several_grammars_can_be_combined_using_operator_plus )
 {
-    const std::string schema_1 = load( BOOST_RESOLVE( "schema_1.xsd" ) );
-    const std::string schema_2 = load( BOOST_RESOLVE( "schema_2.xsd" ) );
+    const std::string schema_1 = load( "schema_1.xsd" );
+    const std::string schema_2 = load( "schema_2.xsd" );
     BOOST_CHECK_THROW( xml::xistringstream xis( "<element xmlns='http://example.org' attribute='42'/>", xml::memory_grammar( schema_1 ) ), xml::exception );
     BOOST_CHECK_THROW( xml::xistringstream xis( "<element xmlns='http://example.org' attribute='42'/>", xml::memory_grammar( schema_1 ) + xml::memory_grammar( schema_2 ) ), xml::exception );
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( "<element xmlns='http://example.org' attribute='42'/>", xml::memory_grammar( schema_2 ) + xml::memory_grammar( schema_1 ) ) );
@@ -229,7 +229,7 @@ BOOST_AUTO_TEST_CASE( several_grammars_with_the_same_target_namespace_can_be_com
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_stream_with_xml_validated_by_internally_referenced_definition_does_not_throw_an_exception )
 {
-    const std::string definition = BOOST_RESOLVE( "document_type.dtd" );
+    const std::string definition = "document_type.dtd";
     const std::string xml = "<!DOCTYPE element SYSTEM '" + definition + "'>"
                             "<element/>";
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml, xml::internal_grammar() ) );
@@ -241,7 +241,7 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_xml_validated_by_internally_reference
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_internally_referenced_definition_throws_an_exception )
 {
-    const std::string definition = BOOST_RESOLVE( "document_type.dtd" );
+    const std::string definition = "document_type.dtd";
     const std::string xml = "<!DOCTYPE element SYSTEM '" + definition + "'>"
                             "<wrong-element/>";
     BOOST_CHECK_THROW( xml::xistringstream xis( xml, xml::internal_grammar() ), xml::exception );
@@ -253,7 +253,7 @@ BOOST_AUTO_TEST_CASE( creating_stream_with_xml_not_validated_by_internally_refer
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( internal_definition_is_used_only_if_specified )
 {
-    const std::string definition = BOOST_RESOLVE( "document_type.dtd" );
+    const std::string definition = "document_type.dtd";
     const std::string xml = "<!DOCTYPE element SYSTEM '" + definition + "'>"
                             "<wrong-element/>";
     BOOST_CHECK_NO_THROW( xml::xistringstream xis( xml ) );

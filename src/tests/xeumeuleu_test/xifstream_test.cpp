@@ -80,7 +80,7 @@ BOOST_AUTO_TEST_CASE( creating_with_valid_file )
 BOOST_AUTO_TEST_CASE( creating_file_with_unicode_name )
 {
     std::string filename;
-    xml::xifstream( BOOST_RESOLVE( "arabic.xml" ) )
+    xml::xifstream( "arabic.xml" )
         >> xml::start( "root" )
             >> xml::attribute( "name", filename );
     filename += ".xml";

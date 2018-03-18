@@ -40,9 +40,10 @@
 #include <xeumeuleu/bridges/xerces/detail/chained_exception.hpp>
 #include <xeumeuleu/bridges/xerces/detail/translate.hpp>
 #include <xeumeuleu/bridges/xerces/detail/import.hpp>
-#include <sstream>
+#include <cstdio>
 #include <limits>
 #include <memory>
+#include <sstream>
 
 namespace xml
 {
@@ -277,7 +278,7 @@ private:
 #   pragma warning( push )
 #   pragma warning( disable : 4996 )
 #endif
-        sprintf( buffer, format, max_digits< T >(), value );
+        std::sprintf( buffer, format, max_digits< T >(), value );
 #ifdef _MSC_VER
 #   pragma warning( pop )
 #endif
@@ -288,7 +289,7 @@ private:
     int max_digits() const
     {
         // actually std::numeric_limits< T >::max_digits10 in C++11
-        return 2 +  std::numeric_limits< T >::digits10;
+        return 2 + std::numeric_limits< T >::digits10;
     }
 
     XERCES_CPP_NAMESPACE::DOMAttr* create_attribute( XERCES_CPP_NAMESPACE::DOMNamedNodeMap& attributes, const std::string& ns, const std::string& name )

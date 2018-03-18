@@ -40,7 +40,7 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( parameters_are_sent_to_the_stylesheet )
 {
-    xsl::xstringtransform xf( BOOST_RESOLVE( "parameters.xsl" ) );
+    xsl::xstringtransform xf( "parameters.xsl" );
     xml::xistringstream xis( "<root/>" );
     xf << xsl::parameter( "key1", "expression1" )
        << xsl::parameter( "key2", "expression2" )
@@ -55,10 +55,10 @@ BOOST_AUTO_TEST_CASE( parameters_are_sent_to_the_stylesheet )
 BOOST_AUTO_TEST_CASE( unicode_parameters_are_sent_to_the_stylesheet )
 {
     std::string name;
-    xml::xifstream( BOOST_RESOLVE( "japanese.xml" ) )
+    xml::xifstream( "japanese.xml" )
         >> xml::start( "root" )
             >> xml::attribute( "name", name );
-    xsl::xstringtransform xf( BOOST_RESOLVE( "parameter.xsl" ) );
+    xsl::xstringtransform xf( "parameter.xsl" );
     xf << xsl::parameter( "key", name )
        << xml::xistringstream( "<root/>" );
     std::string attribute;

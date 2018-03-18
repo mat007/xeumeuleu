@@ -1,0 +1,43 @@
+skip_branch_with_pr: true
+
+environment:
+  matrix:
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      BOOST: 1_59_0
+      MSVC: 14
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      BOOST: 1_64_0
+      MSVC: 15
+
+platform:
+  - x86
+  - x64
+
+configuration:
+  - Debug
+  - Release
+
+cache: c:\tools\vcpkg\installed\
+
+init:
+  - set BOOST_ROOT=C:\Libraries\boost_%BOOST%
+  - if "%PLATFORM%"=="x86" set BOOST_LIBRARYDIR=%BOOST_ROOT%\lib32-msvc-%MSVC%.0
+  - if "%PLATFORM%"=="x64" set BOOST_LIBRARYDIR=%BOOST_ROOT%\lib64-msvc-%MSVC%.0
+  - if "%PLATFORM%"=="x86" set CMAKE_GENERATOR_NAME=Visual Studio %MSVC%
+  - if "%PLATFORM%"=="x64" set CMAKE_GENERATOR_NAME=Visual Studio %MSVC% Win64
+  - if "%CONFIGURATION%"=="Release" set VCPKG_LIBRARYDIR=c:\tools\vcpkg\installed\%PLATFORM%-windows\lib
+  - if "%CONFIGURATION%"=="Debug" set VCPKG_LIBRARYDIR=c:\tools\vcpkg\installed\%PLATFORM%-windows\debug\lib
+  - set VCPKG_INCLUDEDIR=c:\tools\vcpkg\installed\%PLATFORM%-windows\include
+
+install:
+  - appveyor-retry vcpkg install xerces-c:%PLATFORM%-windows xalan-c:%PLATFORM%-windows
+  - appveyor-retry appveyor DownloadFile https://github.com/mat007/turtle/archive/master.zip -FileName turtle-master.zip
+  - 7z x turtle-master.zip
+  - mv turtle-master/include/turtle src/libraries/turtle
+
+build_script:
+  - mkdir %APPVEYOR_BUILD_FOLDER%\build\cmake
+  - cd %APPVEYOR_BUILD_FOLDER%\build\cmake
+  - cmake ../.. -G "%CMAKE_GENERATOR_NAME%" -DCMAKE_INCLUDE_PATH=%VCPKG_INCLUDEDIR% -DCMAKE_LIBRARY_PATH=%VCPKG_LIBRARYDIR% -DBoost_USE_STATIC_LIBS=ON
+  - cmake --build . --config %CONFIGURATION%
+  - ctest -C %CONFIGURATION% --verbose

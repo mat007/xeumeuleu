@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE( creating_an_input_stream_with_invalid_encoding_throws )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( creating_an_output_stream_with_invalid_encoding_throws )
 {
-    BOOST_TODO;
+    BOOST_WARN_MESSAGE( 0, "TODO !" );
     //BOOST_CHECK_THROW( xml::xostringstream( xml::encoding( "invalid_encoding" ) ), xml::exception );
 }
 
@@ -84,7 +84,7 @@ BOOST_AUTO_TEST_CASE( forcing_encoding_upon_write_overrides_prolog_encoding )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( reading_data_in_arabic_preserves_utf_8_characters )
 {
-    xml::xifstream xis( BOOST_RESOLVE( "arabic.xml" ) );
+    xml::xifstream xis( "arabic.xml" );
     std::string name;
     xis >> xml::start( "root" );
     xis >> xml::attribute( "name", name );
@@ -100,7 +100,7 @@ BOOST_AUTO_TEST_CASE( reading_data_in_arabic_preserves_utf_8_characters )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( reading_data_in_japanese_preserves_utf_8_characters )
 {
-    xml::xifstream xis( BOOST_RESOLVE( "japanese.xml" ) );
+    xml::xifstream xis( "japanese.xml" );
     std::string name;
     xis >> xml::start( "resource" );
     xis >> xml::attribute( "name", name );
