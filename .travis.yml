@@ -13,21 +13,15 @@ compiler:
   - clang
 
 before_install:
-  - CMAKE_URL="https://cmake.org/files/v3.7/cmake-3.7.2-Linux-x86_64.tar.gz"
-  - mkdir cmake
-  - travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
-  - export PATH=${TRAVIS_BUILD_DIR}/cmake/bin:${PATH}
-  - cmake --version
   - sudo apt-get -qq update
-  - sudo apt-get install libboost-all-dev
-  - sudo apt-get install libxerces-c-dev
-  - sudo apt-get install libxalan-c-dev
+  - sudo apt-get install cmake libboost-all-dev libxerces-c-dev libxalan-c-dev
+  - cmake --version
   - travis_retry wget https://github.com/mat007/turtle/archive/master.zip
   - unzip master.zip
   - cp -r turtle-master/include/turtle src/libraries
 
 script:
-  - mkdir build/cmake
+  - mkdir -p build/cmake
   - cd build/cmake
   - cmake ../.. -DCMAKE_CXX_STANDARD=${CXX_STANDARD}
   - cmake --build .
