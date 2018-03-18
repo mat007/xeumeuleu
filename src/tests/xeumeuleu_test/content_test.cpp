@@ -143,17 +143,17 @@ BOOST_AUTO_TEST_CASE( streaming_content_round_trips_node_content )
     check_round_trip_numeric_limits< short >();
     check_round_trip_numeric_limits< int >();
     check_round_trip_numeric_limits< long >();
-    //check_round_trip_numeric_limits< long long >();
+    check_round_trip_numeric_limits< long long >();
     check_round_trip_numeric_limits< float >();
     check_round_trip_numeric_limits< double >();
     check_round_trip_numeric_limits< long double >();
     check_round_trip_numeric_limits< unsigned short >();
     check_round_trip_numeric_limits< unsigned int >();
     check_round_trip_numeric_limits< unsigned long >();
-    //check_round_trip_numeric_limits< unsigned long long >();
+    check_round_trip_numeric_limits< unsigned long long >();
     check_read_special_values< float >();
     check_read_special_values< double >();
-    //check_read_special_values< long double >();
+    check_read_special_values< long double >();
 }
 
 namespace
@@ -183,7 +183,7 @@ BOOST_AUTO_TEST_CASE( data_conversion_failure_provides_error_context )
 {
     short value;
     xml::xistringstream xis( "<element>300000</element>" );
-    BOOST_CHECK_THROW_WHAT( xis >> xml::content( "element", value ),
+    BOOST_CHECK_THROW_WHAT_SUB( xis >> xml::content( "element", value ),
         xml::exception,
         "string_input (line 1, column 10) : value of 'element' is not a short" );
 }
