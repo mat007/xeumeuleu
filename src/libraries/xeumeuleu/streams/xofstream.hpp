@@ -79,10 +79,7 @@ public:
     {
         try
         {
-            if(
-#ifndef __CYGWIN__
-                ! std::uncaught_exception() &&
-#endif // $$$$ MAT : not sure if it's cygwin or gcc 3.4.4 but uncaught_exception always returns true
+            if( ! std::uncaught_exception() &&
                 ! flushed_ )
                 flush();
         }

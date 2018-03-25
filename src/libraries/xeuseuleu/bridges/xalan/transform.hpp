@@ -56,9 +56,7 @@ private:
             }
             ~initializer()
             {
-#ifndef __CYGWIN__ // $$$$ MAT : xalan seems to have a problem with cygwin/gcc, not sure why it crashes exactly...
                 XALAN_CPP_NAMESPACE::XalanTransformer::terminate();
-#endif
                 XERCES_CPP_NAMESPACE::XMLPlatformUtils::Terminate();
             }
         };
