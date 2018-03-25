@@ -156,9 +156,7 @@ BOOST_AUTO_TEST_CASE( file_is_not_created_upon_stream_destruction_if_an_exceptio
     }
     catch( ... )
     {
-#ifndef __CYGWIN__
         BOOST_CHECK( ! std::ifstream( filename.c_str() ) );
         std::remove( filename.c_str() );
-#endif // $$$$ MAT : not sure if it's cygwin or gcc 3.4.4 but uncaught_exception always returns true
     }
 }

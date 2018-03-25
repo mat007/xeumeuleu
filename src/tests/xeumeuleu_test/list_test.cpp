@@ -55,9 +55,15 @@ namespace
         void my_method( xml::xistream&, int, int, int, int, int ) {}
     };
 
+    xml::xistream& xis_ref()
+    {
+        static xml::xistringstream xis( "<root/>" );
+        return xis;
+    }
+
     void my_function_to_test_caller_implementations()
     {
-        xml::xistream& xis = *(xml::xistream*)0;
+        xml::xistream& xis = xis_ref();
         my_caller_class c;
         int p = 1;
         xis >> xml::list( c, &my_caller_class::my_method )
@@ -93,7 +99,7 @@ namespace
 
     void my_function_to_test_const_caller_implementations()
     {
-        xml::xistream& xis = *(xml::xistream*)0;
+        xml::xistream& xis = xis_ref();
         const my_const_caller_class c = my_const_caller_class();
         int p = 1;
         xis >> xml::list( c, &my_const_caller_class::my_method )
@@ -123,7 +129,7 @@ namespace
 
     void my_function_to_test_caller_implementations_with_namespace()
     {
-        xml::xistream& xis = *(xml::xistream*)0;
+        xml::xistream& xis = xis_ref();
         my_caller_class_with_namespace c;
         int p = 1;
         xis >> xml::list( c, &my_caller_class_with_namespace::my_method )
@@ -147,7 +153,7 @@ namespace
 
     void my_function_to_test_const_caller_implementations_with_namespace()
     {
-        xml::xistream& xis = *(xml::xistream*)0;
+        xml::xistream& xis = xis_ref();
         const my_const_caller_class_with_namespace c = my_const_caller_class_with_namespace();
         int p = 1;
         xis >> xml::list( c, &my_const_caller_class_with_namespace::my_method )
@@ -221,7 +227,7 @@ namespace
 
     void warning_check()
     {
-        xml::xistream& xis = *(xml::xistream*)0;
+        xml::xistream& xis = xis_ref();
         {
             my_class my_instance;
             xis >> xml::list( "node", my_instance, &my_class::my_method );

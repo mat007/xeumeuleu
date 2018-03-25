@@ -63,27 +63,25 @@ public:
     //@{
     explicit xofstream( const std::string& filename )
         : xostream( output_ )
-        , output_  ( *document_, *document_, *this )
-        , filename_( filename )
-        , encoding_( encoding() )
-        , flushed_ ( false )
+        , output_    ( *document_, *document_, *this )
+        , filename_  ( filename )
+        , encoding_  ( encoding() )
+        , exceptions_( uncaught_exceptions() )
+        , flushed_   ( false )
     {}
     xofstream( const std::string& filename, const encoding& encoding )
         : xostream( output_ )
-        , output_  ( *document_, *document_, *this )
-        , filename_( filename )
-        , encoding_( encoding )
-        , flushed_ ( false )
+        , output_    ( *document_, *document_, *this )
+        , filename_  ( filename )
+        , encoding_  ( encoding )
+        , exceptions_( uncaught_exceptions() )
+        , flushed_   ( false )
     {}
     virtual ~xofstream()
     {
         try
         {
-            if(
-#ifndef __CYGWIN__
-                ! std::uncaught_exception() &&
-#endif // $$$$ MAT : not sure if it's cygwin or gcc 3.4.4 but uncaught_exception always returns true
-                ! flushed_ )
+            if( ! flushed_ && exceptions_ >= uncaught_exceptions() )
                 flush();
         }
         catch( ... )
@@ -101,12 +99,26 @@ private:
     }
     //@}
 
+    //! @name Helpers
+    //@{
+    int uncaught_exceptions() const
+    {
+#if defined(__cplusplus) && (__cplusplus >= 201703L) || \
+    defined(_MSC_VER) && (_MSC_VER >= 1900)
+        return std::uncaught_exceptions();
+#else
+        return std::uncaught_exception() ? 1 : 0;
+#endif
+    }
+    //@}
+
 private:
     //! @name Member data
     //@{
     output output_;
     const std::string filename_;
     const std::string encoding_;
+    const int exceptions_;
     bool flushed_;
     //@}
 };

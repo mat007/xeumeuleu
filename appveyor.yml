@@ -5,9 +5,15 @@ environment:
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
       BOOST: 1_59_0
       MSVC: 14
+      CXX_STANDARD: 11
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       BOOST: 1_64_0
       MSVC: 15
+      CXX_STANDARD: 14
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      BOOST: 1_65_1
+      MSVC: 15
+      CXX_STANDARD: 17
 
 platform:
   - x86
@@ -30,6 +36,7 @@ init:
   - set VCPKG_INCLUDEDIR=c:\tools\vcpkg\installed\%PLATFORM%-windows\include
 
 install:
+  - cmake --version
   - appveyor-retry vcpkg install xerces-c:%PLATFORM%-windows xalan-c:%PLATFORM%-windows
   - appveyor-retry appveyor DownloadFile https://github.com/mat007/turtle/archive/master.zip -FileName turtle-master.zip
   - 7z x turtle-master.zip
@@ -38,6 +45,6 @@ install:
 build_script:
   - mkdir %APPVEYOR_BUILD_FOLDER%\build\cmake
   - cd %APPVEYOR_BUILD_FOLDER%\build\cmake
-  - cmake ../.. -G "%CMAKE_GENERATOR_NAME%" -DCMAKE_INCLUDE_PATH=%VCPKG_INCLUDEDIR% -DCMAKE_LIBRARY_PATH=%VCPKG_LIBRARYDIR% -DBoost_USE_STATIC_LIBS=ON
+  - cmake ../.. -G "%CMAKE_GENERATOR_NAME%" -DCMAKE_CXX_STANDARD=%CXX_STANDARD% -DCMAKE_INCLUDE_PATH=%VCPKG_INCLUDEDIR% -DCMAKE_LIBRARY_PATH=%VCPKG_LIBRARYDIR% -DBoost_USE_STATIC_LIBS=ON
   - cmake --build . --config %CONFIGURATION%
   - ctest -C %CONFIGURATION% --verbose
